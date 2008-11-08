@@ -27,6 +27,8 @@ import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.Source;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
@@ -135,44 +137,31 @@ public class ContextAndPolicyConfiguration {
 		if(schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())){ //if the schemaPath has the url: prefix
 			URL url = new URL(schema.substring(URL_PREFIX.length()));
 			if(url == null) throw new IllegalArgumentException(schema);
-			try {
-				this.schema = sf.newSchema(url);
-			} catch (SAXException e){
-				setValidateParsing(false);
-				setValidateWriting(false);
-				logger.warn("Validating turned off because schema could not be initialized.");
-			}
+			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		} else if(schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX.length())){ //if the schemaPath has the file: prefix
 			File file = new File(schema.substring(FILE_PREFIX.length()));
 			if(file == null) throw new IllegalArgumentException(schema);
-			try {
-				this.schema = sf.newSchema(file);
-			} catch (SAXException e){
-				setValidateParsing(false);
-				setValidateWriting(false);
-				logger.warn("Validating turned off because schema could not be initialized.");
-			}
+			this.schema = createSchema(sf, new StreamSource(file));
 		} else if(schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())){ //if the schemaPath has the classpath: prefix
 			URL url = getClass().getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
 			if(url == null) throw new IllegalArgumentException(schema);
-			try {
-				this.schema = sf.newSchema(url);
-			} catch (SAXException e){
-				setValidateParsing(false);
-				setValidateWriting(false);
-				logger.warn("Validating turned off because schema could not be initialized.");
-			}
+			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		} else { //if no prefix is provided, the default is classpath:
 			URL url = getClass().getResource(leadingSlash(schema));
 			if(url == null) throw new IllegalArgumentException(schema);
-			try {
-				this.schema = sf.newSchema(url);
-			} catch (SAXException e){
-				setValidateParsing(false);
-				setValidateWriting(false);
-				logger.warn("Validating turned off because schema could not be initialized.");
-			}
+			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		}
+	}
+
+	private Schema createSchema(SchemaFactory sf, Source source) {
+		try {
+			return sf.newSchema(source);
+		} catch (SAXException e){
+			setValidateParsing(false);
+			setValidateWriting(false);
+			logger.warn("Validating turned off because schema could not be initialized.");
+		}
+		return null;
 	}
 	
 	/**
