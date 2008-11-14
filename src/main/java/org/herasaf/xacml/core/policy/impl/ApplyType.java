@@ -142,7 +142,6 @@ public class ApplyType extends ExpressionType implements Serializable {
 	 * (non-Javadoc)
 	 * @see org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public Object handle(RequestType request,
 			RequestInformation reqInfo)

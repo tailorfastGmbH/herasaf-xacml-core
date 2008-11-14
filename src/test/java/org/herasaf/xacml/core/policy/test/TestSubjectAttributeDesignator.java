@@ -279,7 +279,6 @@ public class TestSubjectAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "subjectAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			SubjectAttributeDesignatorType designator) throws Throwable {
@@ -290,7 +289,6 @@ public class TestSubjectAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeSubjectWithIllegalType("test",
@@ -302,7 +300,6 @@ public class TestSubjectAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeSubject(

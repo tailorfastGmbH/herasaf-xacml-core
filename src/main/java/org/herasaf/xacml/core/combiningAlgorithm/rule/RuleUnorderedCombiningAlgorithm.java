@@ -37,18 +37,7 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  */
 public abstract class RuleUnorderedCombiningAlgorithm extends
 		RuleCombiningAlgorithm {
-
-//	/**
-//	 * Initializes the {@link RuleUnorderedCombiningAlgorithm} with the given
-//	 * {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link RuleUnorderedCombiningAlgorithm}
-//	 */
-//	public RuleUnorderedCombiningAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
+	private static final long serialVersionUID = -5692513372812026683L;
 
 	/*
 	 * (non-Javadoc)

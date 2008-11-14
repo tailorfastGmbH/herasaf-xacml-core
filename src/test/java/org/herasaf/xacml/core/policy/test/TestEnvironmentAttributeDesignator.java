@@ -146,7 +146,6 @@ public class TestEnvironmentAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, dataProvider = "environmentAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			EnvironmentAttributeDesignatorType designator) throws Throwable {
@@ -157,7 +156,6 @@ public class TestEnvironmentAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeEnvironmentWithIllegalType(
@@ -167,7 +165,6 @@ public class TestEnvironmentAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeEnvironment(

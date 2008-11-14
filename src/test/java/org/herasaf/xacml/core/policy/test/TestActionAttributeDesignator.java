@@ -135,7 +135,6 @@ public class TestActionAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, dataProvider = "actionAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			ActionAttributeDesignatorType designator) throws Throwable {
@@ -146,7 +145,6 @@ public class TestActionAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeActionWithIllegalType(
@@ -156,7 +154,6 @@ public class TestActionAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeAction("action-Id",

@@ -78,7 +78,6 @@ public class TestSubset {
 		return durations;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "functionTest")
 	public void testFunction(List<DayTimeDuration> durations1,
 			List<DayTimeDuration> durations2, Boolean expectedResult)

@@ -37,17 +37,7 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
  */
 public abstract class PolicyUnorderedCombiningAlgorithm extends
 		AbstractCombiningAlgorithm implements PolicyCombiningAlgorithm {
-
-//	/**
-//	 * Constructor setting the {@link TargetMatcher} as the
-//	 * {@link TargetMatcher} used for the target evaluation.
-//	 *
-//	 * @param targetMatcher
-//	 *            The targetmatcher that should be used.
-//	 */
-//	public PolicyUnorderedCombiningAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
+	private static final long serialVersionUID = 3587482340234936823L;
 
 	/*
 	 * (non-Javadoc)

@@ -37,6 +37,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  *
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
+	private static final long serialVersionUID = -5423784677434727360L;
 	private TargetMatcher targetMatcher;
 
 //	/**

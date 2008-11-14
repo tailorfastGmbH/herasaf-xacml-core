@@ -55,7 +55,6 @@ public abstract class AbstractOneAndOnlyFunction<T> implements Function {
 	 * exception if more than value is in the list.
 	 * </p>
 	 */
-	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

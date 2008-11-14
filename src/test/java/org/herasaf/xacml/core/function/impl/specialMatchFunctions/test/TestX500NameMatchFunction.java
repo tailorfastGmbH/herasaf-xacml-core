@@ -63,7 +63,6 @@ public class TestX500NameMatchFunction {
 						false }, };
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "functionTest")
 	public void testFunction(X500Principal principal1,
 			X500Principal principal2, Boolean expectedResult) throws Exception {

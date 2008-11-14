@@ -178,7 +178,6 @@ public class TestResourceAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "resourceAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			ResourceAttributeDesignatorType designator) throws Throwable {
@@ -189,7 +188,6 @@ public class TestResourceAttributeDesignator {
 		}
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeResourceWithIllegalType(
@@ -201,7 +199,6 @@ public class TestResourceAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeResource(

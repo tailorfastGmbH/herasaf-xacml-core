@@ -46,18 +46,7 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  */
 public abstract class RuleCombiningAlgorithm extends AbstractCombiningAlgorithm
 		implements CombiningAlgorithm {
-
-//	/**
-//	 * Initializes the {@link RuleCombiningAlgorithm} with the given
-//	 * {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link RuleCombiningAlgorithm}
-//	 */
-//	public RuleCombiningAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
+	private static final long serialVersionUID = 2445043201410211876L;
 
 	/**
 	 * Evaluates a rule.
