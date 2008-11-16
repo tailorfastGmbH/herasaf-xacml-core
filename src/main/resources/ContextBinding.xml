@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jaxb:bindings jaxb:version="2.1"
 	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
-	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xs:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
 	<jaxb:bindings
 		schemaLocation="access_control-xacml-2.0-context-schema-os.xsd">
 		<jaxb:bindings node="/xs:schema">
