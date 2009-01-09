@@ -34,13 +34,18 @@ import org.herasaf.xacml.core.policy.impl.Variable;
 import org.herasaf.xacml.core.policy.impl.VariableDefinitionType;
 import org.herasaf.xacml.core.policy.impl.VariableReferenceType;
 import org.herasaf.xacml.core.policy.impl.VariableValue;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-
-public class TestVariableReference {
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestVariableReference extends AbstractTestNGSpringContextTests{
 	ObjectFactory factory;
-
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;
 	@BeforeMethod
 	public void beforeMethod() {
 		factory = new ObjectFactory();
@@ -49,7 +54,7 @@ public class TestVariableReference {
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		Object[] values = new Object[]{"test1", "test2", "test3"};
-		RequestInformation reqInfo = new RequestInformation(null, null);
+		RequestInformation reqInfo = requestInformationFactory.createRequestInformation(null, null);
 		reqInfo.setVariableDefinitions(initVariableDefinitions(values));
 
 		VariableReferenceType varRef1 = new VariableReferenceType();

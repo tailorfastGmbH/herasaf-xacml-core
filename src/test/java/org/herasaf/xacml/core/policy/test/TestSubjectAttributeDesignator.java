@@ -36,12 +36,22 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.SubjectAttributeDesignatorType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-public class TestSubjectAttributeDesignator {
-	RequestInformation reqInfo = new RequestInformation(null, new AttributeFinderMock());
-
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestSubjectAttributeDesignator extends AbstractTestNGSpringContextTests{
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;
+	RequestInformation reqInfo;
+	@BeforeClass
+	public void beforeClass(){
+		reqInfo = requestInformationFactory.createRequestInformation(null, new AttributeFinderMock());
+	}
 	@DataProvider(name = "successfulSubjectAttrDesignator")
 	public Object[][] successfulSubjectAttrDesignator() {
 		return new Object[][] {

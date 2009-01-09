@@ -76,9 +76,10 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 58, for further information.
  * 
- * @version 1.0
+ * @version 1.1
  * @author <i>generated</i>
  * @author Stefan Oberholzer
+ * @author Patrik Dietschweiler
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PolicySetType", propOrder = { "description",
@@ -312,14 +313,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 		// No foreach iterator to ensure thread safety.
 		for (int i = 0; i < additionalInformation.size(); i++) {
 			JAXBElement<?> jaxbElem = additionalInformation.get(i);
-			if (jaxbElem.getValue() instanceof Evaluatable) {
-				evals.add((Evaluatable) jaxbElem.getValue());
-			} else if (jaxbElem.getValue() instanceof IdReferenceType) {
-				evals
-						.add(reqInfo
-								.getRemotePolicy(((IdReferenceType) jaxbElem
-										.getValue()).getValue()));
-			}
+			evals.add((Evaluatable) jaxbElem.getValue());
 		}
 		return evals;
 	}
@@ -343,4 +337,12 @@ public class PolicySetType implements Evaluatable, Serializable {
 	public EvaluatableID getId() {
 		return new EvaluatableIDImpl(getPolicySetId());
 	}
+	/*
+	 * (non-Javadoc)
+	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
+	 */
+	public String getEvalutableVersion() {
+		return getVersion();
+	}
+	
 }

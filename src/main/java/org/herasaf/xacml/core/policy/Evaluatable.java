@@ -17,14 +17,15 @@
 
 package org.herasaf.xacml.core.policy;
 
+import org.herasaf.xacml.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
  * Represents an type that is evaluatable.
- *
- * @author Florian Huonder
- * @version 1.0
+ * 
+ * @author Florian Huonder, Patrik Dietschweiler
+ * @version 1.1
  */
 public interface Evaluatable {
 
@@ -32,20 +33,39 @@ public interface Evaluatable {
 	 * Returns the id of the evaluatable.
 	 * 
 	 * @return The Id as string.
+	 * 
+	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
+	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public EvaluatableID getId(); 
+	public EvaluatableID getId() throws EvaluatableNotFoundException; 
 	
 	/**
 	 * Returns the {@link TargetType} of the evaluatable.
 	 * 
 	 * @return The {@link TargetType} of the evaluatable.
+	 * 
+	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
+	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public TargetType getTarget();
+	public TargetType getTarget() throws EvaluatableNotFoundException;
 	
 	/**
 	 * Returns the {@link CombiningAlgorithm} of the evaluatable.
 	 * 
 	 * @return The {@link CombiningAlgorithm} of the evaluatable.
+	 * 
+	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
+	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public CombiningAlgorithm getCombiningAlg();
+	public CombiningAlgorithm getCombiningAlg() throws EvaluatableNotFoundException;
+	
+	/**
+	 * Returns the version of the evaluatable.
+	 * 
+	 * @return The version as string.
+	 * 
+	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
+	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
+	 */
+	public String getEvalutableVersion() throws EvaluatableNotFoundException;
 }

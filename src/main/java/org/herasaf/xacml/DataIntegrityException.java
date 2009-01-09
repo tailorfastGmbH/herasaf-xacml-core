@@ -17,35 +17,33 @@
 
 package org.herasaf.xacml;
 
-import org.herasaf.xacml.core.policy.Evaluatable;
-
 /**
- * This exception is thrown when a {@link Evaluatable} is not found.
- * 
- * @author Florian Huonder, Patrik Dietschweiler
+ * Is thrown if an integrity problem with the data occured.
+ *
+ * @author Florian Huonder
  * @version 1.0
  */
-public class EvaluatableNotFoundException extends RuntimeException {
-	private static final long serialVersionUID = 8213802064654257318L;
+public class DataIntegrityException extends Exception {
+	private static final long serialVersionUID = -1652615076673142164L;
 
 	/**
 	 * Constructs a new exception with null as its detail message.
 	 */
-	public EvaluatableNotFoundException() {
+	public DataIntegrityException() {
 		super();
 	}
 
 	/**
 	 * Constructs a new exception with the specified detail message.
 	 */
-	public EvaluatableNotFoundException(String message) {
+	public DataIntegrityException(String message) {
 		super(message);
 	}
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
 	 */
-	public EvaluatableNotFoundException(String message, Throwable cause) {
+	public DataIntegrityException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
@@ -54,7 +52,7 @@ public class EvaluatableNotFoundException extends RuntimeException {
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
 	 */
-	public EvaluatableNotFoundException(Throwable cause) {
+	public DataIntegrityException(Throwable cause) {
 		super(cause);
 	}
 }

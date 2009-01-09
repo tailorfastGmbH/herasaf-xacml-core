@@ -19,7 +19,8 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
@@ -28,20 +29,26 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
-import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.RuleCombiningAlgMock;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.ConditionType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-public class TestRuleEvaluation {
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestRuleEvaluation extends AbstractTestNGSpringContextTests{
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;	
 	@DataProvider(name = "evaluationData")
 	public Object[][] evaluationData() throws Exception {
 		return new Object[][] {
@@ -313,8 +320,8 @@ public class TestRuleEvaluation {
 			StatusCode expectedStatusCode,
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
-		RequestInformation info = new RequestInformation(
-				new HashMap<String, Evaluatable>(), null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation info = requestInformationFactory.createRequestInformation(references,null);
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule,
 				info);
 		assertEquals(madeDecision, expectedDecision);

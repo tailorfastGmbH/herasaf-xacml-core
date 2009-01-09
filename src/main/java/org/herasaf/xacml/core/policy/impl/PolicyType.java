@@ -331,4 +331,11 @@ public class PolicyType implements Evaluatable, Serializable {
 	public EvaluatableID getId() {
 		return new EvaluatableIDImpl(getPolicyId());
 	}
+	/*
+	 * (non-Javadoc)
+	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
+	 */
+	public String getEvalutableVersion() {
+		return getVersion();
+	}
 }

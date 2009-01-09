@@ -21,7 +21,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
@@ -31,23 +32,28 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
-import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-public class TestRulePermitOverridesAlgorithm {
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestRulePermitOverridesAlgorithm extends AbstractTestNGSpringContextTests{
 	private RuleCombiningAlgorithm combAlg;
 	private TargetMatcherMock targetMatcher;
 	private RulePermitOverridesAlgorithm[] rulePermitOverridesAlgorithmWithTRUEDecisionsArray;
 	private RulePermitOverridesAlgorithm rulePermitOverridesAlgorithmWithTRUEFALSEDecisions;
-	
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;	
 	public TestRulePermitOverridesAlgorithm() {
 		rulePermitOverridesAlgorithmWithTRUEDecisionsArray = new RulePermitOverridesAlgorithm[12];
 		for (int i = 0; i < rulePermitOverridesAlgorithmWithTRUEDecisionsArray.length; i++) {
@@ -258,8 +264,8 @@ public class TestRulePermitOverridesAlgorithm {
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		RequestInformation infos = new RequestInformation(
-				new HashMap<String, Evaluatable>(), null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation infos = requestInformationFactory.createRequestInformation(references,null);
 		DecisionType decision = alg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

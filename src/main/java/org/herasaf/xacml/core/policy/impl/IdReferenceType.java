@@ -18,12 +18,19 @@
 package org.herasaf.xacml.core.policy.impl;
 
 import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+
+import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.reference.IdReferenceTypeDelegateCombiningAlgorithm;
+import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.EvaluatableID;
 
 
 /**
@@ -54,7 +61,7 @@ import javax.xml.bind.annotation.XmlValue;
 @XmlType(name = "IdReferenceType", propOrder = {
     "value"
 })
-public class IdReferenceType implements Serializable
+public class IdReferenceType implements Serializable, Evaluatable
 {
 
     private final static long serialVersionUID = 632768732L;
@@ -68,6 +75,12 @@ public class IdReferenceType implements Serializable
     @XmlAttribute(name = "LatestVersion")
     protected String latestVersion;
 
+    public IdReferenceType(){
+    	delegateCombiningAlgorihtm = new IdReferenceTypeDelegateCombiningAlgorithm();
+    }
+    
+    @XmlTransient
+    private IdReferenceTypeDelegateCombiningAlgorithm delegateCombiningAlgorihtm = null;
     /**
      * Gets the value of the value property.
      * 
@@ -155,12 +168,68 @@ public class IdReferenceType implements Serializable
     /**
      * Sets the value of the latestVersion property.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
      *     
      */
     public void setLatestVersion(String value) {
         this.latestVersion = value;
     }
+
+    /**
+     * Gets the CombiningAlgorithmn of the idReferencetype which delegate to the 
+     * delegated evaluatable.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+	public CombiningAlgorithm getCombiningAlg() {
+		return delegateCombiningAlgorihtm;
+	}
+	 /**
+     * IllegalAccess
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+	public EvaluatableID getId() {
+		return new EvaluatableIDImpl(value);
+	}
+	 /**
+     * IllegalAccess
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+	public TargetType getTarget() {
+		throw new IllegalAccessError();
+	}
+
+	 /**
+     * Sets the DelegateCombiningAlgorithm which can delegate the evaluate method 
+     * in the combining algorithm.
+     * 
+     *     
+     */
+	public void setDelegateCombiningAlgorihtm(
+			IdReferenceTypeDelegateCombiningAlgorithm delegateCombiningAlgorihtm) {
+		this.delegateCombiningAlgorihtm = delegateCombiningAlgorihtm;
+	}
+
+
+	 /**
+     * IllegalAccess
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+	public String getEvalutableVersion() {
+		throw new IllegalAccessError();
+	}	
 }

@@ -40,6 +40,7 @@ import org.herasaf.xacml.core.policy.impl.SubjectMatchType;
 import org.herasaf.xacml.core.policy.impl.SubjectType;
 import org.herasaf.xacml.core.policy.impl.SubjectsType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.herasaf.xacml.core.targetMatcher.impl.test.mock.ActionAttributeDesignatorMock;
@@ -47,11 +48,21 @@ import org.herasaf.xacml.core.targetMatcher.impl.test.mock.EnvironmentAttributeD
 import org.herasaf.xacml.core.targetMatcher.impl.test.mock.FunctionMock;
 import org.herasaf.xacml.core.targetMatcher.impl.test.mock.ResourceAttributeDesignatorMock;
 import org.herasaf.xacml.core.targetMatcher.impl.test.mock.SubjectAttributeDesignatorMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-public class TestTargetMatcher {
-	RequestInformation reqInfo = new RequestInformation(null, new AttributeFinderMock());
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestTargetMatcher extends AbstractTestNGSpringContextTests{
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;
+	RequestInformation reqInfo;
+	@BeforeClass
+	public void beforeClass(){
+		reqInfo = requestInformationFactory.createRequestInformation(null, new AttributeFinderMock());
+	}
 	@DataProvider (name = "positiveData")
 	public Object[][] createPositiveData(){
 		//  1 = length of the array says how many subjects the Target has

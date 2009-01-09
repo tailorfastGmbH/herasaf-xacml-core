@@ -21,7 +21,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
@@ -29,11 +30,18 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test.PolicyTypeMock;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-
-public class TestRuleTargetEvaluation {
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestRuleTargetEvaluation extends AbstractTestNGSpringContextTests{
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;	
 	@DataProvider(name = "TargetEvaluationInput")
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		return new Object[][] {
@@ -71,8 +79,8 @@ public class TestRuleTargetEvaluation {
 			Evaluatable eval, DecisionType expectedDecision,
 			StatusCode expectedStatusCode, boolean missingAttributeExpected) {
 
-		RequestInformation infos = new RequestInformation(
-				new HashMap<String, Evaluatable>(), null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation infos = requestInformationFactory.createRequestInformation(references,null);
 		DecisionType decision = alg.evaluate(null, eval, infos);
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

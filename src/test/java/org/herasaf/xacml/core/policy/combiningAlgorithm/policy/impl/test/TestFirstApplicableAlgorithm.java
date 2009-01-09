@@ -21,9 +21,7 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
@@ -38,20 +36,28 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.PolicyCombiningAlgMock;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.RuleCombiningAlgMock;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-public class TestFirstApplicableAlgorithm {
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestFirstApplicableAlgorithm extends AbstractTestNGSpringContextTests{
 	PolicyCombiningAlgorithm combAlg;
 	TargetMatcherMock targetMatcher;
 	ObjectFactory factory = new ObjectFactory();
-
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;
+	
+	
 	@DataProvider(name = "testTargetMatchAndOneEvaluatable")
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		return new Object[][] {
@@ -603,8 +609,8 @@ public class TestFirstApplicableAlgorithm {
 			TargetMatcherMock.Decisions[] targetDecision,
 			DecisionType decision) throws Exception {
 
-		Map<String, Evaluatable> references = new HashMap<String, Evaluatable>();
-		RequestInformation reqEvals = new RequestInformation(references, null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation reqEvals = requestInformationFactory.createRequestInformation(references,null);
 		PolicySetType p = initializePolicy(new PolicyCombiningAlgMock(
 				DecisionType.PERMIT, StatusCode.OK, null));
 		addPolicySet(p, addedPolicySet);
@@ -619,8 +625,8 @@ public class TestFirstApplicableAlgorithm {
 			DecisionType decision) throws Exception {
 
 		List<Evaluatable> policies = new ArrayList<Evaluatable>();
-		Map<String, Evaluatable> references = new HashMap<String, Evaluatable>();
-		RequestInformation reqEvals = new RequestInformation(references, null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation reqEvals = requestInformationFactory.createRequestInformation(references,null);
 
 		for (PolicyCombiningAlgorithm algs : policyCombiningAlgs) {
 			policies.add(initializePolicy(algs));
@@ -629,7 +635,8 @@ public class TestFirstApplicableAlgorithm {
 
 		List<MissingAttributeDetailType> details = new ArrayList<MissingAttributeDetailType>();
 
-		RequestInformation info = new RequestInformation(null, null);
+		RequestInformation info = requestInformationFactory.createRequestInformation(null,null);
+
 		// Used to ensure that the strongest statusCode will stay
 		switch (decision) {
 		case DENY:
@@ -669,8 +676,8 @@ public class TestFirstApplicableAlgorithm {
 
 	@Test(enabled = true)
 	public void testWrongEvaluatable() throws Exception {
-		Map<String, Evaluatable> references = new HashMap<String, Evaluatable>();
-		RequestInformation reqEvals = new RequestInformation(references, null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation reqEvals = requestInformationFactory.createRequestInformation(references,null);
 
 		PolicyType p = new PolicyType();
 		p
@@ -688,8 +695,8 @@ public class TestFirstApplicableAlgorithm {
 	@Test(enabled = true)
 	public void testNullInEvaluatableList() throws Exception {
 		List<Evaluatable> policies = new ArrayList<Evaluatable>();
-		Map<String, Evaluatable> references = new HashMap<String, Evaluatable>();
-		RequestInformation reqEvals = new RequestInformation(references, null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation reqEvals = requestInformationFactory.createRequestInformation(references,null);
 
 		policies.add(initializePolicy(new PolicyCombiningAlgMock(
 				DecisionType.PERMIT, StatusCode.OK, null)));
@@ -706,8 +713,8 @@ public class TestFirstApplicableAlgorithm {
 	@Test(enabled = true)
 	public void testNullCombiningAlg() throws Exception {
 		List<Evaluatable> policies = new ArrayList<Evaluatable>();
-		Map<String, Evaluatable> references = new HashMap<String, Evaluatable>();
-		RequestInformation reqEvals = new RequestInformation(references, null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation reqEvals = requestInformationFactory.createRequestInformation(references,null);
 
 		policies.add(new PolicySetType());
 		assertEquals(combAlg.evaluateEvaluatableList(null, policies, reqEvals),
@@ -716,8 +723,8 @@ public class TestFirstApplicableAlgorithm {
 
 	@Test(enabled = true)
 	public void testPolicyAsEvaluatable() throws Exception {
-		Map<String, Evaluatable> references = new HashMap<String, Evaluatable>();
-		RequestInformation reqEvals = new RequestInformation(references, null);
+		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
+		RequestInformation reqEvals = requestInformationFactory.createRequestInformation(references,null);
 		targetMatcher
 		.setDecision(new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE });
 		assertEquals(combAlg.evaluate(null, new PolicyType(), reqEvals),

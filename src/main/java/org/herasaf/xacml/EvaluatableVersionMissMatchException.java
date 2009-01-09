@@ -22,30 +22,30 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 /**
  * This exception is thrown when a {@link Evaluatable} is not found.
  * 
- * @author Florian Huonder, Patrik Dietschweiler
+ * @author Patrik Dietschweiler 
  * @version 1.0
  */
-public class EvaluatableNotFoundException extends RuntimeException {
+public class EvaluatableVersionMissMatchException extends EvaluatableNotFoundException {
 	private static final long serialVersionUID = 8213802064654257318L;
 
 	/**
 	 * Constructs a new exception with null as its detail message.
 	 */
-	public EvaluatableNotFoundException() {
+	public EvaluatableVersionMissMatchException() {
 		super();
 	}
 
 	/**
 	 * Constructs a new exception with the specified detail message.
 	 */
-	public EvaluatableNotFoundException(String message) {
+	public EvaluatableVersionMissMatchException(String message) {
 		super(message);
 	}
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
 	 */
-	public EvaluatableNotFoundException(String message, Throwable cause) {
+	public EvaluatableVersionMissMatchException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
@@ -54,7 +54,7 @@ public class EvaluatableNotFoundException extends RuntimeException {
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
 	 */
-	public EvaluatableNotFoundException(Throwable cause) {
+	public EvaluatableVersionMissMatchException(Throwable cause) {
 		super(cause);
 	}
 }

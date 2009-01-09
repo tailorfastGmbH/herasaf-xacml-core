@@ -24,7 +24,6 @@ import java.util.Arrays;
 import javax.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResourceType;
@@ -41,14 +40,19 @@ import org.herasaf.xacml.core.policy.impl.FunctionType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.ResourceAttributeDesignatorType;
+import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-public class TestApplyType {
+@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
+public class TestApplyType extends AbstractTestNGSpringContextTests{
 	ObjectFactory factory;
-
+	@Autowired
+	private RequestInformationFactoryMock requestInformationFactory;	
 	@DataProvider(name = "successfulApplyType")
 	public Object[][] successfulApplyType() {
 		return new Object[][] { new Object[] {
@@ -111,7 +115,7 @@ public class TestApplyType {
 	public void testHandle(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, new RequestInformation(null, null)),
+		assertEquals(apply.handle(request, requestInformationFactory.createRequestInformation(null, null)),
 				result);
 	}
 
@@ -119,7 +123,7 @@ public class TestApplyType {
 	public void testHandleExceptions(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, new RequestInformation(null, null)),
+		assertEquals(apply.handle(request,requestInformationFactory.createRequestInformation(null, null)),
 				result);
 	}
 
@@ -127,7 +131,7 @@ public class TestApplyType {
 	public void testApplyWithFunctionType(JAXBElement<ApplyType> JaxbElem,
 			Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(new RequestType(), new RequestInformation(null, null)),
+		assertEquals(apply.handle(new RequestType(), requestInformationFactory.createRequestInformation(null, null)),
 				result);
 
 	}
