@@ -9,7 +9,7 @@ import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 
 public class RequestInformationFactory {
 
-	private Class remoteMapClassName = null;
+	private Class<Map<String, Evaluatable>> remoteMapClassName = null;
 	public RequestInformation createRequestInformation(
 			List<IdReferenceType> idReferences, AttributeFinder attributeFinder) {
 		try {
@@ -19,7 +19,7 @@ public class RequestInformationFactory {
 			throw new RuntimeException(e);
 		} 
 	}
-	public void setRemoteMapClassName(Class remoteMapClassName) {
+	public void setRemoteMapClassName(Class<Map<String, Evaluatable>> remoteMapClassName) {
 		this.remoteMapClassName = remoteMapClassName;
 	}
 

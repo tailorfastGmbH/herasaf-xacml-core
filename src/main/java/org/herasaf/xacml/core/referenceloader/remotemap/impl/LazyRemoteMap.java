@@ -43,7 +43,7 @@ import org.herasaf.xacml.core.utils.IdReferenceLookup;
  * 
  */
 public class LazyRemoteMap extends HashMap<String, Evaluatable> {
-
+	private static final long serialVersionUID = -1413918228413211687L;
 	transient static ReferenceLoader referenceLoader = null;
 	private final Log logger = LogFactory.getLog(this.getClass().getPackage()
 			.getName());

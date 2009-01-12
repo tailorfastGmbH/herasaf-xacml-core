@@ -40,6 +40,7 @@ import org.herasaf.xacml.core.utils.IdReferenceLookup;
  *     
  */
 public class FirstRemoteMap extends HashMap<String, Evaluatable>{
+	private static final long serialVersionUID = 3899647143618137172L;
 
 	private Log logger = LogFactory.getLog(FirstRemoteMap.class);
 	
