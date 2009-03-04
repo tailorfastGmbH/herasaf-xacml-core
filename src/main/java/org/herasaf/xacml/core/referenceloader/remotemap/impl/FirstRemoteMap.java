@@ -20,12 +20,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.referenceloader.ReferenceLoader;
 import org.herasaf.xacml.core.utils.IdReferenceLookup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * First Remote Map
  * 
@@ -40,9 +40,12 @@ import org.herasaf.xacml.core.utils.IdReferenceLookup;
  *     
  */
 public class FirstRemoteMap extends HashMap<String, Evaluatable>{
-	private static final long serialVersionUID = 3899647143618137172L;
+	
+	/** Serial version UID. */
+	private static final long serialVersionUID = -6584097811337441109L;
 
-	private Log logger = LogFactory.getLog(FirstRemoteMap.class);
+	/** Class logger. */
+	private Logger logger = LoggerFactory.getLogger(FirstRemoteMap.class);
 	
 	private static ReferenceLoader referenceLoader = null;
 	

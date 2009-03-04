@@ -22,14 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.herasaf.xacml.EvaluatableNotFoundException;
 import org.herasaf.xacml.EvaluatableVersionMissMatchException;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.referenceloader.ReferenceLoader;
 import org.herasaf.xacml.core.utils.IdReferenceLookup;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This util {@link LazyRemoteMap} contains the ReferencLoader and IdReferenceType to resolve the
@@ -43,10 +43,14 @@ import org.herasaf.xacml.core.utils.IdReferenceLookup;
  * 
  */
 public class LazyRemoteMap extends HashMap<String, Evaluatable> {
-	private static final long serialVersionUID = -1413918228413211687L;
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = 822879862176104685L;
+
 	transient static ReferenceLoader referenceLoader = null;
-	private final Log logger = LogFactory.getLog(this.getClass().getPackage()
-			.getName());
+	
+	/** Class logger. */
+	private final Logger logger = LoggerFactory.getLogger(LazyRemoteMap.class);
 	
 	private Map<String, Evaluatable> cache = null;
 	/**

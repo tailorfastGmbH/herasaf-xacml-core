@@ -32,8 +32,8 @@ import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
 import javax.xml.validation.SchemaFactory;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
@@ -64,7 +64,9 @@ public class ContextAndPolicyConfiguration {
 	private boolean validateWriting;
 	/** The context. */
 	private JAXBContext context;
-	private final Log logger = LogFactory.getLog(this.getClass().getPackage().getName());
+	
+	/** Class logger. */
+	private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyConfiguration.class);
 
 	/**
 	 * Returns if the output should be formatted.
