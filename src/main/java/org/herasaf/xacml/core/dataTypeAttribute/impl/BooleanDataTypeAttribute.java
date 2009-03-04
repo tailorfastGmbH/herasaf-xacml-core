@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#boolean.<br>
@@ -29,15 +28,15 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class BooleanDataTypeAttribute implements DataTypeAttribute<Boolean> {
-	private static final long serialVersionUID = -1489035106193634953L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
+public class BooleanDataTypeAttribute extends AbstractDataTypeAttribute<Boolean> {
+	
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Serial version UID. */
+	private static final long serialVersionUID = -4881189643269560315L;
+
+	/** {@inheritDoc} */
 	public Boolean convertTo(String jaxbRepresentation) throws SyntaxException {
 		String value = jaxbRepresentation.trim();
 		if (value.equals("1") || value.equals("true")) {
@@ -49,13 +48,8 @@ public class BooleanDataTypeAttribute implements DataTypeAttribute<Boolean> {
 		throw new SyntaxException();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

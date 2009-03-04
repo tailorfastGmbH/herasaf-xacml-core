@@ -21,7 +21,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
  * <p>
@@ -38,15 +37,15 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class AnyURIDataTypeAttribute implements DataTypeAttribute<URI> {
-	private static final long serialVersionUID = 2572419057278770505L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#anyURI";
+public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#anyURI";
+	
+	/** Serial version UID. */
+	private static final long serialVersionUID = -5182797446805115749L;	
+
+	/** {@inheritDoc} */
 	public URI convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new URI(jaxbRepresentation.trim());
@@ -54,14 +53,9 @@ public class AnyURIDataTypeAttribute implements DataTypeAttribute<URI> {
 			throw new SyntaxException(e);
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

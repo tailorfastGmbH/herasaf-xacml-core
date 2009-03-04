@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#string.<br>
@@ -28,26 +27,21 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class StringDataTypeAttribute implements DataTypeAttribute<String> {
-	private static final long serialVersionUID = -7266420997780583862L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#string";
+public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String>{
+	
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
+	
+	/** Serial version UID. */
+	private static final long serialVersionUID = 2908910266915235140L;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** {@inheritDoc} */
 	public String convertTo(String jaxbRepresentation) {
 		return jaxbRepresentation.trim();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

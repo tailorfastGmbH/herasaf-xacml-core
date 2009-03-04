@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#double.<br>
@@ -26,19 +25,19 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A> for further
  * information. target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A>
  * </p>
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DoubleDataTypeAttribute implements DataTypeAttribute<Double> {
-	private static final long serialVersionUID = 3803104666129468604L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#double";
+public class DoubleDataTypeAttribute extends AbstractDataTypeAttribute<Double> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#double";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = 8801120753602867144L;
+
+	/** {@inheritDoc} */
 	public Double convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return Double.parseDouble(jaxbRepresentation.trim());
@@ -47,13 +46,8 @@ public class DoubleDataTypeAttribute implements DataTypeAttribute<Double> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

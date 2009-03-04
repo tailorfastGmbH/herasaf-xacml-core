@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.DnsName;
 
 /**
@@ -31,15 +30,15 @@ import org.herasaf.xacml.core.types.DnsName;
  * @author Florian Huonder
  * @version 1.0
  */
-public class DnsNameDataTypeAttribute implements DataTypeAttribute<DnsName> {
-	private static final long serialVersionUID = -6319529854643178474L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dnsName";
+public class DnsNameDataTypeAttribute extends AbstractDataTypeAttribute<DnsName> {
+	
+	/** Data type ID URI. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dnsName";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Serial version UID. */
+	private static final long serialVersionUID = 7841789516189513021L;
+	
+	/** {@inheritDoc} */
 	public DnsName convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new DnsName(jaxbRepresentation.trim());
@@ -48,13 +47,8 @@ public class DnsNameDataTypeAttribute implements DataTypeAttribute<DnsName> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

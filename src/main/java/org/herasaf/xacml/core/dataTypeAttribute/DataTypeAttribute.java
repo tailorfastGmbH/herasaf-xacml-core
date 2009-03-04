@@ -36,6 +36,13 @@ import org.herasaf.xacml.SyntaxException;
  *            The data type of the containing attribute.
  */
 public interface DataTypeAttribute<E> extends java.io.Serializable {
+	
+	/**
+	 * Gets the URI the identifies this datatype.
+	 * 
+	 * @return URI the identifies this datatype
+	 */
+	public String getDatatypeURI();
 
 	/**
 	 * Converts a jaxb-representation string into the data type E.

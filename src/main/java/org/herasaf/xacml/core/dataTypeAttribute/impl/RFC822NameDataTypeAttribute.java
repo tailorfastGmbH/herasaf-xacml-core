@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.RFC822Name;
 
 /**
@@ -32,16 +31,15 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class RFC822NameDataTypeAttribute implements
-		DataTypeAttribute<RFC822Name> {
-	private static final long serialVersionUID = -3887209236990388647L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name";
+public class RFC822NameDataTypeAttribute extends AbstractDataTypeAttribute<RFC822Name> {
+	
+	/** Data type ID URI. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Serial version UID. */
+	private static final long serialVersionUID = 3529004809034784066L;
+
+	/** {@inheritDoc} */
 	public RFC822Name convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -51,13 +49,8 @@ public class RFC822NameDataTypeAttribute implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

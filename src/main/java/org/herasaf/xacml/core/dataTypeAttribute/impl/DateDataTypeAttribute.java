@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.Date;
 
 /**
@@ -26,19 +25,19 @@ import org.herasaf.xacml.core.types.Date;
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#date"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#date</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateDataTypeAttribute implements DataTypeAttribute<Date> {
-	private static final long serialVersionUID = -6555762327854176324L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#date";
+public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#date";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = -5112328908612717257L;
+
+	/** {@inheritDoc} */
 	public Date convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new Date(jaxbRepresentation.trim());
@@ -47,13 +46,8 @@ public class DateDataTypeAttribute implements DataTypeAttribute<Date> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

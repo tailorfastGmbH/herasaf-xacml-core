@@ -18,29 +18,29 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.IPAddress;
 
 /**
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:ipAddress.<br>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
- *
+ * 
  * @author Florian Huonder
  * @version 1.0
  */
-public class IpAddressDataTypeAttribute implements DataTypeAttribute<IPAddress> {
-	private static final long serialVersionUID = -2613745230470775921L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:ipAddress";
+public class IpAddressDataTypeAttribute extends
+		AbstractDataTypeAttribute<IPAddress> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:ipAddress";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = 7091374499978898219L;
+
+	/** {@inheritDoc} */
 	public IPAddress convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -50,13 +50,8 @@ public class IpAddressDataTypeAttribute implements DataTypeAttribute<IPAddress> 
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

@@ -20,26 +20,26 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import java.math.BigInteger;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
  * The Name of this datatype is http://www.w3.org/2001/XMLSchema#integer.<br>
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#integer"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class IntegerDataTypeAttribute implements DataTypeAttribute<BigInteger> {
-	private static final long serialVersionUID = 2961063328872682725L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#integer";
+public class IntegerDataTypeAttribute extends
+		AbstractDataTypeAttribute<BigInteger> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#integer";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = -6361086876173896623L;
+
+	/** {@inheritDoc} */
 	public BigInteger convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -49,13 +49,8 @@ public class IntegerDataTypeAttribute implements DataTypeAttribute<BigInteger> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

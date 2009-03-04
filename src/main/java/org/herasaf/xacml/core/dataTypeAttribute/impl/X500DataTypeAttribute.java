@@ -20,7 +20,6 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import javax.security.auth.x500.X500Principal;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
  * The Name of this data type is
@@ -33,15 +32,15 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class X500DataTypeAttribute implements DataTypeAttribute<X500Principal> {
-	private static final long serialVersionUID = -8349052006706615588L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:x500Name";
+public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Principal> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:x500Name";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = -8741252348616072890L;
+
+	/** {@inheritDoc} */
 	public X500Principal convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -51,13 +50,8 @@ public class X500DataTypeAttribute implements DataTypeAttribute<X500Principal> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

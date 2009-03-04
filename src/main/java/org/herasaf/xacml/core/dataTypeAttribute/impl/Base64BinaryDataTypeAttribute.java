@@ -26,21 +26,21 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#base64Binary"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#base64Binary</A> for
  * further information.
- *
+ * 
  * @author Florian Huonder
  * @version 1.0
  * @see DataTypeAttribute
  */
-public class Base64BinaryDataTypeAttribute implements
-		DataTypeAttribute<Base64Binary> {
-	private static final long serialVersionUID = -2493616619484912599L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
+public class Base64BinaryDataTypeAttribute extends
+		AbstractDataTypeAttribute<Base64Binary> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = 229831857554104677L;
+
+	/** {@inheritDoc} */
 	public Base64Binary convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -50,13 +50,8 @@ public class Base64BinaryDataTypeAttribute implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

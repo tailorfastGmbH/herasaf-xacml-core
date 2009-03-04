@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.HexBinary;
 
 /**
@@ -30,15 +29,15 @@ import org.herasaf.xacml.core.types.HexBinary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class HexBinaryDataTypeAttribute implements DataTypeAttribute<HexBinary> {
-	private static final long serialVersionUID = 4128099489912308146L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#hexBinary";
+public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBinary> {
+	
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#hexBinary";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Serial version UID. */
+	private static final long serialVersionUID = -1876089138053432795L;
+
+	/** {@inheritDoc} */
 	public HexBinary convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -48,13 +47,8 @@ public class HexBinaryDataTypeAttribute implements DataTypeAttribute<HexBinary> 
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.Time;
 
 /**
@@ -30,15 +29,15 @@ import org.herasaf.xacml.core.types.Time;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class TimeDataTypeAttribute implements DataTypeAttribute<Time> {
-	private static final long serialVersionUID = -2419136782434407365L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#time";
+public class TimeDataTypeAttribute extends AbstractDataTypeAttribute<Time> {
+	
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#time";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Serial version UID. */
+	private static final long serialVersionUID = 7476359216854881540L;	
+	
+	/** {@inheritDoc} */
 	public Time convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new Time(jaxbRepresentation.trim());
@@ -47,13 +46,8 @@ public class TimeDataTypeAttribute implements DataTypeAttribute<Time> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

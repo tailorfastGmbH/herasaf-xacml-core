@@ -18,30 +18,29 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.YearMonthDuration;
 
 /**
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration.<br>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
  * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class YearMonthDurationDataTypeAttribute implements
-		DataTypeAttribute<YearMonthDuration> {
-	private static final long serialVersionUID = -6296103807032784852L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration";
+public class YearMonthDurationDataTypeAttribute extends
+		AbstractDataTypeAttribute<YearMonthDuration> {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration";
+
+	/** Serial version UID. */
+	private static final long serialVersionUID = -9096516144266375543L;
+
+	/** {@inheritDoc} */
 	public YearMonthDuration convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -51,13 +50,8 @@ public class YearMonthDurationDataTypeAttribute implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

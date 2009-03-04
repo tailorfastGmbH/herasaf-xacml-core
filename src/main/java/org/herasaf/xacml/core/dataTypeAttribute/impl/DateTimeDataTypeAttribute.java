@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.DateTime;
 
 /**
@@ -26,19 +25,20 @@ import org.herasaf.xacml.core.types.DateTime;
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#dateTime"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#dateTime</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateTimeDataTypeAttribute implements DataTypeAttribute<DateTime> {
-	private static final long serialVersionUID = -1986292690586008369L;
-	private static final String ID = "http://www.w3.org/2001/XMLSchema#dateTime";
+public class DateTimeDataTypeAttribute extends
+		AbstractDataTypeAttribute<DateTime> {
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+	/** Data type ID URI. */
+	public static final String ID = "http://www.w3.org/2001/XMLSchema#dateTime";
+	
+	/** Serial version UID. */
+	private static final long serialVersionUID = 258484197947468750L;
+
+	/** {@inheritDoc} */
 	public DateTime convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new DateTime(jaxbRepresentation.trim());
@@ -47,13 +47,8 @@ public class DateTimeDataTypeAttribute implements DataTypeAttribute<DateTime> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }

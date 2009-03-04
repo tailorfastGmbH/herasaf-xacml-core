@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 
 /**
@@ -32,16 +31,15 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DayTimeDurationDataTypeAttribute implements
-		DataTypeAttribute<DayTimeDuration> {
-	private static final long serialVersionUID = 7763646879375619297L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration";
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.dataTypeAttribute.DataTypeAttribute#convertTo(java.lang.String)
-	 */
+public class DayTimeDurationDataTypeAttribute extends AbstractDataTypeAttribute<DayTimeDuration> {
+	
+	/** Data type ID URI. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration";
+	
+	/** Serial version UID. */
+	private static final long serialVersionUID = -2483527344156125328L;
+	
+	/** {@inheritDoc} */
 	public DayTimeDuration convertTo(String jaxbRepresentation)
 			throws SyntaxException {
 		try {
@@ -51,13 +49,8 @@ public class DayTimeDurationDataTypeAttribute implements
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	/** {@inheritDoc} */
+	public String getDatatypeURI() {
 		return ID;
 	}
 }
