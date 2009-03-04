@@ -14,6 +14,10 @@
 		<connection>${scm.url}/herasaf-xacml-core</connection>
 	</scm>
 
+	<properties>
+		<spring.version>2.5.6</spring.version>
+	</properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -36,7 +40,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>2.5.4</version>
+			<version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>commons-logging</groupId>
@@ -78,7 +82,7 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>2.5.4</version>
+			<version>${spring.version}</version>
 			<scope>test</scope>
 			<exclusions>
 				<exclusion>
