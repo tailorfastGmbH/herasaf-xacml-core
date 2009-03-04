@@ -26,6 +26,7 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -54,18 +55,6 @@ public class PolicyFirstApplicableAlgorithm extends
 	private static final long serialVersionUID = -8418394590870869155L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable";
-
-//	/**
-//	 * Initializes the {@link PolicyOrderedPermitOverridesAlgorithm} with the
-//	 * given {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link PolicyOrderedPermitOverridesAlgorithm}
-//	 */
-//	public PolicyFirstApplicableAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -101,8 +90,10 @@ public class PolicyFirstApplicableAlgorithm extends
 				 * If the result is permit, the statuscode is always ok.
 				 */
 				requestInfos.resetStatus();
+				requestInfos.addObligations(eval.getObligations(EffectType.PERMIT));
 				return DecisionType.PERMIT;
 			case DENY:
+				requestInfos.addObligations(eval.getObligations(EffectType.DENY));
 				return decision;
 			case INDETERMINATE:
 				return decision;

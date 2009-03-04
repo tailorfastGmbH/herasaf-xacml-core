@@ -28,6 +28,8 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
 
 /**
  * <p>
@@ -57,17 +59,6 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides";
 
-//	/**
-//	 * Initializes the {@link PolicyOrderedPermitOverridesAlgorithm} with the
-//	 * given {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link PolicyOrderedPermitOverridesAlgorithm}
-//	 */
-//	public PolicyOrderedPermitOverridesAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -80,14 +71,28 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			List<Evaluatable> possiblePolicies, RequestInformation requestInfos) {
 		boolean atLeastOneError = false;
 		boolean atLeastOneDeny = false;
+		boolean decisionPermit = false;
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
 		 */
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
+		
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
+			
+			if(decisionPermit && respectAbandonedEvaluatables && !eval.hasObligations()){
+				/* 
+				 * If a decision is already made (decisionPermit == true) and the abandoned Obligations must be taken into account
+				 * (respectAbandonedEvaluatables == true) and the evaluatable to evaluate (and its sub evaluatables) do not have 
+				 * Obligations,
+				 * then this iteration can be skipped.
+				 */
+				break;
+			}
+			
 			DecisionType decision;
 			try {
 				// Resets the status to go sure, that the returned statuscode is
@@ -107,11 +112,18 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			}
 			switch (decision) {
 			case PERMIT:
-				/*
-				 * If the result is permit, the statuscode is always ok.
-				 */
-				requestInfos.resetStatus();
-				return DecisionType.PERMIT;
+				if(!respectAbandonedEvaluatables){
+					/*
+					 * If the result is permit, the statuscode is always ok.
+					 */
+					requestInfos.resetStatus();
+					requestInfos.addObligations(eval.getObligations(EffectType.PERMIT));
+					return DecisionType.PERMIT;
+				}
+				else {
+					decisionPermit = true;
+					obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.PERMIT));
+				}
 			case DENY:
 				/*
 				 * If the decision of the evaluatable is deny, the status has to
@@ -119,6 +131,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 				 */
 				missingAttributes.addAll(requestInfos.getMissingAttributes());
 				statusCodes.add(requestInfos.getStatusCode());
+				obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.DENY));
 				atLeastOneDeny = true;
 				break;
 			case INDETERMINATE:
@@ -134,12 +147,21 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 				break;
 			}
 		}
-		if (atLeastOneDeny) {
+		if(decisionPermit){
+			/*
+			 * If the result is permit, the statuscode is always ok.
+			 */
+			requestInfos.resetStatus();
+			requestInfos.addObligations(obligationsOfApplicableEvals);
+			return DecisionType.PERMIT;
+		}
+		else if (atLeastOneDeny) {
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCodes);
+			requestInfos.addObligations(obligationsOfApplicableEvals);
 			return DecisionType.DENY;
 		}
-		if (atLeastOneError) {
+		else if (atLeastOneError) {
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCodes);
 			return DecisionType.INDETERMINATE;

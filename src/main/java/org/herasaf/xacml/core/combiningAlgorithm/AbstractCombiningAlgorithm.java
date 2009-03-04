@@ -23,6 +23,7 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
@@ -39,18 +40,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private static final long serialVersionUID = -5423784677434727360L;
 	private TargetMatcher targetMatcher;
+	
+	/** If set to true abandoned {@link Evaluatable}s will be included (if possible) in the evaluation. */
+	protected boolean respectAbandonedEvaluatables;
 
-//	/**
-//	 * Initializes the {@link AbstractCombiningAlgorithm} with the given
-//	 * {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link AbstractCombiningAlgorithm}
-//	 */
-//	public AbstractCombiningAlgorithm(TargetMatcher targetMatcher) {
-//		this.targetMatcher = targetMatcher;
-//	}
+	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
+		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
+	}
 	
 	/**
 	 * Sets the TargetMatcher.
@@ -59,6 +55,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	public void setTargetMatcher(TargetMatcher targetMatcher) {
 		this.targetMatcher = targetMatcher;
 	}
+
 
 	/**
 	 * Matches the target of the request.

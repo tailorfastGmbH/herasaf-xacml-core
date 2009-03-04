@@ -76,10 +76,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 58, for further information.
  * 
- * @version 1.1
+ * @version 1.2
  * @author <i>generated</i>
  * @author Stefan Oberholzer
  * @author Patrik Dietschweiler
+ * @author Florian Huonder
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PolicySetType", propOrder = { "description",
@@ -113,6 +114,8 @@ public class PolicySetType implements Evaluatable, Serializable {
 	@XmlJavaTypeAdapter(URNToPolicyCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
 	protected PolicyCombiningAlgorithm policyCombiningAlg;
+	
+	protected transient boolean hasObligations;
 
 	/**
 	 * Gets the value of the description property.
@@ -344,5 +347,37 @@ public class PolicySetType implements Evaluatable, Serializable {
 	public String getEvalutableVersion() {
 		return getVersion();
 	}
+
+	/**
+	 * Set the field hasObligations to the proper value.
+	 * True if the current PolicySet has Obligations or a subpolicy or policyset, respectively.
+	 * False otherwise.
+	 * 
+	 * @param value The boolean value to set.
+	 */
+	public void setHasObligations(boolean value) {
+		hasObligations = value;
+	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean hasObligations(){
+		return hasObligations;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<ObligationType> getObligations(EffectType effect) {
+		List<ObligationType> result = new ArrayList<ObligationType>();
+		if(obligations != null){
+			for(ObligationType obli : obligations.getObligations()){
+				if(obli.fulfillOn.equals(effect)){
+					result.add(obli);
+				}
+			}
+		}
+		return result;
+	}
 }

@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.policy.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -26,6 +27,8 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
 
 /**
  * <p>
@@ -51,24 +54,9 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 
 public class PolicyOrderedDenyOverridesAlgorithm extends
 		PolicyOrderedCombiningAlgorithm {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1057109525583444172L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-deny-overrides";
-
-//	/**
-//	 * Initializes the {@link PolicyOrderedDenyOverridesAlgorithm} with the
-//	 * given {@link TargetMatcher}.
-//	 * 
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link PolicyOrderedDenyOverridesAlgorithm}
-//	 */
-//	public PolicyOrderedDenyOverridesAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
 
 	/*
 	 * (non-Javadoc)
@@ -79,9 +67,24 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 	@Override
 	public DecisionType evaluateEvaluatableList(RequestType request,
 			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+	
+		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();	
 		boolean atLeastOnePermit = false;
+		boolean decisionDeny = false;
+		
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
+			
+			if(decisionDeny && respectAbandonedEvaluatables && !eval.hasObligations()){
+				/* 
+				 * If a decision is already made (decisionDeny == true) and the abandoned Obligations must be taken into account
+				 * (respectAbandonedEvaluatables == true) and the evaluatable to evaluate (and its sub evaluatables) do not have 
+				 * Obligations,
+				 * then this iteration can be skipped.
+				 */
+				break;
+			}
+			
 			DecisionType decision;
 			try {
 				// Resets the status to go sure, that the returned statuscode is
@@ -101,11 +104,19 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 			}
 			switch (decision) {
 			case DENY:
-				return decision;
+				if(!respectAbandonedEvaluatables){ //if abandoned evaluatables should not be included then the first deny finishes the evaluation
+					requestInfo.addObligations(eval.getObligations(EffectType.DENY));
+					return decision;
+				}
+				else {
+					obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.DENY));
+					decisionDeny = true;
+				}
 			case INDETERMINATE:
 				requestInfo.resetStatus();
 				return DecisionType.DENY;
 			case PERMIT:
+				obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.PERMIT));
 				atLeastOnePermit = true;
 				break;
 			case NOT_APPLICABLE:
@@ -113,11 +124,16 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 			}
 		}
 
-		if (atLeastOnePermit) {
+		if(decisionDeny){
+			requestInfo.addObligations(obligationsOfApplicableEvals);
+			return DecisionType.DENY;
+		}
+		else if (atLeastOnePermit) {
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
 			requestInfo.resetStatus();
+			requestInfo.addObligations(obligationsOfApplicableEvals);
 			return DecisionType.PERMIT;
 		}
 

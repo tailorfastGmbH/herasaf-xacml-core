@@ -29,7 +29,8 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * Interface for the PolicyCombiningAlgorithms.
  *
  * @author Sacha Dolski
- * @version 1.0
+ * @author Florian Huonder
+ * @version 1.1
  */
 
 public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {

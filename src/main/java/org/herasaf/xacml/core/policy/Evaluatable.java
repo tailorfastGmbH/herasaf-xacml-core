@@ -17,8 +17,12 @@
 
 package org.herasaf.xacml.core.policy;
 
+import java.util.List;
+
 import org.herasaf.xacml.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
+import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
@@ -68,4 +72,21 @@ public interface Evaluatable {
 	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
 	 */
 	public String getEvalutableVersion() throws EvaluatableNotFoundException;
+	
+	/**
+	 * Returns a boolean value indicating if the current {@link Evaluatable} or a sub- {@link Evaluatable} contains
+	 * one or more Obligations.
+	 * 
+	 * @return True if the current or a sub- {@link Evaluatable} contains one or more Obligations.
+	 *         False otherwise.
+	 */
+	public boolean hasObligations();
+	
+	/**
+	 * Returns the Obligations of this {@link Evaluatable} which match the given effect.
+	 * 	
+	 * @param effect the {@link EffectType} by which the Obligations should be returned.
+	 * @return The Obligations which match the {@link EffectType}.
+	 */
+	public List<ObligationType> getObligations(EffectType effect);
 }

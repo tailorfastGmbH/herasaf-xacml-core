@@ -28,6 +28,8 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.springframework.stereotype.Component;
 
 /**
@@ -59,18 +61,6 @@ public class OnlyOneApplicableAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable";
 
-//	/**
-//	 * Initializes the {@link PolicyOrderedPermitOverridesAlgorithm} with the
-//	 * given {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link PolicyOrderedPermitOverridesAlgorithm}
-//	 */
-//	public OnlyOneApplicableAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -87,6 +77,9 @@ public class OnlyOneApplicableAlgorithm extends
 		StatusCode statusCode = null;
 		// remembers the missing Attributes of the first decision
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		
+		List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
+		
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 			DecisionType decision;
@@ -151,6 +144,9 @@ public class OnlyOneApplicableAlgorithm extends
 				 */
 				if (firstApplicableDecision == null) {
 					firstApplicableDecision = decision;
+					if(decision.equals(DecisionType.DENY) || decision.equals(DecisionType.PERMIT)){
+						obligationsOfFirstApplicableEval = eval.getObligations(EffectType.valueOf(decision.value().toUpperCase()));
+					}
 					statusCode = requestInfos.getStatusCode();
 					missingAttributes = requestInfos.getMissingAttributes();
 				} else {
@@ -181,6 +177,7 @@ public class OnlyOneApplicableAlgorithm extends
 		if (firstApplicableDecision != null) {
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCode);
+			requestInfos.addObligations(obligationsOfFirstApplicableEval);
 			return firstApplicableDecision;
 		}
 		return DecisionType.NOT_APPLICABLE;

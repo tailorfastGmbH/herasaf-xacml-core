@@ -18,6 +18,7 @@
 package org.herasaf.xacml.core.policy.impl;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -230,6 +231,20 @@ public class IdReferenceType implements Serializable, Evaluatable
      *     
      */
 	public String getEvalutableVersion() {
+		throw new IllegalAccessError();
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean hasObligations() {
+		return true; //Returns always true because it cannot be determined if a remote Policy contains Obligations.
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<ObligationType> getObligations(EffectType effect) {
 		throw new IllegalAccessError();
 	}	
 }

@@ -24,6 +24,9 @@ import java.util.Map;
 import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.ObjectFactory;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
+import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.policy.impl.Variable;
 
 /**
@@ -31,7 +34,7 @@ import org.herasaf.xacml.core.policy.impl.Variable;
  * and all remote-{@link Evaluatable}s.
  *
  * @author Florian Huonder
- * @version 1.0
+ * @version 1.1
  */
 public class RequestInformation {
 	private AttributeFinder attributeFinder;
@@ -40,6 +43,16 @@ public class RequestInformation {
 	private List<MissingAttributeDetailType> missingAttributes;
 	private boolean targetMatched;
 	private Map<String, Variable> variableDefinitions;
+	private ObligationsType obligations;
+	
+	private static ObjectFactory objectFactory;
+
+	/**
+	 * Initializes the JAXB object factory.
+	 */
+	static {
+		objectFactory = new ObjectFactory();
+	}
 
 	/**
 	 * Create a new <code>RequestInformation</code> with the given {@link Map}
@@ -54,6 +67,7 @@ public class RequestInformation {
 		statusCode = StatusCode.OK;
 		missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		targetMatched = true;
+		obligations = objectFactory.createObligationsType();
 	}
 
 	/**
@@ -217,5 +231,23 @@ public class RequestInformation {
 	 */
 	public AttributeFinder getAttributeFinder() {
 		return attributeFinder;
+	}
+	
+	/**
+	 * Adds an {@link ObligationType} for further processing.
+	 * 
+	 * @param obligation The {@link ObligationType} to add.
+	 */
+	public void addObligations(List<ObligationType> obligations){
+		this.obligations.getObligations().addAll(obligations);
+	}
+	
+	/**
+	 * Returns the {@link ObligationsType} contained in this {@link RequestInformation} object.
+	 * 
+	 * @return the {@link ObligationsType}.
+	 */
+	public ObligationsType getObligations(){
+		return obligations;
 	}
 }

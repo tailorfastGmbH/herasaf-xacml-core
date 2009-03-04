@@ -374,6 +374,9 @@ public class ResponseCtxFactory {
 			resCtx.getResponse().getResults().get(0).getStatus()
 					.setStatusDetail(statusDetail);
 		}
+		if(requestInfo.getObligations().getObligations().size() > 0){//Add the Obligations to the response
+			resCtx.getResponse().getResults().get(0).setObligations(requestInfo.getObligations());
+		}
 
 		return resCtx;
 	}

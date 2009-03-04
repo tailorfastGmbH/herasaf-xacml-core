@@ -338,4 +338,27 @@ public class PolicyType implements Evaluatable, Serializable {
 	public String getEvalutableVersion() {
 		return getVersion();
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public boolean hasObligations() {
+		if(obligations == null) return false;
+		return obligations.getObligations().size() > 0;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public List<ObligationType> getObligations(EffectType effect) {
+		List<ObligationType> result = new ArrayList<ObligationType>();
+		if(obligations != null){
+			for(ObligationType obli : obligations.getObligations()){
+				if(obli.fulfillOn.equals(effect)){
+					result.add(obli);
+				}
+			}
+		}
+		return result;
+	}
 }
