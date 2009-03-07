@@ -168,13 +168,11 @@ public class PolicyPermitOverridesAlgorithm extends
 		return DecisionType.NOT_APPLICABLE;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	protected String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 }

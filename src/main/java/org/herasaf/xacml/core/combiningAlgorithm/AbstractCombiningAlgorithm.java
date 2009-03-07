@@ -105,4 +105,19 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 		}
 		return DecisionType.PERMIT;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return getCombiningAlgorithmId();
+	}
+	
+	/**
+	 * Returns the ID of the combining algorithm.
+	 * 
+	 * @return The ID of the combining algorithm.
+	 */
+	protected abstract String getCombiningAlgorithmId();
 }

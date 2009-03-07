@@ -91,4 +91,11 @@ public class RuleCombiningAlgMock extends RuleCombiningAlgorithm {
 		return decision;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getCombiningAlgorithmId() {
+		return "mockCombiningAlgorithm";
+	}
 }

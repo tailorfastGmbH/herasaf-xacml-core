@@ -141,13 +141,11 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	protected String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 }

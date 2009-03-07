@@ -58,25 +58,11 @@ public class RuleOrderedPermitOverridesAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-permit-overrides";
 
-//	/**
-//	 * Initializes the {@link RuleOrderedPermitOverridesAlgorithm} with the
-//	 * given {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link RuleOrderedPermitOverridesAlgorithm}
-//	 */
-//	public RuleOrderedPermitOverridesAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	protected String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 

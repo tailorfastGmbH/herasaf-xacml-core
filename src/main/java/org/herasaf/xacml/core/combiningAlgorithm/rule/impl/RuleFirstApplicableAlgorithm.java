@@ -54,28 +54,15 @@ public class RuleFirstApplicableAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
 
-//	/**
-//	 * Initializes the {@link RuleFirstApplicableAlgorithm} with the given
-//	 * {@link TargetMatcher}.
-//	 *
-//	 * @param targetMatcher
-//	 *            The {@link TargetMatcher} to place in the
-//	 *            {@link RuleFirstApplicableAlgorithm}
-//	 */
-//	public RuleFirstApplicableAlgorithm(TargetMatcher targetMatcher) {
-//		super(targetMatcher);
-//	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	protected String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 *

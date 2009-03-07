@@ -74,4 +74,12 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 			List<RuleType> possiblePolicies, RequestInformation requestInfos) {
 		return DecisionType.PERMIT;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	protected String getCombiningAlgorithmId() {
+		return "mockCombiningAlgorithm";
+	}
 }
