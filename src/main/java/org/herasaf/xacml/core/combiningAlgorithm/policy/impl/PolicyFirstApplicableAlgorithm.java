@@ -27,7 +27,6 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -49,7 +48,6 @@ import org.springframework.stereotype.Component;
  * @author Stefan Oberholzer 
  * @version 1.0
  */
-@Component
 public class PolicyFirstApplicableAlgorithm extends
 		PolicyOrderedCombiningAlgorithm {
 	private static final long serialVersionUID = -8418394590870869155L;

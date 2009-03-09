@@ -51,7 +51,6 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-
 public class PolicyOrderedDenyOverridesAlgorithm extends
 		PolicyOrderedCombiningAlgorithm {
 	private static final long serialVersionUID = -1057109525583444172L;

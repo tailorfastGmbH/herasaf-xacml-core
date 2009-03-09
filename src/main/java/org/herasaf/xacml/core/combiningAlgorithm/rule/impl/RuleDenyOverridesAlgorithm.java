@@ -29,7 +29,6 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -52,7 +51,6 @@ import org.springframework.stereotype.Component;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-@Component
 public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm {
 
 	private static final long serialVersionUID = 4562421373287202395L;

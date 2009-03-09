@@ -37,7 +37,6 @@ import org.herasaf.xacml.core.policy.impl.SubjectType;
 import org.herasaf.xacml.core.policy.impl.SubjectsType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
-import org.springframework.stereotype.Component;
 
 /**
  * Implementation of the {@link TargetMatcher} interface.
@@ -45,7 +44,6 @@ import org.springframework.stereotype.Component;
  * @author Florian Huonder
  * @version 1.0
  */
-@Component
 public class TargetMatcherImpl implements TargetMatcher {
 	/**
 	 *

@@ -51,7 +51,6 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-
 public class PolicyOrderedPermitOverridesAlgorithm extends
 		PolicyOrderedCombiningAlgorithm {
 

@@ -27,7 +27,6 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
-import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * Abstract class for all {@link CombiningAlgorithm}s. It contains the logic
@@ -51,7 +50,6 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	/**
 	 * Sets the TargetMatcher.
 	 */
-	@Autowired
 	public void setTargetMatcher(TargetMatcher targetMatcher) {
 		this.targetMatcher = targetMatcher;
 	}

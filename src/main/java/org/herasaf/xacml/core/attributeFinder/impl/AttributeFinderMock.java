@@ -23,9 +23,7 @@ import java.util.List;
 import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.springframework.stereotype.Component;
 
-@Component("herasafAttributeFinder")
 public class AttributeFinderMock implements AttributeFinder {
 
 	/*

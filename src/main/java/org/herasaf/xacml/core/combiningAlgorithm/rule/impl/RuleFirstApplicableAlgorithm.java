@@ -25,7 +25,6 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
-import org.springframework.stereotype.Component;
 
 /**
  * <p>
@@ -47,7 +46,6 @@ import org.springframework.stereotype.Component;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-@Component
 public class RuleFirstApplicableAlgorithm extends
 		RuleUnorderedCombiningAlgorithm {
 	private static final long serialVersionUID = -5712159891343195803L;
