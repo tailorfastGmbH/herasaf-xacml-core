@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm;
 
+import java.util.List;
+
 import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.context.RequestInformation;
@@ -25,6 +27,9 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
+import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
+import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 
@@ -118,4 +123,26 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 * @return The ID of the combining algorithm.
 	 */
 	protected abstract String getCombiningAlgorithmId();
+	
+	/**
+	 * Removes all Obligations from the ObligationsType that to not match the {@link EffectType} provided.
+	 * 
+	 * @param effect The Obligation's {@link EffectType} that should be kept.
+	 */
+	public static void reviseObligations(ObligationsType obligations, EffectType effect) {
+		reviseObligations(obligations.getObligations(), effect);
+	}
+	
+	/**
+	 * Removes all Obligations from the list that to not match the {@link EffectType} provided.
+	 * 
+	 * @param effect The Obligation's {@link EffectType} that should be kept.
+	 */
+	public static void reviseObligations(List<ObligationType> obligations, EffectType effect) {
+		for(ObligationType obl : obligations){
+			if(!obl.getFulfillOn().equals(effect)){
+				obligations.remove(obl);
+			}
+		}
+	}
 }

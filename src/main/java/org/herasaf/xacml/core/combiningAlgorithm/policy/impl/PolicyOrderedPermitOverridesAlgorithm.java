@@ -112,11 +112,13 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			switch (decision) {
 			case PERMIT:
 				if(!respectAbandonedEvaluatables){
+					List<ObligationType> obligations = eval.getObligations(EffectType.PERMIT);
+					reviseObligations(obligations, EffectType.PERMIT);
 					/*
 					 * If the result is permit, the statuscode is always ok.
 					 */
 					requestInfos.resetStatus();
-					requestInfos.addObligations(eval.getObligations(EffectType.PERMIT));
+					requestInfos.addObligations(obligations);
 					return DecisionType.PERMIT;
 				}
 				else {
@@ -147,6 +149,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			}
 		}
 		if(decisionPermit){
+			reviseObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
@@ -155,6 +158,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			return DecisionType.PERMIT;
 		}
 		else if (atLeastOneDeny) {
+			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY);
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCodes);
 			requestInfos.addObligations(obligationsOfApplicableEvals);

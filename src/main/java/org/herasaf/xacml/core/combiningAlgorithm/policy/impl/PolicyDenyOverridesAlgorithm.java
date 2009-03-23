@@ -104,7 +104,10 @@ public class PolicyDenyOverridesAlgorithm extends
 			switch (decision) {
 			case DENY:
 				if(!respectAbandonedEvaluatables){ //if abandoned evaluatables should not be included then the first deny finishes the evaluation
-					requestInfo.addObligations(eval.getObligations(EffectType.DENY));
+					List<ObligationType> obligations = eval.getObligations(EffectType.DENY);
+					reviseObligations(obligations, EffectType.DENY);
+					
+					requestInfo.addObligations(obligations);
 					return decision;
 				}
 				else {
@@ -124,10 +127,12 @@ public class PolicyDenyOverridesAlgorithm extends
 		}
 
 		if(atLeastOneDeny){
+			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY);
 			requestInfo.addObligations(obligationsOfApplicableEvals);
 			return DecisionType.DENY;
 		}
 		else if (atLeastOnePermit) {
+			reviseObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
