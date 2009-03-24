@@ -175,7 +175,10 @@ public class OnlyOneApplicableAlgorithm extends
 		if (firstApplicableDecision != null) {
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCode);
-			requestInfos.addObligations(obligationsOfFirstApplicableEval); //the list can only contain Obligations if the decision is PERMIT or DENY.
+			if(firstApplicableDecision.equals(DecisionType.DENY) || firstApplicableDecision.equals(DecisionType.PERMIT)){
+				reviseObligations(requestInfos.getObligations(), EffectType.valueOf(firstApplicableDecision.value().toUpperCase())); //Revising the Obligations to keep the PERMIT or the DENY Obligations (depending on the decision)
+				requestInfos.addObligations(obligationsOfFirstApplicableEval); //the list can only contain Obligations if the decision is PERMIT or DENY.
+			}
 			return firstApplicableDecision;
 		}
 		return DecisionType.NOT_APPLICABLE;

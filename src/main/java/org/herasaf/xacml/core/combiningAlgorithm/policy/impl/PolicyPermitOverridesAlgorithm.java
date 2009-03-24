@@ -110,7 +110,7 @@ public class PolicyPermitOverridesAlgorithm extends
 			case PERMIT:
 				if(!respectAbandonedEvaluatables){
 					List<ObligationType> obligations = eval.getObligations(EffectType.PERMIT);
-					reviseObligations(obligations, EffectType.PERMIT);
+					reviseObligations(requestInfos.getObligations(), EffectType.PERMIT); // The decision is made and all DENY-Obligations can be filtered out
 					/*
 					 * If the result is permit, the statuscode is always ok.
 					 */
@@ -147,7 +147,8 @@ public class PolicyPermitOverridesAlgorithm extends
 		}
 		
 		if(atLeastOnePermit){
-			reviseObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
+			reviseObligations(obligationsOfApplicableEvals, EffectType.PERMIT); // To filter all DENY-Obligations that were collected so far
+			reviseObligations(requestInfos.getObligations(), EffectType.PERMIT); // The decision is made and all DENY-Obligations can be filtered out
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
@@ -156,7 +157,8 @@ public class PolicyPermitOverridesAlgorithm extends
 			return DecisionType.PERMIT;
 		}
 		else if (atLeastOneDeny) {
-			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY);
+			// The obligationsOfApplicableEvals may not be revised because it can only contain DENY-Obligations.
+			reviseObligations(requestInfos.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCodes);
 			requestInfos.addObligations(obligationsOfApplicableEvals);

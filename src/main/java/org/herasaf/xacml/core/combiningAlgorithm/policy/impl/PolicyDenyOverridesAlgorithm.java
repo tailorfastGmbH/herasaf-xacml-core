@@ -105,7 +105,7 @@ public class PolicyDenyOverridesAlgorithm extends
 			case DENY:
 				if(!respectAbandonedEvaluatables){ //if abandoned evaluatables should not be included then the first deny finishes the evaluation
 					List<ObligationType> obligations = eval.getObligations(EffectType.DENY);
-					reviseObligations(obligations, EffectType.DENY);
+					reviseObligations(requestInfo.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
 					
 					requestInfo.addObligations(obligations);
 					return decision;
@@ -127,12 +127,16 @@ public class PolicyDenyOverridesAlgorithm extends
 		}
 
 		if(atLeastOneDeny){
-			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY);
+			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY); // To filter all PERMIT-Obligations that were collected so far
+			reviseObligations(requestInfo.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
+
 			requestInfo.addObligations(obligationsOfApplicableEvals);
 			return DecisionType.DENY;
 		}
 		else if (atLeastOnePermit) {
-			reviseObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
+			// The obligationsOfApplicableEvals may not be revised because it can only contain PERMIT-Obligations.
+			reviseObligations(requestInfo.getObligations(), EffectType.PERMIT); // The decision is made and all DENY-Obligations can be filtered out
+			
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
