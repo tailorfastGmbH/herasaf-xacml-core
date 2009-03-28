@@ -38,13 +38,10 @@ public class IdReferenceLookup {
 	/**
 	 * Looks for IdReferencesType in a Evaluatables
 	 * 
-	 * @param Evaluatables eval Evaluatables to look for IdReferencesType
+	 * @param eval {@link Evaluatable}s to look for {@link IdReferenceType}.
 	 * 
 	 * @return Return the result of search. If no IdReferenceType was found
 	 *  the resturn value is an empty List
-	 * 
-	 * @author Patrik Dietschweiler
-	 * 
 	 */
 	public static List<IdReferenceType> getIdReference(Evaluatable eval){
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
@@ -68,13 +65,10 @@ public class IdReferenceLookup {
 	/**
 	 * Looks for IdReferencesType in a List of Evaluatables
 	 * 
-	 * @param Collection<Evaluatables> evals list of evaluatables to look for IdReferencesType
+	 * @param evals {@link Collection}  of {@link Evaluatable}s to look for {@link IdReferenceType}.
 	 * 
 	 * @return Return the result of search. If no IdReferenceType was found
 	 *  the resturn value is an empty List
-	 * 
-	 * @author Patrik Dietschweiler
-	 * 
 	 */
 	public static List<IdReferenceType> getIdReference(Collection<Evaluatable> evals){
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
