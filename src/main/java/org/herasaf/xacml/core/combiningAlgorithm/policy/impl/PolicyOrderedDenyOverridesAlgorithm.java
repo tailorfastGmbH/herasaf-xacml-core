@@ -107,13 +107,14 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 					List<ObligationType> obligations = eval.getObligations(EffectType.DENY);
 					reviseObligations(requestInfo.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
 					
-					requestInfo.addObligations(obligations);
+					requestInfo.replaceObligations(obligations);
 					return decision;
 				}
 				else {
 					obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.DENY));
 					decisionDeny = true;
 				}
+				break;
 			case INDETERMINATE:
 				requestInfo.resetStatus();
 				return DecisionType.DENY;
@@ -130,7 +131,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY); // To filter all PERMIT-Obligations that were collected so far
 			reviseObligations(requestInfo.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
 			
-			requestInfo.addObligations(obligationsOfApplicableEvals);
+			requestInfo.replaceObligations(obligationsOfApplicableEvals);
 			return DecisionType.DENY;
 		}
 		else if (atLeastOnePermit) {
@@ -141,7 +142,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 			 * If the result is permit, the statuscode is always ok.
 			 */
 			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals);
+			requestInfo.replaceObligations(obligationsOfApplicableEvals);
 			return DecisionType.PERMIT;
 		}
 

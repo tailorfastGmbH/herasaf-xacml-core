@@ -144,6 +144,7 @@ public class OnlyOneApplicableAlgorithm extends
 					firstApplicableDecision = decision;
 					if(decision.equals(DecisionType.DENY) || decision.equals(DecisionType.PERMIT)){
 						obligationsOfFirstApplicableEval = eval.getObligations(EffectType.valueOf(decision.value().toUpperCase()));
+						obligationsOfFirstApplicableEval.addAll(requestInfos.getObligations().getObligations());
 					}
 					statusCode = requestInfos.getStatusCode();
 					missingAttributes = requestInfos.getMissingAttributes();
@@ -177,7 +178,7 @@ public class OnlyOneApplicableAlgorithm extends
 			requestInfos.updateStatusCode(statusCode);
 			if(firstApplicableDecision.equals(DecisionType.DENY) || firstApplicableDecision.equals(DecisionType.PERMIT)){
 				reviseObligations(requestInfos.getObligations(), EffectType.valueOf(firstApplicableDecision.value().toUpperCase())); //Revising the Obligations to keep the PERMIT or the DENY Obligations (depending on the decision)
-				requestInfos.addObligations(obligationsOfFirstApplicableEval); //the list can only contain Obligations if the decision is PERMIT or DENY.
+				requestInfos.replaceObligations(obligationsOfFirstApplicableEval); //the list can only contain Obligations if the decision is PERMIT or DENY.
 			}
 			return firstApplicableDecision;
 		}

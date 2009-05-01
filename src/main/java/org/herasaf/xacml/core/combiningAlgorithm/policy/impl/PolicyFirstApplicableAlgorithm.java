@@ -89,11 +89,11 @@ public class PolicyFirstApplicableAlgorithm extends
 				 */
 				requestInfos.resetStatus();
 				reviseObligations(requestInfos.getObligations(), EffectType.PERMIT); //Keep all PERMIT-Obligations
-				requestInfos.addObligations(eval.getObligations(EffectType.PERMIT));
+				requestInfos.replaceObligations(eval.getObligations(EffectType.PERMIT));
 				return DecisionType.PERMIT;
 			case DENY:
 				reviseObligations(requestInfos.getObligations(), EffectType.DENY); //Keep all DENY-Obligations
-				requestInfos.addObligations(eval.getObligations(EffectType.DENY));
+				requestInfos.replaceObligations(eval.getObligations(EffectType.DENY));
 				return decision;
 			case INDETERMINATE:
 				return decision;

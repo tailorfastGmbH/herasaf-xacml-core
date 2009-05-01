@@ -238,7 +238,8 @@ public class RequestInformation {
 	 * 
 	 * @param obligations The {@link List} of {@link ObligationType}s to add.
 	 */
-	public void addObligations(List<ObligationType> obligations){
+	public void replaceObligations(List<ObligationType> obligations){
+		this.obligations.getObligations().clear();
 		this.obligations.getObligations().addAll(obligations);
 	}
 	

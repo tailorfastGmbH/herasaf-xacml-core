@@ -118,13 +118,14 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 					 * If the result is permit, the statuscode is always ok.
 					 */
 					requestInfos.resetStatus();
-					requestInfos.addObligations(obligations);
+					requestInfos.replaceObligations(obligations);
 					return DecisionType.PERMIT;
 				}
 				else {
 					decisionPermit = true;
 					obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.PERMIT));
 				}
+				break;
 			case DENY:
 				/*
 				 * If the decision of the evaluatable is deny, the status has to
@@ -155,7 +156,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			 * If the result is permit, the statuscode is always ok.
 			 */
 			requestInfos.resetStatus();
-			requestInfos.addObligations(obligationsOfApplicableEvals);
+			requestInfos.replaceObligations(obligationsOfApplicableEvals);
 			return DecisionType.PERMIT;
 		}
 		else if (atLeastOneDeny) {
@@ -164,7 +165,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 			
 			requestInfos.setMissingAttributes(missingAttributes);
 			requestInfos.updateStatusCode(statusCodes);
-			requestInfos.addObligations(obligationsOfApplicableEvals);
+			requestInfos.replaceObligations(obligationsOfApplicableEvals);
 			return DecisionType.DENY;
 		}
 		else if (atLeastOneError) {
