@@ -115,8 +115,12 @@ public class PolicySetType implements Evaluatable, Serializable {
 	@XmlSchemaType(name = "anyURI")
 	protected PolicyCombiningAlgorithm policyCombiningAlg;
 	
-	protected transient boolean hasObligations;
+	protected transient boolean hasObligations; //True if the PolicySet or a SubPolicy (SubPolicySet) contains any Obligations.
 
+	public PolicySetType() {
+		setHasObligations(true); //Must by default be true. It cannot be assumed that a preprocessor correctly sets this field.
+	}
+	
 	/**
 	 * Gets the value of the description property.
 	 *
@@ -352,6 +356,8 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * Set the field hasObligations to the proper value.
 	 * True if the current PolicySet has Obligations or a subpolicy or policyset, respectively.
 	 * False otherwise.
+	 * 
+	 * It is intended that this method is called by e.g. a preprocessor.
 	 * 
 	 * @param value The boolean value to set.
 	 */
