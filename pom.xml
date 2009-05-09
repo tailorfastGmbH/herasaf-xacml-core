@@ -9,10 +9,8 @@
 	</parent>
 
 	<!-- Project -->
-	<groupId>org.herasaf.xacml.new.core
-	</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
-	<artifactId>herasaf-xacml-core
-	</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
+	<groupId>org.herasaf.xacml.new.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
+	<artifactId>herasaf-xacml-core</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
 	<packaging>jar</packaging>
 	<version>1.0.0-SNAPSHOT</version>
 	<!--
