@@ -1,0 +1,83 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.herasaf.xacml.new</groupId>
+		<artifactId>herasaf-xacml</artifactId>
+		<version>1.0.0-SNAPSHOT</version> <!-- use most recent, final RootRoot-POM -->
+	</parent>
+
+	<!-- Project -->
+	<groupId>org.herasaf.xacml.new.core
+	</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
+	<artifactId>herasaf-xacml-core
+	</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
+	<packaging>jar</packaging>
+	<version>1.0.0-SNAPSHOT</version>
+	<!--
+		[major].[minor].[revision] major version = HERAS-AF release -> (API
+		changes on the main Interfaces (PDP,PIP,REPO etc.) or XACML Version
+		change) minor version = Changes to the framework where the user is
+		affected (e.g. indexer config file changes, repo internal core api
+		changes, feature improvements) revision version = changes of
+		implementations (internal bugfixes, patches, internal improvements
+		etc.) Process: "top-down-propagation" = core version change propagates
+		to Repo to repo-locator etc... (pseudo automatic, because updates in
+		dependencies) Option for the future: User version ranges for
+		dependency management (e.g repo needs a version of core between 2.5.0
+		and 2.5.999)
+	-->
+
+	<!-- Project Information-->
+	<name>HERAS-AF XACML :: Core</name> <!-- HERAS-AF XACML :: <ComponentName> -->
+	<description>Core component of the
+		"HERAS-AF XACML Implementation"</description> <!-- mandatory for HERAS-AF-->
+	<url>http://www.herasaf.org</url> <!-- always HERAS-AF Homepage-->
+	<!--
+		Inception Year is inherited from parent pom !!!DO NOT OVERRIDE!!!
+	-->
+	<!-- Licenses is inherited from parent pom !!!DO NOT OVERRIDE!!!-->
+	<!-- Organization is inherited from parent pom !!!DO NOT OVERRIDE!!!-->
+
+	<!-- Project Environment/Infrastructure ### MANDATORY ### -->
+	<issueManagement>
+		<system>Atlassian JIRA</system>
+		<url>http://jira.herasaf.org/browse/HERASAFXACMLCORE
+		</url>
+		<!--
+			always pattern: "<JIRA Server>/browse/<componentKey>" (e.g.
+			"http://jira.herasaf.org/POLICYREPOSITORY"
+		-->
+	</issueManagement>
+	<ciManagement>
+		<system>Atlassian Bamboo</system>
+		<url>http://bamboo.herasaf.org/browse/HERASAFXACMLCORE
+		</url>
+		<!--
+			always pattern: "<Bamboo Server>/browse/<componentKey>" (e.g.
+			"http://bamboo.herasaf.org/POLICYREPOSITORY"
+		-->
+	</ciManagement>
+	<scm>
+		<connection>
+			scm:svn:http://svn.herasaf.org/herasaf-xacmlnew/trunk/herasaf-xacml/herasaf-xacml-core
+		</connection>
+		<developerConnection>
+			scm:svn:https://svn.herasaf.org/herasaf-xacmlnew/trunk/herasaf-xacml/herasaf-xacml-core
+		</developerConnection>
+		<url>
+			http://svn.herasaf.org/herasaf-xacmlnew/trunk/herasaf-xacml/herasaf-xacml-core
+		</url>
+	</scm>
+
+	<!--
+		Project Distribution is inherited from parent pom !!!DO NOT
+		OVERRIDE!!!
+	-->
+	<!--
+		Dependency Management is inherited from parent pom !!!DO NOT
+		OVERRIDE!!!
+	-->
+
+</project>
