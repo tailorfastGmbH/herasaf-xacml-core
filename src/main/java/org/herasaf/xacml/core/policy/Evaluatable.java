@@ -88,5 +88,5 @@ public interface Evaluatable {
 	 * @param effect the {@link EffectType} by which the Obligations should be returned.
 	 * @return The Obligations which match the {@link EffectType}.
 	 */
-	public List<ObligationType> getObligations(EffectType effect);
+	public List<ObligationType> getContainedObligations(EffectType effect);
 }

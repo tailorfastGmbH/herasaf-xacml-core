@@ -24,6 +24,7 @@ import java.util.Map;
 import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.ObligationsType;
@@ -234,13 +235,25 @@ public class RequestInformation {
 	}
 	
 	/**
-	 * Adds an {@link ObligationType} for further processing.
+	 * Removes all Obligations from the list that to not match the {@link EffectType} provided.
 	 * 
-	 * @param obligations The {@link List} of {@link ObligationType}s to add.
+	 * @param effect The Obligation's {@link EffectType} that should be kept.
 	 */
-	public void replaceObligations(List<ObligationType> obligations){
-		this.obligations.getObligations().clear();
+	
+	public void addObligations(List<ObligationType> obligations, EffectType effect){
+			for(int i = 0; i < obligations.size(); i++){
+				ObligationType obl = obligations.get(i);
+				if(!obl.getFulfillOn().equals(effect)){
+					obligations.remove(i);
+					i--;
+				}
+			}
+		
 		this.obligations.getObligations().addAll(obligations);
+	}
+	
+	public void clearObligations(){
+		this.obligations.getObligations().clear();
 	}
 	
 	/**

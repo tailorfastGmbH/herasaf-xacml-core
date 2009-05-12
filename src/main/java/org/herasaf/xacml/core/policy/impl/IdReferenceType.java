@@ -244,7 +244,7 @@ public class IdReferenceType implements Serializable, Evaluatable
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<ObligationType> getObligations(EffectType effect) {
+	public List<ObligationType> getContainedObligations(EffectType effect) {
 		throw new IllegalAccessError();
 	}	
 }

@@ -48,9 +48,9 @@ import javax.xml.bind.annotation.XmlType;
 public enum EffectType {
 
     @XmlEnumValue("Permit")
-    PERMIT("Permit"),
+    PERMIT("PERMIT"),
     @XmlEnumValue("Deny")
-    DENY("Deny");
+    DENY("DENY");
     private final String value;
 
     EffectType(String v) {
@@ -62,15 +62,15 @@ public enum EffectType {
     }
 
     /**
-     * The effect type is an enumeration. This method is needed to finde the Enum-Value from its String-representation.
+     * The effect type is an enumeration. This method is needed to find the Enum-Value from its String-representation.
      * 
      * @param value String representation of the enumeration.
      * @return The {@link EffectType} of the string representation
      */
     public static EffectType fromValue(String value) {
         for (int i = 0; i < EffectType.values().length; i++){
-        	EffectType c =EffectType.values()[i];
-            if (c.value.equals(value)) {
+        	EffectType c = EffectType.values()[i];
+        	if (c.value.equalsIgnoreCase(value)) {
                 return c;
             }
         }

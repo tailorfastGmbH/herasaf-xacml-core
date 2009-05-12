@@ -375,11 +375,13 @@ public class PolicySetType implements Evaluatable, Serializable {
 	/**
 	 * {@inheritDoc}
 	 */
-	public List<ObligationType> getObligations(EffectType effect) {
+	public List<ObligationType> getContainedObligations(EffectType effect) {
 		List<ObligationType> result = new ArrayList<ObligationType>();
 		if(obligations != null){
-			for(ObligationType obli : obligations.getObligations()){
-				if(obli.fulfillOn.equals(effect)){
+			List<ObligationType> oblis = obligations.getObligations();
+			for(int i = 0; i < oblis.size(); i++){
+				ObligationType obli = oblis.get(i);
+				if(obli.getFulfillOn() == effect){
 					result.add(obli);
 				}
 			}

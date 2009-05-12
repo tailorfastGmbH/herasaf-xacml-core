@@ -71,6 +71,9 @@ public class PolicyDenyOverridesAlgorithm extends
 		
 		boolean atLeastOnePermit = false;
 		boolean atLeastOneDeny = false;
+		boolean atLeastOneError = false;
+		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 			
@@ -88,9 +91,13 @@ public class PolicyDenyOverridesAlgorithm extends
 			try {
 				// Resets the status to go sure, that the returned statuscode is
 				// the one of the evaluation.
-				requestInfo.resetStatus();
+				requestInfo.resetStatus();				
 				decision = eval.getCombiningAlg().evaluate(request, eval,
 						requestInfo);
+				if(decision == DecisionType.PERMIT || decision == DecisionType.DENY){
+					obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
+					obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
+				}
 			} catch (NullPointerException e) {
 				/*
 				 * If an error occures or a reference returnes null, the answer
@@ -104,50 +111,46 @@ public class PolicyDenyOverridesAlgorithm extends
 			switch (decision) {
 			case DENY:
 				if(!respectAbandonedEvaluatables){ //if abandoned evaluatables should not be included then the first deny finishes the evaluation
-					List<ObligationType> obligations = eval.getObligations(EffectType.DENY);
-					reviseObligations(requestInfo.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
-					
-					requestInfo.replaceObligations(obligations);
-					return decision;
+					requestInfo.clearObligations();
+					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
+					return DecisionType.DENY;
 				}
 				else {
-					obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.DENY));
 					atLeastOneDeny = true;
 				}
 				break;
-			case INDETERMINATE:
-				requestInfo.resetStatus();
-				return DecisionType.DENY;
 			case PERMIT:
-				obligationsOfApplicableEvals.addAll(eval.getObligations(EffectType.PERMIT));
 				atLeastOnePermit = true;
+				break;
+			case INDETERMINATE:
+				statusCodes.add(requestInfo.getStatusCode());
+				atLeastOneError = true;
 				break;
 			case NOT_APPLICABLE:
 				break;
 			}
+			requestInfo.clearObligations();
 		}
-
+		
 		if(atLeastOneDeny){
-			reviseObligations(obligationsOfApplicableEvals, EffectType.DENY); // To filter all PERMIT-Obligations that were collected so far
-			//reviseObligations(requestInfo.getObligations(), EffectType.DENY); // The decision is made and all PERMIT-Obligations can be filtered out
-
-			requestInfo.replaceObligations(obligationsOfApplicableEvals);
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY); 
+			return DecisionType.DENY;
+		}
+		else if (atLeastOneError) {
+			requestInfo.resetStatus();
 			return DecisionType.DENY;
 		}
 		else if (atLeastOnePermit) {
-			// The obligationsOfApplicableEvals may not be revised because it can only contain PERMIT-Obligations.
-			reviseObligations(requestInfo.getObligations(), EffectType.PERMIT); // The decision is made and all DENY-Obligations can be filtered out
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 			
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
 			requestInfo.resetStatus();
-			requestInfo.replaceObligations(obligationsOfApplicableEvals);
 			return DecisionType.PERMIT;
 		}
-
+		requestInfo.clearObligations();
 		return DecisionType.NOT_APPLICABLE;
-
 	}
 
 	/**

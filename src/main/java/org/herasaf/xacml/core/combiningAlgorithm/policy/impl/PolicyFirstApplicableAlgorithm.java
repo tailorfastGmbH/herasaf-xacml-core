@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.policy.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -27,6 +28,7 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.ObligationType;
 
 /**
  * <p>
@@ -37,15 +39,15 @@ import org.herasaf.xacml.core.policy.impl.EffectType;
  * The Implementation of the First-Applicable implementation oriented at the
  * sample implementation in the XACML 2.0 specification.
  * </p>
- *
+ * 
  * <p>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> pages 137-139, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class PolicyFirstApplicableAlgorithm extends
@@ -56,22 +58,29 @@ public class PolicyFirstApplicableAlgorithm extends
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
+	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
 	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfos) {
+			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+		List<ObligationType> obligations = new ArrayList<ObligationType>();
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 			DecisionType decision;
 			try {
 				// Resets the status to go sure, that the returned statuscode is
 				// the one of the evaluation.
-				requestInfos.resetStatus();
+				requestInfo.resetStatus();
 				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfos);
+						requestInfo);
+				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+					obligations.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
+					obligations.addAll(requestInfo.getObligations()
+							.getObligations());
+				}
 			} catch (NullPointerException e) {
 				/*
 				 * If an error occures or a reference returnes null, the answer
@@ -79,31 +88,29 @@ public class PolicyFirstApplicableAlgorithm extends
 				 * Access Control Markup Langugage (XACML) 2.0, Errata 29 June
 				 * 2006</a> page 86 and page 137 for further information.
 				 */
-				requestInfos.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			}
+			requestInfo.clearObligations();
 			switch (decision) {
 			case PERMIT:
 				/*
 				 * If the result is permit, the statuscode is always ok.
 				 */
-				requestInfos.resetStatus();
-				reviseObligations(requestInfos.getObligations(), EffectType.PERMIT); //Keep all PERMIT-Obligations
-				requestInfos.replaceObligations(eval.getObligations(EffectType.PERMIT));
+				requestInfo.resetStatus();
+				requestInfo.addObligations(obligations, EffectType.PERMIT);
 				return DecisionType.PERMIT;
 			case DENY:
-				reviseObligations(requestInfos.getObligations(), EffectType.DENY); //Keep all DENY-Obligations
-				requestInfos.replaceObligations(eval.getObligations(EffectType.DENY));
+				requestInfo.addObligations(obligations, EffectType.DENY);
 				return decision;
 			case INDETERMINATE:
 				return decision;
-
 			}
 		}
 		/*
 		 * If no evaluation leaded to a result, the status has to be ok.
 		 */
-		requestInfos.resetStatus();
+		requestInfo.resetStatus();
 		return DecisionType.NOT_APPLICABLE;
 	}
 

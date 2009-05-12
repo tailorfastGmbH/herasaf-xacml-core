@@ -68,14 +68,13 @@ public class OnlyOneApplicableAlgorithm extends
 
 	@Override
 	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfos) {
+			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
 		// Variable to keep the first made decision
 		DecisionType firstApplicableDecision = null;
 		// keeps the statuscode of the first decision
 		StatusCode statusCode = null;
 		// remembers the missing Attributes of the first decision
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-		
 		List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
 		
 		for (int i = 0; i < possiblePolicies.size(); i++) {
@@ -84,9 +83,13 @@ public class OnlyOneApplicableAlgorithm extends
 			try {
 				// Resets the status to go sure, that the returned statuscode is
 				// the one of the evaluation.
-				requestInfos.resetStatus();
+				requestInfo.resetStatus();
 				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfos);
+						requestInfo);
+				if(decision == DecisionType.PERMIT || decision == DecisionType.DENY){
+					obligationsOfFirstApplicableEval.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
+					obligationsOfFirstApplicableEval.addAll(requestInfo.getObligations().getObligations());
+				}
 			} catch (NullPointerException e) {
 				/*
 				 * If an error occures or a reference returnes null, the answer
@@ -94,9 +97,10 @@ public class OnlyOneApplicableAlgorithm extends
 				 * Access Control Markup Langugage (XACML) 2.0, Errata 29 June
 				 * 2006</a> page 86 and page 139 for further information.
 				 */
-				requestInfos.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			}
+			requestInfo.clearObligations();
 			switch (decision) {
 			case NOT_APPLICABLE:
 				// If the target of the evaluated policy has matched, the
@@ -104,7 +108,7 @@ public class OnlyOneApplicableAlgorithm extends
 				// itself was Applicable and only its rules/inner policy haven't
 				// been
 				// applicable.
-				if (requestInfos.isTargetMatched()) {
+				if (requestInfo.isTargetMatched()) {
 					// If there was already another applicable Evaluatable,
 					// Indeterminate has to be thrown.
 					if (firstApplicableDecision != null) {
@@ -118,8 +122,8 @@ public class OnlyOneApplicableAlgorithm extends
 						 * and the specification of the only-one-applicable
 						 * algorithm for further information.
 						 */
-						requestInfos.resetStatus();
-						requestInfos
+						requestInfo.resetStatus();
+						requestInfo
 								.updateStatusCode(StatusCode.PROCESSING_ERROR);
 						return DecisionType.INDETERMINATE;
 					}
@@ -128,8 +132,8 @@ public class OnlyOneApplicableAlgorithm extends
 					 * remembered including the status code and the missing
 					 * attribute data.
 					 */
-					statusCode = requestInfos.getStatusCode();
-					missingAttributes = requestInfos.getMissingAttributes();
+					statusCode = requestInfo.getStatusCode();
+					missingAttributes = requestInfo.getMissingAttributes();
 					firstApplicableDecision = decision;
 				}
 				break;
@@ -142,12 +146,8 @@ public class OnlyOneApplicableAlgorithm extends
 				 */
 				if (firstApplicableDecision == null) {
 					firstApplicableDecision = decision;
-					if(decision.equals(DecisionType.DENY) || decision.equals(DecisionType.PERMIT)){
-						obligationsOfFirstApplicableEval = eval.getObligations(EffectType.valueOf(decision.value().toUpperCase()));
-						obligationsOfFirstApplicableEval.addAll(requestInfos.getObligations().getObligations());
-					}
-					statusCode = requestInfos.getStatusCode();
-					missingAttributes = requestInfos.getMissingAttributes();
+					statusCode = requestInfo.getStatusCode();
+					missingAttributes = requestInfo.getMissingAttributes();
 				} else {
 					/*
 					 * When indeterminate is returned, it has to be sure that
@@ -158,8 +158,8 @@ public class OnlyOneApplicableAlgorithm extends
 					 * page 86 and page 139 and the specification of the
 					 * only-one-applicable algorithm for further information.
 					 */
-					requestInfos.resetStatus();
-					requestInfos.updateStatusCode(StatusCode.PROCESSING_ERROR);
+					requestInfo.resetStatus();
+					requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
 					return DecisionType.INDETERMINATE;
 				}
 				break;
@@ -172,13 +172,14 @@ public class OnlyOneApplicableAlgorithm extends
 		 * of the decision. Or if the policy is not applicable it has to be sure
 		 * that no chances of the state have been made.
 		 */
-		requestInfos.resetStatus();
+		requestInfo.resetStatus();
 		if (firstApplicableDecision != null) {
-			requestInfos.setMissingAttributes(missingAttributes);
-			requestInfos.updateStatusCode(statusCode);
-			if(firstApplicableDecision.equals(DecisionType.DENY) || firstApplicableDecision.equals(DecisionType.PERMIT)){
-				reviseObligations(requestInfos.getObligations(), EffectType.valueOf(firstApplicableDecision.value().toUpperCase())); //Revising the Obligations to keep the PERMIT or the DENY Obligations (depending on the decision)
-				requestInfos.replaceObligations(obligationsOfFirstApplicableEval); //the list can only contain Obligations if the decision is PERMIT or DENY.
+			requestInfo.setMissingAttributes(missingAttributes);
+			requestInfo.updateStatusCode(statusCode);
+			if(firstApplicableDecision == DecisionType.DENY){
+				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.DENY);
+			} else if(firstApplicableDecision == DecisionType.PERMIT){
+				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.PERMIT);
 			}
 			return firstApplicableDecision;
 		}
