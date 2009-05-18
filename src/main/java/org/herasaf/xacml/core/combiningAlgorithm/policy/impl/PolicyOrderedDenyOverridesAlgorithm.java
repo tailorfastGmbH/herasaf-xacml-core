@@ -133,6 +133,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 		}
 		
 		if(atLeastOneDeny){
+			requestInfo.resetStatus();
 			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY); // To filter all PERMIT-Obligations that were collected so far
 			return DecisionType.DENY;
 		}

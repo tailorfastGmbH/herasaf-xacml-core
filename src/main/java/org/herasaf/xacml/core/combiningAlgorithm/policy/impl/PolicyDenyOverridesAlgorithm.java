@@ -133,6 +133,7 @@ public class PolicyDenyOverridesAlgorithm extends
 		}
 		
 		if(atLeastOneDeny){
+			requestInfo.resetStatus();
 			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY); 
 			return DecisionType.DENY;
 		}

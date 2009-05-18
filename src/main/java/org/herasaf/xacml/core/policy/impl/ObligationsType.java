@@ -89,4 +89,12 @@ public class ObligationsType
         }
         return this.obligations;
     }
+    
+    @Override
+    public String toString(){
+    	StringBuilder val = new StringBuilder("ObligationsType[obligations=");
+    	val.append(obligations);
+    	val.append("]");
+    	return val.toString();
+    }
 }

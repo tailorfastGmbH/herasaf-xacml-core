@@ -240,16 +240,17 @@ public class RequestInformation {
 	 * @param effect The Obligation's {@link EffectType} that should be kept.
 	 */
 	
-	public void addObligations(List<ObligationType> obligations, EffectType effect){
-			for(int i = 0; i < obligations.size(); i++){
-				ObligationType obl = obligations.get(i);
-				if(!obl.getFulfillOn().equals(effect)){
-					obligations.remove(i);
-					i--;
-				}
-			}
+	public void addObligations(final List<ObligationType> obligations, final EffectType effect){
+		List<ObligationType> obls = new ArrayList<ObligationType>();
 		
-		this.obligations.getObligations().addAll(obligations);
+		for(int i = 0; i < obligations.size(); i++){
+			ObligationType obl = obligations.get(i);
+			if(obl.getFulfillOn().equals(effect)){
+				obls.add(obl);
+			}
+		}
+		
+		this.obligations.getObligations().addAll(obls);
 	}
 	
 	public void clearObligations(){
@@ -263,5 +264,28 @@ public class RequestInformation {
 	 */
 	public ObligationsType getObligations(){
 		return obligations;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		StringBuilder stringValue = new StringBuilder("RequestInformation[");
+		stringValue.append("attributeFinder=");
+		stringValue.append(attributeFinder);
+		stringValue.append(", statusCode=");
+		stringValue.append(statusCode);
+		stringValue.append(", missingAttributes=");
+		stringValue.append(missingAttributes);
+		stringValue.append(", targetMatched=");
+		stringValue.append(this.targetMatched);
+		stringValue.append(", variableDefinitions=");
+		stringValue.append(variableDefinitions);
+		stringValue.append(", obligations=");
+		stringValue.append(obligations);
+		stringValue.append("]");
+
+		return stringValue.toString();
 	}
 }

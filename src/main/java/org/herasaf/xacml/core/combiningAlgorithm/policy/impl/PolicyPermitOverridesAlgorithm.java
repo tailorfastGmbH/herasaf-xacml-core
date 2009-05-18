@@ -161,7 +161,7 @@ public class PolicyPermitOverridesAlgorithm extends
 			// The obligationsOfApplicableEvals may not be revised because it can only contain DENY-Obligations.
 			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 			requestInfo.setMissingAttributes(missingAttributes);
-			requestInfo.updateStatusCode(statusCodes);
+			requestInfo.resetStatus();
 			return DecisionType.DENY;
 		}
 		else if (atLeastOneError) {
