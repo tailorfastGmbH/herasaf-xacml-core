@@ -39,11 +39,11 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 /**
  * <p>
  * Java class for SubjectAttributeDesignatorType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;SubjectAttributeDesignatorType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -53,10 +53,12 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 62, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 62, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  */
@@ -72,9 +74,9 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType
 
 	/**
 	 * Gets the value of the subjectCategory property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getSubjectCategory() {
 		if (subjectCategory == null) {
@@ -85,10 +87,10 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType
 
 	/**
 	 * Sets the value of the subjectCategory property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setSubjectCategory(String value) {
 		this.subjectCategory = value;
@@ -96,13 +98,13 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.Map)
+	 * 
+	 * @see
+	 * org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf
+	 * .core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo)
+	public Object handle(RequestType request, RequestInformation reqInfo)
 			throws ExpressionProcessingException, MissingAttributeException,
 			SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
@@ -119,10 +121,12 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType
 									attr.getDataType().toString())) {
 						if (issuer != null) {
 							if (issuer.equals(attr.getIssuer())) {
-								addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+								addAndConvertAttrValue(returnValues, attr
+										.getAttributeValues());
 							}
 						} else {
-							addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+							addAndConvertAttrValue(returnValues, attr
+									.getAttributeValues());
 						}
 					}
 				}
@@ -131,15 +135,15 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType
 		/*
 		 * If no Attribute could be found, the attribute has to be requested
 		 * from a Policy Information Point.
-		 *
+		 * 
 		 * See: the OASIS eXtensible Access Control Markup Langugage (XACML)
 		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
 		 * further information.
 		 */
-		if (returnValues.size() == 0) {
+		if (returnValues.size() == 0 && reqInfo.getAttributeFinder() != null) {
 			List<AttributeValueType> attrValues = reqInfo.getAttributeFinder()
-					.requestSubjectAttributes(request, attributeId, dataType.toString(),
-							issuer, subjectCategory);
+					.requestSubjectAttributes(request, attributeId,
+							dataType.toString(), issuer, subjectCategory);
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {
