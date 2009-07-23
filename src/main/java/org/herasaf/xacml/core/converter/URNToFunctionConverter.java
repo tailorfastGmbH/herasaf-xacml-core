@@ -23,10 +23,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.function.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a function. The functions are defined in the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * Converts an URN to a function. The functions are defined in the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix A.3, page 105. <br>
  * <br>
@@ -34,13 +36,16 @@ import org.herasaf.xacml.core.function.Function;
  * The setter for this {@link Map} is NOT static. The filling of this
  * {@link Map} takes place through the <a
  * href="http://www.springframework.org/">Springframework</a>.
- *
+ * 
  * @author Sacha Dolski
  * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.1
  * @see Function
  */
 public class URNToFunctionConverter extends XmlAdapter<String, Function> {
+	private final Logger logger = LoggerFactory
+			.getLogger(URNToFunctionConverter.class);
 
 	/**
 	 * Contains all the available functions
@@ -48,38 +53,57 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	static Map<String, Function> functions;
 
 	/**
-	 * Is used by the <a href="http://www.springframework.org/">Springframework</a>
-	 * to fill the static {@link Map} containing the mapping between URNs and
-	 * functions. 
-	 *
+	 * Is used by the <a
+	 * href="http://www.springframework.org/">Springframework</a> to fill the
+	 * static {@link Map} containing the mapping between URNs and functions.
+	 * 
 	 * @param functions
 	 *            The map containing the mapping between URNs and functions.
 	 */
 	public static void setFunctions(Map<String, Function> functions) {
-		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(functions); //ConcurrentHashMap because of concurrent access possible
+		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(
+				functions); // ConcurrentHashMap because of concurrent access
+							// possible
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	 * 
+	 * @see
+	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
 	 */
 	@Override
 	public String marshal(Function function) throws IllegalArgumentException {
-		return function.toString();
+		String functionString;
+		try {
+			functionString = function.toString();
+		} catch (NullPointerException e) {
+			logger.error("Argument function must not be null: ", e);
+			throw new IllegalArgumentException(e);
+		}
+		return functionString;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	 * 
+	 * @see
+	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
 	 */
 	@Override
-	public Function unmarshal(String functionId) throws IllegalArgumentException {
-		Function func = functions.get(functionId);
+	public Function unmarshal(String functionId)
+			throws IllegalArgumentException {
+		Function func;
+		try {
+			func = functions.get(functionId);
+		} catch (NullPointerException e) {
+			logger.error("URNToFunctionConverter not properly initialized.");
+			throw new NotInitializedException(e);
+		}
 		if (func != null) {
 			return func;
 		}
-		throw new IllegalArgumentException("Function " + functionId + " unknown.");
+		throw new IllegalArgumentException("Function " + functionId
+				+ " unknown.");
 	}
 }

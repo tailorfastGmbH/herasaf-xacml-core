@@ -51,6 +51,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  *
  * @author Sacha Dolski
  * @author Stefan Oberholzer
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class OnlyOneApplicableAlgorithm extends
@@ -190,7 +191,7 @@ public class OnlyOneApplicableAlgorithm extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 }

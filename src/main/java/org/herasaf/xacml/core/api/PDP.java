@@ -42,6 +42,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * information.
  * 
  * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public interface PDP {
@@ -54,4 +55,16 @@ public interface PDP {
 	 * @return The {@link ResponseCtx} with the result of the evaluation.
 	 */
 	public ResponseCtx evaluate(RequestCtx request);
+
+	/**
+	 * TODO JAVDOC
+	 * @return
+	 */
+	public PolicyRepository getPolicyRepository();
+
+	/**
+	 *  TODO JAVDOC
+	 * @param policyRepository
+	 */
+	public void setPolicyRepository(PolicyRepository policyRepository);
 }

@@ -49,6 +49,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * </p>
  *
  * @author Stefan Oberholzer
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class PolicyOrderedPermitOverridesAlgorithm extends
@@ -180,7 +181,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 }

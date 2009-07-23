@@ -23,6 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts an URN to a {@link PolicyCombiningAlgorithm}. The
@@ -38,10 +40,13 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm
  *
  * @author Sacha Dolski
  * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.1
  */
 public class URNToPolicyCombiningAlgorithmConverter extends
 		XmlAdapter<String, PolicyCombiningAlgorithm> {
+	private final Logger logger = LoggerFactory
+	.getLogger(URNToPolicyCombiningAlgorithmConverter.class);
 	static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
 
 	/**
@@ -64,7 +69,15 @@ public class URNToPolicyCombiningAlgorithmConverter extends
 	@Override
 	public String marshal(PolicyCombiningAlgorithm combAlg)
 			throws IllegalArgumentException {
-		return combAlg.toString();
+		String combAlgString;
+		try {
+			combAlgString = combAlg.toString();
+		}
+		catch (NullPointerException e){
+			logger.error("Argument combAlg must not be null: ", e);
+			throw new IllegalArgumentException(e);
+		}
+		return combAlgString;
 	}
 
 	/*
@@ -75,7 +88,14 @@ public class URNToPolicyCombiningAlgorithmConverter extends
 	@Override
 	public PolicyCombiningAlgorithm unmarshal(String combAlgId)
 			throws IllegalArgumentException {
-		PolicyCombiningAlgorithm combAlg = combiningAlgorithms.get(combAlgId);
+		PolicyCombiningAlgorithm combAlg;
+		try {
+			combAlg = combiningAlgorithms.get(combAlgId);
+		}
+		catch (NullPointerException e){
+			logger.error("URNToPolicyCombiningAlgorithmConverter not properly initialized.");
+			throw new NotInitializedException(e);
+		}
 		if (combAlg != null) {
 			return combAlg;
 		}

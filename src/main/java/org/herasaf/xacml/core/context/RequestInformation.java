@@ -35,11 +35,11 @@ import org.herasaf.xacml.core.policy.impl.Variable;
  * and all remote-{@link Evaluatable}s.
  *
  * @author Florian Huonder
- * @version 1.1
+ * @author René Eggenschwiler
+ * @version 1.0
  */
 public class RequestInformation {
 	private AttributeFinder attributeFinder;
-	private Map<String, Evaluatable> remoteEvaluatables;
 	private StatusCode statusCode;
 	private List<MissingAttributeDetailType> missingAttributes;
 	private boolean targetMatched;
@@ -62,24 +62,12 @@ public class RequestInformation {
 	 * @param remoteEvaluatables
 	 *            The {@link Map} of remote-{@link Evaluatable}s.
 	 */
-	public RequestInformation(Map<String, Evaluatable> remoteEvaluatables, AttributeFinder attributeFinder) {
-		this.remoteEvaluatables = remoteEvaluatables;
+	public RequestInformation(AttributeFinder attributeFinder) {
 		this.attributeFinder = attributeFinder;
 		statusCode = StatusCode.OK;
 		missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		targetMatched = true;
 		obligations = objectFactory.createObligationsType();
-	}
-
-	/**
-	 * Returns a single remote {@link Evaluatable}.
-	 *
-	 * @param policyId
-	 *            The Id of the remote {@link Evaluatable} to get.
-	 * @return The remote {@link Evaluatable}.
-	 */
-	public Evaluatable getRemotePolicy(String policyId) {
-		return remoteEvaluatables.get(policyId);
 	}
 
 	/**

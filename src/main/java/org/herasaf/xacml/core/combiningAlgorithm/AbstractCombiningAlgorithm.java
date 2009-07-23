@@ -23,21 +23,27 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.converter.NotInitializedException;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract class for all {@link CombiningAlgorithm}s. It contains the logic
  * for the targetMatch.
  *
  * @author Stefan Oberholzer
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.0
  *
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private static final long serialVersionUID = -5423784677434727360L;
+	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
 	
 	/** If set to true abandoned {@link Evaluatable}s will be included (if possible) in the evaluation. */
@@ -71,16 +77,15 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 		boolean targetMatchDecision;
 		try {
 			targetMatchDecision = targetMatcher.match(request, target, requestInfo);
+		} catch (NullPointerException e){
+			logger.error("TargetMatcher not initialized.", e);
+			throw new NotInitializedException(e);
 		} catch (SyntaxException e) {
 			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			requestInfo.setTargetMatched(false);
 			return DecisionType.INDETERMINATE;
 		} catch (ProcessingException e) {
 			requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
-			requestInfo.setTargetMatched(false);
-			return DecisionType.INDETERMINATE;
-		} catch (NullPointerException e) {
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			requestInfo.setTargetMatched(false);
 			return DecisionType.INDETERMINATE;
 		} catch (MissingAttributeException e) {
@@ -117,5 +122,5 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 * 
 	 * @return The ID of the combining algorithm.
 	 */
-	protected abstract String getCombiningAlgorithmId();
+	public abstract String getCombiningAlgorithmId();
 }

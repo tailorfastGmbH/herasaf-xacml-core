@@ -29,222 +29,209 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.reference.IdReferenceTypeDelegateCombiningAlgorithm;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * <p>Java class for IdReferenceType complex type.
+ * <p>
+ * Java class for IdReferenceType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
- * &lt;complexType name="IdReferenceType">
- *   &lt;simpleContent>
- *     &lt;extension base="&lt;http://www.w3.org/2001/XMLSchema>anyURI">
- *       &lt;attribute name="Version" type="{urn:oasis:names:tc:xacml:2.0:policy:schema:os}VersionMatchType" />
- *       &lt;attribute name="EarliestVersion" type="{urn:oasis:names:tc:xacml:2.0:policy:schema:os}VersionMatchType" />
- *       &lt;attribute name="LatestVersion" type="{urn:oasis:names:tc:xacml:2.0:policy:schema:os}VersionMatchType" />
- *     &lt;/extension>
- *   &lt;/simpleContent>
- * &lt;/complexType>
+ * &lt;complexType name=&quot;IdReferenceType&quot;&gt;
+ *   &lt;simpleContent&gt;
+ *     &lt;extension base=&quot;&lt;http://www.w3.org/2001/XMLSchema&gt;anyURI&quot;&gt;
+ *       &lt;attribute name=&quot;Version&quot; type=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}VersionMatchType&quot; /&gt;
+ *       &lt;attribute name=&quot;EarliestVersion&quot; type=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}VersionMatchType&quot; /&gt;
+ *       &lt;attribute name=&quot;LatestVersion&quot; type=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}VersionMatchType&quot; /&gt;
+ *     &lt;/extension&gt;
+ *   &lt;/simpleContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 51 (PolicySetIdReferenceType)
- * and page 52 (PolicyIdReferenceType), for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 51 (PolicySetIdReferenceType) and page 52
+ * (PolicyIdReferenceType), for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "IdReferenceType", propOrder = {
-    "value"
-})
-public class IdReferenceType implements Serializable, Evaluatable
-{
+@XmlType(name = "IdReferenceType", propOrder = { "value" })
+public class IdReferenceType implements Serializable, Evaluatable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlValue
-    @XmlSchemaType(name = "anyURI")
-    protected String value;
-    @XmlAttribute(name = "Version")
-    protected String version;
-    @XmlAttribute(name = "EarliestVersion")
-    protected String earliestVersion;
-    @XmlAttribute(name = "LatestVersion")
-    protected String latestVersion;
+	@XmlTransient
+	private final static long serialVersionUID = 632768732L;
+	@XmlTransient
+	private final Logger logger = LoggerFactory
+			.getLogger(IdReferenceType.class);
 
-    public IdReferenceType(){
-    	delegateCombiningAlgorihtm = new IdReferenceTypeDelegateCombiningAlgorithm();
-    }
-    
-    @XmlTransient
-    private IdReferenceTypeDelegateCombiningAlgorithm delegateCombiningAlgorihtm = null;
-    /**
-     * Gets the value of the value property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getValue() {
-        return value;
-    }
+	@XmlValue
+	@XmlSchemaType(name = "anyURI")
+	protected String value;
+	@XmlAttribute(name = "Version")
+	protected String version;
+	@XmlAttribute(name = "EarliestVersion")
+	protected String earliestVersion;
+	@XmlAttribute(name = "LatestVersion")
+	protected String latestVersion;
 
-    /**
-     * Sets the value of the value property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setValue(String value) {
-        this.value = value;
-    }
-
-    /**
-     * Gets the value of the version property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getVersion() {
-        return version;
-    }
-
-    /**
-     * Sets the value of the version property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setVersion(String value) {
-        this.version = value;
-    }
-
-    /**
-     * Gets the value of the earliestVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getEarliestVersion() {
-        return earliestVersion;
-    }
-
-    /**
-     * Sets the value of the earliestVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setEarliestVersion(String value) {
-        this.earliestVersion = value;
-    }
-
-    /**
-     * Gets the value of the latestVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getLatestVersion() {
-        return latestVersion;
-    }
-
-    /**
-     * Sets the value of the latestVersion property.
-     * 
-     *     
-     */
-    public void setLatestVersion(String value) {
-        this.latestVersion = value;
-    }
-
-    /**
-     * Gets the CombiningAlgorithmn of the idReferencetype which delegate to the 
-     * delegated evaluatable.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-	public CombiningAlgorithm getCombiningAlg() {
-		return delegateCombiningAlgorihtm;
+	/**
+	 * Gets the value of the value property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getValue() {
+		return value;
 	}
-	 /**
-     * IllegalAccess
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+
+	/**
+	 * Sets the value of the value property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	/**
+	 * Gets the value of the version property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getVersion() {
+		return version;
+	}
+
+	/**
+	 * Sets the value of the version property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setVersion(String value) {
+		this.version = value;
+	}
+
+	/**
+	 * Gets the value of the earliestVersion property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getEarliestVersion() {
+		return earliestVersion;
+	}
+
+	/**
+	 * Sets the value of the earliestVersion property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setEarliestVersion(String value) {
+		this.earliestVersion = value;
+	}
+
+	/**
+	 * Gets the value of the latestVersion property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getLatestVersion() {
+		return latestVersion;
+	}
+
+	/**
+	 * Sets the value of the latestVersion property.
+	 * 
+	 * 
+	 */
+	public void setLatestVersion(String value) {
+		this.latestVersion = value;
+	}
+
+	/**
+	 * Gets the CombiningAlgorithmn of the idReferencetype which delegate to the
+	 * delegated evaluatable.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public CombiningAlgorithm getCombiningAlg() {
+		UnsupportedOperationException e = new UnsupportedOperationException(
+				"PolicyReferences are not supported in this version.");
+		logger.warn("PolicyReferences are not supported in this version.", e);
+		throw e;
+	}
+
+	/**
+	 * IllegalAccess
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
 	public EvaluatableID getId() {
 		return new EvaluatableIDImpl(value);
 	}
-	 /**
-     * IllegalAccess
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+
+	/**
+	 * IllegalAccess
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
 	public TargetType getTarget() {
-		throw new IllegalAccessError();
+		UnsupportedOperationException e = new UnsupportedOperationException(
+				"PolicyReferences are not supported in this version.");
+		logger.warn("PolicyReferences are not supported in this version.", e);
+		throw e;
 	}
 
-	 /**
-     * Sets the DelegateCombiningAlgorithm which can delegate the evaluate method 
-     * in the combining algorithm.
-     * 
-     *     
-     */
-	public void setDelegateCombiningAlgorihtm(
-			IdReferenceTypeDelegateCombiningAlgorithm delegateCombiningAlgorihtm) {
-		this.delegateCombiningAlgorihtm = delegateCombiningAlgorihtm;
-	}
-
-
-	 /**
-     * IllegalAccess
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
+	/**
+	 * IllegalAccess
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
 	public String getEvalutableVersion() {
-		throw new IllegalAccessError();
+		UnsupportedOperationException e = new UnsupportedOperationException(
+				"PolicyReferences are not supported in this version.");
+		logger.warn("PolicyReferences are not supported in this version.", e);
+		throw e;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public boolean hasObligations() {
-		return true; //Returns always true because it cannot be determined if a remote Policy contains Obligations.
+		return true; // Returns always true because it cannot be determined if a
+		// remote Policy contains Obligations.
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public List<ObligationType> getContainedObligations(EffectType effect) {
-		throw new IllegalAccessError();
-	}	
+		UnsupportedOperationException e = new UnsupportedOperationException(
+				"PolicyReferences are not supported in this version.");
+		logger.warn("PolicyReferences are not supported in this version.", e);
+		throw e;
+	}
 }

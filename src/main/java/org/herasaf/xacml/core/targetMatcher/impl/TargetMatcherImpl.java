@@ -28,6 +28,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.ActionType;
 import org.herasaf.xacml.core.policy.impl.ActionsType;
 import org.herasaf.xacml.core.policy.impl.AttributeDesignatorType;
+import org.herasaf.xacml.core.policy.impl.AttributeValueType;
 import org.herasaf.xacml.core.policy.impl.EnvironmentType;
 import org.herasaf.xacml.core.policy.impl.EnvironmentsType;
 import org.herasaf.xacml.core.policy.impl.Match;
@@ -42,6 +43,7 @@ import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
  * Implementation of the {@link TargetMatcher} interface.
  *
  * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class TargetMatcherImpl implements TargetMatcher {
@@ -209,11 +211,11 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 79 (Match evaluation, line 3371).
-				matchMatches = (Boolean) matchFunction.handle(designator
-						.getDataType().convertTo(
-								(String) match.getAttributeValue().getContent()
+				AttributeValueType policyAttributeValue = match.getAttributeValue();
+				matchMatches = (Boolean) matchFunction.handle(policyAttributeValue.getDataType().convertTo(
+								(String) policyAttributeValue.getContent()
 										.get(0)), requestAttributeValue);
-
+				
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request
 				// than the match is true and no more processing is needed

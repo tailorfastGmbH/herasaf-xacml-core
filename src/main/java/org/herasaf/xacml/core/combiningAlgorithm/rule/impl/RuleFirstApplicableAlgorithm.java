@@ -43,7 +43,9 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * 2006</a> page 137, for further information.
  * </p>
  *
+ * @author Florian Huonder
  * @author Stefan Oberholzer
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class RuleFirstApplicableAlgorithm extends
@@ -57,7 +59,7 @@ public class RuleFirstApplicableAlgorithm extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 	

@@ -48,6 +48,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * </p>
  * 
  * @author Stefan Oberholzer
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class PolicyFirstApplicableAlgorithm extends
@@ -118,7 +119,7 @@ public class PolicyFirstApplicableAlgorithm extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 }

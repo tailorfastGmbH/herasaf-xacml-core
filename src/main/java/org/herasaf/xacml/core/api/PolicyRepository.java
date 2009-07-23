@@ -18,16 +18,21 @@
 package org.herasaf.xacml.core.api;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.herasaf.xacml.core.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
 /**
  * The {@link PolicyRepository} 
  * TODO JAVADOC!!!!
+ * 
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  */
 public interface PolicyRepository {
 
@@ -39,6 +44,12 @@ public interface PolicyRepository {
 	 * @throws EvaluatableNotFoundException Thrown if the {@link Evaluatable} cannot be found.
 	 */
 	public Evaluatable getEvaluatable(EvaluatableID id)
+			throws PolicyRepositoryException;
+	
+	/**
+	 * TODO JAVADOC!!!!!!!!!
+	 */
+	public List<Evaluatable> getEvaluatables(RequestCtx requestCtx)
 			throws PolicyRepositoryException;
 
 	/**
@@ -52,7 +63,7 @@ public interface PolicyRepository {
 	 * @throws SyntaxException 
 	 */
 	void deploy(Collection<Evaluatable> evaluatables)
-			throws PolicyRepositoryException, SyntaxException;
+			throws PolicyRepositoryException;
 
 	/**
 	 * Deploys the given {@link Evaluatable} to this {@link PolicyRepository}.
@@ -63,7 +74,7 @@ public interface PolicyRepository {
 	 * @throws DataIntegrityException
 	 * @throws SyntaxException 
 	 */
-	void deploy(Evaluatable evaluatable) throws PolicyRepositoryException, SyntaxException;
+	void deploy(Evaluatable evaluatable) throws PolicyRepositoryException;
 
 	/**
 	 * Undeploys the {@link Evaluatable} identified by the given id.

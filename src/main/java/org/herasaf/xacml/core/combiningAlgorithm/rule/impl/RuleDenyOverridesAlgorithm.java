@@ -49,6 +49,7 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  *
  * @author Sacha Dolski
  * @author Stefan Oberholzer
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm {
@@ -62,7 +63,7 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 	

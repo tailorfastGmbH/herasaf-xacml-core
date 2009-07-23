@@ -23,6 +23,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Converts an URN to a data type. The data types are defined in the <a
@@ -37,9 +39,13 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  *
  * @author Sacha Dolski
  * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.1
  */
 public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute<?>> {
+	private final Logger logger = LoggerFactory
+	.getLogger(URNToDataTypeConverter.class);
+	
 	static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
 	/**
@@ -63,7 +69,15 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	@Override
 	public String marshal(DataTypeAttribute<?> dataTypeAttr)
 			throws IllegalArgumentException {
-		return dataTypeAttr.toString();
+		String dataTypeAttrString;
+		try {
+			dataTypeAttrString = dataTypeAttr.toString();
+		}
+		catch (NullPointerException e){
+			logger.error("Argument dataTypeAttr must not be null: ", e);
+			throw new IllegalArgumentException(e);
+		}
+		return dataTypeAttrString;
 	}
 
 	/*
@@ -74,7 +88,14 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	@Override
 	public DataTypeAttribute<?> unmarshal(String dataTypeId)
 			throws IllegalArgumentException {
-		DataTypeAttribute<?> dta = dataTypeAttributes.get(dataTypeId);
+		DataTypeAttribute<?> dta;
+		try {
+			dta = dataTypeAttributes.get(dataTypeId);
+		}
+		catch (NullPointerException e){
+			logger.error("URNToDataTypeConverter not properly initialized.");
+			throw new NotInitializedException(e);
+		}
 		if (dta != null) {
 			return dta;
 		}

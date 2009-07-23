@@ -48,6 +48,8 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * </p>
  * 
  * @author Stefan Oberholzer
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class RulePermitOverridesAlgorithm extends
@@ -60,7 +62,7 @@ public class RulePermitOverridesAlgorithm extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
 	
