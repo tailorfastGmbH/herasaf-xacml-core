@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -74,7 +75,9 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * 
  * @version 1.0
  * @author <i>generated</i>
+ * @author Florian Huonder
  */
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults",
 		"target", "additionalInformation", "obligations" })
