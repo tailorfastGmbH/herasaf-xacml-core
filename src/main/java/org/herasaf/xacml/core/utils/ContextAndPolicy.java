@@ -21,28 +21,36 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
+import org.herasaf.xacml.core.NotInitializedException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- * Singleton which creates and configures the {@link Marshaller}s and {@link Unmarshaller}s.
+ * Singleton which creates and configures the {@link Marshaller}s and
+ * {@link Unmarshaller}s.
  * 
- * The marshaller and unmarshaller configuration is saved in {@link ContextAndPolicyConfiguration}
- * instances.
+ * The marshaller and unmarshaller configuration is saved in
+ * {@link ContextAndPolicyConfiguration} instances.
  * 
  * 
  * @author Stefan Oberholzer (soberhol@hsr.ch)
  * @version 1.0
  */
 public class ContextAndPolicy {
+	private static final Logger logger = LoggerFactory
+			.getLogger(ContextAndPolicy.class);
+
 	/**
 	 * This enum contains the possible {@link JAXBProfile}s.
-	 *
-	 * @author Florian Huonder 
+	 * 
+	 * @author Florian Huonder
 	 * @version 1.0
 	 */
 	public enum JAXBProfile {
 		/**
 		 * Represents the policy profile should be loaded.
 		 */
-		POLICY, 
+		POLICY,
 		/**
 		 * Represents the response profile should be loaded.
 		 */
@@ -60,7 +68,8 @@ public class ContextAndPolicy {
 	/**
 	 * Returns the marshaller for the given context.
 	 * 
-	 * @param profile The {@link JAXBProfile} of the {@link Marshaller}.
+	 * @param profile
+	 *            The {@link JAXBProfile} of the {@link Marshaller}.
 	 * @return The obtained marshaller.
 	 * @throws JAXBException
 	 */
@@ -85,10 +94,19 @@ public class ContextAndPolicy {
 		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, conf.isFragment());
 
 		if (conf.isWriteSchemaLocation()) {
+			if (conf.getSchemaLocationAsString().equals("")) {
+				logger.error("SchemaLocation not initialized.");
+				throw new NotInitializedException(
+						"SchemaLocation not initialized.");
+			}
 			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, conf
 					.getSchemaLocationAsString());
 		}
 		if (conf.isValidateWriting()) {
+			if (conf.getSchema() == null) {
+				logger.error("Schema not initialized.");
+				throw new NotInitializedException("Schema not initialized");
+			}
 			marshaller.setSchema(conf.getSchema());
 		}
 		return marshaller;
@@ -97,7 +115,8 @@ public class ContextAndPolicy {
 	/**
 	 * Returns the unmarshaller for the given context.
 	 * 
-	 * @param profile The {@link JAXBProfile} of the {@link Unmarshaller}.
+	 * @param profile
+	 *            The {@link JAXBProfile} of the {@link Unmarshaller}.
 	 * @return The obtained unmarshaller.
 	 * @throws JAXBException
 	 */
@@ -126,7 +145,7 @@ public class ContextAndPolicy {
 	/**
 	 * Returns the {@link ContextAndPolicyConfiguration} of the policy profile.
 	 * 
-	 * @return The {@link ContextAndPolicyConfiguration} of the policy profile. 
+	 * @return The {@link ContextAndPolicyConfiguration} of the policy profile.
 	 */
 	public static ContextAndPolicyConfiguration getPolicyProfile() {
 		return policyProfile;
@@ -135,16 +154,19 @@ public class ContextAndPolicy {
 	/**
 	 * Sets the {@link ContextAndPolicyConfiguration} for the policy profile.
 	 * 
-	 * @param policyProfile The {@link ContextAndPolicyConfiguration} for the policy profile.
+	 * @param policyProfile
+	 *            The {@link ContextAndPolicyConfiguration} for the policy
+	 *            profile.
 	 */
-	public static void setPolicyProfile(ContextAndPolicyConfiguration policyProfile) {
+	public static void setPolicyProfile(
+			ContextAndPolicyConfiguration policyProfile) {
 		ContextAndPolicy.policyProfile = policyProfile;
 	}
 
 	/**
 	 * Returns the {@link ContextAndPolicyConfiguration} of the request profile.
 	 * 
-	 * @return The {@link ContextAndPolicyConfiguration} of the request profile. 
+	 * @return The {@link ContextAndPolicyConfiguration} of the request profile.
 	 */
 	public static ContextAndPolicyConfiguration getRequestCtxProfile() {
 		return requestCtxProfile;
@@ -153,16 +175,21 @@ public class ContextAndPolicy {
 	/**
 	 * Sets the {@link ContextAndPolicyConfiguration} for the request profile.
 	 * 
-	 * @param requestCtxProfile The {@link ContextAndPolicyConfiguration} for the request profile.
+	 * @param requestCtxProfile
+	 *            The {@link ContextAndPolicyConfiguration} for the request
+	 *            profile.
 	 */
-	public static void setRequestCtxProfile(ContextAndPolicyConfiguration requestCtxProfile) {
+	public static void setRequestCtxProfile(
+			ContextAndPolicyConfiguration requestCtxProfile) {
 		ContextAndPolicy.requestCtxProfile = requestCtxProfile;
 	}
 
 	/**
-	 * Returns the {@link ContextAndPolicyConfiguration} of the response profile.
+	 * Returns the {@link ContextAndPolicyConfiguration} of the response
+	 * profile.
 	 * 
-	 * @return The {@link ContextAndPolicyConfiguration} of the response profile. 
+	 * @return The {@link ContextAndPolicyConfiguration} of the response
+	 *         profile.
 	 */
 	public static ContextAndPolicyConfiguration getResponseCtxProfile() {
 		return responseCtxProfile;
@@ -171,9 +198,12 @@ public class ContextAndPolicy {
 	/**
 	 * Sets the {@link ContextAndPolicyConfiguration} for the response profile.
 	 * 
-	 * @param responseCtxProfile The {@link ContextAndPolicyConfiguration} for the response profile.
+	 * @param responseCtxProfile
+	 *            The {@link ContextAndPolicyConfiguration} for the response
+	 *            profile.
 	 */
-	public static void setResponseCtxProfile(ContextAndPolicyConfiguration responseCtxProfile) {
+	public static void setResponseCtxProfile(
+			ContextAndPolicyConfiguration responseCtxProfile) {
 		ContextAndPolicy.responseCtxProfile = responseCtxProfile;
 	}
 }
