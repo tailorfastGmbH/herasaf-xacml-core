@@ -33,7 +33,9 @@ import org.slf4j.LoggerFactory;
  * {@link ContextAndPolicyConfiguration} instances.
  * 
  * 
- * @author Stefan Oberholzer (soberhol@hsr.ch)
+ * @author Stefan Oberholzer
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.0
  */
 public class ContextAndPolicy {

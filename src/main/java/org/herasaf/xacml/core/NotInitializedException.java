@@ -17,11 +17,13 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO JAVADOC!!
+ * This {@link RuntimeException} is thrown when a component needed for
+ * evaluation is not properly initialized.
+ * 
+ * E.g. if the JAXB engine is not configured as expected.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public class NotInitializedException extends RuntimeException {
 	private static final long serialVersionUID = 4169969483147086614L;
@@ -31,22 +33,21 @@ public class NotInitializedException extends RuntimeException {
 	}
 
 	/**
-	 * @param message
-	 * @param cause
+	 * {@inheritDoc}
 	 */
 	public NotInitializedException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * @param message
+	 * {@inheritDoc}
 	 */
 	public NotInitializedException(String message) {
 		super(message);
 	}
 
 	/**
-	 * @param cause
+	 * {@inheritDoc}
 	 */
 	public NotInitializedException(Throwable cause) {
 		super(cause);
