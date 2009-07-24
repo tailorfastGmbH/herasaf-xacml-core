@@ -20,6 +20,7 @@ package org.herasaf.xacml.core.utils;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.ValidationEventHandler;
 
 import org.herasaf.xacml.core.NotInitializedException;
 import org.slf4j.Logger;
@@ -66,6 +67,7 @@ public class ContextAndPolicy {
 	private static ContextAndPolicyConfiguration policyProfile;
 	private static ContextAndPolicyConfiguration requestCtxProfile;
 	private static ContextAndPolicyConfiguration responseCtxProfile;
+	private static ValidationEventHandler validationEventHandler;
 
 	/**
 	 * Returns the marshaller for the given context.
@@ -111,6 +113,11 @@ public class ContextAndPolicy {
 			}
 			marshaller.setSchema(conf.getSchema());
 		}
+		if (validationEventHandler == null) {
+			marshaller.setEventHandler(new DefaultValidationEventHandler());
+		} else {
+			marshaller.setEventHandler(validationEventHandler);
+		}
 		return marshaller;
 	}
 
@@ -140,6 +147,11 @@ public class ContextAndPolicy {
 		Unmarshaller unmarshaller = conf.getContext().createUnmarshaller();
 		if (conf.isValidateParsing()) {
 			unmarshaller.setSchema(conf.getSchema());
+		}
+		if (validationEventHandler == null) {
+			unmarshaller.setEventHandler(new DefaultValidationEventHandler());
+		} else {
+			unmarshaller.setEventHandler(validationEventHandler);
 		}
 		return unmarshaller;
 	}
@@ -207,5 +219,15 @@ public class ContextAndPolicy {
 	public static void setResponseCtxProfile(
 			ContextAndPolicyConfiguration responseCtxProfile) {
 		ContextAndPolicy.responseCtxProfile = responseCtxProfile;
+	}
+	
+	/**
+	 * Set a {@link ValidationEventHandler} for JAXB.
+	 * 
+	 * @param validationEventHandler The {@link ValidationEventHandler} to set.
+	 */
+	public static void setValidationEventHandler(
+			ValidationEventHandler validationEventHandler) {
+		ContextAndPolicy.validationEventHandler = validationEventHandler;
 	}
 }
