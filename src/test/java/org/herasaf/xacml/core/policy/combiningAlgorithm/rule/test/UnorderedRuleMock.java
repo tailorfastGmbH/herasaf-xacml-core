@@ -79,7 +79,7 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return "mockCombiningAlgorithm";
 	}
 }

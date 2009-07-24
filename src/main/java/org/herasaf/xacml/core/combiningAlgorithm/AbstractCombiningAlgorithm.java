@@ -117,5 +117,5 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 * 
 	 * @return The ID of the combining algorithm.
 	 */
-	protected abstract String getCombiningAlgorithmId();
+	public abstract String getCombiningAlgorithmId();
 }
