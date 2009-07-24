@@ -62,7 +62,7 @@
 	</bean>
 
 	<bean id="onlyOneApplicableAlgorithm"
-		class="org.herasaf.xacml.core.combiningAlgorithm.policy.impl.OnlyOneApplicableAlgorithm">
+		class="org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm">
 		<constructor-arg ref="targetMatcher" />
 	</bean>
 

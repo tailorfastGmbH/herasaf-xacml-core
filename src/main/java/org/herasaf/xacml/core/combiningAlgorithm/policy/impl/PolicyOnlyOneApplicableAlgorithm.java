@@ -53,7 +53,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class OnlyOneApplicableAlgorithm extends
+public class PolicyOnlyOneApplicableAlgorithm extends
 		PolicyUnorderedCombiningAlgorithm {
 	private static final long serialVersionUID = 2610413464044117162L;
 	// XACML Name of the Combining Algorithm
