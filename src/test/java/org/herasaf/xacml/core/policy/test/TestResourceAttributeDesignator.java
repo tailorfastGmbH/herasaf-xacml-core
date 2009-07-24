@@ -36,81 +36,72 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.ResourceAttributeDesignatorType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestResourceAttributeDesignator {
-	private RequestInformationFactoryMock requestInformationFactory;
 	RequestInformation reqInfo;
 
 	@BeforeTest
 	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
 
-		reqInfo = requestInformationFactory.createRequestInformation(null, new AttributeFinderMock());
+		reqInfo = new RequestInformation(new AttributeFinderMock());
 	}
-	
+
 	@DataProvider(name = "successfulResourceAttrDesignator")
 	public Object[][] successfulResourceAttrDesignator() {
 		return new Object[][] {
 				new Object[] {
 						initializeRequest(initializeResource("resource-name",
-								new StringDataTypeAttribute(), "hsr", "Fredi", false),
-								initializeResource("resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Hans", false), initializeResource(
-										"resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Fritz", false)),
+								new StringDataTypeAttribute(), "hsr", "Fredi",
+								false), initializeResource("resource-name",
+								new StringDataTypeAttribute(), "hsr", "Hans",
+								false), initializeResource("resource-name",
+								new StringDataTypeAttribute(), "hsr", "Fritz",
+								false)),
 						initializeDesignator("resource-name",
 								new StringDataTypeAttribute(), null, false),
 						initResult("Fredi", "Hans", "Fritz") },
 				new Object[] {
 						initializeRequest(initializeResource("resource-name",
-								new StringDataTypeAttribute(), "hsr", "Fredi", false),
-								initializeResource("resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Hans", false), initializeResource(
-										"resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Fritz", false)),
+								new StringDataTypeAttribute(), "hsr", "Fredi",
+								false), initializeResource("resource-name",
+								new StringDataTypeAttribute(), "hsr", "Hans",
+								false), initializeResource("resource-name",
+								new StringDataTypeAttribute(), "hsr", "Fritz",
+								false)),
 						initializeDesignator("resource-name",
 								new StringDataTypeAttribute(), "hsr", false),
 						initResult("Fredi", "Hans", "Fritz") },
 				new Object[] {
 						initializeRequest(initializeResource("resource-name",
-								new StringDataTypeAttribute(), "hsr", "Hans", false),
-								initializeResource("resource-name",
-										new RFC822NameDataTypeAttribute(),
-										"hsr", "Fredi@gmx.ch", false),
-								initializeResource("resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Fritz", false)),
+								new StringDataTypeAttribute(), "hsr", "Hans",
+								false), initializeResource("resource-name",
+								new RFC822NameDataTypeAttribute(), "hsr",
+								"Fredi@gmx.ch", false), initializeResource(
+								"resource-name", new StringDataTypeAttribute(),
+								"hsr", "Fritz", false)),
 						initializeDesignator("resource-name",
 								new StringDataTypeAttribute(), "hsr", false),
 						initResult("Hans", "Fritz") },
 				new Object[] {
 						initializeRequest(initializeResource("resource-name",
-								new StringDataTypeAttribute(), "hsr", "Fritz", false),
-								initializeResource("resource-name",
-										new RFC822NameDataTypeAttribute(),
-										"hsr", "Hans@hotmail.com", false),
-								initializeResource("resource-name",
-										new StringDataTypeAttribute(), "zhw",
-										"Fredi", false)),
+								new StringDataTypeAttribute(), "hsr", "Fritz",
+								false), initializeResource("resource-name",
+								new RFC822NameDataTypeAttribute(), "hsr",
+								"Hans@hotmail.com", false), initializeResource(
+								"resource-name", new StringDataTypeAttribute(),
+								"zhw", "Fredi", false)),
 						initializeDesignator("resource-name",
 								new RFC822NameDataTypeAttribute(), "hsr", true),
 						initResult("Hans@hotmail.com") },
 				new Object[] {
-						initializeRequest(
-								initializeResource("role",
-										new StringDataTypeAttribute(), "hsr",
-										"Werner", false), initializeResource(
-										"resource-name",
-										new RFC822NameDataTypeAttribute(),
-										"zhw", "Werner@beinhart.de", false),
+						initializeRequest(initializeResource("role",
+								new StringDataTypeAttribute(), "hsr", "Werner",
+								false), initializeResource("resource-name",
+								new RFC822NameDataTypeAttribute(), "zhw",
+								"Werner@beinhart.de", false),
 								initializeResource("resource-name",
 										new StringDataTypeAttribute(), "hsr",
 										"Fridolin", false)),
@@ -126,45 +117,40 @@ public class TestResourceAttributeDesignator {
 		return new Object[][] {
 				new Object[] {
 						initializeRequest(initializeResource("resource-name",
-								new StringDataTypeAttribute(), "hsr", "Fredi", false),
-								initializeResource("resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Hans", false), initializeResource(
-										"resource-name",
-										new StringDataTypeAttribute(), "hsr",
-										"Fritz", false)),
+								new StringDataTypeAttribute(), "hsr", "Fredi",
+								false), initializeResource("resource-name",
+								new StringDataTypeAttribute(), "hsr", "Hans",
+								false), initializeResource("resource-name",
+								new StringDataTypeAttribute(), "hsr", "Fritz",
+								false)),
 						initializeDesignator("resource-name",
 								new RFC822NameDataTypeAttribute(), "hsr", true) },
 				new Object[] {
 						initializeRequest(initializeResource("resource-name",
-								new StringDataTypeAttribute(), "zhw", "Hans", false),
-								initializeResource("resource-name",
-										new RFC822NameDataTypeAttribute(),
-										"hsr", "Fredi@gmx.ch", false),
-								initializeResource("resource",
-										new StringDataTypeAttribute(), "hsr",
-										"Fritz", false)),
+								new StringDataTypeAttribute(), "zhw", "Hans",
+								false), initializeResource("resource-name",
+								new RFC822NameDataTypeAttribute(), "hsr",
+								"Fredi@gmx.ch", false), initializeResource(
+								"resource", new StringDataTypeAttribute(),
+								"hsr", "Fritz", false)),
 						initializeDesignator("resource-name",
 								new StringDataTypeAttribute(), "hsr", true) },
 				new Object[] {
 						initializeRequest(initializeResource("res",
-								new StringDataTypeAttribute(), "hsr", "Fritz", false),
-								initializeResource("subject",
-										new RFC822NameDataTypeAttribute(),
-										"hsr", "Hans@hotmail.com", false),
-								initializeResource("resource-name",
-										new StringDataTypeAttribute(), "zhw",
-										"Fredi", false)),
+								new StringDataTypeAttribute(), "hsr", "Fritz",
+								false), initializeResource("subject",
+								new RFC822NameDataTypeAttribute(), "hsr",
+								"Hans@hotmail.com", false), initializeResource(
+								"resource-name", new StringDataTypeAttribute(),
+								"zhw", "Fredi", false)),
 						initializeDesignator("resource-name",
 								new RFC822NameDataTypeAttribute(), "hsr", true) },
 				new Object[] {
-						initializeRequest(
-								initializeResource("role",
-										new StringDataTypeAttribute(), "hsr",
-										"Werner", false), initializeResource(
-										"resource-name",
-										new RFC822NameDataTypeAttribute(),
-										"zhw", "Werner@beinhart.de", false),
+						initializeRequest(initializeResource("role",
+								new StringDataTypeAttribute(), "hsr", "Werner",
+								false), initializeResource("resource-name",
+								new RFC822NameDataTypeAttribute(), "zhw",
+								"Werner@beinhart.de", false),
 								initializeResource("resource-name",
 										new StringDataTypeAttribute(), "hsr",
 										"Fridolin", false)),
@@ -178,9 +164,10 @@ public class TestResourceAttributeDesignator {
 	@Test(dataProvider = "successfulResourceAttrDesignator")
 	public void testHandle(RequestType req,
 			ResourceAttributeDesignatorType designator, List<Object> result)
-			throws Exception{
+			throws Exception {
 
-		List<Object> returnValue = (List<Object>) designator.handle(req, reqInfo);
+		List<Object> returnValue = (List<Object>) designator.handle(req,
+				reqInfo);
 		assertEquals(returnValue.size(), result.size());
 		for (Object obj : returnValue) {
 			assertTrue(isContained(obj.toString(), result));
@@ -200,9 +187,11 @@ public class TestResourceAttributeDesignator {
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeResourceWithIllegalType(
-				"resource-name", new StringDataTypeAttribute(), "hsr", 1), initializeResourceWithIllegalType(
-						"resource-name", new StringDataTypeAttribute(), "hsr", 1),initializeResourceWithIllegalType(
-								"resource-name", new StringDataTypeAttribute(), "hsr", 1));
+				"resource-name", new StringDataTypeAttribute(), "hsr", 1),
+				initializeResourceWithIllegalType("resource-name",
+						new StringDataTypeAttribute(), "hsr", 1),
+				initializeResourceWithIllegalType("resource-name",
+						new StringDataTypeAttribute(), "hsr", 1));
 		ResourceAttributeDesignatorType designator = initializeDesignator(
 				"resource-name", new StringDataTypeAttribute(), null, false);
 		designator.handle(req, reqInfo);
@@ -210,10 +199,12 @@ public class TestResourceAttributeDesignator {
 
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
-		RequestType req = initializeRequest(initializeResource(
-				"resource-name", new StringDataTypeAttribute(), "hsr", "Fredi", true),initializeResource(
-						"resource-name", new StringDataTypeAttribute(), "hsr", "Fredi", false),initializeResource(
-								"resource-name", new StringDataTypeAttribute(), "hsr", "Fredi", false));
+		RequestType req = initializeRequest(initializeResource("resource-name",
+				new StringDataTypeAttribute(), "hsr", "Fredi", true),
+				initializeResource("resource-name",
+						new StringDataTypeAttribute(), "hsr", "Fredi", false),
+				initializeResource("resource-name",
+						new StringDataTypeAttribute(), "hsr", "Fredi", false));
 		ResourceAttributeDesignatorType designator = initializeDesignator(
 				"resource-name", new StringDataTypeAttribute(), null, false);
 		designator.handle(req, reqInfo);
@@ -240,7 +231,8 @@ public class TestResourceAttributeDesignator {
 	}
 
 	private ResourceType initializeResource(String attrId,
-			DataTypeAttribute<?> dataType, String issuer, String value, boolean multiContent) {
+			DataTypeAttribute<?> dataType, String issuer, String value,
+			boolean multiContent) {
 
 		ResourceType res = new ResourceType();
 
@@ -251,7 +243,7 @@ public class TestResourceAttributeDesignator {
 
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add(value);
-		if(multiContent){
+		if (multiContent) {
 			attrVal.getContent().add(value);
 		}
 

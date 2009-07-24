@@ -18,6 +18,7 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract String getSearchContext();
 
 	protected abstract String getSearchContextPath();
-	
+
 	protected abstract Class<T> getTargetClass();
 
 	private final String CLASS_ENDING = ".class";
@@ -118,12 +119,15 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 			try {
 				Class clazz = Class.forName(className);
+				if (Modifier.isAbstract(clazz.getModifiers())) {
+					continue;
+				}
 				Object instance = clazz.newInstance();
-				try{
+				try {
 					getTargetClass().cast(instance);
 					listOfInstances.add((T) instance);
 				} catch (ClassCastException e) {
-					//nop -- expected
+					// nop -- expected
 				}
 			} catch (ClassNotFoundException e) {
 				logger.error("Unable to load classes.", e);
@@ -146,7 +150,9 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 		try {
 			ClassLoader cl = Thread.currentThread().getContextClassLoader();
-			resourceURLs = cl.getResources(searchContext); // TODO VERIFY behaviour on other OS!!!!
+			resourceURLs = cl.getResources(searchContext); // TODO VERIFY
+															// behaviour on
+															// other OS!!!!
 		} catch (IOException e) {
 			logger.error("Unable to load DataTypeAttributes.", e);
 			throw new InitializationException(e);
@@ -163,11 +169,14 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				throw new InitializationException(e);
 			}
 			File[] allFiles = folder.listFiles();
-			for (int i = 0; i<allFiles.length; i++) {
+			for (int i = 0; i < allFiles.length; i++) {
 				if (allFiles[i].isDirectory()) {
-					files.addAll(collectFiles(searchContext + "/" + allFiles[i].getName()));
+					files.addAll(collectFiles(searchContext + "/"
+							+ allFiles[i].getName()));
 				} else {
-					if (allFiles[i].getName().endsWith(".class") && !allFiles[i].getName().startsWith("Abstract")) {
+					if (allFiles[i].getName().endsWith(".class")
+							&& !allFiles[i].getName().startsWith("Abstract")
+							&& !allFiles[i].getName().contains("Mock")) {
 						files.add(allFiles[i]);
 					}
 				}

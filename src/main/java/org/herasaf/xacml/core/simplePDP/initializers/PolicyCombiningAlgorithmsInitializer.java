@@ -20,9 +20,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
-import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.AbstractPolicyCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
+import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 
@@ -33,18 +33,18 @@ import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
  * @author René Eggenschwiler
  * 
  */
-public class RuleCombiningAlgorithmsInitializer extends
-		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
+public class PolicyCombiningAlgorithmsInitializer extends
+		AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
 
-	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
-	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
-	private final static Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
+	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
+	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
+	private final static Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
 	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
 
 	@Override
 	protected void furtherInitializations(
-			List<AbstractRuleCombiningAlgorithm> instances) {
-		for (AbstractRuleCombiningAlgorithm algorithm : instances) {
+			List<AbstractPolicyCombiningAlgorithm> instances) {
+		for (AbstractPolicyCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
 		}
 	}
@@ -69,7 +69,7 @@ public class RuleCombiningAlgorithmsInitializer extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getURIFromType(AbstractRuleCombiningAlgorithm instance) {
+	protected String getURIFromType(AbstractPolicyCombiningAlgorithm instance) {
 		return instance.getCombiningAlgorithmId();
 	}
 
@@ -78,10 +78,11 @@ public class RuleCombiningAlgorithmsInitializer extends
 	 */
 	@Override
 	protected void setInstancesIntoConverter(
-			Map<String, AbstractRuleCombiningAlgorithm> instancesMap) {
-		Map<String, RuleCombiningAlgorithm> instances = new HashMap<String, RuleCombiningAlgorithm>();
+			Map<String, AbstractPolicyCombiningAlgorithm> instancesMap) {
+		Map<String, PolicyCombiningAlgorithm> instances = new HashMap<String, PolicyCombiningAlgorithm>();
 		instances.putAll(instancesMap);
-		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(instances);
+		URNToPolicyCombiningAlgorithmConverter
+				.setCombiningAlgorithms(instances);
 	}
 
 	/*
@@ -91,7 +92,8 @@ public class RuleCombiningAlgorithmsInitializer extends
 	 * getTargetClass()
 	 */
 	@Override
-	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {
+	protected Class<AbstractPolicyCombiningAlgorithm> getTargetClass() {
 		return TARGET_CLASS;
 	}
+
 }

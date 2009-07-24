@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.slf4j.Logger;
@@ -41,6 +42,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Sacha Dolski
  * @author René Eggenschwiler
+ * @author Florian Huonder
  * @version 1.0
  */
 public class URNToRuleCombiningAlgorithmConverter extends
@@ -78,8 +80,7 @@ public class URNToRuleCombiningAlgorithmConverter extends
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
-		}
-		catch (NullPointerException e){
+		} catch (NullPointerException e) {
 			logger.error("Argument combAlg must not be null: ", e);
 			throw new IllegalArgumentException(e);
 		}
@@ -98,14 +99,15 @@ public class URNToRuleCombiningAlgorithmConverter extends
 		RuleCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);
-		}
-		catch (NullPointerException e){
-			logger.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
+		} catch (NullPointerException e) {
+			logger
+					.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
 			throw new NotInitializedException(e);
 		}
 		if (combAlg != null) {
 			return combAlg;
 		}
-		throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
+		throw new IllegalArgumentException("Combining Algorithm " + combAlgId
+				+ " unknown.");
 	}
 }

@@ -17,13 +17,13 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm;
 
+import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.converter.NotInitializedException;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;

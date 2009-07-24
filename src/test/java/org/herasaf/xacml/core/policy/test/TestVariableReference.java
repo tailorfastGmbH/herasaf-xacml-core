@@ -34,25 +34,21 @@ import org.herasaf.xacml.core.policy.impl.Variable;
 import org.herasaf.xacml.core.policy.impl.VariableDefinitionType;
 import org.herasaf.xacml.core.policy.impl.VariableReferenceType;
 import org.herasaf.xacml.core.policy.impl.VariableValue;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class TestVariableReference {
 	ObjectFactory factory;
-	private RequestInformationFactoryMock requestInformationFactory;
 	
 	@BeforeTest
 	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-
 		factory = new ObjectFactory();
 	}
 
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		Object[] values = new Object[]{"test1", "test2", "test3"};
-		RequestInformation reqInfo = requestInformationFactory.createRequestInformation(null, null);
+		RequestInformation reqInfo = new RequestInformation(null);
 		reqInfo.setVariableDefinitions(initVariableDefinitions(values));
 
 		VariableReferenceType varRef1 = new VariableReferenceType();

@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
+import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

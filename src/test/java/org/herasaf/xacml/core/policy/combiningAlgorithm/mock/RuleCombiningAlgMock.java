@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 
-public class RuleCombiningAlgMock extends RuleCombiningAlgorithm {
+public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	/**
 	 *
 	 */
@@ -95,7 +95,7 @@ public class RuleCombiningAlgMock extends RuleCombiningAlgorithm {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getCombiningAlgorithmId() {
+	public String getCombiningAlgorithmId() {
 		return "mockCombiningAlgorithm";
 	}
 }

@@ -28,6 +28,7 @@ import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.FunctionsInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsInitializer;
 
 /**
@@ -54,7 +55,7 @@ public class SimplePDPFactory {
 			initializers.add(new FunctionsInitializer());
 			initializers.add(new DataTypesInitializer());
 			initializers.add(new RuleCombiningAlgorithmsInitializer());
-			//initializers.add(new PolicyCombiningAlgorithmsInitializer());
+			initializers.add(new PolicyCombiningAlgorithmsInitializer());
 			initializers.add(new ContextAndPolicyInitializer());
 		}
 	}

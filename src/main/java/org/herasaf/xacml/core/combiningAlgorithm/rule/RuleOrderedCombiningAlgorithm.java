@@ -28,7 +28,7 @@ import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * Abstract class for {@link RuleCombiningAlgorithm}s that evalute the rules
+ * Abstract class for {@link AbstractRuleCombiningAlgorithm}s that evalute the rules
  * ordered.
  *
  * @author Stefan Oberholzer
@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  *
  */
 public abstract class RuleOrderedCombiningAlgorithm extends
-		RuleCombiningAlgorithm {
+		AbstractRuleCombiningAlgorithm {
 
 	private static final long serialVersionUID = -60706589402580599L;
 
@@ -86,7 +86,7 @@ public abstract class RuleOrderedCombiningAlgorithm extends
 	 *      java.util.List)
 	 */
 	@Override
-	protected abstract DecisionType evaluateRuleList(RequestType request,
+	public abstract DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possiblePolicies, RequestInformation requestInfos);
 
 }

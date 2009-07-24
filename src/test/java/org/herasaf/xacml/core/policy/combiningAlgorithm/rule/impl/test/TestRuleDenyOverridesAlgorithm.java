@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -38,23 +38,19 @@ import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestRuleDenyOverridesAlgorithm {
-	private RuleCombiningAlgorithm combAlg;
+	private AbstractRuleCombiningAlgorithm combAlg;
 	private TargetMatcherMock targetMatcher;
 	private RuleDenyOverridesAlgorithm[] ruleDenyOverridesAlgorithmWithTRUEDecisionsArray;
 	private RuleDenyOverridesAlgorithm ruleDenyOverridesAlgorithmWithTRUEFALSEDecisions;
-	private RequestInformationFactoryMock requestInformationFactory;
 
 	@BeforeTest
 	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-
 		ruleDenyOverridesAlgorithmWithTRUEDecisionsArray = new RuleDenyOverridesAlgorithm[11];
 		for (int i = 0; i < ruleDenyOverridesAlgorithmWithTRUEDecisionsArray.length; i++) {
 			ruleDenyOverridesAlgorithmWithTRUEDecisionsArray[i] = new RuleDenyOverridesAlgorithm();
@@ -246,14 +242,13 @@ public class TestRuleDenyOverridesAlgorithm {
 
 	@Test(dataProvider = "testData")
 	public void testCombiningAlg(String testID, RuleType[] rulesArray,
-			RuleCombiningAlgorithm alg, DecisionType expectedDecision,
+			AbstractRuleCombiningAlgorithm alg, DecisionType expectedDecision,
 			StatusCode expectedStatusCode, boolean expectMissintAttribute)
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
-		RequestInformation infos = requestInformationFactory
-				.createRequestInformation(references, null);
+		RequestInformation infos = new RequestInformation(null);
 		DecisionType decision = alg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

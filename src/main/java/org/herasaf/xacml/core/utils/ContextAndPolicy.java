@@ -22,7 +22,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.ValidationEventHandler;
 
-import org.herasaf.xacml.core.converter.NotInitializedException;
+import org.herasaf.xacml.core.NotInitializedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

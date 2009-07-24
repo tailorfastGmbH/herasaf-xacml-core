@@ -38,18 +38,10 @@ import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestRuleEvaluation {
-	private RequestInformationFactoryMock requestInformationFactory;
-
-	@BeforeTest
-	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-	}
 
 	@DataProvider(name = "evaluationData")
 	public Object[][] evaluationData() throws Exception {
@@ -317,8 +309,7 @@ public class TestRuleEvaluation {
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
-		RequestInformation info = requestInformationFactory
-				.createRequestInformation(references, null);
+		RequestInformation info = new RequestInformation(null);
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule, info);
 		assertEquals(madeDecision, expectedDecision);
 		assertEquals(info.getStatusCode(), expectedStatusCode);

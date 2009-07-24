@@ -71,7 +71,7 @@ public class RuleFirstApplicableAlgorithm extends
 	 *      java.util.Map)
 	 */
 	@Override
-	protected DecisionType evaluateRuleList(RequestType request,
+	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> rules, RequestInformation requestInfo) {
 
 		for (int i = 0; i < rules.size(); i++) {

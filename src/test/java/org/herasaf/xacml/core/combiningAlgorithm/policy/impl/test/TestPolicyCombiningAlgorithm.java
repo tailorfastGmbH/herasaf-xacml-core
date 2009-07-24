@@ -134,7 +134,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			boolean reqInfReturnesPermitObligation,
 			boolean reqInfReturnesDenyObligation, StatusCode reqInfStatusCode,
 			boolean reqInfTargetMatched) {
-		RequestInformation reqInfo = new RequestInformation(null, null);
+		RequestInformation reqInfo = new RequestInformation(null);
 		reqInfo.setTargetMatched(reqInfTargetMatched);
 		reqInfo.updateStatusCode(reqInfStatusCode);
 		if (reqInfReturnesPermitObligation) {
@@ -259,7 +259,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		RequestInformation reqInfo = new RequestInformation(null, null);
+		RequestInformation reqInfo = new RequestInformation(null);
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);

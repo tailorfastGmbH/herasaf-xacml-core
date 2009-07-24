@@ -19,7 +19,6 @@ package org.herasaf.xacml.core.combiningAlgorithm.policy;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -30,26 +29,29 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
 /**
  * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
  * the included Evaluatables ordered.
- *
+ * 
  * @author Stefan Oberholzer
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  * @version 1.0
- *
+ * 
  */
 public abstract class PolicyOrderedCombiningAlgorithm extends
-		AbstractCombiningAlgorithm implements PolicyCombiningAlgorithm {
+		AbstractPolicyCombiningAlgorithm {
 	private static final long serialVersionUID = 738279366961769108L;
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      org.herasaf.core.policy.impl.Evaluatable,
-	 *      org.herasaf.core.dataTypes.RequestInformation)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf
+	 * .core.context.impl.RequestType, org.herasaf.core.policy.impl.Evaluatable,
+	 * org.herasaf.core.dataTypes.RequestInformation)
 	 */
-	public DecisionType evaluate(RequestType request,
-			Evaluatable evals, RequestInformation requestInfo) {
-		DecisionType decision = matchTarget(request,
-				evals.getTarget(), requestInfo);
+	public DecisionType evaluate(RequestType request, Evaluatable evals,
+			RequestInformation requestInfo) {
+		DecisionType decision = matchTarget(request, evals.getTarget(),
+				requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
@@ -79,12 +81,12 @@ public abstract class PolicyOrderedCombiningAlgorithm extends
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
+	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
-	public abstract DecisionType evaluateEvaluatableList(
-			RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfos);
+	public abstract DecisionType evaluateEvaluatableList(RequestType request,
+			List<Evaluatable> possiblePolicies, RequestInformation requestInfos);
 
 }

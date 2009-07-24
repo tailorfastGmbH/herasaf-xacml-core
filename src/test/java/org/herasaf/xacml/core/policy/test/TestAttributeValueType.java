@@ -19,24 +19,17 @@ package org.herasaf.xacml.core.policy.test;
 
 import static org.testng.Assert.assertEquals;
 
+import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.AttributeValueType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 public class TestAttributeValueType {
 	AttributeValueType attrVal;
-	private RequestInformationFactoryMock requestInformationFactory;	
 
-	@BeforeTest
-	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-	}
-	
 	@BeforeMethod
 	public void beforeMethod() {
 		attrVal = new AttributeValueType();
@@ -48,7 +41,7 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 
 		assertEquals("test", (String) attrVal.handle(new RequestType(),
-				requestInformationFactory.createRequestInformation(null, null)));
+				new RequestInformation(null)));
 	}
 
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
@@ -57,13 +50,13 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 		attrVal.getContent().add("test2");
 
-		attrVal.handle(new RequestType(), requestInformationFactory.createRequestInformation(null, null));
+		attrVal.handle(new RequestType(), new RequestInformation(null));
 	}
 
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add(new Integer("1"));
-		attrVal.handle(new RequestType(), requestInformationFactory.createRequestInformation(null, null));
+		attrVal.handle(new RequestType(), new RequestInformation(null));
 	}
 }

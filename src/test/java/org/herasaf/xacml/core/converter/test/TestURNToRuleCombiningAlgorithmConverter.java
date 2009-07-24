@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
@@ -40,7 +41,7 @@ import org.testng.annotations.Test;
 public class TestURNToRuleCombiningAlgorithmConverter {
 	static final String DENY_OVERRIDES_ID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides";
 	private URNToRuleCombiningAlgorithmConverter converter;
-	private RuleCombiningAlgorithm comAlg;
+	private AbstractRuleCombiningAlgorithm comAlg;
 	private Map<String, RuleCombiningAlgorithm> map;
 
 	@BeforeTest
@@ -66,7 +67,7 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 
 	@Test(enabled = true, expectedExceptions = { IllegalArgumentException.class })
 	public void testConvertException() throws IllegalArgumentException {
-		comAlg = converter.unmarshal("test");
+		comAlg = (AbstractRuleCombiningAlgorithm) converter.unmarshal("test");
 	}
 
 }

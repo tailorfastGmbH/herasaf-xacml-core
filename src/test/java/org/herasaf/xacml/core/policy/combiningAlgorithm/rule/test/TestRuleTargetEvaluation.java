@@ -24,7 +24,7 @@ import static org.testng.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -32,19 +32,11 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test.PolicyTypeMock;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestRuleTargetEvaluation {
-	private RequestInformationFactoryMock requestInformationFactory;	
 
-	@BeforeTest
-	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-	}
-	
 	@DataProvider(name = "TargetEvaluationInput")
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		return new Object[][] {
@@ -78,12 +70,12 @@ public class TestRuleTargetEvaluation {
 	}
 
 	@Test(dataProvider = "TargetEvaluationInput")
-	public void testOrderedRuleTargetEvaluation(RuleCombiningAlgorithm alg,
+	public void testOrderedRuleTargetEvaluation(AbstractRuleCombiningAlgorithm alg,
 			Evaluatable eval, DecisionType expectedDecision,
 			StatusCode expectedStatusCode, boolean missingAttributeExpected) {
 
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
-		RequestInformation infos = requestInformationFactory.createRequestInformation(references,null);
+		RequestInformation infos = new RequestInformation(null);
 		DecisionType decision = alg.evaluate(null, eval, infos);
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

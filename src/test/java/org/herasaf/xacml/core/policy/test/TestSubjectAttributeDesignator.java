@@ -36,21 +36,18 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.SubjectAttributeDesignatorType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestSubjectAttributeDesignator {
-	private RequestInformationFactoryMock requestInformationFactory;
 	RequestInformation reqInfo;
-	
+
 	@BeforeTest
 	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-
-		reqInfo = requestInformationFactory.createRequestInformation(null, new AttributeFinderMock());
+		reqInfo = new RequestInformation(new AttributeFinderMock());
 	}
+
 	@DataProvider(name = "successfulSubjectAttrDesignator")
 	public Object[][] successfulSubjectAttrDesignator() {
 		return new Object[][] {
@@ -71,10 +68,9 @@ public class TestSubjectAttributeDesignator {
 										"subject-role",
 										new StringDataTypeAttribute(), "hsr",
 										"Fritz", false)),
-						initializeDesignator(
-								null,
-								"subject-role", new StringDataTypeAttribute(),
-								null, false), initResult("Fredi", "Hans") },
+						initializeDesignator(null, "subject-role",
+								new StringDataTypeAttribute(), null, false),
+						initResult("Fredi", "Hans") },
 				new Object[] {
 						initializeRequest(
 								initializeSubject(
@@ -92,20 +88,15 @@ public class TestSubjectAttributeDesignator {
 										"subject-role",
 										new StringDataTypeAttribute(), "hsr",
 										"Fritz", false)),
-						initializeDesignator(
-								null,
-								"subject-role", new StringDataTypeAttribute(),
-								"hsr", false), initResult("Fredi", "Hans") },
+						initializeDesignator(null, "subject-role",
+								new StringDataTypeAttribute(), "hsr", false),
+						initResult("Fredi", "Hans") },
 				new Object[] {
 						initializeRequest(
-								initializeSubject(
-										null,
-										"subject-role",
+								initializeSubject(null, "subject-role",
 										new StringDataTypeAttribute(), "hsr",
 										"Fredi", false),
-								initializeSubject(
-										null,
-										"subject-role",
+								initializeSubject(null, "subject-role",
 										new StringDataTypeAttribute(), "hsr",
 										"Hans", false),
 								initializeSubject(
@@ -113,10 +104,9 @@ public class TestSubjectAttributeDesignator {
 										"subject-role",
 										new StringDataTypeAttribute(), "hsr",
 										"Fritz", false)),
-						initializeDesignator(
-								null,
-								"subject-role", new StringDataTypeAttribute(),
-								"hsr", false), initResult("Fredi", "Hans") },
+						initializeDesignator(null, "subject-role",
+								new StringDataTypeAttribute(), "hsr", false),
+						initResult("Fredi", "Hans") },
 				new Object[] {
 						initializeRequest(
 								initializeSubject(
@@ -281,7 +271,8 @@ public class TestSubjectAttributeDesignator {
 			SubjectAttributeDesignatorType designator, List<Object> result)
 			throws Exception {
 
-		List<Object> returnValue = (List<Object>) designator.handle(req, reqInfo);
+		List<Object> returnValue = (List<Object>) designator.handle(req,
+				reqInfo);
 		assertEquals(returnValue.size(), result.size());
 		for (Object obj : returnValue) {
 			assertTrue(isContained(obj.toString(), result));
@@ -300,23 +291,29 @@ public class TestSubjectAttributeDesignator {
 
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
-		RequestType req = initializeRequest(initializeSubjectWithIllegalType("test",
-				"resource-name", new StringDataTypeAttribute(), "hsr", 1), initializeSubjectWithIllegalType(
-						"test","subject-role", new StringDataTypeAttribute(), "hsr", 1),initializeSubjectWithIllegalType(
-								"test","subject-role", new StringDataTypeAttribute(), "hsr", 1));
+		RequestType req = initializeRequest(initializeSubjectWithIllegalType(
+				"test", "resource-name", new StringDataTypeAttribute(), "hsr",
+				1), initializeSubjectWithIllegalType("test", "subject-role",
+				new StringDataTypeAttribute(), "hsr", 1),
+				initializeSubjectWithIllegalType("test", "subject-role",
+						new StringDataTypeAttribute(), "hsr", 1));
 		SubjectAttributeDesignatorType designator = initializeDesignator(
-				"test","subject-role", new StringDataTypeAttribute(), null, false);
+				"test", "subject-role", new StringDataTypeAttribute(), null,
+				false);
 		designator.handle(req, reqInfo);
 	}
 
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
-		RequestType req = initializeRequest(initializeSubject(
-				"test","subject-role", new StringDataTypeAttribute(), "hsr", "Fredi", true),initializeSubject(
-						"test","subject-role", new StringDataTypeAttribute(), "hsr", "Fredi", false),initializeSubject(
-								"test","subject-role", new StringDataTypeAttribute(), "hsr", "Fredi", false));
+		RequestType req = initializeRequest(initializeSubject("test",
+				"subject-role", new StringDataTypeAttribute(), "hsr", "Fredi",
+				true), initializeSubject("test", "subject-role",
+				new StringDataTypeAttribute(), "hsr", "Fredi", false),
+				initializeSubject("test", "subject-role",
+						new StringDataTypeAttribute(), "hsr", "Fredi", false));
 		SubjectAttributeDesignatorType designator = initializeDesignator(
-				"test","subject-role", new StringDataTypeAttribute(), null, false);
+				"test", "subject-role", new StringDataTypeAttribute(), null,
+				false);
 		designator.handle(req, reqInfo);
 	}
 
@@ -343,7 +340,8 @@ public class TestSubjectAttributeDesignator {
 	}
 
 	private SubjectType initializeSubject(String subjCat, String attrId,
-			DataTypeAttribute<?> dataType, String issuer, String value, boolean multiContent) {
+			DataTypeAttribute<?> dataType, String issuer, String value,
+			boolean multiContent) {
 
 		SubjectType sub = new SubjectType();
 		sub.setSubjectCategory(subjCat);
@@ -355,7 +353,7 @@ public class TestSubjectAttributeDesignator {
 
 		AttributeValueType attrVal = new AttributeValueType();
 		attrVal.getContent().add(value);
-		if(multiContent){
+		if (multiContent) {
 			attrVal.getContent().add(value);
 		}
 
@@ -365,8 +363,10 @@ public class TestSubjectAttributeDesignator {
 
 		return sub;
 	}
-	private SubjectType initializeSubjectWithIllegalType(String subjCat, String attrId,
-			DataTypeAttribute<?> dataType, String issuer, Integer value) {
+
+	private SubjectType initializeSubjectWithIllegalType(String subjCat,
+			String attrId, DataTypeAttribute<?> dataType, String issuer,
+			Integer value) {
 
 		SubjectType sub = new SubjectType();
 		sub.setSubjectCategory(subjCat);

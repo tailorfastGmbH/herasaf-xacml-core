@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -103,7 +103,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	@XmlAttribute(name = "RuleCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToRuleCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected RuleCombiningAlgorithm ruleCombiningAlg;
+	protected AbstractRuleCombiningAlgorithm ruleCombiningAlg;
 
 	/**
 	 * Gets the value of the description property.
@@ -269,7 +269,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	 * (non-Javadoc)
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getCombiningAlg()
 	 */
-	public RuleCombiningAlgorithm getCombiningAlg() {
+	public AbstractRuleCombiningAlgorithm getCombiningAlg() {
 		return ruleCombiningAlg;
 	}
 
@@ -279,7 +279,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	 * @param value
 	 *            allowed object is {@link String }
 	 */
-	public void setCombiningAlg(RuleCombiningAlgorithm value) {
+	public void setCombiningAlg(AbstractRuleCombiningAlgorithm value) {
 		this.ruleCombiningAlg = value;
 	}
 

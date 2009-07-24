@@ -33,6 +33,8 @@ import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
@@ -44,25 +46,38 @@ import org.testng.annotations.Test;
  * 
  */
 public class SimplePDPTest {
-
 	private PDP simplePDP;
 
-	// @BeforeTest
-	public void init() {
+	@DataProvider(name = "policy-request-response-combinations")
+	public Object[][] initializeTestCases() throws Exception {
+		return new Object[][] {
+				new Object[] {
+						loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml"),
+						loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
+						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") },
 
+				new Object[] {
+						loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml"),
+						loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
+						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") },
+
+		// TODO
+		// policy with internal ref
+		// policy with external ref
+		};
 	}
 
-	@Test
-	public void testSimplePolicy() throws Exception {
+	@BeforeTest
+	public void init() {
 		SimplePDPFactory.useDefaultInitializers(true);
 		simplePDP = SimplePDPFactory.getSimplePDP();
+	}
 
-		Evaluatable eval = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
+	@Test(dataProvider = "policy-request-response-combinations")
+	public void testSimplePDP(Evaluatable policy, RequestCtx request,
+			ResponseCtx expectedResponse) throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
-		repo.deploy(eval);
-
-		RequestCtx request = loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml");
-		ResponseCtx expectedResponse = loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml");
+		repo.deploy(policy);
 
 		ResponseCtx response = simplePDP.evaluate(request);
 
@@ -79,26 +94,8 @@ public class SimplePDPTest {
 				+ expectedResponse.getResponse().getResults().get(0)
 						.getDecision() + ", but the response was: "
 				+ response.getResponse().getResults().get(0).getDecision());
-	}
 
-	@Test
-	public void testSimplePolicyWithInternalReference() {
-
-	}
-
-	@Test
-	public void testSimplePolicyWithExternalReference() {
-
-	}
-
-	@Test
-	public void testSimplePolicySet() {
-
-	}
-
-	@Test
-	public void testMalformedPolicy() {
-
+		repo.undeploy(policy.getId());
 	}
 
 	private Evaluatable loadPolicy(String file) throws SyntaxException {

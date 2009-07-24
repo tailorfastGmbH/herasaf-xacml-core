@@ -36,21 +36,16 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.ActionAttributeDesignatorType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestActionAttributeDesignator {
-	private RequestInformationFactoryMock requestInformationFactory;
 	RequestInformation reqInfo;
 
 	@BeforeTest
 	public void init() {
-		requestInformationFactory = new RequestInformationFactoryMock();
-		
-		reqInfo = requestInformationFactory.createRequestInformation(null,
-				new AttributeFinderMock());
+		reqInfo = new RequestInformation(new AttributeFinderMock());
 	}
 
 	@DataProvider(name = "successfulActionAttrDesignator")
