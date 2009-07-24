@@ -304,6 +304,7 @@ public class TestTargetMatcher extends AbstractTestNGSpringContextTests{
 
 		AttributeValueType attrValue = new AttributeValueType();
 		attrValue.getContent().add(MATCH);
+		attrValue.setDataType(new StringDataTypeAttribute());
 		smt.setAttributeValue(attrValue);
 		rmt.setAttributeValue(attrValue);
 		amt.setAttributeValue(attrValue);
