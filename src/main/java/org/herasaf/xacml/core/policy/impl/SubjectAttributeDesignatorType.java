@@ -136,7 +136,7 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType
 		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
 		 * further information.
 		 */
-		if (returnValues.size() == 0) {
+		if (returnValues.size() == 0 && reqInfo.getAttributeFinder() != null) {
 			List<AttributeValueType> attrValues = reqInfo.getAttributeFinder()
 					.requestSubjectAttributes(request, attributeId, dataType.toString(),
 							issuer, subjectCategory);
