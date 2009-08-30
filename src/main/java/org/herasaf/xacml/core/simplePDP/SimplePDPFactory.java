@@ -23,7 +23,7 @@ import java.util.List;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.OnlyOneApplicableAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
 import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.FunctionsInitializer;
@@ -91,7 +91,7 @@ public class SimplePDPFactory {
 	 * @return
 	 */
 	public static PDP getSimplePDP() {
-		return getSimplePDP(new OnlyOneApplicableAlgorithm(),
+		return getSimplePDP(new PolicyOnlyOneApplicableAlgorithm(),
 				new MapBasedSimplePolicyRepository());
 	}
 

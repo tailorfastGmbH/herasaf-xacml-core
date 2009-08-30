@@ -151,8 +151,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 		try {
 			ClassLoader cl = Thread.currentThread().getContextClassLoader();
 			resourceURLs = cl.getResources(searchContext); // TODO VERIFY
-															// behaviour on
-															// other OS!!!!
+			// behaviour on
+			// other OS!!!!
 		} catch (IOException e) {
 			logger.error("Unable to load DataTypeAttributes.", e);
 			throw new InitializationException(e);
@@ -176,7 +176,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				} else {
 					if (allFiles[i].getName().endsWith(".class")
 							&& !allFiles[i].getName().startsWith("Abstract")
-							&& !allFiles[i].getName().contains("Mock")) {
+							&& !allFiles[i].getName().contains("Mock")
+							&& !allFiles[i].getName().contains("$") /*a anonymous inner class ends with a $. E.g.: House$1.class*/) {
 						files.add(allFiles[i]);
 					}
 				}

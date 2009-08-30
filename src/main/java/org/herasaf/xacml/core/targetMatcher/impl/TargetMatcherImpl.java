@@ -38,60 +38,81 @@ import org.herasaf.xacml.core.policy.impl.SubjectType;
 import org.herasaf.xacml.core.policy.impl.SubjectsType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implementation of the {@link TargetMatcher} interface.
- *
+ * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  * @version 1.0
  */
 public class TargetMatcherImpl implements TargetMatcher {
-	/**
-	 *
-	 */
+	private final Logger logger = LoggerFactory
+			.getLogger(TargetMatcherImpl.class);
 	private static final long serialVersionUID = 9099144198373918560L;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.targetMatcher.TargetMatcher#match(org.herasaf.core.context.impl.RequestType,
-	 *      org.herasaf.core.policy.impl.TargetType)
+	/**
+	 * {@inheritDoc}
 	 */
-	public boolean match(RequestType request, TargetType target, RequestInformation reqInfo)
-			throws SyntaxException, ProcessingException, MissingAttributeException {
+	public boolean match(RequestType request, TargetType target,
+			RequestInformation reqInfo) throws SyntaxException,
+			ProcessingException, MissingAttributeException {
 		if (target != null) {
 			boolean subjectsMatches = subjectsMatch(target.getSubjects(),
 					request, reqInfo);
+			logger.debug("Request meets subject target requirements: {}",
+					subjectsMatches);
+			if (!subjectsMatches) {
+				return false;
+			}
+
 			boolean resourcesMatches = resourcesMatch(target.getResources(),
 					request, reqInfo);
-			boolean actionsMatches = actionMatch(target.getActions(), request, reqInfo);
+			logger.debug("Request meets resource target requirements: {}",
+					resourcesMatches);
+			if (!resourcesMatches) {
+				return false;
+			}
+
+			boolean actionsMatches = actionMatch(target.getActions(), request,
+					reqInfo);
+			logger.debug("Request meets action target requirements: {}",
+					actionsMatches);
+			if (!actionsMatches) {
+				return false;
+			}
+
 			boolean environmentsMatches = environmentMatch(target
 					.getEnvironments(), request, reqInfo);
-
-			// Each of the elements subjects, resources, actions and
-			// environments
-			// must return true that the target matches.
-			//
-			// This part references OASIS eXtensible Access Control Markup
-			// Langugage
-			// (XACML) 2.0, Errata 29 June 2006
-			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-			// on page 45 (5.5).
-			return subjectsMatches && resourcesMatches && actionsMatches
-					&& environmentsMatches;
+			logger.debug("Request meets environment target requirements: {}",
+					environmentsMatches);
+			if (!environmentsMatches) {
+				return false;
+			}
 		}
+		// If there was no target, or all the subjects, resources, actions, and
+		// environments matched
+		// then the overall target is considered a match.
+		//
+		// This part references OASIS eXtensible Access Control Markup Language
+		// (XACML) 2.0, Errata 29 June 2006
+		// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
+		// on page 45 (5.5).
 		return true;
 	}
 
-	private boolean subjectsMatch(SubjectsType subjects, RequestType request, RequestInformation reqInfo)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	private boolean subjectsMatch(SubjectsType subjects, RequestType request,
+			RequestInformation reqInfo) throws ProcessingException,
+			SyntaxException, MissingAttributeException {
 		if (subjects == null) {
 			return true;
 		}
 		for (int i = 0; i < subjects.getSubjects().size(); i++) {
 			SubjectType targetSubject = subjects.getSubjects().get(i);
-			boolean matches = match(targetSubject.getSubjectMatches(), request, reqInfo);
+			boolean matches = match(targetSubject.getSubjectMatches(), request,
+					reqInfo);
 			if (matches) {
 				// If one subject matches the subjects matches and returns true.
 				//
@@ -105,8 +126,10 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
-	private boolean resourcesMatch(ResourcesType resources, RequestType request, RequestInformation reqInfo)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	private boolean resourcesMatch(ResourcesType resources,
+			RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException,
+			MissingAttributeException {
 		if (resources == null) {
 			return true;
 		}
@@ -128,14 +151,16 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
-	private boolean actionMatch(ActionsType actions, RequestType request, RequestInformation reqInfo)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	private boolean actionMatch(ActionsType actions, RequestType request,
+			RequestInformation reqInfo) throws ProcessingException,
+			SyntaxException, MissingAttributeException {
 		if (actions == null) {
 			return true;
 		}
 		for (int i = 0; i < actions.getActions().size(); i++) {
 			ActionType targetAction = actions.getActions().get(i);
-			boolean matches = match(targetAction.getActionMatches(), request, reqInfo);
+			boolean matches = match(targetAction.getActionMatches(), request,
+					reqInfo);
 			if (matches) {
 				// If one action matches the actions matches and returns true.
 				//
@@ -150,7 +175,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	private boolean environmentMatch(EnvironmentsType environments,
-			RequestType request, RequestInformation reqInfo) throws ProcessingException, SyntaxException, MissingAttributeException {
+			RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException,
+			MissingAttributeException {
 		if (environments == null) {
 			return true;
 		}
@@ -173,14 +200,15 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
-	private boolean match(List<? extends Match> matches, RequestType request, RequestInformation reqInfo)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	private boolean match(List<? extends Match> matches, RequestType request,
+			RequestInformation reqInfo) throws ProcessingException,
+			SyntaxException, MissingAttributeException {
 		for (int i = 0; i < matches.size(); i++) {
 			Match match = matches.get(i);
 			Function matchFunction = match.getMatchFunction();
 			AttributeDesignatorType designator = match.getAttributeDesignator();
-			List<?> requestAttributeValues = (List<?>) designator
-					.handle(request, reqInfo); // Fetches all AttributeValue-contents
+			List<?> requestAttributeValues = (List<?>) designator.handle(
+					request, reqInfo); // Fetches all AttributeValue-contents
 			// from the element (element = subject,
 			// resource, action or environment)
 			// AttributeDesignator.
@@ -211,11 +239,13 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 79 (Match evaluation, line 3371).
-				AttributeValueType policyAttributeValue = match.getAttributeValue();
-				matchMatches = (Boolean) matchFunction.handle(policyAttributeValue.getDataType().convertTo(
-								(String) policyAttributeValue.getContent()
-										.get(0)), requestAttributeValue);
-				
+				AttributeValueType policyAttributeValue = match
+						.getAttributeValue();
+				matchMatches = (Boolean) matchFunction.handle(
+						policyAttributeValue.getDataType().convertTo(
+								(String) policyAttributeValue.getContent().get(
+										0)), requestAttributeValue);
+
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request
 				// than the match is true and no more processing is needed

@@ -389,6 +389,7 @@ public class TestTargetMatcher {
 
 		AttributeValueType attrValue = new AttributeValueType();
 		attrValue.getContent().add(MATCH);
+		attrValue.setDataType(new StringDataTypeAttribute()); //String is fix because all tests need string as data type
 		smt.setAttributeValue(attrValue);
 		rmt.setAttributeValue(attrValue);
 		amt.setAttributeValue(attrValue);

@@ -31,8 +31,10 @@ import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
+import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -50,6 +52,11 @@ public class SimplePDPTest {
 
 	@DataProvider(name = "policy-request-response-combinations")
 	public Object[][] initializeTestCases() throws Exception {
+		System.out.println("XXXXXXXXXXXXXXXX: DP - START");
+		
+		PDP p = SimplePDPFactory.getSimplePDP();
+		
+		
 		return new Object[][] {
 				new Object[] {
 						loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml"),
@@ -67,15 +74,18 @@ public class SimplePDPTest {
 		};
 	}
 
-	@BeforeTest
+	@BeforeClass
 	public void init() {
+		System.out.println("XXXXXXXXXXXXXXXX: BC - START");
 		SimplePDPFactory.useDefaultInitializers(true);
 		simplePDP = SimplePDPFactory.getSimplePDP();
+		System.out.println("XXXXXXXXXXXXXXXX: BC - END");
 	}
 
 	@Test(dataProvider = "policy-request-response-combinations")
 	public void testSimplePDP(Evaluatable policy, RequestCtx request,
 			ResponseCtx expectedResponse) throws Exception {
+		System.out.println("XXXXXXXXXXXXXXXX: Test START");
 		PolicyRepository repo = simplePDP.getPolicyRepository();
 		repo.deploy(policy);
 
@@ -96,6 +106,7 @@ public class SimplePDPTest {
 				+ response.getResponse().getResults().get(0).getDecision());
 
 		repo.undeploy(policy.getId());
+		System.out.println("XXXXXXXXXXXXXXXX: Test - END");
 	}
 
 	private Evaluatable loadPolicy(String file) throws SyntaxException {

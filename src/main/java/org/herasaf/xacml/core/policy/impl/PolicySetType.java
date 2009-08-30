@@ -28,6 +28,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -83,6 +84,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * @author Florian Huonder
  */
 @XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "PolicySetType", propOrder = { "description",
 		"policySetDefaults", "target", "additionalInformation", "obligations" })
 public class PolicySetType implements Evaluatable, Serializable {
@@ -318,8 +320,8 @@ public class PolicySetType implements Evaluatable, Serializable {
 			RequestInformation reqInfo) {
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		// No foreach iterator to ensure thread safety.
-		for (int i = 0; i < additionalInformation.size(); i++) {
-			JAXBElement<?> jaxbElem = additionalInformation.get(i);
+		for (int i = 0; i < getAdditionalInformation().size(); i++) {
+			JAXBElement<?> jaxbElem = getAdditionalInformation().get(i);
 			evals.add((Evaluatable) jaxbElem.getValue());
 		}
 		return evals;

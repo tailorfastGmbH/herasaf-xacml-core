@@ -100,7 +100,8 @@ public class ContextAndPolicy {
 		if (conf.isWriteSchemaLocation()) {
 			if (conf.getSchemaLocationAsString().equals("")) {
 				logger.error("SchemaLocation not initialized.");
-				throw new NotInitializedException("SchemaLocation not initialized.");
+				throw new NotInitializedException(
+						"SchemaLocation not initialized.");
 			}
 			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, conf
 					.getSchemaLocationAsString());
@@ -220,6 +221,12 @@ public class ContextAndPolicy {
 		ContextAndPolicy.responseCtxProfile = responseCtxProfile;
 	}
 
+	/**
+	 * Set a {@link ValidationEventHandler} for JAXB.
+	 * 
+	 * @param validationEventHandler
+	 *            The {@link ValidationEventHandler} to set.
+	 */
 	public static void setValidationEventHandler(
 			ValidationEventHandler validationEventHandler) {
 		ContextAndPolicy.validationEventHandler = validationEventHandler;
