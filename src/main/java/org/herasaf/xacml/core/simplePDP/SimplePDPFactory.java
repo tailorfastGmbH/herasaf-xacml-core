@@ -30,6 +30,8 @@ import org.herasaf.xacml.core.simplePDP.initializers.FunctionsInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsInitializer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO JAVADOC!!
@@ -39,7 +41,7 @@ import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsInit
  * 
  */
 public class SimplePDPFactory {
-
+	private static final Logger logger = LoggerFactory.getLogger(SimplePDPFactory.class);
 	private static PDP pdp;
 	private static ThreadLocal<Boolean> singletonControl = new ThreadLocal<Boolean>();
 
@@ -91,6 +93,7 @@ public class SimplePDPFactory {
 	 * @return
 	 */
 	public static PDP getSimplePDP() {
+		logger.warn("The MapBasedSimplePolicyRepository is in use. This must not be used in a productive environment.");
 		return getSimplePDP(new PolicyOnlyOneApplicableAlgorithm(),
 				new MapBasedSimplePolicyRepository());
 	}
