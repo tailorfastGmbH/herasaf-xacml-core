@@ -51,6 +51,8 @@ public class ContextAndPolicyInitializer implements Initializer {
 				.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
 		ContextAndPolicy
 				.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
+		
+		logger.info("JAXB settings for context (request, response) and policy are initialized.");
 	}
 	
 	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath){

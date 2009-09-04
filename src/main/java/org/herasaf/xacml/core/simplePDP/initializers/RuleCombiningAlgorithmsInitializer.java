@@ -25,6 +25,8 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO JAVADOC!!
@@ -35,7 +37,8 @@ import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
  */
 public class RuleCombiningAlgorithmsInitializer extends
 		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
-
+	private static Logger logger = LoggerFactory
+	.getLogger(RuleCombiningAlgorithmsInitializer.class);
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
 	private final static Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
@@ -82,6 +85,7 @@ public class RuleCombiningAlgorithmsInitializer extends
 		Map<String, RuleCombiningAlgorithm> instances = new HashMap<String, RuleCombiningAlgorithm>();
 		instances.putAll(instancesMap);
 		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(instances);
+		logger.info("{} rule combining algorithms are initialized.", instances.size());
 	}
 
 	/*

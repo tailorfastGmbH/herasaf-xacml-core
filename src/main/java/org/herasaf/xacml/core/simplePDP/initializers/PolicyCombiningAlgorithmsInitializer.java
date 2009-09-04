@@ -25,6 +25,8 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm
 import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO JAVADOC!!
@@ -35,7 +37,8 @@ import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
  */
 public class PolicyCombiningAlgorithmsInitializer extends
 		AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
-
+	private static Logger logger = LoggerFactory
+			.getLogger(PolicyCombiningAlgorithmsInitializer.class);
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
 	private final static Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
@@ -83,6 +86,7 @@ public class PolicyCombiningAlgorithmsInitializer extends
 		instances.putAll(instancesMap);
 		URNToPolicyCombiningAlgorithmConverter
 				.setCombiningAlgorithms(instances);
+		logger.info("{} policy combining algorithms are initialized.", instances.size());
 	}
 
 	/*
@@ -95,5 +99,4 @@ public class PolicyCombiningAlgorithmsInitializer extends
 	protected Class<AbstractPolicyCombiningAlgorithm> getTargetClass() {
 		return TARGET_CLASS;
 	}
-
 }

@@ -126,6 +126,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				try {
 					getTargetClass().cast(instance);
 					listOfInstances.add((T) instance);
+					logger.debug("The type {} is successfully initialized.", instance.getClass().getCanonicalName());
 				} catch (ClassCastException e) {
 					// nop -- expected
 				}

@@ -20,6 +20,8 @@ import java.util.Map;
 
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
 import org.herasaf.xacml.core.function.Function;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * TODO JAVADOC!!
@@ -29,7 +31,7 @@ import org.herasaf.xacml.core.function.Function;
  * 
  */
 public class FunctionsInitializer extends AbstractInitializer<Function> {
-
+	private final Logger logger = LoggerFactory.getLogger(FunctionsInitializer.class);
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.function.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
 	private final static Class<Function> TARGET_CLASS = Function.class;
@@ -64,6 +66,7 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 	@Override
 	protected void setInstancesIntoConverter(Map<String, Function> instancesMap) {
 		URNToFunctionConverter.setFunctions(instancesMap);
+		logger.info("{} functions are initialized.", instancesMap.size());
 	}
 
 	/* (non-Javadoc)
