@@ -25,26 +25,50 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link YearMonthDurationDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestYearMonthDurationDataTypeAttribute {
-
 	private YearMonthDurationDataTypeAttribute dataType;
 
+	/**
+	 * Initializes a new {@link YearMonthDurationDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new YearMonthDurationDataTypeAttribute();
 	}
 
+	/**
+	 * Tests the positive data.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput1() throws Exception {
 		assertEquals(dataType.convertTo("-P9Y3M"), new YearMonthDuration(
 				"-P9Y3M"));
 	}
 
+	/**
+	 * Tests the negative data.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
 		dataType.convertTo("+P9Y3M");
 	}
 
+	/**
+	 * Tests if the {@link YearMonthDurationDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

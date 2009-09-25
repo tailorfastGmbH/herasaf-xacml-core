@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.AttributeType;
@@ -40,6 +41,11 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This class tests the {@link ResourceAttributeDesignatorType}.
+ * 
+ * @author Florian Huonder
+ */
 public class TestResourceAttributeDesignator {
 	RequestInformation reqInfo;
 
@@ -49,6 +55,9 @@ public class TestResourceAttributeDesignator {
 		reqInfo = new RequestInformation(new AttributeFinderMock());
 	}
 
+	/**
+	 * Initializes the {@link RequestInformation} with an mock for the {@link AttributeFinder}.
+	 */
 	@DataProvider(name = "successfulResourceAttrDesignator")
 	public Object[][] successfulResourceAttrDesignator() {
 		return new Object[][] {
@@ -112,6 +121,11 @@ public class TestResourceAttributeDesignator {
 		};
 	}
 
+	/**
+	 * Initializes the exception test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "resourceAttrDesignatorException")
 	public Object[][] resourceAttrDesignatorException() {
 		return new Object[][] {
@@ -160,6 +174,14 @@ public class TestResourceAttributeDesignator {
 		};
 	}
 
+	/**
+	 * Test the successful cases.
+	 * 
+	 * @param req The {@link RequestInformation}.
+	 * @param designator The {@link ResourceAttributeDesignatorType} (is under test)
+	 * @param result The expected result.
+	 * @throws Exception In case an error occurs.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "successfulResourceAttrDesignator")
 	public void testHandle(RequestType req,
@@ -174,6 +196,14 @@ public class TestResourceAttributeDesignator {
 		}
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link MissingAttributeException}.
+	 * 
+	 * @param req The {@link RequestInformation}.
+	 * @param designator The {@link ResourceAttributeDesignatorType} (is under test)
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(dataProvider = "resourceAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			ResourceAttributeDesignatorType designator) throws Throwable {
@@ -184,6 +214,12 @@ public class TestResourceAttributeDesignator {
 		}
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link SyntaxException}.
+	 * 
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeResourceWithIllegalType(
@@ -197,6 +233,12 @@ public class TestResourceAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeResource("resource-name",
@@ -210,6 +252,12 @@ public class TestResourceAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
+	/**
+	 * Checks if a certain {@link String} is contained in a {@link List} of {@link Object}s.
+	 * @param elem The {@link String} that is expected.
+	 * @param list The list the may contain the element.
+	 * @return True if the element is contained in the {@link List}, false otherwise.
+	 */
 	private boolean isContained(String elem, List<Object> list) {
 		for (Object obj : list) {
 			if (elem.equals(obj.toString())) {
@@ -219,6 +267,16 @@ public class TestResourceAttributeDesignator {
 		return false;
 	}
 
+	/**
+	 * Initializes the {@link ResourceAttributeDesignatorType} with ID, data type, issuer and must be present.
+	 * 
+	 * @param attrId The attribute ID.
+	 * @param dataType The data type of the designator.
+	 * @param issuer The issuer of the designator.
+	 * @param mustBePresent True if mustbepresent is on.
+	 * 
+	 * @return The initialized {@link ResourceAttributeDesignatorType}.
+	 */
 	private ResourceAttributeDesignatorType initializeDesignator(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, Boolean mustBePresent) {
 		ResourceAttributeDesignatorType designator = new ResourceAttributeDesignatorType();
@@ -230,6 +288,16 @@ public class TestResourceAttributeDesignator {
 		return designator;
 	}
 
+	/**
+	 * Initializes the {@link ResourceType}.
+	 * 
+	 * @param attrId The Attribute ID of the of the attribute contained in the {@link ResourceType}.
+	 * @param dataType The datatype of the attribute.
+	 * @param issuer The issuer of the attribute.
+	 * @param value The value of the attribute
+	 * @param multiContent True if the attribute contains multi content.
+	 * @return The created {@link ResourceType}.
+	 */
 	private ResourceType initializeResource(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, String value,
 			boolean multiContent) {
@@ -254,6 +322,15 @@ public class TestResourceAttributeDesignator {
 		return res;
 	}
 
+	/**
+	 * Creates an resource with an illegal type.
+	 * 
+	 * @param attrId The Attribute ID of the of the attribute contained in the {@link ResourceType}.
+	 * @param dataType The datatype of the attribute.
+	 * @param issuer The issuer of the attribute.
+	 * @param value The value of the attribute
+	 * @return The created {@link ResourceType}.
+	 */
 	private ResourceType initializeResourceWithIllegalType(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, Integer value) {
 
@@ -274,6 +351,14 @@ public class TestResourceAttributeDesignator {
 		return res;
 	}
 
+	/**
+	 * Initializes the request with the given {@link ResourceType}.
+	 * 
+	 * @param r1 The first resource type to place into the {@link RequestType}.
+	 * @param r2 The second resource type to place into the {@link RequestType}.
+	 * @param r3 The third resource type to place into the {@link RequestType}.
+	 * @return The initialized {@link RequestType}.
+	 */
 	private RequestType initializeRequest(ResourceType r1, ResourceType r2,
 			ResourceType r3) {
 		RequestType req = new RequestType();
@@ -283,6 +368,12 @@ public class TestResourceAttributeDesignator {
 		return req;
 	}
 
+	/**
+	 * Initializes the expected results.
+	 * 
+	 * @param args The resultes.
+	 * @return The {@link List} containing the results.
+	 */
 	private List<String> initResult(String... args) {
 		List<String> returnValues = new ArrayList<String>();
 		for (String str : args) {

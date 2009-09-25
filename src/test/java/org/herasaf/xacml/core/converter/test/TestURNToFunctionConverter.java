@@ -22,17 +22,18 @@ import static org.testng.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.impl.equalityPredicates.StringEqualFunction;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- *
+ * Tests the {@link URNToFunctionConverter} JAXB converter.
+ * 
  * @author Sacha Dolski
- * @version 1.0
- *
  */
 public class TestURNToFunctionConverter {
 
@@ -41,6 +42,9 @@ public class TestURNToFunctionConverter {
 	private Function function;
 	private Map<String, Function> map;
 
+	/**
+	 * Initializes {@link URNToFunctionConverter} with a {@link Function}.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		converter = new URNToFunctionConverter();
@@ -51,17 +55,39 @@ public class TestURNToFunctionConverter {
 		URNToFunctionConverter.setFunctions(map);
 	}
 
+	/**
+	 * Tests if the unmarshalling works correctly. That means that the
+	 * {@link URNToFunctionConverter#unmarshal(String)} returns the proper
+	 * object.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             In case of an improper argument.
+	 */
 	@Test
 	public void testConvertToStringEqualsFunction()
 			throws IllegalArgumentException {
 		assertEquals(converter.unmarshal(FUNCTION_ID), function);
 	}
-	
-	@Test(expectedExceptions={IllegalArgumentException.class})
-	public void testUnknowFunction(){
+
+	/**
+	 * Expects an {@link IllegalArgumentException} because an improper argument
+	 * is given to the {@link URNToDataTypeConverter#unmarshal(String)} method.
+	 * 
+	 * @throws IllegalArgumentException
+	 */
+	@Test(expectedExceptions = { IllegalArgumentException.class })
+	public void testUnknowFunction() {
 		converter.unmarshal("test");
 	}
 
+	/**
+	 * Tests if the marshalling works correctly. That means that the
+	 * {@link URNToFunctionConverter#marshal(Function)} returns the proper
+	 * {@link String}.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             In case of an improper {@link DataTypeAttribute}.
+	 */
 	@Test
 	public void testConvertToFunctionId() throws IllegalArgumentException {
 		assertEquals(converter.marshal(function), FUNCTION_ID);

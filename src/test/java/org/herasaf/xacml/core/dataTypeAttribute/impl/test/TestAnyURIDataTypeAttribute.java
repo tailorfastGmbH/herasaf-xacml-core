@@ -26,33 +26,61 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.AnyURIDataTypeAttribute;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link AnyURIDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestAnyURIDataTypeAttribute {
-
 	private AnyURIDataTypeAttribute dataType;
 	
+	/**
+	 * Initializes a new {@link AnyURIDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new AnyURIDataTypeAttribute();
 	}
 	
+	/**
+	 * Tests if the datatype works with an URL.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput1() throws Exception{
 		assertEquals(dataType.convertTo("www.hallo.ch"), new URI("www.hallo.ch"));
 	}
 	
+	/**
+	 * Tests if the datatype works with an URI.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput0() throws Exception{
 		assertEquals(dataType.convertTo("hallo/du/.ch"), new URI("hallo/du/.ch"));
 	}
 	
+	/**
+	 * Tests if the datatype does not accept illegal arguments.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test(expectedExceptions={SyntaxException.class})
 	public void testInputtrueWrongSpelled() throws Exception{
 		dataType.convertTo("-\\1234");
 	}
 	
+	/**
+	 * Tests if the {@link AnyURIDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(), "http://www.w3.org/2001/XMLSchema#anyURI");
 	}
 }
-

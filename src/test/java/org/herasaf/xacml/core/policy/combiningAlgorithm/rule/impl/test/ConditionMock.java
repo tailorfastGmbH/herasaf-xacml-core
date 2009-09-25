@@ -21,24 +21,41 @@ import javax.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.core.policy.impl.ApplyType;
 import org.herasaf.xacml.core.policy.impl.ConditionType;
+import org.herasaf.xacml.core.policy.impl.ExpressionType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 
+/**
+ * A mock for a {@link ConditionType}.
+ * 
+ * @author Florian Huonder
+ */
 public class ConditionMock extends ConditionType {
 	private static final long serialVersionUID = 1L;
 	private ApplyType expression;
 	private static ObjectFactory factory;
 	
+	/**
+	 * Initializes the ObjectFactory.
+	 */
 	static {
 		factory = new ObjectFactory();
 	}
 	
+	/**
+	 * Creaes a new mock and initializes the containing {@link ExpressionType} that is an {@link ApplyTypeMock} here.
+	 * 
+	 * @param b The returnValue of the {@link ExpressionType}.
+	 * @param exception The {@link Exception} that shall be thrown by the {@link ExpressionType}.
+	 */
 	public ConditionMock(Object b, Exception exception) {
 		expression = new ApplyTypeMock(b, exception);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public JAXBElement<?> getExpression() {
 		return factory.createApply(expression);
 	}
-
 }

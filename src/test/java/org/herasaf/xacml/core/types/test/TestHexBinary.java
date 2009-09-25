@@ -23,8 +23,18 @@ import org.herasaf.xacml.core.types.HexBinary;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link HexBinary} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestHexBinary {
 
+	/**
+	 * Creates positive test cases. One byte.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positiveCasesOneByte")
 	public Object[][] createPositiveCasesOneByte(){
 		return new Object[][] {
@@ -35,6 +45,11 @@ public class TestHexBinary {
 		};
 	}
 	
+	/**
+	 * Creates positive test cases. Two bytes.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positiveCasesTwoBytes")
 	public Object[][] createPositiveCasesTwoBytes(){
 		return new Object[][] {
@@ -45,6 +60,11 @@ public class TestHexBinary {
 		};
 	}
 	
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "negativeCases")
 	public Object[][] createNegativeCases(){
 		return new Object[][] {
@@ -53,12 +73,29 @@ public class TestHexBinary {
 		};
 	}
 	
+	/**
+	 * Test if the {@link HexBinary} objects are properly created.
+	 * One byte.
+	 * 
+	 * @param input The hey-binary in its String representation.
+	 * @param expected The expected String on {@link HexBinary#getValue()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test (dataProvider="positiveCasesOneByte")
 	public void testOneByteValues(String input, int expected) throws Exception{
 		HexBinary hexBinary = new HexBinary(input);
 		assertEquals(hexBinary.getValue()[0], (byte)expected);
 	}
 	
+	/**
+	 * Test if the {@link HexBinary} objects are properly created.
+	 * Two bytes.
+	 * 
+	 * @param input The hey-binary in its String representation.
+	 * @param expectedFirstByte The expected first byte on {@link HexBinary#getValue()}.
+	 * @param expectedSecondByte The expected second byte on {@link HexBinary#getValue()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test (dataProvider="positiveCasesTwoBytes")
 	public void testOnlyUpperCaseCharacters(String input, int expectedFirstByte, int expectedSecondByte) throws Exception{
 		HexBinary hexBinary = new HexBinary(input);
@@ -66,6 +103,12 @@ public class TestHexBinary {
 		assertEquals(hexBinary.getValue()[1], (byte)expectedSecondByte);
 	}
 	
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal hey-binary representations.
+	 * Positive values.
+	 * @param input The illegal hey-binary strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class})
 	public void testNotAllowedCharacters(String input) throws Exception{
 		new HexBinary(input);

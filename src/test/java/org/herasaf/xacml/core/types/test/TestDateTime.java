@@ -24,9 +24,19 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link DateTime} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDateTime {
 	private DateTime dateTime;
 
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "positiveCases")
 	public Object[][] createPositiveCases() {
 		return new Object[][] {
@@ -36,6 +46,11 @@ public class TestDateTime {
 						"2005-02-02T12:00:01" }, };
 	}
 
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
 		return new Object[][] {
@@ -45,6 +60,11 @@ public class TestDateTime {
 				new Object[] { "2006-04-31" }, };
 	}
 
+	/**
+	 * Creates comparison test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "comparison")
 	public Object[][] createComparisonData() {
 		return new Object[][] {
@@ -59,28 +79,57 @@ public class TestDateTime {
 						"2005-02-02T12:00:01.645", 0 }, };
 	}
 
+	/**
+	 * Clears the property javax.xml.datatype.DatatypeFactory.
+	 * This is only relevant for the {@link #testNoDataFactoryFound()} method.
+	 */
 	@AfterMethod
 	public void afterMethod() {
 		System.clearProperty("javax.xml.datatype.DatatypeFactory");
 	}
 
+	/**
+	 * Test if the {@link DateTime} objects are properly created.
+	 * 
+	 * @param input The date-time in its String representation.
+	 * @param expected The expected String on {@link DateTime#toString()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "positiveCases")
 	public void testInput(String input, String expected) throws Exception {
 		dateTime = new DateTime(input);
 		assertEquals(dateTime.toString(), expected);
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal date-time representations.
+	 * @param input The illegal date-time strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { IllegalArgumentException.class })
 	public void testInputFail1(String input) throws Exception {
 		new DateTime(input);
 	}
 
+	/**
+	 * Tests if an exception is thrown when a non-existing DatatypeFactory is set.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(expectedExceptions = { IllegalArgumentException.class })
 	public void testNoDataFactoryFound() throws Exception {
 		System.setProperty("javax.xml.datatype.DatatypeFactory", "bla");
 		new DateTime("2005-02-02T12:00:01");
 	}
 
+	/**
+	 * Tests if the comparison function of {@link DateTime} works properly.
+	 * 
+	 * @param input1 The first string.
+	 * @param input2 The second date-time string.
+	 * @param expected The expected result (-1, 0, 1).
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "comparison")
 	public void testCompare(String input1, String input2, int expected)
 			throws Exception {

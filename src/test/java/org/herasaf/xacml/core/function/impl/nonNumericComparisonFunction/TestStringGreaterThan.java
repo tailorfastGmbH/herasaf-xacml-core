@@ -25,9 +25,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the StringGreaterThan function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestStringGreaterThan {
 	private Function ia;
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="args")
 	public Object[][] createArgs(){
 		return new Object[][]{
@@ -41,19 +50,30 @@ public class TestStringGreaterThan {
 		};
 	}
 
-
-
-
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new StringGreaterThanFunction();
 	}
 
+	/**
+	 * Tests if the StringGreaterThan function works properly.
+	 * 
+	 * @param i1 The first string argument.
+	 * @param i2 The second string argument.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="args")
 	public void testArgs(String i1, String i2, Boolean result) throws Exception {
 		assertEquals(ia.handle(i1, i2), result);
 	}
 
+	/**
+	 * Tests if the StringGreaterThan function returns the proper ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:string-greater-than");

@@ -30,16 +30,32 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
+ * Represents a moch object for an {@link Evaluatable}. The following points are
+ * configurable:; (1) if it has deny obligations, (2) if it has permit
+ * obligations, (3) the decision.
+ * 
  * @author Florian Huonder
  * @author Stefan Oberholzer
  */
 public class EvaluatableMock implements Evaluatable, Cloneable {
-
 	private DecisionType decision;
 	private ObligationType denyObligation;
 	private ObligationType permitObligation;
 	private RequestInformation reqInfo;
 
+	/**
+	 * Creates a new mock with or without deny/permit obligations and a specific
+	 * decision.
+	 * 
+	 * @param hasDenyObligation
+	 *            True if the {@link Evaluatable} shall have deny obligations,
+	 *            false otherwise.
+	 * @param hasPermitObligation
+	 *            True if the {@link Evaluatable} shall have permit obligations,
+	 *            false otherwise.
+	 * @param decision
+	 *            The decision that the {@link Evaluatable} shall return.
+	 */
 	public EvaluatableMock(boolean hasDenyObligation,
 			boolean hasPermitObligation, DecisionType decision) {
 		this.decision = decision;
@@ -50,9 +66,13 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 			this.permitObligation = new ObligationType("permit",
 					EffectType.PERMIT);
 		}
-		
+
 	}
 
+	/**
+	 * Returns the combining algorithm of this {@link Evaluatable} that is of
+	 * type {@link CombiningAlgorithmMock}.
+	 */
 	public CombiningAlgorithm getCombiningAlg()
 			throws EvaluatableNotFoundException {
 
@@ -61,6 +81,16 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 		return mock;
 	}
 
+	/**
+	 * Returns all {@link ObligationType}s from the {@link Evaluatable}
+	 * regarding the given effect.
+	 * 
+	 * @param effect
+	 *            The effect for which the matching {@link ObligationType}s
+	 *            shall be returned.
+	 * @return A list of all {@link ObligationType}s in the {@link Evaluatable}
+	 *         that match the effect.
+	 */
 	public List<ObligationType> getContainedObligations(EffectType effect) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 		switch (effect) {
@@ -78,48 +108,101 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 		return obligations;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * The version of the {@link Evaluatable}. Because the {@link Evaluatable}
+	 * is a mock it always returns <b>MOCK</b>.
+	 */
 	public String getEvalutableVersion() throws EvaluatableNotFoundException {
 		return "MOCK";
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Because it is a mock it always returns null.
+	 */
 	public EvaluatableID getId() throws EvaluatableNotFoundException {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * This mock does not have a target.
+	 */
 	public TargetType getTarget() throws EvaluatableNotFoundException {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc} 
+	 */
 	public boolean hasObligations() {
-		return (denyObligation != null || permitObligation != null || reqInfo.getObligations().getObligations().size() > 0);
+		return (denyObligation != null || permitObligation != null || reqInfo
+				.getObligations().getObligations().size() > 0);
 	}
 
+	/**
+	 * Returns the decision that is set in this {@link Evaluatable}.
+	 * 
+	 * @return The decision of this {@link Evaluatable}
+	 */
 	public DecisionType getDecision() {
 		return decision;
 	}
 
+	/**
+	 * Returns the deny {@link ObligationType} of this {@link Evaluatable}.
+	 * 
+	 * @return The deny {@link ObligationType} of this {@link Evaluatable}.
+	 */
 	public ObligationType getDenyObligation() {
 		return denyObligation;
 	}
 
-	public void setDenyObligation(ObligationType obl){
+	/**
+	 * Sets the deny {@link ObligationType} for this {@link Evaluatable}.
+	 * 
+	 * @param obl The deny {@link ObligationType} for this {@link Evaluatable}.
+	 */
+	public void setDenyObligation(ObligationType obl) {
 		this.denyObligation = obl;
 	}
-	
+
+	/**
+	 * Returns the permit {@link ObligationType} of this {@link Evaluatable}.
+	 * 
+	 * @return The permit {@link ObligationType} of this {@link Evaluatable}.
+	 */
 	public ObligationType getPermitObligation() {
 		return permitObligation;
 	}
-	
-	public void setPermitObligation(ObligationType obl){
+
+	/**
+	 * Sets the permit {@link ObligationType} for this {@link Evaluatable}.
+	 * 
+	 * @param obl The permit {@link ObligationType} for this {@link Evaluatable}.
+	 */
+	public void setPermitObligation(ObligationType obl) {
 		this.permitObligation = obl;
 	}
-	
-	
 
+	/**
+	 * Sets the {@link RequestInformation} for this {@link Evaluatable}.
+	 * 
+	 * @param reqInfo The {@link RequestInformation} to set into this {@link Evaluatable}.
+	 */
 	public void setReqInfo(RequestInformation reqInfo) {
 		this.reqInfo = reqInfo;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns the decision and whether it has or has not permit/deny {@link ObligationType}s.
+	 */
 	public String toString() {
 		return "EvaluatableMock[decision=" + decision + ", hasDenyObligation="
 				+ (denyObligation != null) + ", hasPermitObligation="
@@ -143,6 +226,5 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 					.getObligationId(), this.permitObligation.getFulfillOn()));
 		}
 		return clone;
-
 	}
 }

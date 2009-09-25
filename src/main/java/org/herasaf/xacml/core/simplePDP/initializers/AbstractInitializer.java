@@ -39,16 +39,11 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public abstract class AbstractInitializer<T> implements Initializer {
-
 	private final Logger logger = LoggerFactory
 			.getLogger(AbstractInitializer.class);
-
 	protected abstract String getSearchContext();
-
 	protected abstract String getSearchContextPath();
-
 	protected abstract Class<T> getTargetClass();
-
 	private final String CLASS_ENDING = ".class";
 
 	/**
@@ -76,8 +71,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			Map<String, T> instancesMap);
 
 	/**
-	 * @param dataTypeAttributes
-	 * @return
+	 * TODO JAVADOC
+	 * 
+	 * @param instances The {@link List} of instances that shall be converted into a {@link Map}.
+	 * @return The {@link Map} containing the instances.
 	 */
 	private Map<String, T> convertListToMap(List<T> instances) {
 		Map<String, T> targetMap = new HashMap<String, T>();
@@ -88,13 +85,16 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * @return
+	 * TODO JAVADOC
+	 * 
+	 * @param instance The type from which the URI shall be returned.
+	 * @return The URI of the given instance.
 	 */
 	protected abstract String getURIFromType(T instance);
 
 	/**
-	 * @param files
-	 * @return
+	 * @param files The {@link List} of files from which instances shall be created.
+	 * @return The {@link List} containing the instances.
 	 */
 	@SuppressWarnings("unchecked")
 	private List<T> instantiateClasses(List<File> files) {
@@ -144,6 +144,12 @@ public abstract class AbstractInitializer<T> implements Initializer {
 		return listOfInstances;
 	}
 
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param searchContext The context where the files shall be collected.
+	 * @return A {@link List} containing all collected files.
+	 */
 	private List<File> collectFiles(final String searchContext) {
 		List<URL> urls = new ArrayList<URL>();
 		Enumeration<URL> resourceURLs;

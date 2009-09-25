@@ -25,36 +25,74 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link HexBinaryDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestHexBinaryDataTypeAttribute {
 	private HexBinaryDataTypeAttribute dataType;
 
+	/**
+	 * Creates negative test cases for the test.
+	 * 
+	 * @return The negative test cases.
+	 */
 	@DataProvider(name = "negativeData")
 	public Object[][] initNegativeData() {
 		return new Object[][] { new Object[] { "12 34" }, };
 	}
 
+	/**
+	 * Creates positive test cases for the test.
+	 * 
+	 * @return The positive test cases.
+	 */
 	@DataProvider(name = "positiveData")
 	public Object[][] initPositiveData() {
 		return new Object[][] { new Object[] { "12", 18 },
 				new Object[] { "1F", 31 }, };
 	}
 
+	/**
+	 * Initializes a new {@link HexBinaryDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new HexBinaryDataTypeAttribute();
 	}
 
+	/**
+	 * Tests the positive data.
+	 * 
+	 * @param hex The positive data.
+	 * @param integer The expected result.
+	 * @throws Exception In case of an error.
+	 */
 	@Test(dataProvider = "positiveData")
 	public void testInput2(String hex, int integer) throws Exception {
 		assertEquals(dataType.convertTo(hex).getValue()[0],
 				(byte)integer);
 	}
 
+	/**
+	 * Tests the negative data.
+	 * 
+	 * @param input The negative data.
+	 * @throws Exception In case of an error.
+	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
 		dataType.convertTo(input);
 	}
 
+	/**
+	 * Tests if the {@link HexBinaryDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

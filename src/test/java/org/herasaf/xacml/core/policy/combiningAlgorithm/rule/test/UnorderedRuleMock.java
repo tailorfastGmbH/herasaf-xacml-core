@@ -29,20 +29,31 @@ import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
+/**
+ * This is a mock of the {@link RuleUnorderedCombiningAlgorithm}.
+ *
+ * @author Florian Huonder
+ */
 public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
-
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -4195896583077373103L;
 	public DecisionType targetDecision;
 	public StatusCode targetStatusCode;
 	public MissingAttributeDetailType targetMissingAttribute;
 
+	/**
+	 * Creates a new mock that contains a {@link TargetMatcherMock}.
+	 */
 	public UnorderedRuleMock() {
 		super.setTargetMatcher(new TargetMatcherMock());
 	}
 
+	/**
+	 * Creates a new mock.
+	 * 
+	 * @param targetDecision The {@link DecisionType} of the combining algorithm.
+	 * @param targetStatusCode The {@link StatusCode} of the combing algorithm.
+	 * @param targetMissingAttribute The {@link MissingAttributeDetailType} of the combining algorithm.
+	 */
 	public UnorderedRuleMock(DecisionType targetDecision,
 			StatusCode targetStatusCode,
 			MissingAttributeDetailType targetMissingAttribute) {
@@ -52,12 +63,22 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 		this.targetMissingAttribute = targetMissingAttribute;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns always null because this method is not needed.
+	 */
 	@Override
 	public DecisionType evaluateRule(RequestType request,
 			RuleType rule, RequestInformation requestInfo) {
 		return null;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns the predefined {@link DecisionType}.
+	 */
 	@Override
 	protected DecisionType matchTarget(RequestType request,
 			TargetType target, RequestInformation requestInfo) {
@@ -69,6 +90,9 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 		return targetDecision;
 	}
 
+	/**
+	 * Returns always permit.
+	 */
 	@Override
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possiblePolicies, RequestInformation requestInfos) {

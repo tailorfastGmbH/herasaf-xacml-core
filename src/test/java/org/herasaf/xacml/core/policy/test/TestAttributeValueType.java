@@ -27,14 +27,26 @@ import org.herasaf.xacml.core.policy.impl.AttributeValueType;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+/**
+ * Tests the {@link AttributeValueType}.
+ * 
+ * @author Florian Huonder
+ */
 public class TestAttributeValueType {
 	AttributeValueType attrVal;
 
+	/**
+	 * Initializes an {@link AttributeValueType}.
+	 */
 	@BeforeMethod
 	public void beforeMethod() {
 		attrVal = new AttributeValueType();
 	}
 
+	/**
+	 * Tests the {@link AttributeValueType#handle(RequestType, RequestInformation)} method.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
@@ -44,6 +56,12 @@ public class TestAttributeValueType {
 				new RequestInformation(null)));
 	}
 
+	/**
+	 * Tests cases where the {@link AttributeValueType#handle(RequestType, RequestInformation)} throws an exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleException() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
@@ -53,6 +71,12 @@ public class TestAttributeValueType {
 		attrVal.handle(new RequestType(), new RequestInformation(null));
 	}
 
+	/**
+	 * Tests cases where the {@link AttributeValueType#handle(RequestType, RequestInformation)} throws an exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());

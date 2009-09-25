@@ -28,31 +28,70 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
+/**
+ * This is a mock object of a policy combining algorithm. This mock can be fed
+ * with a {@link DecisionType}, a {@link StatusCode}, a
+ * {@link MissingAttributeDetailType} and the target evaluation failed.
+ * 
+ * @author Florian Huonder
+ */
 public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 644980341269055301L;
 	public DecisionType decision;
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;
 	public boolean returnTargetFailure;
 
-	public PolicyCombiningAlgMock(DecisionType decision,
-			StatusCode statusCode, MissingAttributeDetailType missingAttr) {
+	/**
+	 * Creates a new {@link PolicyCombiningAlgMock}.
+	 * 
+	 * @param decision
+	 *            The {@link DecisionType} that this combining algorithm shall
+	 *            return.
+	 * @param statusCode
+	 *            The {@link StatusCode} that this combining algorithm shall
+	 *            return.
+	 * @param missingAttr
+	 *            The {@link MissingAttributeDetailType} that this combining
+	 *            algorithm shall return.
+	 */
+	public PolicyCombiningAlgMock(DecisionType decision, StatusCode statusCode,
+			MissingAttributeDetailType missingAttr) {
 		this.decision = decision;
 		this.statusCode = statusCode;
 		this.missingAttr = missingAttr;
 	}
 
-	public PolicyCombiningAlgMock(DecisionType decision,
-			StatusCode statusCode, MissingAttributeDetailType missingAttr, boolean returnTargetFailure) {
+	/**
+	 * Creates a new {@link PolicyCombiningAlgMock}.
+	 * 
+	 * @param decision
+	 *            The {@link DecisionType} that this combining algorithm shall
+	 *            return.
+	 * @param statusCode
+	 *            The {@link StatusCode} that this combining algorithm shall
+	 *            return.
+	 * @param missingAttr
+	 *            The {@link MissingAttributeDetailType} that this combining
+	 *            algorithm shall return.
+	 * @param returnTargetFailure
+	 *            True if the target evaluation shall fail, false otherwise.
+	 */
+	public PolicyCombiningAlgMock(DecisionType decision, StatusCode statusCode,
+			MissingAttributeDetailType missingAttr, boolean returnTargetFailure) {
 		this(decision, statusCode, missingAttr);
 		this.returnTargetFailure = returnTargetFailure;
 	}
 
-	public DecisionType evaluate(RequestType request,
-			Evaluatable evals, RequestInformation requestInfo) {
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns a {@link DecisionType} containing the predefined
+	 * {@link StatusCode}, {@link DecisionType} and
+	 * {@link MissingAttributeDetailType}.
+	 */
+	public DecisionType evaluate(RequestType request, Evaluatable evals,
+			RequestInformation requestInfo) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
 			missingAttributes.add(missingAttr);
@@ -63,6 +102,13 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 		return decision;
 	}
 
+	/**
+	 *{@inheritDoc}
+	 * 
+	 * Returns a {@link DecisionType} containing the predefined
+	 * {@link StatusCode}, {@link DecisionType} and
+	 * {@link MissingAttributeDetailType}.
+	 */
 	public DecisionType evaluateEvaluatableList(RequestType request,
 			List<Evaluatable> possibleEvaluatables,
 			RequestInformation requestInfo) {

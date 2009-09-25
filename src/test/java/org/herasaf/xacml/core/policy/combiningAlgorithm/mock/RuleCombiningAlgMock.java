@@ -30,35 +30,60 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 
+/**
+ * This is a mock object of a rule combining algorithm. This mock can be fed
+ * with a {@link TargetMatcher} or it uses the {@link TargetMatcherMock}.
+ * 
+ * @author Florian Huonder
+ */
 public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -6985362616120672850L;
 	public DecisionType decision;
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;
 
+	/**
+	 * Creates a new mock with a given TargetMatcher.
+	 * 
+	 * @param matcher The {@link TargetMatcher} to use.
+	 */
 	public RuleCombiningAlgMock(TargetMatcher matcher){
 		super.setTargetMatcher(matcher);
 	}
 	
+	/**
+	 * Creates a new mock with a {@link TargetMatcherMock}.
+	 */
 	public RuleCombiningAlgMock(){
 		super.setTargetMatcher(new TargetMatcherMock());
 	}
 
-
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public DecisionType evaluateRule(RequestType request,
 			RuleType rule, RequestInformation requestInfo) {
 		return super.evaluateRule(request, rule, requestInfo);
 	}
+	
+	/**
+	 * Creates a new mock with a given {@link DecisionType}.
+	 * 
+	 * @param decision The {@link DecisionType} to use.
+	 */
 	public RuleCombiningAlgMock(DecisionType decision){
 		this();
 		this.decision = decision;
 	}
 
+	/**
+	 * Creates a new mock with a given {@link DecisionType}, {@link StatusCode} and {@link MissingAttributeDetailType}.
+	 * 
+	 * @param decision The {@link DecisionType} to use.
+	 * @param statusCode The {@link StatusCode} to use.
+	 * @param missingAttr The {@link MissingAttributeDetailType} to use.
+	 */
 	public RuleCombiningAlgMock(DecisionType decision,
 			StatusCode statusCode, MissingAttributeDetailType missingAttr) {
 		this(decision);
@@ -66,7 +91,13 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 		this.missingAttr = missingAttr;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns a {@link DecisionType} containing the predefined
+	 * {@link StatusCode}, {@link DecisionType} and
+	 * {@link MissingAttributeDetailType}.
+	 */
 	public DecisionType evaluate(RequestType request,
 			Evaluatable evals, RequestInformation requestInfo) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
@@ -78,6 +109,13 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 		return decision;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns a {@link DecisionType} containing the predefined
+	 * {@link StatusCode}, {@link DecisionType} and
+	 * {@link MissingAttributeDetailType}.
+	 */
 	@Override
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possibleEvaluatables,

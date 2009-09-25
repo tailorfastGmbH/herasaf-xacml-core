@@ -27,9 +27,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the IntegerToDouble function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestIntegerToDoubleFunction {
 	private Function ia;
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -40,18 +49,29 @@ public class TestIntegerToDoubleFunction {
 		};
 	}
 
-
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new IntegerToDoubleFunction();
 	}
 
+	/**
+	 * Tests all test cases.
+	 * 
+	 * @param i1 The integer value.
+	 * @param result The expected double value.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="args")
 	public void testArgs(String i1, String result) throws Exception {
 		assertEquals(((Double)ia.handle(new BigInteger(i1))).toString(), result);
 	}
 
-
+	/**
+	 * Tests if the IntegerToDouble function returns the proper ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:integer-to-double");

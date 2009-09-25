@@ -37,14 +37,27 @@ import org.herasaf.xacml.core.policy.impl.VariableValue;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link VariableReferenceType} behaves properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestVariableReference {
 	ObjectFactory factory;
-	
+
+	/**
+	 * Initializes the {@link ObjectFactory}.
+	 */
 	@BeforeTest
 	public void init() {
 		factory = new ObjectFactory();
 	}
 
+	/**
+	 * Tests if the {@link VariableReferenceType#handle(RequestType, RequestInformation)} method behaves properly.
+	 * 
+	 *@throws Exception If an error occurs.
+	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		Object[] values = new Object[]{"test1", "test2", "test3"};
@@ -62,20 +75,14 @@ public class TestVariableReference {
 		VariableReferenceType varRef3 = new VariableReferenceType();
 		varRef3.setVariableId("3");
 		assertEquals(varRef3.handle(new RequestType(), reqInfo), values[2]);
-
-
-
-
-
-//		assertEquals(variableDefinitions.get("1").getValue(new RequestType(),
-//				variableDefinitions), values[0]);
-//		assertEquals(variableDefinitions.get("2").getValue(new RequestType(),
-//				variableDefinitions), values[1]);
-//		assertEquals(variableDefinitions.get("3").getValue(new RequestType(),
-//				variableDefinitions), values[2]);
-
 	}
 
+	/**
+	 * Initializes some {@link VariableDefinitionType}s.
+	 * 
+	 * @param values The {@link AttributeValueType}s to place into the expressions of the {@link VariableDefinitionType}.
+	 * @return A map containing the {@link VariableDefinitionType}s.
+	 */
 	private Map<String, Variable> initVariableDefinitions(Object[] values) {
 		Map<String, Variable> variableDefinitions = new HashMap<String, Variable>();
 
@@ -98,6 +105,12 @@ public class TestVariableReference {
 		return variableDefinitions;
 	}
 
+	/**
+	 * Initializes an {@link AttributeValueType}.
+	 * @param object The content of the {@link AttributeValueType}.
+	 * @param dataType The data type of the {@link AttributeValueType}.
+	 * @return The created {@link AttributeValueType} contained within a {@link JAXBElement}.
+	 */
 	private JAXBElement<AttributeValueType> initAttributeValue(Object object,
 			DataTypeAttribute<?> dataType) {
 		AttributeValueType attrVal = new AttributeValueType();

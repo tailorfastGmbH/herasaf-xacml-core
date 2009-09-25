@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.ActionType;
@@ -40,14 +41,27 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This class tests the {@link ActionAttributeDesignatorType}.
+ * 
+ * @author Florian Huonder
+ */
 public class TestActionAttributeDesignator {
 	RequestInformation reqInfo;
 
+	/**
+	 * Initializes the {@link RequestInformation} with an mock for the {@link AttributeFinder}.
+	 */
 	@BeforeTest
 	public void init() {
 		reqInfo = new RequestInformation(new AttributeFinderMock());
 	}
 
+	/**
+	 * Initializes the test successful cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "successfulActionAttrDesignator")
 	public Object[][] successfulActionAttrDesignator() {
 		return new Object[][] {
@@ -93,10 +107,14 @@ public class TestActionAttributeDesignator {
 						initializeDesignator("action-id",
 								new StringDataTypeAttribute(), "hsr", false),
 						initResult() },
-
 		};
 	}
 
+	/**
+	 * Initializes the exception test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "actionAttrDesignatorException")
 	public Object[][] actionAttrDesignatorException() {
 		return new Object[][] {
@@ -128,6 +146,14 @@ public class TestActionAttributeDesignator {
 		};
 	}
 
+	/**
+	 * Test the successful cases.
+	 * 
+	 * @param req The {@link RequestInformation}.
+	 * @param designator The {@link ActionAttributeDesignatorType} (is under test)
+	 * @param result The expected result.
+	 * @throws Exception In case an error occurs.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "successfulActionAttrDesignator", enabled = true)
 	public void testHandle(RequestType req,
@@ -142,6 +168,14 @@ public class TestActionAttributeDesignator {
 		}
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link MissingAttributeException}.
+	 * 
+	 * @param req The {@link RequestInformation}.
+	 * @param designator The {@link ActionAttributeDesignatorType} (is under test)
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, dataProvider = "actionAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			ActionAttributeDesignatorType designator) throws Throwable {
@@ -152,6 +186,12 @@ public class TestActionAttributeDesignator {
 		}
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link SyntaxException}.
+	 * 
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeActionWithIllegalType(
@@ -161,6 +201,12 @@ public class TestActionAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeAction("action-Id",
@@ -170,6 +216,12 @@ public class TestActionAttributeDesignator {
 		designator.handle(req, reqInfo);
 	}
 
+	/**
+	 * Checks if a certain {@link String} is contained in a {@link List} of {@link Object}s.
+	 * @param elem The {@link String} that is expected.
+	 * @param list The list the may contain the element.
+	 * @return True if the element is contained in the {@link List}, false otherwise.
+	 */
 	private boolean isContained(String elem, List<Object> list) {
 		for (Object obj : list) {
 			if (elem.equals(obj.toString())) {
@@ -179,6 +231,16 @@ public class TestActionAttributeDesignator {
 		return false;
 	}
 
+	/**
+	 * Initializes the {@link ActionAttributeDesignatorType} with ID, data type, issuer and must be present.
+	 * 
+	 * @param attrId The attribute ID.
+	 * @param dataType The data type of the designator.
+	 * @param issuer The issuer of the designator.
+	 * @param mustBePresent True if mustbepresent is on.
+	 * 
+	 * @return The initialized {@link ActionAttributeDesignatorType}.
+	 */
 	private ActionAttributeDesignatorType initializeDesignator(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, Boolean mustBePresent) {
 		ActionAttributeDesignatorType designator = new ActionAttributeDesignatorType();
@@ -190,6 +252,16 @@ public class TestActionAttributeDesignator {
 		return designator;
 	}
 
+	/**
+	 * Initializes the {@link ActionType}.
+	 * 
+	 * @param attrId The Attribute ID of the of the attribute contained in the {@link ActionType}.
+	 * @param dataType The datatype of the attribute.
+	 * @param issuer The issuer of the attribute.
+	 * @param value The value of the attribute
+	 * @param multiContent True if the attribute contains multi content.
+	 * @return The created {@link ActionType}.
+	 */
 	private ActionType initializeAction(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, String value,
 			boolean multiContent) {
@@ -214,6 +286,15 @@ public class TestActionAttributeDesignator {
 		return act;
 	}
 
+	/**
+	 * Creates an action with an illegal type.
+	 * 
+	 * @param attrId The Attribute ID of the of the attribute contained in the {@link ActionType}.
+	 * @param dataType The datatype of the attribute.
+	 * @param issuer The issuer of the attribute.
+	 * @param value The value of the attribute
+	 * @return The created {@link ActionType}.
+	 */
 	private ActionType initializeActionWithIllegalType(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, Integer value) {
 
@@ -234,12 +315,24 @@ public class TestActionAttributeDesignator {
 		return act;
 	}
 
+	/**
+	 * Initializes the request with the given {@link ActionType}.
+	 * 
+	 * @param a1 The action type to place into the {@link RequestType}.
+	 * @return The initialized {@link RequestType}.
+	 */
 	private RequestType initializeRequest(ActionType a1) {
 		RequestType req = new RequestType();
 		req.setAction(a1);
 		return req;
 	}
 
+	/**
+	 * Initializes the expected results.
+	 * 
+	 * @param args The resultes.
+	 * @return The {@link List} containing the results.
+	 */
 	private List<String> initResult(String... args) {
 		List<String> returnValues = new ArrayList<String>();
 		for (String str : args) {

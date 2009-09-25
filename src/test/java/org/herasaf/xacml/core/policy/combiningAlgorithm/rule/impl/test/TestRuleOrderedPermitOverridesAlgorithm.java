@@ -21,9 +21,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedPermitOverridesAlgorithm;
@@ -35,7 +32,6 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.EffectType;
-import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.testng.annotations.BeforeMethod;
@@ -43,12 +39,20 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests the {@link RuleOrderedPermitOverridesAlgorithm}.
+ *
+ * @author Florian Huonder.
+ */
 public class TestRuleOrderedPermitOverridesAlgorithm {
 	private AbstractRuleCombiningAlgorithm combAlg;
 	private TargetMatcherMock targetMatcher;
 	private RuleOrderedPermitOverridesAlgorithm[] ruleOrderedPermitOverridesAlgorithmWithTRUEDecisionsArray;
 	private RuleOrderedPermitOverridesAlgorithm ruleOrderedPermitOverridesAlgorithmWithTRUEFALSEDecisions;
 
+	/**
+	 * Initializes the {@link RuleOrderedPermitOverridesAlgorithm}s.
+	 */
 	@BeforeTest
 	public void init() {
 		ruleOrderedPermitOverridesAlgorithmWithTRUEDecisionsArray = new RuleOrderedPermitOverridesAlgorithm[12];
@@ -71,6 +75,12 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 								TargetMatcherMock.Decisions.FALSE }));
 	}
 
+	/**
+	 * Creates the test cases.
+	 * 
+	 * @return The test cases.
+	 * @throws Exception If an error occurs.
+	 */
 	@DataProvider(name = "testData")
 	public Object[][] evaluationData() throws Exception {
 		return new Object[][] {
@@ -234,6 +244,13 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 
 	}
 
+	/**
+	 * Creates a {@link RuleType}.
+	 * 
+	 * @param effect The {@link EffectType} that the created rule shall return.
+	 * @param condition The {@link ConditionMock} that the {@link RuleType} shall contain.
+	 * @return The created {@link RuleType}.
+	 */
 	private RuleType initializeRule(EffectType effect, ConditionMock condition) {
 		RuleType rule = new RuleType();
 		rule.setCondition(condition);
@@ -241,6 +258,9 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 		return rule;
 	}
 
+	/**
+	 * Initializes the {@link RuleOrderedPermitOverridesAlgorithm} and sets {@link TargetMatcherMock} into it.
+	 */
 	@BeforeMethod
 	public void beforeTest() {
 		targetMatcher = new TargetMatcherMock();
@@ -248,6 +268,10 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 		combAlg.setTargetMatcher(targetMatcher);
 	}
 
+	/**
+	 * Tests if the {@link RuleOrderedPermitOverridesAlgorithm} returns a proper ID:
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true)
 	public void testID() throws Exception {
 		assertEquals(
@@ -255,20 +279,30 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 				"urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-permit-overrides");
 	}
 
+	/**
+	 * Tests if the {@link RuleOrderedPermitOverridesAlgorithm} works properly.
+	 * 
+	 * @param testID An ID for the test case.
+	 * @param rulesArray An array containing all {@link RuleType}s.
+	 * @param alg The combining algorithm to test.
+	 * @param expectedDecision The expected {@link DecisionType}.
+	 * @param expectedStatusCode The expected {@link StatusCode}.
+	 * @param expectMissingAttribute True if missing attributes are expected, false otherwise.
+	 * @throws Exception
+	 */
 	@Test(dataProvider = "testData")
 	public void testCombiningAlg(String testID, RuleType[] rulesArray,
 			AbstractRuleCombiningAlgorithm alg, DecisionType expectedDecision,
-			StatusCode expectedStatusCode, boolean expectMissintAttribute)
+			StatusCode expectedStatusCode, boolean expectMissingAttribute)
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
 		RequestInformation infos = new RequestInformation(null);
 		DecisionType decision = alg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);
-		if (expectMissintAttribute) {
+		if (expectMissingAttribute) {
 			assertFalse(infos.getMissingAttributes().isEmpty());
 		} else {
 			assertTrue(infos.getMissingAttributes().isEmpty());

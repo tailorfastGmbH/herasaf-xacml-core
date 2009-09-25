@@ -26,7 +26,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link YearMonthDuration} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestYearMonthDuration {
+	
+	/**
+	 * Creates positive test cases. 
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positivePossibleCases")
 	public Object[][] createPossiblePositiveCases(){
 		return new Object[][] {
@@ -36,6 +47,11 @@ public class TestYearMonthDuration {
 		};
 	}
 	
+	/**
+	 * Creates comparison test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positiveComparableCases")
 	public Object[][] createComparableCases(){
 		return new Object[][] {
@@ -46,6 +62,11 @@ public class TestYearMonthDuration {
 		};
 	}
 
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "negativeCases")
 	public Object[][] createNegativeCases(){
 		return new Object[][] {
@@ -56,23 +77,48 @@ public class TestYearMonthDuration {
 		};
 	}
 	
+	/**
+	 * Clears the property javax.xml.datatype.DatatypeFactory.
+	 */
 	@AfterMethod
 	public void afterMethod() {
 		System.clearProperty("javax.xml.datatype.DatatypeFactory");
 	}
 
+	/**
+	 * Test if the {@link YearMonthDuration} objects are properly created.
+	 * Positive data.
+	 * 
+	 * @param input The year month duration in its String representation.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positivePossibleCases", enabled = true)
 	public void testsuccessfulPositiveValues(String input, String expected) throws Exception {
 		YearMonthDuration duration = new YearMonthDuration(input);
 		assertEquals(duration.toString(), expected);
 	}
 
+	/**
+	 * Test if the {@link YearMonthDuration} objects are properly created.
+	 * Negative data.
+	 * 
+	 * @param input The year month duration in its String representation.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positivePossibleCases", enabled = true)
 	public void testsuccessfulNegativeValues(String input, String expected) throws Exception {
 		YearMonthDuration duration = new YearMonthDuration("-" + input);
 		assertEquals(duration.toString(), "-" + expected);
 	}
 
+	/**
+	 * Tests if the comparison function of {@link YearMonthDuration} works properly.
+	 * 
+	 * @param input1 The first string.
+	 * @param input2 The second year month duration string.
+	 * @param input3 A control flag..
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positiveComparableCases", enabled = true)
 	public void testComparable(String input1, String input2, String input3) throws Exception {
 		YearMonthDuration duration1 = new YearMonthDuration(input1);
@@ -92,11 +138,25 @@ public class TestYearMonthDuration {
 		}
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal year month duration representations.
+	 * Positive cases.
+	 * 
+	 * @param input The illegal time strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
 	public void testFailuresPositiveValues(String input) throws Exception {
 		new YearMonthDuration(input);
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal year month duration representations.
+	 * Negative cases.
+	 * 
+	 * @param input The illegal time strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
 	public void testFailuresNegativeValues(String input) throws Exception {
 		new YearMonthDuration("-" + input);

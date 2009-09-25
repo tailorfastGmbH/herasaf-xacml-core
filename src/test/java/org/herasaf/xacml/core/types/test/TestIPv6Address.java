@@ -23,7 +23,18 @@ import org.herasaf.xacml.core.types.IPv6Address;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link IPv6Address} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestIPv6Address {
+	
+	/**
+	 * Creates positive test cases. 
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positiveCases")
 	public Object[][] createPositiveCases(){
 		return new Object[][] {
@@ -47,6 +58,11 @@ public class TestIPv6Address {
 		};
 	}
 
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "negativeCases")
 	public Object[][] createNegativeCases(){
 		return new Object[][] {
@@ -56,11 +72,25 @@ public class TestIPv6Address {
 		};
 	}
 	
+	/**
+	 * Test if the {@link IPv6Address} objects are properly created.
+	 * One byte.
+	 * 
+	 * @param input The ipv6 in its String representation.
+	 * @param expected The expected String on {@link IPv6Address#toString()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positiveCases", enabled = true)
 	public void testAllowed(String input, String expected) throws Exception {
 		assertEquals(new IPv6Address(input).toString(), expected.toLowerCase());
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal ipv6 representations.
+	 * Positive values.
+	 * @param input The illegal ipv6 strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
 	public void testNotAllowed(String input) throws Exception {		
 		new IPv6Address(input);

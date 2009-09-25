@@ -28,9 +28,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the n-of function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestNOFFunction {
 	private Function ia;
 
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The positive test cases.
+	 */
 	@DataProvider(name="args")
 	public Object[][] createArgs(){
 		return new Object[][]{
@@ -46,6 +56,11 @@ public class TestNOFFunction {
 		};
 	}
 
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The negative test cases.
+	 */
 	@DataProvider(name="processingException")
 	public Object[][] createProcessingException(){
 		return new Object[][]{
@@ -54,23 +69,47 @@ public class TestNOFFunction {
 		};
 	}
 
-
-
+	/**
+	 * Initializes the n-of function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new NOFFunction();
 	}
 
+	/**
+	 * Tests the positive test cases. Tests if the n-of function works properly.
+	 * 
+	 * @param i1 The integer argument.
+	 * @param otherArgs The list of boolean values.
+	 * @param result The expected result
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="args")
 	public void testArgs(BigInteger i1, Boolean[] otherArgs, Boolean result) throws Exception {
 		assertEquals(ia.handle(toObjectArray(i1, otherArgs)), result);
 	}
-
+	
+	/**
+	 * Tests the negative test cases. If the n-of function behaves properly.
+	 * All test cases should result in an {@link ProcessingException}.
+	 * 
+	 * @param i The integer value.
+	 * @param otherArgs The list of boolean values.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="processingException", expectedExceptions={ProcessingException.class})
 	public void testProcessingException(BigInteger i, Boolean[] otherArgs) throws Exception{
 		ia.handle(toObjectArray(i, otherArgs));
 	}
 
+	/**
+	 * Transforms a the boolean values and the integer value into a single object array.
+	 * 
+	 * @param i1 The integer value.
+	 * @param otherArgs The list of boolean values.
+	 * @return The object array.
+	 */
 	public Object[] toObjectArray(BigInteger i1, Boolean[] otherArgs){
 		Object[] args = new Object[otherArgs.length+1];
 		args[0] = i1;
@@ -80,6 +119,9 @@ public class TestNOFFunction {
 		return args;
 	}
 
+	/**
+	 * Tests if the n-of function returns the proper ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:n-of");

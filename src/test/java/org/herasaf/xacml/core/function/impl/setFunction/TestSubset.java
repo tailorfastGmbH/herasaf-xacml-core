@@ -29,15 +29,27 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the Subset function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestSubset {
-
 	private Function function;
 
+	/**
+	 * Initializes the function.
+	 * This test is executed with the {@link DayTimeDurationSubsetFunction} function.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		this.function = new DayTimeDurationSubsetFunction();
 	}
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "functionTest")
 	public Object[][] createArgs() {
 		return new Object[][] {
@@ -70,6 +82,13 @@ public class TestSubset {
 		};
 	}
 
+	/**
+	 * Creates Sets of {@link DayTimeDuration}s.
+	 * 
+	 * @param strings The strings that shall be added to a set.
+	 * 
+	 * @return The created set.
+	 */
 	private List<DayTimeDuration> createSet(String[] strings) {
 		List<DayTimeDuration> durations = new ArrayList<DayTimeDuration>();
 		for (String str : strings) {
@@ -78,6 +97,14 @@ public class TestSubset {
 		return durations;
 	}
 
+	/**
+	 * Tests if the function works properly.
+	 * 
+	 * @param durations1 The first duration.
+	 * @param durations2 The second duration.
+	 * @param expectedResult The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "functionTest")
 	public void testFunction(List<DayTimeDuration> durations1,
 			List<DayTimeDuration> durations2, Boolean expectedResult)

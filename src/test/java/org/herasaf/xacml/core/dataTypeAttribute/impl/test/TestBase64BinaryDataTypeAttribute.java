@@ -26,9 +26,19 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link Base64BinaryDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestBase64BinaryDataTypeAttribute {
 	private Base64BinaryDataTypeAttribute dataType;
 	
+	/**
+	 * Creates the test cases for the test.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name="data")
 	public Object[][] createData(){
 		return new Object[][]{
@@ -40,17 +50,32 @@ public class TestBase64BinaryDataTypeAttribute {
 		};
 	}
 	
+	/**
+	 * Initializes a new {@link Base64BinaryDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new Base64BinaryDataTypeAttribute();
 	}
 	
+	/**
+	 * Converts various {@link String}s into {@link Base64Binary} and checks if it worked fine.
+	 * @param input A {@link String} to convert
+	 * @throws Exception In case of an error.
+	 */
 	@Test (dataProvider="data")
 	public void testInput(String input) throws Exception{
 		String base64Data =  Base64Encoder.encodeString(input);
 		assertEquals(dataType.convertTo(base64Data).getValue(), new Base64Binary(base64Data).getValue());
 	}
 	
+	/**
+	 * Tests if the {@link Base64BinaryDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(), "http://www.w3.org/2001/XMLSchema#base64Binary");

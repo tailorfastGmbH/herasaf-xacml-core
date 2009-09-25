@@ -26,9 +26,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This test tests if the DoubleDivide function works properly. 
+ *  
+ * @author Florian Huonder
+ */
 public class TestDoubleDivideFunction {
 	private Function ia;
 
+	/**
+	 * Creates tests that divides 2 double values. The third column is the expected result of the division.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -37,6 +47,11 @@ public class TestDoubleDivideFunction {
 		};
 	}
 
+	/**
+	 * Creates test cases where these double values are divided by 0.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="dataBy0")
 	public Object[][] createDataBy0(){
 		return new Object[][]{
@@ -44,21 +59,43 @@ public class TestDoubleDivideFunction {
 			new Object[] { new Double("99.0")},
 		};
 	}
+	
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new DoubleDivideFunction();
 	}
 
+	/**
+	 * Tests the division of 2 double values.
+	 * 
+	 * @param i1 The first double value.
+	 * @param i2 The second double value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data2Args")
 	public void testDivide2Args(Double i1, Double i2, Double result) throws Exception {
 		assertEquals(ia.handle(i1, i2), result);
 	}
 
+	/**
+	 * Tests the division by 0.
+	 * This test expects a {@link FunctionProcessingException}.
+	 * 
+	 * @param i1 The double value that shall be divided by 0.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="dataBy0", expectedExceptions={FunctionProcessingException.class})
 	public void testDivideBy0Args(Double i1) throws Exception {
 		ia.handle(i1, new Double("0.0"));
 	}
-
+	
+	/**
+	 * Tests if the function returns the right ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:double-divide");

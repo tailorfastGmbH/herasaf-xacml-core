@@ -56,11 +56,9 @@ public class RequestInformation {
 	}
 
 	/**
-	 * Create a new <code>RequestInformation</code> with the given {@link Map}
-	 * of remote-{@link Evaluatable}s.
-	 *
-	 * @param remoteEvaluatables
-	 *            The {@link Map} of remote-{@link Evaluatable}s.
+	 * TODO JAVADOC
+	 * 
+	 * @param attributeFinder The Attribute finder to place into the {@link RequestInformation}.
 	 */
 	public RequestInformation(AttributeFinder attributeFinder) {
 		this.attributeFinder = attributeFinder;

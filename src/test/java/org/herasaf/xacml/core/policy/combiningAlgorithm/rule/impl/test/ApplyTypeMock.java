@@ -24,26 +24,50 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.ApplyType;
 
+/**
+ * This is a mock for the {@link ApplyType}.
+ * 
+ * @author Florian Huonder
+ */
 public class ApplyTypeMock extends ApplyType {
-
-	private static final long serialVersionUID = 1L;
-
+	private static final long serialVersionUID = 1280368586961289345L;
 	private Object returnValue;
 	private Exception returnException;
 
+	/**
+	 * Creates a new mock with a given return value.
+	 * 
+	 * @param returnValue The return value of the mock.
+	 */
 	public ApplyTypeMock(Object returnValue) {
 		this.returnValue = returnValue;
 	}
 
+	/**
+	 * Creates a new mock with a given {@link Exception} to be thrown.
+	 * 
+	 * @param exception The {@link Exception} to throw.
+	 */
 	public ApplyTypeMock(Exception exception) {
 		this.returnException = exception;
 	}
 
-	public ApplyTypeMock(Object b, Exception exception) {
-		returnValue =  b;
+	/**
+	 * creates a new mock with a given {@link Exception} and a given return value.
+	 * 
+	 * @param returnValue The return value of the mock.
+	 * @param exception The {@link Exception} that shall be thrown.
+	 */
+	public ApplyTypeMock(Object returnValue, Exception exception) {
+		this.returnValue =  returnValue;
 		returnException = exception;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Throw the given {@link Exception} or return the given returnValue. 
+	 */
 	@Override
 	public Object handle(RequestType request,
 			RequestInformation reqInfo)

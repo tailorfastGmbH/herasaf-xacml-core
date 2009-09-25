@@ -19,11 +19,9 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -35,14 +33,24 @@ import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.RuleCombiningAlgMoc
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.ConditionType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
-import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class TestRuleEvaluation {
+/**
+ * Tests if the rule evaluation works properly.
 
+ * @author Florian Huonder.
+ */
+public class TestRuleEvaluation {
+	
+	/**
+	 * Creates the test cases.
+	 * 
+	 * @return The test cases.
+	 * @throws Exception If an error occurs.
+	 */
 	@DataProvider(name = "evaluationData")
 	public Object[][] evaluationData() throws Exception {
 		return new Object[][] {
@@ -287,6 +295,13 @@ public class TestRuleEvaluation {
 						StatusCode.PROCESSING_ERROR, null }, };
 	}
 
+	/**
+	 * Creates a {@link RuleType}.
+	 * 
+	 * @param effect The {@link EffectType} that the created rule shall return.
+	 * @param condition The {@link ConditionMock} that the {@link RuleType} shall contain.
+	 * @return The created {@link RuleType}.
+	 */
 	private RuleType initializeRule(EffectType effect, ConditionType condition) {
 		RuleType rule = new RuleType();
 		rule.setTarget(new TargetType());
@@ -295,6 +310,9 @@ public class TestRuleEvaluation {
 		return rule;
 	}
 
+	/**
+	 * Initializes the {@link RuleDenyOverridesAlgorithm} and sets {@link TargetMatcherMock} into it.
+	 */
 	private RuleCombiningAlgorithm initializeRuleCombiningAlg(
 			TargetMatcherMock.Decisions decision) {
 		TargetMatcherMock targetMatcher = new TargetMatcherMock(
@@ -302,13 +320,23 @@ public class TestRuleEvaluation {
 		return new RuleCombiningAlgMock(targetMatcher);
 	}
 
+	/**
+	 * Tests if the rule evaluation works properly.
+	 * 
+	 * @param testID An ID for the test case.
+	 * @param rule The {@link RuleType}.
+	 * @param combAlg The combining algorithm to test.
+	 * @param expectedDecision The expected {@link DecisionType}.
+	 * @param expectedStatusCode The expected {@link StatusCode}.
+	 * @param expectedMissingAttribute True if missing attributes are expected, false otherwise.
+	 * @throws Exception
+	 */
 	@Test(dataProvider = "evaluationData")
 	public void testEvaluateRule(String testID, RuleType rule,
 			RuleCombiningAlgMock combAlg, DecisionType expectedDecision,
 			StatusCode expectedStatusCode,
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
-		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
 		RequestInformation info = new RequestInformation(null);
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule, info);
 		assertEquals(madeDecision, expectedDecision);
@@ -319,5 +347,4 @@ public class TestRuleEvaluation {
 			assertEquals(info.getMissingAttributes().size(), 0);
 		}
 	}
-
 }

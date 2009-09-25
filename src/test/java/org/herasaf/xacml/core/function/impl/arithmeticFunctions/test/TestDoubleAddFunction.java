@@ -25,9 +25,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This test tests if the DoubleAdd function works properly. 
+ *  
+ * @author Florian Huonder
+ */
 public class TestDoubleAddFunction {
 	private Function ia;
 
+	/**
+	 * Creates tests that add 2 double values. The third column is the expected result of the addition.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -40,6 +50,11 @@ public class TestDoubleAddFunction {
 		};
 	}
 
+	/**
+	 * Creates tests that add 3 double values. The fourth column is the expected result of the addition.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data3Args")
 	public Object[][] createData3Args(){
 		return new Object[][]{
@@ -52,21 +67,44 @@ public class TestDoubleAddFunction {
 		};
 	}
 
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new DoubleAddFunction();
 	}
 
+	/**
+	 * Tests all test cases with 2 double values.
+	 * 
+	 * @param i1 The first double value.
+	 * @param i2 The second double value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data2Args")
 	public void testAdd2Args(Double i1, Double i2, Double result) throws Exception {
 		assertEquals(((Double)ia.handle(i1, i2)).longValue(), result.longValue());
 	}
 
+	/**
+	 * Tests all test cases with 2 double values.
+	 * 
+	 * @param i1 The first double value.
+	 * @param i2 The second double value.
+	 * @param i3 The third double value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data3Args")
 	public void testAdd3Args(Double i1, Double i2, Double i3, Double result) throws Exception {
 		assertEquals(((Double)ia.handle(i1, i2, i3)).longValue(), result.longValue());
 	}
 
+	/**
+	 * Tests if the function returns the right ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:double-add");

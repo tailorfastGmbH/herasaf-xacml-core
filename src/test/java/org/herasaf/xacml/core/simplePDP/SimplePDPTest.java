@@ -31,30 +31,31 @@ import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
-import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * 
- * TODO JAVADOC!!
+ * Tests if the {@link SimplePDP} and {@link SimplePDPFactory} behave as expected.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public class SimplePDPTest {
 	private PDP simplePDP;
 
+	/**
+	 * Creates various test cases.
+	 * 
+	 * @return The created test cases.
+	 * @throws Exception If an error occurs.
+	 */
 	@DataProvider(name = "policy-request-response-combinations")
 	public Object[][] initializeTestCases() throws Exception {
-		System.out.println("XXXXXXXXXXXXXXXX: DP - START");
-		
-		PDP p = SimplePDPFactory.getSimplePDP();
+		SimplePDPFactory.getSimplePDP(); //This line is needed that the JAXB stuff is initialized.
 		
 		
 		return new Object[][] {
@@ -68,24 +69,33 @@ public class SimplePDPTest {
 						loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
 						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") },
 
-		// TODO
+		// TODO add further cases:
 		// policy with internal ref
 		// policy with external ref
 		};
 	}
 
+	/**
+	 * Initializes the {@link SimplePDPFactory} to use the default {@link Initializer}s.
+	 * Creates a new {@link SimplePDP}.
+	 */
 	@BeforeClass
 	public void init() {
-		System.out.println("XXXXXXXXXXXXXXXX: BC - START");
 		SimplePDPFactory.useDefaultInitializers(true);
 		simplePDP = SimplePDPFactory.getSimplePDP();
-		System.out.println("XXXXXXXXXXXXXXXX: BC - END");
 	}
 
+	/**
+	 * Tests if the {@link SimplePDP} behaves properly.
+	 * 
+	 * @param policy The policy tree to deploy and test against.
+	 * @param request The {@link RequestCtx} that shall be evaluated.
+	 * @param expectedResponse The expected {@link ResponseCtx}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "policy-request-response-combinations")
 	public void testSimplePDP(Evaluatable policy, RequestCtx request,
 			ResponseCtx expectedResponse) throws Exception {
-		System.out.println("XXXXXXXXXXXXXXXX: Test START");
 		PolicyRepository repo = simplePDP.getPolicyRepository();
 		repo.deploy(policy);
 
@@ -106,19 +116,36 @@ public class SimplePDPTest {
 				+ response.getResponse().getResults().get(0).getDecision());
 
 		repo.undeploy(policy.getId());
-		System.out.println("XXXXXXXXXXXXXXXX: Test - END");
 	}
 
+	/**
+	 * Loads an {@link Evaluatable} from the class path.
+	 * @param file The path to the resource.
+	 * @return The created {@link Evaluatable}.
+	 * @throws SyntaxException
+	 */
 	private Evaluatable loadPolicy(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
 		return PolicyConverter.unmarshal(is);
 	}
 
+	/**
+	 * Loads an {@link RequestCtx} from the class path.
+	 * @param file The path to the resource.
+	 * @return The created {@link RequestCtx}.
+	 * @throws SyntaxException
+	 */
 	private RequestCtx loadRequest(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
 		return RequestCtxFactory.unmarshal(is);
 	}
 
+	/**
+	 * Loads an {@link ResponseCtx} from the class path.
+	 * @param file The path to the resource.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 */
 	private ResponseCtx loadResponse(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
 		return ResponseCtxFactory.unmarshal(is);

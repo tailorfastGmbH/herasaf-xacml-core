@@ -26,9 +26,19 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link DnsNameDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDnsNameDataTypeAttribute {
 	private DnsNameDataTypeAttribute dataType;
 
+	/**
+	 * Creates positive test cases for the test.
+	 * 
+	 * @return The positive test cases.
+	 */
 	@DataProvider(name = "positiveCases")
 	public Object[][] createPositiveCases() {
 		return new Object[][] {
@@ -56,6 +66,11 @@ public class TestDnsNameDataTypeAttribute {
 				new Object[] { "*.mydomain.ch:12-30" } };
 	}
 
+	/**
+	 * Creates negative test cases for the test.
+	 * 
+	 * @return The negative test cases.
+	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
 		return new Object[][] {
@@ -78,21 +93,43 @@ public class TestDnsNameDataTypeAttribute {
 				new Object[] { "sub1.*.domain.ch:30-12" } };
 	}
 
+	/**
+	 * Initializes a new {@link DnsNameDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new DnsNameDataTypeAttribute();
 	}
 
+	/**
+	 * Tests the positive data.
+	 * 
+	 * @param input The positive data.
+	 * @throws Exception In case of an error.
+	 */
 	@Test(dataProvider = "positiveCases")
 	public void testInput(String input) throws Exception {
 		assertEquals(dataType.convertTo(input), new DnsName(input));
 	}
 
+	/**
+	 * Tests the negative data.
+	 * 
+	 * @param input The negative data.
+	 * @throws Exception In case of an error.
+	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
 		dataType.convertTo(input);
 	}
 
+	/**
+	 * Tests if the {@link DnsNameDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

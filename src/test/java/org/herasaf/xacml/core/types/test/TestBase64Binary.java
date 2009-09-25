@@ -27,7 +27,18 @@ import org.herasaf.xacml.core.types.Base64Binary;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests the {@link Base64Binary} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestBase64Binary {
+	
+	/**
+	 * Creates test cases.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider (name="data")
 	public Object[][] createData(){
 		return new Object[][]{
@@ -39,6 +50,11 @@ public class TestBase64Binary {
 		};
 	}
 
+	/**
+	 * Test if the creation of the {@link Base64Binary} data type initialized properly.
+	 * @param input the String to encode to {@link Base64Binary}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test (dataProvider="data")
 	public void testBase64(String input) throws Exception {
 		String base64Data = Base64Encoder.encodeString(input);
@@ -46,6 +62,11 @@ public class TestBase64Binary {
 		assertEquals(b64b.getValue(), input.getBytes());
 	}
 
+	/**
+	 * Checks if the hash-code function of the {@link Base64Binary} data type works properly.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test
 	public void testHashCode() throws Exception {
 		String base64Data = Base64Encoder.encodeString("hallo");

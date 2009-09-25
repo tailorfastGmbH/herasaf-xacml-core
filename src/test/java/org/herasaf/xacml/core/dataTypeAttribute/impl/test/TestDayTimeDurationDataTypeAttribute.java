@@ -25,26 +25,51 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link DayTimeDurationDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDayTimeDurationDataTypeAttribute {
 
 	private DayTimeDurationDataTypeAttribute dataType;
 
+	/**
+	 * Initializes a new {@link DayTimeDurationDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new DayTimeDurationDataTypeAttribute();
 	}
 
+	/**
+	 * Test a case with a day-time-duration that is valid.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput1() throws Exception {
 		assertEquals(dataType.convertTo("-P9DT4H"), new DayTimeDuration(
 				"-P9DT4H"));
 	}
 
+	/**
+	 * Test an illegal value.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
 		dataType.convertTo("+P4DT4H");
 	}
 
+	/**
+	 * Tests if the {@link DayTimeDurationDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

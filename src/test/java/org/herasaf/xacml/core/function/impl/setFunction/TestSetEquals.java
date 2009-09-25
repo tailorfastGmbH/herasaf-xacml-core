@@ -29,15 +29,27 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the SetEquals function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestSetEquals {
-
 	private Function function;
 
+	/**
+	 * Initializes the function.
+	 * This test is executed with the {@link DayTimeDurationSetEqualsFunction} function.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		this.function = new DayTimeDurationSetEqualsFunction();
 	}
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "functionTest")
 	public Object[][] createArgs() {
 		return new Object[][] {
@@ -77,6 +89,13 @@ public class TestSetEquals {
 		};
 	}
 
+	/**
+	 * Creates Sets of {@link DayTimeDuration}s.
+	 * 
+	 * @param strings The strings that shall be added to a set.
+	 * 
+	 * @return The created set.
+	 */
 	private List<DayTimeDuration> createSet(String[] strings) {
 		List<DayTimeDuration> durations = new ArrayList<DayTimeDuration>();
 		for (String str : strings) {
@@ -85,6 +104,14 @@ public class TestSetEquals {
 		return durations;
 	}
 
+	/**
+	 * Tests if the function works properly.
+	 * 
+	 * @param durations1 The first duration.
+	 * @param durations2 The second duration.
+	 * @param expectedResult The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "functionTest")
 	public void testFunction(List<DayTimeDuration> durations1,
 			List<DayTimeDuration> durations2, Boolean expectedResult)

@@ -65,7 +65,9 @@ public class SimplePDPFactory {
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @return
+	 * @param rootCombiningAlgorithm The root combining algorithm of the PDP.
+	 * @param policyRepository the {@link PolicyRepository} of the PDP.
+	 * @return The PDP (singleton).
 	 */
 	public static PDP getSimplePDP(
 			PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
@@ -90,7 +92,7 @@ public class SimplePDPFactory {
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @return
+	 * @return The PDP (singleton).
 	 */
 	public static PDP getSimplePDP() {
 		logger.warn("The MapBasedSimplePolicyRepository is in use. This must not be used in a productive environment.");

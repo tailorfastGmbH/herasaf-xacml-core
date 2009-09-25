@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.types.test;
 
+import org.herasaf.xacml.core.types.DayTimeDuration;
 import org.herasaf.xacml.core.types.DnsName;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -24,7 +25,18 @@ import static org.testng.Assert.fail;
 import static org.testng.Assert.assertTrue;
 import static org.testng.Assert.assertEquals;
 
+/**
+ *  Tests the {@link DnsName} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDnsName {
+	
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positiveCases")
 	public Object[][] createPositiveCases(){
 		return new Object[][] {
@@ -50,6 +62,11 @@ public class TestDnsName {
 		};
 	}
 
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "negativeCases")
 	public Object[][] createNegativeCases(){
 		return new Object[][] {
@@ -72,12 +89,25 @@ public class TestDnsName {
 		};
 	}
 	
+	/**
+	 * Test if the {@link DayTimeDuration} objects are properly created.
+	 * 
+	 * @param input The dnsName in its String representation.
+	 * @param output The expected String on {@link DnsName#toString()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test (dataProvider = "positiveCases")
 	public void testPositives(String input, String output) throws Exception {
 		DnsName dnsName = new DnsName(input);
 		assertEquals(dnsName.toString(), output);
 	}
 	
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal dnsName representations.
+	 * Positive values.
+	 * @param negativeCase The illegal dnsName strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test (dataProvider = "negativeCases")
 	public void testNegatives(String negativeCase) throws Exception {
 		try {

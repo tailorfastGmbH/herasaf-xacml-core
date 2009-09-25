@@ -30,15 +30,27 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the Intersection function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestIntersection {
-
 	private Function function;
 
+	/**
+	 * Initializes the function.
+	 * This test is executed with the {@link DayTimeDurationIntersectionFunction} function.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		this.function = new DayTimeDurationIntersectionFunction();
 	}
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "functionTest")
 	public Object[][] createArgs() {
 		return new Object[][] {
@@ -62,6 +74,13 @@ public class TestIntersection {
 		};
 	}
 
+	/**
+	 * Creates Sets of {@link DayTimeDuration}s.
+	 * 
+	 * @param strings The strings that shall be added to a set.
+	 * 
+	 * @return The created set.
+	 */
 	private List<DayTimeDuration> createSet(String[] strings) {
 		List<DayTimeDuration> durations = new ArrayList<DayTimeDuration>();
 		for (String str : strings) {
@@ -70,6 +89,14 @@ public class TestIntersection {
 		return durations;
 	}
 
+	/**
+	 * Tests if the function works properly.
+	 * 
+	 * @param durations1 The first duration.
+	 * @param durations2 The second duration.
+	 * @param expectedIntersection Expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(dataProvider = "functionTest")
 	public void testFunction(List<DayTimeDuration> durations1,

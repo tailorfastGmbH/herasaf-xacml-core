@@ -20,17 +20,28 @@ package org.herasaf.xacml.core.targetMatcher.impl.test.mock;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
+/**
+ * A mock of the {@link Function} type.
+ * 
+ * @author Florian Huonder
+ */
 public class FunctionMock implements Function {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -5717424357552861113L;
 	private boolean exceptionProcessing;
 
+	/**
+	 * Initializes the mock.
+	 * @param exceptionProcessing True if the mock shall throw an exception.
+	 */
 	public FunctionMock(boolean exceptionProcessing) {
 		this.exceptionProcessing = exceptionProcessing;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Throws an exception if set so or returns the request values.
+	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		if(exceptionProcessing){
 			throw new FunctionProcessingException();

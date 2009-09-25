@@ -29,17 +29,30 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the Map (higher order) function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestMapFunction {
-
 	private Function function;
 	private Function compareFunction;
 
+	/**
+	 * Initializes the function needed to pass to the map (higher order) function. Here it is the {@link StringNormalizeSpaceFunction} (trim).
+	 * Initializes the map (higher order) function.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		this.function = new MapFunction();
 		this.compareFunction = new StringNormalizeSpaceFunction();
 	}
 
+	/**
+	 * Creates the test cases.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "functionTest")
 	public Object[][] createArgs() {
 		return new Object[][] {
@@ -54,6 +67,13 @@ public class TestMapFunction {
 		};
 	}
 
+	/**
+	 * Creates Sets of Strings.
+	 * 
+	 * @param strings The strings that shall be added to a set.
+	 * 
+	 * @return The created set.
+	 */
 	private List<String> createSet(String[] strings) {
 		List<String> set = new ArrayList<String>();
 		for (String str : strings){
@@ -62,7 +82,13 @@ public class TestMapFunction {
 		return set;
 	}
 
-
+	/**
+	 * Tests if the map function works properly.
+	 * 
+	 * @param set1 The input set containing strings.
+	 * @param set2 The expected result set.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="functionTest")
 	public void testFunction(List<String> set1, List<String> set2) throws Exception {
 		assertEquals(function.handle(compareFunction, set1), set2);

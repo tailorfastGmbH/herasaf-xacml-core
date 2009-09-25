@@ -21,8 +21,11 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Arrays;
 
+import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
 import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
@@ -51,14 +54,28 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link TargetMatcher} behaves properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestTargetMatcher {
 	RequestInformation reqInfo;
 
+	/**
+	 * Initializes the {@link RequestInformation} containing an mock for the
+	 * {@link AttributeFinder}.
+	 */
 	@BeforeTest
 	public void init() {
 		reqInfo = new RequestInformation(new AttributeFinderMock());
 	}
 
+	/**
+	 * Creates various test cases.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "positiveData")
 	public Object[][] createPositiveData() {
 		// 1 = length of the array says how many subjects the Target has
@@ -180,6 +197,11 @@ public class TestTargetMatcher {
 						0, false, false, false, false, true }, };
 	}
 
+	/**
+	 * Creates various test cases.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "overAllData")
 	public Object[][] createOverAllData() {
 		return new Object[][] {
@@ -202,6 +224,32 @@ public class TestTargetMatcher {
 				new Object[] { true, true, true, true, true }, };
 	}
 
+	/**
+	 * Tests the target matcher in various combinations.
+	 * 
+	 * @param subjects
+	 *            The number of subjects that match.
+	 * @param matchingAttributeValues
+	 *            The number of {@link AttributeValueType}s that match.
+	 * @param nonMatchingAttributeValues
+	 *            The number of the {@link AttributeValueType}s that do not
+	 *            match.
+	 * @param firstIsMatch
+	 *            Tells if the first matches.
+	 * @param funcProcessException
+	 *            True if a {@link FunctionProcessingException} should occur,
+	 *            false othwerwise.
+	 * @param expressProcessException
+	 *            True if a {@link ExpressionProcessingException} should occur,
+	 *            false otherwise.
+	 * @param syntaxException
+	 *            True if a {@link SyntaxException} should occur, flase
+	 *            otherwise.
+	 * @param result
+	 *            The expected result.
+	 * @throws Exception
+	 *             If an error occurs.
+	 */
 	@Test(enabled = true, dataProvider = "positiveData", description = "The test only tests if the subject-match does work because resource,"
 			+ "action and environment match are absolutely the same. Therefor they are"
 			+ "omitted and this results in that the elements alway match, what means"
@@ -235,16 +283,16 @@ public class TestTargetMatcher {
 		for (int i = 0; i < subjects.length; i++) { // Number of subjects
 			SubjectType subject = new SubjectType();
 			for (int j = 0; j < subjects[i][0]; j++) { // Number of
-														// subject-matches that
-														// match
+				// subject-matches that
+				// match
 				SubjectMatchType match = createSubjectMatchType(
 						funcProcessException, MATCH);
 				match.setSubjectAttributeDesignator(designatorMock);
 				subject.getSubjectMatches().add(match);
 			}
 			for (int j = 0; j < subjects[i][1]; j++) { // Number of
-														// subject-matches that
-														// do not match
+				// subject-matches that
+				// do not match
 				SubjectMatchType match = createSubjectMatchType(
 						funcProcessException, "Something that does not match");
 				match.setSubjectAttributeDesignator(designatorMock);
@@ -255,24 +303,44 @@ public class TestTargetMatcher {
 
 		TargetMatcher matcher = new TargetMatcherImpl();
 		assertEquals(matcher.match(null, target, reqInfo), result); // Request
-																	// can be
-																	// null
-																	// because
-																	// the data
-																	// is
-																	// provided
-																	// through
-																	// the
-																	// Designator
-																	// above.
+		// can be
+		// null
+		// because
+		// the data
+		// is
+		// provided
+		// through
+		// the
+		// Designator
+		// above.
 	}
 
+	/**
+	 * Returns the an {@link String} array containing a a value n time (n =
+	 * size).
+	 * 
+	 * @param value
+	 *            The value to add to the array
+	 * @param size
+	 *            The number of times the value shall be in the array.
+	 * @return The array containing the value size-time.
+	 */
 	private String[] getMatchValues(String value, int size) {
 		String[] values = new String[size];
 		Arrays.fill(values, value);
 		return values;
 	}
 
+	/**
+	 * Creates a {@link SubjectMatchType}.
+	 * 
+	 * @param funcProcessException
+	 *            True if the {@link SubjectMatchType} should throw a
+	 *            {@link FunctionProcessingException}, false otherwise.
+	 * @param content
+	 *            the content of the {@link AttributeValueType}.
+	 * @return The created {@link SubjectMatchType}.
+	 */
 	private SubjectMatchType createSubjectMatchType(
 			boolean funcProcessException, String content) {
 		SubjectMatchType match = new SubjectMatchType();
@@ -283,25 +351,60 @@ public class TestTargetMatcher {
 
 		match.setAttributeValue(attrValue1);
 		match.setMatchFunction(new FunctionMock(funcProcessException)); // This
-																		// function
-																		// matches
+		// function
+		// matches
 		return match;
 	}
 
+	/**
+	 * Tests if the the match throws a {@link FunctionProcessingException} when
+	 * expected.
+	 * 
+	 * @throws Exception
+	 *             If an error occurs.
+	 */
 	@Test(expectedExceptions = { FunctionProcessingException.class })
 	public void testFunctionProcessingException() throws Exception {
 		testMatch(new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 5, 0, true,
 				true, false, false, true); // All parameters except of the 5th
-											// have no impact
+		// have no impact
 	}
 
+	/**
+	 * Tests if the the match throws a {@link ExpressionProcessingException}
+	 * when expected.
+	 * 
+	 * @throws Exception
+	 *             If an error occurs.
+	 */
 	@Test(expectedExceptions = { ExpressionProcessingException.class })
 	public void testExceptionProcessingException() throws Exception {
 		testMatch(new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 5, 0, true,
 				false, true, false, true); // All parameters except of the 6th
-											// have no impact
+		// have no impact
 	}
 
+	/**
+	 * Tests if all various combinations of the four elements (subject-,
+	 * resource-, action- and environment-match) works as expected.
+	 * 
+	 * @param subjectMatches
+	 *            True if the {@link SubjectMatchType} shall match, false
+	 *            otherwise.
+	 * @param resourceMatches
+	 *            True if the {@link ResourceMatchType} shall match, false
+	 *            otherwise.
+	 * @param actionMatches
+	 *            True if the {@link ActionMatchType} shall match, false
+	 *            otherwise.
+	 * @param environmentMatches
+	 *            True if the {@link EnvironmentMatchType} shall match, false
+	 *            otherwise.
+	 * @param result
+	 *            The expected result.
+	 * @throws Exception
+	 *             If an error occurs.
+	 */
 	@Test(dataProvider = "overAllData", description = "Tests the combinations of all four elements")
 	public void testOverAll(boolean subjectMatches, boolean resourceMatches,
 			boolean actionMatches, boolean environmentMatches, boolean result)
@@ -389,7 +492,11 @@ public class TestTargetMatcher {
 
 		AttributeValueType attrValue = new AttributeValueType();
 		attrValue.getContent().add(MATCH);
-		attrValue.setDataType(new StringDataTypeAttribute()); //String is fix because all tests need string as data type
+		attrValue.setDataType(new StringDataTypeAttribute()); // String is fix
+																// because all
+																// tests need
+																// string as
+																// data type
 		smt.setAttributeValue(attrValue);
 		rmt.setAttributeValue(attrValue);
 		amt.setAttributeValue(attrValue);
@@ -397,37 +504,38 @@ public class TestTargetMatcher {
 
 		TargetMatcher matcher = new TargetMatcherImpl();
 		assertEquals(matcher.match(null, target, reqInfo), result); // Request
-																	// can be
-																	// null
-																	// because
-																	// the data
-																	// is
-																	// provided
-																	// through
-																	// the
-																	// Designator
-																	// above.
+		// can be
+		// null
+		// because
+		// the data
+		// is
+		// provided
+		// through
+		// the
+		// Designator
+		// above.
 	}
 
+	/**
+	 * Tests if the match works when the {@link RequestType} is null.
+	 * 
+	 * @throws Exception
+	 *             If an error occurs.
+	 */
 	@Test
 	public void testNullElements() throws Exception {
 		TargetType target = new TargetType();
 
 		TargetMatcher matcher = new TargetMatcherImpl();
 		assertEquals(matcher.match(null, target, reqInfo), true); // Request can
-																	// be null
-																	// because
-																	// the data
-																	// is
-																	// provided
-																	// through
-																	// the
-																	// Designator
-																	// above.
-	}
-
-	@Test
-	public void testEmptyBag() {
-
+		// be null
+		// because
+		// the data
+		// is
+		// provided
+		// through
+		// the
+		// Designator
+		// above.
 	}
 }

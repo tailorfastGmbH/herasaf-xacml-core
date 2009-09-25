@@ -58,7 +58,7 @@ public interface PDP {
 
 	/**
 	 * TODO JAVDOC
-	 * @return
+	 * @return The {@link PolicyRepository} attached to this {@link PDP}.
 	 */
 	public PolicyRepository getPolicyRepository();
 
