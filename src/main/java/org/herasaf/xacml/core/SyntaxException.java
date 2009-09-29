@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core;
 
 /**
+ * TODO JAVADOC
+ * 
  * This exception is thrown when there is a syntax error in the request.
  * 
  * @author Florian Huonder 

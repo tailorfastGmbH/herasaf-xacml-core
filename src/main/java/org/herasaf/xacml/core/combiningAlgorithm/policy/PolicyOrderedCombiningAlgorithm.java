@@ -27,6 +27,8 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
+ * TODO JAVADOC
+ * 
  * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
  * the included Evaluatables ordered.
  * 

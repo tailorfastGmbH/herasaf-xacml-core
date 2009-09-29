@@ -18,10 +18,11 @@
 package org.herasaf.xacml.core.types;
 
 /**
+ * TODO JAVADOC
+ * 
  * Takes a string that represents a base64 encoded value. The value is decoded in the constructor.
  *
  * @author Florian Huonder 
- * @version 1.0
  */
 public class Base64Binary {
 	private byte[] value;

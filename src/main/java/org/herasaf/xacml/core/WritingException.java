@@ -20,6 +20,8 @@ package org.herasaf.xacml.core;
 import java.io.Serializable;
 
 /**
+ * TODO JAVADOC
+ * 
  * This exception is thrown when a writing fails.
  * 
  * @author Florian Huonder 

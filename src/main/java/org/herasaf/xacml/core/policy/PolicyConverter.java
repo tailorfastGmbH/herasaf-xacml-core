@@ -47,6 +47,8 @@ import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 
 /**
+ * TODO JAVADOC
+ * 
  * Marshalls and Unmarshalls {@link Evaluatable}s to and from the given sources
  * and sinks respectively. Every access creates a new {@link Marshaller} or
  * {@link Unmarshaller} respectively because the JAXB Specification currently
@@ -64,6 +66,8 @@ public final class PolicyConverter {
 	private static final ContextAndPolicy.JAXBProfile CONTEXT = ContextAndPolicy.JAXBProfile.POLICY;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Initializes the object factory.
 	 */
 	static {
@@ -71,6 +75,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * It should not be possible to instantiate such an object. The
 	 * {@link PolicyConverter} must be accessed in a static way.
 	 */
@@ -78,6 +84,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link ContentHandler}.
 	 *
 	 * @param ch
@@ -110,6 +118,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link File}.
 	 *
 	 * @param file
@@ -142,6 +152,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link Result}.
 	 *
 	 * @param result
@@ -174,6 +186,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link OutputStream}.
 	 *
 	 * @param out
@@ -206,6 +220,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link Writer}.
 	 *
 	 * @param writer
@@ -238,6 +254,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link Node}.
 	 *
 	 * @param node
@@ -270,6 +288,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link XMLStreamWriter}.
 	 *
 	 * @param xmlStreamWriter
@@ -302,6 +322,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the {@link RequestType} to the given {@link XMLEventWriter}.
 	 *
 	 * @param xmlEventWriter
@@ -334,6 +356,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link File}.
 	 *
 	 * @param file
@@ -357,6 +381,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link InputStream}.
 	 *
 	 * @param inputStream
@@ -381,6 +407,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link Reader}.
 	 *
 	 * @param reader
@@ -404,6 +432,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link URL}.
 	 *
 	 * @param url
@@ -426,6 +456,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link InputSource}.
 	 *
 	 * @param inputSource
@@ -450,6 +482,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link Node}.
 	 *
 	 * @param node
@@ -473,6 +507,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+
 	 * Creates a {@link Evaluatable} object from the given {@link Node}.
 	 *
 	 * @param source
@@ -496,6 +532,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given
 	 * {@link XMLStreamReader}.
 	 *
@@ -521,6 +559,8 @@ public final class PolicyConverter {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a {@link Evaluatable} object from the given
 	 * {@link XMLEventReader}.
 	 *

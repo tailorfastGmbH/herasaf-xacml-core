@@ -55,6 +55,9 @@ public class ContextAndPolicyInitializer implements Initializer {
 		logger.info("JAXB settings for context (request, response) and policy are initialized.");
 	}
 	
+	/**
+	 * TODO JAVADOC
+	 */
 	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath){
 		ContextAndPolicyConfiguration config = new ContextAndPolicyConfiguration();
 		

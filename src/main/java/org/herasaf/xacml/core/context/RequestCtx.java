@@ -38,6 +38,8 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 
 /**
+ * TODO JAVADOC
+ * 
  * Encapsulates a {@link RequestType}. Provides various marshalling methods for
  * the {@link RequestType}. Because the {@link Marshaller} from JAXB <b>is
  * not</b> thread safe it must be newly created in each marshal-method. This
@@ -54,6 +56,8 @@ public class RequestCtx {
 	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Initializes the Object factory.
 	 */
 	static {
@@ -61,6 +65,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a new {@link RequestCtx} from the given {@link RequestType}.
 	 * 
 	 * @param request
@@ -72,6 +78,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the containing {@link RequestType}.
 	 * 
 	 * @return The {@link RequestType} contained in this object.
@@ -81,6 +89,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the contained Request into SAX2 events.
 	 * 
 	 * @param ch
@@ -98,6 +108,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the contained Request to the file.
 	 * 
 	 * @param file
@@ -115,6 +127,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * <p>
 	 * Marshal the contained Request into the specified
 	 * javax.xml.transform.Result.
@@ -140,6 +154,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * <p>
 	 * Marshal the contained Request into an output stream.
 	 * </p>
@@ -159,6 +175,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * <p>
 	 * Marshal the contained Request into a Writer.
 	 * </p>
@@ -178,6 +196,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the contained Request into a DOM tree.
 	 * 
 	 * @param node
@@ -198,6 +218,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshal the contained Request into a XMLStreamWriter.
 	 * 
 	 * @param xmlStreamWriter
@@ -217,6 +239,8 @@ public class RequestCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshal the contained Request into a XMLEventWriter.
 	 * 
 	 * @param xmlEventWriter

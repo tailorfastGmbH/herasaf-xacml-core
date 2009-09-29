@@ -19,6 +19,8 @@ package org.herasaf.xacml.core.policy;
 
 
 /**
+ * TODO JAVADOC
+ * 
  * The {@link EvaluatableID} represents the id of an {@link Evaluatable}.
  * It is used for a cleaner API.
  *
@@ -27,6 +29,8 @@ package org.herasaf.xacml.core.policy;
  */
 public interface EvaluatableID {
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the id of the {@link Evaluatable} as {@link String}.
 	 * 
 	 * @return The id of the {@link Evaluatable}.

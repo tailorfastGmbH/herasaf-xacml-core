@@ -21,6 +21,8 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
+ * TODO JAVADOC
+ * 
  * This exception is thrown if a missing attribute cannot be retrieved by the
  * remote loader.
  * 

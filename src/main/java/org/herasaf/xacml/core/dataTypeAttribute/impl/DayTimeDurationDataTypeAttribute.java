@@ -21,6 +21,8 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration.<br>
  * See: <a

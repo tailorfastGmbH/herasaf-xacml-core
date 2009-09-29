@@ -19,6 +19,8 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#string.<br>
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#string"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#string</A> for further

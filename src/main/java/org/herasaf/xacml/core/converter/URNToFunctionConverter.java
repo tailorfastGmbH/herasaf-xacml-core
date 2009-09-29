@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * TODO JAVADOC
+ * 
  * Converts an URN to a function. The functions are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
@@ -49,11 +51,15 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 			.getLogger(URNToFunctionConverter.class);
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Contains all the available functions
 	 */
 	static Map<String, Function> functions;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Is used by the <a
 	 * href="http://www.springframework.org/">Springframework</a> to fill the
 	 * static {@link Map} containing the mapping between URNs and functions.
@@ -62,16 +68,14 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 *            The map containing the mapping between URNs and functions.
 	 */
 	public static void setFunctions(Map<String, Function> functions) {
+		//TODO is a concurrent hashmap really needed?
 		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(
 				functions); // ConcurrentHashMap because of concurrent access
 							// possible
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String marshal(Function function) throws IllegalArgumentException {
@@ -85,11 +89,8 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 		return functionString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Function unmarshal(String functionId)

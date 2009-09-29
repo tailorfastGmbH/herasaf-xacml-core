@@ -20,10 +20,11 @@ package org.herasaf.xacml.core.function;
 import org.herasaf.xacml.core.ProcessingException;
 
 /**
+ * TODO JAVADOC
+ * 
  * This exception is thrown when the processing of the a Function fails.
  *
  * @author Florian Huonder
- * @version 1.0
  */
 public class FunctionProcessingException extends ProcessingException {
 	private static final long serialVersionUID = 8213802064654257318L;

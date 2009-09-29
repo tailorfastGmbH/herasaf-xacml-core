@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core.types;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:rfc822Name.<br>
  * See: <a

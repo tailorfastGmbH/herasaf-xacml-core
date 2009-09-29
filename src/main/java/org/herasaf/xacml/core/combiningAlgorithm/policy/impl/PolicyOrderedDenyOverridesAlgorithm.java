@@ -31,6 +31,8 @@ import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 
 /**
+ * TODO JAVADOC
+ * 
  * <p>
  * The implementation of the {@link PolicyCombiningAlgorithm} with the
  * Ordered-Deny-Overrides strategy.

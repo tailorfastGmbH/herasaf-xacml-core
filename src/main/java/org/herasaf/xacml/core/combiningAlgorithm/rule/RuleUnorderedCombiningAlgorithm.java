@@ -28,6 +28,8 @@ import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
+ * TODO JAVADOC
+ * 
  * Abstract class for {@link AbstractRuleCombiningAlgorithm}s that evaluate the rules
  * unordered.
  *

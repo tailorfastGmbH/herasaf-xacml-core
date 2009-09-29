@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core.types;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this datatype is http://www.w3.org/2001/XMLSchema#hexBinary.<br>
  * See: <a
  * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">

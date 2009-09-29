@@ -37,6 +37,8 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
+ * TODO JAVADOC
+ * 
  * Contains the configuration information for an instance which uses a JAXB
  * {@link Marshaller} or {@link Unmarshaller}.
  * 

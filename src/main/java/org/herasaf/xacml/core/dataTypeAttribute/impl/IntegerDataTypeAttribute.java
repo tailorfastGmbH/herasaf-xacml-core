@@ -22,6 +22,8 @@ import java.math.BigInteger;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this datatype is http://www.w3.org/2001/XMLSchema#integer.<br>
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#integer"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for further

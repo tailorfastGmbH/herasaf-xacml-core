@@ -47,6 +47,9 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  */
 public interface PDP {
 	/**
+	 * 
+	 * TODO JAVADOC 
+	 * 
 	 * Evaluates a {@link RequestCtx} with the {@link Evaluatable}s stored in
 	 * the {@link PDP}.
 	 * 

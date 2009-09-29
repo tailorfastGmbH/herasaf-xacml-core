@@ -23,6 +23,8 @@ import java.net.URISyntaxException;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
+ * TODO JAVADOC
+ * 
  * <p>
  * A DataType is used as an attribute in the JAXB Objects representing the XACML
  * elements. To get the correct Value of the AttributeElement, the convertTo

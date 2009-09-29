@@ -32,14 +32,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * TODO JAVADOC
+ * 
  * Abstract class for all {@link CombiningAlgorithm}s. It contains the logic
  * for the targetMatch.
  *
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
- *
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private static final long serialVersionUID = -5423784677434727360L;

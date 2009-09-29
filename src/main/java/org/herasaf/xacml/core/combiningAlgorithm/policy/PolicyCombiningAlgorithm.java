@@ -26,6 +26,8 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
+ * TODO JAVADOC
+ * 
  * Interface for the PolicyCombiningAlgorithms.
  *
  * @author Sacha Dolski

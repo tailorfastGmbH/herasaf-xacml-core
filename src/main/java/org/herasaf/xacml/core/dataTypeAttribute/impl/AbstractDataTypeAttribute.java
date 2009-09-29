@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
+ * TODO JAVADOC
+ * 
  * Base class for {@link DataTypeAttribute} implementations.
  * 
  * @param <DataType>

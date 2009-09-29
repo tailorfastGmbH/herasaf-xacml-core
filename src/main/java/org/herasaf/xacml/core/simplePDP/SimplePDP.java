@@ -45,23 +45,42 @@ public class SimplePDP implements PDP {
 	public SimplePDP() {
 	}
 
+	/**
+	 * TODO JAVADOC
+	 * @param rootCombiningAlgorithm
+	 * @param policyRepository
+	 */
 	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository) {
 		this.policyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
 	}
 	
+	/**
+	 * TODO JAVADOC
+	 */
 	public PolicyRepository getPolicyRepository() {
 		return policyRepository;
 	}
 
+	/**
+	 * TODO JAVADOC
+	 */
 	public void setPolicyRepository(PolicyRepository policyRepository) {
 		this.policyRepository = policyRepository;
 	}
 
+	/**
+	 * TODO JAVADOC
+	 * @param attributeFinder
+	 */
 	public void setAttributeFinder(AttributeFinder attributeFinder) {
 		this.attributeFinder = attributeFinder;
 	}
 
+	/**
+	 * TODO JAVADOC
+	 * @param policyCombiningAlgorithm
+	 */
 	public void setPolicyCombiningAlgorithm(
 			PolicyUnorderedCombiningAlgorithm policyCombiningAlgorithm) {
 		this.policyCombiningAlgorithm = policyCombiningAlgorithm;

@@ -27,6 +27,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * TODO JAVADOC
+ * 
  * Singleton which creates and configures the {@link Marshaller}s and
  * {@link Unmarshaller}s.
  * 

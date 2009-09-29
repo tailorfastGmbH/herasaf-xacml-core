@@ -22,6 +22,8 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.Base64Binary;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this datatype is http://www.w3.org/2001/XMLSchema#base64Binary.<br>
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#base64Binary"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#base64Binary</A> for

@@ -21,6 +21,8 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.RFC822Name;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name.<br>
  * See: <a

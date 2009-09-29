@@ -28,6 +28,8 @@ import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
+ * TODO JAVADOC
+ * 
  * Looks for IdReferencesType in a PolicySetType
  * 
  * @author Patrik Dietschweiler

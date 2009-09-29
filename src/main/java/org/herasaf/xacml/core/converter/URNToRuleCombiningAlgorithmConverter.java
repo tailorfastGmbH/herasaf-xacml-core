@@ -29,6 +29,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * TODO JAVADOC
+ * 
  * Converts an URN to a {@link RuleCombiningAlgorithm}. The
  * {@link RuleCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -52,6 +54,8 @@ public class URNToRuleCombiningAlgorithmConverter extends
 	static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Is used by the <a
 	 * href="http://www.springframework.org/">Springframework</a> to fill the
 	 * static {@link Map} containing the mapping between URNs and
@@ -63,6 +67,7 @@ public class URNToRuleCombiningAlgorithmConverter extends
 	 */
 	public static void setCombiningAlgorithms(
 			Map<String, RuleCombiningAlgorithm> algorithms) {
+		//TODO is a concurrent hashmap really needed?
 		combiningAlgorithms = new ConcurrentHashMap<String, RuleCombiningAlgorithm>(
 				algorithms); // ConcurrentHashMap because of concurrent access
 		// possible

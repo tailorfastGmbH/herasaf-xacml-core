@@ -22,6 +22,8 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.ResourceType;
 
 /**
+ * TODO JAVADOC
+ * 
  * A ResourceTransformable contains the information to return a
  * <code>Collection</code> of <code>ResourceType</code> objects.
  *
@@ -31,6 +33,8 @@ import org.herasaf.xacml.core.context.impl.ResourceType;
 public interface ResourceTransformable {
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Transforms the information contained in the Transformable to
 	 * <code>Collection</code> of <code>ResourceType</code> objects.
 	 *

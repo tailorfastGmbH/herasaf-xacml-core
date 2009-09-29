@@ -22,6 +22,8 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
+ * TODO JAVADOC
+ * 
  * <p>
  * Represents a http://www.w3.org/2001/XMLSchema#date. The specification can be
  * found at <A HREF="http://www.w3.org/2001/XMLSchema#date"

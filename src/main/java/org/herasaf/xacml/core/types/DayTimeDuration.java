@@ -22,6 +22,8 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
 /**
+ * TODO JAVADOC
+ * 
  * This class implements a
  * "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see Page 105 of the
  * XACML 2.0Specification) except for the following deviations::

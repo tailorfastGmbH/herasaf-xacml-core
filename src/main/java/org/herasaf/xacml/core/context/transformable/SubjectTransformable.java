@@ -22,6 +22,8 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.SubjectType;
 
 /**
+ * TODO JAVADOC
+ * 
  * A SubjectTransformable contains the information to return a
  * <code>Collection</code> of <code>SubjectType</code> objects.
  *
@@ -29,7 +31,10 @@ import org.herasaf.xacml.core.context.impl.SubjectType;
  * @version 1.0
  */
 public interface SubjectTransformable {
+	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Transforms the information contained in the Transformable to
 	 * <code>Collection</code> of <code>SubjectType</code> objects.
 	 *

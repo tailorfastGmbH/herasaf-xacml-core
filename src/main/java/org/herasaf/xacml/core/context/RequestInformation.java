@@ -31,12 +31,13 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.policy.impl.Variable;
 
 /**
+ * TODO JAVADOC extend documentation a lot. This is one of the central classes of the implementation.
+ * 
  * This data type is a collection which contains all local-{@link Evaluatable}s
  * and all remote-{@link Evaluatable}s.
  *
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class RequestInformation {
 	private AttributeFinder attributeFinder;

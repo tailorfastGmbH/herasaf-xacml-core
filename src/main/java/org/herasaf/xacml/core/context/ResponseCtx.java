@@ -35,6 +35,8 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 
 /**
+ * TODO JAVADOC
+ * 
  * Encapsulates a {@link ResponseType}. Provides various marshalling methods for
  * the {@link ResponseType}. Because the {@link Marshaller} from JAXB <b>is not</b>
  * thread safe it must be newly created in each marshal-method. This class fully
@@ -50,6 +52,8 @@ public class ResponseCtx {
 	private ResponseType response;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Initializes the object factory.
 	 */
 	static {
@@ -57,6 +61,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Creates a new {@link ResponseCtx} with the given {@link ResponseType}.
 	 *
 	 * @param response
@@ -67,6 +73,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the containing {@link ResponseType}.
 	 *
 	 * @return The {@link ResponseType} contained in this object.
@@ -76,6 +84,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the contained Response into SAX2 events.
 	 *
 	 * @param ch
@@ -93,6 +103,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the contained Response to the file.
 	 *
 	 * @param file
@@ -110,6 +122,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * <p>
 	 * Marshal the contained Response into the specified
 	 * javax.xml.transform.Result.
@@ -135,6 +149,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * <p>
 	 * Marshal the contained Response into an output stream.
 	 * </p>
@@ -154,6 +170,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * <p>
 	 * Marshal the contained Response into a Writer.
 	 * </p>
@@ -173,6 +191,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshals the contained Response into a DOM tree.
 	 *
 	 * @param node
@@ -193,6 +213,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshal the contained Response into a XMLStreamWriter.
 	 *
 	 * @param xmlStreamWriter
@@ -212,6 +234,8 @@ public class ResponseCtx {
 	}
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Marshal the contained Response into a XMLEventWriter.
 	 *
 	 * @param xmlEventWriter

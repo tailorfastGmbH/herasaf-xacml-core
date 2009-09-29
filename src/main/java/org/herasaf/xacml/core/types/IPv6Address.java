@@ -23,6 +23,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
+ * TODO JAVADOC
+ * 
  * Implementation of the {@link IPAddress} datatype for IPv6.
  *
  * @author Florian Huonder 

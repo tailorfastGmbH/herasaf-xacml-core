@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core.types;
 
 /**
+ * TODO JAVADOC
+ * 
  * This class represents a port range.
  *
  * @author Florian Huonder 

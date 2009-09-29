@@ -34,6 +34,8 @@ import org.herasaf.xacml.core.policy.impl.ExpressionType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
+ * TODO JAVADOC
+ * 
  * The {@link AbstractRuleCombiningAlgorithm} is used to combine
  * {@link RuleType}s.
  * 

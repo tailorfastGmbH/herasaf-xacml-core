@@ -27,6 +27,8 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
+ * TODO JAVADOC
+ * 
  * The {@link TargetMatcher} is used to match a given {@link TargetType} to a
  * {@link RequestType}.
  *
@@ -34,6 +36,8 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  */
 public interface TargetMatcher extends Serializable {
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Matches a {@link TargetType} to a {@link RequestType}.
 	 *
 	 * @param req

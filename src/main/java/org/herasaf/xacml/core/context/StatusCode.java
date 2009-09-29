@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core.context;
 
 /**
+ * TODO JAVADOC
+ * 
  * The {@link StatusCode} contains the status of the evaluation. See: <a
  * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
@@ -33,7 +35,7 @@ public enum StatusCode {
 	 */
 	OK("urn:oasis:names:tc:xacml:1.0:status:ok"),
 	/**
-	 * This status indicates that an error occured during policy evaluation.
+	 * This status indicates that an error occurred during policy evaluation.
 	 */
 	PROCESSING_ERROR("urn:oasis:names:tc:xacml:1.0:status:processing-error"),
 	/**

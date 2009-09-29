@@ -29,7 +29,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 
 /**
  * The {@link PolicyRepository} 
- * TODO JAVADOC!!!!
+ * TODO JAVADOC!!!! wait for: HERASAFXACMLCORE-14
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -37,6 +37,8 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 public interface PolicyRepository {
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Retrives an {@link Evaluatable} from the local or a remote {@link PolicyRepository}.
 	 * 
 	 * @param id The id of the {@link Evaluatable}
@@ -53,6 +55,8 @@ public interface PolicyRepository {
 			throws PolicyRepositoryException;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Deploys the given {@link Collection} of {@link Evaluatable}s to this
 	 * {@link PolicyRepository}.
 	 * 
@@ -66,6 +70,8 @@ public interface PolicyRepository {
 			throws PolicyRepositoryException;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Deploys the given {@link Evaluatable} to this {@link PolicyRepository}.
 	 * 
 	 * @param evaluatable
@@ -77,6 +83,9 @@ public interface PolicyRepository {
 	void deploy(Evaluatable evaluatable) throws PolicyRepositoryException;
 
 	/**
+	 * 
+	 * TODO JAVADOC
+	 * 
 	 * Undeploys the {@link Evaluatable} identified by the given id.
 	 * 
 	 * @param id
@@ -87,6 +96,9 @@ public interface PolicyRepository {
 	void undeploy(EvaluatableID id) throws PolicyRepositoryException;
 
 	/**
+	 * 
+	 * TODO JAVADOC
+	 * 
 	 * Undeploys the {@link Evaluatable}s identified by the given
 	 * {@link Collection} ids.
 	 * 

@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#boolean.<br>
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#boolean</A> for further

@@ -26,6 +26,8 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
+ * TODO JAVADOC
+ * 
  * Represents an type that is evaluatable.
  * 
  * @author Florian Huonder, Patrik Dietschweiler
@@ -34,6 +36,8 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
 public interface Evaluatable {
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the id of the evaluatable.
 	 * 
 	 * @return The Id as string.
@@ -44,6 +48,8 @@ public interface Evaluatable {
 	public EvaluatableID getId() throws EvaluatableNotFoundException; 
 	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the {@link TargetType} of the evaluatable.
 	 * 
 	 * @return The {@link TargetType} of the evaluatable.
@@ -54,6 +60,8 @@ public interface Evaluatable {
 	public TargetType getTarget() throws EvaluatableNotFoundException;
 	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the {@link CombiningAlgorithm} of the evaluatable.
 	 * 
 	 * @return The {@link CombiningAlgorithm} of the evaluatable.
@@ -64,6 +72,8 @@ public interface Evaluatable {
 	public CombiningAlgorithm getCombiningAlg() throws EvaluatableNotFoundException;
 	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the version of the evaluatable.
 	 * 
 	 * @return The version as string.
@@ -74,6 +84,8 @@ public interface Evaluatable {
 	public String getEvalutableVersion() throws EvaluatableNotFoundException;
 	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns a boolean value indicating if the current {@link Evaluatable} or a sub- {@link Evaluatable} contains
 	 * one or more Obligations.
 	 * 
@@ -83,6 +95,8 @@ public interface Evaluatable {
 	public boolean hasObligations();
 	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Returns the Obligations of this {@link Evaluatable} which match the given effect.
 	 * 	
 	 * @param effect the {@link EffectType} by which the Obligations should be returned.

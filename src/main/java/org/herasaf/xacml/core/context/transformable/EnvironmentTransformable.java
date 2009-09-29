@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.EnvironmentType;
 
 /**
+ * TODO JAVADOC
+ * 
  * A EnvironmentTransformable contains the information to return a
  * <code>EnvironmentType</code>.
  *
@@ -28,7 +30,10 @@ import org.herasaf.xacml.core.context.impl.EnvironmentType;
  *
  */
 public interface EnvironmentTransformable {
+	
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Transforms the information contained in the Transformable to an
 	 * <code>EnvironmentType</code>
 	 *

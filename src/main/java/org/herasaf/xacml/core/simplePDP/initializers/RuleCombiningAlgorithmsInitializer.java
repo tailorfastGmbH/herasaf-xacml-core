@@ -88,11 +88,8 @@ public class RuleCombiningAlgorithmsInitializer extends
 		logger.info("{} rule combining algorithms are initialized.", instances.size());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.herasaf.xacml.core.simplePDP.initializers.AbstractInitializer#
-	 * getTargetClass()
+	/**
+	 * TODO JAVADOC
 	 */
 	@Override
 	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {

@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.combiningAlgorithm.policy;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 
 /**
+ * TODO JAVADOC
+ * 
  * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
  * the included Evaluatables ordered.
  * 

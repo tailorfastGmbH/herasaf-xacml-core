@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.dataTypeAttribute;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
+ * TODO JAVADOC
+ * 
  * A DataType is used as an attribute in the JAXB Objects representing the XACML
  * elements. To get the correct value of the attribute-element, the
  * {@link #convertTo(String)} method should be used to convert the value to the

@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * TODO JAVADOC
+ * 
  * Converts an URN to a data type. The data types are defined in the <a
  * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
@@ -50,6 +52,8 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Is used by the <a href="http://www.springframework.org/">Springframework</a>
 	 * to fill the static {@link Map} containing the mapping between URNs and
 	 * data types. 
@@ -59,13 +63,12 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	 */
 	public static void setDataTypeAttributes(
 			Map<String, DataTypeAttribute<?>> dataTypes) {
+		//TODO is a concurrent hashmap really needed?
 		URNToDataTypeConverter.dataTypeAttributes = new ConcurrentHashMap<String, DataTypeAttribute<?>>(dataTypes); //ConcurrentHashMap because of concurrent access possible
 	}
 	
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String marshal(DataTypeAttribute<?> dataTypeAttr)
@@ -81,10 +84,8 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 		return dataTypeAttrString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public DataTypeAttribute<?> unmarshal(String dataTypeId)

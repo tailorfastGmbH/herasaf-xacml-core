@@ -22,6 +22,8 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 /**
+ * TODO JAVADOC
+ * 
  * Implementation of the {@link IPAddress} datatype for IPv4.
  *
  * @author Florian Huonder 

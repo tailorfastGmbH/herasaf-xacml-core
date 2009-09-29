@@ -28,6 +28,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * TODO JAVADOC
+ * 
  * Converts an URN to a {@link PolicyCombiningAlgorithm}. The
  * {@link PolicyCombiningAlgorithm}s are defined in the <a
  * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -51,6 +53,8 @@ public class URNToPolicyCombiningAlgorithmConverter extends
 	static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Fills the static {@link Map} containing the mapping between URNs and
 	 * {@link PolicyCombiningAlgorithm}s.
 	 * 
@@ -59,13 +63,12 @@ public class URNToPolicyCombiningAlgorithmConverter extends
 	 *            {@link PolicyCombiningAlgorithm}s.
 	 */
 	public static void setCombiningAlgorithms(Map<String, PolicyCombiningAlgorithm> algorithms) {
+		//TODO is a concurrent hashmap really needed?
 		combiningAlgorithms = new ConcurrentHashMap<String, PolicyCombiningAlgorithm>(algorithms); //ConcurrentHashMap because of concurrent access possible
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String marshal(PolicyCombiningAlgorithm combAlg)
@@ -81,10 +84,8 @@ public class URNToPolicyCombiningAlgorithmConverter extends
 		return combAlgString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public PolicyCombiningAlgorithm unmarshal(String combAlgId)

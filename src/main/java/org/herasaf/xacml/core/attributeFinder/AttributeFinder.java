@@ -23,6 +23,8 @@ import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
+ * TODO JAVADOC, wait for: HERASAFXACMLCORE-2
+ * 
  * When a request doesn't contain an attribute, the PDP has to call the PIP for
  * the information of this attribute. An AttributeFinder implementation is
  * responsible to resolve Attributes not included in the request. In the
@@ -39,6 +41,9 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 public interface AttributeFinder {
 
 	/**
+	 * 
+	 * TODO JAVADOC
+	 * 
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
@@ -61,6 +66,9 @@ public interface AttributeFinder {
 			String subjectCategory);
 
 	/**
+	 * TODO JAVADOC
+	 * 
+	 * 
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
@@ -80,6 +88,10 @@ public interface AttributeFinder {
 			String attributeId, String dataType, String issuer);
 
 	/**
+	 * 
+	 * TODO JAVADOC
+	 * 
+	 * 
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
@@ -99,6 +111,8 @@ public interface AttributeFinder {
 			String attributeId, String dataType, String issuer);
 
 	/**
+	 * TODO JAVADOC
+	 * 
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.

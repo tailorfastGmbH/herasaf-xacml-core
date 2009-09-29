@@ -20,6 +20,8 @@ package org.herasaf.xacml.core;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
+ * TODO JAVADOC
+ * 
  * This exception is thrown when a {@link Evaluatable} is not found.
  * 
  * @author Florian Huonder, Patrik Dietschweiler

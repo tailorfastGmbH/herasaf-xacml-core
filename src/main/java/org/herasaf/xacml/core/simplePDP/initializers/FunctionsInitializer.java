@@ -69,8 +69,8 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 		logger.info("{} functions are initialized.", instancesMap.size());
 	}
 
-	/* (non-Javadoc)
-	 * @see org.herasaf.xacml.core.simplePDP.initializers.AbstractInitializer#getTargetClass()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<Function> getTargetClass() {

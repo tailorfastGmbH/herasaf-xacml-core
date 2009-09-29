@@ -21,6 +21,8 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.IPAddress;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:ipAddress.<br>
  * See: <a href=

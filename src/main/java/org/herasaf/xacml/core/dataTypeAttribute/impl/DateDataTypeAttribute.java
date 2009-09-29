@@ -21,6 +21,8 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#date.<br>
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#date"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#date</A> for further

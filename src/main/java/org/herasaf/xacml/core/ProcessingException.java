@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core;
 
 /**
+ * TODO JAVADOC
+ * 
  * This exception is thrown if an error while processing a function or
  * expression.
  *

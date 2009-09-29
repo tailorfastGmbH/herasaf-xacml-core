@@ -22,6 +22,8 @@ import javax.security.auth.x500.X500Principal;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
+ * TODO JAVADOC
+ * 
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:x500Name.<br>
  * See: <a

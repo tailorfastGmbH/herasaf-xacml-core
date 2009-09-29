@@ -25,6 +25,9 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
+ * 
+ * TODO JAVADOC
+ * 
  * Interface for all Combining algorithms.
  *
  * @author Stefan Oberholzer

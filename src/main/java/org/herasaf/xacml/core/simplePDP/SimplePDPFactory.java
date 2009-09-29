@@ -47,10 +47,18 @@ public class SimplePDPFactory {
 
 	private static List<Initializer> initializers;
 
+	/**
+	 * TODO JAVADOC
+	 * @param initalizers
+	 */
 	public static void setInitalizers(List<Initializer> initalizers) {
 		SimplePDPFactory.initializers = initalizers;
 	}
 
+	/**
+	 * TODO JAVADOC
+	 * @param useDefaultInitializers
+	 */
 	public static void useDefaultInitializers(boolean useDefaultInitializers) {
 		if (useDefaultInitializers) {
 			initializers = new ArrayList<Initializer>();

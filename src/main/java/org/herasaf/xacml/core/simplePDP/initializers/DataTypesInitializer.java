@@ -85,11 +85,8 @@ public class DataTypesInitializer extends
 		logger.info("{} DataTypeAttributes are initialized.", instancesMap.size());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @seeorg.herasaf.xacml.core.simplePDP.initializers.AbstractInitializer#
-	 * getTargetClass()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<DataTypeAttribute<?>> getTargetClass() {
