@@ -58,6 +58,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
+	 * TODO JAVADOC
 	 * @param instances
 	 */
 	protected void furtherInitializations(List<T> instances) {
@@ -65,6 +66,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
+	 * TODO JAVADOC
 	 * @param instancesMap
 	 */
 	protected abstract void setInstancesIntoConverter(
@@ -93,6 +95,9 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract String getURIFromType(T instance);
 
 	/**
+	 * TODO JAVADOC
+	 * 
+	 * TODO document code below in detail.
 	 * @param files The {@link List} of files from which instances shall be created.
 	 * @return The {@link List} containing the instances.
 	 */
@@ -147,8 +152,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @param searchContext The context where the files shall be collected.
-	 * @return A {@link List} containing all collected files.
+	 * TODO document code below in detail.
+	 * 
+	 * @param searchContext
+	 * @return
 	 */
 	private List<File> collectFiles(final String searchContext) {
 		List<URL> urls = new ArrayList<URL>();
