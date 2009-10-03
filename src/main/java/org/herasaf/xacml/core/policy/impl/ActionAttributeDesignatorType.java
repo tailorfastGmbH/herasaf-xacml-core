@@ -115,5 +115,4 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType
 		}
 		return returnValues;
 	}
-
 }

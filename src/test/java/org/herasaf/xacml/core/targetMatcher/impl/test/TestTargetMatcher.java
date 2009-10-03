@@ -27,7 +27,6 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
-import org.herasaf.xacml.core.pip.impl.PIPMock;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.ActionMatchType;
 import org.herasaf.xacml.core.policy.impl.ActionType;
@@ -68,7 +67,7 @@ public class TestTargetMatcher {
 	 */
 	@BeforeTest
 	public void init() {
-		reqInfo = new RequestInformation(new PIPMock());
+		reqInfo = new RequestInformation(null); //null means no PIP
 	}
 
 	/**

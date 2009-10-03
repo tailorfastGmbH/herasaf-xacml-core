@@ -33,7 +33,6 @@ import org.herasaf.xacml.core.context.impl.SubjectType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.RFC822NameDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
-import org.herasaf.xacml.core.pip.impl.PIPMock;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.SubjectAttributeDesignatorType;
@@ -54,7 +53,7 @@ public class TestSubjectAttributeDesignator {
 	 */
 	@BeforeTest
 	public void init() {
-		reqInfo = new RequestInformation(new PIPMock());
+		reqInfo = new RequestInformation(null); //null means no PIP
 	}
 
 	/**
