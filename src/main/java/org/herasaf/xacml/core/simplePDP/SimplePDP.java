@@ -18,8 +18,8 @@
 package org.herasaf.xacml.core.simplePDP;
 
 import org.herasaf.xacml.core.api.PDP;
+import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRepository;
-import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestInformation;
@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SimplePDP implements PDP {
 	private PolicyRepository policyRepository;
-	private AttributeFinder attributeFinder; // TODO introduce PIP
+	private PIP pip; // TODO introduce PIP
 	private PolicyUnorderedCombiningAlgorithm policyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
 	
@@ -73,8 +73,8 @@ public class SimplePDP implements PDP {
 	 * TODO JAVADOC
 	 * @param attributeFinder
 	 */
-	public void setAttributeFinder(AttributeFinder attributeFinder) {
-		this.attributeFinder = attributeFinder;
+	public void setPIP(PIP pip) {
+		this.pip = pip;
 	}
 
 	/**
@@ -97,7 +97,7 @@ public class SimplePDP implements PDP {
 		 * request&response e.g. use generated correlationID
 		 */
 		logger.debug("Evaluating Request: {}", request.toString());
-		RequestInformation reqInfo = new RequestInformation(attributeFinder);
+		RequestInformation reqInfo = new RequestInformation(pip);
 
 		DecisionType decision = policyCombiningAlgorithm
 				.evaluateEvaluatableList(request.getRequest(), policyRepository
