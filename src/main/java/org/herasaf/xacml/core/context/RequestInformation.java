@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
+import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
@@ -40,7 +40,7 @@ import org.herasaf.xacml.core.policy.impl.Variable;
  * @author René Eggenschwiler
  */
 public class RequestInformation {
-	private AttributeFinder attributeFinder;
+	private PIP pip;
 	private StatusCode statusCode;
 	private List<MissingAttributeDetailType> missingAttributes;
 	private boolean targetMatched;
@@ -59,10 +59,10 @@ public class RequestInformation {
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @param attributeFinder The Attribute finder to place into the {@link RequestInformation}.
+	 * @param pip The Attribute finder to place into the {@link RequestInformation}.
 	 */
-	public RequestInformation(AttributeFinder attributeFinder) {
-		this.attributeFinder = attributeFinder;
+	public RequestInformation(PIP pip) {
+		this.pip = pip;
 		statusCode = StatusCode.OK;
 		missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		targetMatched = true;
@@ -213,12 +213,12 @@ public class RequestInformation {
 	}
 
 	/**
-	 * Gets the AttributeFinder for this Request.
+	 * Gets the PIP for this Request.
 	 *
-	 * @return Returns the AttributeFinder
+	 * @return Returns the PIP
 	 */
-	public AttributeFinder getAttributeFinder() {
-		return attributeFinder;
+	public PIP getPIP() {
+		return pip;
 	}
 	
 	/**
@@ -259,8 +259,8 @@ public class RequestInformation {
 	@Override
 	public String toString() {
 		StringBuilder stringValue = new StringBuilder("RequestInformation[");
-		stringValue.append("attributeFinder=");
-		stringValue.append(attributeFinder);
+		stringValue.append("pip=");
+		stringValue.append(pip);
 		stringValue.append(", statusCode=");
 		stringValue.append(statusCode);
 		stringValue.append(", missingAttributes=");

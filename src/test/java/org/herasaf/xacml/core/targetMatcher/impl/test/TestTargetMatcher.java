@@ -22,12 +22,12 @@ import static org.testng.Assert.assertEquals;
 import java.util.Arrays;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
-import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
+import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
+import org.herasaf.xacml.core.pip.impl.PIPMock;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.ActionMatchType;
 import org.herasaf.xacml.core.policy.impl.ActionType;
@@ -64,11 +64,11 @@ public class TestTargetMatcher {
 
 	/**
 	 * Initializes the {@link RequestInformation} containing an mock for the
-	 * {@link AttributeFinder}.
+	 * {@link PIP}.
 	 */
 	@BeforeTest
 	public void init() {
-		reqInfo = new RequestInformation(new AttributeFinderMock());
+		reqInfo = new RequestInformation(new PIPMock());
 	}
 
 	/**

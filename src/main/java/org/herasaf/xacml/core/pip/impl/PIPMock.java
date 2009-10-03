@@ -15,24 +15,16 @@
  * limitations under the License.
  */
 
-package org.herasaf.xacml.core.attributeFinder.impl;
+package org.herasaf.xacml.core.pip.impl;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
+import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 
-/**
- * 
- * TODO JAVADOC!! wait for HERASAFXACMLCORE-2.
- * 
- * @author Florian Huonder
- * @author René Eggenschwiler
- *
- */
-public class AttributeFinderMock implements AttributeFinder {
+public class PIPMock implements PIP {
 
 	/*
 	 * (non-Javadoc)

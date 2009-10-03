@@ -24,8 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.attributeFinder.AttributeFinder;
-import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
+import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.ActionType;
 import org.herasaf.xacml.core.context.impl.AttributeType;
@@ -34,6 +33,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.RFC822NameDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
+import org.herasaf.xacml.core.pip.impl.PIPMock;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.ActionAttributeDesignatorType;
@@ -50,11 +50,11 @@ public class TestActionAttributeDesignator {
 	RequestInformation reqInfo;
 
 	/**
-	 * Initializes the {@link RequestInformation} with an mock for the {@link AttributeFinder}.
+	 * Initializes the {@link RequestInformation} with an mock for the {@link PIP}.
 	 */
 	@BeforeTest
 	public void init() {
-		reqInfo = new RequestInformation(new AttributeFinderMock());
+		reqInfo = new RequestInformation(new PIPMock());
 	}
 
 	/**

@@ -104,8 +104,8 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType
 		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
 		 * further information.
 		 */
-		if (returnValues.size() == 0 && reqInfo.getAttributeFinder() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getAttributeFinder()
+		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
+			List<AttributeValueType> attrValues = reqInfo.getPIP()
 					.requestActionAttributes(request, attributeId, dataType.toString(),
 							issuer);
 			addAndConvertAttrValue(returnValues, attrValues);
