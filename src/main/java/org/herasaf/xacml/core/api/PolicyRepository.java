@@ -18,11 +18,11 @@
 package org.herasaf.xacml.core.api;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import org.herasaf.xacml.core.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.PolicyRepositoryException;
-import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -35,77 +35,84 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * @author René Eggenschwiler
  */
 public interface PolicyRepository {
-
-	/**
-	 * TODO JAVADOC
-	 * 
-	 * Retrives an {@link Evaluatable} from the local or a remote {@link PolicyRepository}.
-	 * 
-	 * @param id The id of the {@link Evaluatable}
-	 * @return The retrieved {@link Evaluatable}
-	 * @throws EvaluatableNotFoundException Thrown if the {@link Evaluatable} cannot be found.
-	 */
-	public Evaluatable getEvaluatable(EvaluatableID id)
-			throws PolicyRepositoryException;
 	
 	/**
-	 * TODO JAVADOC!!!!!!!!!
-	 */
-	public List<Evaluatable> getEvaluatables(RequestCtx requestCtx)
-			throws PolicyRepositoryException;
-
-	/**
 	 * TODO JAVADOC
-	 * 
-	 * Deploys the given {@link Collection} of {@link Evaluatable}s to this
-	 * {@link PolicyRepository}.
-	 * 
-	 * @param evaluatables
-	 *            The {@link Collection} of {@link Evaluatable}s to deploy.
-	 * @throws DataIntegrityException
-	 * @throws DataAccessException
-	 * @throws SyntaxException 
-	 */
-	void deploy(Collection<Evaluatable> evaluatables)
-			throws PolicyRepositoryException;
-
-	/**
-	 * TODO JAVADOC
-	 * 
-	 * Deploys the given {@link Evaluatable} to this {@link PolicyRepository}.
 	 * 
 	 * @param evaluatable
-	 *            The {@link Evaluatable} to deploy.
-	 * @throws DataAccessException
-	 * @throws DataIntegrityException
-	 * @throws SyntaxException 
+	 * @throws PolicyRepositoryException
 	 */
-	void deploy(Evaluatable evaluatable) throws PolicyRepositoryException;
-
+	public Change deploy(Evaluatable evaluatable) throws PolicyRepositoryException;
+	
 	/**
-	 * 
 	 * TODO JAVADOC
 	 * 
-	 * Undeploys the {@link Evaluatable} identified by the given id.
-	 * 
-	 * @param id
-	 *            The id of the {@link Evaluatable} to undeploy.
-	 * @throws DataAccessException
-	 * @throws SyntaxException 
+	 * @param evaluatables
+	 * @throws PolicyRepositoryException
 	 */
-	void undeploy(EvaluatableID id) throws PolicyRepositoryException;
-
+	public Change deploy(Collection<Evaluatable> evaluatables) throws PolicyRepositoryException;
+	
 	/**
-	 * 
 	 * TODO JAVADOC
 	 * 
-	 * Undeploys the {@link Evaluatable}s identified by the given
-	 * {@link Collection} ids.
-	 * 
-	 * @param ids
-	 *            The {@link Collection} of ids of the {@link Evaluatable}s.
-	 * @throws DataAccessException
-	 * @throws SyntaxException 
+	 * @param evaluatableID
+	 * @throws PolicyRepositoryException
 	 */
-	void undeploy(Collection<EvaluatableID> ids) throws PolicyRepositoryException;
+	public Change undeploy(EvaluatableID evaluatableID) throws PolicyRepositoryException;
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param evaluatableIDs
+	 * @throws PolicyRepositoryException
+	 */
+	public Change undeploy(Collection<EvaluatableID> evaluatableIDs) throws PolicyRepositoryException;
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param diff
+	 * @throws PolicyRepositoryException
+	 */
+	public Change applyDiff(Diff diff) throws PolicyRepositoryException;
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @return
+	 */
+	public List<Evaluatable> getDeployment();
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param dateTime
+	 * @return
+	 */
+	public List<Evaluatable> getDeployment(Date dateTime);
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @return
+	 */
+	public Map<Date,List<Evaluatable>> getDeployments();
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param evaluatableID
+	 * @throws PolicyRepositoryException
+	 * 
+	 * @return
+	 */
+	public Evaluatable getEvaluatable(EvaluatableID evaluatableID) throws PolicyRepositoryException;
+	
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param request
+	 * @return
+	 */
+	public List<Evaluatable> getEvaluatables(RequestCtx request);
 }

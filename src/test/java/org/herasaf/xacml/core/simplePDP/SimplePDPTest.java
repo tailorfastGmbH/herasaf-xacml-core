@@ -16,14 +16,19 @@
  */
 package org.herasaf.xacml.core.simplePDP;
 
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
+import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRepository;
@@ -32,7 +37,9 @@ import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
@@ -116,6 +123,115 @@ public class SimplePDPTest {
 				+ response.getResponse().getResults().get(0).getDecision());
 
 		repo.undeploy(policy.getId());
+		System.out.println();
+	}
+	
+	@Test
+	public void testMultiDeploy() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
+		EvaluatableID evalId1 = eval1.getId();
+		Evaluatable eval2 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml");
+		EvaluatableID evalId2 = eval2.getId();
+		List<Evaluatable> evals = new ArrayList<Evaluatable>();
+		evals.add(eval1);
+		evals.add(eval2);
+		List<EvaluatableID> evalIds = new ArrayList<EvaluatableID>();
+		evalIds.add(evalId1);
+		evalIds.add(evalId2);
+		
+		repo.deploy(evals);
+		
+		assertEquals(repo.getDeployment(), evals);
+		
+		repo.undeploy(evalIds);
+		
+		assertEquals(repo.getDeployment().size(), 0);
+	}
+	
+	@Test
+	public void testGetByIdPositive() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+		Evaluatable eval = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml");
+		
+		repo.deploy(eval);
+		
+		Evaluatable eval1 = repo.getEvaluatable(new EvaluatableIDImpl("urn:oasis:names:tc:example:SimplePolicy2"));
+		Evaluatable eval2 = repo.getEvaluatable(new EvaluatableIDImpl("urn:oasis:names:tc:xacml:2.0:conformance-test:IID006:policyset"));
+		
+		assertNotNull(eval1);
+		assertNotNull(eval2);
+		
+		repo.undeploy(eval2.getId()); //only the root policy must be undeployed.
+	}
+	
+	@Test (expectedExceptions={PolicyRepositoryException.class})
+	public void testGetByIdNegative() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+
+		repo.getEvaluatable(new EvaluatableIDImpl("does not exist"));
+	}
+	
+	@Test
+	public void testGetByRequest() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
+		EvaluatableID evalId1 = eval1.getId();
+		Evaluatable eval2 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml");
+		EvaluatableID evalId2 = eval2.getId();
+		List<Evaluatable> evals = new ArrayList<Evaluatable>();
+		evals.add(eval1);
+		evals.add(eval2);
+		List<EvaluatableID> evalIds = new ArrayList<EvaluatableID>();
+		evalIds.add(evalId1);
+		evalIds.add(evalId2);
+		
+		repo.deploy(evals);
+		
+		RequestCtx request = loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml");
+		
+		assertEquals(repo.getEvaluatables(request), evals);
+		
+		repo.undeploy(evalIds);
+		
+		assertEquals(repo.getDeployment().size(), 0);
+	}
+	
+	@Test
+	public void testPSInternalReference() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy03.xml");
+		repo.deploy(eval1);
+		
+		Evaluatable eval = repo.getEvaluatable(new EvaluatableIDImpl("urn:oasis:names:tc:xacml:2.0:conformance-test:IID006:policyset3-root"));
+		assertNotNull(eval);
+		
+		eval = repo.getEvaluatable(new EvaluatableIDImpl("urn:oasis:names:tc:xacml:2.0:conformance-test:IID006:policyset3-left"));
+		assertNotNull(eval);
+		
+		eval = repo.getEvaluatable(new EvaluatableIDImpl("urn:oasis:names:tc:example:SimplePolicy"));
+		assertNotNull(eval);
+		
+		repo.undeploy(eval1.getId());
+		assertEquals(repo.getDeployment().size(), 0);
+	}
+	
+	@Test (expectedExceptions={PolicyRepositoryException.class})
+	public void testPSRemoteReference() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy04.xml");
+		repo.deploy(eval1);
+	}
+	
+	@Test  (expectedExceptions={PolicyRepositoryException.class})
+	public void testPSLocalReferenceToOtherPS() throws Exception {
+		PolicyRepository repo = simplePDP.getPolicyRepository();
+		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy04.xml");
+		Evaluatable eval2 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy05.xml");
+		List<Evaluatable> evals = new ArrayList<Evaluatable>();
+		evals.add(eval1);
+		evals.add(eval2);
+		repo.deploy(evals);
 	}
 
 	/**

@@ -27,6 +27,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -75,6 +77,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	private final Logger logger = LoggerFactory
 			.getLogger(IdReferenceType.class);
 
+	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
 	@XmlValue
 	@XmlSchemaType(name = "anyURI")
 	protected String value;
