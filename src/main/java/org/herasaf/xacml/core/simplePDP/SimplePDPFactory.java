@@ -42,9 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SimplePDPFactory {
 	private static final Logger logger = LoggerFactory.getLogger(SimplePDPFactory.class);
-	private static PDP pdp;
-	private static ThreadLocal<Boolean> singletonControl = new ThreadLocal<Boolean>();
-
 	private static List<Initializer> initializers;
 
 	/**
@@ -52,6 +49,7 @@ public class SimplePDPFactory {
 	 * @param initalizers
 	 */
 	public static void setInitalizers(List<Initializer> initalizers) {
+		logger.info("Custom initializers are in use.");
 		SimplePDPFactory.initializers = initalizers;
 	}
 
@@ -60,6 +58,7 @@ public class SimplePDPFactory {
 	 * @param useDefaultInitializers
 	 */
 	public static void useDefaultInitializers(boolean useDefaultInitializers) {
+		logger.info("The default initializers are in use.");
 		if (useDefaultInitializers) {
 			initializers = new ArrayList<Initializer>();
 			initializers.add(new FunctionsInitializer());
@@ -77,24 +76,13 @@ public class SimplePDPFactory {
 	 * @param policyRepository the {@link PolicyRepository} of the PDP.
 	 * @return The PDP (singleton).
 	 */
-	public static PDP getSimplePDP(
-			PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository) {
-		if (singletonControl.get() == null) {
-			synchronized (SimplePDPFactory.class) {
-				if (pdp == null) {
-					if (initializers == null) {
-						throw new InitializationException(
-								"SimplePDPFactory is not initialized.");
-					}
-					runInitializers();
-					pdp = new SimplePDP(rootCombiningAlgorithm,
-							policyRepository);
-				}
-				singletonControl.set(Boolean.TRUE);
-			}
+	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,PolicyRepository policyRepository) {
+		if (initializers == null) {
+			logger.error("SimplePDPFactory is not initialized. Initializers must be set.");
+			throw new InitializationException("SimplePDPFactory is not initialized. Initializers must be set.");
 		}
-		return pdp;
+		runInitializers();
+		return new SimplePDP(rootCombiningAlgorithm, policyRepository);
 	}
 
 	/**
@@ -103,6 +91,8 @@ public class SimplePDPFactory {
 	 * @return The PDP (singleton).
 	 */
 	public static PDP getSimplePDP() {
+		logger.info("The root combining algorithm is: urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable");
+		logger.info("The policy repository is: org.herasaf.xacml.core.simplePDP.MapBasedSimplePolicyRepository");
 		logger.warn("The MapBasedSimplePolicyRepository is in use. This must not be used in a productive environment.");
 		return getSimplePDP(new PolicyOnlyOneApplicableAlgorithm(),
 				new MapBasedSimplePolicyRepository());

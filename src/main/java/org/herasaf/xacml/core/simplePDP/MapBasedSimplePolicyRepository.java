@@ -205,7 +205,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 */
 	public Change applyDiff(Diff diff) throws PolicyRepositoryException {
 		String msg = "The MapBasedSimplePolicyRepository does not support the application of Diffs";
-		logger.warn(msg);
+		logger.error(msg);
 		throw new UnsupportedOperationException(msg);
 	}
 
@@ -221,7 +221,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 */
 	public List<Evaluatable> getDeployment(Date dateTime) {
 		String msg = "The MapBasedSimplePolicyRepository does not persist previous deployments.";
-		logger.warn(msg);
+		logger.error(msg);
 		throw new UnsupportedOperationException(msg);
 	}
 
@@ -230,7 +230,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 */
 	public Map<Date, List<Evaluatable>> getDeployments() {
 		String msg = "The MapBasedSimplePolicyRepository does not persist previous deployments.";
-		logger.warn(msg);
+		logger.error(msg);
 		throw new UnsupportedOperationException(msg);
 	}
 

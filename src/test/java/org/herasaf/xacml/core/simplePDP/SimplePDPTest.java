@@ -17,6 +17,7 @@
 package org.herasaf.xacml.core.simplePDP;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotSame;
 import static org.testng.Assert.assertNotNull;
 import static org.testng.Assert.assertTrue;
 
@@ -126,6 +127,11 @@ public class SimplePDPTest {
 		System.out.println();
 	}
 	
+	/**
+	 * Tests if the deployment of multiple {@link Evaluatable}s in a {@link List} works properly.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test
 	public void testMultiDeploy() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -149,6 +155,11 @@ public class SimplePDPTest {
 		assertEquals(repo.getDeployment().size(), 0);
 	}
 	
+	/**
+	 * Tests if the PolicyRepository does return an {@link Evaluatable} by id properly.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test
 	public void testGetByIdPositive() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -165,6 +176,11 @@ public class SimplePDPTest {
 		repo.undeploy(eval2.getId()); //only the root policy must be undeployed.
 	}
 	
+	/**
+	 * Tests that the PDP does not return an {@link Evaluatable} if a wrong id is given.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test (expectedExceptions={PolicyRepositoryException.class})
 	public void testGetByIdNegative() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -172,6 +188,11 @@ public class SimplePDPTest {
 		repo.getEvaluatable(new EvaluatableIDImpl("does not exist"));
 	}
 	
+	/**
+	 * Tests if the PDP returns the right {@link Evaluatable} in case the {@link Evaluatable} are retrieved by request.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test
 	public void testGetByRequest() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -197,6 +218,11 @@ public class SimplePDPTest {
 		assertEquals(repo.getDeployment().size(), 0);
 	}
 	
+	/**
+	 * Tests if internal references are correctly resloved.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test
 	public void testPSInternalReference() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -216,6 +242,11 @@ public class SimplePDPTest {
 		assertEquals(repo.getDeployment().size(), 0);
 	}
 	
+	/**
+	 * Tests if the simple PDP cannot resolv remote references.
+	 * 
+	 * @throws ExceptionIf an error occurs.
+	 */
 	@Test (expectedExceptions={PolicyRepositoryException.class})
 	public void testPSRemoteReference() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -223,6 +254,11 @@ public class SimplePDPTest {
 		repo.deploy(eval1);
 	}
 	
+	/**
+	 * Tests if a local reference to an other PolicySet as this PolicySet cannot be resolved.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test  (expectedExceptions={PolicyRepositoryException.class})
 	public void testPSLocalReferenceToOtherPS() throws Exception {
 		PolicyRepository repo = simplePDP.getPolicyRepository();
@@ -232,6 +268,17 @@ public class SimplePDPTest {
 		evals.add(eval1);
 		evals.add(eval2);
 		repo.deploy(evals);
+	}
+	
+	/**
+	 * Tests if the PDP Factory returns multiple PDP objects.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
+	@Test
+	public void testMultiplePDPInstances() throws Exception {
+		PDP secondSimplePDP = SimplePDPFactory.getSimplePDP();
+		assertNotSame(secondSimplePDP, simplePDP);
 	}
 
 	/**
