@@ -4,7 +4,6 @@
 	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides"
 	PolicyId="urn:oasis:names:tc:example:SimplePolicy1"
 	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os http://docs.oasis-open.org/xacml/access_control-xacml-2.0-policy-schema-os.xsd">
-	<Description>Med Example Corp access control policy</Description>
 	<Target>
 		<Subjects>
 			<Subject>
@@ -21,10 +20,6 @@
 		</Subjects>
 	</Target>
 	<Rule Effect="Permit" RuleId="urn:oasis:names:tc:xacml:2.0:example:SimpleRule1">
-		<Description>
-			Any subject with an e-mail name in the med.example.com
-			domain can perform any action on any resource.
-		</Description>
 		<Target>
 			<Subjects>
 				<Subject>
