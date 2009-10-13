@@ -34,27 +34,28 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class SimplePDP implements PDP {
 	private PolicyRepository policyRepository;
 	private PIP pip; // TODO introduce PIP
 	private PolicyUnorderedCombiningAlgorithm policyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
-	
+
 	public SimplePDP() {
 	}
 
 	/**
 	 * TODO JAVADOC
+	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param policyRepository
 	 */
-	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository) {
+	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
+			PolicyRepository policyRepository) {
 		this.policyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
 	}
-	
+
 	/**
 	 * TODO JAVADOC
 	 */
@@ -71,6 +72,7 @@ public class SimplePDP implements PDP {
 
 	/**
 	 * TODO JAVADOC
+	 * 
 	 * @param attributeFinder
 	 */
 	public void setPIP(PIP pip) {
@@ -79,6 +81,7 @@ public class SimplePDP implements PDP {
 
 	/**
 	 * TODO JAVADOC
+	 * 
 	 * @param policyCombiningAlgorithm
 	 */
 	public void setPolicyCombiningAlgorithm(
@@ -89,13 +92,23 @@ public class SimplePDP implements PDP {
 	/**
 	 * TODO JAVADOC!!!!
 	 * 
-	 * 
+	 * <br />
+	 * <b>Logging:</b><br />
+	 * This section is relevant for all users of the {@link SimplePDP} in a
+	 * multi-threaded environment. All logging messages during the evaluation
+	 * should be connected with a correlation ID to be able to distinguish the
+	 * different requesters. Due to the fact that this connection lays with the
+	 * requester here is a hint how this could be realized with the SLF4J
+	 * Logging Framework (<a
+	 * href="http://www.slf4j.org">http://www.slf4j.org</a>) used here if the
+	 * underlying logging framwork (such as logback) supports MDC (Mapped
+	 * Diagnostic Context).<br />
+	 * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
+	 * different requesters as described here: <a
+	 * href="http://logback.qos.ch/manual/mdc.html"
+	 * >http://logback.qos.ch/manual/mdc.html</a>.
 	 */
 	public ResponseCtx evaluate(RequestCtx request) {
-		/*
-		 * FIXME Introduce proper logging with correlation between
-		 * request&response e.g. use generated correlationID
-		 */
 		logger.debug("Evaluating Request: {}", request.toString());
 		RequestInformation reqInfo = new RequestInformation(pip);
 
