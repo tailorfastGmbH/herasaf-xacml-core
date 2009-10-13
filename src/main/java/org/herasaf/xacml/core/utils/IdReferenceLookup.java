@@ -28,6 +28,8 @@ import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
+ * FIXME: This class is a survival of the remote reference loader implemenation in the "old" core.
+ * I think it should be removed. To discuss.
  * TODO JAVADOC
  * 
  * Looks for IdReferencesType in a PolicySetType

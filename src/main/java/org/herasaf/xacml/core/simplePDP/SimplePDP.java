@@ -90,7 +90,10 @@ public class SimplePDP implements PDP {
 	}
 
 	/**
-	 * TODO JAVADOC!!!!
+	 * TODO REVIEW
+	 * 
+	 * {@inheritDoc}
+	 * The evaluation starts at the predefined root combining algorithm. 
 	 * 
 	 * <br />
 	 * <b>Logging:</b><br />
@@ -101,7 +104,7 @@ public class SimplePDP implements PDP {
 	 * requester here is a hint how this could be realized with the SLF4J
 	 * Logging Framework (<a
 	 * href="http://www.slf4j.org">http://www.slf4j.org</a>) used here if the
-	 * underlying logging framwork (such as logback) supports MDC (Mapped
+	 * underlying logging framework (such as logback) supports MDC (Mapped
 	 * Diagnostic Context).<br />
 	 * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
 	 * different requesters as described here: <a

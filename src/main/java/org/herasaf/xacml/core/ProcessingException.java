@@ -18,13 +18,12 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW
  * 
- * This exception is thrown if an error while processing a function or
+ * This exception is thrown if an error occurs while processing a function or
  * expression.
- *
+ * 
  * @author Florian Huonder
- * @version 1.0
  */
 public abstract class ProcessingException extends Exception {
 	private static final long serialVersionUID = -7535706787860940155L;
@@ -38,6 +37,10 @@ public abstract class ProcessingException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public ProcessingException(String message) {
 		super(message);
@@ -45,6 +48,14 @@ public abstract class ProcessingException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public ProcessingException(String message, Throwable cause) {
 		super(message, cause);
@@ -54,6 +65,11 @@ public abstract class ProcessingException extends Exception {
 	 * Constructs a new exception with the specified cause and a detail message
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and indicates
+	 *            that the cause is nonexistent or unknown.)
 	 */
 	public ProcessingException(Throwable cause) {
 		super(cause);

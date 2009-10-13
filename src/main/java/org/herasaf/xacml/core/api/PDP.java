@@ -20,7 +20,6 @@ package org.herasaf.xacml.core.api;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
  * TODO JAVADOC!!!!!!!!
@@ -43,19 +42,18 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public interface PDP {
 	/**
+	 * TODO REVIEW 
 	 * 
-	 * TODO JAVADOC 
+	 * The {@link #evaluate(RequestCtx)} method is responsible for evaluating
+	 * XACML conform requests. These requests are provided within a
+	 * {@link RequestCtx} object. When the evaluation has finished a {@link ResponseCtx} is
+	 * created and returned to the requester.
 	 * 
-	 * Evaluates a {@link RequestCtx} with the {@link Evaluatable}s stored in
-	 * the {@link PDP}.
-	 * 
-	 * @param request
-	 *            The {@link RequestCtx} to evaluate.
-	 * @return The {@link ResponseCtx} with the result of the evaluation.
+	 * @param request The {@link RequestCtx} that shall be evaluated.
+	 * @return The {@link ResponseCtx} containing the result of the evaluation.
 	 */
 	public ResponseCtx evaluate(RequestCtx request);
 
