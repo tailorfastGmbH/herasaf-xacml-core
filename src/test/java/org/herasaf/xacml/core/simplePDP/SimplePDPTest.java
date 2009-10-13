@@ -76,10 +76,6 @@ public class SimplePDPTest {
 						loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml"),
 						loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
 						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") },
-
-		// TODO add further cases:
-		// policy with internal ref
-		// policy with external ref
 		};
 	}
 
