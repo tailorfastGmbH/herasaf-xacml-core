@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.herasaf.xacml.core.PolicyRepositoryException;
-import org.herasaf.xacml.core.api.Change;
 import org.herasaf.xacml.core.api.Diff;
 import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
@@ -33,7 +32,6 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
-import org.herasaf.xacml.core.simplePDP.SimpleChange.ChangeType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,78 +43,78 @@ import org.slf4j.LoggerFactory;
  */
 public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	private Map<EvaluatableID, List<Evaluatable>> individualEvaluatables; // The
-																			// reason
-																			// that
-																			// a
-																			// List
-																			// is
-																			// put
-																			// as
-																			// value
-																			// here
-																			// is:
-																			// A
-																			// map
-																			// can
-																			// only
-																			// store
-																			// on
-																			// value
-																			// per
-																			// key.
-																			// But
-																			// if
-																			// a
-																			// local
-																			// reference
-																			// shall
-																			// be
-																			// in
-																			// the
-																			// list,
-																			// it
-																			// has
-																			// at
-																			// least
-																			// two
-																			// values
-																			// for
-																			// that
-																			// specific
-																			// key.
-																			// The
-																			// key
-																			// shall
-																			// be
-																			// a
-																			// tupel
-																			// of
-																			// two
-																			// elements
-																			// (root-key,eval-key).
-																			// The
-																			// root
-																			// key
-																			// shall
-																			// point
-																			// to
-																			// the
-																			// root
-																			// policy
-																			// to
-																			// which
-																			// this
-																			// policy
-																			// belongs.
+	// reason
+	// that
+	// a
+	// List
+	// is
+	// put
+	// as
+	// value
+	// here
+	// is:
+	// A
+	// map
+	// can
+	// only
+	// store
+	// on
+	// value
+	// per
+	// key.
+	// But
+	// if
+	// a
+	// local
+	// reference
+	// shall
+	// be
+	// in
+	// the
+	// list,
+	// it
+	// has
+	// at
+	// least
+	// two
+	// values
+	// for
+	// that
+	// specific
+	// key.
+	// The
+	// key
+	// shall
+	// be
+	// a
+	// tupel
+	// of
+	// two
+	// elements
+	// (root-key,eval-key).
+	// The
+	// root
+	// key
+	// shall
+	// point
+	// to
+	// the
+	// root
+	// policy
+	// to
+	// which
+	// this
+	// policy
+	// belongs.
 	private Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping; // Mapping
-																			// that
-																			// tells
-																			// which
-																			// policies
-																			// are
-																			// under
-																			// which
-																			// root.
+	// that
+	// tells
+	// which
+	// policies
+	// are
+	// under
+	// which
+	// root.
 	private List<Evaluatable> rootEvaluatables; // The root evaluatables
 
 	private final Logger logger = LoggerFactory
@@ -131,30 +129,35 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Change deploy(Collection<Evaluatable> evaluatables)
+	public void deploy(Collection<Evaluatable> evaluatables)
 			throws PolicyRepositoryException {
 
 		for (Evaluatable eval : evaluatables) {
 			deploy(eval); // Change object can be neglected here
 		}
-
-		return new SimpleChange(ChangeType.DEPLOYMENT);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Change deploy(Evaluatable evaluatable)
+	public void deploy(Evaluatable evaluatable)
 			throws PolicyRepositoryException {
 		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(
 				evaluatable, evaluatable.getId());
 
-		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check for consistency
+		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check
+																		// for
+																		// consistency
 			throw new PolicyRepositoryException(
 					"The PolicySet is not consistent.");
 		}
 
-		for (EvaluatableID id : newIndividualEvaluatables.keySet()) { // Check for uniqueness of the keys.
+		for (EvaluatableID id : newIndividualEvaluatables.keySet()) { // Check
+																		// for
+																		// uniqueness
+																		// of
+																		// the
+																		// keys.
 			if (individualEvaluatables.containsKey(id)) {
 				throw new PolicyRepositoryException(
 						"The ID must be unique over all PolicySets and Policies.");
@@ -163,16 +166,17 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 
 		individualEvaluatables.putAll(newIndividualEvaluatables);
 		rootEvaluatables.add(evaluatable);
-
-		return new SimpleChange(ChangeType.DEPLOYMENT);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Change undeploy(EvaluatableID id) throws PolicyRepositoryException {
-		for (Evaluatable eval : rootEvaluatables) {
+	public void undeploy(EvaluatableID id) throws PolicyRepositoryException {
+		boolean foundAtLeastOneMatchingEvaluatable = false;
+		for (int i = 0; i < rootEvaluatables.size(); i++) {
+			Evaluatable eval = rootEvaluatables.get(i);
 			if (eval.getId().equals(id)) {
+				foundAtLeastOneMatchingEvaluatable = true;
 				rootEvaluatables.remove(eval);
 				List<EvaluatableID> ids = rootEvaluatableMapping.get(eval
 						.getId());
@@ -180,30 +184,28 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 					individualEvaluatables.remove(evalId);
 				}
 				rootEvaluatableMapping.remove(eval.getId());
-				return new SimpleChange(ChangeType.UNDEPLOYMENT);
 			}
 		}
-		throw new PolicyRepositoryException("No root policy with id: "
-				+ id.getId());
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public Change undeploy(Collection<EvaluatableID> ids)
-			throws PolicyRepositoryException {
-
-		for (EvaluatableID id : ids) {
-			undeploy(id); // Change object can be neglected here
+		if (!foundAtLeastOneMatchingEvaluatable) {
+			throw new PolicyRepositoryException("No root policy with id: "
+					+ id.getId());
 		}
-
-		return new SimpleChange(ChangeType.UNDEPLOYMENT);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public Change applyDiff(Diff diff) throws PolicyRepositoryException {
+	public void undeploy(Collection<EvaluatableID> ids)
+			throws PolicyRepositoryException {
+		for (EvaluatableID id : ids) {
+			undeploy(id);
+		}
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void applyDiff(Diff diff) throws PolicyRepositoryException {
 		String msg = "The MapBasedSimplePolicyRepository does not support the application of Diffs";
 		logger.error(msg);
 		throw new UnsupportedOperationException(msg);
@@ -240,7 +242,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	public Evaluatable getEvaluatable(EvaluatableID id)
 			throws PolicyRepositoryException {
 		List<Evaluatable> evals = individualEvaluatables.get(id);
-		if(evals != null){
+		if (evals != null) {
 			for (Evaluatable eval : evals) {
 				if (eval instanceof PolicyType || eval instanceof PolicySetType) {
 					return eval;
@@ -261,36 +263,37 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 		return rootEvaluatables;
 	}
 
-	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(Map<EvaluatableID, List<Evaluatable>> initialMap, Evaluatable evaluatable, EvaluatableID rootId) {
+	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(
+			Map<EvaluatableID, List<Evaluatable>> initialMap,
+			Evaluatable evaluatable, EvaluatableID rootId) {
 		Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
-		if(initialMap == null){
+		if (initialMap == null) {
 			individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>(); // This
 			// construct
 			// is
 			// called
 			// MULTIMAP.
-		}
-		else {
+		} else {
 			individualEvaluatables = initialMap;
 		}
-		
+
 		// The following if-else block adds the id of this evaluatable and this
 		// evaluatable to the list of the individual evaluatables
 		if (individualEvaluatables.containsKey(evaluatable.getId())) { // checks
-																		// if an
-																		// entry
-																		// with
-																		// this
-																		// ID
-																		// already
-																		// exists.
+			// if an
+			// entry
+			// with
+			// this
+			// ID
+			// already
+			// exists.
 			individualEvaluatables.get(evaluatable.getId()).add(evaluatable); // if
-																				// yes,
-																				// the
-																				// additional
-																				// evaluatable
-																				// is
-																				// added.
+			// yes,
+			// the
+			// additional
+			// evaluatable
+			// is
+			// added.
 		} else { // if no, the first entry at this id is created.
 			List<Evaluatable> value = new ArrayList<Evaluatable>();
 			value.add(evaluatable);
@@ -298,18 +301,18 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			addRootMapping(evaluatable.getId(), rootId);
 		}
 		if (evaluatable instanceof PolicySetType) { // If the evaluatable is a
-													// PolicySet, this method is
-													// recursively applied to
-													// all sub-policies
+			// PolicySet, this method is
+			// recursively applied to
+			// all sub-policies
 			for (Evaluatable eval : ((PolicySetType) evaluatable)
 					.getUnorderedEvaluatables(null)) {
-				individualEvaluatables
-						.putAll(splitIntoIndividuals(individualEvaluatables, eval, rootId));
+				individualEvaluatables.putAll(splitIntoIndividuals(
+						individualEvaluatables, eval, rootId));
 			}
 		}
 		return individualEvaluatables;
 	}
-	
+
 	/*
 	 * Entry Point for other methods!
 	 */
@@ -324,12 +327,12 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 */
 	private void addRootMapping(EvaluatableID id, EvaluatableID rootId) {
 		if (rootEvaluatableMapping.containsKey(rootId)) { // checks if an entry
-															// with this ID
-															// already exists.
+			// with this ID
+			// already exists.
 			rootEvaluatableMapping.get(rootId).add(id); // if yes, the
-														// additional
-														// evaluatableId is
-														// added.
+			// additional
+			// evaluatableId is
+			// added.
 		} else { // if no, the first entry at this id is created.
 			List<EvaluatableID> value = new ArrayList<EvaluatableID>();
 			value.add(id);
@@ -348,16 +351,16 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 					logger
 							.error("This implementation of the PolicyRepository interface does not support Remote references. Further a local reference must be within the same PolicySet.");
 					return false; // If the List contains only one element that
-									// is a reference. It must be either a
-									// remote-reference or a local-reference
-									// that is not in this PolicySet. The first
-									// is not supported by this PolicyRepository
-									// implementation and the second is
-									// prohibited by the XACML specification.
+					// is a reference. It must be either a
+					// remote-reference or a local-reference
+					// that is not in this PolicySet. The first
+					// is not supported by this PolicyRepository
+					// implementation and the second is
+					// prohibited by the XACML specification.
 				}
 			} else { // More than one element in the List. Must be local
-						// references. Futher it is not allowed (by specification) to
-						// have more than one policy with the same id.
+				// references. Further it is not allowed (by specification) to
+				// have more than one policy with the same id.
 				boolean anEvaluatableFound = false;
 				for (Evaluatable eval : evals) {
 					if (!(eval instanceof IdReferenceType)
