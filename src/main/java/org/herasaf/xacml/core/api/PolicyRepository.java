@@ -28,61 +28,66 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
 /**
- * The {@link PolicyRepository} 
- * TODO JAVADOC!!!! wait for: HERASAFXACMLCORE-14
+ * The {@link PolicyRepository} TODO JAVADOC!!!! wait for: HERASAFXACMLCORE-14
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public interface PolicyRepository {
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param evaluatable
 	 * @throws PolicyRepositoryException
 	 */
-	public void deploy(Evaluatable evaluatable) throws PolicyRepositoryException;
-	
+	public void deploy(Evaluatable evaluatable)
+			throws PolicyRepositoryException;
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param evaluatables
 	 * @throws PolicyRepositoryException
 	 */
-	public void deploy(Collection<Evaluatable> evaluatables) throws PolicyRepositoryException;
-	
+	public void deploy(Collection<Evaluatable> evaluatables)
+			throws PolicyRepositoryException;
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param evaluatableID
 	 * @throws PolicyRepositoryException
 	 */
-	public void undeploy(EvaluatableID evaluatableID) throws PolicyRepositoryException;
-	
+	public void undeploy(EvaluatableID evaluatableID)
+			throws PolicyRepositoryException;
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param evaluatableIDs
 	 * @throws PolicyRepositoryException
 	 */
-	public void undeploy(Collection<EvaluatableID> evaluatableIDs) throws PolicyRepositoryException;
-	
+	public void undeploy(Collection<EvaluatableID> evaluatableIDs)
+			throws PolicyRepositoryException;
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param diff
 	 * @throws PolicyRepositoryException
 	 */
-	public void applyDiff(Diff diff) throws PolicyRepositoryException;
-	
+	public void applyDeploymentInstructions(
+			List<DeploymentInstruction> deploymentInstructions)
+			throws PolicyRepositoryException;
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @return
 	 */
 	public List<Evaluatable> getDeployment();
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -90,14 +95,14 @@ public interface PolicyRepository {
 	 * @return
 	 */
 	public List<Evaluatable> getDeployment(Date dateTime);
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @return
 	 */
-	public Map<Date,List<Evaluatable>> getDeployments();
-	
+	public Map<Date, List<Evaluatable>> getDeployments();
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -106,8 +111,9 @@ public interface PolicyRepository {
 	 * 
 	 * @return
 	 */
-	public Evaluatable getEvaluatable(EvaluatableID evaluatableID) throws PolicyRepositoryException;
-	
+	public Evaluatable getEvaluatable(EvaluatableID evaluatableID)
+			throws PolicyRepositoryException;
+
 	/**
 	 * TODO JAVADOC
 	 * 

@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.herasaf.xacml.core.PolicyRepositoryException;
-import org.herasaf.xacml.core.api.Diff;
+import org.herasaf.xacml.core.api.DeploymentInstruction;
 import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -146,18 +146,18 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 				evaluatable, evaluatable.getId());
 
 		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check
-																		// for
-																		// consistency
+			// for
+			// consistency
 			throw new PolicyRepositoryException(
 					"The PolicySet is not consistent.");
 		}
 
 		for (EvaluatableID id : newIndividualEvaluatables.keySet()) { // Check
-																		// for
-																		// uniqueness
-																		// of
-																		// the
-																		// keys.
+			// for
+			// uniqueness
+			// of
+			// the
+			// keys.
 			if (individualEvaluatables.containsKey(id)) {
 				throw new PolicyRepositoryException(
 						"The ID must be unique over all PolicySets and Policies.");
@@ -205,7 +205,9 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyDiff(Diff diff) throws PolicyRepositoryException {
+	public void applyDeploymentInstructions(
+			List<DeploymentInstruction> deploymentInstructions)
+			throws PolicyRepositoryException {
 		String msg = "The MapBasedSimplePolicyRepository does not support the application of Diffs";
 		logger.error(msg);
 		throw new UnsupportedOperationException(msg);
