@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.api;
 
+import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -63,9 +64,7 @@ public interface PDP {
 	 */
 	public PolicyRepository getPolicyRepository();
 
-	/**
-	 *  TODO JAVDOC
-	 * @param policyRepository
-	 */
-	public void setPolicyRepository(PolicyRepository policyRepository);
+	public PIP getPIP();
+	
+	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm();
 }

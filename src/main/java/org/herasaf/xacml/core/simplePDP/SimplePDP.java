@@ -51,7 +51,7 @@ public class SimplePDP implements PDP {
 	 * @param policyRepository
 	 */
 	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository) {
+			PolicyRepository policyRepository, PIP pip) {
 		this.policyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
 	}
@@ -62,33 +62,25 @@ public class SimplePDP implements PDP {
 	public PolicyRepository getPolicyRepository() {
 		return policyRepository;
 	}
-
+	
 	/**
-	 * TODO JAVADOC
-	 */
-	public void setPolicyRepository(PolicyRepository policyRepository) {
-		this.policyRepository = policyRepository;
-	}
-
-	/**
-	 * TODO JAVADOC
+	 * TODO JAVA
 	 * 
-	 * @param attributeFinder
+	 * @return
 	 */
-	public void setPIP(PIP pip) {
-		this.pip = pip;
+	public PIP getPIP(){
+		return pip;
 	}
-
+	
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVA
 	 * 
-	 * @param policyCombiningAlgorithm
+	 * @return
 	 */
-	public void setPolicyCombiningAlgorithm(
-			PolicyUnorderedCombiningAlgorithm policyCombiningAlgorithm) {
-		this.policyCombiningAlgorithm = policyCombiningAlgorithm;
+	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm(){
+		return policyCombiningAlgorithm;
 	}
-
+	
 	/**
 	 * TODO REVIEW
 	 * 
@@ -110,6 +102,7 @@ public class SimplePDP implements PDP {
 	 * different requesters as described here: <a
 	 * href="http://logback.qos.ch/manual/mdc.html"
 	 * >http://logback.qos.ch/manual/mdc.html</a>.
+	 * TODO extend log message after log issue is handled.
 	 */
 	public ResponseCtx evaluate(RequestCtx request) {
 		logger.debug("Evaluating Request: {}", request.toString());
