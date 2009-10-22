@@ -42,13 +42,23 @@ public class PolicyCombiningAlgorithmsInitializer extends
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
 	private final static Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
-	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
-
+	private final TargetMatcher targetMatcher = new TargetMatcherImpl(); //The default target matcher.
+	private static boolean respectAbandondEvaluatables;
+	
+	/**
+	 * TODO JAVADOC
+	 */
+	public PolicyCombiningAlgorithmsInitializer(boolean respectAbandondEvaluatables) {
+		logger.info("Respect abandoned Evaluatables: {}", respectAbandondEvaluatables);
+		PolicyCombiningAlgorithmsInitializer.respectAbandondEvaluatables = respectAbandondEvaluatables;
+	}
+	
 	@Override
 	protected void furtherInitializations(
 			List<AbstractPolicyCombiningAlgorithm> instances) {
 		for (AbstractPolicyCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
+			algorithm.setRespectAbandondEvaluatables(respectAbandondEvaluatables);
 		}
 	}
 

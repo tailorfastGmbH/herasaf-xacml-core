@@ -44,6 +44,7 @@ import org.slf4j.LoggerFactory;
 public class SimplePDPFactory {
 	private static final Logger logger = LoggerFactory
 			.getLogger(SimplePDPFactory.class);
+	private static boolean respectAbandonedEvaluatables;
 	private static List<Initializer> initializers;
 	private static Class<? extends PolicyUnorderedCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
 	private static Class<? extends PolicyRepository> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
@@ -61,6 +62,15 @@ public class SimplePDPFactory {
 	/**
 	 * TODO JAVADOC
 	 * 
+	 * @param respect
+	 */
+	public static void respectAbandonedEvaluatables(boolean respect){
+		respectAbandonedEvaluatables = respect;
+	}
+	
+	/**
+	 * TODO JAVADOC
+	 * 
 	 * @param useDefaultInitializers
 	 */
 	public static void useDefaultInitializers(boolean useDefaultInitializers) {
@@ -70,11 +80,11 @@ public class SimplePDPFactory {
 			initializers.add(new FunctionsInitializer());
 			initializers.add(new DataTypesInitializer());
 			initializers.add(new RuleCombiningAlgorithmsInitializer());
-			initializers.add(new PolicyCombiningAlgorithmsInitializer());
+			initializers.add(new PolicyCombiningAlgorithmsInitializer(respectAbandonedEvaluatables));
 			initializers.add(new ContextAndPolicyInitializer());
 		}
 	}
-
+	
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -98,6 +108,8 @@ public class SimplePDPFactory {
 					"SimplePDPFactory is not initialized. Initializers must be set.");
 		}
 		runInitializers();
+		
+		rootCombiningAlgorithm.setRespectAbandondEvaluatables(respectAbandonedEvaluatables);
 		
 		return new SimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}

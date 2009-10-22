@@ -292,8 +292,8 @@ public class PolicyType implements Evaluatable, Serializable {
 	 */
 	public List<RuleType> getOrderedRules() {
 		List<RuleType> rules = new ArrayList<RuleType>();
-		for (int i = 0; i < additionalInformation.size(); i++){
-			Object obj = additionalInformation.get(i);
+		for (int i = 0; i < getAdditionalInformation().size(); i++){
+			Object obj = getAdditionalInformation().get(i);
 			if (obj instanceof RuleType) {
 				rules.add((RuleType) obj);
 			}
@@ -317,7 +317,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	 */
 	public Map<String, Variable> getVariables(){
 		Map<String, Variable> variables = new HashMap<String, Variable>();
-		for (Object obj : additionalInformation) {
+		for (Object obj : getAdditionalInformation()) {
 			if (obj instanceof VariableDefinitionType){
 				VariableDefinitionType variable = (VariableDefinitionType) obj;
 				variables.put(variable.getVariableId(), variable);
