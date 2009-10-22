@@ -14,17 +14,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW
  * 
- * This class represents a port range.
- *
- * @author Florian Huonder 
- * @author Stefan Oberholzer 
- * @version 1.0
+ * This class represents a (network) port range. The values can be between 1 and
+ * 65535.
+ * 
+ * <br /><b>Examples:</b><br />
+ * <code>
+ * {@link PortRange} range1 = new {@link PortRange}("123");<br />
+ * {@link PortRange} range2 = new {@link PortRange}("-4657");<br />
+ * {@link PortRange} range3 = new {@link PortRange}("17383-");<br />
+ * {@link PortRange} range4 = new {@link PortRange}("1204-3845");
+ * </code>
+ * <br /><br />
+ * A -&lt;number&gt; indicates that the lower boundary of the range is the minimum value
+ * of 1. A &lt;number&gt;- indicates that the upper boundary of the range is the maximum value of 35535. 
+ * 
+ * 
+ * @author Florian Huonder
+ * @author Stefan Oberholzer
  */
 public class PortRange {
 	private static final String MATCHPATTERN = "(([1-9]\\d*)??\\-??([1-9]\\d*)??)??";
@@ -32,56 +43,58 @@ public class PortRange {
 	private int upperValue = 65535;
 
 	/**
-	 * Initializes the object. The range will be checked if it is a port range.
-	 *
-	 * @param portRange The port range.
+	 * TODO REVIEW
+	 * 
+	 * Creates a new {@link PortRange}.
+	 * 
+	 * @param portRange
+	 *            The {@link String} representation of the port range.
 	 */
-	public PortRange(String portRange){
-		if(!portRange.matches(MATCHPATTERN)) {
+	public PortRange(String portRange) {
+		if (!portRange.matches(MATCHPATTERN)) {
 			throw new IllegalArgumentException("No port range: " + portRange);
 		}
 		int position = portRange.indexOf("-");
-		if(position == -1){
+		if (position == -1) {
 			try {
-				lowerValue = upperValue = new Integer(portRange.substring(0, portRange.length()));
+				lowerValue = upperValue = new Integer(portRange.substring(0,
+						portRange.length()));
+			} catch (Exception e) {
+				throw new IllegalArgumentException("No port range: "
+						+ portRange);
 			}
-			catch (Exception e){
-				throw new IllegalArgumentException("No port range: " + portRange);
-			}
-		}
-		else {
+		} else {
 			try {
 				String value = portRange.substring(0, position);
-				if(!value.equals("")){
+				if (!value.equals("")) {
 					lowerValue = new Integer(value);
 				}
 				value = portRange.substring(position + 1, portRange.length());
-				if(!value.equals("")){
+				if (!value.equals("")) {
 					upperValue = new Integer(value);
 				}
-			}
-			catch (Exception e){
-				throw new IllegalArgumentException("No port range: " + portRange);
+			} catch (Exception e) {
+				throw new IllegalArgumentException("No port range: "
+						+ portRange);
 			}
 		}
-		if(lowerValue < 0){
+		if (lowerValue < 0) {
 			throw new IllegalArgumentException("No port range: " + portRange);
 		}
-		if(upperValue - lowerValue < 0){
+		if (upperValue - lowerValue < 0) {
 			throw new IllegalArgumentException("No port range: " + portRange);
 		}
-		if(upperValue > 65535){
+		if (upperValue > 65535) {
 			throw new IllegalArgumentException("No port range: " + portRange);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
-		if(upperValue != lowerValue){
+		if (upperValue != lowerValue) {
 			return lowerValue + "-" + upperValue;
 		}
 		return Integer.toString(lowerValue);
