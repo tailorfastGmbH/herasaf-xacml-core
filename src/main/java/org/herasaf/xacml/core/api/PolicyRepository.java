@@ -77,8 +77,8 @@ public interface PolicyRepository {
 	 * @param diff
 	 * @throws PolicyRepositoryException
 	 */
-	public void applyDeploymentInstructions(
-			List<DeploymentInstruction> deploymentInstructions)
+	public void applyDeploymentModifications(
+			List<DeploymentModification> deploymentInstructions)
 			throws PolicyRepositoryException;
 
 	/**

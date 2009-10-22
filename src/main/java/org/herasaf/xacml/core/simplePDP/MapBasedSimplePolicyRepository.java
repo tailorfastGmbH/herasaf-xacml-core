@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.herasaf.xacml.core.PolicyRepositoryException;
-import org.herasaf.xacml.core.api.DeploymentInstruction;
+import org.herasaf.xacml.core.api.DeploymentModification;
 import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -205,8 +205,8 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyDeploymentInstructions(
-			List<DeploymentInstruction> deploymentInstructions)
+	public void applyDeploymentModifications(
+			List<DeploymentModification> deploymentInstructions)
 			throws PolicyRepositoryException {
 		String msg = "The MapBasedSimplePolicyRepository does not support the application of Diffs";
 		logger.error(msg);

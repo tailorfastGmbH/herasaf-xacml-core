@@ -21,6 +21,6 @@ package org.herasaf.xacml.core.api;
  * 
  * @author Florian Huonder
  */
-public interface DeploymentInstruction {
+public interface DeploymentModification {
 
 }
