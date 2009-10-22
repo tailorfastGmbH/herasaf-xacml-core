@@ -38,22 +38,25 @@ import org.slf4j.LoggerFactory;
 public class SimplePDP implements PDP {
 	private PolicyRepository policyRepository;
 	private PIP pip; // TODO introduce PIP
-	private PolicyUnorderedCombiningAlgorithm policyCombiningAlgorithm;
+	private PolicyUnorderedCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
-
-	public SimplePDP() {
-	}
 
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param policyRepository
+	 * @param pip
 	 */
 	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRepository policyRepository, PIP pip) {
-		this.policyCombiningAlgorithm = rootCombiningAlgorithm;
+		this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
+		this.pip = pip;
+		
+		if(pip == null){
+			logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
+		}
 	}
 
 	/**
@@ -78,7 +81,7 @@ public class SimplePDP implements PDP {
 	 * @return
 	 */
 	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm(){
-		return policyCombiningAlgorithm;
+		return rootPolicyCombiningAlgorithm;
 	}
 	
 	/**
@@ -108,7 +111,7 @@ public class SimplePDP implements PDP {
 		logger.debug("Evaluating Request: {}", request.toString());
 		RequestInformation reqInfo = new RequestInformation(pip);
 
-		DecisionType decision = policyCombiningAlgorithm
+		DecisionType decision = rootPolicyCombiningAlgorithm
 				.evaluateEvaluatableList(request.getRequest(), policyRepository
 						.getEvaluatables(request), reqInfo);
 
