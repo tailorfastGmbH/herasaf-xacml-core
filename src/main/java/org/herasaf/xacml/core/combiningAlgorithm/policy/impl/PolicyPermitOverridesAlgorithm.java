@@ -30,6 +30,9 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * TODO JAVADOC
@@ -42,14 +45,14 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * The Implementation of the Permit-override implementation oriented at the
  * sample implementation in the XACML 2.0 specification.
  * </p>
- *
+ * 
  * <p>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 135-137, for further information.
  * </p>
- *
+ * 
  * @author Stefan Oberholzer
  * @author René Eggenschwiler
  * @version 1.0
@@ -59,12 +62,15 @@ public class PolicyPermitOverridesAlgorithm extends
 	private static final long serialVersionUID = 2540669307662754759L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:permit-overrides";
+	private Logger logger = LoggerFactory
+			.getLogger(PolicyDenyOverridesAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
+	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
 	public DecisionType evaluateEvaluatableList(RequestType request,
@@ -79,30 +85,53 @@ public class PolicyPermitOverridesAlgorithm extends
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
 		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
-		
+
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
-			
-			if(atLeastOnePermit && respectAbandonedEvaluatables && !eval.hasObligations()){
-				/* 
-				 * If a decision is already made (decisionPermit == true) and the abandoned Obligations must be taken into account
-				 * (respectAbandonedEvaluatables == true) and the evaluatable to evaluate (and its sub evaluatables) do not have 
-				 * Obligations,
+
+			if (atLeastOnePermit && respectAbandonedEvaluatables
+					&& !eval.hasObligations()) {
+				/*
+				 * If a decision is already made (decisionPermit == true) and
+				 * the abandoned Obligations must be taken into account
+				 * (respectAbandonedEvaluatables == true) and the evaluatable to
+				 * evaluate (and its sub evaluatables) do not have Obligations,
 				 * then this iteration can be skipped.
 				 */
 				break;
 			}
-			
+
 			DecisionType decision;
 			try {
 				// Resets the status to go sure, that the returned statuscode is
 				// the one of the evaluation.
 				requestInfo.resetStatus();
+
+				if (logger.isDebugEnabled()) {
+					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+							.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId()
+							.getId());
+				}
+
 				decision = eval.getCombiningAlg().evaluate(request, eval,
 						requestInfo);
-				if(decision == DecisionType.PERMIT || decision == DecisionType.DENY){
-					obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
-					obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
+
+				if (logger.isDebugEnabled()) {
+					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+							.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId()
+							.getId(), decision.toString());
+					MDC.remove("org:herasaf:xacml:evaluation:evaluatableid");
+				}
+
+				if (decision == DecisionType.PERMIT
+						|| decision == DecisionType.DENY) {
+					obligationsOfApplicableEvals.addAll(eval
+							.getContainedObligations(EffectType
+									.fromValue(decision.toString())));
+					obligationsOfApplicableEvals.addAll(requestInfo
+							.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*
@@ -116,16 +145,16 @@ public class PolicyPermitOverridesAlgorithm extends
 			}
 			switch (decision) {
 			case PERMIT:
-				if(!respectAbandonedEvaluatables){
+				if (!respectAbandonedEvaluatables) {
 					requestInfo.clearObligations();
-					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
+					requestInfo.addObligations(obligationsOfApplicableEvals,
+							EffectType.PERMIT);
 					/*
-					* If the result is permit, the statuscode is always ok.
+					 * If the result is permit, the statuscode is always ok.
 					 */
 					requestInfo.resetStatus();
 					return DecisionType.PERMIT;
-				}
-				else {
+				} else {
 					atLeastOnePermit = true;
 				}
 				break;
@@ -152,22 +181,23 @@ public class PolicyPermitOverridesAlgorithm extends
 			}
 			requestInfo.clearObligations();
 		}
-		if(atLeastOnePermit){
+		if (atLeastOnePermit) {
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
 			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
+			requestInfo.addObligations(obligationsOfApplicableEvals,
+					EffectType.PERMIT);
 			return DecisionType.PERMIT;
-		}
-		else if (atLeastOneDeny) {
-			// The obligationsOfApplicableEvals may not be revised because it can only contain DENY-Obligations.
-			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
+		} else if (atLeastOneDeny) {
+			// The obligationsOfApplicableEvals may not be revised because it
+			// can only contain DENY-Obligations.
+			requestInfo.addObligations(obligationsOfApplicableEvals,
+					EffectType.DENY);
 			requestInfo.setMissingAttributes(missingAttributes);
 			requestInfo.resetStatus();
 			return DecisionType.DENY;
-		}
-		else if (atLeastOneError) {
+		} else if (atLeastOneError) {
 			requestInfo.setMissingAttributes(missingAttributes);
 			requestInfo.updateStatusCode(statusCodes);
 			return DecisionType.INDETERMINATE;

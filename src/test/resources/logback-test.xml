@@ -2,7 +2,7 @@
 <configuration>
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<layout class="ch.qos.logback.classic.PatternLayout">
-			<Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+			<Pattern>%d{HH:mm:ss.SSS} %-5level Logger[%logger{36}] - Request[%X{org:herasaf:request:xacml:evaluation:requesttime}] - EvaluatableId[%X{org:herasaf:xacml:evaluation:evaluatableid}] - RuleId[%X{org:herasaf:xacml:evaluation:ruleid}] %msg%n</Pattern>
 		</layout>
 	</appender>
 

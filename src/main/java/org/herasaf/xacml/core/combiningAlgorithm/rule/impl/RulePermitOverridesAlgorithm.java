@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -29,6 +30,9 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * TODO JAVADOC
@@ -43,8 +47,8 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * </p>
  * 
  * <p>
- * See <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 135-136, for further information.
  * </p>
@@ -59,6 +63,8 @@ public class RulePermitOverridesAlgorithm extends
 	private static final long serialVersionUID = -2135362506622622611L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides";
+	private Logger logger = LoggerFactory
+			.getLogger(PolicyDenyOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -67,13 +73,15 @@ public class RulePermitOverridesAlgorithm extends
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see org.herasaf.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm#evaluateRuleList(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List, org.herasaf.core.dataTypes.RequestInformation,
-	 *      java.util.Map)
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm
+	 * #evaluateRuleList(org.herasaf.core.context.impl.RequestType,
+	 * java.util.List, org.herasaf.core.dataTypes.RequestInformation,
+	 * java.util.Map)
 	 */
 	@Override
 	public DecisionType evaluateRuleList(RequestType request,
@@ -94,8 +102,26 @@ public class RulePermitOverridesAlgorithm extends
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
 			requestInfo.resetStatus();
+
+			if (logger.isDebugEnabled()) {
+				MDC
+						.put("org:herasaf:xacml:evaluation:ruleid", rule
+								.getRuleId());
+				logger.debug("Starting evaluation of: {}", rule.getRuleId());
+			}
+
 			DecisionType decision = this.evaluateRule(request, rule,
 					requestInfo);
+
+			if (logger.isDebugEnabled()) {
+				MDC
+						.put("org:herasaf:xacml:evaluation:ruleid", rule
+								.getRuleId());
+				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
+						decision.toString());
+				MDC.remove("org:herasaf:xacml:evaluation:ruleid");
+			}
+
 			switch (decision) {
 			case DENY:
 				atLeastOneDeny = true;

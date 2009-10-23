@@ -29,6 +29,9 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * TODO JAVADOC
@@ -58,6 +61,8 @@ public class PolicyFirstApplicableAlgorithm extends
 	private static final long serialVersionUID = -8418394590870869155L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable";
+	private Logger logger = LoggerFactory
+			.getLogger(PolicyDenyOverridesAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -77,10 +82,29 @@ public class PolicyFirstApplicableAlgorithm extends
 				// Resets the status to go sure, that the returned statuscode is
 				// the one of the evaluation.
 				requestInfo.resetStatus();
+
+				if (logger.isDebugEnabled()) {
+					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+							.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId()
+							.getId());
+				}
+
 				decision = eval.getCombiningAlg().evaluate(request, eval,
 						requestInfo);
-				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
-					obligations.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
+
+				if (logger.isDebugEnabled()) {
+					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+							.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId()
+							.getId(), decision.toString());
+					MDC.remove("org:herasaf:xacml:evaluation:evaluatableid");
+				}
+
+				if (decision == DecisionType.PERMIT
+						|| decision == DecisionType.DENY) {
+					obligations.addAll(eval.getContainedObligations(EffectType
+							.fromValue(decision.toString())));
 					obligations.addAll(requestInfo.getObligations()
 							.getObligations());
 				}

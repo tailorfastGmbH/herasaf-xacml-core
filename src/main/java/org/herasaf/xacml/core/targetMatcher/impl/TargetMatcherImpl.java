@@ -62,33 +62,34 @@ public class TargetMatcherImpl implements TargetMatcher {
 			RequestInformation reqInfo) throws SyntaxException,
 			ProcessingException, MissingAttributeException {
 		if (target != null) {
+			logger.debug("Starting subjects match.");
 			boolean subjectsMatches = subjectsMatch(target.getSubjects(),
 					request, reqInfo);
-			logger.debug("Request meets subject target requirements: {}",
-					subjectsMatches);
+			logger.debug("Subjects match resulted in: {}", subjectsMatches);
 			if (!subjectsMatches) {
 				return false;
 			}
 
+			logger.debug("Starting recources match.");
 			boolean resourcesMatches = resourcesMatch(target.getResources(),
 					request, reqInfo);
-			logger.debug("Request meets resource target requirements: {}",
-					resourcesMatches);
+			logger.debug("Resources match resulted in: {}", resourcesMatches);
 			if (!resourcesMatches) {
 				return false;
 			}
 
+			logger.debug("Starting actions match.");
 			boolean actionsMatches = actionMatch(target.getActions(), request,
 					reqInfo);
-			logger.debug("Request meets action target requirements: {}",
-					actionsMatches);
+			logger.debug("Actions match resulted in: {}", actionsMatches);
 			if (!actionsMatches) {
 				return false;
 			}
 
+			logger.debug("Starting environments match.");
 			boolean environmentsMatches = environmentMatch(target
 					.getEnvironments(), request, reqInfo);
-			logger.debug("Request meets environment target requirements: {}",
+			logger.debug("Environments match resulted in: {}",
 					environmentsMatches);
 			if (!environmentsMatches) {
 				return false;
@@ -109,10 +110,13 @@ public class TargetMatcherImpl implements TargetMatcher {
 			RequestInformation reqInfo) throws ProcessingException,
 			SyntaxException, MissingAttributeException {
 		if (subjects == null) {
+			logger.debug("No subjects present.");
 			return true;
 		}
 		for (int i = 0; i < subjects.getSubjects().size(); i++) {
 			SubjectType targetSubject = subjects.getSubjects().get(i);
+			logger.debug("Starting subject match. (id:{})", targetSubject
+					.toString());
 			boolean matches = match(targetSubject.getSubjectMatches(), request,
 					reqInfo);
 			if (matches) {
@@ -122,6 +126,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 46 (5.6).
+				logger.debug("Subject match resulted in: {}", matches);
 				return true;
 			}
 		}
@@ -133,10 +138,13 @@ public class TargetMatcherImpl implements TargetMatcher {
 			throws ProcessingException, SyntaxException,
 			MissingAttributeException {
 		if (resources == null) {
+			logger.debug("No resources present.");
 			return true;
 		}
 		for (int i = 0; i < resources.getResources().size(); i++) {
 			ResourceType targetResource = resources.getResources().get(i);
+			logger.debug("Starting resource match. (id:{})", targetResource
+					.toString());
 			boolean matches = match(targetResource.getResourceMatches(),
 					request, reqInfo);
 			if (matches) {
@@ -147,6 +155,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 47 (5.9).
+				logger.debug("Resource match resulted in: {}", matches);
 				return true;
 			}
 		}
@@ -157,10 +166,13 @@ public class TargetMatcherImpl implements TargetMatcher {
 			RequestInformation reqInfo) throws ProcessingException,
 			SyntaxException, MissingAttributeException {
 		if (actions == null) {
+			logger.debug("No actions present.");
 			return true;
 		}
 		for (int i = 0; i < actions.getActions().size(); i++) {
 			ActionType targetAction = actions.getActions().get(i);
+			logger.debug("Starting action match. (id:{})", targetAction
+					.toString());
 			boolean matches = match(targetAction.getActionMatches(), request,
 					reqInfo);
 			if (matches) {
@@ -170,6 +182,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 48 (5.12).
+				logger.debug("Action match resulted in: {}", matches);
 				return true;
 			}
 		}
@@ -181,11 +194,14 @@ public class TargetMatcherImpl implements TargetMatcher {
 			throws ProcessingException, SyntaxException,
 			MissingAttributeException {
 		if (environments == null) {
+			logger.debug("No environments present.");
 			return true;
 		}
 		for (int i = 0; i < environments.getEnvironments().size(); i++) {
 			EnvironmentType targetEnvironment = environments.getEnvironments()
 					.get(i);
+			logger.debug("Starting environment match. (id:{})",
+					targetEnvironment.toString());
 			boolean matches = match(targetEnvironment.getEnvironmentMatches(),
 					request, reqInfo);
 			if (matches) {
@@ -196,6 +212,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 50 (5.15).
+				logger.debug("Environment match resulted in: {}", matches);
 				return true;
 			}
 		}
@@ -208,6 +225,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 		for (int i = 0; i < matches.size(); i++) {
 			Match match = matches.get(i);
 			Function matchFunction = match.getMatchFunction();
+			logger
+					.debug("Matching with function: {}", matchFunction
+							.toString());
 			AttributeDesignatorType designator = match.getAttributeDesignator();
 			List<?> requestAttributeValues = (List<?>) designator.handle(
 					request, reqInfo); // Fetches all AttributeValue-contents
@@ -225,6 +245,8 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 			// on page 79 (Match evaluation, line 3394).
 			if (requestAttributeValues.size() == 0) {
+				logger
+						.debug("Request did not contain the required attributes.");
 				return false;
 			}
 
@@ -247,6 +269,14 @@ public class TargetMatcherImpl implements TargetMatcher {
 						policyAttributeValue.getDataType().convertTo(
 								(String) policyAttributeValue.getContent().get(
 										0)), requestAttributeValue);
+				logger
+						.debug(
+								"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
+								new Object[] {
+										matchMatches,
+										policyAttributeValue.getDataType(),
+										policyAttributeValue.getContent()
+												.get(0), requestAttributeValue });
 
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request

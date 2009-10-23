@@ -28,6 +28,7 @@ import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
  * TODO JAVADOC!!!!!!!!!! The implementation of the {@link PDP}. <br>
@@ -108,6 +109,7 @@ public class SimplePDP implements PDP {
 	 * TODO extend log message after log issue is handled.
 	 */
 	public ResponseCtx evaluate(RequestCtx request) {
+		MDC.put("org:herasaf:request:xacml:evaluation:requesttime", String.valueOf(System.currentTimeMillis()));
 		logger.debug("Evaluating Request: {}", request.toString());
 		RequestInformation reqInfo = new RequestInformation(pip);
 
@@ -115,6 +117,7 @@ public class SimplePDP implements PDP {
 				.evaluateEvaluatableList(request.getRequest(), policyRepository
 						.getEvaluatables(request), reqInfo);
 
+		MDC.remove("org:herasaf:request:xacml:evaluation:requesttime");
 		return ResponseCtxFactory.create(request.getRequest(), decision,
 				reqInfo);
 	}
