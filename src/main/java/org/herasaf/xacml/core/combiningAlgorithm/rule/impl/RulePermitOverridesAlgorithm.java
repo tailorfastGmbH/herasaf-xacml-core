@@ -64,7 +64,7 @@ public class RulePermitOverridesAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides";
 	private Logger logger = LoggerFactory
-			.getLogger(PolicyDenyOverridesAlgorithm.class);
+			.getLogger(RulePermitOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -105,7 +105,7 @@ public class RulePermitOverridesAlgorithm extends
 
 			if (logger.isDebugEnabled()) {
 				MDC
-						.put("org:herasaf:xacml:evaluation:ruleid", rule
+						.put(MDC_RULE_ID, rule
 								.getRuleId());
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
@@ -115,11 +115,11 @@ public class RulePermitOverridesAlgorithm extends
 
 			if (logger.isDebugEnabled()) {
 				MDC
-						.put("org:herasaf:xacml:evaluation:ruleid", rule
+						.put(MDC_RULE_ID, rule
 								.getRuleId());
 				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
 						decision.toString());
-				MDC.remove("org:herasaf:xacml:evaluation:ruleid");
+				MDC.remove(MDC_RULE_ID);
 			}
 
 			switch (decision) {

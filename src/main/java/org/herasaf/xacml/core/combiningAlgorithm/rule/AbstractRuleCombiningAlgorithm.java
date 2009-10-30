@@ -51,6 +51,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends
 		AbstractCombiningAlgorithm implements CombiningAlgorithm,
 		RuleCombiningAlgorithm {
 	private static final long serialVersionUID = 2445043201410211876L;
+	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**
 	 * {@inheritDoc}

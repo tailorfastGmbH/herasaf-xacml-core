@@ -41,6 +41,8 @@ public class SimplePDP implements PDP {
 	private PIP pip; // TODO introduce PIP
 	private PolicyUnorderedCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
+	
+	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 
 	/**
 	 * TODO JAVADOC
@@ -109,7 +111,7 @@ public class SimplePDP implements PDP {
 	 * TODO extend log message after log issue is handled.
 	 */
 	public ResponseCtx evaluate(RequestCtx request) {
-		MDC.put("org:herasaf:request:xacml:evaluation:requesttime", String.valueOf(System.currentTimeMillis()));
+		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
 		logger.debug("Evaluating Request: {}", request.toString());
 		RequestInformation reqInfo = new RequestInformation(pip);
 
@@ -117,7 +119,7 @@ public class SimplePDP implements PDP {
 				.evaluateEvaluatableList(request.getRequest(), policyRepository
 						.getEvaluatables(request), reqInfo);
 
-		MDC.remove("org:herasaf:request:xacml:evaluation:requesttime");
+		MDC.remove(MDC_REQUEST_TIME);
 		return ResponseCtxFactory.create(request.getRequest(), decision,
 				reqInfo);
 	}

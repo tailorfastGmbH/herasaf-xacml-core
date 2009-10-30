@@ -96,7 +96,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+					MDC.put(MDC_EVALUATABLE_ID, eval
 							.getId().getId());
 					logger.debug("Starting evaluation of: {}", eval.getId()
 							.getId());
@@ -106,11 +106,11 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 						requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+					MDC.put(MDC_EVALUATABLE_ID, eval
 							.getId().getId());
 					logger.debug("Evaluation of {} was: {}", eval.getId()
 							.getId(), decision.toString());
-					MDC.remove("org:herasaf:xacml:evaluation:evaluatableid");
+					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
 				if (decision == DecisionType.PERMIT

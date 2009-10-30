@@ -63,7 +63,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-deny-overrides";
 	private Logger logger = LoggerFactory
-			.getLogger(PolicyDenyOverridesAlgorithm.class);
+			.getLogger(PolicyOrderedDenyOverridesAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -105,7 +105,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+					MDC.put(MDC_EVALUATABLE_ID, eval
 							.getId().getId());
 					logger.debug("Starting evaluation of: {}", eval.getId()
 							.getId());
@@ -115,11 +115,11 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 						requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put("org:herasaf:xacml:evaluation:evaluatableid", eval
+					MDC.put(MDC_EVALUATABLE_ID, eval
 							.getId().getId());
 					logger.debug("Evaluation of {} was: {}", eval.getId()
 							.getId(), decision.toString());
-					MDC.remove("org:herasaf:xacml:evaluation:evaluatableid");
+					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
 				if (decision == DecisionType.PERMIT

@@ -60,7 +60,7 @@ public class RuleFirstApplicableAlgorithm extends
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
 	private Logger logger = LoggerFactory
-			.getLogger(PolicyDenyOverridesAlgorithm.class);
+			.getLogger(RuleFirstApplicableAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -93,7 +93,7 @@ public class RuleFirstApplicableAlgorithm extends
 
 			if (logger.isDebugEnabled()) {
 				MDC
-						.put("org:herasaf:xacml:evaluation:ruleid", rule
+						.put(MDC_RULE_ID, rule
 								.getRuleId());
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
@@ -103,11 +103,11 @@ public class RuleFirstApplicableAlgorithm extends
 
 			if (logger.isDebugEnabled()) {
 				MDC
-						.put("org:herasaf:xacml:evaluation:ruleid", rule
+						.put(MDC_RULE_ID, rule
 								.getRuleId());
 				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
 						decision.toString());
-				MDC.remove("org:herasaf:xacml:evaluation:ruleid");
+				MDC.remove(MDC_RULE_ID);
 			}
 
 			switch (decision) {
