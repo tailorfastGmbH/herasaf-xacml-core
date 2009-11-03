@@ -36,19 +36,19 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * The implementation of the {@link PolicyCombiningAlgorithm} with the
  * Only-One-Applicable strategy.
  * </p>
- *
+ * 
  * <p>
  * The Implementation of the Only-One-Applicable implementation oriented at the
  * sample implementation in the XACML 2.0 specification.
  * </p>
- *
+ * 
  * <p>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 139, for further information.
  * </p>
- *
+ * 
  * @author Sacha Dolski
  * @author Stefan Oberholzer
  * @version 1.0
@@ -61,9 +61,11 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm#evaluateEvaluatableList(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List, org.herasaf.core.dataTypes.RequestInformation)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm
+	 * #evaluateEvaluatableList(org.herasaf.core.context.impl.RequestType,
+	 * java.util.List, org.herasaf.core.dataTypes.RequestInformation)
 	 */
 
 	@Override
@@ -76,7 +78,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 		// remembers the missing Attributes of the first decision
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
-		
+
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 			DecisionType decision;
@@ -86,9 +88,13 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 				requestInfo.resetStatus();
 				decision = eval.getCombiningAlg().evaluate(request, eval,
 						requestInfo);
-				if(decision == DecisionType.PERMIT || decision == DecisionType.DENY){
-					obligationsOfFirstApplicableEval.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
-					obligationsOfFirstApplicableEval.addAll(requestInfo.getObligations().getObligations());
+				if (decision == DecisionType.PERMIT
+						|| decision == DecisionType.DENY) {
+					obligationsOfFirstApplicableEval.addAll(eval
+							.getContainedObligations(EffectType
+									.fromValue(decision.toString())));
+					obligationsOfFirstApplicableEval.addAll(requestInfo
+							.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*
@@ -118,8 +124,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 						 * because of this, the request information have to be
 						 * reset and set to Processing-exception. See: OASIS
 						 * eXtensible Access Control Markup Langugage (XACML)
-						 * 2.0, Errata 29 June 2006</a> page 86 and page 139
-						 * and the specification of the only-one-applicable
+						 * 2.0, Errata 29 June 2006</a> page 86 and page 139 and
+						 * the specification of the only-one-applicable
 						 * algorithm for further information.
 						 */
 						requestInfo.resetStatus();
@@ -133,7 +139,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 					 * attribute data.
 					 */
 					statusCode = requestInfo.getStatusCode();
-					missingAttributes = requestInfo.getMissingAttributes();
+					missingAttributes
+							.addAll(requestInfo.getMissingAttributes());
 					firstApplicableDecision = decision;
 				}
 				break;
@@ -147,16 +154,18 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 				if (firstApplicableDecision == null) {
 					firstApplicableDecision = decision;
 					statusCode = requestInfo.getStatusCode();
-					missingAttributes = requestInfo.getMissingAttributes();
+					missingAttributes
+							.addAll(requestInfo.getMissingAttributes());
 				} else {
 					/*
 					 * When indeterminate is returned, it has to be sure that
 					 * the returned error is a processing exception. because of
 					 * this, the request information have to be reset and set to
 					 * Processing-exception. See: OASIS eXtensible Access
-					 * Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a>
-					 * page 86 and page 139 and the specification of the
-					 * only-one-applicable algorithm for further information.
+					 * Control Markup Langugage (XACML) 2.0, Errata 29 June
+					 * 2006</a> page 86 and page 139 and the specification of
+					 * the only-one-applicable algorithm for further
+					 * information.
 					 */
 					requestInfo.resetStatus();
 					requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
@@ -176,10 +185,12 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 		if (firstApplicableDecision != null) {
 			requestInfo.setMissingAttributes(missingAttributes);
 			requestInfo.updateStatusCode(statusCode);
-			if(firstApplicableDecision == DecisionType.DENY){
-				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.DENY);
-			} else if(firstApplicableDecision == DecisionType.PERMIT){
-				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.PERMIT);
+			if (firstApplicableDecision == DecisionType.DENY) {
+				requestInfo.addObligations(obligationsOfFirstApplicableEval,
+						EffectType.DENY);
+			} else if (firstApplicableDecision == DecisionType.PERMIT) {
+				requestInfo.addObligations(obligationsOfFirstApplicableEval,
+						EffectType.PERMIT);
 			}
 			return firstApplicableDecision;
 		}

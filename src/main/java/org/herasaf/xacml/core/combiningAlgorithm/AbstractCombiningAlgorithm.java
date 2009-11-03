@@ -85,6 +85,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			return DecisionType.INDETERMINATE;
 		} catch (MissingAttributeException e) {
 			requestInfo.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
+			requestInfo.addMissingAttributes(e.getMissingAttribute());
 			requestInfo.setTargetMatched(false);
 			return DecisionType.INDETERMINATE;
 		}

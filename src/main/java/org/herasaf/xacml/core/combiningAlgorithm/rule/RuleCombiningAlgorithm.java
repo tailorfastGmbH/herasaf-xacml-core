@@ -148,7 +148,7 @@ public abstract class RuleCombiningAlgorithm extends AbstractCombiningAlgorithm
 	 *            needed to evaluate the request
 	 * @return the decision
 	 */
-	protected abstract DecisionType evaluateRuleList(
+	public abstract DecisionType evaluateRuleList(
 			RequestType request, List<RuleType> possibleRules,
 			RequestInformation requestInfos);
 

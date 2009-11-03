@@ -70,7 +70,7 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	}
 
 	@Override
-	protected DecisionType evaluateRuleList(RequestType request,
+	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possiblePolicies, RequestInformation requestInfos) {
 		return DecisionType.PERMIT;
 	}

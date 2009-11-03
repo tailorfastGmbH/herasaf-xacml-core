@@ -22,7 +22,6 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
@@ -32,6 +31,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -39,153 +39,148 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
-
 /**
- * <p>Java class for MissingAttributeDetailType complex type.
+ * <p>
+ * Java class for MissingAttributeDetailType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
- * &lt;complexType name="MissingAttributeDetailType">
- *   &lt;complexContent>
- *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
- *       &lt;sequence>
- *         &lt;element ref="{urn:oasis:names:tc:xacml:2.0:context:schema:os}AttributeValue" maxOccurs="unbounded" minOccurs="0"/>
- *       &lt;/sequence>
- *       &lt;attribute name="AttributeId" use="required" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
- *       &lt;attribute name="DataType" use="required" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
- *       &lt;attribute name="Issuer" type="{http://www.w3.org/2001/XMLSchema}string" />
- *     &lt;/restriction>
- *   &lt;/complexContent>
- * &lt;/complexType>
+ * &lt;complexType name=&quot;MissingAttributeDetailType&quot;&gt;
+ *   &lt;complexContent&gt;
+ *     &lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
+ *       &lt;sequence&gt;
+ *         &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:context:schema:os}AttributeValue&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
+ *       &lt;/sequence&gt;
+ *       &lt;attribute name=&quot;AttributeId&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}anyURI&quot; /&gt;
+ *       &lt;attribute name=&quot;DataType&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}anyURI&quot; /&gt;
+ *       &lt;attribute name=&quot;Issuer&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
+ *     &lt;/restriction&gt;
+ *   &lt;/complexContent&gt;
+ * &lt;/complexType&gt;
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 75, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 75, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
+//This is needed because the MissingAttributeDetail is contained within the
+//StatusDetail. The content of the StatusDetail is not specified.
+@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "MissingAttributeDetailType", propOrder = {
-    "attributeValues"
-})
-public class MissingAttributeDetailType
-    implements Serializable
-{
+@XmlType(name = "MissingAttributeDetailType", propOrder = { "attributeValues" })
+public class MissingAttributeDetailType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "AttributeValue")
-    protected List<AttributeValueType> attributeValues;
-    @XmlAttribute(name = "AttributeId", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String attributeId;
-    @XmlAttribute(name = "DataType", required = true)
-    @XmlJavaTypeAdapter(URNToDataTypeConverter.class)
-    @XmlSchemaType(name = "anyURI")
-    protected DataTypeAttribute<?> dataType;
-    @XmlAttribute(name = "Issuer")
-    protected String issuer;
+	private final static long serialVersionUID = 632768732L;
+	@XmlElement(name = "AttributeValue")
+	protected List<AttributeValueType> attributeValues;
+	@XmlAttribute(name = "AttributeId", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String attributeId;
+	@XmlAttribute(name = "DataType", required = true)
+	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
+	@XmlSchemaType(name = "anyURI")
+	protected DataTypeAttribute<?> dataType;
+	@XmlAttribute(name = "Issuer")
+	protected String issuer;
 
-    /**
-     * Gets the value of the attributeValues property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributeValues property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributeValues().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributeValueType }
-     * 
-     * 
-     */
-    public List<AttributeValueType> getAttributeValues() {
-        if (attributeValues == null) {
-            attributeValues = new ArrayList<AttributeValueType>();
-        }
-        return this.attributeValues;
-    }
+	/**
+	 * Gets the value of the attributeValues property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributeValues property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributeValues().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributeValueType }
+	 * 
+	 * 
+	 */
+	public List<AttributeValueType> getAttributeValues() {
+		if (attributeValues == null) {
+			attributeValues = new ArrayList<AttributeValueType>();
+		}
+		return this.attributeValues;
+	}
 
-    /**
-     * Gets the value of the attributeId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getAttributeId() {
-        return attributeId;
-    }
+	/**
+	 * Gets the value of the attributeId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getAttributeId() {
+		return attributeId;
+	}
 
-    /**
-     * Sets the value of the attributeId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setAttributeId(String value) {
-        this.attributeId = value;
-    }
+	/**
+	 * Sets the value of the attributeId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setAttributeId(String value) {
+		this.attributeId = value;
+	}
 
-    /**
-     * Gets the value of the dataType property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public DataTypeAttribute<?> getDataType() {
-        return dataType;
-    }
+	/**
+	 * Gets the value of the dataType property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public DataTypeAttribute<?> getDataType() {
+		return dataType;
+	}
 
-    /**
-     * Sets the value of the dataType property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDataType(DataTypeAttribute<?> value) {
-        this.dataType = value;
-    }
+	/**
+	 * Sets the value of the dataType property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDataType(DataTypeAttribute<?> value) {
+		this.dataType = value;
+	}
 
-    /**
-     * Gets the value of the issuer property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getIssuer() {
-        return issuer;
-    }
+	/**
+	 * Gets the value of the issuer property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getIssuer() {
+		return issuer;
+	}
 
-    /**
-     * Sets the value of the issuer property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setIssuer(String value) {
-        this.issuer = value;
-    }
+	/**
+	 * Sets the value of the issuer property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setIssuer(String value) {
+		this.issuer = value;
+	}
 
 }

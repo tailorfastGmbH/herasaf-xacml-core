@@ -72,7 +72,7 @@ public class RuleOrderedPermitOverridesAlgorithm extends
 	 *      java.util.Map)
 	 */
 	@Override
-	protected DecisionType evaluateRuleList(RequestType request,
+	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> rules, RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining

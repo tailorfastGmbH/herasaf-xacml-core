@@ -78,15 +78,4 @@ public abstract class RuleOrderedCombiningAlgorithm extends
 			return DecisionType.INDETERMINATE;
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List)
-	 */
-	@Override
-	protected abstract DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> possiblePolicies, RequestInformation requestInfos);
-
 }
