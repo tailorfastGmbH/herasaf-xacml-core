@@ -22,82 +22,119 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyElement;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
+
 import org.w3c.dom.Element;
 
-
 /**
- * <p>Java class for StatusDetailType complex type.
+ * <p>
+ * Java class for StatusDetailType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StatusDetailType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;any/>
+ *         &lt;any namespace="##any" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 74, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 74, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
+ * @author Florian Huonder
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StatusDetailType", propOrder = {
-    "content"
-})
-public class StatusDetailType
-    implements Serializable
-{
+@XmlType(name = "StatusDetailType", propOrder = { "content" })
+public class StatusDetailType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlAnyElement(lax = true)
-    protected List<Object> content;
+	private static ObjectFactory factory;
 
-    /**
-     * Gets the value of the content property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the content property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getContent().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Element }
-     * {@link Object }
-     * 
-     * 
-     */
-    public List<Object> getContent() {
-        if (content == null) {
-            content = new ArrayList<Object>();
-        }
-        return this.content;
+	/**
+	 * Initializes the object factory.
+	 */
+	static {
+		factory = new ObjectFactory();
+	}
+
+	private final static long serialVersionUID = 632768732L;
+	@XmlAnyElement(lax = true)
+	protected List<Object> content;
+
+	/**
+	 * Gets the value of the content property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the content property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getContent().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link Element }
+	 * {@link Object }
+	 * 
+	 * 
+	 */
+	public List<Object> getContent() {
+		if (content == null) {
+			content = new ArrayList<Object>();
+		}
+		return this.content;
+	}
+
+	/**
+	 * This method returns the {@link MissingAttributeDetailType}s contained in this {@link StatusDetailType}.
+	 * It is now allowed to add a new {@link MissingAttributeDetailType} with <code>getMissingAttributeDetails().add(...)</code>.
+	 * Use {@link #addMissingAttribute(MissingAttributeDetailType)} instead.
+	 * 
+	 * @return The {@link MissingAttributeDetailType}s contained in this {@link StatusDetailType}.
+	 */
+	@XmlTransient
+	public List<MissingAttributeDetailType> getMissingAttributeDetails() {
+		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		for (Object obj : content) {
+			if (obj instanceof MissingAttributeDetailType) {
+				missingAttributes.add((MissingAttributeDetailType) obj);
+			}
+		}
+		return missingAttributes;
+	}
+
+	/**
+	 * Add a new {@link MissingAttributeDetailType} to this {@link StatusDetailType}.
+	 * @param missingAttribute The {@link MissingAttributeDetailType} to add.
+	 */
+	public void addMissingAttribute(MissingAttributeDetailType missingAttribute){
+    	content.add(factory.createMissingAttributeDetail(missingAttribute));
     }
-
 }
