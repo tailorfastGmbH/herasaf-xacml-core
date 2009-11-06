@@ -29,9 +29,9 @@
 
 	<!-- Project Information-->
 	<name>HERAS-AF XACML :: Core</name> <!-- HERAS-AF XACML :: <ComponentName> -->
-	<description>Core component of the
-		"HERAS-AF XACML Implementation"</description> <!-- mandatory for HERAS-AF-->
+	<description>The core component contains the evaluation engine. This means: combining algorithms, functions, data types, and API interfaces.</description> <!-- mandatory for HERAS-AF-->
 	<url>http://www.herasaf.org</url> <!-- always HERAS-AF Homepage-->
+
 	<!--
 		Inception Year is inherited from parent pom !!!DO NOT OVERRIDE!!!
 	-->
@@ -84,10 +84,10 @@
 
 	<dependencies>
 		<dependency>
-            <groupId>com.sun.xml.bind</groupId>
-            <artifactId>jaxb-xjc</artifactId>
-            <version>${jaxb.version}</version>
-        </dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-xjc</artifactId>
+			<version>${jaxb.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-api</artifactId>
