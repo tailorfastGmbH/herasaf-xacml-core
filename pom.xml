@@ -40,9 +40,8 @@
 
 	<!-- Project Environment/Infrastructure ### MANDATORY ### -->
 	<issueManagement>
-		<system>Atlassian JIRA</system>
-		<url>http://jira.herasaf.org/browse/HERASAFXACMLCORE
-		</url>
+		<system>JIRA</system> <!-- This value must be JIRA! -->
+		<url>http://jira.herasaf.org/browse/HERASAFXACMLCORE</url>
 		<!--
 			always pattern: "<JIRA Server>/browse/<componentKey>" (e.g.
 			"http://jira.herasaf.org/POLICYREPOSITORY"
@@ -68,7 +67,17 @@
 			http://svn.herasaf.org/herasaf-xacmlnew/trunk/herasaf-xacml/herasaf-xacml-core
 		</url>
 	</scm>
-
+	<distributionManagement>
+		<site>
+			<!--
+				The site section must be defined in every project (or root project,
+				if it aggregates the site).
+			-->
+			<id>heras-af_site</id>
+			<name>heras-af_site</name>
+			<url>${site.url}/${project.artifactId}/${project.version}</url> <!-- configure property ${site.url} in maven settings -->
+		</site>
+	</distributionManagement>
 	<!--
 		Project Distribution is inherited from parent pom !!!DO NOT
 		OVERRIDE!!!
