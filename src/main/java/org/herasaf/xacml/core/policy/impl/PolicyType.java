@@ -102,13 +102,10 @@ public class PolicyType implements Evaluatable, Serializable {
 	protected String policyId;
 	@XmlAttribute(name = "Version")
 	protected String version;
-	
-	// This field is marked as transient because it is only
-	// marshal-/unmarshal-able if it is used together with JAXB.
 	@XmlAttribute(name = "RuleCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToRuleCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected transient AbstractRuleCombiningAlgorithm ruleCombiningAlg;
+	protected AbstractRuleCombiningAlgorithm ruleCombiningAlg;
 
 	/**
 	 * Gets the value of the description property.
