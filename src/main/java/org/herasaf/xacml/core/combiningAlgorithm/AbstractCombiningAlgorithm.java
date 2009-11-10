@@ -43,8 +43,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private static final long serialVersionUID = -5423784677434727360L;
-	private final Logger logger = LoggerFactory
-			.getLogger(AbstractCombiningAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
 
 	/**
@@ -53,8 +52,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 */
 	protected boolean respectAbandonedEvaluatables;
 
-	public void setRespectAbandondEvaluatables(
-			boolean respectAbandondEvaluatables) {
+	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
 		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
 	}
 
@@ -77,14 +75,12 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 *            process.
 	 * @return The decision of matching the target.
 	 */
-	protected DecisionType matchTarget(RequestType request, TargetType target,
-			RequestInformation requestInfo) {
+	protected DecisionType matchTarget(RequestType request, TargetType target, RequestInformation requestInfo) {
 		boolean targetMatchDecision = false;
 		DecisionType decision = DecisionType.INDETERMINATE;
 		try {
 			logger.debug("Starting target match.");
-			targetMatchDecision = targetMatcher.match(request, target,
-					requestInfo);
+			targetMatchDecision = targetMatcher.match(request, target, requestInfo);
 
 			/*
 			 * The target match can't return "not Applicable". If the
@@ -112,6 +108,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			logger.debug("Processing error occurred.");
 		} catch (MissingAttributeException e) {
 			requestInfo.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
+			requestInfo.addMissingAttributes(e.getMissingAttribute());
 			requestInfo.setTargetMatched(false);
 			logger.debug("Missing attribute error occurred.");
 		}

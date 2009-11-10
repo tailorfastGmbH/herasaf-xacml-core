@@ -21,6 +21,8 @@ import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
@@ -44,14 +46,12 @@ import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 /**
- * TODO JAVADOC
- * 
  * Factory to create a {@link RequestCtx}.Provides various unmarshal methods to
- * create a ResponseCtx containing a ResponseType. Because the {@link Unmarshaller}
- * from JAXB <b>is not</b> thread safe it must be newly created in each
- * marshal-method. This class fully relies on the underlying JAXB
- * implementation.
- *
+ * create a ResponseCtx containing a ResponseType. Because the
+ * {@link Unmarshaller} from JAXB <b>is not</b> thread safe it must be newly
+ * created in each marshal-method. This class fully relies on the underlying
+ * JAXB implementation.
+ * 
  * @author Florian Huonder
  * @version 1.0
  */
@@ -60,8 +60,6 @@ public class ResponseCtxFactory {
 	private static ObjectFactory factory;
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Initializes the object factory.
 	 */
 	static {
@@ -69,24 +67,20 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Unmarshal XML data from the specified file and return the resulting
 	 * ResponseCtx.
-	 *
+	 * 
 	 * @param file
 	 *            the file to unmarshal the request from.
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static ResponseCtx unmarshal(File file) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(file)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(file)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -96,26 +90,21 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Unmarshal XML data from the specified InputStream and return the
 	 * resulting ResponseCtx. Validation event location information may be
 	 * incomplete.
-	 *
+	 * 
 	 * @param inputStream
 	 *            the inputStream to unmarshal the request from.
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static ResponseCtx unmarshal(InputStream inputStream)
-			throws SyntaxException {
+	public static ResponseCtx unmarshal(InputStream inputStream) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(inputStream)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(inputStream)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -125,24 +114,20 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Unmarshal XML data from the specified Reader and return the resulting
 	 * ResponseCtx. Validation event location information may be incomplete.
-	 *
+	 * 
 	 * @param reader
 	 *            the Reader to unmarshal XML data from.
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static ResponseCtx unmarshal(Reader reader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(reader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(reader)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -152,24 +137,20 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Unmarshal XML data from the specified URL and return the resulting
 	 * ResponseCtx.
-	 *
+	 * 
 	 * @param url
 	 *            the url to unmarshal the request from.
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static ResponseCtx unmarshal(URL url) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(url)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(url)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -179,26 +160,21 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Unmarshal XML data from the specified SAX InputSource and return the
 	 * resulting ResponseCtx.
-	 *
+	 * 
 	 * @param inputSource
 	 *            the input source to unmarshal XML data from
-	 *
+	 * 
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static ResponseCtx unmarshal(InputSource inputSource)
-			throws SyntaxException {
+	public static ResponseCtx unmarshal(InputSource inputSource) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(inputSource)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(inputSource)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -208,25 +184,21 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Unmarshal global XML data from the specified DOM tree and return the
 	 * resulting ResponseCtx.
-	 *
+	 * 
 	 * @param node
 	 *            the input source to unmarshal XML data from
-	 *
+	 * 
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static ResponseCtx unmarshal(Node node) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(node)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(node)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -236,8 +208,6 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * <p>
 	 * Unmarshal XML data from the specified XML Source and return the resulting
 	 * ResponseCtx.
@@ -270,21 +240,19 @@ public class ResponseCtxFactory {
 	 * API. All other forms of the unmarshal method (File, URL, Node, etc) will
 	 * use the default parser and validator mechanisms.
 	 * </p>
-	 *
+	 * 
 	 * @param source
 	 *            the input source to unmarshal XML data from
-	 *
+	 * 
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static ResponseCtx unmarshal(Source source) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(source)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(source)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -294,8 +262,6 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * <p>
 	 * Unmarshal XML data from the specified pull parser and return the
 	 * resulting ResponseCtx.
@@ -306,24 +272,21 @@ public class ResponseCtxFactory {
 	 * the corresponding end event. If this method returns successfully, the
 	 * reader will be pointing at the token right after the end event.
 	 * </p>
-	 *
-	 *
-	 *
+	 * 
+	 * 
+	 * 
 	 * @param xmlStreamReader
 	 *            The parser to be read.
-	 *
+	 * 
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static ResponseCtx unmarshal(XMLStreamReader xmlStreamReader)
-			throws SyntaxException {
+	public static ResponseCtx unmarshal(XMLStreamReader xmlStreamReader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(xmlStreamReader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(xmlStreamReader)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -333,8 +296,6 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * <p>
 	 * Unmarshal XML data from the specified pull parser and return the
 	 * resulting ResponseCtx.
@@ -345,24 +306,21 @@ public class ResponseCtxFactory {
 	 * the corresponding end event. If this method returns successfully, the
 	 * reader will be pointing at the token right after the end event.
 	 * </p>
-	 *
-	 *
-	 *
+	 * 
+	 * 
+	 * 
 	 * @param xmlEventReader
 	 *            The parser to be read.
-	 *
+	 * 
 	 * @return The newly created ResponseCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static ResponseCtx unmarshal(XMLEventReader xmlEventReader)
-			throws SyntaxException {
+	public static ResponseCtx unmarshal(XMLEventReader xmlEventReader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(RESPONSECTX);
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
-					.unmarshal(xmlEventReader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(RESPONSECTX);
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(xmlEventReader)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -372,12 +330,9 @@ public class ResponseCtxFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * Creates a {@link ResponseCtx} with the given {@link DecisionType} and
+	 * adds the {@link MissingAttributeDetailType}s if there are any.
 	 * 
-	 * Creates a {@link ResponseCtx} with the given
-	 * {@link DecisionType} and adds the
-	 * {@link MissingAttributeDetailType}s if there are any.
-	 *
 	 * @param req
 	 *            The relating {@link RequestType}.
 	 * @param decision
@@ -387,32 +342,49 @@ public class ResponseCtxFactory {
 	 *            about StatusDetails an missing attributes.
 	 * @return The {@link ResponseCtx} containing the information.
 	 */
-	public static ResponseCtx create(RequestType req,
-			DecisionType decision, RequestInformation requestInfo) {
-		ResponseCtx resCtx = create(req, decision, requestInfo
-				.getStatusCode());
-		if (requestInfo.getMissingAttributes().size() > 0) {
+	public static ResponseCtx create(RequestType req, DecisionType decision, RequestInformation requestInfo) {
+		ResponseCtx resCtx = create(req, decision, requestInfo.getStatusCode());
+		if (requestInfo.getMissingAttributes().size() > 0) { // This check is
+			// here because
+			// currently
+			// only
+			// MissingAttributeDetails
+			// are supported
+			// in the the
+			// StatusDetail
 			StatusDetailType statusDetail = factory.createStatusDetailType();
-			statusDetail.getContent()
-					.addAll(requestInfo.getMissingAttributes());
-			resCtx.getResponse().getResults().get(0).getStatus()
-					.setStatusDetail(statusDetail);
+			/*
+			 * If the request contains any MissingAttributeDetails those must be
+			 * added to the List in the StatusDetailType contained in a
+			 * JAXBElement object. This because the List in the StatusDetailType
+			 * takes a type of ##any (in Java this is Object). Therefore without
+			 * the JAXBElement containing the MissingAttributeDetailType JAXB is
+			 * unable to marshal the MissingAttributeDetail correctly.
+			 */
+			List<JAXBElement<MissingAttributeDetailType>> missingAttributesJaxb = new ArrayList<JAXBElement<MissingAttributeDetailType>>();
+			for (MissingAttributeDetailType madt : requestInfo.getMissingAttributes()) {
+				missingAttributesJaxb.add(factory.createMissingAttributeDetail(madt));
+			}
+			statusDetail.getContent().addAll(missingAttributesJaxb);
+			resCtx.getResponse().getResults().get(0).getStatus().setStatusDetail(statusDetail);
 		}
-		if(requestInfo.getObligations().getObligations().size() > 0){//Add the Obligations to the response
+		if (requestInfo.getObligations().getObligations().size() > 0) {// Add
+			// the
+			// Obligations
+			// to
+			// the
+			// response
 			resCtx.getResponse().getResults().get(0).setObligations(requestInfo.getObligations());
 		}
-
 		return resCtx;
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Does the same as
-	 * {@link #create(RequestType, DecisionType, RequestInformation)}
-	 * except that no {@link MissingAttributeDetailType} are delivered. Only the
+	 * {@link #create(RequestType, DecisionType, RequestInformation)} except
+	 * that no {@link MissingAttributeDetailType} are delivered. Only the
 	 * {@link StatusCode}.
-	 *
+	 * 
 	 * @param req
 	 *            The relating {@link RequestType}.
 	 * @param decision
@@ -421,16 +393,18 @@ public class ResponseCtxFactory {
 	 *            The {@link StatusCode} of the evaluation.
 	 * @return The {@link ResponseCtx} containing the information.
 	 */
-	public static ResponseCtx create(RequestType req,
-			DecisionType decision, StatusCode code) {
+	public static ResponseCtx create(RequestType req, DecisionType decision, StatusCode code) {
 		ResponseType res = factory.createResponseType();
 		ResultType result = factory.createResultType();
 
 		if (req.getResources().size() == 1) {
-			// The ResourceId could be set here as well. This is explicitly not done because of performance reasons.
-			// For setting the ResourceId in the response, all attributes in the request-resource must be walked through
+			// The ResourceId could be set here as well. This is explicitly not
+			// done because of performance reasons.
+			// For setting the ResourceId in the response, all attributes in the
+			// request-resource must be walked through
 			// to find the id. Then this id must be planted into the response.
-			// This is an absolute overhead because each response is automatically assigned to its request by the caller.
+			// This is an absolute overhead because each response is
+			// automatically assigned to its request by the caller.
 
 			result.setDecision(decision);
 		} else {

@@ -164,7 +164,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 					 * attribute data.
 					 */
 					statusCode = requestInfo.getStatusCode();
-					missingAttributes = requestInfo.getMissingAttributes();
+					missingAttributes.addAll(requestInfo.getMissingAttributes());
 					firstApplicableDecision = decision;
 				}
 				break;
@@ -178,7 +178,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 				if (firstApplicableDecision == null) {
 					firstApplicableDecision = decision;
 					statusCode = requestInfo.getStatusCode();
-					missingAttributes = requestInfo.getMissingAttributes();
+					missingAttributes.addAll(requestInfo.getMissingAttributes());
 				} else {
 					/*
 					 * When indeterminate is returned, it has to be sure that
