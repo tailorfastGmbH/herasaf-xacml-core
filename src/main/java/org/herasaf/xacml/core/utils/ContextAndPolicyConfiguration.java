@@ -147,11 +147,11 @@ public class ContextAndPolicyConfiguration {
 			if(file == null) throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(file));
 		} else if(schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())){ //if the schemaPath has the classpath: prefix
-			URL url = getClass().getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
+			URL url = getClass().getClassLoader().getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
 			if(url == null) throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		} else { //if no prefix is provided, the default is classpath:
-			URL url = getClass().getResource(leadingSlash(schema));
+			URL url = getClass().getClassLoader().getResource(leadingSlash(schema));
 			if(url == null) throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		}

@@ -60,8 +60,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ResourceAttributeDesignatorType")
-public class ResourceAttributeDesignatorType extends AttributeDesignatorType
-		implements Serializable {
+public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 
 	private final static long serialVersionUID = 632768732L;
 

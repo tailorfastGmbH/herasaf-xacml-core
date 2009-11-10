@@ -34,7 +34,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * @version 1.0
  *
  */
-public interface CombiningAlgorithm extends Serializable {
+public interface CombiningAlgorithm {
 
 	/**
 	 * Evaluates a request against a evaluatable.

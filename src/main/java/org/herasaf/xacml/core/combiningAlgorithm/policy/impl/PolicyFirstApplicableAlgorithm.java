@@ -58,10 +58,9 @@ import org.slf4j.MDC;
  */
 public class PolicyFirstApplicableAlgorithm extends
 		PolicyOrderedCombiningAlgorithm {
-	private static final long serialVersionUID = -8418394590870869155L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable";
-	private Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(PolicyFirstApplicableAlgorithm.class);
 
 	/*

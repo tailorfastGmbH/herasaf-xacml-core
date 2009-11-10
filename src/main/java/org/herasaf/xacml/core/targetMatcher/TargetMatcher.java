@@ -34,7 +34,7 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  *
  * @author Sacha Dolski (sdolski@solnet.ch)
  */
-public interface TargetMatcher extends Serializable {
+public interface TargetMatcher {
 	/**
 	 * TODO JAVADOC
 	 * 

@@ -68,7 +68,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ApplyType", propOrder = { "expressions" })
-public class ApplyType extends ExpressionType implements Serializable {
+public class ApplyType extends ExpressionType {
 
 	private final static long serialVersionUID = 632768732L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)

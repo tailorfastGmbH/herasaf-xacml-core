@@ -48,9 +48,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RuleCombinerParametersType")
 public class RuleCombinerParametersType
-    extends CombinerParametersType
-    implements Serializable
-{
+    extends CombinerParametersType {
 
     private final static long serialVersionUID = 632768732L;
     @XmlAttribute(name = "RuleIdRef", required = true)

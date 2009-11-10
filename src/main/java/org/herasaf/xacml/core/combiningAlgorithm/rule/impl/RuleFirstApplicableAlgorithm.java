@@ -20,7 +20,6 @@ package org.herasaf.xacml.core.combiningAlgorithm.rule.impl;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -56,10 +55,9 @@ import org.slf4j.MDC;
  */
 public class RuleFirstApplicableAlgorithm extends
 		RuleUnorderedCombiningAlgorithm {
-	private static final long serialVersionUID = -5712159891343195803L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
-	private Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(RuleFirstApplicableAlgorithm.class);
 
 	/**
@@ -111,10 +109,9 @@ public class RuleFirstApplicableAlgorithm extends
 			}
 
 			switch (decision) {
+			//default case is not required here.
 			case DENY:
-				return decision;
 			case INDETERMINATE:
-				return decision;
 			case PERMIT:
 				return decision;
 			}

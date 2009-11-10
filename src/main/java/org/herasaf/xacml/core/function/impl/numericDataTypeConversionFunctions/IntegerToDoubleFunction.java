@@ -44,14 +44,14 @@ public class IntegerToDoubleFunction implements Function {
 	/**
 	 * {@inheritDoc} <br>
 	 * <br>
-	 * Returns the intger value as double with the same numeric  value.
+	 * Returns the integer value as double with the same numeric  value.
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException{
 		try {
 			if(args.length != 1){
 				throw new FunctionProcessingException("Invalid number of parameters");
 			}
-			return  new Double( ((BigInteger)args[0]).longValue() );
+			return  Double.valueOf((((BigInteger)args[0]).longValue()));
 		} catch (ClassCastException e){
 			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e){

@@ -35,7 +35,6 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * @author Stefan Oberholzer
  */
 public class CombiningAlgorithmMock implements CombiningAlgorithm {
-	private static final long serialVersionUID = -631513345878367721L;
 	RequestInformation reqInfo;
 	DecisionType decision;
 

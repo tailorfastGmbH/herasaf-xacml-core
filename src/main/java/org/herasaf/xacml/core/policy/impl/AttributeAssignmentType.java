@@ -49,9 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeAssignmentType")
 public class AttributeAssignmentType
-    extends AttributeValueType
-    implements Serializable
-{
+    extends AttributeValueType {
 
     private final static long serialVersionUID = 632768732L;
     @XmlAttribute(name = "AttributeId", required = true)

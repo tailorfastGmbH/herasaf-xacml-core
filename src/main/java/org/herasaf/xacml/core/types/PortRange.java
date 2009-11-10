@@ -73,7 +73,7 @@ public class PortRange {
 				if (!value.equals("")) {
 					upperValue = new Integer(value);
 				}
-			} catch (Exception e) {
+			} catch (NumberFormatException e) {
 				throw new IllegalArgumentException("No port range: "
 						+ portRange);
 			}

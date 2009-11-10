@@ -71,8 +71,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 		ResourceAttributeDesignatorType.class,
 		EnvironmentAttributeDesignatorType.class,
 		ActionAttributeDesignatorType.class })
-public abstract class AttributeDesignatorType extends ExpressionType implements
-		Serializable {
+public abstract class AttributeDesignatorType extends ExpressionType {
 
 	private final static long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "AttributeId", required = true)

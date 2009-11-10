@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -112,12 +113,14 @@ public class PolicySetType implements Evaluatable, Serializable {
 	protected String policySetId;
 	@XmlAttribute(name = "Version")
 	protected String version;
+	
+	//This field is transient because it is only marshal-/unamrshal-able together with JAXB.
 	@XmlAttribute(name = "PolicyCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToPolicyCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
 	protected PolicyCombiningAlgorithm policyCombiningAlg;
-	
-	protected transient boolean hasObligations; //True if the PolicySet or a SubPolicy (SubPolicySet) contains any Obligations.
+	@XmlTransient
+	protected boolean hasObligations; //True if the PolicySet or a SubPolicy (SubPolicySet) contains any Obligations.
 
 	public PolicySetType() {
 		setHasObligations(true); //Must by default be true. It cannot be assumed that a preprocessor correctly sets this field.

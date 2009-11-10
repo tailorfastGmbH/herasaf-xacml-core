@@ -70,7 +70,6 @@ import org.slf4j.LoggerFactory;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "IdReferenceType", propOrder = { "value" })
 public class IdReferenceType implements Serializable, Evaluatable {
-
 	@XmlTransient
 	private final static long serialVersionUID = 632768732L;
 	@XmlTransient

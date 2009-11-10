@@ -74,7 +74,7 @@ import org.w3c.dom.Element;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
 @XmlSeeAlso( { AttributeAssignmentType.class })
-public class AttributeValueType extends ExpressionType implements Serializable {
+public class AttributeValueType extends ExpressionType {
 
 	private final static long serialVersionUID = 632768732L;
 	@XmlMixed
@@ -85,7 +85,14 @@ public class AttributeValueType extends ExpressionType implements Serializable {
 	@XmlSchemaType(name = "anyURI")
 	protected DataTypeAttribute<?> dataType;
 	@XmlAnyAttribute
-	private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+	private Map<QName, String> otherAttributes;
+	
+	/**
+	 * TODO JAVADOC
+	 */
+	public AttributeValueType() {
+		otherAttributes = new HashMap<QName, String>();
+	}
 
 	/**
 	 * Gets the value of the content property.

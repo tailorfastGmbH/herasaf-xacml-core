@@ -82,6 +82,19 @@
 		Project Distribution is inherited from parent pom !!!DO NOT
 		OVERRIDE!!!
 	-->
+	
+	<reporting>
+		<plugins>
+			<!-- findbugs -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>findbugs-maven-plugin</artifactId>
+				<configuration>
+					<excludeFilterFile>src/main/config/reporting/findbugs-excludes.xml</excludeFilterFile>
+				</configuration>
+			</plugin>
+		</plugins>
+	</reporting>
 
 	<properties>
 		<jaxb.version>2.1.12</jaxb.version>

@@ -27,7 +27,7 @@ import java.io.Serializable;
  * @author Florian Huonder 
  * @version 1.0
  */
-public class WritingException extends Exception implements Serializable {
+public class WritingException extends Exception {
 	private static final long serialVersionUID = 4577643847561378418L;
 
 	/**

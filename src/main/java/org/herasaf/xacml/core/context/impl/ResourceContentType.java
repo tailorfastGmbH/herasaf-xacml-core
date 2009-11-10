@@ -76,8 +76,15 @@ public class ResourceContentType
     @XmlAnyElement(lax = true)
     protected List<Object> content;
     @XmlAnyAttribute
-    private Map<QName, String> otherAttributes = new HashMap<QName, String>();
+    private Map<QName, String> otherAttributes;
 
+    /**
+	 * TODO JAVADOC 
+	 */
+	public ResourceContentType() {
+		otherAttributes = new HashMap<QName, String>();
+	}
+    
     /**
      * Gets the value of the content property.
      * 

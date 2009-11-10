@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -60,10 +59,9 @@ import org.slf4j.MDC;
  */
 public class RulePermitOverridesAlgorithm extends
 		RuleUnorderedCombiningAlgorithm {
-	private static final long serialVersionUID = -2135362506622622611L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides";
-	private Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(RulePermitOverridesAlgorithm.class);
 
 	/**

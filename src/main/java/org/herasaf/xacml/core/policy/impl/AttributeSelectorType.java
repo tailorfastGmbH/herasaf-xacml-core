@@ -56,9 +56,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeSelectorType")
 public class AttributeSelectorType
-    extends ExpressionType
-    implements Serializable
-{
+    extends ExpressionType {
 
     private final static long serialVersionUID = 632768732L;
     @XmlAttribute(name = "RequestContextPath", required = true)

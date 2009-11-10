@@ -56,9 +56,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VariableReferenceType")
 public class VariableReferenceType
-    extends ExpressionType
-    implements Serializable
-{
+    extends ExpressionType {
 
     private final static long serialVersionUID = 632768732L;
     @XmlAttribute(name = "VariableId", required = true)

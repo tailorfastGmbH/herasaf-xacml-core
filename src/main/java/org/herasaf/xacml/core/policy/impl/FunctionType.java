@@ -57,9 +57,7 @@ import org.herasaf.xacml.core.function.Function;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FunctionType")
 public class FunctionType
-    extends ExpressionType
-    implements Serializable
-{
+    extends ExpressionType {
 
     private final static long serialVersionUID = 632768732L;
     @XmlAttribute(name = "FunctionId", required = true)

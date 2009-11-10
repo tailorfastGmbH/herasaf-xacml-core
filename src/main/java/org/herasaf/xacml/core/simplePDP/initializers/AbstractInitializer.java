@@ -116,9 +116,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			if (File.separator.equals("\\")) {
 				path = path.replaceAll("\\\\", ".");
 			} else {
-				path = path.replaceAll(File.separator, "."); // TODO Verify Unix
-				// based OS
-				// behavior
+				path = path.replaceAll(File.separatorChar == '\\' ? "\\\\" : File.separator, ".");
 			}
 			String className = path.substring(path.indexOf(getSearchContext()));
 

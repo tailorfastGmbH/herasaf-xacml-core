@@ -53,7 +53,6 @@ import org.slf4j.LoggerFactory;
 public class TargetMatcherImpl implements TargetMatcher {
 	private final Logger logger = LoggerFactory
 			.getLogger(TargetMatcherImpl.class);
-	private static final long serialVersionUID = 9099144198373918560L;
 
 	/**
 	 * {@inheritDoc}

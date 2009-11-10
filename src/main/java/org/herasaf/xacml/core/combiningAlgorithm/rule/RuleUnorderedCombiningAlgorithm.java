@@ -39,8 +39,6 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  */
 public abstract class RuleUnorderedCombiningAlgorithm extends
 		AbstractRuleCombiningAlgorithm {
-	private static final long serialVersionUID = -5692513372812026683L;
-
 	/*
 	 * (non-Javadoc)
 	 *

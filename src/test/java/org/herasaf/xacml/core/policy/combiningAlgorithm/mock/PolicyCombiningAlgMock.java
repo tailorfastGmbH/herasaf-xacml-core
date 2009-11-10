@@ -36,7 +36,6 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * @author Florian Huonder
  */
 public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
-	private static final long serialVersionUID = 644980341269055301L;
 	public DecisionType decision;
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;

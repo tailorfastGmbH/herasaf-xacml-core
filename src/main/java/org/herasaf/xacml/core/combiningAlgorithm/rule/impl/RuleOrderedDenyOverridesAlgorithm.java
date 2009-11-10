@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -60,10 +59,9 @@ import org.slf4j.MDC;
  */
 public class RuleOrderedDenyOverridesAlgorithm extends
 		RuleOrderedCombiningAlgorithm {
-	private static final long serialVersionUID = 13812608137844813L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides";
-	private Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
 
 	/**
@@ -123,6 +121,7 @@ public class RuleOrderedDenyOverridesAlgorithm extends
 			}
 
 			switch (decision) {
+			//default case is not required here.
 			case DENY:
 				return DecisionType.DENY;
 			case INDETERMINATE:

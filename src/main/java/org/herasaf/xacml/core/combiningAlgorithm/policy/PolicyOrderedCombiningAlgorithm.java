@@ -40,7 +40,6 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
  */
 public abstract class PolicyOrderedCombiningAlgorithm extends
 		AbstractPolicyCombiningAlgorithm {
-	private static final long serialVersionUID = 738279366961769108L;
 
 	/*
 	 * (non-Javadoc)

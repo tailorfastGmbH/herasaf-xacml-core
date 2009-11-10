@@ -35,7 +35,6 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  * @author Florian Huonder
  */
 public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
-	private static final long serialVersionUID = -4195896583077373103L;
 	public DecisionType targetDecision;
 	public StatusCode targetStatusCode;
 	public MissingAttributeDetailType targetMissingAttribute;

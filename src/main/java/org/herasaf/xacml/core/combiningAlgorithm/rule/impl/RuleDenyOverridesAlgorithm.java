@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -59,11 +58,9 @@ import org.slf4j.MDC;
  * @version 1.0
  */
 public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm {
-
-	private static final long serialVersionUID = 4562421373287202395L;
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides";
-	private Logger logger = LoggerFactory
+	private final Logger logger = LoggerFactory
 			.getLogger(RuleDenyOverridesAlgorithm.class);
 
 	/**
@@ -123,6 +120,7 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 			}
 
 			switch (decision) {
+			//default case is not required here.
 			case DENY:
 				return DecisionType.DENY;
 			case INDETERMINATE:
@@ -134,7 +132,7 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 				atLeastOneError = true;
 				/*
 				 * If the effect is deny if the evaluation results in true, the
-				 * result is potentialy deny if an error occures.
+				 * result is potentially deny if an error occurres.
 				 */
 				if (rule.getEffect() == EffectType.DENY) {
 					potentialDeny = true;

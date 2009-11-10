@@ -61,8 +61,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ActionAttributeDesignatorType")
-public class ActionAttributeDesignatorType extends AttributeDesignatorType
-		implements Serializable {
+public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 
 	private final static long serialVersionUID = 632768732L;
 

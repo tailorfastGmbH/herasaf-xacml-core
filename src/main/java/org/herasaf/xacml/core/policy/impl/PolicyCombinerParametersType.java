@@ -49,9 +49,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PolicyCombinerParametersType")
 public class PolicyCombinerParametersType
-    extends CombinerParametersType
-    implements Serializable
-{
+    extends CombinerParametersType {
 
     private final static long serialVersionUID = 632768732L;
     @XmlAttribute(name = "PolicyIdRef", required = true)
