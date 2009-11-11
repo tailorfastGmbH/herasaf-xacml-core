@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core;
 
-import java.io.Serializable;
-
 /**
  * TODO JAVADOC
  * 

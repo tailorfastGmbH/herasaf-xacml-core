@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm;
 
-import java.io.Serializable;
-
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;

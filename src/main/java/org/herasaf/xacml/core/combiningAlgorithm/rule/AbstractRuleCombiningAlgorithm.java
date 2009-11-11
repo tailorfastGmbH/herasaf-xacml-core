@@ -22,7 +22,6 @@ import java.util.List;
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;

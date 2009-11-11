@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core.targetMatcher;
 
-import java.io.Serializable;
-
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;

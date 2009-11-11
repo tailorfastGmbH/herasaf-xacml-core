@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 

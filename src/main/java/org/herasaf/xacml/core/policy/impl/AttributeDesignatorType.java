@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
