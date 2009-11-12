@@ -83,14 +83,14 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
 		"obligations" })
 public class PolicyType implements Evaluatable, Serializable {
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
 	protected String description;
 	@XmlElement(name = "PolicyDefaults")
 	protected DefaultsType policyDefaults;
 	@XmlElement(name = "Target", required = true)
 	protected TargetType target;
-	@XmlElements( { @XmlElement(name = "Rule", type = RuleType.class),
+	@XmlElements({ @XmlElement(name = "Rule", type = RuleType.class),
 			@XmlElement(name = "VariableDefinition", type = VariableDefinitionType.class),
 			@XmlElement(name = "RuleCombinerParameters", type = RuleCombinerParametersType.class),
 			@XmlElement(name = "CombinerParameters", type = CombinerParametersType.class) })
@@ -350,8 +350,9 @@ public class PolicyType implements Evaluatable, Serializable {
 	 * {@inheritDoc}
 	 */
 	public boolean hasObligations() {
-		if (obligations == null)
+		if (obligations == null) {
 			return false;
+		}
 		return obligations.getObligations().size() > 0;
 	}
 

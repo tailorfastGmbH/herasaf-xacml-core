@@ -25,8 +25,6 @@ import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -40,18 +38,17 @@ import org.xml.sax.SAXException;
  * TODO JAVADOC
  * 
  * Contains the configuration information for an instance which uses a JAXB
- * {@link Marshaller} or {@link Unmarshaller}.
+ * marshaller or unmarshaller.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @version 1.1
  */
 public class ContextAndPolicyConfiguration {
 	private static final String CLASSPATH_PREFIX = "classpath:";
 	private static final String FILE_PREFIX = "file:";
 	private static final String URL_PREFIX = "url:";
 	/** Tells if the output should be formatted. */
-	private boolean formatted_output;
+	private boolean formattedOutput;
 	/** Tells if the output should be fragmented. */
 	private boolean fragment;
 	/** Tells if the schema location should be added to the output. */
@@ -75,18 +72,18 @@ public class ContextAndPolicyConfiguration {
 	 * 
 	 * @return True if the output should be formatted, else otherwise.
 	 */
-	public boolean isFormatted_output() {
-		return formatted_output;
+	public boolean isFormattedOutput() {
+		return formattedOutput;
 	}
 
 	/**
 	 * Set if the output should be formatted.
 	 * 
-	 * @param formatted_output
+	 * @param formattedOutput
 	 *            True if the output should be formatted, false otherwise.
 	 */
-	public void setFormatted_output(boolean formatted_output) {
-		this.formatted_output = formatted_output;
+	public void setFormattedOutput(boolean formattedOutput) {
+		this.formattedOutput = formattedOutput;
 	}
 
 	/**
@@ -139,47 +136,58 @@ public class ContextAndPolicyConfiguration {
 		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		String schema = schemaPath.trim();
 		if (schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())) { // if
-																					// the
-																					// schemaPath
-																					// has
-																					// the
-																					// url:
-																					// prefix
+			// the
+			// schemaPath
+			// has
+			// the
+			// url:
+			// prefix
 			URL url = new URL(schema.substring(URL_PREFIX.length()));
-			if (url == null)
+			if (url == null) {
 				throw new IllegalArgumentException(schema);
+			}
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX.length())) { // if
-																							// the
-																							// schemaPath
-																							// has
-																							// the
-																							// file:
-																							// prefix
+			// the
+			// schemaPath
+			// has
+			// the
+			// file:
+			// prefix
 			File file = new File(schema.substring(FILE_PREFIX.length()));
-			if (file == null)
+			if (file == null) {
 				throw new IllegalArgumentException(schema);
+			}
 			this.schema = createSchema(sf, new StreamSource(file));
 		} else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())) { // if
-																									// the
-																									// schemaPath
-																									// has
-																									// the
-																									// classpath:
-																									// prefix
+			// the
+			// schemaPath
+			// has
+			// the
+			// classpath:
+			// prefix
 			URL url = getClass().getClassLoader()
 					.getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
-			if (url == null)
+			if (url == null) {
 				throw new IllegalArgumentException(schema);
+			}
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		} else { // if no prefix is provided, the default is classpath:
 			URL url = getClass().getClassLoader().getResource(leadingSlash(schema));
-			if (url == null)
+			if (url == null) {
 				throw new IllegalArgumentException(schema);
+			}
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		}
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param sf
+	 * @param source
+	 * @return
+	 */
 	private Schema createSchema(SchemaFactory sf, Source source) {
 		try {
 			return sf.newSchema(source);
@@ -192,17 +200,18 @@ public class ContextAndPolicyConfiguration {
 	}
 
 	/**
-	 * checks if a given String has a leading slash and adds one otherwise
+	 * checks if a given String has a leading slash and adds one otherwise.
 	 * 
 	 * @param input
 	 *            The String to add a leading slash if missing.
 	 * @return The String with a leading slash.
 	 */
 	private String leadingSlash(String input) {
-		if (input.startsWith("/"))
+		if (input.startsWith("/")) {
 			return input;
-		else
+		} else {
 			return "/" + input;
+		}
 	}
 
 	/**

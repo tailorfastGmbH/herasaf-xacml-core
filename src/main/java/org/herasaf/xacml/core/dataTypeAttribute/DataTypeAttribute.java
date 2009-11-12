@@ -44,7 +44,7 @@ public interface DataTypeAttribute<E> extends java.io.Serializable {
 	 * 
 	 * @return URI the identifies this datatype
 	 */
-	public String getDatatypeURI();
+	String getDatatypeURI();
 
 	/**
 	 * Converts a jaxb-representation string into the data type E.
@@ -54,5 +54,5 @@ public interface DataTypeAttribute<E> extends java.io.Serializable {
 	 * @return Returns the created object.
 	 * @throws SyntaxException
 	 */
-	public E convertTo(String jaxbRepresentation) throws SyntaxException;
+	E convertTo(String jaxbRepresentation) throws SyntaxException;
 }

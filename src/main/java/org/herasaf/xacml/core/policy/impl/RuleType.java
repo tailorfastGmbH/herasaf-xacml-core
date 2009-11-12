@@ -61,7 +61,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RuleType", propOrder = { "description", "target", "condition" })
 public class RuleType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
 	protected String description;
 	@XmlElement(name = "Target")

@@ -62,7 +62,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ObligationType", propOrder = { "attributeAssignments" })
 public class ObligationType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeAssignment")
 	protected List<AttributeAssignmentType> attributeAssignments;
 	@XmlAttribute(name = "ObligationId", required = true)
@@ -71,10 +71,16 @@ public class ObligationType implements Serializable {
 	@XmlAttribute(name = "FulfillOn", required = true)
 	protected EffectType fulfillOn;
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	public ObligationType() {
 
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	public ObligationType(String id, EffectType effect) {
 		this.obligationId = id;
 		this.fulfillOn = effect;
@@ -153,6 +159,10 @@ public class ObligationType implements Serializable {
 		this.fulfillOn = value;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String toString() {
 		StringBuilder val = new StringBuilder("ObligationType[attributeAssignment=");
 		val.append(attributeAssignments);

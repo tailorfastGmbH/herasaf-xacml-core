@@ -38,13 +38,8 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * 
  */
 public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombiningAlgorithm {
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf
-	 * .core.context.impl.RequestType, org.herasaf.core.policy.impl.Evaluatable,
-	 * org.herasaf.core.dataTypes.RequestInformation)
+	/**
+	 * {@inheritDoc}
 	 */
 	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
 		DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);

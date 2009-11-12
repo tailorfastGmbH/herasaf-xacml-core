@@ -65,7 +65,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlType(name = "SubjectAttributeDesignatorType")
 public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "SubjectCategory")
 	@XmlSchemaType(name = "anyURI")
 	protected String subjectCategory;

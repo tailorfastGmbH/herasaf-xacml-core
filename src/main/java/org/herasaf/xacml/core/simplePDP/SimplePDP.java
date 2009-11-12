@@ -45,7 +45,7 @@ public class SimplePDP implements PDP {
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param policyRepository
@@ -63,14 +63,14 @@ public class SimplePDP implements PDP {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	public PolicyRepository getPolicyRepository() {
 		return policyRepository;
 	}
 
 	/**
-	 * TODO JAVA
+	 * TODO JAVADOC.
 	 * 
 	 * @return
 	 */
@@ -79,7 +79,7 @@ public class SimplePDP implements PDP {
 	}
 
 	/**
-	 * TODO JAVA
+	 * TODO JAVADOC.
 	 * 
 	 * @return
 	 */
@@ -88,7 +88,7 @@ public class SimplePDP implements PDP {
 	}
 
 	/**
-	 * TODO REVIEW
+	 * TODO REVIEW.
 	 * 
 	 * {@inheritDoc} The evaluation starts at the predefined root combining
 	 * algorithm.

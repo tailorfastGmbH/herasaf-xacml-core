@@ -77,10 +77,8 @@ public class DateTime implements Comparable<DateTime> {
 		return xmlCalendar.toXMLFormat();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * TODO JAVADOC.
 	 */
 	public int compareTo(DateTime dateTime) {
 		return xmlCalendar.compare(dateTime.getCalendar());

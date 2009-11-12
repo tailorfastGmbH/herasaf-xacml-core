@@ -19,7 +19,6 @@ package org.herasaf.xacml.core.policy;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
@@ -41,12 +40,8 @@ public interface Evaluatable {
 	 * Returns the id of the evaluatable.
 	 * 
 	 * @return The Id as string.
-	 * 
-	 * @throws EvaluatableNotFound
-	 *             if the Evaluatable is an IdReferenceType and it didnt find
-	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public EvaluatableID getId() throws EvaluatableNotFoundException;
+	EvaluatableID getId();
 
 	/**
 	 * TODO JAVADOC
@@ -59,7 +54,7 @@ public interface Evaluatable {
 	 *             if the Evaluatable is an IdReferenceType and it didnt find
 	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public TargetType getTarget() throws EvaluatableNotFoundException;
+	TargetType getTarget();
 
 	/**
 	 * TODO JAVADOC
@@ -72,7 +67,7 @@ public interface Evaluatable {
 	 *             if the Evaluatable is an IdReferenceType and it didnt find
 	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public CombiningAlgorithm getCombiningAlg() throws EvaluatableNotFoundException;
+	CombiningAlgorithm getCombiningAlg();
 
 	/**
 	 * TODO JAVADOC
@@ -85,7 +80,7 @@ public interface Evaluatable {
 	 *             if the Evaluatable is an IdReferenceType and it didnt find
 	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public String getEvalutableVersion() throws EvaluatableNotFoundException;
+	String getEvalutableVersion();
 
 	/**
 	 * TODO JAVADOC
@@ -96,7 +91,7 @@ public interface Evaluatable {
 	 * @return True if the current or a sub- {@link Evaluatable} contains one or
 	 *         more Obligations. False otherwise.
 	 */
-	public boolean hasObligations();
+	boolean hasObligations();
 
 	/**
 	 * TODO JAVADOC
@@ -109,5 +104,5 @@ public interface Evaluatable {
 	 *            returned.
 	 * @return The Obligations which match the {@link EffectType}.
 	 */
-	public List<ObligationType> getContainedObligations(EffectType effect);
+	List<ObligationType> getContainedObligations(EffectType effect);
 }

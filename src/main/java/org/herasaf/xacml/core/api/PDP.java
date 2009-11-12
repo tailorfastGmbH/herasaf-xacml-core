@@ -20,7 +20,6 @@ package org.herasaf.xacml.core.api;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
  * TODO JAVADOC!!!!!!!!
@@ -58,16 +57,24 @@ public interface PDP {
 	 *            The {@link RequestCtx} that shall be evaluated.
 	 * @return The {@link ResponseCtx} containing the result of the evaluation.
 	 */
-	public ResponseCtx evaluate(RequestCtx request);
+	ResponseCtx evaluate(RequestCtx request);
 
 	/**
-	 * TODO JAVDOC
+	 * TODO JAVDOC.
 	 * 
 	 * @return The {@link PolicyRepository} attached to this {@link PDP}.
 	 */
-	public PolicyRepository getPolicyRepository();
+	PolicyRepository getPolicyRepository();
 
-	public PIP getPIP();
+	/**
+	 * TODO JAVADOC.
+	 * @return The PIP that is set in this {@link PDP}.
+	 */
+	PIP getPIP();
 
-	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm();
+	/**
+	 * TODO JAVADOC.
+	 * @return The root combining algorithm of this {@link PDP}.
+	 */
+	PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm();
 }

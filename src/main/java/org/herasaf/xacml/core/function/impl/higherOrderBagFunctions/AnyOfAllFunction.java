@@ -42,6 +42,9 @@ public class AnyOfAllFunction implements Function {
 
 	private Function anyOfFunction;
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	public AnyOfAllFunction() {
 		this.anyOfFunction = new AnyOfFunction();
 	}

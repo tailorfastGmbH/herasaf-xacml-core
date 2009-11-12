@@ -64,7 +64,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "EnvironmentType", propOrder = { "attributes" })
 public class EnvironmentType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Attribute")
 	protected List<AttributeType> attributes;
 
@@ -89,7 +89,9 @@ public class EnvironmentType implements Serializable {
 	 * Objects of the following type(s) are allowed in the list
 	 * {@link AttributeType }
 	 * 
+	 * @return
 	 * 
+	 * TODO JAVADOC
 	 */
 	public List<AttributeType> getAttributes() {
 		if (attributes == null) {
@@ -97,5 +99,4 @@ public class EnvironmentType implements Serializable {
 		}
 		return this.attributes;
 	}
-
 }

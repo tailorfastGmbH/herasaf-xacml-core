@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.util.Map;
-
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
@@ -42,9 +40,9 @@ public interface Variable {
 	 * @param request
 	 *            The corresponding request.
 	 * @param reqInfo
-	 *            The RequestInformation instance containing the {@link Map}
+	 *            The RequestInformation instance containing the map
 	 *            which containing the {@link VariableDefinitionType}s or the
-	 *            calculated values. At beginning this {@link Map} only contains
+	 *            calculated values. At beginning this map only contains
 	 *            {@link VariableDefinitionType}s. After using one of them the
 	 *            element is replaced by a {@link VariableValue} and must not be
 	 *            recalculated later.
@@ -53,6 +51,6 @@ public interface Variable {
 	 * @throws MissingAttributeException
 	 * @throws SyntaxException
 	 */
-	public Object getValue(RequestType request, RequestInformation reqInfo) throws ProcessingException,
+	Object getValue(RequestType request, RequestInformation reqInfo) throws ProcessingException,
 			MissingAttributeException, SyntaxException;
 }

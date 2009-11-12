@@ -71,7 +71,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlType(name = "ApplyType", propOrder = { "expressions" })
 public class ApplyType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
 	protected List<JAXBElement<?>> expressions;
 	@XmlAttribute(name = "FunctionId", required = true)

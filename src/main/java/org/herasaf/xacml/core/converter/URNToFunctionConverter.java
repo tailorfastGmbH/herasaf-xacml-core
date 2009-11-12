@@ -50,7 +50,7 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	private final Logger logger = LoggerFactory.getLogger(URNToFunctionConverter.class);
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * Contains all the available functions
 	 */
@@ -80,7 +80,7 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(Function function) throws IllegalArgumentException {
+	public String marshal(Function function) {
 		String functionString;
 		try {
 			functionString = function.toString();
@@ -95,7 +95,7 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Function unmarshal(String functionId) throws IllegalArgumentException {
+	public Function unmarshal(String functionId) {
 		Function func;
 		try {
 			func = functions.get(functionId);

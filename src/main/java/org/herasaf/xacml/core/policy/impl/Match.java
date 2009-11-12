@@ -37,26 +37,26 @@ public interface Match {
 	 * 
 	 * @return The {@link AttributeValueType}.
 	 */
-	public AttributeValueType getAttributeValue();
+	AttributeValueType getAttributeValue();
 
 	/**
 	 * Returns the {@link AttributeDesignatorType} of the **Match.
 	 * 
 	 * @return The {@link AttributeDesignatorType}.
 	 */
-	public AttributeDesignatorType getAttributeDesignator();
+	AttributeDesignatorType getAttributeDesignator();
 
 	/**
 	 * Returns the {@link AttributeSelectorType} of the **Match.
 	 * 
 	 * @return The {@link AttributeSelectorType}.
 	 */
-	public AttributeSelectorType getAttributeSelector();
+	AttributeSelectorType getAttributeSelector();
 
 	/**
 	 * Returns the match-{@link Function} of the **Match.
 	 * 
 	 * @return The match-{@link Function}.
 	 */
-	public Function getMatchFunction();
+	Function getMatchFunction();
 }

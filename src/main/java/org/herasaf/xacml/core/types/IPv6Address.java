@@ -32,7 +32,7 @@ import java.net.UnknownHostException;
  * @see IPAddress
  */
 public class IPv6Address extends IPAddress {
-	private final static String REGEX = "\\[[\\.:0-9A-Fa-f]+\\](/\\[[\\.:0-9A-Fa-f]+\\])?(:[\\d\\-]+)?";
+	private static final String REGEX = "\\[[\\.:0-9A-Fa-f]+\\](/\\[[\\.:0-9A-Fa-f]+\\])?(:[\\d\\-]+)?";
 	private InetAddress ip;
 	private InetAddress mask;
 	private PortRange portRange;
@@ -114,8 +114,9 @@ public class IPv6Address extends IPAddress {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null)
+		if (obj == null) {
 			return false;
+		}
 		return toString().equals(obj.toString());
 	}
 

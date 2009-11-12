@@ -32,12 +32,12 @@ import org.herasaf.xacml.core.context.impl.ActionType;
 public interface ActionTransformable {
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * Transforms the information contained in the Transformable to an
 	 * <code>ActionType</code>
 	 * 
 	 * @return ActionType containing the Information of the Transformable
 	 */
-	public ActionType transform();
+	ActionType transform();
 }

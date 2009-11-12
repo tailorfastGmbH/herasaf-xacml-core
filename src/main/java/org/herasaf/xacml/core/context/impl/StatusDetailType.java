@@ -34,8 +34,6 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.w3c.dom.Element;
-
 /**
  * <p>
  * Java class for StatusDetailType complex type.
@@ -67,8 +65,8 @@ import org.w3c.dom.Element;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StatusDetailType", propOrder = { "content" })
 public class StatusDetailType implements Serializable {
-	private static ObjectFactory factory;
-	private final static long serialVersionUID = 632768732L;
+	private static final ObjectFactory OBJECT_FACTORY;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAnyElement(lax = true)
 	protected List<Object> content;
 
@@ -76,7 +74,7 @@ public class StatusDetailType implements Serializable {
 	 * Initializes the object factory.
 	 */
 	static {
-		factory = new ObjectFactory();
+		OBJECT_FACTORY = new ObjectFactory();
 	}
 
 	/**
@@ -97,7 +95,7 @@ public class StatusDetailType implements Serializable {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list {@link Element }
+	 * Objects of the following type(s) are allowed in the list org.w3c.dom.Element,
 	 * {@link Object }
 	 * 
 	 * 
@@ -138,6 +136,6 @@ public class StatusDetailType implements Serializable {
 	 *            The {@link MissingAttributeDetailType} to add.
 	 */
 	public void addMissingAttribute(MissingAttributeDetailType missingAttribute) {
-		content.add(factory.createMissingAttributeDetail(missingAttribute));
+		content.add(OBJECT_FACTORY.createMissingAttributeDetail(missingAttribute));
 	}
 }

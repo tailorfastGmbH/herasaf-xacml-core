@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "CombinerParameterType", propOrder = { "attributeValue" })
 public class CombinerParameterType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
 	protected AttributeValueType attributeValue;
 	@XmlAttribute(name = "ParameterName", required = true)

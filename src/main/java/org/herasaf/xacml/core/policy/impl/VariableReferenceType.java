@@ -60,7 +60,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlType(name = "VariableReferenceType")
 public class VariableReferenceType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "VariableId", required = true)
 	protected String variableId;
 

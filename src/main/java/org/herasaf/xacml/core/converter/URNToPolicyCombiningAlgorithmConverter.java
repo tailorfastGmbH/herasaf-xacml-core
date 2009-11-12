@@ -74,7 +74,7 @@ public class URNToPolicyCombiningAlgorithmConverter extends XmlAdapter<String, P
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(PolicyCombiningAlgorithm combAlg) throws IllegalArgumentException {
+	public String marshal(PolicyCombiningAlgorithm combAlg) {
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
@@ -89,7 +89,7 @@ public class URNToPolicyCombiningAlgorithmConverter extends XmlAdapter<String, P
 	 * {@inheritDoc}
 	 */
 	@Override
-	public PolicyCombiningAlgorithm unmarshal(String combAlgId) throws IllegalArgumentException {
+	public PolicyCombiningAlgorithm unmarshal(String combAlgId) {
 		PolicyCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);

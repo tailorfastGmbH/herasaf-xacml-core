@@ -32,9 +32,9 @@ import org.slf4j.LoggerFactory;
  */
 public class FunctionsInitializer extends AbstractInitializer<Function> {
 	private final Logger logger = LoggerFactory.getLogger(FunctionsInitializer.class);
-	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.function.impl";
-	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
-	private final static Class<Function> TARGET_CLASS = Function.class;
+	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.function.impl";
+	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
+	private static final Class<Function> TARGET_CLASS = Function.class;
 
 	/**
 	 * {@inheritDoc}

@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.types.Base64Binary;
 
 /**
@@ -31,7 +30,6 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * 
  * @author Florian Huonder
  * @version 1.0
- * @see DataTypeAttribute
  */
 public class Base64BinaryDataTypeAttribute extends AbstractDataTypeAttribute<Base64Binary> {
 

@@ -59,7 +59,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 @XmlType(name = "AttributeSelectorType")
 public class AttributeSelectorType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "RequestContextPath", required = true)
 	protected String requestContextPath;
 	@XmlAttribute(name = "DataType", required = true)

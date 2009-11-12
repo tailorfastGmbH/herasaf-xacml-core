@@ -67,7 +67,7 @@ import org.herasaf.xacml.core.function.Function;
 @XmlType(name = "ResourceMatchType", propOrder = { "attributeValue", "resourceAttributeDesignator", "attributeSelector" })
 public class ResourceMatchType implements Serializable, Match {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
 	protected AttributeValueType attributeValue;
 	@XmlElement(name = "ResourceAttributeDesignator")

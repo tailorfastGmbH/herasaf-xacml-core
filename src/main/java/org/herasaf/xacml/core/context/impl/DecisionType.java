@@ -67,14 +67,29 @@ public enum DecisionType {
 	NOT_APPLICABLE("NotApplicable");
 	private final String value;
 
+	/**
+	 * TODO JAVADOC. 
+	 * @param v
+	 */
 	DecisionType(String v) {
 		value = v;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
 	public String value() {
 		return value;
 	}
 
+	/**
+	 * TODO JAVADOC
+	 * 
+	 * @param v
+	 * @return
+	 */
 	public static DecisionType fromValue(String v) {
 		for (int i = 0; i < DecisionType.values().length; i++) {
 			DecisionType c = DecisionType.values()[i];
@@ -84,5 +99,4 @@ public enum DecisionType {
 		}
 		throw new IllegalArgumentException(v);
 	}
-
 }

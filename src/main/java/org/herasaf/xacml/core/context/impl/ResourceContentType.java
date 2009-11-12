@@ -36,7 +36,6 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlMixed;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
-import org.w3c.dom.Element;
 
 /**
  * <p>
@@ -70,7 +69,7 @@ import org.w3c.dom.Element;
 @XmlType(name = "ResourceContentType", propOrder = { "content" })
 public class ResourceContentType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlMixed
 	@XmlAnyElement(lax = true)
 	protected List<Object> content;
@@ -78,7 +77,7 @@ public class ResourceContentType implements Serializable {
 	private Map<QName, String> otherAttributes;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	public ResourceContentType() {
 		otherAttributes = new HashMap<QName, String>();
@@ -102,7 +101,7 @@ public class ResourceContentType implements Serializable {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list {@link Element }
+	 * Objects of the following type(s) are allowed in the list org.w3c.dom.Element,
 	 * {@link String } {@link Object }
 	 * 
 	 * 

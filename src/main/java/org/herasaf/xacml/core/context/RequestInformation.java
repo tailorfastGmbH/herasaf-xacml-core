@@ -23,7 +23,6 @@ import java.util.Map;
 
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
-import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
@@ -33,9 +32,6 @@ import org.herasaf.xacml.core.policy.impl.Variable;
 /**
  * TODO JAVADOC extend documentation a lot. This is one of the central classes
  * of the implementation.
- * 
- * This data type is a collection which contains all local-{@link Evaluatable}s
- * and all remote-{@link Evaluatable}s.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -58,7 +54,7 @@ public class RequestInformation {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param pip
 	 *            The Attribute finder to place into the
@@ -244,6 +240,9 @@ public class RequestInformation {
 		this.obligations.getObligations().addAll(obls);
 	}
 
+	/**
+	 * TODO JAVADOC
+	 */
 	public void clearObligations() {
 		this.obligations.getObligations().clear();
 	}

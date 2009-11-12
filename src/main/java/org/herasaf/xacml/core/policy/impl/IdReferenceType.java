@@ -71,7 +71,7 @@ import org.slf4j.LoggerFactory;
 @XmlType(name = "IdReferenceType", propOrder = { "value" })
 public class IdReferenceType implements Serializable, Evaluatable {
 	@XmlTransient
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlTransient
 	private final Logger logger = LoggerFactory.getLogger(IdReferenceType.class);
 

@@ -46,7 +46,7 @@ public class StringLessThanFunction implements Function {
 	 * http://www.w3.org/2001/XMLSchema#string is lesser than the second
 	 * argument.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException, FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
 				throw new FunctionProcessingException("Invalid number of parameters");

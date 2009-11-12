@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ObligationsType", propOrder = { "obligations" })
 public class ObligationsType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Obligation", required = true)
 	protected List<ObligationType> obligations;
 

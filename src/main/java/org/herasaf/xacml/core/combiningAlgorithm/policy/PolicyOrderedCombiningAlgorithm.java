@@ -40,13 +40,8 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
  */
 public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf
-	 * .core.context.impl.RequestType, org.herasaf.core.policy.impl.Evaluatable,
-	 * org.herasaf.core.dataTypes.RequestInformation)
+	/**
+	 * {@inheritDoc}
 	 */
 	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
 		DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
@@ -76,12 +71,8 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
-	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
+	/**
+	 * {@inheritDoc}
 	 */
 	public abstract DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
 			RequestInformation requestInfos);

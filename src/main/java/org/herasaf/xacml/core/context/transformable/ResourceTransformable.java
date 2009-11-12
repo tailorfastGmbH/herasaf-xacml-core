@@ -33,7 +33,7 @@ import org.herasaf.xacml.core.context.impl.ResourceType;
 public interface ResourceTransformable {
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * Transforms the information contained in the Transformable to
 	 * <code>Collection</code> of <code>ResourceType</code> objects.
@@ -41,5 +41,5 @@ public interface ResourceTransformable {
 	 * @return <code>Collection</code> of <code>ResourceType</code> objects
 	 *         containing the Information of the Transformable
 	 */
-	public Collection<? extends ResourceType> transform();
+	Collection<? extends ResourceType> transform();
 }

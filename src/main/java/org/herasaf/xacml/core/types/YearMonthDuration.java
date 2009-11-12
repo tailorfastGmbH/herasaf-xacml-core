@@ -68,10 +68,8 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 		return duration.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * TODO JAVADOC.
 	 */
 	public int compareTo(YearMonthDuration o) {
 		return duration.compare(o.duration);

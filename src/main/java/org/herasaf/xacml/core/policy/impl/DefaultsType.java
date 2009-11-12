@@ -60,7 +60,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "DefaultsType", propOrder = { "xPathVersion" })
 public class DefaultsType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "XPathVersion")
 	@XmlSchemaType(name = "anyURI")
 	protected String xPathVersion;

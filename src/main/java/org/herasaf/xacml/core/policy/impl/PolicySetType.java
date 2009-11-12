@@ -92,14 +92,14 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 		"obligations" })
 public class PolicySetType implements Evaluatable, Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
 	protected String description;
 	@XmlElement(name = "PolicySetDefaults")
 	protected DefaultsType policySetDefaults;
 	@XmlElement(name = "Target", required = true)
 	protected TargetType target;
-	@XmlElementRefs( {
+	@XmlElementRefs({
 			@XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetCombinerParameters", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
@@ -127,6 +127,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 										// (SubPolicySet) contains any
 										// Obligations.
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	public PolicySetType() {
 		setHasObligations(true); // Must by default be true. It cannot be
 									// assumed that a preprocessor correctly

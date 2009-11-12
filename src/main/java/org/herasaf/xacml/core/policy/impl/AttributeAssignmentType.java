@@ -53,7 +53,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "AttributeAssignmentType")
 public class AttributeAssignmentType extends AttributeValueType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "AttributeId", required = true)
 	@XmlSchemaType(name = "anyURI")
 	protected String attributeId;

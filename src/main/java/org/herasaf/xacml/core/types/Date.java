@@ -83,10 +83,8 @@ public class Date implements Comparable<Date> {
 		return xmlCalendar.toXMLFormat();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * TODO JAVADOC.
 	 */
 	public int compareTo(Date date) {
 		return xmlCalendar.compare(date.getCalendar());

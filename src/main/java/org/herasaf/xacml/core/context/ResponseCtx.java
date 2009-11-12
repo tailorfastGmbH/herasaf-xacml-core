@@ -22,7 +22,6 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Result;
@@ -38,7 +37,7 @@ import org.xml.sax.ContentHandler;
  * TODO JAVADOC
  * 
  * Encapsulates a {@link ResponseType}. Provides various marshalling methods for
- * the {@link ResponseType}. Because the {@link Marshaller} from JAXB <b>is
+ * the {@link ResponseType}. Because the marshaller from JAXB <b>is
  * not</b> thread safe it must be newly created in each marshal-method. This
  * class fully relies on the underlying JAXB implementation.
  * 

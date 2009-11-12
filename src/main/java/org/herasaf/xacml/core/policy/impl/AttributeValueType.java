@@ -40,7 +40,6 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
-import org.w3c.dom.Element;
 
 /**
  * <p>
@@ -74,10 +73,10 @@ import org.w3c.dom.Element;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
-@XmlSeeAlso( { AttributeAssignmentType.class })
+@XmlSeeAlso({ AttributeAssignmentType.class })
 public class AttributeValueType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlMixed
 	@XmlAnyElement(lax = true)
 	protected List<Object> content;
@@ -89,7 +88,7 @@ public class AttributeValueType extends ExpressionType {
 	private Map<QName, String> otherAttributes;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	public AttributeValueType() {
 		otherAttributes = new HashMap<QName, String>();
@@ -113,7 +112,7 @@ public class AttributeValueType extends ExpressionType {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list {@link Element }
+	 * Objects of the following type(s) are allowed in the list org.w3c.dom.Element,
 	 * {@link String } {@link Object }
 	 * 
 	 * 

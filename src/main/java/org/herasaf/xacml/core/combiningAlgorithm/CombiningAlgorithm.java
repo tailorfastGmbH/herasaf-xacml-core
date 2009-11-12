@@ -45,5 +45,5 @@ public interface CombiningAlgorithm {
 	 *            the additional informations used in this evaluation process.
 	 * @return the decision.
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestedEvals);
+	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestedEvals);
 }

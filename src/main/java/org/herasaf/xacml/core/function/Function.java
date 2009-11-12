@@ -44,5 +44,5 @@ public interface Function extends Serializable {
 	 * @return The result of the execution of the handler.
 	 * @throws FunctionProcessingException
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException;
+	Object handle(Object... args) throws FunctionProcessingException;
 }

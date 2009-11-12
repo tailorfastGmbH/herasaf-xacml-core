@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.function.impl.logicalFunctions;
 
 import java.math.BigInteger;
-import java.util.List;
 
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
@@ -40,7 +39,7 @@ public class NOFFunction implements Function {
 
 	/**
 	 * The first argument is a {@link BigInteger}, the second argument should be
-	 * a {@link List} of boolean values. The first argument specifies the
+	 * a list of boolean values. The first argument specifies the
 	 * minimum amount of true values that should be in the list. if the list is
 	 * shorter then than minimum. value, a {@link FunctionProcessingException}
 	 * is thrown. If the amount of true values is reached, true is returned,

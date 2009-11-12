@@ -37,9 +37,9 @@ import org.slf4j.LoggerFactory;
  */
 public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractRuleCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory.getLogger(RuleCombiningAlgorithmsInitializer.class);
-	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
-	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
-	private final static Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
+	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
+	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
+	private static final Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
 	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
 
 	@Override
@@ -85,7 +85,7 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	@Override
 	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {

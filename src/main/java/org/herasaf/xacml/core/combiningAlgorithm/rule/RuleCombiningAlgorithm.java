@@ -50,7 +50,7 @@ public interface RuleCombiningAlgorithm {
 	 * @return The Decision made by this rule. The returned values for the
 	 *         different situations can be found in the specification.
 	 */
-	public DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo);
+	DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo);
 
 	/**
 	 * Evaluates all rules given in the rule list and returnes the result.
@@ -64,6 +64,6 @@ public interface RuleCombiningAlgorithm {
 	 *            needed to evaluate the request
 	 * @return the decision
 	 */
-	public abstract DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules,
+	DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules,
 			RequestInformation requestInfos);
 }

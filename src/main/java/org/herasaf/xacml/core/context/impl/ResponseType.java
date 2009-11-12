@@ -64,7 +64,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ResponseType", propOrder = { "results" })
 public class ResponseType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Result", required = true)
 	protected List<ResultType> results;
 

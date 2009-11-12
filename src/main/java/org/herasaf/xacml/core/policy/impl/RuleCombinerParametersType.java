@@ -52,7 +52,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "RuleCombinerParametersType")
 public class RuleCombinerParametersType extends CombinerParametersType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "RuleIdRef", required = true)
 	protected String ruleIdRef;
 

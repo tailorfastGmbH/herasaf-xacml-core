@@ -68,11 +68,11 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeDesignatorType")
-@XmlSeeAlso( { SubjectAttributeDesignatorType.class, ResourceAttributeDesignatorType.class,
+@XmlSeeAlso({ SubjectAttributeDesignatorType.class, ResourceAttributeDesignatorType.class,
 		EnvironmentAttributeDesignatorType.class, ActionAttributeDesignatorType.class })
 public abstract class AttributeDesignatorType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "AttributeId", required = true)
 	@XmlSchemaType(name = "anyURI")
 	protected String attributeId;

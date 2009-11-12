@@ -37,6 +37,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * 2006</a> page 105, for further information.
  * </p>
  * 
+ * @param <T> TODO JAVADOC.
  * @author Stefan Oberholzer
  * @version 1.0
  */

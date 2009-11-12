@@ -37,9 +37,9 @@ import org.slf4j.LoggerFactory;
  */
 public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory.getLogger(PolicyCombiningAlgorithmsInitializer.class);
-	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
-	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
-	private final static Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
+	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
+	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
+	private static final Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
 	private final TargetMatcher targetMatcher = new TargetMatcherImpl(); // The
 																			// default
 																			// target
@@ -47,7 +47,7 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	private static boolean respectAbandondEvaluatables;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	public PolicyCombiningAlgorithmsInitializer(boolean respectAbandondEvaluatables) {
 		logger.info("Respect abandoned Evaluatables: {}", respectAbandondEvaluatables);
@@ -98,7 +98,7 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	@Override
 	protected Class<AbstractPolicyCombiningAlgorithm> getTargetClass() {

@@ -119,6 +119,9 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 
 	private final Logger logger = LoggerFactory.getLogger(MapBasedSimplePolicyRepository.class);
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	public MapBasedSimplePolicyRepository() {
 		individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
 		rootEvaluatableMapping = new HashMap<EvaluatableID, List<EvaluatableID>>();
@@ -128,7 +131,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void deploy(Collection<Evaluatable> evaluatables) throws PolicyRepositoryException {
+	public void deploy(Collection<Evaluatable> evaluatables) {
 
 		for (Evaluatable eval : evaluatables) {
 			deploy(eval); // Change object can be neglected here
@@ -138,7 +141,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void deploy(Evaluatable evaluatable) throws PolicyRepositoryException {
+	public void deploy(Evaluatable evaluatable) {
 		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
 				.getId());
 
@@ -166,7 +169,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void undeploy(EvaluatableID id) throws PolicyRepositoryException {
+	public void undeploy(EvaluatableID id) {
 		boolean foundAtLeastOneMatchingEvaluatable = false;
 		for (int i = 0; i < rootEvaluatables.size(); i++) {
 			Evaluatable eval = rootEvaluatables.get(i);
@@ -188,7 +191,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void undeploy(Collection<EvaluatableID> ids) throws PolicyRepositoryException {
+	public void undeploy(Collection<EvaluatableID> ids) {
 		for (EvaluatableID id : ids) {
 			undeploy(id);
 		}
@@ -197,8 +200,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyDeploymentModifications(List<DeploymentModification> deploymentInstructions)
-			throws PolicyRepositoryException {
+	public void applyDeploymentModifications(List<DeploymentModification> deploymentInstructions) {
 		String msg = "The MapBasedSimplePolicyRepository does not support the application of Diffs";
 		logger.error(msg);
 		throw new UnsupportedOperationException(msg);
@@ -232,7 +234,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Evaluatable getEvaluatable(EvaluatableID id) throws PolicyRepositoryException {
+	public Evaluatable getEvaluatable(EvaluatableID id) {
 		List<Evaluatable> evals = individualEvaluatables.get(id);
 		if (evals != null) {
 			for (Evaluatable eval : evals) {
@@ -254,6 +256,9 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 		return rootEvaluatables;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(
 			Map<EvaluatableID, List<Evaluatable>> initialMap, Evaluatable evaluatable, EvaluatableID rootId) {
 		Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
@@ -303,6 +308,9 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 
 	/*
 	 * Entry Point for other methods!
+	 */
+	/**
+	 * TODO JAVADOC.
 	 */
 	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(Evaluatable evaluatable, EvaluatableID rootId) {
 		return splitIntoIndividuals(null, evaluatable, rootId);

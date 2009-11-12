@@ -52,9 +52,9 @@ import org.xml.sax.InputSource;
  * @author Florian Huonder
  * @version 1.0
  */
-public class RequestCtxFactory {
+public final class RequestCtxFactory {
 	private static final ContextAndPolicy.JAXBProfile REQUESTCTX;
-	private static final ObjectFactory objectFactory;
+	private static final ObjectFactory OBJECT_FACTORY;
 
 	/**
 	 * Static constructor of the RequestCtxFactory. It initializes Class
@@ -62,7 +62,16 @@ public class RequestCtxFactory {
 	 */
 	static {
 		REQUESTCTX = ContextAndPolicy.JAXBProfile.REQUEST_CTX;
-		objectFactory = new ObjectFactory();
+		OBJECT_FACTORY = new ObjectFactory();
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * A utility class must not bi instantiated.
+	 */
+	private RequestCtxFactory() {
+
 	}
 
 	/**
@@ -85,7 +94,7 @@ public class RequestCtxFactory {
 	public static RequestCtx create(SubjectTransformable subjectTransformable,
 			ResourceTransformable resourceTransformable, ActionTransformable actionTransformable,
 			EnvironmentTransformable environmentTransformable) {
-		RequestType req = objectFactory.createRequestType();
+		RequestType req = OBJECT_FACTORY.createRequestType();
 		req.getSubjects().addAll(subjectTransformable.transform());
 		req.getResources().addAll(resourceTransformable.transform());
 		req.setAction(actionTransformable.transform());

@@ -68,7 +68,7 @@ import org.herasaf.xacml.core.function.Function;
 		"attributeSelector" })
 public class EnvironmentMatchType implements Serializable, Match {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
 	protected AttributeValueType attributeValue;
 	@XmlElement(name = "EnvironmentAttributeDesignator")

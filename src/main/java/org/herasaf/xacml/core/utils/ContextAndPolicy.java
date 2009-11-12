@@ -41,8 +41,15 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class ContextAndPolicy {
+public final class ContextAndPolicy {
 	private static final Logger logger = LoggerFactory.getLogger(ContextAndPolicy.class);
+
+	/**
+	 * TODO JAVADOC.
+	 */
+	private ContextAndPolicy() {
+
+	}
 
 	/**
 	 * This enum contains the possible {@link JAXBProfile}s.
@@ -93,7 +100,7 @@ public class ContextAndPolicy {
 		}
 
 		Marshaller marshaller = conf.getContext().createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, conf.isFormatted_output());
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, conf.isFormattedOutput());
 		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, conf.isFragment());
 
 		if (conf.isWriteSchemaLocation()) {

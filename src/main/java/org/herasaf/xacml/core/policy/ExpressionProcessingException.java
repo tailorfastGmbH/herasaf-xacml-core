@@ -18,12 +18,11 @@
 package org.herasaf.xacml.core.policy;
 
 import org.herasaf.xacml.core.ProcessingException;
-import org.herasaf.xacml.core.policy.impl.ExpressionType;
 
 /**
  * TODO JAVADOC
  * 
- * This exception is thrown when the processing of the a {@link ExpressionType}
+ * This exception is thrown when the processing of the an expression
  * fails.
  * 
  * @author Sacha Dolski (sdolski@solnet.ch)

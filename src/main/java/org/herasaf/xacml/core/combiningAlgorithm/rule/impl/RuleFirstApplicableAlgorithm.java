@@ -19,7 +19,6 @@ package org.herasaf.xacml.core.combiningAlgorithm.rule.impl;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -33,7 +32,7 @@ import org.slf4j.MDC;
  * TODO JAVADOC
  * 
  * <p>
- * The implementation of the {@link PolicyCombiningAlgorithm} with the
+ * The implementation of the policy combining algorithm with the
  * First-Applicable strategy.
  * </p>
  * <p>

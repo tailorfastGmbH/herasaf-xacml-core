@@ -34,6 +34,8 @@ import org.slf4j.LoggerFactory;
 /**
  * TODO JAVADOC!!
  * 
+ * @param <T>
+ *            TODO JAVADOC.
  * @author Florian Huonder
  * @author René Eggenschwiler
  * 
@@ -41,13 +43,33 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractInitializer<T> implements Initializer {
 	private final Logger logger = LoggerFactory.getLogger(AbstractInitializer.class);
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
 	protected abstract String getSearchContext();
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
 	protected abstract String getSearchContextPath();
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
 	protected abstract Class<T> getTargetClass();
 
-	private final String CLASS_ENDING = ".class";
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
+	private static final String CLASS_ENDING = ".class";
 
 	/**
 	 * {@inheritDoc}
@@ -61,7 +83,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param instances
 	 */
@@ -70,14 +92,14 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param instancesMap
 	 */
 	protected abstract void setInstancesIntoConverter(Map<String, T> instancesMap);
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param instances
 	 *            The {@link List} of instances that shall be converted into a
@@ -93,7 +115,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param instance
 	 *            The type from which the URI shall be returned.
@@ -102,7 +124,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract String getURIFromType(T instance);
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * TODO document code below in detail.
 	 * 
@@ -126,7 +148,16 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			if (File.separator.equals("\\")) {
 				path = path.replaceAll("\\\\", ".");
 			} else {
-				path = path.replaceAll(File.separatorChar == '\\' ? "\\\\" : File.separator, ".");
+				String separator;
+				if (File.separatorChar == '\\') { // Avoids problems with the
+					// replaceAll-regex function
+					// in case of windows file
+					// separator.
+					separator = "\\\\";
+				} else {
+					separator = File.separator;
+				}
+				path = path.replaceAll(separator, ".");
 			}
 			String className = path.substring(path.indexOf(getSearchContext()));
 

@@ -64,7 +64,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ActionType", propOrder = { "attributes" })
 public class ActionType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Attribute")
 	protected List<AttributeType> attributes;
 

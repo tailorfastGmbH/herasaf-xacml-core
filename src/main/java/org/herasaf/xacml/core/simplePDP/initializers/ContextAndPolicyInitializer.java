@@ -53,7 +53,7 @@ public class ContextAndPolicyInitializer implements Initializer {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
 	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath) {
 		ContextAndPolicyConfiguration config = new ContextAndPolicyConfiguration();
@@ -64,7 +64,7 @@ public class ContextAndPolicyInitializer implements Initializer {
 			logger.error("Unable to initialize JAXB. Verify Context-Path settings.", e);
 			throw new InitializationException(e);
 		}
-		config.setFormatted_output(FORMATTED_OUTPUT);
+		config.setFormattedOutput(FORMATTED_OUTPUT);
 		config.setValidateWriting(VALIDATE_WRITING);
 		config.setValidateParsing(VALIDATE);
 		config.setFragment(FRAGMENT);

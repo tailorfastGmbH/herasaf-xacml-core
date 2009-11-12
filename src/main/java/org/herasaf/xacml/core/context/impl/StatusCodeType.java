@@ -65,7 +65,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StatusCodeType", propOrder = { "statusCode" })
 public class StatusCodeType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "StatusCode")
 	protected StatusCodeType statusCode;
 	@XmlAttribute(name = "Value", required = true)

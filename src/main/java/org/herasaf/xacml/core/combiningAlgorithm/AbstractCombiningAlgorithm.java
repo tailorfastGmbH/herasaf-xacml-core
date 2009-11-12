@@ -24,7 +24,6 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
@@ -46,7 +45,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private TargetMatcher targetMatcher;
 
 	/**
-	 * If set to true abandoned {@link Evaluatable}s will be included (if
+	 * If set to true abandoned evaluatables will be included (if
 	 * possible) in the evaluation.
 	 */
 	protected boolean respectAbandonedEvaluatables;
@@ -88,7 +87,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			 * (XACML) 2.0, Errata 29 June 2006</a> page 83, chapter Policy
 			 * evaluation for further information.
 			 */
-			if (targetMatchDecision == true) {
+			if (targetMatchDecision) {
 				decision = DecisionType.PERMIT;
 			} else {
 				requestInfo.setTargetMatched(false);

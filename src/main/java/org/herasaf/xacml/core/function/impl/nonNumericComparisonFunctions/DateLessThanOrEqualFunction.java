@@ -63,7 +63,7 @@ public class DateLessThanOrEqualFunction implements Function {
 	// must provide an implicit time zone if no one is set.
 	// This MUST is not considered in this implementation of the function and
 	// must be fixed.
-	public Object handle(Object... args) throws FunctionProcessingException, FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
 				throw new FunctionProcessingException("Invalid number of parameters");

@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SubjectsType", propOrder = { "subjects" })
 public class SubjectsType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Subject", required = true)
 	protected List<SubjectType> subjects;
 

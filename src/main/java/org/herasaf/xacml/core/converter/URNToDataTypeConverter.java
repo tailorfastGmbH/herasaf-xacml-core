@@ -74,7 +74,7 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(DataTypeAttribute<?> dataTypeAttr) throws IllegalArgumentException {
+	public String marshal(DataTypeAttribute<?> dataTypeAttr) {
 		String dataTypeAttrString;
 		try {
 			dataTypeAttrString = dataTypeAttr.toString();
@@ -89,7 +89,7 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DataTypeAttribute<?> unmarshal(String dataTypeId) throws IllegalArgumentException {
+	public DataTypeAttribute<?> unmarshal(String dataTypeId) {
 		DataTypeAttribute<?> dta;
 		try {
 			dta = dataTypeAttributes.get(dataTypeId);

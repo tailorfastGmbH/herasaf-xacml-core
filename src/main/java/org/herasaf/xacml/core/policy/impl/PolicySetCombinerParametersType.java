@@ -53,7 +53,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "PolicySetCombinerParametersType")
 public class PolicySetCombinerParametersType extends CombinerParametersType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "PolicySetIdRef", required = true)
 	@XmlSchemaType(name = "anyURI")
 	protected String policySetIdRef;

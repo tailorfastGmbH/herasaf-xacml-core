@@ -82,7 +82,7 @@ public class RequestType implements Serializable {
 	private static final String CURRENT_DATE_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-date";
 	private static final String CURRENT_TIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-time";
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 
 	@XmlElement(name = "Subject", required = true)
 	protected List<SubjectType> subjects;
@@ -93,6 +93,10 @@ public class RequestType implements Serializable {
 	@XmlElement(name = "Environment", required = true)
 	protected EnvironmentType environment;
 
+	/**
+	 * TODO JAVADOC.
+	 * @param marshaller
+	 */
 	public void beforeMarshal(Marshaller marshaller) {
 		if (!envContainsAttributeId(CURRENT_TIME_DATATYPEID)) {
 			environment.getAttributes().add(createCurrentTime());
@@ -105,6 +109,10 @@ public class RequestType implements Serializable {
 		}
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * @return
+	 */
 	private AttributeType createCurrentTime() {
 		AttributeType currentTimeAttr = new AttributeType();
 		currentTimeAttr.setAttributeId(CURRENT_TIME_DATATYPEID);
@@ -114,6 +122,10 @@ public class RequestType implements Serializable {
 		return currentTimeAttr;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * @return
+	 */
 	private AttributeType createCurrentDate() {
 		AttributeType currentDateAttr = new AttributeType();
 		currentDateAttr.setAttributeId(CURRENT_DATE_DATATYPEID);
@@ -123,6 +135,10 @@ public class RequestType implements Serializable {
 		return currentDateAttr;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * @return
+	 */
 	private AttributeType createCurrentDateTime() {
 		AttributeType currentDateTimeAttr = new AttributeType();
 		currentDateTimeAttr.setAttributeId(CURRENT_DATETIME_DATATYPEID);
@@ -132,6 +148,11 @@ public class RequestType implements Serializable {
 		return currentDateTimeAttr;
 	}
 
+	/**
+	 * FIXME Timezone issue (right library usage).
+	 * TODO JAVADOC.
+	 * @return
+	 */
 	private AttributeValueType createDateTime(String pattern) {
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
@@ -143,6 +164,10 @@ public class RequestType implements Serializable {
 		return attrValue;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * @return
+	 */
 	private boolean envContainsAttributeId(String id) {
 		for (AttributeType attr : environment.getAttributes()) {
 			if (attr.getAttributeId().equals(id)) {

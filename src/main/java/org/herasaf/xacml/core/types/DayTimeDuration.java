@@ -80,10 +80,8 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		return duration.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * TODO JAVADOC.
 	 */
 	public int compareTo(DayTimeDuration o) {
 		return duration.compare(o.duration);

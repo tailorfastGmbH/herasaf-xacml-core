@@ -48,6 +48,9 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  */
 public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
 		RuleCombiningAlgorithm {
+	/**
+	 * TODO JAVADOC.
+	 */
 	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**

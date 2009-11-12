@@ -32,12 +32,12 @@ import org.herasaf.xacml.core.context.impl.EnvironmentType;
 public interface EnvironmentTransformable {
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * Transforms the information contained in the Transformable to an
 	 * <code>EnvironmentType</code>
 	 * 
 	 * @return EnvironmentType containing the Information of the Transformable
 	 */
-	public EnvironmentType transform();
+	EnvironmentType transform();
 }

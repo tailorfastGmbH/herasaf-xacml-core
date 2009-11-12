@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  * 
  */
-public class SimplePDPFactory {
+public final class SimplePDPFactory {
 	private static final Logger logger = LoggerFactory.getLogger(SimplePDPFactory.class);
 	private static boolean respectAbandonedEvaluatables;
 	private static List<Initializer> initializers;
@@ -49,7 +49,14 @@ public class SimplePDPFactory {
 	private static Class<? extends PolicyRepository> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
+	 */
+	private SimplePDPFactory() {
+
+	}
+
+	/**
+	 * TODO JAVADOC.
 	 * 
 	 * @param initalizers
 	 */
@@ -59,7 +66,7 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param respect
 	 */
@@ -68,7 +75,7 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param useDefaultInitializers
 	 */
@@ -85,7 +92,7 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param policyRepository
@@ -111,13 +118,12 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param pip
 	 */
-	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PIP pip)
-			throws InitializationException {
+	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PIP pip) {
 		PolicyRepository policyRepository;
 
 		try {
@@ -139,12 +145,12 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param policyRepository
 	 * @param pip
 	 */
-	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip) throws InitializationException {
+	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip) {
 		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
 
 		try {
@@ -169,7 +175,7 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 */
@@ -198,7 +204,7 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param policyRepository
 	 */
@@ -227,7 +233,7 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @param pip
 	 */
@@ -294,11 +300,11 @@ public class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * @return The PDP (singleton).
 	 */
-	public static PDP getSimplePDP() throws InitializationException {
+	public static PDP getSimplePDP() {
 		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
 		PolicyRepository policyRepository;
 
@@ -341,6 +347,9 @@ public class SimplePDPFactory {
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 */
 	private static void runInitializers() {
 		for (Initializer initializer : initializers) {
 			initializer.run();

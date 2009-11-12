@@ -46,6 +46,6 @@ public interface TargetMatcher {
 	 * @throws SyntaxException
 	 * @throws ProcessingException
 	 */
-	public boolean match(RequestType req, TargetType target, RequestInformation requestInformation)
+	boolean match(RequestType req, TargetType target, RequestInformation requestInformation)
 			throws SyntaxException, ProcessingException, MissingAttributeException;
 }

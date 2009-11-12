@@ -33,9 +33,9 @@ public class DnsName {
 	private static final String DNS_NAME_PART_DELIMITER = "\\.";
 	private static final String PORT_RANGE_DELIMITER = ":";
 	private static final String AC = "[^!#\\$%&'()\\*\\+,/:;=\\?@\\[\\]\\s]"; // AC
-																				// =
-																				// allowed
-																				// characters
+	// =
+	// allowed
+	// characters
 	private static final String MATCHPATTERN = "^((" + AC + "+(\\." + AC + "+)*)|(\\*)|(\\*\\." + AC + "+(\\." + AC
 			+ "+)*))(:[\\d\\-]+)??$";
 	private PortRange portRange;
@@ -69,7 +69,12 @@ public class DnsName {
 	public String toString() {
 		StringBuilder dnsName = new StringBuilder();
 		for (int i = 0; i < dnsNameParts.length; i++) {
-			dnsName.append(i == 0 ? dnsNameParts[i] : "." + dnsNameParts[i]);
+			String dnsNamePart;
+			dnsNamePart = dnsNameParts[i];
+			if (i != 0) {
+				dnsNamePart = "." + dnsNamePart;
+			}
+			dnsName.append(dnsNamePart);
 		}
 		if (portRange != null) {
 			dnsName.append(PORT_RANGE_DELIMITER + portRange.toString());
@@ -84,8 +89,9 @@ public class DnsName {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj == null)
+		if (obj == null) {
 			return false;
+		}
 		return toString().equals(obj.toString());
 	}
 

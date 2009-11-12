@@ -23,9 +23,9 @@ import org.herasaf.xacml.core.SyntaxException;
  * TODO JAVADOC
  * 
  * The Name of this data type is http://www.w3.org/2001/XMLSchema#double.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#double"
+ * See: <a href="http://www.w3.org/TR/xmlschema-2/#double"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A> for further
- * information. target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A>
+ * information. target="_blank">http://www.w3.org/TR/xmlschema-2/#double</a>
  * </p>
  * 
  * @author Stefan Oberholzer

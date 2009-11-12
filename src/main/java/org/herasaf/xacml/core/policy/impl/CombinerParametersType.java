@@ -57,11 +57,11 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "CombinerParametersType", propOrder = { "combinerParameters" })
-@XmlSeeAlso( { RuleCombinerParametersType.class, PolicySetCombinerParametersType.class,
+@XmlSeeAlso({ RuleCombinerParametersType.class, PolicySetCombinerParametersType.class,
 		PolicyCombinerParametersType.class })
 public class CombinerParametersType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "CombinerParameter")
 	protected List<CombinerParameterType> combinerParameters;
 

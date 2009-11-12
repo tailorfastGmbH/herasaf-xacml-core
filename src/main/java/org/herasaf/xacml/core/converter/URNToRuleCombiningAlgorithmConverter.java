@@ -23,7 +23,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.NotInitializedException;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +60,7 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 	 * 
 	 * @param algorithms
 	 *            The map containing the mapping between URNs and
-	 *            {@link PolicyCombiningAlgorithm}s.
+	 *            policy combining algorithms.
 	 */
 	public static void setCombiningAlgorithms(Map<String, RuleCombiningAlgorithm> algorithms) {
 		// TODO is a concurrent hashmap really needed?
@@ -80,7 +79,7 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
 	 */
 	@Override
-	public String marshal(RuleCombiningAlgorithm combAlg) throws IllegalArgumentException {
+	public String marshal(RuleCombiningAlgorithm combAlg) {
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
@@ -98,7 +97,7 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
 	 */
 	@Override
-	public RuleCombiningAlgorithm unmarshal(String combAlgId) throws IllegalArgumentException {
+	public RuleCombiningAlgorithm unmarshal(String combAlgId) {
 		RuleCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);

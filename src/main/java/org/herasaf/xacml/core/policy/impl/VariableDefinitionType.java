@@ -66,7 +66,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlType(name = "VariableDefinitionType", propOrder = { "expression" })
 public class VariableDefinitionType implements Serializable, Variable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
 	protected JAXBElement<? extends Serializable> expression;
 	@XmlAttribute(name = "VariableId", required = true)

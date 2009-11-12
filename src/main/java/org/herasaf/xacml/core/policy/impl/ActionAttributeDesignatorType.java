@@ -62,7 +62,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlType(name = "ActionAttributeDesignatorType")
 public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 
 	/*
 	 * (non-Javadoc)

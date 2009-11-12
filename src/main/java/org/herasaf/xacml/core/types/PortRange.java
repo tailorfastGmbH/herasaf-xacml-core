@@ -41,8 +41,10 @@ package org.herasaf.xacml.core.types;
  */
 public class PortRange {
 	private static final String MATCHPATTERN = "(([1-9]\\d*)??\\-??([1-9]\\d*)??)??";
-	private int lowerValue = 1;
-	private int upperValue = 65535;
+	private static final int UPPER_BOUNDARY = 65535;
+	private static final int LOWER_BOUNDARY = 1;
+	private int lowerValue = LOWER_BOUNDARY;
+	private int upperValue = UPPER_BOUNDARY;
 
 	/**
 	 * TODO REVIEW
@@ -59,7 +61,7 @@ public class PortRange {
 		int position = portRange.indexOf("-");
 		if (position == -1) {
 			try {
-				lowerValue = upperValue = new Integer(portRange.substring(0, portRange.length()));
+				lowerValue = upperValue = Integer.valueOf(portRange.substring(0, portRange.length()));
 			} catch (Exception e) {
 				throw new IllegalArgumentException("No port range: " + portRange);
 			}
@@ -83,7 +85,7 @@ public class PortRange {
 		if (upperValue - lowerValue < 0) {
 			throw new IllegalArgumentException("No port range: " + portRange);
 		}
-		if (upperValue > 65535) {
+		if (upperValue > UPPER_BOUNDARY) {
 			throw new IllegalArgumentException("No port range: " + portRange);
 		}
 	}

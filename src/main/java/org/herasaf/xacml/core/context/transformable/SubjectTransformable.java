@@ -33,7 +33,7 @@ import org.herasaf.xacml.core.context.impl.SubjectType;
 public interface SubjectTransformable {
 
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 * 
 	 * Transforms the information contained in the Transformable to
 	 * <code>Collection</code> of <code>SubjectType</code> objects.
@@ -41,5 +41,5 @@ public interface SubjectTransformable {
 	 * @return <code>Collection</code> of <code>SubjectType</code> objects
 	 *         containing the Information of the Transformable
 	 */
-	public Collection<? extends SubjectType> transform();
+	Collection<? extends SubjectType> transform();
 }

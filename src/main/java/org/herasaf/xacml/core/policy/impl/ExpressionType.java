@@ -58,10 +58,10 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ExpressionType")
-@XmlSeeAlso( { AttributeSelectorType.class, ApplyType.class, FunctionType.class, VariableReferenceType.class,
+@XmlSeeAlso({ AttributeSelectorType.class, ApplyType.class, FunctionType.class, VariableReferenceType.class,
 		AttributeDesignatorType.class })
 public abstract class ExpressionType implements Serializable {
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 
 	/**
 	 * Executes the expression.

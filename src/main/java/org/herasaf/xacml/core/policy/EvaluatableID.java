@@ -34,5 +34,5 @@ public interface EvaluatableID {
 	 * 
 	 * @return The id of the {@link Evaluatable}.
 	 */
-	public String getId();
+	String getId();
 }

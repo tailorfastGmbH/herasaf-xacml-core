@@ -55,7 +55,7 @@ import org.xml.sax.InputSource;
  * @author Florian Huonder
  * @version 1.0
  */
-public class ResponseCtxFactory {
+public final class ResponseCtxFactory {
 	private static final ContextAndPolicy.JAXBProfile RESPONSECTX = ContextAndPolicy.JAXBProfile.RESPONSE_CTX;
 	private static ObjectFactory factory;
 
@@ -64,6 +64,15 @@ public class ResponseCtxFactory {
 	 */
 	static {
 		factory = new ObjectFactory();
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * This is a utility class and must not be instantiated.
+	 */
+	private ResponseCtxFactory() {
+
 	}
 
 	/**
@@ -368,7 +377,7 @@ public class ResponseCtxFactory {
 			statusDetail.getContent().addAll(missingAttributesJaxb);
 			resCtx.getResponse().getResults().get(0).getStatus().setStatusDetail(statusDetail);
 		}
-		if (requestInfo.getObligations().getObligations().size() > 0) {// Add
+		if (requestInfo.getObligations().getObligations().size() > 0) { // Add
 			// the
 			// Obligations
 			// to

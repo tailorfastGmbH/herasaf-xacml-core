@@ -41,7 +41,7 @@ public class RFC822NameMatchFunction implements Function {
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match";
 
 	/**
-	 * {@inheritDoc} <br>
+	 * {@inheritDoc}. <br>
 	 * <br>
 	 * Returns true if the first argument matches the second argument according
 	 * the specification on page 125 (A.3.14, special match functions) in <a

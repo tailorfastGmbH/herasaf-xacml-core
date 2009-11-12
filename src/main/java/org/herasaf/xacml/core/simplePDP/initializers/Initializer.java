@@ -25,8 +25,7 @@ package org.herasaf.xacml.core.simplePDP.initializers;
  */
 public interface Initializer {
 	/**
-	 * TODO JAVADOC
+	 * TODO JAVADOC.
 	 */
-	public void run();
-
+	void run();
 }

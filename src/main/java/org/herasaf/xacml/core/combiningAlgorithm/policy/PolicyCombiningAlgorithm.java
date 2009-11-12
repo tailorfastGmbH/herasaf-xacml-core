@@ -46,6 +46,6 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	 *            Contains the information that has to be kept for this request.
 	 * @return The decision of the evaluation of the request.
 	 */
-	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
+	DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			RequestInformation requestInfo);
 }

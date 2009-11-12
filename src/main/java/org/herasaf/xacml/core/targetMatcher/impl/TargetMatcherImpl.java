@@ -98,6 +98,17 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return true;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param subjects
+	 * @param request
+	 * @param reqInfo
+	 * @return
+	 * @throws ProcessingException
+	 * @throws SyntaxException
+	 * @throws MissingAttributeException
+	 */
 	private boolean subjectsMatch(SubjectsType subjects, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (subjects == null) {
@@ -122,6 +133,17 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param resources
+	 * @param request
+	 * @param reqInfo
+	 * @return
+	 * @throws ProcessingException
+	 * @throws SyntaxException
+	 * @throws MissingAttributeException
+	 */
 	private boolean resourcesMatch(ResourcesType resources, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (resources == null) {
@@ -147,6 +169,17 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param actions
+	 * @param request
+	 * @param reqInfo
+	 * @return
+	 * @throws ProcessingException
+	 * @throws SyntaxException
+	 * @throws MissingAttributeException
+	 */
 	private boolean actionMatch(ActionsType actions, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (actions == null) {
@@ -171,6 +204,17 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param environments
+	 * @param request
+	 * @param reqInfo
+	 * @return
+	 * @throws ProcessingException
+	 * @throws SyntaxException
+	 * @throws MissingAttributeException
+	 */
 	private boolean environmentMatch(EnvironmentsType environments, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (environments == null) {
@@ -196,6 +240,17 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return false;
 	}
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param matches
+	 * @param request
+	 * @param reqInfo
+	 * @return
+	 * @throws ProcessingException
+	 * @throws SyntaxException
+	 * @throws MissingAttributeException
+	 */
 	private boolean match(List<? extends Match> matches, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		for (int i = 0; i < matches.size(); i++) {

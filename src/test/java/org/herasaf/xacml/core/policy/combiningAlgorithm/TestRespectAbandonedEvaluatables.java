@@ -141,7 +141,7 @@ public class TestRespectAbandonedEvaluatables {
 	 * Removes the deployment from the {@link PDP}.
 	 */
 	@AfterMethod
-	public void cleanUp() {
+	public void cleanUp() throws Exception {
 		repo.undeploy(repo.getDeployment().get(0).getId());
 	}
 }
