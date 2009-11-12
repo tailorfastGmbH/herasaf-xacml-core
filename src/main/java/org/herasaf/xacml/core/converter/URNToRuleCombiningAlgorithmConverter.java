@@ -47,10 +47,8 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  * @version 1.0
  */
-public class URNToRuleCombiningAlgorithmConverter extends
-		XmlAdapter<String, RuleCombiningAlgorithm> {
-	private final Logger logger = LoggerFactory
-			.getLogger(URNToRuleCombiningAlgorithmConverter.class);
+public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, RuleCombiningAlgorithm> {
+	private final Logger logger = LoggerFactory.getLogger(URNToRuleCombiningAlgorithmConverter.class);
 	static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
 	/**
@@ -65,11 +63,13 @@ public class URNToRuleCombiningAlgorithmConverter extends
 	 *            The map containing the mapping between URNs and
 	 *            {@link PolicyCombiningAlgorithm}s.
 	 */
-	public static void setCombiningAlgorithms(
-			Map<String, RuleCombiningAlgorithm> algorithms) {
-		//TODO is a concurrent hashmap really needed?
-		combiningAlgorithms = new ConcurrentHashMap<String, RuleCombiningAlgorithm>(
-				algorithms); // ConcurrentHashMap because of concurrent access
+	public static void setCombiningAlgorithms(Map<String, RuleCombiningAlgorithm> algorithms) {
+		// TODO is a concurrent hashmap really needed?
+		combiningAlgorithms = new ConcurrentHashMap<String, RuleCombiningAlgorithm>(algorithms); // ConcurrentHashMap
+																									// because
+																									// of
+																									// concurrent
+																									// access
 		// possible
 	}
 
@@ -80,8 +80,7 @@ public class URNToRuleCombiningAlgorithmConverter extends
 	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
 	 */
 	@Override
-	public String marshal(RuleCombiningAlgorithm combAlg)
-			throws IllegalArgumentException {
+	public String marshal(RuleCombiningAlgorithm combAlg) throws IllegalArgumentException {
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
@@ -99,20 +98,17 @@ public class URNToRuleCombiningAlgorithmConverter extends
 	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
 	 */
 	@Override
-	public RuleCombiningAlgorithm unmarshal(String combAlgId)
-			throws IllegalArgumentException {
+	public RuleCombiningAlgorithm unmarshal(String combAlgId) throws IllegalArgumentException {
 		RuleCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);
 		} catch (NullPointerException e) {
-			logger
-					.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
+			logger.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
 			throw new NotInitializedException(e);
 		}
 		if (combAlg != null) {
 			return combAlg;
 		}
-		throw new IllegalArgumentException("Combining Algorithm " + combAlgId
-				+ " unknown.");
+		throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
 	}
 }

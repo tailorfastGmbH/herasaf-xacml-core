@@ -26,18 +26,18 @@ import org.herasaf.xacml.core.context.impl.SubjectType;
  * 
  * A SubjectTransformable contains the information to return a
  * <code>Collection</code> of <code>SubjectType</code> objects.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
 public interface SubjectTransformable {
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * Transforms the information contained in the Transformable to
 	 * <code>Collection</code> of <code>SubjectType</code> objects.
-	 *
+	 * 
 	 * @return <code>Collection</code> of <code>SubjectType</code> objects
 	 *         containing the Information of the Transformable
 	 */

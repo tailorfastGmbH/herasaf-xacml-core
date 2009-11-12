@@ -19,26 +19,28 @@ package org.herasaf.xacml.core.function;
 
 import java.io.Serializable;
 
-
 /**
  * TODO JAVADOC
  * 
- * The implementation of the XACML 2.0 function.
- * See: Appendix A.3 of the <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 105, for further information.
- *
+ * The implementation of the XACML 2.0 function. See: Appendix A.3 of the <a
+ * href
+ * ="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 105, for further information.
+ * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @version 1.0
  */
-public interface Function extends Serializable{
+public interface Function extends Serializable {
 
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * The handler that takes an unspecified amount of arguments to process.
-	 *
-	 * @param args The arguments needed to process the function.
+	 * 
+	 * @param args
+	 *            The arguments needed to process the function.
 	 * @return The result of the execution of the handler.
 	 * @throws FunctionProcessingException
 	 */

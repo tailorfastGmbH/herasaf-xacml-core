@@ -57,12 +57,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class RuleOrderedPermitOverridesAlgorithm extends
-		RuleOrderedCombiningAlgorithm {
+public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-permit-overrides";
-	private final Logger logger = LoggerFactory
-			.getLogger(RuleOrderedPermitOverridesAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(RuleOrderedPermitOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -82,8 +80,7 @@ public class RuleOrderedPermitOverridesAlgorithm extends
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> rules, RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(RequestType request, List<RuleType> rules, RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
@@ -100,21 +97,20 @@ public class RuleOrderedPermitOverridesAlgorithm extends
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
 			requestInfo.resetStatus();
-			
+
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
-			
-			DecisionType decision = this.evaluateRule(request, rule,
-					requestInfo);
-			
+
+			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());
 				logger.debug("Evaluation of {} was: {}", rule.getRuleId(), decision.toString());
 				MDC.remove(MDC_RULE_ID);
 			}
-			
+
 			switch (decision) {
 			case DENY:
 				atLeastOneDeny = true;

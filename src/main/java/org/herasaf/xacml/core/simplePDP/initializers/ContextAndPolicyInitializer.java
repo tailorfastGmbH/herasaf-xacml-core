@@ -40,27 +40,24 @@ public class ContextAndPolicyInitializer implements Initializer {
 	private static final String POLICY_PACKAGE = "org.herasaf.xacml.core.policy.impl";
 	private static final String CONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
 	private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyInitializer.class);
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public void run() {
-		ContextAndPolicy
-				.setRequestCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
-		ContextAndPolicy
-				.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
-		ContextAndPolicy
-				.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
-		
+		ContextAndPolicy.setRequestCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
+		ContextAndPolicy.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
+		ContextAndPolicy.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
+
 		logger.info("JAXB settings for context (request, response) and policy are initialized.");
 	}
-	
+
 	/**
 	 * TODO JAVADOC
 	 */
-	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath){
+	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath) {
 		ContextAndPolicyConfiguration config = new ContextAndPolicyConfiguration();
-		
+
 		try {
 			config.setContext(JAXBContext.newInstance(contextPath));
 		} catch (JAXBException e) {
@@ -71,7 +68,7 @@ public class ContextAndPolicyInitializer implements Initializer {
 		config.setValidateWriting(VALIDATE_WRITING);
 		config.setValidateParsing(VALIDATE);
 		config.setFragment(FRAGMENT);
-		
+
 		return config;
 	}
 }

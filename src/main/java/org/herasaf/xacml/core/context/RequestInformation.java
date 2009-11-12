@@ -31,11 +31,12 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.policy.impl.Variable;
 
 /**
- * TODO JAVADOC extend documentation a lot. This is one of the central classes of the implementation.
+ * TODO JAVADOC extend documentation a lot. This is one of the central classes
+ * of the implementation.
  * 
  * This data type is a collection which contains all local-{@link Evaluatable}s
  * and all remote-{@link Evaluatable}s.
- *
+ * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
@@ -46,7 +47,7 @@ public class RequestInformation {
 	private boolean targetMatched;
 	private Map<String, Variable> variableDefinitions;
 	private ObligationsType obligations;
-	
+
 	private static ObjectFactory objectFactory;
 
 	/**
@@ -59,7 +60,9 @@ public class RequestInformation {
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @param pip The Attribute finder to place into the {@link RequestInformation}.
+	 * @param pip
+	 *            The Attribute finder to place into the
+	 *            {@link RequestInformation}.
 	 */
 	public RequestInformation(PIP pip) {
 		this.pip = pip;
@@ -71,7 +74,7 @@ public class RequestInformation {
 
 	/**
 	 * Returns the {@link StatusCode} set in this {@link RequestInformation}.
-	 *
+	 * 
 	 * @return The {@link StatusCode} of this {@link RequestInformation}.
 	 */
 	public StatusCode getStatusCode() {
@@ -89,7 +92,7 @@ public class RequestInformation {
 	 * <li>{@link StatusCode#PROCESSING_ERROR}</li>
 	 * <li>{@link StatusCode#OK}</li>
 	 * </ol>
-	 *
+	 * 
 	 * @param code
 	 *            The prospective new {@link StatusCode}.
 	 */
@@ -106,8 +109,7 @@ public class RequestInformation {
 			this.statusCode = code;
 			return;
 		}
-		if (statusCode == StatusCode.PROCESSING_ERROR
-				&& code == StatusCode.MISSING_ATTRIBUTE) {
+		if (statusCode == StatusCode.PROCESSING_ERROR && code == StatusCode.MISSING_ATTRIBUTE) {
 			this.statusCode = code;
 			return;
 		}
@@ -120,7 +122,7 @@ public class RequestInformation {
 	/**
 	 * Sets the strongest {@link StatusCode} from the {@link List} into this
 	 * {@link RequestInformation}.
-	 *
+	 * 
 	 * @param statusCodes
 	 *            The {@link List} of {@link StatusCode}s.
 	 */
@@ -140,8 +142,9 @@ public class RequestInformation {
 	}
 
 	/**
-	 * Returns a {@link List} containing the {@link MissingAttributeDetailType}s.
-	 *
+	 * Returns a {@link List} containing the {@link MissingAttributeDetailType}
+	 * s.
+	 * 
 	 * @return The {@link List} of {@link MissingAttributeDetailType}s.
 	 */
 	public List<MissingAttributeDetailType> getMissingAttributes() {
@@ -150,19 +153,18 @@ public class RequestInformation {
 
 	/**
 	 * Sets the {@link MissingAttributeDetailType}s.
-	 *
+	 * 
 	 * @param missingAttributes
 	 *            The {@link List} of {@link MissingAttributeDetailType}s.
 	 */
-	public void setMissingAttributes(
-			List<MissingAttributeDetailType> missingAttributes) {
+	public void setMissingAttributes(List<MissingAttributeDetailType> missingAttributes) {
 		this.missingAttributes = missingAttributes;
 	}
 
 	/**
 	 * There are some combining algorithms which must be aware of the fact if an
 	 * indeterminate has its source in a function or a target-match.
-	 *
+	 * 
 	 * @return True if the target-match was successful.
 	 */
 	public boolean isTargetMatched() {
@@ -171,7 +173,7 @@ public class RequestInformation {
 
 	/**
 	 * Sets if the target-match was successful.
-	 *
+	 * 
 	 * @param targetMatched
 	 */
 	public void setTargetMatched(boolean targetMatched) {
@@ -181,7 +183,7 @@ public class RequestInformation {
 	/**
 	 * Adds a {@link MissingAttributeDetailType} to the {@link List} of
 	 * {@link MissingAttributeDetailType}.
-	 *
+	 * 
 	 * @param missingAttribute
 	 *            The {@link MissingAttributeDetailType} to add.
 	 */
@@ -193,7 +195,7 @@ public class RequestInformation {
 	/**
 	 * Gets the variable Definitions actually appended to the
 	 * requestInformation.
-	 *
+	 * 
 	 * @return a Map with the VariableDefinitions. The key value is the
 	 *         identifier of the variable.
 	 */
@@ -203,7 +205,7 @@ public class RequestInformation {
 
 	/**
 	 * Sets the variable definitions to the RequestInformation.
-	 *
+	 * 
 	 * @param variableDefinitions
 	 *            The Map with the Variabledefinitions to set. The key value is
 	 *            the identifier of the variable
@@ -214,45 +216,48 @@ public class RequestInformation {
 
 	/**
 	 * Gets the PIP for this Request.
-	 *
+	 * 
 	 * @return Returns the PIP
 	 */
 	public PIP getPIP() {
 		return pip;
 	}
-	
+
 	/**
-	 * Removes all Obligations from the list that to not match the {@link EffectType} provided.
+	 * Removes all Obligations from the list that to not match the
+	 * {@link EffectType} provided.
 	 * 
-	 * @param effect The Obligation's {@link EffectType} that should be kept.
+	 * @param effect
+	 *            The Obligation's {@link EffectType} that should be kept.
 	 */
-	
-	public void addObligations(final List<ObligationType> obligations, final EffectType effect){
+
+	public void addObligations(final List<ObligationType> obligations, final EffectType effect) {
 		List<ObligationType> obls = new ArrayList<ObligationType>();
-		
-		for(int i = 0; i < obligations.size(); i++){
+
+		for (int i = 0; i < obligations.size(); i++) {
 			ObligationType obl = obligations.get(i);
-			if(obl.getFulfillOn().equals(effect)){
+			if (obl.getFulfillOn().equals(effect)) {
 				obls.add(obl);
 			}
 		}
-		
+
 		this.obligations.getObligations().addAll(obls);
 	}
-	
-	public void clearObligations(){
+
+	public void clearObligations() {
 		this.obligations.getObligations().clear();
 	}
-	
+
 	/**
-	 * Returns the {@link ObligationsType} contained in this {@link RequestInformation} object.
+	 * Returns the {@link ObligationsType} contained in this
+	 * {@link RequestInformation} object.
 	 * 
 	 * @return the {@link ObligationsType}.
 	 */
-	public ObligationsType getObligations(){
+	public ObligationsType getObligations() {
 		return obligations;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

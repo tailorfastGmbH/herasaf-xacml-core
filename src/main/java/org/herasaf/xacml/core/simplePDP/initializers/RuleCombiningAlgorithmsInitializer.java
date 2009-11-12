@@ -35,18 +35,15 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  * 
  */
-public class RuleCombiningAlgorithmsInitializer extends
-		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
-	private static Logger logger = LoggerFactory
-	.getLogger(RuleCombiningAlgorithmsInitializer.class);
+public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractRuleCombiningAlgorithm> {
+	private static Logger logger = LoggerFactory.getLogger(RuleCombiningAlgorithmsInitializer.class);
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
 	private final static Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
 	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
 
 	@Override
-	protected void furtherInitializations(
-			List<AbstractRuleCombiningAlgorithm> instances) {
+	protected void furtherInitializations(List<AbstractRuleCombiningAlgorithm> instances) {
 		for (AbstractRuleCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
 		}
@@ -80,8 +77,7 @@ public class RuleCombiningAlgorithmsInitializer extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void setInstancesIntoConverter(
-			Map<String, AbstractRuleCombiningAlgorithm> instancesMap) {
+	protected void setInstancesIntoConverter(Map<String, AbstractRuleCombiningAlgorithm> instancesMap) {
 		Map<String, RuleCombiningAlgorithm> instances = new HashMap<String, RuleCombiningAlgorithm>();
 		instances.putAll(instancesMap);
 		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(instances);

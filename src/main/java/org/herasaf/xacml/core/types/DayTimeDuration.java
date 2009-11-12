@@ -28,17 +28,16 @@ import javax.xml.datatype.Duration;
  * "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see Page 105 of the
  * XACML 2.0Specification) except for the following deviations::
  * <ul>
- * <li> The calculation of the dayTimeDuration in units of seconds is:
- * <code>( ( ('value of the day component' * 24) + ('value of the hour component') * 60) + ('value of the minute component')*60) + ('value of the second component')</code>
+ * <li>The calculation of the dayTimeDuration in units of seconds is: <code>( ( ('value of the day component' * 24) + ('value of the hour component') * 60) + ('value of the minute component')*60) + ('value of the second component')</code>
  * This seems to be the intent of the XACML 2.0 specification.</li>
  * <li>The duration must be a valid http://www.w3.org/2001/XMLSchema#duration
  * data type (See: <a
- * href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration">http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration</a>
- * for further information.) Therefore the data type accepts a shortened range
- * of values.</li>
+ * href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration"
+ * >http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration</a> for further
+ * information.) Therefore the data type accepts a shortened range of values.</li>
  * </ul>
  * 
- * @author Stefan Oberholzer 
+ * @author Stefan Oberholzer
  * @version 1.0
  * 
  */
@@ -61,8 +60,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	public DayTimeDuration(String duration) {
 
 		if (!duration.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException("The format of the argument: \""
-					+ duration + "\" isn't correct");
+			throw new IllegalArgumentException("The format of the argument: \"" + duration + "\" isn't correct");
 		}
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();

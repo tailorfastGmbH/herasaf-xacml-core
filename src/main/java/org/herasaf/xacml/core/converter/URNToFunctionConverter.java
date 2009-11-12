@@ -47,8 +47,7 @@ import org.slf4j.LoggerFactory;
  * @see Function
  */
 public class URNToFunctionConverter extends XmlAdapter<String, Function> {
-	private final Logger logger = LoggerFactory
-			.getLogger(URNToFunctionConverter.class);
+	private final Logger logger = LoggerFactory.getLogger(URNToFunctionConverter.class);
 
 	/**
 	 * TODO JAVADOC
@@ -68,10 +67,13 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 *            The map containing the mapping between URNs and functions.
 	 */
 	public static void setFunctions(Map<String, Function> functions) {
-		//TODO is a concurrent hashmap really needed?
-		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(
-				functions); // ConcurrentHashMap because of concurrent access
-							// possible
+		// TODO is a concurrent hashmap really needed?
+		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(functions); // ConcurrentHashMap
+																								// because
+																								// of
+																								// concurrent
+																								// access
+		// possible
 	}
 
 	/**
@@ -93,8 +95,7 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Function unmarshal(String functionId)
-			throws IllegalArgumentException {
+	public Function unmarshal(String functionId) throws IllegalArgumentException {
 		Function func;
 		try {
 			func = functions.get(functionId);
@@ -105,7 +106,6 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 		if (func != null) {
 			return func;
 		}
-		throw new IllegalArgumentException("Function " + functionId
-				+ " unknown.");
+		throw new IllegalArgumentException("Function " + functionId + " unknown.");
 	}
 }

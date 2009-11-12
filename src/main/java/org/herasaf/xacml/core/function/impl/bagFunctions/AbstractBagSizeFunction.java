@@ -29,15 +29,15 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * functions logic.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 116, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
- *
+ * 
  * @param <T>
  *            Implemented Type.
  */
@@ -60,11 +60,9 @@ public abstract class AbstractBagSizeFunction<T> implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
-			return new BigInteger(Integer.valueOf(((List<T>) args[0]).size())
-					.toString());
+			return new BigInteger(Integer.valueOf(((List<T>) args[0]).size()).toString());
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(e);
 		} catch (Exception e) {

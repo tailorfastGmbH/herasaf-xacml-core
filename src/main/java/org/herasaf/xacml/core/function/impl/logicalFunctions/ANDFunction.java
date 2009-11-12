@@ -22,11 +22,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:and function.
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 109, for further information.
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
@@ -35,8 +35,8 @@ public class ANDFunction implements Function {
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:and";
 
 	/**
-	 * Takes at least one {@link Boolean} value returns <code>true</code> if
-	 * all of them are <code>true</code>. Otherwise false is returnes.
+	 * Takes at least one {@link Boolean} value returns <code>true</code> if all
+	 * of them are <code>true</code>. Otherwise false is returnes.
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
@@ -58,7 +58,7 @@ public class ANDFunction implements Function {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

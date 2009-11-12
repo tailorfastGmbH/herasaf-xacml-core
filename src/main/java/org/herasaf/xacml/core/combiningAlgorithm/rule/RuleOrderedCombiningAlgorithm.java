@@ -30,35 +30,31 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
 /**
  * TODO JAVADOC
  * 
- * Abstract class for {@link AbstractRuleCombiningAlgorithm}s that evalute the rules
- * ordered.
- *
+ * Abstract class for {@link AbstractRuleCombiningAlgorithm}s that evalute the
+ * rules ordered.
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
- *
+ * 
  */
-public abstract class RuleOrderedCombiningAlgorithm extends
-		AbstractRuleCombiningAlgorithm {
+public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombiningAlgorithm {
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      org.herasaf.core.policy.impl.Evaluatable,
-	 *      org.herasaf.core.dataTypes.RequestInformation)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf
+	 * .core.context.impl.RequestType, org.herasaf.core.policy.impl.Evaluatable,
+	 * org.herasaf.core.dataTypes.RequestInformation)
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals,
-			RequestInformation requestInfo) {
-		DecisionType decision = matchTarget(request, evals.getTarget(),
-				requestInfo);
+	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
+		DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
 		}
 		try {
-			requestInfo.setVariableDefinitions(((PolicyType) evals)
-					.getVariables());
-			DecisionType dec = this.evaluateRuleList(request,
-					((PolicyType) evals).getOrderedRules(), requestInfo);
+			requestInfo.setVariableDefinitions(((PolicyType) evals).getVariables());
+			DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getOrderedRules(), requestInfo);
 			/*
 			 * If the decision was made, the evaluation process might have set
 			 * the targetMatched variable to false. so it has to be sure that
@@ -80,12 +76,13 @@ public abstract class RuleOrderedCombiningAlgorithm extends
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List)
+	 * 
+	 * @see
+	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
+	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public abstract DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> possiblePolicies, RequestInformation requestInfos);
+	public abstract DecisionType evaluateRuleList(RequestType request, List<RuleType> possiblePolicies,
+			RequestInformation requestInfos);
 
 }

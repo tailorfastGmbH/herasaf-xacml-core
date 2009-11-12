@@ -52,10 +52,8 @@ public class Time implements Comparable<Time> {
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
 
-			if (lexicalRepresentation
-					.matches("\\d\\d:\\d\\d:\\d\\d(\\.\\d(\\d)?(\\d)?)?([-+]\\d\\d:\\d\\d)?")) {
-				this.xmlCalendar = factory
-						.newXMLGregorianCalendar(lexicalRepresentation);
+			if (lexicalRepresentation.matches("\\d\\d:\\d\\d:\\d\\d(\\.\\d(\\d)?(\\d)?)?([-+]\\d\\d:\\d\\d)?")) {
+				this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -67,8 +65,8 @@ public class Time implements Comparable<Time> {
 	/**
 	 * TODO REVIEW
 	 * 
-	 * Returns the {@link XMLGregorianCalendar} instance of this
-	 * {@link Time} object.
+	 * Returns the {@link XMLGregorianCalendar} instance of this {@link Time}
+	 * object.
 	 * 
 	 * @return The {@link XMLGregorianCalendar} instance.
 	 */

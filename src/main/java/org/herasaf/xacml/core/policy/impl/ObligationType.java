@@ -152,16 +152,16 @@ public class ObligationType implements Serializable {
 	public void setFulfillOn(EffectType value) {
 		this.fulfillOn = value;
 	}
-	
-	public String toString(){
-    	StringBuilder val = new StringBuilder("ObligationType[attributeAssignment=");
-    	val.append(attributeAssignments);
-    	val.append(", obligationId=");
-    	val.append(obligationId);
-    	val.append(", fulfillOn=");
-    	val.append(fulfillOn);
-    	val.append("]");
- 
-    	return val.toString();
-    }
+
+	public String toString() {
+		StringBuilder val = new StringBuilder("ObligationType[attributeAssignment=");
+		val.append(attributeAssignments);
+		val.append(", obligationId=");
+		val.append(obligationId);
+		val.append(", fulfillOn=");
+		val.append(fulfillOn);
+		val.append("]");
+
+		return val.toString();
+	}
 }

@@ -26,7 +26,7 @@ import org.herasaf.xacml.core.context.impl.ResourceType;
  * 
  * A ResourceTransformable contains the information to return a
  * <code>Collection</code> of <code>ResourceType</code> objects.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
@@ -37,7 +37,7 @@ public interface ResourceTransformable {
 	 * 
 	 * Transforms the information contained in the Transformable to
 	 * <code>Collection</code> of <code>ResourceType</code> objects.
-	 *
+	 * 
 	 * @return <code>Collection</code> of <code>ResourceType</code> objects
 	 *         containing the Information of the Transformable
 	 */

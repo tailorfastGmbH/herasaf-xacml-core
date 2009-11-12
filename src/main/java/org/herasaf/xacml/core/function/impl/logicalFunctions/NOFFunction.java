@@ -25,11 +25,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:n-of. See:
- * Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 109, for further information.
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
@@ -39,8 +39,8 @@ public class NOFFunction implements Function {
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:n-of";
 
 	/**
-	 * The first argument is a {@link BigInteger}, the second argument should
-	 * be a {@link List} of boolean values. The first argument specifies the
+	 * The first argument is a {@link BigInteger}, the second argument should be
+	 * a {@link List} of boolean values. The first argument specifies the
 	 * minimum amount of true values that should be in the list. if the list is
 	 * shorter then than minimum. value, a {@link FunctionProcessingException}
 	 * is thrown. If the amount of true values is reached, true is returned,
@@ -51,8 +51,7 @@ public class NOFFunction implements Function {
 		int handledArrayFields = 1;
 		try {
 			if (args.length < 1) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 
 			minOccurence = (int) ((BigInteger) args[0]).longValue();
@@ -87,6 +86,7 @@ public class NOFFunction implements Function {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

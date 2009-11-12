@@ -57,12 +57,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class PolicyPermitOverridesAlgorithm extends
-		PolicyUnorderedCombiningAlgorithm {
+public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:permit-overrides";
-	private final Logger logger = LoggerFactory
-			.getLogger(PolicyPermitOverridesAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(PolicyPermitOverridesAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -72,8 +70,8 @@ public class PolicyPermitOverridesAlgorithm extends
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
+			RequestInformation requestInfo) {
 		boolean atLeastOneError = false;
 		boolean atLeastOneDeny = false;
 		boolean atLeastOnePermit = false;
@@ -88,8 +86,7 @@ public class PolicyPermitOverridesAlgorithm extends
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 
-			if (atLeastOnePermit && respectAbandonedEvaluatables
-					&& !eval.hasObligations()) {
+			if (atLeastOnePermit && respectAbandonedEvaluatables && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (decisionPermit == true) and
 				 * the abandoned Obligations must be taken into account
@@ -107,30 +104,22 @@ public class PolicyPermitOverridesAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Starting evaluation of: {}", eval.getId()
-							.getId());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId().getId());
 				}
 
-				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfo);
+				decision = eval.getCombiningAlg().evaluate(request, eval, requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Evaluation of {} was: {}", eval.getId()
-							.getId(), decision.toString());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
 					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
-				if (decision == DecisionType.PERMIT
-						|| decision == DecisionType.DENY) {
-					obligationsOfApplicableEvals.addAll(eval
-							.getContainedObligations(EffectType
-									.fromValue(decision.toString())));
-					obligationsOfApplicableEvals.addAll(requestInfo
-							.getObligations().getObligations());
+				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+					obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision
+							.toString())));
+					obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*
@@ -146,8 +135,7 @@ public class PolicyPermitOverridesAlgorithm extends
 			case PERMIT:
 				if (!respectAbandonedEvaluatables) {
 					requestInfo.clearObligations();
-					requestInfo.addObligations(obligationsOfApplicableEvals,
-							EffectType.PERMIT);
+					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 					/*
 					 * If the result is permit, the statuscode is always ok.
 					 */
@@ -185,14 +173,12 @@ public class PolicyPermitOverridesAlgorithm extends
 			 * If the result is permit, the statuscode is always ok.
 			 */
 			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals,
-					EffectType.PERMIT);
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 			return DecisionType.PERMIT;
 		} else if (atLeastOneDeny) {
 			// The obligationsOfApplicableEvals may not be revised because it
 			// can only contain DENY-Obligations.
-			requestInfo.addObligations(obligationsOfApplicableEvals,
-					EffectType.DENY);
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 			requestInfo.setMissingAttributes(missingAttributes);
 			requestInfo.resetStatus();
 			return DecisionType.DENY;

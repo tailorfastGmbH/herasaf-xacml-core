@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-
 /**
  * TODO JAVADOC
  * 
@@ -29,11 +28,11 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String>{
-	
+public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
+
 	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
-	
+
 	/** Serial version UID. */
 	private static final long serialVersionUID = 2908910266915235140L;
 

@@ -21,11 +21,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 
 public class EvaluatableIDImpl implements EvaluatableID {
 	private String id;
-	
-	public EvaluatableIDImpl(String id){
+
+	public EvaluatableIDImpl(String id) {
 		this.id = id;
 	}
-	
+
 	public String getId() {
 		return id;
 	}
@@ -34,16 +34,17 @@ public class EvaluatableIDImpl implements EvaluatableID {
 	public String toString() {
 		return id;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) return false;
-		if(obj instanceof EvaluatableID){
-			return ((EvaluatableID)obj).getId().equals(id);
+		if (obj == null)
+			return false;
+		if (obj instanceof EvaluatableID) {
+			return ((EvaluatableID) obj).getId().equals(id);
 		}
 		return false;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return id.hashCode();

@@ -22,7 +22,6 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
@@ -33,11 +32,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ResponseType complex type.
+ * <p>
+ * Java class for ResponseType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ResponseType">
@@ -51,51 +52,50 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 71, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 71, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResponseType", propOrder = {
-    "results"
-})
-public class ResponseType
-    implements Serializable
-{
+@XmlType(name = "ResponseType", propOrder = { "results" })
+public class ResponseType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "Result", required = true)
-    protected List<ResultType> results;
+	private final static long serialVersionUID = 632768732L;
+	@XmlElement(name = "Result", required = true)
+	protected List<ResultType> results;
 
-    /**
-     * Gets the value of the results property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the results property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getResults().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ResultType }
-     * 
-     * 
-     */
-    public List<ResultType> getResults() {
-        if (results == null) {
-            results = new ArrayList<ResultType>();
-        }
-        return this.results;
-    }
+	/**
+	 * Gets the value of the results property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the results property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getResults().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link ResultType }
+	 * 
+	 * 
+	 */
+	public List<ResultType> getResults() {
+		if (results == null) {
+			results = new ArrayList<ResultType>();
+		}
+		return this.results;
+	}
 
 }

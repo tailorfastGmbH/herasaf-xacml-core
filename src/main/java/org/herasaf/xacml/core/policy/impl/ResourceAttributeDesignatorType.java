@@ -36,11 +36,11 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 /**
  * <p>
  * Java class for ResourceAttributeDesignatorType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;ResourceAttributeDesignatorType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -49,10 +49,12 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 62, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 62, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
@@ -65,14 +67,14 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 
 	/*
 	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.Map)
+	 * 
+	 * @see
+	 * org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf
+	 * .core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo)
-			throws ExpressionProcessingException, MissingAttributeException, SyntaxException {
+	public Object handle(RequestType request, RequestInformation reqInfo) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
 		// A RequestType is not thread safe, because of this you can iterate
@@ -81,8 +83,7 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		for (ResourceType res : resources) {
 			for (AttributeType attr : res.getAttributes()) {
 				if (attributeId.equals(attr.getAttributeId())
-						&& dataType.toString().equals(
-								attr.getDataType().toString())) {
+						&& dataType.toString().equals(attr.getDataType().toString())) {
 					if (issuer != null) {
 						if (issuer.equals(attr.getIssuer())) {
 							addAndConvertAttrValue(returnValues, attr.getAttributeValues());
@@ -96,15 +97,14 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		/*
 		 * If no Attribute could be found, the attribute has to be requested
 		 * from a Policy Information Point.
-		 *
+		 * 
 		 * See: the OASIS eXtensible Access Control Markup Langugage (XACML)
 		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP()
-					.requestResourceAttributes(request, attributeId, dataType.toString(),
-							issuer);
+			List<AttributeValueType> attrValues = reqInfo.getPIP().requestResourceAttributes(request, attributeId,
+					dataType.toString(), issuer);
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {

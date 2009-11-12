@@ -37,34 +37,37 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  * A Policy Decision Point can handle only one resource per {@link RequestType}.
  * The context handler is responsible for splitting up a {@link RequestType}
  * that contains multiple resources into many {@link RequestType}s. <br>
- * See: <a href="See: <a href="http://docs.oasis-open.org/xacml/2.0/access_control-xacml-2.0-mult-profile-spec-os.pdf"
- * >Multiple resource profile of XACML v2.0, 1 February 2005</a> for further
- * information.
+ * See: <a
+ * href="See: <a href="http://docs.oasis-open.org/xacml/2.0/access_control
+ * -xacml-2.0-mult-profile-spec-os.pdf" >Multiple resource profile of XACML
+ * v2.0, 1 February 2005</a> for further information.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public interface PDP {
 	/**
-	 * TODO REVIEW 
+	 * TODO REVIEW
 	 * 
 	 * The {@link #evaluate(RequestCtx)} method is responsible for evaluating
 	 * XACML conform requests. These requests are provided within a
-	 * {@link RequestCtx} object. When the evaluation has finished a {@link ResponseCtx} is
-	 * created and returned to the requester.
+	 * {@link RequestCtx} object. When the evaluation has finished a
+	 * {@link ResponseCtx} is created and returned to the requester.
 	 * 
-	 * @param request The {@link RequestCtx} that shall be evaluated.
+	 * @param request
+	 *            The {@link RequestCtx} that shall be evaluated.
 	 * @return The {@link ResponseCtx} containing the result of the evaluation.
 	 */
 	public ResponseCtx evaluate(RequestCtx request);
 
 	/**
 	 * TODO JAVDOC
+	 * 
 	 * @return The {@link PolicyRepository} attached to this {@link PDP}.
 	 */
 	public PolicyRepository getPolicyRepository();
 
 	public PIP getPIP();
-	
+
 	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm();
 }

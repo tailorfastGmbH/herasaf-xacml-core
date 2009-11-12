@@ -34,8 +34,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * DatatypeFactory isn't correct and allows 31Days for every Month.
  * </p>
  * 
- * @author Stefan Oberholzer 
- * @author Florian Huonder 
+ * @author Stefan Oberholzer
+ * @author Florian Huonder
  * @version 1.0
  */
 public class Date implements Comparable<Date> {
@@ -52,13 +52,12 @@ public class Date implements Comparable<Date> {
 	 */
 	public Date(String lexicalRepresentation) {
 		if (!lexicalRepresentation.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException("The format of the argument: \""
-					+ lexicalRepresentation + "\" isn't correct");
+			throw new IllegalArgumentException("The format of the argument: \"" + lexicalRepresentation
+					+ "\" isn't correct");
 		}
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
-			this.xmlCalendar = factory
-					.newXMLGregorianCalendar(lexicalRepresentation);
+			this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
 		} catch (DatatypeConfigurationException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -136,11 +135,9 @@ public class Date implements Comparable<Date> {
 	 */
 	public void subtract(YearMonthDuration duration) {
 		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration()
-					.toString().substring(1)).getDuration());
+			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration().toString().substring(1)).getDuration());
 		} else {
-			this.xmlCalendar.add(new YearMonthDuration("-"
-					+ duration.getDuration().toString()).getDuration());
+			this.xmlCalendar.add(new YearMonthDuration("-" + duration.getDuration().toString()).getDuration());
 		}
 	}
 }

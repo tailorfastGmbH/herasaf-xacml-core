@@ -17,13 +17,12 @@
 
 package org.herasaf.xacml.core.policy;
 
-
 /**
  * TODO JAVADOC
  * 
- * The {@link EvaluatableID} represents the id of an {@link Evaluatable}.
- * It is used for a cleaner API.
- *
+ * The {@link EvaluatableID} represents the id of an {@link Evaluatable}. It is
+ * used for a cleaner API.
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */

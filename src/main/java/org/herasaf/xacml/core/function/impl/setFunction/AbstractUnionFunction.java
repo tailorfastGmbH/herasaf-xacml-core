@@ -25,37 +25,43 @@ import java.util.Set;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
-/** <p>The implementation of the urn:oasis:names:tc:xacml:1.0:function:<u>type</u>-union function.</p>
-* <p>See: Apendix A.3 of the <a
-* href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
-* OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
-* 2006</a> page 105, for further information.</p>
-*
-* @author Stefan Oberholzer 
-* @version 1.0
-*/
+/**
+ * <p>
+ * The implementation of the
+ * urn:oasis:names:tc:xacml:1.0:function:<u>type</u>-union function.
+ * </p>
+ * <p>
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 105, for further information.
+ * </p>
+ * 
+ * @author Stefan Oberholzer
+ * @version 1.0
+ */
 public abstract class AbstractUnionFunction<T> implements Function {
 	private static final long serialVersionUID = -367894928512846701L;
 
 	/**
-	 * {@inheritDoc}
-	 * <br><br>
+	 * {@inheritDoc} <br>
+	 * <br>
 	 * Returns a bag containing all elements from the first and the second bag.
 	 */
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if(args.length != 2){
+			if (args.length != 2) {
 				throw new FunctionProcessingException("Invalid number of parameters.");
 			}
-			Set<T> arg0 = new HashSet<T>((List<T>)args[0]);
-			arg0.addAll((List<T>)args[1]);
+			Set<T> arg0 = new HashSet<T>((List<T>) args[0]);
+			arg0.addAll((List<T>) args[1]);
 			return new ArrayList<T>(arg0);
-		} catch (ClassCastException e){
+		} catch (ClassCastException e) {
 			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
-		} catch (FunctionProcessingException e){
+		} catch (FunctionProcessingException e) {
 			throw e;
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}

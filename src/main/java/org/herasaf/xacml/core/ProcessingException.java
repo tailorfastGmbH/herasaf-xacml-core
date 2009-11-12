@@ -68,8 +68,8 @@ public abstract class ProcessingException extends Exception {
 	 * 
 	 * @param cause
 	 *            The cause (which is saved for later retrieval by the
-	 *            {@link #getCause()} method). (A null value is permitted, and indicates
-	 *            that the cause is nonexistent or unknown.)
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public ProcessingException(Throwable cause) {
 		super(cause);

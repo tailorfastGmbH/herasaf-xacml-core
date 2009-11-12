@@ -21,27 +21,27 @@ package org.herasaf.xacml.core.types;
  * TODO JAVADOC
  * 
  * The Name of this datatype is http://www.w3.org/2001/XMLSchema#hexBinary.<br>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
  * 
- * @author Florian Huonder 
+ * @author Florian Huonder
  * @version 1.0
  */
 public class HexBinary {
 	private byte[] value;
 
 	/**
-	 * Creates a new {@link HexBinary} from the given {@link String}-representation.
+	 * Creates a new {@link HexBinary} from the given {@link String}
+	 * -representation.
 	 * 
 	 * @param value
 	 *            The {@link String} to create the {@link HexBinary} from.
 	 */
 	public HexBinary(String value) {
 		if ((value.length() % 2) != 0) {
-			throw new IllegalArgumentException(
-					"A HexBinary string must have even length.");
+			throw new IllegalArgumentException("A HexBinary string must have even length.");
 		}
 		byte[] result = new byte[value.length() / 2];
 		int j = 0;

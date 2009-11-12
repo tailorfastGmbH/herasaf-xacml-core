@@ -24,11 +24,11 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
  * When a request doesn't contain an attribute, the PDP has to call the PIP for
- * the information of this attribute. An PIP implementation is
- * responsible to resolve Attributes not included in the request. In the
- * standard XACML dataflow, this means, that the PIP is asked for the information.
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * the information of this attribute. An PIP implementation is responsible to
+ * resolve Attributes not included in the request. In the standard XACML
+ * dataflow, this means, that the PIP is asked for the information. See: <a
+ * href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 78, chapter attribute retrieval for further information.
  * 
@@ -42,77 +42,76 @@ public interface PIP {
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
 	 * 
-	 * @param request -
-	 *            The Request to append
-	 * @param attributeId -
-	 *            The AttributeID of the requested AttributeValues
-	 * @param dataType -
-	 *            The DataType of the requested AttributeValues
-	 * @param issuer -
-	 *            The Issuer of the requested AttributeValues
-	 * @param subjectCategory -
-	 *            The SubjectCategory of the requestedValues
+	 * @param request
+	 *            - The Request to append
+	 * @param attributeId
+	 *            - The AttributeID of the requested AttributeValues
+	 * @param dataType
+	 *            - The DataType of the requested AttributeValues
+	 * @param issuer
+	 *            - The Issuer of the requested AttributeValues
+	 * @param subjectCategory
+	 *            - The SubjectCategory of the requestedValues
 	 * @return The found AttributeValues. If no AttributeValues could be found
 	 *         or an error occurred, an empty list is returned.
 	 */
-	List<AttributeValueType> requestSubjectAttributes(RequestType request,
-			String attributeId, String dataType, String issuer,
-			String subjectCategory);
+	List<AttributeValueType> requestSubjectAttributes(RequestType request, String attributeId, String dataType,
+			String issuer, String subjectCategory);
 
 	/**
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
 	 * 
-	 * @param request -
-	 *            The Request to append
-	 * @param attributeId -
-	 *            The AttributeID of the requested AttributeValues
-	 * @param dataType -
-	 *            The DataType of the requested AttributeValues
-	 * @param issuer -
-	 *            The Issuer of the requested AttributeValues
+	 * @param request
+	 *            - The Request to append
+	 * @param attributeId
+	 *            - The AttributeID of the requested AttributeValues
+	 * @param dataType
+	 *            - The DataType of the requested AttributeValues
+	 * @param issuer
+	 *            - The Issuer of the requested AttributeValues
 	 * @return The found AttributeValues. If no AttributeValues could be found
 	 *         or an error occurred, an empty list is returned.
 	 */
-	List<AttributeValueType> requestResourceAttributes(RequestType request,
-			String attributeId, String dataType, String issuer);
+	List<AttributeValueType> requestResourceAttributes(RequestType request, String attributeId, String dataType,
+			String issuer);
 
 	/**
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
 	 * 
-	 * @param request -
-	 *            The Request to append
-	 * @param attributeId -
-	 *            The AttributeID of the requested AttributeValues
-	 * @param dataType -
-	 *            The DataType of the requested AttributeValues
-	 * @param issuer -
-	 *            The Issuer of the requested AttributeValues
+	 * @param request
+	 *            - The Request to append
+	 * @param attributeId
+	 *            - The AttributeID of the requested AttributeValues
+	 * @param dataType
+	 *            - The DataType of the requested AttributeValues
+	 * @param issuer
+	 *            - The Issuer of the requested AttributeValues
 	 * @return The found AttributeValues. If no AttributeValues could be found
 	 *         or an error occurred, an empty list is returned.
 	 */
-	List<AttributeValueType> requestActionAttributes(RequestType request,
-			String attributeId, String dataType, String issuer);
+	List<AttributeValueType> requestActionAttributes(RequestType request, String attributeId, String dataType,
+			String issuer);
 
 	/**
 	 * Extends the given {@link RequestType} with the attributes given through
 	 * the resolved missing attributes and returnes the added
 	 * {@link AttributeValueType}s.
 	 * 
-	 * @param request -
-	 *            The Request to append
-	 * @param attributeId -
-	 *            The AttributeID of the requested AttributeValues
-	 * @param dataType -
-	 *            The DataType of the requested AttributeValues
-	 * @param issuer -
-	 *            The Issuer of the requested AttributeValues
+	 * @param request
+	 *            - The Request to append
+	 * @param attributeId
+	 *            - The AttributeID of the requested AttributeValues
+	 * @param dataType
+	 *            - The DataType of the requested AttributeValues
+	 * @param issuer
+	 *            - The Issuer of the requested AttributeValues
 	 * @return The found AttributeValues. If no AttributeValues could be found
 	 *         or an error occurred, an empty list is returned.
 	 */
-	List<AttributeValueType> requestEnvironmentAttributes(RequestType request,
-			String attributeId, String dataType, String issuer);
+	List<AttributeValueType> requestEnvironmentAttributes(RequestType request, String attributeId, String dataType,
+			String issuer);
 }

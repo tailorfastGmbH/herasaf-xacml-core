@@ -23,15 +23,16 @@ import org.herasaf.xacml.core.policy.impl.ExpressionType;
 /**
  * TODO JAVADOC
  * 
- * This exception is thrown when the processing of the a {@link ExpressionType} fails.
+ * This exception is thrown when the processing of the a {@link ExpressionType}
+ * fails.
  * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
- *
+ * 
  */
 public class ExpressionProcessingException extends ProcessingException {
 	private static final long serialVersionUID = 1600393747247326688L;
-	
+
 	/**
 	 * Constructs a new exception with null as its detail message.
 	 */

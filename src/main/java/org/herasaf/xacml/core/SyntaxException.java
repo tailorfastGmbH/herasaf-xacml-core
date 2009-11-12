@@ -22,7 +22,7 @@ package org.herasaf.xacml.core;
  * 
  * This exception is thrown when there is a syntax error in the request.
  * 
- * @author Florian Huonder 
+ * @author Florian Huonder
  * @version 1.0
  */
 public class SyntaxException extends Exception {

@@ -31,12 +31,11 @@ import org.herasaf.xacml.core.types.DateTime;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateTimeDataTypeAttribute extends
-		AbstractDataTypeAttribute<DateTime> {
+public class DateTimeDataTypeAttribute extends AbstractDataTypeAttribute<DateTime> {
 
 	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#dateTime";
-	
+
 	/** Serial version UID. */
 	private static final long serialVersionUID = 258484197947468750L;
 

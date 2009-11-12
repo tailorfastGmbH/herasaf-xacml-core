@@ -22,7 +22,7 @@ package org.herasaf.xacml.core;
  * 
  * This exception is thrown when a writing fails.
  * 
- * @author Florian Huonder 
+ * @author Florian Huonder
  * @version 1.0
  */
 public class WritingException extends Exception {

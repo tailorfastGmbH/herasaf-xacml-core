@@ -32,10 +32,8 @@ import org.slf4j.LoggerFactory;
  * 
  */
 @SuppressWarnings("unchecked")
-public class DataTypesInitializer extends
-		AbstractInitializer<DataTypeAttribute<?>> {
-	private static Logger logger = LoggerFactory
-			.getLogger(DataTypesInitializer.class);
+public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<?>> {
+	private static Logger logger = LoggerFactory.getLogger(DataTypesInitializer.class);
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.dataTypeAttribute.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/dataTypeAttribute/impl";
 	private final static Class<DataTypeAttribute<?>> TARGET_CLASS;
@@ -79,8 +77,7 @@ public class DataTypesInitializer extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void setInstancesIntoConverter(
-			Map<String, DataTypeAttribute<?>> instancesMap) {
+	protected void setInstancesIntoConverter(Map<String, DataTypeAttribute<?>> instancesMap) {
 		URNToDataTypeConverter.setDataTypeAttributes(instancesMap);
 		logger.info("{} DataTypeAttributes are initialized.", instancesMap.size());
 	}

@@ -42,8 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  */
 public class ContextAndPolicy {
-	private static final Logger logger = LoggerFactory
-			.getLogger(ContextAndPolicy.class);
+	private static final Logger logger = LoggerFactory.getLogger(ContextAndPolicy.class);
 
 	/**
 	 * This enum contains the possible {@link JAXBProfile}s.
@@ -79,8 +78,7 @@ public class ContextAndPolicy {
 	 * @return The obtained marshaller.
 	 * @throws JAXBException
 	 */
-	public static Marshaller getMarshaller(JAXBProfile profile)
-			throws JAXBException {
+	public static Marshaller getMarshaller(JAXBProfile profile) throws JAXBException {
 		ContextAndPolicyConfiguration conf;
 		switch (profile) {
 		case POLICY:
@@ -95,18 +93,15 @@ public class ContextAndPolicy {
 		}
 
 		Marshaller marshaller = conf.getContext().createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, conf
-				.isFormatted_output());
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, conf.isFormatted_output());
 		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, conf.isFragment());
 
 		if (conf.isWriteSchemaLocation()) {
 			if (conf.getSchemaLocationAsString().equals("")) {
 				logger.error("SchemaLocation not initialized.");
-				throw new NotInitializedException(
-						"SchemaLocation not initialized.");
+				throw new NotInitializedException("SchemaLocation not initialized.");
 			}
-			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, conf
-					.getSchemaLocationAsString());
+			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, conf.getSchemaLocationAsString());
 		}
 		if (conf.isValidateWriting()) {
 			if (conf.getSchema() == null) {
@@ -131,8 +126,7 @@ public class ContextAndPolicy {
 	 * @return The obtained unmarshaller.
 	 * @throws JAXBException
 	 */
-	public static Unmarshaller getUnmarshaller(JAXBProfile profile)
-			throws JAXBException {
+	public static Unmarshaller getUnmarshaller(JAXBProfile profile) throws JAXBException {
 		ContextAndPolicyConfiguration conf;
 		switch (profile) {
 		case POLICY:
@@ -174,8 +168,7 @@ public class ContextAndPolicy {
 	 *            The {@link ContextAndPolicyConfiguration} for the policy
 	 *            profile.
 	 */
-	public static void setPolicyProfile(
-			ContextAndPolicyConfiguration policyProfile) {
+	public static void setPolicyProfile(ContextAndPolicyConfiguration policyProfile) {
 		ContextAndPolicy.policyProfile = policyProfile;
 	}
 
@@ -195,8 +188,7 @@ public class ContextAndPolicy {
 	 *            The {@link ContextAndPolicyConfiguration} for the request
 	 *            profile.
 	 */
-	public static void setRequestCtxProfile(
-			ContextAndPolicyConfiguration requestCtxProfile) {
+	public static void setRequestCtxProfile(ContextAndPolicyConfiguration requestCtxProfile) {
 		ContextAndPolicy.requestCtxProfile = requestCtxProfile;
 	}
 
@@ -218,8 +210,7 @@ public class ContextAndPolicy {
 	 *            The {@link ContextAndPolicyConfiguration} for the response
 	 *            profile.
 	 */
-	public static void setResponseCtxProfile(
-			ContextAndPolicyConfiguration responseCtxProfile) {
+	public static void setResponseCtxProfile(ContextAndPolicyConfiguration responseCtxProfile) {
 		ContextAndPolicy.responseCtxProfile = responseCtxProfile;
 	}
 
@@ -229,8 +220,7 @@ public class ContextAndPolicy {
 	 * @param validationEventHandler
 	 *            The {@link ValidationEventHandler} to set.
 	 */
-	public static void setValidationEventHandler(
-			ValidationEventHandler validationEventHandler) {
+	public static void setValidationEventHandler(ValidationEventHandler validationEventHandler) {
 		ContextAndPolicy.validationEventHandler = validationEventHandler;
 	}
 }

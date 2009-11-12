@@ -33,8 +33,7 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * @version 1.0
  * @see DataTypeAttribute
  */
-public class Base64BinaryDataTypeAttribute extends
-		AbstractDataTypeAttribute<Base64Binary> {
+public class Base64BinaryDataTypeAttribute extends AbstractDataTypeAttribute<Base64Binary> {
 
 	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
@@ -43,8 +42,7 @@ public class Base64BinaryDataTypeAttribute extends
 	private static final long serialVersionUID = 229831857554104677L;
 
 	/** {@inheritDoc} */
-	public Base64Binary convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public Base64Binary convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new Base64Binary(jaxbRepresentation.trim());
 		} catch (Exception e) {

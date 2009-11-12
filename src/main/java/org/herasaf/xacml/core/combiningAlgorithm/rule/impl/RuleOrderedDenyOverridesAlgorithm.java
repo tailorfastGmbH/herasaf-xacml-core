@@ -57,12 +57,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class RuleOrderedDenyOverridesAlgorithm extends
-		RuleOrderedCombiningAlgorithm {
+public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides";
-	private final Logger logger = LoggerFactory
-			.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -82,8 +80,7 @@ public class RuleOrderedDenyOverridesAlgorithm extends
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> rules, RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(RequestType request, List<RuleType> rules, RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
@@ -102,26 +99,20 @@ public class RuleOrderedDenyOverridesAlgorithm extends
 			requestInfo.resetStatus();
 
 			if (logger.isDebugEnabled()) {
-				MDC
-						.put(MDC_RULE_ID, rule
-								.getRuleId());
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			DecisionType decision = this.evaluateRule(request, rule,
-					requestInfo);
+			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
 
 			if (logger.isDebugEnabled()) {
-				MDC
-						.put(MDC_RULE_ID, rule
-								.getRuleId());
-				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
-						decision.toString());
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
+				logger.debug("Evaluation of {} was: {}", rule.getRuleId(), decision.toString());
 				MDC.remove(MDC_RULE_ID);
 			}
 
 			switch (decision) {
-			//default case is not required here.
+			// default case is not required here.
 			case DENY:
 				return DecisionType.DENY;
 			case INDETERMINATE:

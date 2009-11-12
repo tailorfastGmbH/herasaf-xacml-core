@@ -102,9 +102,8 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 	 * .core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo)
-			throws ExpressionProcessingException, MissingAttributeException,
-			SyntaxException {
+	public Object handle(RequestType request, RequestInformation reqInfo) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
 		// A RequestType is not thread safe, because of this you can iterate
@@ -115,16 +114,13 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 			if (sub.getSubjectCategory().equals(getSubjectCategory())) {
 				for (AttributeType attr : sub.getAttributes()) {
 					if (attributeId.equals(attr.getAttributeId())
-							&& dataType.toString().equals(
-									attr.getDataType().toString())) {
+							&& dataType.toString().equals(attr.getDataType().toString())) {
 						if (issuer != null) {
 							if (issuer.equals(attr.getIssuer())) {
-								addAndConvertAttrValue(returnValues, attr
-										.getAttributeValues());
+								addAndConvertAttrValue(returnValues, attr.getAttributeValues());
 							}
 						} else {
-							addAndConvertAttrValue(returnValues, attr
-									.getAttributeValues());
+							addAndConvertAttrValue(returnValues, attr.getAttributeValues());
 						}
 					}
 				}
@@ -139,9 +135,8 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP()
-					.requestSubjectAttributes(request, attributeId,
-							dataType.toString(), issuer, subjectCategory);
+			List<AttributeValueType> attrValues = reqInfo.getPIP().requestSubjectAttributes(request, attributeId,
+					dataType.toString(), issuer, subjectCategory);
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {

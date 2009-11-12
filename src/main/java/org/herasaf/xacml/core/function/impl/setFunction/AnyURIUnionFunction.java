@@ -19,21 +19,28 @@ package org.herasaf.xacml.core.function.impl.setFunction;
 
 import java.net.URI;
 
-/** <p>The implementation of the urn:oasis:names:tc:xacml:1.0:function:anyURI-union function.</p>
-* <p>See: Apendix A.3 of the <a
-* href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
-* OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
-* 2006</a> page 105, for further information.</p>
-* 
-* @author Stefan Oberholzer 
-* @version 1.0
-*/
+/**
+ * <p>
+ * The implementation of the urn:oasis:names:tc:xacml:1.0:function:anyURI-union
+ * function.
+ * </p>
+ * <p>
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 105, for further information.
+ * </p>
+ * 
+ * @author Stefan Oberholzer
+ * @version 1.0
+ */
 public class AnyURIUnionFunction extends AbstractUnionFunction<URI> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-union";
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

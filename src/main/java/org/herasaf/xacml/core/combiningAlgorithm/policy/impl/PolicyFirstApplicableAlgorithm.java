@@ -56,12 +56,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class PolicyFirstApplicableAlgorithm extends
-		PolicyOrderedCombiningAlgorithm {
+public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable";
-	private final Logger logger = LoggerFactory
-			.getLogger(PolicyFirstApplicableAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(PolicyFirstApplicableAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -71,8 +69,8 @@ public class PolicyFirstApplicableAlgorithm extends
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
+			RequestInformation requestInfo) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
@@ -83,29 +81,21 @@ public class PolicyFirstApplicableAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Starting evaluation of: {}", eval.getId()
-							.getId());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId().getId());
 				}
 
-				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfo);
+				decision = eval.getCombiningAlg().evaluate(request, eval, requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Evaluation of {} was: {}", eval.getId()
-							.getId(), decision.toString());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
 					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
-				if (decision == DecisionType.PERMIT
-						|| decision == DecisionType.DENY) {
-					obligations.addAll(eval.getContainedObligations(EffectType
-							.fromValue(decision.toString())));
-					obligations.addAll(requestInfo.getObligations()
-							.getObligations());
+				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+					obligations.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
+					obligations.addAll(requestInfo.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*

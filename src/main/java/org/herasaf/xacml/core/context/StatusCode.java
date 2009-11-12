@@ -20,11 +20,11 @@ package org.herasaf.xacml.core.context;
 /**
  * TODO JAVADOC
  * 
- * The {@link StatusCode} contains the status of the evaluation. See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * The {@link StatusCode} contains the status of the evaluation. See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix B.9 page 131, for further information.
- *
+ * 
  * @author Florian Huonder
  * @version 1.0
  */
@@ -53,7 +53,7 @@ public enum StatusCode {
 
 	/**
 	 * Initializes this enum.
-	 *
+	 * 
 	 * @param value
 	 *            The value to set.
 	 */
@@ -63,7 +63,7 @@ public enum StatusCode {
 
 	/**
 	 * Returns the current value.
-	 *
+	 * 
 	 * @return The current {@link StatusCode}.
 	 */
 	public String getValue() {
@@ -72,7 +72,7 @@ public enum StatusCode {
 
 	/**
 	 * Returns the {@link StatusCode} referenced by its String-Representation.
-	 *
+	 * 
 	 * @param value
 	 *            The String value of the {@link StatusCode}.
 	 * @return The {@link StatusCode}.

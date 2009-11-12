@@ -28,9 +28,8 @@ import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
- * FIXME: This class is a survival of the remote reference loader implemenation in the "old" core.
- * I think it should be removed. To discuss.
- * TODO JAVADOC
+ * FIXME: This class is a survival of the remote reference loader implemenation
+ * in the "old" core. I think it should be removed. To discuss. TODO JAVADOC
  * 
  * Looks for IdReferencesType in a PolicySetType
  * 
@@ -42,44 +41,47 @@ public class IdReferenceLookup {
 	/**
 	 * Looks for IdReferencesType in a Evaluatables
 	 * 
-	 * @param eval {@link Evaluatable}s to look for {@link IdReferenceType}.
+	 * @param eval
+	 *            {@link Evaluatable}s to look for {@link IdReferenceType}.
 	 * 
-	 * @return Return the result of search. If no IdReferenceType was found
-	 *  the resturn value is an empty List
+	 * @return Return the result of search. If no IdReferenceType was found the
+	 *         resturn value is an empty List
 	 */
-	public static List<IdReferenceType> getIdReference(Evaluatable eval){
+	public static List<IdReferenceType> getIdReference(Evaluatable eval) {
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
 		Stack<PolicySetType> setTypes = new Stack<PolicySetType>();
-		if(eval instanceof PolicySetType){
-			setTypes.push((PolicySetType)eval);
-			while(!setTypes.isEmpty()){
+		if (eval instanceof PolicySetType) {
+			setTypes.push((PolicySetType) eval);
+			while (!setTypes.isEmpty()) {
 				PolicySetType setType = setTypes.pop();
 				for (JAXBElement<?> currentContent : setType.getAdditionalInformation()) {
-					if(currentContent.getValue() instanceof IdReferenceType){
-						references.add((IdReferenceType)currentContent.getValue());
-					}else if (currentContent.getValue() instanceof PolicySetType){
-						setTypes.push((PolicySetType)currentContent.getValue());
+					if (currentContent.getValue() instanceof IdReferenceType) {
+						references.add((IdReferenceType) currentContent.getValue());
+					} else if (currentContent.getValue() instanceof PolicySetType) {
+						setTypes.push((PolicySetType) currentContent.getValue());
 					}
 				}
 			}
 		}
 		return references;
 	}
-	
+
 	/**
 	 * Looks for IdReferencesType in a List of Evaluatables
 	 * 
-	 * @param evals {@link Collection}  of {@link Evaluatable}s to look for {@link IdReferenceType}.
+	 * @param evals
+	 *            {@link Collection} of {@link Evaluatable}s to look for
+	 *            {@link IdReferenceType}.
 	 * 
-	 * @return Return the result of search. If no IdReferenceType was found
-	 *  the resturn value is an empty List
+	 * @return Return the result of search. If no IdReferenceType was found the
+	 *         resturn value is an empty List
 	 */
-	public static List<IdReferenceType> getIdReference(Collection<Evaluatable> evals){
+	public static List<IdReferenceType> getIdReference(Collection<Evaluatable> evals) {
 		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
 		for (Evaluatable evaluatable : evals) {
 			references.addAll(getIdReference(evaluatable));
-		}	
+		}
 		return references;
 	}
-	
+
 }

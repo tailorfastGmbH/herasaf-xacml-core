@@ -42,8 +42,7 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public class SimplePDPFactory {
-	private static final Logger logger = LoggerFactory
-			.getLogger(SimplePDPFactory.class);
+	private static final Logger logger = LoggerFactory.getLogger(SimplePDPFactory.class);
 	private static boolean respectAbandonedEvaluatables;
 	private static List<Initializer> initializers;
 	private static Class<? extends PolicyUnorderedCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
@@ -64,10 +63,10 @@ public class SimplePDPFactory {
 	 * 
 	 * @param respect
 	 */
-	public static void respectAbandonedEvaluatables(boolean respect){
+	public static void respectAbandonedEvaluatables(boolean respect) {
 		respectAbandonedEvaluatables = respect;
 	}
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -84,7 +83,7 @@ public class SimplePDPFactory {
 			initializers.add(new ContextAndPolicyInitializer());
 		}
 	}
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -92,38 +91,35 @@ public class SimplePDPFactory {
 	 * @param policyRepository
 	 * @param pip
 	 */
-	public static PDP getSimplePDP(
-			PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
+	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRepository policyRepository, PIP pip) {
-		if(rootCombiningAlgorithm == null || policyRepository == null){
+		if (rootCombiningAlgorithm == null || policyRepository == null) {
 			String msg = "The root combining algorithm and the policy repository must not be null.";
 			logger.error(msg);
 			throw new InitializationException(msg);
 		}
-		
+
 		if (initializers == null) {
-			logger
-					.error("SimplePDPFactory is not initialized. Initializers must be set.");
-			throw new InitializationException(
-					"SimplePDPFactory is not initialized. Initializers must be set.");
+			logger.error("SimplePDPFactory is not initialized. Initializers must be set.");
+			throw new InitializationException("SimplePDPFactory is not initialized. Initializers must be set.");
 		}
 		runInitializers();
-		
+
 		rootCombiningAlgorithm.setRespectAbandondEvaluatables(respectAbandonedEvaluatables);
-		
+
 		return new SimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param pip
 	 */
-	public static PDP getSimplePDP(
-			PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,PIP pip) throws InitializationException {
+	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PIP pip)
+			throws InitializationException {
 		PolicyRepository policyRepository;
-		
+
 		try {
 			policyRepository = defaultPolicyRepository.newInstance();
 		} catch (InstantiationException e) {
@@ -135,13 +131,13 @@ public class SimplePDPFactory {
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
+
 		logger.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
 		logger.warn("The default policy repository is in use. This must not be used in a productive environment.");
-		
+
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -150,20 +146,24 @@ public class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip) throws InitializationException {
 		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
-		
+
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
-		logger.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm.getCanonicalName());
+
+		logger
+				.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm
+						.getCanonicalName());
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}
@@ -173,26 +173,27 @@ public class SimplePDPFactory {
 	 * 
 	 * @param rootCombiningAlgorithm
 	 */
-	public static PDP getSimplePDP(
-			PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm) {
+	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm) {
 		PolicyRepository policyRepository;
-		
+
 		try {
-			policyRepository =  defaultPolicyRepository.newInstance();
+			policyRepository = defaultPolicyRepository.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default policy repository: " + defaultPolicyRepository.getCanonicalName();
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default policy repository: " + defaultPolicyRepository.getCanonicalName();
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
+
 		logger.info("There is no Policy Information Point (PIP) in use.");
 		logger.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
 		logger.warn("The default policy repository is in use. This must not be used in a productive environment.");
-		
+
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}
 
@@ -206,18 +207,22 @@ public class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
+
 		logger.info("There is no Policy Information Point (PIP) in use.");
-		logger.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm.getCanonicalName());
-		
+		logger
+				.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm
+						.getCanonicalName());
+
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}
 
@@ -229,36 +234,42 @@ public class SimplePDPFactory {
 	public static PDP getSimplePDP(PIP pip) {
 		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
 		PolicyRepository policyRepository;
-		
+
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
+
 		try {
 			policyRepository = defaultPolicyRepository.newInstance();
-			
+
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default policy repository: " + defaultPolicyRepository.getCanonicalName();
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default policy repository: " + defaultPolicyRepository.getCanonicalName();
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
-		logger.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm.getCanonicalName());
+
+		logger
+				.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm
+						.getCanonicalName());
 		logger.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
 		logger.warn("The default policy repository is in use. This must not be used in a productive environment.");
-		
+
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}
 
@@ -274,12 +285,11 @@ public class SimplePDPFactory {
 	 *            the {@link PolicyRepository} of the PDP.
 	 * @return The PDP (singleton).
 	 */
-	public static PDP getSimplePDP(
-			PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
+	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRepository policyRepository) {
-		
+
 		logger.info("There is no Policy Information Point (PIP) in use.");
-		
+
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}
 
@@ -291,37 +301,43 @@ public class SimplePDPFactory {
 	public static PDP getSimplePDP() throws InitializationException {
 		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
 		PolicyRepository policyRepository;
-		
+
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: " + defaultRootCombiningAlgorithm.getCanonicalName();
+			String msg = "Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
+
 		try {
 			policyRepository = defaultPolicyRepository.newInstance();
-			
+
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default policy repository: " + defaultPolicyRepository.getCanonicalName();
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default policy repository: " + defaultPolicyRepository.getCanonicalName();
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
 			logger.error(msg);
 			throw new InitializationException(msg, e);
 		}
-		
+
 		logger.info("There is no Policy Information Point (PIP) in use.");
-		logger.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm.getCanonicalName());
+		logger
+				.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm
+						.getCanonicalName());
 		logger.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
 		logger.warn("The default policy repository is in use. This must not be used in a productive environment.");
-		
+
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}
 

@@ -57,12 +57,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class PolicyOrderedDenyOverridesAlgorithm extends
-		PolicyOrderedCombiningAlgorithm {
+public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-deny-overrides";
-	private final Logger logger = LoggerFactory
-			.getLogger(PolicyOrderedDenyOverridesAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(PolicyOrderedDenyOverridesAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -72,8 +70,8 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
+			RequestInformation requestInfo) {
 
 		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
 
@@ -85,8 +83,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 
-			if (atLeastOneDeny && respectAbandonedEvaluatables
-					&& !eval.hasObligations()) {
+			if (atLeastOneDeny && respectAbandonedEvaluatables && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (atLeastOneDeny == true) and
 				 * the abandoned Obligations must be taken into account
@@ -104,30 +101,22 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Starting evaluation of: {}", eval.getId()
-							.getId());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId().getId());
 				}
 
-				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfo);
+				decision = eval.getCombiningAlg().evaluate(request, eval, requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Evaluation of {} was: {}", eval.getId()
-							.getId(), decision.toString());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
 					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
-				if (decision == DecisionType.PERMIT
-						|| decision == DecisionType.DENY) {
-					obligationsOfApplicableEvals.addAll(eval
-							.getContainedObligations(EffectType
-									.fromValue(decision.toString())));
-					obligationsOfApplicableEvals.addAll(requestInfo
-							.getObligations().getObligations());
+				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+					obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision
+							.toString())));
+					obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*
@@ -148,8 +137,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 					// finishes the
 					// evaluation
 					requestInfo.clearObligations();
-					requestInfo.addObligations(obligationsOfApplicableEvals,
-							EffectType.DENY);
+					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 					return DecisionType.DENY;
 				} else {
 					atLeastOneDeny = true;
@@ -170,16 +158,23 @@ public class PolicyOrderedDenyOverridesAlgorithm extends
 
 		if (atLeastOneDeny) {
 			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals,
-					EffectType.DENY); // To filter all PERMIT-Obligations that
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY); // To
+																						// filter
+																						// all
+																						// PERMIT-Obligations
+																						// that
 			// were collected so far
 			return DecisionType.DENY;
 		} else if (atLeastOneError) {
 			requestInfo.resetStatus();
 			return DecisionType.DENY;
 		} else if (atLeastOnePermit) {
-			requestInfo.addObligations(obligationsOfApplicableEvals,
-					EffectType.PERMIT); // The decision is made and all
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT); // The
+																							// decision
+																							// is
+																							// made
+																							// and
+																							// all
 			// DENY-Obligations can be filtered out
 
 			/*

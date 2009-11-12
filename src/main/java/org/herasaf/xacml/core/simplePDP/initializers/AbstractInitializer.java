@@ -39,11 +39,14 @@ import org.slf4j.LoggerFactory;
  * 
  */
 public abstract class AbstractInitializer<T> implements Initializer {
-	private final Logger logger = LoggerFactory
-			.getLogger(AbstractInitializer.class);
+	private final Logger logger = LoggerFactory.getLogger(AbstractInitializer.class);
+
 	protected abstract String getSearchContext();
+
 	protected abstract String getSearchContextPath();
+
 	protected abstract Class<T> getTargetClass();
+
 	private final String CLASS_ENDING = ".class";
 
 	/**
@@ -59,6 +62,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 	/**
 	 * TODO JAVADOC
+	 * 
 	 * @param instances
 	 */
 	protected void furtherInitializations(List<T> instances) {
@@ -67,15 +71,17 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 	/**
 	 * TODO JAVADOC
+	 * 
 	 * @param instancesMap
 	 */
-	protected abstract void setInstancesIntoConverter(
-			Map<String, T> instancesMap);
+	protected abstract void setInstancesIntoConverter(Map<String, T> instancesMap);
 
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @param instances The {@link List} of instances that shall be converted into a {@link Map}.
+	 * @param instances
+	 *            The {@link List} of instances that shall be converted into a
+	 *            {@link Map}.
 	 * @return The {@link Map} containing the instances.
 	 */
 	private Map<String, T> convertListToMap(List<T> instances) {
@@ -89,7 +95,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * @param instance The type from which the URI shall be returned.
+	 * @param instance
+	 *            The type from which the URI shall be returned.
 	 * @return The URI of the given instance.
 	 */
 	protected abstract String getURIFromType(T instance);
@@ -98,7 +105,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * TODO JAVADOC
 	 * 
 	 * TODO document code below in detail.
-	 * @param files The {@link List} of files from which instances shall be created.
+	 * 
+	 * @param files
+	 *            The {@link List} of files from which instances shall be
+	 *            created.
 	 * @return The {@link List} containing the instances.
 	 */
 	@SuppressWarnings("unchecked")
@@ -183,13 +193,28 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			File[] allFiles = folder.listFiles();
 			for (int i = 0; i < allFiles.length; i++) {
 				if (allFiles[i].isDirectory()) {
-					files.addAll(collectFiles(searchContext + "/"
-							+ allFiles[i].getName()));
+					files.addAll(collectFiles(searchContext + "/" + allFiles[i].getName()));
 				} else {
-					if (allFiles[i].getName().endsWith(".class")
-							&& !allFiles[i].getName().startsWith("Abstract")
-							&& !allFiles[i].getName().contains("Mock")
-							&& !allFiles[i].getName().contains("$") /*a anonymous inner class ends with a $. E.g.: House$1.class*/) {
+					if (allFiles[i].getName().endsWith(".class") && !allFiles[i].getName().startsWith("Abstract")
+							&& !allFiles[i].getName().contains("Mock") && !allFiles[i].getName().contains("$") /*
+																												 * a
+																												 * anonymous
+																												 * inner
+																												 * class
+																												 * ends
+																												 * with
+																												 * a
+																												 * $
+																												 * .
+																												 * E
+																												 * .
+																												 * g
+																												 * .
+																												 * :
+																												 * House$1
+																												 * .
+																												 * class
+																												 */) {
 						files.add(allFiles[i]);
 					}
 				}

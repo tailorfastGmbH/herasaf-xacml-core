@@ -66,7 +66,7 @@ public class ContextAndPolicyConfiguration {
 	private boolean validateWriting;
 	/** The context. */
 	private JAXBContext context;
-	
+
 	/** Class logger. */
 	private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyConfiguration.class);
 
@@ -121,15 +121,15 @@ public class ContextAndPolicyConfiguration {
 	/**
 	 * Sets the Path to the schema file.
 	 * 
-	 * The file can be loaded from three different resources.
-	 * URL, Classpath and File (no prefix results in classpath:)
+	 * The file can be loaded from three different resources. URL, Classpath and
+	 * File (no prefix results in classpath:)
 	 * 
-	 * Example strings:
-	 * <br />
+	 * Example strings: <br />
 	 * <code>url:http://schemas.herasaf.org/mySchema.xsd<br />
 	 * classpath:/org/herasaf/schemas/mySchema.xsd<br />
 	 * file:C:/herasaf/schemas/mySchema.xsd<br />
-	 * /org/herasaf/schemas/mySchema.xsd</code> (no prefix results in classpath:)
+	 * /org/herasaf/schemas/mySchema.xsd</code> (no prefix results in
+	 * classpath:)
 	 * 
 	 * @param schemaPath
 	 *            The path to the schema file.
@@ -138,21 +138,44 @@ public class ContextAndPolicyConfiguration {
 	public void setSchemaByPath(String schemaPath) throws SAXException, MalformedURLException {
 		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		String schema = schemaPath.trim();
-		if(schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())){ //if the schemaPath has the url: prefix
+		if (schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())) { // if
+																					// the
+																					// schemaPath
+																					// has
+																					// the
+																					// url:
+																					// prefix
 			URL url = new URL(schema.substring(URL_PREFIX.length()));
-			if(url == null) throw new IllegalArgumentException(schema);
+			if (url == null)
+				throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
-		} else if(schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX.length())){ //if the schemaPath has the file: prefix
+		} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX.length())) { // if
+																							// the
+																							// schemaPath
+																							// has
+																							// the
+																							// file:
+																							// prefix
 			File file = new File(schema.substring(FILE_PREFIX.length()));
-			if(file == null) throw new IllegalArgumentException(schema);
+			if (file == null)
+				throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(file));
-		} else if(schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())){ //if the schemaPath has the classpath: prefix
-			URL url = getClass().getClassLoader().getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
-			if(url == null) throw new IllegalArgumentException(schema);
+		} else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())) { // if
+																									// the
+																									// schemaPath
+																									// has
+																									// the
+																									// classpath:
+																									// prefix
+			URL url = getClass().getClassLoader()
+					.getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
+			if (url == null)
+				throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
-		} else { //if no prefix is provided, the default is classpath:
+		} else { // if no prefix is provided, the default is classpath:
 			URL url = getClass().getClassLoader().getResource(leadingSlash(schema));
-			if(url == null) throw new IllegalArgumentException(schema);
+			if (url == null)
+				throw new IllegalArgumentException(schema);
 			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
 		}
 	}
@@ -160,23 +183,26 @@ public class ContextAndPolicyConfiguration {
 	private Schema createSchema(SchemaFactory sf, Source source) {
 		try {
 			return sf.newSchema(source);
-		} catch (SAXException e){
+		} catch (SAXException e) {
 			setValidateParsing(false);
 			setValidateWriting(false);
 			logger.warn("Validating turned off because schema could not be initialized.");
 		}
 		return null;
 	}
-	
+
 	/**
 	 * checks if a given String has a leading slash and adds one otherwise
 	 * 
-	 * @param input The String to add a leading slash if missing.
+	 * @param input
+	 *            The String to add a leading slash if missing.
 	 * @return The String with a leading slash.
 	 */
-	private String leadingSlash(String input){
-		if(input.startsWith("/")) return input;
-		else return "/" + input;
+	private String leadingSlash(String input) {
+		if (input.startsWith("/"))
+			return input;
+		else
+			return "/" + input;
 	}
 
 	/**

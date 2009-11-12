@@ -32,14 +32,12 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class DefaultValidationEventHandler implements ValidationEventHandler {
-	private final Logger logger = LoggerFactory
-			.getLogger(DefaultValidationEventHandler.class);
+	private final Logger logger = LoggerFactory.getLogger(DefaultValidationEventHandler.class);
 
 	/**
 	 * TODO REVIEW
 	 * 
-	 * {@inheritDoc} 
-	 * Logs a warning message on an
+	 * {@inheritDoc} Logs a warning message on an
 	 * {@link ValidationEvent#WARNING} event and an error message an a
 	 * {@link ValidationEvent#ERROR} and {@link ValidationEvent#FATAL_ERROR}
 	 * event.
@@ -47,14 +45,12 @@ public class DefaultValidationEventHandler implements ValidationEventHandler {
 	public boolean handleEvent(ValidationEvent event) {
 		switch (event.getSeverity()) {
 		case ValidationEvent.WARNING:
-			logger.warn("JAXB validation event handled: ", event
-					.getLinkedException());
+			logger.warn("JAXB validation event handled: ", event.getLinkedException());
 			return true;
 		case ValidationEvent.ERROR:
 		case ValidationEvent.FATAL_ERROR:
 		default:
-			logger.error("JAXB validation event handled: ", event
-					.getLinkedException());
+			logger.error("JAXB validation event handled: ", event.getLinkedException());
 			return false;
 		}
 	}

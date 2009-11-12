@@ -26,11 +26,11 @@ import org.herasaf.xacml.core.SyntaxException;
  * 
  * The Name of this data type is
  * urn:oasis:names:tc:xacml:2.0:data-type:x500Name.<br>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
@@ -43,8 +43,7 @@ public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Princip
 	private static final long serialVersionUID = -8741252348616072890L;
 
 	/** {@inheritDoc} */
-	public X500Principal convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public X500Principal convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new X500Principal(jaxbRepresentation.trim());
 		} catch (Exception e) {

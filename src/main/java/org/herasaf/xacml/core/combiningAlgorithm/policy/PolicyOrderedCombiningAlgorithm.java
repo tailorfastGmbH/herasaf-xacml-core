@@ -38,8 +38,7 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
  * @version 1.0
  * 
  */
-public abstract class PolicyOrderedCombiningAlgorithm extends
-		AbstractPolicyCombiningAlgorithm {
+public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
 
 	/*
 	 * (non-Javadoc)
@@ -49,18 +48,15 @@ public abstract class PolicyOrderedCombiningAlgorithm extends
 	 * .core.context.impl.RequestType, org.herasaf.core.policy.impl.Evaluatable,
 	 * org.herasaf.core.dataTypes.RequestInformation)
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals,
-			RequestInformation requestInfo) {
-		DecisionType decision = matchTarget(request, evals.getTarget(),
-				requestInfo);
+	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
+		DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
 		}
 		try {
-			DecisionType dec = this
-					.evaluateEvaluatableList(request, ((PolicySetType) evals)
-							.getOrderedEvaluatables(requestInfo), requestInfo);
+			DecisionType dec = this.evaluateEvaluatableList(request, ((PolicySetType) evals)
+					.getOrderedEvaluatables(requestInfo), requestInfo);
 			/*
 			 * The evaluateEvaluatableList method may set the targetMatched
 			 * value to false. So it has to be set to true to go sure that it is
@@ -87,7 +83,7 @@ public abstract class PolicyOrderedCombiningAlgorithm extends
 	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
-	public abstract DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfos);
+	public abstract DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
+			RequestInformation requestInfos);
 
 }

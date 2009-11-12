@@ -42,11 +42,12 @@ public interface Evaluatable {
 	 * 
 	 * @return The Id as string.
 	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
+	 * @throws EvaluatableNotFound
+	 *             if the Evaluatable is an IdReferenceType and it didnt find
+	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
-	public EvaluatableID getId() throws EvaluatableNotFoundException; 
-	
+	public EvaluatableID getId() throws EvaluatableNotFoundException;
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -54,11 +55,12 @@ public interface Evaluatable {
 	 * 
 	 * @return The {@link TargetType} of the evaluatable.
 	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
+	 * @throws EvaluatableNotFound
+	 *             if the Evaluatable is an IdReferenceType and it didnt find
+	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
 	public TargetType getTarget() throws EvaluatableNotFoundException;
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -66,11 +68,12 @@ public interface Evaluatable {
 	 * 
 	 * @return The {@link CombiningAlgorithm} of the evaluatable.
 	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
+	 * @throws EvaluatableNotFound
+	 *             if the Evaluatable is an IdReferenceType and it didnt find
+	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
 	public CombiningAlgorithm getCombiningAlg() throws EvaluatableNotFoundException;
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
@@ -78,28 +81,32 @@ public interface Evaluatable {
 	 * 
 	 * @return The version as string.
 	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
+	 * @throws EvaluatableNotFound
+	 *             if the Evaluatable is an IdReferenceType and it didnt find
+	 *             the Evaluatable (Only in Last Loading Strategy)
 	 */
 	public String getEvalutableVersion() throws EvaluatableNotFoundException;
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * Returns a boolean value indicating if the current {@link Evaluatable} or a sub- {@link Evaluatable} contains
-	 * one or more Obligations.
+	 * Returns a boolean value indicating if the current {@link Evaluatable} or
+	 * a sub- {@link Evaluatable} contains one or more Obligations.
 	 * 
-	 * @return True if the current or a sub- {@link Evaluatable} contains one or more Obligations.
-	 *         False otherwise.
+	 * @return True if the current or a sub- {@link Evaluatable} contains one or
+	 *         more Obligations. False otherwise.
 	 */
 	public boolean hasObligations();
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
-	 * Returns the Obligations of this {@link Evaluatable} which match the given effect.
-	 * 	
-	 * @param effect the {@link EffectType} by which the Obligations should be returned.
+	 * Returns the Obligations of this {@link Evaluatable} which match the given
+	 * effect.
+	 * 
+	 * @param effect
+	 *            the {@link EffectType} by which the Obligations should be
+	 *            returned.
 	 * @return The Obligations which match the {@link EffectType}.
 	 */
 	public List<ObligationType> getContainedObligations(EffectType effect);

@@ -33,8 +33,7 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class YearMonthDurationDataTypeAttribute extends
-		AbstractDataTypeAttribute<YearMonthDuration> {
+public class YearMonthDurationDataTypeAttribute extends AbstractDataTypeAttribute<YearMonthDuration> {
 
 	/** Data type ID URI. */
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration";
@@ -43,8 +42,7 @@ public class YearMonthDurationDataTypeAttribute extends
 	private static final long serialVersionUID = -9096516144266375543L;
 
 	/** {@inheritDoc} */
-	public YearMonthDuration convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public YearMonthDuration convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new YearMonthDuration(jaxbRepresentation.trim());
 		} catch (IllegalArgumentException e) {

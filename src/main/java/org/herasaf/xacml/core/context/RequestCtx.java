@@ -100,8 +100,7 @@ public class RequestCtx {
 	 */
 	public void marshal(ContentHandler ch) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), ch);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), ch);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -119,8 +118,7 @@ public class RequestCtx {
 	 */
 	public void marshal(File file) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), file);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), file);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -146,8 +144,7 @@ public class RequestCtx {
 	 */
 	public void marshal(Result result) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), result);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), result);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -167,8 +164,7 @@ public class RequestCtx {
 	 */
 	public void marshal(OutputStream out) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), out);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), out);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -188,8 +184,7 @@ public class RequestCtx {
 	 */
 	public void marshal(Writer writer) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), writer);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), writer);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -210,8 +205,7 @@ public class RequestCtx {
 	 */
 	public void marshal(Node node) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), node);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), node);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -228,11 +222,9 @@ public class RequestCtx {
 	 * @throws WritingException
 	 *             - If any unexpected problem occurs during the marshalling.
 	 */
-	public void marshal(XMLStreamWriter xmlStreamWriter)
-			throws WritingException {
+	public void marshal(XMLStreamWriter xmlStreamWriter) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), xmlStreamWriter);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlStreamWriter);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -251,8 +243,7 @@ public class RequestCtx {
 	 */
 	public void marshal(XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(
-					objectFactory.createRequest(request), xmlEventWriter);
+			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlEventWriter);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}

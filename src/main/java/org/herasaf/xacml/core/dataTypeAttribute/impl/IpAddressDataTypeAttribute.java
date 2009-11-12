@@ -33,8 +33,7 @@ import org.herasaf.xacml.core.types.IPAddress;
  * @author Florian Huonder
  * @version 1.0
  */
-public class IpAddressDataTypeAttribute extends
-		AbstractDataTypeAttribute<IPAddress> {
+public class IpAddressDataTypeAttribute extends AbstractDataTypeAttribute<IPAddress> {
 
 	/** Data type ID URI. */
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:ipAddress";
@@ -43,8 +42,7 @@ public class IpAddressDataTypeAttribute extends
 	private static final long serialVersionUID = 7091374499978898219L;
 
 	/** {@inheritDoc} */
-	public IPAddress convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public IPAddress convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return IPAddress.newInstance(jaxbRepresentation.trim());
 		} catch (Exception e) {

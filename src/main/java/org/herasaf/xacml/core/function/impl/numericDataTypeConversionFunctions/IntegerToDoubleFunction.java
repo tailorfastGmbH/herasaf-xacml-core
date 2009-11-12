@@ -28,13 +28,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:integer-to-double function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class IntegerToDoubleFunction implements Function {
@@ -44,25 +44,26 @@ public class IntegerToDoubleFunction implements Function {
 	/**
 	 * {@inheritDoc} <br>
 	 * <br>
-	 * Returns the integer value as double with the same numeric  value.
+	 * Returns the integer value as double with the same numeric value.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException{
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if(args.length != 1){
+			if (args.length != 1) {
 				throw new FunctionProcessingException("Invalid number of parameters");
 			}
-			return  Double.valueOf((((BigInteger)args[0]).longValue()));
-		} catch (ClassCastException e){
+			return Double.valueOf((((BigInteger) args[0]).longValue()));
+		} catch (ClassCastException e) {
 			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
-		} catch (FunctionProcessingException e){
+		} catch (FunctionProcessingException e) {
 			throw e;
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.function.FunctionAC#toString()
 	 */
 	@Override

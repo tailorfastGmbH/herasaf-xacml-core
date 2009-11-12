@@ -38,10 +38,10 @@ import org.xml.sax.ContentHandler;
  * TODO JAVADOC
  * 
  * Encapsulates a {@link ResponseType}. Provides various marshalling methods for
- * the {@link ResponseType}. Because the {@link Marshaller} from JAXB <b>is not</b>
- * thread safe it must be newly created in each marshal-method. This class fully
- * relies on the underlying JAXB implementation.
- *
+ * the {@link ResponseType}. Because the {@link Marshaller} from JAXB <b>is
+ * not</b> thread safe it must be newly created in each marshal-method. This
+ * class fully relies on the underlying JAXB implementation.
+ * 
  * @author Florian Huonder
  * @version 1.0
  */
@@ -64,7 +64,7 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a new {@link ResponseCtx} with the given {@link ResponseType}.
-	 *
+	 * 
 	 * @param response
 	 *            The {@link ResponseType} to place in the {@link ResponseCtx}.
 	 */
@@ -76,7 +76,7 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Returns the containing {@link ResponseType}.
-	 *
+	 * 
 	 * @return The {@link ResponseType} contained in this object.
 	 */
 	public ResponseType getResponse() {
@@ -87,16 +87,15 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the contained Response into SAX2 events.
-	 *
+	 * 
 	 * @param ch
 	 *            XML will be sent to this handler as SAX2 events.
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(ContentHandler ch) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), ch);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), ch);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -106,16 +105,15 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the contained Response to the file.
-	 *
+	 * 
 	 * @param file
 	 *            XML written into this file.
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(File file) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), file);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), file);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -133,16 +131,15 @@ public class ResponseCtx {
 	 * results are supported, depends on the JAXBImplementation included in this
 	 * Module.
 	 * </p>
-	 *
+	 * 
 	 * @param result
 	 *            XML will be sent to this Result .
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(Result result) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), result);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), result);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -154,16 +151,15 @@ public class ResponseCtx {
 	 * <p>
 	 * Marshal the contained Response into an output stream.
 	 * </p>
-	 *
+	 * 
 	 * @param out
 	 *            XML will be added to this stream .
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(OutputStream out) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), out);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), out);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -175,16 +171,15 @@ public class ResponseCtx {
 	 * <p>
 	 * Marshal the contained Response into a Writer.
 	 * </p>
-	 *
+	 * 
 	 * @param writer
 	 *            XML will be sent to this writer.
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(Writer writer) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), writer);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), writer);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -194,19 +189,18 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the contained Response into a DOM tree.
-	 *
+	 * 
 	 * @param node
 	 *            DOM nodes will be added as children of this node. This
 	 *            parameter must be a Node that accepts children (Document,
 	 *            DocumentFragment, or Element)
-	 *
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * 
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(Node node) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), node);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), node);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -216,18 +210,17 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Marshal the contained Response into a XMLStreamWriter.
-	 *
+	 * 
 	 * @param xmlStreamWriter
 	 *            XML will be sent to this writer.
-	 *
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * 
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
-	public void marshal(XMLStreamWriter xmlStreamWriter)
-			throws WritingException {
+	public void marshal(XMLStreamWriter xmlStreamWriter) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), xmlStreamWriter);
+			ContextAndPolicy.getMarshaller(RESPONSECTX)
+					.marshal(objectFactory.createResponse(response), xmlStreamWriter);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}
@@ -237,17 +230,16 @@ public class ResponseCtx {
 	 * TODO JAVADOC
 	 * 
 	 * Marshal the contained Response into a XMLEventWriter.
-	 *
+	 * 
 	 * @param xmlEventWriter
 	 *            XML will be sent to this writer.
-	 *
-	 * @throws WritingException -
-	 *             If any unexpected problem occurs during the marshalling.
+	 * 
+	 * @throws WritingException
+	 *             - If any unexpected problem occurs during the marshalling.
 	 */
 	public void marshal(XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(
-					objectFactory.createResponse(response), xmlEventWriter);
+			ContextAndPolicy.getMarshaller(RESPONSECTX).marshal(objectFactory.createResponse(response), xmlEventWriter);
 		} catch (JAXBException e) {
 			throw new WritingException(e);
 		}

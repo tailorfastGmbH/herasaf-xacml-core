@@ -23,7 +23,7 @@ import org.herasaf.xacml.core.ProcessingException;
  * TODO JAVADOC
  * 
  * This exception is thrown when the processing of the a Function fails.
- *
+ * 
  * @author Florian Huonder
  */
 public class FunctionProcessingException extends ProcessingException {
@@ -32,28 +32,30 @@ public class FunctionProcessingException extends ProcessingException {
 	/**
 	 * Constructs a new exception with null as its detail message.
 	 */
-	public FunctionProcessingException(){
+	public FunctionProcessingException() {
 		super();
 	}
 
 	/**
 	 * Constructs a new exception with the specified detail message.
 	 */
-	public FunctionProcessingException(String message){
+	public FunctionProcessingException(String message) {
 		super(message);
 	}
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
 	 */
-	public FunctionProcessingException(String message, Throwable cause){
+	public FunctionProcessingException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * Constructs a new exception with the specified cause and a detail message of (cause==null ? null : cause.toString()) (which typically contains the class and detail message of cause).
+	 * Constructs a new exception with the specified cause and a detail message
+	 * of (cause==null ? null : cause.toString()) (which typically contains the
+	 * class and detail message of cause).
 	 */
-	public FunctionProcessingException(Throwable cause){
+	public FunctionProcessingException(Throwable cause) {
 		super(cause);
 	}
 }

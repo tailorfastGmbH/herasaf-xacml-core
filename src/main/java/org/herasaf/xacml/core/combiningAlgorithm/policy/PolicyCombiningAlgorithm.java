@@ -29,7 +29,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * TODO JAVADOC
  * 
  * Interface for the PolicyCombiningAlgorithms.
- *
+ * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @version 1.1
@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 
 public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	/**
-	 *
+	 * 
 	 * @param request
 	 *            The request that has to be evaluated.
 	 * @param possibleEvaluatables
@@ -46,7 +46,6 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	 *            Contains the information that has to be kept for this request.
 	 * @return The decision of the evaluation of the request.
 	 */
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possibleEvaluatables,
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			RequestInformation requestInfo);
 }

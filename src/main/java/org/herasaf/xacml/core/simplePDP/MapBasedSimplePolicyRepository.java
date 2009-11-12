@@ -117,8 +117,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	// root.
 	private List<Evaluatable> rootEvaluatables; // The root evaluatables
 
-	private final Logger logger = LoggerFactory
-			.getLogger(MapBasedSimplePolicyRepository.class);
+	private final Logger logger = LoggerFactory.getLogger(MapBasedSimplePolicyRepository.class);
 
 	public MapBasedSimplePolicyRepository() {
 		individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
@@ -129,8 +128,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void deploy(Collection<Evaluatable> evaluatables)
-			throws PolicyRepositoryException {
+	public void deploy(Collection<Evaluatable> evaluatables) throws PolicyRepositoryException {
 
 		for (Evaluatable eval : evaluatables) {
 			deploy(eval); // Change object can be neglected here
@@ -140,16 +138,14 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void deploy(Evaluatable evaluatable)
-			throws PolicyRepositoryException {
-		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(
-				evaluatable, evaluatable.getId());
+	public void deploy(Evaluatable evaluatable) throws PolicyRepositoryException {
+		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
+				.getId());
 
 		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check
 			// for
 			// consistency
-			throw new PolicyRepositoryException(
-					"The PolicySet is not consistent.");
+			throw new PolicyRepositoryException("The PolicySet is not consistent.");
 		}
 
 		for (EvaluatableID id : newIndividualEvaluatables.keySet()) { // Check
@@ -159,8 +155,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			// the
 			// keys.
 			if (individualEvaluatables.containsKey(id)) {
-				throw new PolicyRepositoryException(
-						"The ID must be unique over all PolicySets and Policies.");
+				throw new PolicyRepositoryException("The ID must be unique over all PolicySets and Policies.");
 			}
 		}
 
@@ -178,8 +173,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			if (eval.getId().equals(id)) {
 				foundAtLeastOneMatchingEvaluatable = true;
 				rootEvaluatables.remove(eval);
-				List<EvaluatableID> ids = rootEvaluatableMapping.get(eval
-						.getId());
+				List<EvaluatableID> ids = rootEvaluatableMapping.get(eval.getId());
 				for (EvaluatableID evalId : ids) {
 					individualEvaluatables.remove(evalId);
 				}
@@ -187,16 +181,14 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			}
 		}
 		if (!foundAtLeastOneMatchingEvaluatable) {
-			throw new PolicyRepositoryException("No root policy with id: "
-					+ id.getId());
+			throw new PolicyRepositoryException("No root policy with id: " + id.getId());
 		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public void undeploy(Collection<EvaluatableID> ids)
-			throws PolicyRepositoryException {
+	public void undeploy(Collection<EvaluatableID> ids) throws PolicyRepositoryException {
 		for (EvaluatableID id : ids) {
 			undeploy(id);
 		}
@@ -205,8 +197,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void applyDeploymentModifications(
-			List<DeploymentModification> deploymentInstructions)
+	public void applyDeploymentModifications(List<DeploymentModification> deploymentInstructions)
 			throws PolicyRepositoryException {
 		String msg = "The MapBasedSimplePolicyRepository does not support the application of Diffs";
 		logger.error(msg);
@@ -241,8 +232,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * {@inheritDoc}
 	 */
-	public Evaluatable getEvaluatable(EvaluatableID id)
-			throws PolicyRepositoryException {
+	public Evaluatable getEvaluatable(EvaluatableID id) throws PolicyRepositoryException {
 		List<Evaluatable> evals = individualEvaluatables.get(id);
 		if (evals != null) {
 			for (Evaluatable eval : evals) {
@@ -251,8 +241,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 				}
 			}
 		}
-		throw new PolicyRepositoryException("No Evaluatable with ID "
-				+ id.getId() + " found.");
+		throw new PolicyRepositoryException("No Evaluatable with ID " + id.getId() + " found.");
 	}
 
 	/**
@@ -266,8 +255,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	}
 
 	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(
-			Map<EvaluatableID, List<Evaluatable>> initialMap,
-			Evaluatable evaluatable, EvaluatableID rootId) {
+			Map<EvaluatableID, List<Evaluatable>> initialMap, Evaluatable evaluatable, EvaluatableID rootId) {
 		Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
 		if (initialMap == null) {
 			individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>(); // This
@@ -306,10 +294,8 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			// PolicySet, this method is
 			// recursively applied to
 			// all sub-policies
-			for (Evaluatable eval : ((PolicySetType) evaluatable)
-					.getUnorderedEvaluatables(null)) {
-				individualEvaluatables.putAll(splitIntoIndividuals(
-						individualEvaluatables, eval, rootId));
+			for (Evaluatable eval : ((PolicySetType) evaluatable).getUnorderedEvaluatables(null)) {
+				individualEvaluatables.putAll(splitIntoIndividuals(individualEvaluatables, eval, rootId));
 			}
 		}
 		return individualEvaluatables;
@@ -318,8 +304,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/*
 	 * Entry Point for other methods!
 	 */
-	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(
-			Evaluatable evaluatable, EvaluatableID rootId) {
+	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(Evaluatable evaluatable, EvaluatableID rootId) {
 		return splitIntoIndividuals(null, evaluatable, rootId);
 	}
 
@@ -345,8 +330,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	/**
 	 * @param individualEvaluatables2
 	 */
-	private boolean checkReferenceConsistency(
-			Map<EvaluatableID, List<Evaluatable>> individualEvaluatables) {
+	private boolean checkReferenceConsistency(Map<EvaluatableID, List<Evaluatable>> individualEvaluatables) {
 		for (List<Evaluatable> evals : individualEvaluatables.values()) {
 			if (evals.size() == 1) {
 				if (evals.get(0) instanceof IdReferenceType) {
@@ -365,10 +349,8 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 				// have more than one policy with the same id.
 				boolean anEvaluatableFound = false;
 				for (Evaluatable eval : evals) {
-					if (!(eval instanceof IdReferenceType)
-							&& anEvaluatableFound) {
-						logger
-								.error("The ID must be unique over all PolicySets and Policies.");
+					if (!(eval instanceof IdReferenceType) && anEvaluatableFound) {
+						logger.error("The ID must be unique over all PolicySets and Policies.");
 						return false;
 					} else if (!(eval instanceof IdReferenceType)) {
 						anEvaluatableFound = true;

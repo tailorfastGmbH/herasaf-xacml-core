@@ -26,11 +26,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for SubjectsType complex type.
+ * <p>
+ * Java class for SubjectsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="SubjectsType">
@@ -44,50 +46,49 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 46, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 46, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "SubjectsType", propOrder = {
-    "subjects"
-})
-public class SubjectsType
-    implements Serializable
-{
+@XmlType(name = "SubjectsType", propOrder = { "subjects" })
+public class SubjectsType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "Subject", required = true)
-    protected List<SubjectType> subjects;
+	private final static long serialVersionUID = 632768732L;
+	@XmlElement(name = "Subject", required = true)
+	protected List<SubjectType> subjects;
 
-    /**
-     * Gets the value of the subjects property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the subjects property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getSubjects().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link SubjectType }
-     * 
-     * 
-     */
-    public List<SubjectType> getSubjects() {
-        if (subjects == null) {
-            subjects = new ArrayList<SubjectType>();
-        }
-        return this.subjects;
-    }
+	/**
+	 * Gets the value of the subjects property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the subjects property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getSubjects().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link SubjectType }
+	 * 
+	 * 
+	 */
+	public List<SubjectType> getSubjects() {
+		if (subjects == null) {
+			subjects = new ArrayList<SubjectType>();
+		}
+		return this.subjects;
+	}
 }

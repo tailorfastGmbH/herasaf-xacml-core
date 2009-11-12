@@ -20,11 +20,16 @@ package org.herasaf.xacml.core.function.impl.setFunction;
 import org.herasaf.xacml.core.types.YearMonthDuration;
 
 /**
- * <p>The implementation of the urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-union function.</p>
- * <p>See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * <p>
+ * The implementation of the
+ * urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-union function.
+ * </p>
+ * <p>
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 105, for further information.</p>
+ * 2006</a> page 105, for further information.
+ * </p>
  * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
@@ -35,6 +40,7 @@ public class YearMonthDurationUnionFunction extends AbstractUnionFunction<YearMo
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

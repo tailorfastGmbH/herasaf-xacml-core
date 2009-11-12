@@ -59,12 +59,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class PolicyOnlyOneApplicableAlgorithm extends
-		PolicyUnorderedCombiningAlgorithm {
+public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable";
-	private final Logger logger = LoggerFactory
-			.getLogger(PolicyOnlyOneApplicableAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(PolicyOnlyOneApplicableAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -76,8 +74,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 	 */
 
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
+			RequestInformation requestInfo) {
 		// Variable to keep the first made decision
 		DecisionType firstApplicableDecision = null;
 		// keeps the statuscode of the first decision
@@ -95,30 +93,22 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Starting evaluation of: {}", eval.getId()
-							.getId());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId().getId());
 				}
 
-				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfo);
+				decision = eval.getCombiningAlg().evaluate(request, eval, requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Evaluation of {} was: {}", eval.getId()
-							.getId(), decision.toString());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
 					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
-				if (decision == DecisionType.PERMIT
-						|| decision == DecisionType.DENY) {
-					obligationsOfFirstApplicableEval.addAll(eval
-							.getContainedObligations(EffectType
-									.fromValue(decision.toString())));
-					obligationsOfFirstApplicableEval.addAll(requestInfo
-							.getObligations().getObligations());
+				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+					obligationsOfFirstApplicableEval.addAll(eval.getContainedObligations(EffectType.fromValue(decision
+							.toString())));
+					obligationsOfFirstApplicableEval.addAll(requestInfo.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*
@@ -153,8 +143,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 						 * algorithm for further information.
 						 */
 						requestInfo.resetStatus();
-						requestInfo
-								.updateStatusCode(StatusCode.PROCESSING_ERROR);
+						requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
 						return DecisionType.INDETERMINATE;
 					}
 					/*
@@ -208,11 +197,9 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 			requestInfo.setMissingAttributes(missingAttributes);
 			requestInfo.updateStatusCode(statusCode);
 			if (firstApplicableDecision == DecisionType.DENY) {
-				requestInfo.addObligations(obligationsOfFirstApplicableEval,
-						EffectType.DENY);
+				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.DENY);
 			} else if (firstApplicableDecision == DecisionType.PERMIT) {
-				requestInfo.addObligations(obligationsOfFirstApplicableEval,
-						EffectType.PERMIT);
+				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.PERMIT);
 			}
 			return firstApplicableDecision;
 		}

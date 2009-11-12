@@ -57,12 +57,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class PolicyDenyOverridesAlgorithm extends
-		PolicyUnorderedCombiningAlgorithm {
+public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides";
-	private final Logger logger = LoggerFactory
-			.getLogger(PolicyDenyOverridesAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(PolicyDenyOverridesAlgorithm.class);
 
 	/*
 	 * (non-Javadoc)
@@ -72,8 +70,8 @@ public class PolicyDenyOverridesAlgorithm extends
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possiblePolicies, RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
+			RequestInformation requestInfo) {
 
 		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
 
@@ -85,8 +83,7 @@ public class PolicyDenyOverridesAlgorithm extends
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 
-			if (atLeastOneDeny && respectAbandonedEvaluatables
-					&& !eval.hasObligations()) {
+			if (atLeastOneDeny && respectAbandonedEvaluatables && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (atLeastOneDeny == true) and
 				 * the abandoned Obligations must be taken into account
@@ -104,30 +101,22 @@ public class PolicyDenyOverridesAlgorithm extends
 				requestInfo.resetStatus();
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Starting evaluation of: {}", eval.getId()
-							.getId());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Starting evaluation of: {}", eval.getId().getId());
 				}
 
-				decision = eval.getCombiningAlg().evaluate(request, eval,
-						requestInfo);
+				decision = eval.getCombiningAlg().evaluate(request, eval, requestInfo);
 
 				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval
-							.getId().getId());
-					logger.debug("Evaluation of {} was: {}", eval.getId()
-							.getId(), decision.toString());
+					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+					logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
 					MDC.remove(MDC_EVALUATABLE_ID);
 				}
 
-				if (decision == DecisionType.PERMIT
-						|| decision == DecisionType.DENY) {
-					obligationsOfApplicableEvals.addAll(eval
-							.getContainedObligations(EffectType
-									.fromValue(decision.toString())));
-					obligationsOfApplicableEvals.addAll(requestInfo
-							.getObligations().getObligations());
+				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+					obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision
+							.toString())));
+					obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
 				}
 			} catch (NullPointerException e) {
 				/*
@@ -148,8 +137,7 @@ public class PolicyDenyOverridesAlgorithm extends
 					// finishes the
 					// evaluation
 					requestInfo.clearObligations();
-					requestInfo.addObligations(obligationsOfApplicableEvals,
-							EffectType.DENY);
+					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 					return DecisionType.DENY;
 				} else {
 					atLeastOneDeny = true;
@@ -170,15 +158,13 @@ public class PolicyDenyOverridesAlgorithm extends
 
 		if (atLeastOneDeny) {
 			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals,
-					EffectType.DENY);
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 			return DecisionType.DENY;
 		} else if (atLeastOneError) {
 			requestInfo.resetStatus();
 			return DecisionType.DENY;
 		} else if (atLeastOnePermit) {
-			requestInfo.addObligations(obligationsOfApplicableEvals,
-					EffectType.PERMIT);
+			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 
 			/*
 			 * If the result is permit, the statuscode is always ok.

@@ -27,12 +27,12 @@ import org.herasaf.xacml.core.types.HexBinary;
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#hexBinary"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#hexBinary</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
 public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBinary> {
-	
+
 	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#hexBinary";
 
@@ -40,8 +40,7 @@ public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBin
 	private static final long serialVersionUID = -1876089138053432795L;
 
 	/** {@inheritDoc} */
-	public HexBinary convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public HexBinary convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new HexBinary(jaxbRepresentation.trim());
 		} catch (IllegalArgumentException e) {

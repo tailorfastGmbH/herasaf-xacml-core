@@ -22,7 +22,6 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
@@ -33,11 +32,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ActionType complex type.
+ * <p>
+ * Java class for ActionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ActionType">
@@ -51,51 +52,50 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 70, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 70, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ActionType", propOrder = {
-    "attributes"
-})
-public class ActionType
-    implements Serializable
-{
+@XmlType(name = "ActionType", propOrder = { "attributes" })
+public class ActionType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "Attribute")
-    protected List<AttributeType> attributes;
+	private final static long serialVersionUID = 632768732L;
+	@XmlElement(name = "Attribute")
+	protected List<AttributeType> attributes;
 
-    /**
-     * Gets the value of the attributes property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the attributes property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getAttributes().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link AttributeType }
-     * 
-     * 
-     */
-    public List<AttributeType> getAttributes() {
-        if (attributes == null) {
-            attributes = new ArrayList<AttributeType>();
-        }
-        return this.attributes;
-    }
+	/**
+	 * Gets the value of the attributes property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the attributes property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getAttributes().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link AttributeType }
+	 * 
+	 * 
+	 */
+	public List<AttributeType> getAttributes() {
+		if (attributes == null) {
+			attributes = new ArrayList<AttributeType>();
+		}
+		return this.attributes;
+	}
 
 }

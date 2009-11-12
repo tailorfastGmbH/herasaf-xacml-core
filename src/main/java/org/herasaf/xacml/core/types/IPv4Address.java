@@ -25,27 +25,26 @@ import java.net.UnknownHostException;
  * TODO JAVADOC
  * 
  * Implementation of the {@link IPAddress} datatype for IPv4.
- *
- * @author Florian Huonder 
+ * 
+ * @author Florian Huonder
  * @version 1.0
  * @see IPAddress
  */
 public class IPv4Address extends IPAddress {
-	private final static String REGEX =
-		"^[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?(/[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?)?(:[^\\*\\.:]+)??$";
+	private final static String REGEX = "^[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?(/[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?)?(:[^\\*\\.:]+)??$";
 	private InetAddress ip;
 	private InetAddress mask;
 	private PortRange portRange;
 
 	/**
 	 * Creates a new {@link IPv4Address} from the given {@link String}.
-	 *
-	 * @param value The String to create the {@link IPv4Address} from.
+	 * 
+	 * @param value
+	 *            The String to create the {@link IPv4Address} from.
 	 */
 	public IPv4Address(String value) {
 		if (!value.matches(REGEX)) {
-			throw new IllegalArgumentException(value
-					+ " is not a valid IP Address");
+			throw new IllegalArgumentException(value + " is not a valid IP Address");
 		}
 		try {
 			int slashPosition = value.indexOf("/");
@@ -53,16 +52,14 @@ public class IPv4Address extends IPAddress {
 
 			if (slashPosition != -1 && colonPosition != -1) {
 				ip = Inet4Address.getByName(value.substring(0, slashPosition));
-				mask = Inet4Address.getByName(value.substring(slashPosition+1, colonPosition));
-				portRange = new PortRange(value.substring(colonPosition + 1, value
-						.length()));
-			} else if (slashPosition != -1){
+				mask = Inet4Address.getByName(value.substring(slashPosition + 1, colonPosition));
+				portRange = new PortRange(value.substring(colonPosition + 1, value.length()));
+			} else if (slashPosition != -1) {
 				ip = Inet4Address.getByName(value.substring(0, slashPosition));
-				mask = Inet4Address.getByName(value.substring(slashPosition+1, value.length()));
-			} else if (colonPosition != -1){
+				mask = Inet4Address.getByName(value.substring(slashPosition + 1, value.length()));
+			} else if (colonPosition != -1) {
 				ip = Inet4Address.getByName(value.substring(0, colonPosition));
-				portRange = new PortRange(value.substring(colonPosition + 1, value
-						.length()));
+				portRange = new PortRange(value.substring(colonPosition + 1, value.length()));
 			} else {
 				ip = Inet4Address.getByName(value.substring(0, value.length()));
 			}
@@ -74,6 +71,7 @@ public class IPv4Address extends IPAddress {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.types.IPAddress#toString()
 	 */
 	@Override
@@ -94,16 +92,19 @@ public class IPv4Address extends IPAddress {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) return false;
+		if (obj == null)
+			return false;
 		return toString().equals(obj.toString());
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

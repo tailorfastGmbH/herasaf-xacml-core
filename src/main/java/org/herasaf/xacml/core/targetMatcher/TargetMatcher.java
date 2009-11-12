@@ -29,7 +29,7 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  * 
  * The {@link TargetMatcher} is used to match a given {@link TargetType} to a
  * {@link RequestType}.
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  */
 public interface TargetMatcher {
@@ -37,13 +37,12 @@ public interface TargetMatcher {
 	 * TODO JAVADOC
 	 * 
 	 * Matches a {@link TargetType} to a {@link RequestType}.
-	 *
+	 * 
 	 * @param req
 	 *            The {@link RequestType} for the match.
 	 * @param target
 	 *            The {@link TargetType} for the match.
-	 * @return An boolean containing the result of the
-	 *         matching.
+	 * @return An boolean containing the result of the matching.
 	 * @throws SyntaxException
 	 * @throws ProcessingException
 	 */

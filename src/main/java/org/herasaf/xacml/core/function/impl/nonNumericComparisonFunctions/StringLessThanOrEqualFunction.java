@@ -26,13 +26,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:string-less-than-or-equal function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class StringLessThanOrEqualFunction implements Function {
@@ -49,8 +49,7 @@ public class StringLessThanOrEqualFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			int result = ((String) args[0]).compareTo((String) args[1]);
 			if (result < 0) {

@@ -26,12 +26,14 @@ import javax.xml.bind.annotation.XmlType;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 
-
 /**
- * <p>Java class for AttributeSelectorType complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * <p>
+ * Java class for AttributeSelectorType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
  * <pre>
  * &lt;complexType name="AttributeSelectorType">
  *   &lt;complexContent>
@@ -43,110 +45,104 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 64, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 64, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeSelectorType")
-public class AttributeSelectorType
-    extends ExpressionType {
+public class AttributeSelectorType extends ExpressionType {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlAttribute(name = "RequestContextPath", required = true)
-    protected String requestContextPath;
-    @XmlAttribute(name = "DataType", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String dataType;
-    @XmlAttribute(name = "MustBePresent")
-    protected Boolean mustBePresent;
+	private final static long serialVersionUID = 632768732L;
+	@XmlAttribute(name = "RequestContextPath", required = true)
+	protected String requestContextPath;
+	@XmlAttribute(name = "DataType", required = true)
+	@XmlSchemaType(name = "anyURI")
+	protected String dataType;
+	@XmlAttribute(name = "MustBePresent")
+	protected Boolean mustBePresent;
 
-    /**
-     * Gets the value of the requestContextPath property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getRequestContextPath() {
-        return requestContextPath;
-    }
+	/**
+	 * Gets the value of the requestContextPath property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getRequestContextPath() {
+		return requestContextPath;
+	}
 
-    /**
-     * Sets the value of the requestContextPath property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setRequestContextPath(String value) {
-        this.requestContextPath = value;
-    }
+	/**
+	 * Sets the value of the requestContextPath property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setRequestContextPath(String value) {
+		this.requestContextPath = value;
+	}
 
-    /**
-     * Gets the value of the dataType property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public String getDataType() {
-        return dataType;
-    }
+	/**
+	 * Gets the value of the dataType property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getDataType() {
+		return dataType;
+	}
 
-    /**
-     * Sets the value of the dataType property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setDataType(String value) {
-        this.dataType = value;
-    }
+	/**
+	 * Sets the value of the dataType property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDataType(String value) {
+		this.dataType = value;
+	}
 
-    /**
-     * Gets the value of the mustBePresent property.
-     *
-     * @return
-     *     possible object is
-     *     {@link Boolean }
-     *
-     */
-    public boolean isMustBePresent() {
-        if (mustBePresent == null) {
-            return false;
-        }
-        return mustBePresent;
-    }
+	/**
+	 * Gets the value of the mustBePresent property.
+	 * 
+	 * @return possible object is {@link Boolean }
+	 * 
+	 */
+	public boolean isMustBePresent() {
+		if (mustBePresent == null) {
+			return false;
+		}
+		return mustBePresent;
+	}
 
-    /**
-     * Sets the value of the mustBePresent property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link Boolean }
-     *
-     */
-    public void setMustBePresent(Boolean value) {
-        this.mustBePresent = value;
-    }
+	/**
+	 * Sets the value of the mustBePresent property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link Boolean }
+	 * 
+	 */
+	public void setMustBePresent(Boolean value) {
+		this.mustBePresent = value;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
-     */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.
+	 * xacml.core.context.impl.RequestType, java.util.Map)
+	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo) {
+	public Object handle(RequestType request, RequestInformation reqInfo) {
 		return null;
 	}
 }

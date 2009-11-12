@@ -25,11 +25,13 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for RuleType complex type.
+ * <p>
+ * Java class for RuleType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RuleType">
@@ -47,150 +49,132 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 57, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 57, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "RuleType", propOrder = {
-    "description",
-    "target",
-    "condition"
-})
-public class RuleType implements Serializable
-{
+@XmlType(name = "RuleType", propOrder = { "description", "target", "condition" })
+public class RuleType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "Description")
-    protected String description;
-    @XmlElement(name = "Target")
-    protected TargetType target;
-    @XmlElement(name = "Condition")
-    protected ConditionType condition;
-    @XmlAttribute(name = "RuleId", required = true)
-    protected String ruleId;
-    @XmlAttribute(name = "Effect", required = true)
-    protected EffectType effect;
+	private final static long serialVersionUID = 632768732L;
+	@XmlElement(name = "Description")
+	protected String description;
+	@XmlElement(name = "Target")
+	protected TargetType target;
+	@XmlElement(name = "Condition")
+	protected ConditionType condition;
+	@XmlAttribute(name = "RuleId", required = true)
+	protected String ruleId;
+	@XmlAttribute(name = "Effect", required = true)
+	protected EffectType effect;
 
-    /**
-     * Gets the value of the description property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getDescription() {
-        return description;
-    }
+	/**
+	 * Gets the value of the description property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * Sets the value of the description property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setDescription(String value) {
-        this.description = value;
-    }
+	/**
+	 * Sets the value of the description property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setDescription(String value) {
+		this.description = value;
+	}
 
-    /**
-     * Gets the value of the target property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link TargetType }
-     *     
-     */
-    public TargetType getTarget() {
-        return target;
-    }
+	/**
+	 * Gets the value of the target property.
+	 * 
+	 * @return possible object is {@link TargetType }
+	 * 
+	 */
+	public TargetType getTarget() {
+		return target;
+	}
 
-    /**
-     * Sets the value of the target property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link TargetType }
-     *     
-     */
-    public void setTarget(TargetType value) {
-        this.target = value;
-    }
+	/**
+	 * Sets the value of the target property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link TargetType }
+	 * 
+	 */
+	public void setTarget(TargetType value) {
+		this.target = value;
+	}
 
-    /**
-     * Gets the value of the condition property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ConditionType }
-     *     
-     */
-    public ConditionType getCondition() {
-        return condition;
-    }
+	/**
+	 * Gets the value of the condition property.
+	 * 
+	 * @return possible object is {@link ConditionType }
+	 * 
+	 */
+	public ConditionType getCondition() {
+		return condition;
+	}
 
-    /**
-     * Sets the value of the condition property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ConditionType }
-     *     
-     */
-    public void setCondition(ConditionType value) {
-        this.condition = value;
-    }
+	/**
+	 * Sets the value of the condition property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link ConditionType }
+	 * 
+	 */
+	public void setCondition(ConditionType value) {
+		this.condition = value;
+	}
 
-    /**
-     * Gets the value of the ruleId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getRuleId() {
-        return ruleId;
-    }
+	/**
+	 * Gets the value of the ruleId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getRuleId() {
+		return ruleId;
+	}
 
-    /**
-     * Sets the value of the ruleId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setRuleId(String value) {
-        this.ruleId = value;
-    }
+	/**
+	 * Sets the value of the ruleId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setRuleId(String value) {
+		this.ruleId = value;
+	}
 
-    /**
-     * Gets the value of the effect property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link EffectType }
-     *     
-     */
-    public EffectType getEffect() {
-        return effect;
-    }
+	/**
+	 * Gets the value of the effect property.
+	 * 
+	 * @return possible object is {@link EffectType }
+	 * 
+	 */
+	public EffectType getEffect() {
+		return effect;
+	}
 
-    /**
-     * Sets the value of the effect property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link EffectType }
-     *     
-     */
-    public void setEffect(EffectType value) {
-        this.effect = value;
-    }
+	/**
+	 * Sets the value of the effect property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link EffectType }
+	 * 
+	 */
+	public void setEffect(EffectType value) {
+		this.effect = value;
+	}
 }

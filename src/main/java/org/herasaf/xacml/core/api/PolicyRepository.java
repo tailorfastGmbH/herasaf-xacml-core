@@ -41,8 +41,7 @@ public interface PolicyRepository {
 	 * @param evaluatable
 	 * @throws PolicyRepositoryException
 	 */
-	public void deploy(Evaluatable evaluatable)
-			throws PolicyRepositoryException;
+	public void deploy(Evaluatable evaluatable) throws PolicyRepositoryException;
 
 	/**
 	 * TODO JAVADOC
@@ -50,8 +49,7 @@ public interface PolicyRepository {
 	 * @param evaluatables
 	 * @throws PolicyRepositoryException
 	 */
-	public void deploy(Collection<Evaluatable> evaluatables)
-			throws PolicyRepositoryException;
+	public void deploy(Collection<Evaluatable> evaluatables) throws PolicyRepositoryException;
 
 	/**
 	 * TODO JAVADOC
@@ -59,8 +57,7 @@ public interface PolicyRepository {
 	 * @param evaluatableID
 	 * @throws PolicyRepositoryException
 	 */
-	public void undeploy(EvaluatableID evaluatableID)
-			throws PolicyRepositoryException;
+	public void undeploy(EvaluatableID evaluatableID) throws PolicyRepositoryException;
 
 	/**
 	 * TODO JAVADOC
@@ -68,8 +65,7 @@ public interface PolicyRepository {
 	 * @param evaluatableIDs
 	 * @throws PolicyRepositoryException
 	 */
-	public void undeploy(Collection<EvaluatableID> evaluatableIDs)
-			throws PolicyRepositoryException;
+	public void undeploy(Collection<EvaluatableID> evaluatableIDs) throws PolicyRepositoryException;
 
 	/**
 	 * TODO JAVADOC
@@ -77,8 +73,7 @@ public interface PolicyRepository {
 	 * @param diff
 	 * @throws PolicyRepositoryException
 	 */
-	public void applyDeploymentModifications(
-			List<DeploymentModification> deploymentInstructions)
+	public void applyDeploymentModifications(List<DeploymentModification> deploymentInstructions)
 			throws PolicyRepositoryException;
 
 	/**
@@ -111,8 +106,7 @@ public interface PolicyRepository {
 	 * 
 	 * @return
 	 */
-	public Evaluatable getEvaluatable(EvaluatableID evaluatableID)
-			throws PolicyRepositoryException;
+	public Evaluatable getEvaluatable(EvaluatableID evaluatableID) throws PolicyRepositoryException;
 
 	/**
 	 * TODO JAVADOC

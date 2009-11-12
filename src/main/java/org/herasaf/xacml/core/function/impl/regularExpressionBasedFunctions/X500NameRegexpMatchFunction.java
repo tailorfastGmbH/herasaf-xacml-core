@@ -28,13 +28,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:2.0:function:x500Name-regexp-match function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class X500NameRegexpMatchFunction implements Function {
@@ -52,14 +52,11 @@ public class X500NameRegexpMatchFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
-			return ((X500Principal) args[1]).toString().matches(
-					(String) args[0]);
+			return ((X500Principal) args[1]).toString().matches((String) args[0]);
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -69,7 +66,7 @@ public class X500NameRegexpMatchFunction implements Function {
 
 	/*
 	 * (non-Javadoc)
-	 *
+	 * 
 	 * @see org.herasaf.core.function.FunctionAC#toString()
 	 */
 	@Override

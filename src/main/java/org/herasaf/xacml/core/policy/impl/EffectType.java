@@ -21,12 +21,15 @@ import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for EffectType.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
  * <p>
+ * Java class for EffectType.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * <p>
+ * 
  * <pre>
  * &lt;simpleType name="EffectType">
  *   &lt;restriction base="{http://www.w3.org/2001/XMLSchema}string">
@@ -35,9 +38,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 58, for further information.
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 58, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
@@ -47,33 +52,34 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum EffectType {
 
-    @XmlEnumValue("Permit")
-    PERMIT("PERMIT"),
-    @XmlEnumValue("Deny")
-    DENY("DENY");
-    private final String value;
+	@XmlEnumValue("Permit")
+	PERMIT("PERMIT"), @XmlEnumValue("Deny")
+	DENY("DENY");
+	private final String value;
 
-    EffectType(String v) {
-        value = v;
-    }
+	EffectType(String v) {
+		value = v;
+	}
 
-    public String value() {
-        return value;
-    }
+	public String value() {
+		return value;
+	}
 
-    /**
-     * The effect type is an enumeration. This method is needed to find the Enum-Value from its String-representation.
-     * 
-     * @param value String representation of the enumeration.
-     * @return The {@link EffectType} of the string representation
-     */
-    public static EffectType fromValue(String value) {
-        for (int i = 0; i < EffectType.values().length; i++){
-        	EffectType c = EffectType.values()[i];
-        	if (c.value.equalsIgnoreCase(value)) {
-                return c;
-            }
-        }
-        throw new IllegalArgumentException(value);
-    }
+	/**
+	 * The effect type is an enumeration. This method is needed to find the
+	 * Enum-Value from its String-representation.
+	 * 
+	 * @param value
+	 *            String representation of the enumeration.
+	 * @return The {@link EffectType} of the string representation
+	 */
+	public static EffectType fromValue(String value) {
+		for (int i = 0; i < EffectType.values().length; i++) {
+			EffectType c = EffectType.values()[i];
+			if (c.value.equalsIgnoreCase(value)) {
+				return c;
+			}
+		}
+		throw new IllegalArgumentException(value);
+	}
 }

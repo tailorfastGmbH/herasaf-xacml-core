@@ -25,11 +25,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:map function.
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 122, for further information.
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
@@ -49,8 +49,7 @@ public class MapFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			Function function = (Function) args[0];
 			List<Object> returnList = new ArrayList<Object>();
@@ -69,6 +68,7 @@ public class MapFunction implements Function {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

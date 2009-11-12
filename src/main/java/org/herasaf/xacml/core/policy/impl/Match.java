@@ -20,12 +20,15 @@ package org.herasaf.xacml.core.policy.impl;
 import org.herasaf.xacml.core.function.Function;
 
 /**
- * Supertype of the various Match-Types (SubjectMatch, ResourceMatch, ActionMatch, EnvironmentMatch).
+ * Supertype of the various Match-Types (SubjectMatch, ResourceMatch,
+ * ActionMatch, EnvironmentMatch).
  * 
- * This part references the <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a>, pages 46, 48, 49 and 50.
- *
- * @author Florian Huonder 
+ * This part references the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a>, pages 46, 48, 49 and 50.
+ * 
+ * @author Florian Huonder
  * @version 1.0
  */
 public interface Match {
@@ -35,21 +38,21 @@ public interface Match {
 	 * @return The {@link AttributeValueType}.
 	 */
 	public AttributeValueType getAttributeValue();
-	
+
 	/**
 	 * Returns the {@link AttributeDesignatorType} of the **Match.
 	 * 
 	 * @return The {@link AttributeDesignatorType}.
 	 */
 	public AttributeDesignatorType getAttributeDesignator();
-	
+
 	/**
 	 * Returns the {@link AttributeSelectorType} of the **Match.
 	 * 
 	 * @return The {@link AttributeSelectorType}.
 	 */
 	public AttributeSelectorType getAttributeSelector();
-	
+
 	/**
 	 * Returns the match-{@link Function} of the **Match.
 	 * 

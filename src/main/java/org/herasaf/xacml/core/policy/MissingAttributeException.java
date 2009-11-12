@@ -26,7 +26,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * This exception is thrown if a missing attribute cannot be retrieved by the
  * remote loader.
  * 
- * @author Florian Huonder 
+ * @author Florian Huonder
  * @version 1.0
  */
 public class MissingAttributeException extends Exception {
@@ -43,8 +43,7 @@ public class MissingAttributeException extends Exception {
 	 * @param issuer
 	 *            The issuer of the attribute that cannot be obtained.
 	 */
-	public MissingAttributeException(String attributeId,
-			DataTypeAttribute<?> dataType, String issuer) {
+	public MissingAttributeException(String attributeId, DataTypeAttribute<?> dataType, String issuer) {
 		missingAttribute = new MissingAttributeDetailType();
 		missingAttribute.setAttributeId(attributeId);
 		missingAttribute.setIssuer(issuer);

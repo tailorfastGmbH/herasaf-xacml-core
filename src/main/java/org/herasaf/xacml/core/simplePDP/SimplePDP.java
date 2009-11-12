@@ -41,7 +41,7 @@ public class SimplePDP implements PDP {
 	private PIP pip; // TODO introduce PIP
 	private PolicyUnorderedCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
-	
+
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 
 	/**
@@ -51,13 +51,13 @@ public class SimplePDP implements PDP {
 	 * @param policyRepository
 	 * @param pip
 	 */
-	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository, PIP pip) {
+	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
+			PIP pip) {
 		this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
 		this.pip = pip;
-		
-		if(pip == null){
+
+		if (pip == null) {
 			logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
 		}
 	}
@@ -68,30 +68,30 @@ public class SimplePDP implements PDP {
 	public PolicyRepository getPolicyRepository() {
 		return policyRepository;
 	}
-	
+
 	/**
 	 * TODO JAVA
 	 * 
 	 * @return
 	 */
-	public PIP getPIP(){
+	public PIP getPIP() {
 		return pip;
 	}
-	
+
 	/**
 	 * TODO JAVA
 	 * 
 	 * @return
 	 */
-	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm(){
+	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm() {
 		return rootPolicyCombiningAlgorithm;
 	}
-	
+
 	/**
 	 * TODO REVIEW
 	 * 
-	 * {@inheritDoc}
-	 * The evaluation starts at the predefined root combining algorithm. 
+	 * {@inheritDoc} The evaluation starts at the predefined root combining
+	 * algorithm.
 	 * 
 	 * <br />
 	 * <b>Logging:</b><br />
@@ -107,20 +107,18 @@ public class SimplePDP implements PDP {
 	 * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
 	 * different requesters as described here: <a
 	 * href="http://logback.qos.ch/manual/mdc.html"
-	 * >http://logback.qos.ch/manual/mdc.html</a>.
-	 * TODO extend log message after log issue is handled.
+	 * >http://logback.qos.ch/manual/mdc.html</a>. TODO extend log message after
+	 * log issue is handled.
 	 */
 	public ResponseCtx evaluate(RequestCtx request) {
 		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
 		logger.debug("Evaluating Request: {}", request.toString());
 		RequestInformation reqInfo = new RequestInformation(pip);
 
-		DecisionType decision = rootPolicyCombiningAlgorithm
-				.evaluateEvaluatableList(request.getRequest(), policyRepository
-						.getEvaluatables(request), reqInfo);
+		DecisionType decision = rootPolicyCombiningAlgorithm.evaluateEvaluatableList(request.getRequest(),
+				policyRepository.getEvaluatables(request), reqInfo);
 
 		MDC.remove(MDC_REQUEST_TIME);
-		return ResponseCtxFactory.create(request.getRequest(), decision,
-				reqInfo);
+		return ResponseCtxFactory.create(request.getRequest(), decision, reqInfo);
 	}
 }

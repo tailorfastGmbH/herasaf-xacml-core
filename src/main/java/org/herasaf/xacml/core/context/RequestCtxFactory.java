@@ -44,11 +44,11 @@ import org.xml.sax.InputSource;
  * TODO JAVADOC
  * 
  * Factory to create a {@link RequestCtx}.Provides various unmarshal methods to
- * create a RequestCtx containing a RequestType. Because the {@link Unmarshaller}
- * from JAXB <b>is not</b> thread safe it must be newly created in each
- * marshal-method. This class fully relies on the underlying JAXB
- * implementation.
- *
+ * create a RequestCtx containing a RequestType. Because the
+ * {@link Unmarshaller} from JAXB <b>is not</b> thread safe it must be newly
+ * created in each marshal-method. This class fully relies on the underlying
+ * JAXB implementation.
+ * 
  * @author Florian Huonder
  * @version 1.0
  */
@@ -69,7 +69,7 @@ public class RequestCtxFactory {
 	 * TODO JAVADOC explain transformables maybe.
 	 * 
 	 * Method to create a RequestCtx using Transformables.
-	 *
+	 * 
 	 * @param subjectTransformable
 	 *            SubjectTransformable containing the subject informations.
 	 * @param resourceTransformable
@@ -83,8 +83,7 @@ public class RequestCtxFactory {
 	 *         Transformables.
 	 */
 	public static RequestCtx create(SubjectTransformable subjectTransformable,
-			ResourceTransformable resourceTransformable,
-			ActionTransformable actionTransformable,
+			ResourceTransformable resourceTransformable, ActionTransformable actionTransformable,
 			EnvironmentTransformable environmentTransformable) {
 		RequestType req = objectFactory.createRequestType();
 		req.getSubjects().addAll(subjectTransformable.transform());
@@ -99,20 +98,18 @@ public class RequestCtxFactory {
 	 * 
 	 * Unmarshal XML data from the specified file and return the resulting
 	 * RequestCtx.
-	 *
+	 * 
 	 * @param file
 	 *            the file to unmarshal the request from.
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static RequestCtx unmarshal(File file) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(file)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(file)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -127,21 +124,18 @@ public class RequestCtxFactory {
 	 * Unmarshal XML data from the specified InputStream and return the
 	 * resulting RequestCtx. Validation event location information may be
 	 * incomplete.
-	 *
+	 * 
 	 * @param inputStream
 	 *            the inputStream to unmarshal the request from.
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static RequestCtx unmarshal(InputStream inputStream)
-			throws SyntaxException {
+	public static RequestCtx unmarshal(InputStream inputStream) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(inputStream)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(inputStream)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -155,20 +149,18 @@ public class RequestCtxFactory {
 	 * 
 	 * Unmarshal XML data from the specified Reader and return the resulting
 	 * RequestCtx. Validation event location information may be incomplete.
-	 *
+	 * 
 	 * @param reader
 	 *            the Reader to unmarshal XML data from.
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static RequestCtx unmarshal(Reader reader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(reader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(reader)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -182,20 +174,18 @@ public class RequestCtxFactory {
 	 * 
 	 * Unmarshal XML data from the specified URL and return the resulting
 	 * RequestCtx.
-	 *
+	 * 
 	 * @param url
 	 *            the url to unmarshal the request from.
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static RequestCtx unmarshal(URL url) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(url)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(url)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -209,22 +199,19 @@ public class RequestCtxFactory {
 	 * 
 	 * Unmarshal XML data from the specified SAX InputSource and return the
 	 * resulting RequestCtx.
-	 *
+	 * 
 	 * @param inputSource
 	 *            the input source to unmarshal XML data from
-	 *
+	 * 
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static RequestCtx unmarshal(InputSource inputSource)
-			throws SyntaxException {
+	public static RequestCtx unmarshal(InputSource inputSource) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(inputSource)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(inputSource)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -238,21 +225,19 @@ public class RequestCtxFactory {
 	 * 
 	 * Unmarshal global XML data from the specified DOM tree and return the
 	 * resulting RequestCtx.
-	 *
+	 * 
 	 * @param node
 	 *            the input source to unmarshal XML data from
-	 *
+	 * 
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static RequestCtx unmarshal(Node node) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(node)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(node)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -296,21 +281,19 @@ public class RequestCtxFactory {
 	 * API. All other forms of the unmarshal method (File, URL, Node, etc) will
 	 * use the default parser and validator mechanisms.
 	 * </p>
-	 *
+	 * 
 	 * @param source
 	 *            the input source to unmarshal XML data from
-	 *
+	 * 
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
 	public static RequestCtx unmarshal(Source source) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(source)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(source)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -332,24 +315,21 @@ public class RequestCtxFactory {
 	 * the corresponding end event. If this method returns successfully, the
 	 * reader will be pointing at the token right after the end event.
 	 * </p>
-	 *
-	 *
-	 *
+	 * 
+	 * 
+	 * 
 	 * @param xmlStreamReader
 	 *            The parser to be read.
-	 *
+	 * 
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static RequestCtx unmarshal(XMLStreamReader xmlStreamReader)
-			throws SyntaxException {
+	public static RequestCtx unmarshal(XMLStreamReader xmlStreamReader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(xmlStreamReader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(xmlStreamReader)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
@@ -371,24 +351,21 @@ public class RequestCtxFactory {
 	 * the corresponding end event. If this method returns successfully, the
 	 * reader will be pointing at the token right after the end event.
 	 * </p>
-	 *
-	 *
-	 *
+	 * 
+	 * 
+	 * 
 	 * @param xmlEventReader
 	 *            The parser to be read.
-	 *
+	 * 
 	 * @return The newly created RequestCtx.
-	 * @throws SyntaxException -
-	 *             Exception if an error occures.
+	 * @throws SyntaxException
+	 *             - Exception if an error occures.
 	 */
 	@SuppressWarnings("unchecked")
-	public static RequestCtx unmarshal(XMLEventReader xmlEventReader)
-			throws SyntaxException {
+	public static RequestCtx unmarshal(XMLEventReader xmlEventReader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(REQUESTCTX);
-			RequestType rt = ((JAXBElement<RequestType>) unmarshaller
-					.unmarshal(xmlEventReader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(REQUESTCTX);
+			RequestType rt = ((JAXBElement<RequestType>) unmarshaller.unmarshal(xmlEventReader)).getValue();
 			return new RequestCtx(rt);
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);

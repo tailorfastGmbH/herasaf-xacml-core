@@ -26,13 +26,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:string-less-than function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class StringLessThanFunction implements Function {
@@ -43,29 +43,27 @@ public class StringLessThanFunction implements Function {
 	 * {@inheritDoc} <br>
 	 * <br>
 	 * Returns true if the first argument of type
-	 * http://www.w3.org/2001/XMLSchema#string is lesser than the
-	 * second argument.
+	 * http://www.w3.org/2001/XMLSchema#string is lesser than the second
+	 * argument.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException,
-			FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException, FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
-			int result =  ((String) args[0]).compareTo((String)args[1]);
-			if (result < 0 ){
+			int result = ((String) args[0]).compareTo((String) args[1]);
+			if (result < 0) {
 				return true;
-			} else if (result > 0){
+			} else if (result > 0) {
 				return false;
 			}
 			return false;
 
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(e);
-		} catch (FunctionProcessingException e){
+		} catch (FunctionProcessingException e) {
 			throw e;
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}

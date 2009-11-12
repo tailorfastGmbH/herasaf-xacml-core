@@ -21,11 +21,13 @@ import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
- * The implementation of the urn:oasis:names:tc:xacml:1.0:function:double-equal function.
- * See: Apendix A.3 of the <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 105, for further information.
- *
- * @author Florian Huonder 
+ * The implementation of the urn:oasis:names:tc:xacml:1.0:function:double-equal
+ * function. See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 105, for further information.
+ * 
+ * @author Florian Huonder
  * @version 1.0
  */
 public class DoubleEqualFunction implements Function {
@@ -37,25 +39,26 @@ public class DoubleEqualFunction implements Function {
 
 	/**
 	 * {@inheritDoc}
-	 *
-	 * Takes two {@link Double} objects as parameters and returns wheter they are
-	 * equal or not as {@link Boolean} value.
+	 * 
+	 * Takes two {@link Double} objects as parameters and returns wheter they
+	 * are equal or not as {@link Boolean} value.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException{
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if(args.length != 2){
+			if (args.length != 2) {
 				throw new FunctionProcessingException("Invalid number of parameters");
 			}
-			return ((Double)args[0]).equals(args[1]);
-		} catch (ClassCastException e){
+			return ((Double) args[0]).equals(args[1]);
+		} catch (ClassCastException e) {
 			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
-		} catch(Exception e){
+		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.function.FunctionAC#toString()
 	 */
 	@Override

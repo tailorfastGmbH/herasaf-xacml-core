@@ -22,7 +22,6 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
@@ -34,11 +33,13 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.policy.impl.ObligationsType;
 
-
 /**
- * <p>Java class for ResultType complex type.
+ * <p>
+ * Java class for ResultType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ResultType">
@@ -55,126 +56,110 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 72, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 72, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResultType", propOrder = {
-    "decision",
-    "status",
-    "obligations"
-})
-public class ResultType
-    implements Serializable
-{
+@XmlType(name = "ResultType", propOrder = { "decision", "status", "obligations" })
+public class ResultType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "Decision", required = true)
-    protected DecisionType decision;
-    @XmlElement(name = "Status")
-    protected StatusType status;
-    @XmlElement(name = "Obligations", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os")
-    protected ObligationsType obligations;
-    @XmlAttribute(name = "ResourceId")
-    protected String resourceId;
+	private final static long serialVersionUID = 632768732L;
+	@XmlElement(name = "Decision", required = true)
+	protected DecisionType decision;
+	@XmlElement(name = "Status")
+	protected StatusType status;
+	@XmlElement(name = "Obligations", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os")
+	protected ObligationsType obligations;
+	@XmlAttribute(name = "ResourceId")
+	protected String resourceId;
 
-    /**
-     * Gets the value of the decision property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link DecisionType }
-     *     
-     */
-    public DecisionType getDecision() {
-        return decision;
-    }
+	/**
+	 * Gets the value of the decision property.
+	 * 
+	 * @return possible object is {@link DecisionType }
+	 * 
+	 */
+	public DecisionType getDecision() {
+		return decision;
+	}
 
-    /**
-     * Sets the value of the decision property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link DecisionType }
-     *     
-     */
-    public void setDecision(DecisionType value) {
-        this.decision = value;
-    }
+	/**
+	 * Sets the value of the decision property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link DecisionType }
+	 * 
+	 */
+	public void setDecision(DecisionType value) {
+		this.decision = value;
+	}
 
-    /**
-     * Gets the value of the status property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusType }
-     *     
-     */
-    public StatusType getStatus() {
-        return status;
-    }
+	/**
+	 * Gets the value of the status property.
+	 * 
+	 * @return possible object is {@link StatusType }
+	 * 
+	 */
+	public StatusType getStatus() {
+		return status;
+	}
 
-    /**
-     * Sets the value of the status property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusType }
-     *     
-     */
-    public void setStatus(StatusType value) {
-        this.status = value;
-    }
+	/**
+	 * Sets the value of the status property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link StatusType }
+	 * 
+	 */
+	public void setStatus(StatusType value) {
+		this.status = value;
+	}
 
-    /**
-     * Gets the value of the obligations property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link ObligationsType }
-     *     
-     */
-    public ObligationsType getObligations() {
-        return obligations;
-    }
+	/**
+	 * Gets the value of the obligations property.
+	 * 
+	 * @return possible object is {@link ObligationsType }
+	 * 
+	 */
+	public ObligationsType getObligations() {
+		return obligations;
+	}
 
-    /**
-     * Sets the value of the obligations property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ObligationsType }
-     *     
-     */
-    public void setObligations(ObligationsType value) {
-        this.obligations = value;
-    }
+	/**
+	 * Sets the value of the obligations property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link ObligationsType }
+	 * 
+	 */
+	public void setObligations(ObligationsType value) {
+		this.obligations = value;
+	}
 
-    /**
-     * Gets the value of the resourceId property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getResourceId() {
-        return resourceId;
-    }
+	/**
+	 * Gets the value of the resourceId property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getResourceId() {
+		return resourceId;
+	}
 
-    /**
-     * Sets the value of the resourceId property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setResourceId(String value) {
-        this.resourceId = value;
-    }
+	/**
+	 * Sets the value of the resourceId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setResourceId(String value) {
+		this.resourceId = value;
+	}
 
 }

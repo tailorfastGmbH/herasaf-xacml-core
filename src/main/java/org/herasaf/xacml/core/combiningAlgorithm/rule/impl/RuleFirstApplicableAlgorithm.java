@@ -53,12 +53,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  * @version 1.0
  */
-public class RuleFirstApplicableAlgorithm extends
-		RuleUnorderedCombiningAlgorithm {
+public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
-	private final Logger logger = LoggerFactory
-			.getLogger(RuleFirstApplicableAlgorithm.class);
+	private final Logger logger = LoggerFactory.getLogger(RuleFirstApplicableAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -78,8 +76,7 @@ public class RuleFirstApplicableAlgorithm extends
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> rules, RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(RequestType request, List<RuleType> rules, RequestInformation requestInfo) {
 
 		for (int i = 0; i < rules.size(); i++) {
 			RuleType rule = rules.get(i);
@@ -90,26 +87,20 @@ public class RuleFirstApplicableAlgorithm extends
 			requestInfo.resetStatus();
 
 			if (logger.isDebugEnabled()) {
-				MDC
-						.put(MDC_RULE_ID, rule
-								.getRuleId());
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			DecisionType decision = this.evaluateRule(request, rule,
-					requestInfo);
+			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
 
 			if (logger.isDebugEnabled()) {
-				MDC
-						.put(MDC_RULE_ID, rule
-								.getRuleId());
-				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
-						decision.toString());
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
+				logger.debug("Evaluation of {} was: {}", rule.getRuleId(), decision.toString());
 				MDC.remove(MDC_RULE_ID);
 			}
 
 			switch (decision) {
-			//default case is not required here.
+			// default case is not required here.
 			case DENY:
 			case INDETERMINATE:
 			case PERMIT:

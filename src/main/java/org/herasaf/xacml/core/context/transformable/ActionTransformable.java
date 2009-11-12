@@ -24,10 +24,10 @@ import org.herasaf.xacml.core.context.impl.ActionType;
  * 
  * A ActionTransformable contains the information to return a
  * <code>ActionType</code>.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
- *
+ * 
  */
 public interface ActionTransformable {
 
@@ -36,7 +36,7 @@ public interface ActionTransformable {
 	 * 
 	 * Transforms the information contained in the Transformable to an
 	 * <code>ActionType</code>
-	 *
+	 * 
 	 * @return ActionType containing the Information of the Transformable
 	 */
 	public ActionType transform();

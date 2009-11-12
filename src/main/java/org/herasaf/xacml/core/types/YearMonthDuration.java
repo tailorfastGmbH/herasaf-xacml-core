@@ -21,35 +21,38 @@ import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
-
 /**
  * TODO JAVADOC
  * 
- * The Name of this datatype is urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration.<br>
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 103, for further information.
- *
- * @author Stefan Oberholzer 
+ * The Name of this datatype is
+ * urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration.<br>
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 103, for further information.
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class YearMonthDuration implements Comparable<YearMonthDuration> {
 	private static final String PATTERNSTRING = "(\\-)?P\\d+(Y(\\d+M)?|M)";
 	private Duration duration;
+
 	/**
 	 * Creates a new {@link YearMonthDuration} with the given duration.
-	 *
-	 * @param duration The duration to convert into a {@link YearMonthDuration}.
+	 * 
+	 * @param duration
+	 *            The duration to convert into a {@link YearMonthDuration}.
 	 * @throws ConvertException
 	 */
-	public YearMonthDuration(String duration){
+	public YearMonthDuration(String duration) {
 		if (!duration.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException(
-					"The format of the argument isn't correct");
+			throw new IllegalArgumentException("The format of the argument isn't correct");
 		}
 
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
-				this.duration = factory.newDuration(duration);
+			this.duration = factory.newDuration(duration);
 		} catch (DatatypeConfigurationException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -57,6 +60,7 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
@@ -66,6 +70,7 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	public int compareTo(YearMonthDuration o) {
@@ -74,6 +79,7 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -87,6 +93,7 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -94,7 +101,7 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 		return duration.hashCode();
 	}
 
-	protected Duration getDuration(){
+	protected Duration getDuration() {
 		return duration;
 	}
 }

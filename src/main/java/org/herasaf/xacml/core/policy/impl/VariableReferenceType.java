@@ -30,12 +30,14 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
-
 /**
- * <p>Java class for VariableReferenceType complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * <p>
+ * Java class for VariableReferenceType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
  * <pre>
  * &lt;complexType name="VariableReferenceType">
  *   &lt;complexContent>
@@ -45,58 +47,57 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 59, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 59, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "VariableReferenceType")
-public class VariableReferenceType
-    extends ExpressionType {
+public class VariableReferenceType extends ExpressionType {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlAttribute(name = "VariableId", required = true)
-    protected String variableId;
+	private final static long serialVersionUID = 632768732L;
+	@XmlAttribute(name = "VariableId", required = true)
+	protected String variableId;
 
-    /**
-     * Gets the value of the variableId property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     */
-    public String getVariableId() {
-        return variableId;
-    }
+	/**
+	 * Gets the value of the variableId property.
+	 * 
+	 * @return possible object is {@link String }
+	 */
+	public String getVariableId() {
+		return variableId;
+	}
 
-    /**
-     * Sets the value of the variableId property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     */
-    public void setVariableId(String value) {
-        this.variableId = value;
-    }
+	/**
+	 * Sets the value of the variableId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 */
+	public void setVariableId(String value) {
+		this.variableId = value;
+	}
 
-   /*
-    * (non-Javadoc)
-    * @see org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
-    */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.
+	 * xacml.core.context.impl.RequestType, java.util.Map)
+	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo)
-			throws MissingAttributeException, SyntaxException,
-			ProcessingException {
+	public Object handle(RequestType request, RequestInformation reqInfo) throws MissingAttributeException,
+			SyntaxException, ProcessingException {
 
 		Map<String, Variable> variableDefinitions = reqInfo.getVariableDefinitions();
 		Variable var = variableDefinitions.get(variableId);
 		Object value = var.getValue(request, reqInfo);
-		if(var instanceof VariableDefinitionType){
+		if (var instanceof VariableDefinitionType) {
 			variableDefinitions.put(variableId, new VariableValue(value));
 		}
 		return value;

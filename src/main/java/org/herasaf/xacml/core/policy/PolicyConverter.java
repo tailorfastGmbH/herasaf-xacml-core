@@ -54,11 +54,11 @@ import org.xml.sax.InputSource;
  * {@link Unmarshaller} respectively because the JAXB Specification currently
  * does not address the thread safety of any of the runtime classes. In the case
  * of the Sun JAXB RI, the JAXBContext class <b>is</b> thread safe, but the
- * {@link Marshaller}, {@link Unmarshaller}, and Validator classes are <b>not</b>
- * thread safe. (for further information see the <a
+ * {@link Marshaller}, {@link Unmarshaller}, and Validator classes are
+ * <b>not</b> thread safe. (for further information see the <a
  * href="https://jaxb.dev.java.net/faq/index.html#threadSafety">Jaxb-FAQ</a>)
- *
- * @author Florian Huonder 
+ * 
+ * @author Florian Huonder
  * @version 1.0
  */
 public final class PolicyConverter {
@@ -87,29 +87,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link ContentHandler}.
-	 *
+	 * 
 	 * @param ch
 	 *            The {@link ContentHandler} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable, ContentHandler ch)
-			throws WritingException {
+	public static void marshall(Evaluatable evaluatable, ContentHandler ch) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						ch);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), ch);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						ch);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -121,29 +115,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link File}.
-	 *
+	 * 
 	 * @param file
 	 *            The {@link File} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable, File file)
-			throws WritingException {
+	public static void marshall(Evaluatable evaluatable, File file) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						file);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), file);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						file);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -155,29 +143,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link Result}.
-	 *
+	 * 
 	 * @param result
 	 *            The {@link Result} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable, Result result)
-			throws WritingException {
+	public static void marshall(Evaluatable evaluatable, Result result) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						result);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), result);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						result);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -189,29 +171,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link OutputStream}.
-	 *
+	 * 
 	 * @param out
 	 *            The {@link OutputStream} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable, OutputStream out)
-			throws WritingException {
+	public static void marshall(Evaluatable evaluatable, OutputStream out) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						out);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), out);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						out);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -223,29 +199,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link Writer}.
-	 *
+	 * 
 	 * @param writer
 	 *            The {@link Writer} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable, Writer writer)
-			throws WritingException {
+	public static void marshall(Evaluatable evaluatable, Writer writer) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						writer);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), writer);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						writer);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -257,29 +227,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link Node}.
-	 *
+	 * 
 	 * @param node
 	 *            The {@link Node} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable, Node node)
-			throws WritingException {
+	public static void marshall(Evaluatable evaluatable, Node node) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						node);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), node);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						node);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -291,29 +255,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link XMLStreamWriter}.
-	 *
+	 * 
 	 * @param xmlStreamWriter
 	 *            The {@link XMLStreamWriter} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable,
-			XMLStreamWriter xmlStreamWriter) throws WritingException {
+	public static void marshall(Evaluatable evaluatable, XMLStreamWriter xmlStreamWriter) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						xmlStreamWriter);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), xmlStreamWriter);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						xmlStreamWriter);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -325,29 +283,23 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Marshals the {@link RequestType} to the given {@link XMLEventWriter}.
-	 *
+	 * 
 	 * @param xmlEventWriter
 	 *            The {@link XMLEventWriter} to use.
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to marshall.
 	 * @throws WritingException
 	 */
-	public static void marshall(Evaluatable evaluatable,
-			XMLEventWriter xmlEventWriter) throws WritingException {
+	public static void marshall(Evaluatable evaluatable, XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory
-								.createPolicySet((PolicySetType) evaluatable),
-						xmlEventWriter);
+						objectFactory.createPolicySet((PolicySetType) evaluatable), xmlEventWriter);
 			} else if (evaluatable instanceof PolicyType) {
-				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
-						objectFactory.createPolicy((PolicyType) evaluatable),
+				ContextAndPolicy.getMarshaller(CONTEXT).marshal(objectFactory.createPolicy((PolicyType) evaluatable),
 						xmlEventWriter);
 			} else {
-				throw new WritingException(
-						"Cannot marshall an object of type: "
-								+ evaluatable.getClass());
+				throw new WritingException("Cannot marshall an object of type: " + evaluatable.getClass());
 			}
 
 		} catch (JAXBException e) {
@@ -359,7 +311,7 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link File}.
-	 *
+	 * 
 	 * @param file
 	 *            The {@link File} from which the {@link Evaluatable} is
 	 *            created.
@@ -369,10 +321,8 @@ public final class PolicyConverter {
 	@SuppressWarnings("unchecked")
 	public static Evaluatable unmarshal(File file) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(file))
-					.getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(file)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -384,7 +334,7 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link InputStream}.
-	 *
+	 * 
 	 * @param inputStream
 	 *            The {@link InputStream} from which the {@link Evaluatable} is
 	 *            created.
@@ -392,13 +342,10 @@ public final class PolicyConverter {
 	 * @throws SyntaxException
 	 */
 	@SuppressWarnings("unchecked")
-	public static Evaluatable unmarshal(InputStream inputStream)
-			throws SyntaxException {
+	public static Evaluatable unmarshal(InputStream inputStream) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller
-					.unmarshal(inputStream)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(inputStream)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -410,7 +357,7 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link Reader}.
-	 *
+	 * 
 	 * @param reader
 	 *            The {@link Reader} from which the {@link Evaluatable} is
 	 *            created.
@@ -420,10 +367,8 @@ public final class PolicyConverter {
 	@SuppressWarnings("unchecked")
 	public static Evaluatable unmarshal(Reader reader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(reader))
-					.getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(reader)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -435,7 +380,7 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link URL}.
-	 *
+	 * 
 	 * @param url
 	 *            The {@link URL} from which the {@link Evaluatable} is created.
 	 * @return The newly created {@link Evaluatable}.
@@ -444,10 +389,8 @@ public final class PolicyConverter {
 	@SuppressWarnings("unchecked")
 	public static Evaluatable unmarshal(URL url) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(url))
-					.getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(url)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -459,7 +402,7 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link InputSource}.
-	 *
+	 * 
 	 * @param inputSource
 	 *            The {@link InputSource} from which the {@link Evaluatable} is
 	 *            created.
@@ -467,13 +410,10 @@ public final class PolicyConverter {
 	 * @throws SyntaxException
 	 */
 	@SuppressWarnings("unchecked")
-	public static Evaluatable unmarshal(InputSource inputSource)
-			throws SyntaxException {
+	public static Evaluatable unmarshal(InputSource inputSource) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller
-					.unmarshal(inputSource)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(inputSource)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -485,7 +425,7 @@ public final class PolicyConverter {
 	 * TODO JAVADOC
 	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link Node}.
-	 *
+	 * 
 	 * @param node
 	 *            The {@link Node} from which the {@link Evaluatable} is
 	 *            created.
@@ -495,10 +435,8 @@ public final class PolicyConverter {
 	@SuppressWarnings("unchecked")
 	public static Evaluatable unmarshal(Node node) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(node))
-					.getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(node)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -508,9 +446,9 @@ public final class PolicyConverter {
 
 	/**
 	 * TODO JAVADOC
-
+	 * 
 	 * Creates a {@link Evaluatable} object from the given {@link Node}.
-	 *
+	 * 
 	 * @param source
 	 *            The {@link Node} from which the {@link Evaluatable} is
 	 *            created.
@@ -520,10 +458,8 @@ public final class PolicyConverter {
 	@SuppressWarnings("unchecked")
 	public static Evaluatable unmarshal(Source source) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(source))
-					.getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(source)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -536,7 +472,7 @@ public final class PolicyConverter {
 	 * 
 	 * Creates a {@link Evaluatable} object from the given
 	 * {@link XMLStreamReader}.
-	 *
+	 * 
 	 * @param xmlStreamReader
 	 *            The {@link XMLStreamReader} from which the {@link Evaluatable}
 	 *            is created.
@@ -544,13 +480,10 @@ public final class PolicyConverter {
 	 * @throws SyntaxException
 	 */
 	@SuppressWarnings("unchecked")
-	public static Evaluatable unmarshal(XMLStreamReader xmlStreamReader)
-			throws SyntaxException {
+	public static Evaluatable unmarshal(XMLStreamReader xmlStreamReader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller
-					.unmarshal(xmlStreamReader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(xmlStreamReader)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {
@@ -563,7 +496,7 @@ public final class PolicyConverter {
 	 * 
 	 * Creates a {@link Evaluatable} object from the given
 	 * {@link XMLEventReader}.
-	 *
+	 * 
 	 * @param xmlEventReader
 	 *            The {@link XMLEventReader} from which the {@link Evaluatable}
 	 *            is created.
@@ -571,13 +504,10 @@ public final class PolicyConverter {
 	 * @throws SyntaxException
 	 */
 	@SuppressWarnings("unchecked")
-	public static Evaluatable unmarshal(XMLEventReader xmlEventReader)
-			throws SyntaxException {
+	public static Evaluatable unmarshal(XMLEventReader xmlEventReader) throws SyntaxException {
 		try {
-			Unmarshaller unmarshaller = ContextAndPolicy
-					.getUnmarshaller(CONTEXT);
-			return ((JAXBElement<Evaluatable>) unmarshaller
-					.unmarshal(xmlEventReader)).getValue();
+			Unmarshaller unmarshaller = ContextAndPolicy.getUnmarshaller(CONTEXT);
+			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(xmlEventReader)).getValue();
 		} catch (JAXBException e) {
 			throw new SyntaxException(e);
 		} catch (ClassCastException e) {

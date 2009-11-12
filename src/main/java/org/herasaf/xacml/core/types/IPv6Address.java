@@ -26,8 +26,8 @@ import java.net.UnknownHostException;
  * TODO JAVADOC
  * 
  * Implementation of the {@link IPAddress} datatype for IPv6.
- *
- * @author Florian Huonder 
+ * 
+ * @author Florian Huonder
  * @version 1.0
  * @see IPAddress
  */
@@ -39,13 +39,13 @@ public class IPv6Address extends IPAddress {
 
 	/**
 	 * Creates a new {@link IPv6Address} from the given {@link String}.
-	 *
-	 * @param value The String to create the {@link IPv6Address} from.
+	 * 
+	 * @param value
+	 *            The String to create the {@link IPv6Address} from.
 	 */
 	public IPv6Address(String value) {
 		if (!value.matches(REGEX)) {
-			throw new IllegalArgumentException(value
-					+ " is not a valid IP Address");
+			throw new IllegalArgumentException(value + " is not a valid IP Address");
 		}
 		try {
 			int slashPosition = value.indexOf("/");
@@ -57,10 +57,10 @@ public class IPv6Address extends IPAddress {
 				ip = Inet6Address.getByName(value.substring(1, slashPosition - 1));
 				mask = Inet6Address.getByName(value.substring(slashPosition + 2, colonPosition - 1));
 				portRange = new PortRange(value.substring(colonPosition + 1, value.length()));
-			} else if (slashPosition != -1){
+			} else if (slashPosition != -1) {
 				ip = Inet6Address.getByName(value.substring(1, slashPosition - 1));
-				mask = Inet6Address.getByName(value.substring(slashPosition + 2, value.length()-1));
-			} else if (hasRange){
+				mask = Inet6Address.getByName(value.substring(slashPosition + 2, value.length() - 1));
+			} else if (hasRange) {
 				ip = Inet6Address.getByName(value.substring(1, colonPosition - 1));
 				portRange = new PortRange(value.substring(colonPosition + 1, value.length()));
 			} else {
@@ -73,6 +73,7 @@ public class IPv6Address extends IPAddress {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.types.IPAddress#toString()
 	 */
 	@Override
@@ -80,10 +81,11 @@ public class IPv6Address extends IPAddress {
 		StringBuilder builder = new StringBuilder();
 		builder.append("[");
 		/*
-		 * If ip is an Inet4Address-compatible IP-Address, Java automatically converts it into an Inet4Adress, therefore it must
-		 * be converted back into IPv6 style.
+		 * If ip is an Inet4Address-compatible IP-Address, Java automatically
+		 * converts it into an Inet4Adress, therefore it must be converted back
+		 * into IPv6 style.
 		 */
-		if(ip instanceof Inet4Address){
+		if (ip instanceof Inet4Address) {
 			builder.append("0:0:0:0:0:ffff:");
 		}
 		builder.append(ip.getHostAddress());
@@ -91,7 +93,7 @@ public class IPv6Address extends IPAddress {
 
 		if (mask != null) {
 			builder.append("/[");
-			if(mask instanceof Inet4Address){
+			if (mask instanceof Inet4Address) {
 				builder.append("0:0:0:0:0:ffff:");
 			}
 			builder.append(mask.getHostAddress());
@@ -107,16 +109,19 @@ public class IPv6Address extends IPAddress {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) return false;
+		if (obj == null)
+			return false;
 		return toString().equals(obj.toString());
 	}
-	
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override

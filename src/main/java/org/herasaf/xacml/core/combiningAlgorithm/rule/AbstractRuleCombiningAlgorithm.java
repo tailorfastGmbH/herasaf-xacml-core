@@ -46,21 +46,18 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * @author Sacha Dolski
  * @version 1.0
  */
-public abstract class AbstractRuleCombiningAlgorithm extends
-		AbstractCombiningAlgorithm implements
+public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
 		RuleCombiningAlgorithm {
 	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluateRule(RequestType request, RuleType rule,
-			RequestInformation requestInfo) {
+	public DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo) {
 		/*
 		 * Matches the target of the rule
 		 */
-		DecisionType targetDecision = matchTarget(request, rule.getTarget(),
-				requestInfo);
+		DecisionType targetDecision = matchTarget(request, rule.getTarget(), requestInfo);
 		if (targetDecision != DecisionType.PERMIT) {
 			return targetDecision;
 		}
@@ -79,8 +76,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends
 
 		}
 		try {
-			decision = (Boolean) ((ExpressionType) condition.getExpression()
-					.getValue()).handle(request, requestInfo);
+			decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request, requestInfo);
 		} catch (ProcessingException e) {
 			requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;
@@ -127,7 +123,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends
 	/**
 	 *{@inheritDoc}
 	 */
-	public abstract DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> possibleRules, RequestInformation requestInfos);
+	public abstract DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules,
+			RequestInformation requestInfos);
 
 }

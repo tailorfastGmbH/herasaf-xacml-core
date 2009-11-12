@@ -27,8 +27,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @param <DataType>
  *            the type of data handled by this data type
  */
-public abstract class AbstractDataTypeAttribute<DataType> implements
-		DataTypeAttribute<DataType> {
+public abstract class AbstractDataTypeAttribute<DataType> implements DataTypeAttribute<DataType> {
 
 	/** Serial version UID. */
 	private static final long serialVersionUID = -7160783590484665708L;
@@ -37,12 +36,12 @@ public abstract class AbstractDataTypeAttribute<DataType> implements
 	public String toString() {
 		return getDatatypeURI();
 	}
-	
+
 	/** {@inheritDoc} */
 	public int hashCode() {
 		return getDatatypeURI().hashCode();
 	}
-	
+
 	/** {@inheritDoc} */
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -56,7 +55,7 @@ public abstract class AbstractDataTypeAttribute<DataType> implements
 		if (this.getClass().isInstance(o)) {
 			return hashCode() == o.hashCode();
 		}
-		
+
 		return false;
 	}
 }

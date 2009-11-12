@@ -27,18 +27,18 @@ import org.herasaf.xacml.core.types.Time;
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#time"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#time</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
 public class TimeDataTypeAttribute extends AbstractDataTypeAttribute<Time> {
-	
+
 	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#time";
 
 	/** Serial version UID. */
-	private static final long serialVersionUID = 7476359216854881540L;	
-	
+	private static final long serialVersionUID = 7476359216854881540L;
+
 	/** {@inheritDoc} */
 	public Time convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {

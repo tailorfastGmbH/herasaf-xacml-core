@@ -31,8 +31,8 @@ import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
  * @version 1.0
  * 
  */
-public abstract class AbstractPolicyCombiningAlgorithm extends
-		AbstractCombiningAlgorithm implements PolicyCombiningAlgorithm {
+public abstract class AbstractPolicyCombiningAlgorithm extends AbstractCombiningAlgorithm implements
+		PolicyCombiningAlgorithm {
 	protected static final String MDC_EVALUATABLE_ID = "org:herasaf:xacml:evaluation:evaluatableid";
 
 }

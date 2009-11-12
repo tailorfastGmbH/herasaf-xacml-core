@@ -35,16 +35,17 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  * 
  */
-public class PolicyCombiningAlgorithmsInitializer extends
-		AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
-	private static Logger logger = LoggerFactory
-			.getLogger(PolicyCombiningAlgorithmsInitializer.class);
+public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
+	private static Logger logger = LoggerFactory.getLogger(PolicyCombiningAlgorithmsInitializer.class);
 	private final static String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
 	private final static String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
 	private final static Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
-	private final TargetMatcher targetMatcher = new TargetMatcherImpl(); //The default target matcher.
+	private final TargetMatcher targetMatcher = new TargetMatcherImpl(); // The
+																			// default
+																			// target
+																			// matcher.
 	private static boolean respectAbandondEvaluatables;
-	
+
 	/**
 	 * TODO JAVADOC
 	 */
@@ -52,10 +53,9 @@ public class PolicyCombiningAlgorithmsInitializer extends
 		logger.info("Respect abandoned Evaluatables: {}", respectAbandondEvaluatables);
 		PolicyCombiningAlgorithmsInitializer.respectAbandondEvaluatables = respectAbandondEvaluatables;
 	}
-	
+
 	@Override
-	protected void furtherInitializations(
-			List<AbstractPolicyCombiningAlgorithm> instances) {
+	protected void furtherInitializations(List<AbstractPolicyCombiningAlgorithm> instances) {
 		for (AbstractPolicyCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
 			algorithm.setRespectAbandondEvaluatables(respectAbandondEvaluatables);
@@ -90,12 +90,10 @@ public class PolicyCombiningAlgorithmsInitializer extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void setInstancesIntoConverter(
-			Map<String, AbstractPolicyCombiningAlgorithm> instancesMap) {
+	protected void setInstancesIntoConverter(Map<String, AbstractPolicyCombiningAlgorithm> instancesMap) {
 		Map<String, PolicyCombiningAlgorithm> instances = new HashMap<String, PolicyCombiningAlgorithm>();
 		instances.putAll(instancesMap);
-		URNToPolicyCombiningAlgorithmConverter
-				.setCombiningAlgorithms(instances);
+		URNToPolicyCombiningAlgorithmConverter.setCombiningAlgorithms(instances);
 		logger.info("{} policy combining algorithms are initialized.", instances.size());
 	}
 

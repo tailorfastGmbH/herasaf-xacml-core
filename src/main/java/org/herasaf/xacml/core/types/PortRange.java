@@ -22,16 +22,18 @@ package org.herasaf.xacml.core.types;
  * This class represents a (network) port range. The values can be between 1 and
  * 65535.
  * 
- * <br /><b>Examples:</b><br />
+ * <br />
+ * <b>Examples:</b><br />
  * <code>
  * {@link PortRange} range1 = new {@link PortRange}("123");<br />
  * {@link PortRange} range2 = new {@link PortRange}("-4657");<br />
  * {@link PortRange} range3 = new {@link PortRange}("17383-");<br />
  * {@link PortRange} range4 = new {@link PortRange}("1204-3845");
- * </code>
- * <br /><br />
- * A -&lt;number&gt; indicates that the lower boundary of the range is the minimum value
- * of 1. A &lt;number&gt;- indicates that the upper boundary of the range is the maximum value of 35535. 
+ * </code> <br />
+ * <br />
+ * A -&lt;number&gt; indicates that the lower boundary of the range is the
+ * minimum value of 1. A &lt;number&gt;- indicates that the upper boundary of
+ * the range is the maximum value of 35535.
  * 
  * 
  * @author Florian Huonder
@@ -57,11 +59,9 @@ public class PortRange {
 		int position = portRange.indexOf("-");
 		if (position == -1) {
 			try {
-				lowerValue = upperValue = new Integer(portRange.substring(0,
-						portRange.length()));
+				lowerValue = upperValue = new Integer(portRange.substring(0, portRange.length()));
 			} catch (Exception e) {
-				throw new IllegalArgumentException("No port range: "
-						+ portRange);
+				throw new IllegalArgumentException("No port range: " + portRange);
 			}
 		} else {
 			try {
@@ -74,8 +74,7 @@ public class PortRange {
 					upperValue = new Integer(value);
 				}
 			} catch (NumberFormatException e) {
-				throw new IllegalArgumentException("No port range: "
-						+ portRange);
+				throw new IllegalArgumentException("No port range: " + portRange);
 			}
 		}
 		if (lowerValue < 0) {

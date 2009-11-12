@@ -24,19 +24,19 @@ import org.herasaf.xacml.core.context.impl.EnvironmentType;
  * 
  * A EnvironmentTransformable contains the information to return a
  * <code>EnvironmentType</code>.
- *
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
- *
+ * 
  */
 public interface EnvironmentTransformable {
-	
+
 	/**
 	 * TODO JAVADOC
 	 * 
 	 * Transforms the information contained in the Transformable to an
 	 * <code>EnvironmentType</code>
-	 *
+	 * 
 	 * @return EnvironmentType containing the Information of the Transformable
 	 */
 	public EnvironmentType transform();

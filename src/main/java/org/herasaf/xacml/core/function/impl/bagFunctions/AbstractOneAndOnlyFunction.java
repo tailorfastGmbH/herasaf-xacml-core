@@ -28,15 +28,15 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:anyURI-one-and-only functions logic.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 115, for further information.
  * </p>
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
- *
+ * 
  */
 public abstract class AbstractOneAndOnlyFunction<T> implements Function {
 
@@ -58,12 +58,10 @@ public abstract class AbstractOneAndOnlyFunction<T> implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			if (((List<?>) args[0]).size() != 1) {
-				throw new FunctionProcessingException(
-						"Invalid number of elements");
+				throw new FunctionProcessingException("Invalid number of elements");
 			}
 			Object returnValue = ((List<?>) args[0]).get(0);
 
