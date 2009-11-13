@@ -85,27 +85,27 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 public class PolicyType implements Evaluatable, Serializable {
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
-	protected String description;
+	private String description;
 	@XmlElement(name = "PolicyDefaults")
-	protected DefaultsType policyDefaults;
+	private DefaultsType policyDefaults;
 	@XmlElement(name = "Target", required = true)
-	protected TargetType target;
+	private TargetType target;
 	@XmlElements({ @XmlElement(name = "Rule", type = RuleType.class),
 			@XmlElement(name = "VariableDefinition", type = VariableDefinitionType.class),
 			@XmlElement(name = "RuleCombinerParameters", type = RuleCombinerParametersType.class),
 			@XmlElement(name = "CombinerParameters", type = CombinerParametersType.class) })
-	protected List<Object> additionalInformation;
+	private List<Object> additionalInformation;
 	@XmlElement(name = "Obligations")
-	protected ObligationsType obligations;
+	private ObligationsType obligations;
 	@XmlAttribute(name = "PolicyId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String policyId;
+	private String policyId;
 	@XmlAttribute(name = "Version")
-	protected String version;
+	private String version;
 	@XmlAttribute(name = "RuleCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToRuleCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected AbstractRuleCombiningAlgorithm ruleCombiningAlg;
+	private AbstractRuleCombiningAlgorithm ruleCombiningAlg;
 
 	/**
 	 * Gets the value of the description property.

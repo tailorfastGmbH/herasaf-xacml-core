@@ -66,11 +66,11 @@ public class StatusType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "StatusCode", required = true)
-	protected StatusCodeType statusCode;
+	private StatusCodeType statusCode;
 	@XmlElement(name = "StatusMessage")
-	protected String statusMessage;
+	private String statusMessage;
 	@XmlElement(name = "StatusDetail")
-	protected StatusDetailType statusDetail;
+	private StatusDetailType statusDetail;
 
 	/**
 	 * Gets the value of the statusCode property.

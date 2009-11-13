@@ -68,7 +68,7 @@ public class StatusDetailType implements Serializable {
 	private static final ObjectFactory OBJECT_FACTORY;
 	private static final long serialVersionUID = 632768732L;
 	@XmlAnyElement(lax = true)
-	protected List<Object> content;
+	private List<Object> content;
 
 	/**
 	 * Initializes the object factory.

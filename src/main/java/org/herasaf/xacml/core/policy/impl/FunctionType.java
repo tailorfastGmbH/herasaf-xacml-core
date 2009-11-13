@@ -64,7 +64,7 @@ public class FunctionType extends ExpressionType {
 	@XmlAttribute(name = "FunctionId", required = true)
 	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected Function function;
+	private Function function;
 
 	/**
 	 * Gets the value of the function property.

@@ -68,7 +68,7 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "SubjectCategory")
 	@XmlSchemaType(name = "anyURI")
-	protected String subjectCategory;
+	private String subjectCategory;
 
 	/**
 	 * Gets the value of the subjectCategory property.
@@ -113,10 +113,10 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 		for (SubjectType sub : subjects) {
 			if (sub.getSubjectCategory().equals(getSubjectCategory())) {
 				for (AttributeType attr : sub.getAttributes()) {
-					if (attributeId.equals(attr.getAttributeId())
-							&& dataType.toString().equals(attr.getDataType().toString())) {
-						if (issuer != null) {
-							if (issuer.equals(attr.getIssuer())) {
+					if (getAttributeId().equals(attr.getAttributeId())
+							&& getDataType().toString().equals(attr.getDataType().toString())) {
+						if (getIssuer() != null) {
+							if (getIssuer().equals(attr.getIssuer())) {
 								addAndConvertAttrValue(returnValues, attr.getAttributeValues());
 							}
 						} else {
@@ -135,12 +135,12 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestSubjectAttributes(request, attributeId,
-					dataType.toString(), issuer, subjectCategory);
+			List<AttributeValueType> attrValues = reqInfo.getPIP().requestSubjectAttributes(request, getAttributeId(),
+					getDataType().toString(), getIssuer(), getSubjectCategory());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {
-			throw new MissingAttributeException(attributeId, dataType, issuer);
+			throw new MissingAttributeException(getAttributeId(), getDataType(), getIssuer());
 		}
 		return returnValues;
 	}

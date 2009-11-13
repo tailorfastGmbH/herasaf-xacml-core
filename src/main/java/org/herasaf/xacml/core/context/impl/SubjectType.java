@@ -69,10 +69,10 @@ public class SubjectType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Attribute")
-	protected List<AttributeType> attributes;
+	private List<AttributeType> attributes;
 	@XmlAttribute(name = "SubjectCategory")
 	@XmlSchemaType(name = "anyURI")
-	protected String subjectCategory;
+	private String subjectCategory;
 
 	/**
 	 * Gets the value of the attributes property.

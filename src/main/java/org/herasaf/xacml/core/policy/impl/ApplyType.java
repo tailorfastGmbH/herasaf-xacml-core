@@ -73,11 +73,11 @@ public class ApplyType extends ExpressionType {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
-	protected List<JAXBElement<?>> expressions;
+	private List<JAXBElement<?>> expressions;
 	@XmlAttribute(name = "FunctionId", required = true)
 	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected Function function;
+	private Function function;
 
 	/**
 	 * Gets the value of the expressions property.

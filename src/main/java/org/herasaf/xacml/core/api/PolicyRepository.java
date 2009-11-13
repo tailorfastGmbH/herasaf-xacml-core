@@ -22,7 +22,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -39,7 +38,6 @@ public interface PolicyRepository {
 	 * TODO JAVADOC.
 	 * 
 	 * @param evaluatable
-	 * @throws PolicyRepositoryException
 	 */
 	void deploy(Evaluatable evaluatable);
 
@@ -47,7 +45,6 @@ public interface PolicyRepository {
 	 * TODO JAVADOC.
 	 * 
 	 * @param evaluatables
-	 * @throws PolicyRepositoryException
 	 */
 	void deploy(Collection<Evaluatable> evaluatables);
 
@@ -55,7 +52,6 @@ public interface PolicyRepository {
 	 * TODO JAVADOC.
 	 * 
 	 * @param evaluatableID
-	 * @throws PolicyRepositoryException
 	 */
 	void undeploy(EvaluatableID evaluatableID);
 
@@ -63,7 +59,6 @@ public interface PolicyRepository {
 	 * TODO JAVADOC.
 	 * 
 	 * @param evaluatableIDs
-	 * @throws PolicyRepositoryException
 	 */
 	void undeploy(Collection<EvaluatableID> evaluatableIDs);
 
@@ -71,7 +66,6 @@ public interface PolicyRepository {
 	 * TODO JAVADOC.
 	 * 
 	 * @param diff
-	 * @throws PolicyRepositoryException
 	 */
 	void applyDeploymentModifications(List<DeploymentModification> deploymentInstructions);
 
@@ -102,9 +96,8 @@ public interface PolicyRepository {
 	 * 
 	 * @param evaluatableID The {@link EvaluatableID} of the requested {@link Evaluatable}.
 	 * @return The {@link Evaluatable} with the given {@link EvaluatableID}.
-	 * @throws PolicyRepositoryException If no {@link Evaluatable} with the given {@link EvaluatableID} is found.
 	 */
-	Evaluatable getEvaluatable(EvaluatableID evaluatableID) throws PolicyRepositoryException;
+	Evaluatable getEvaluatable(EvaluatableID evaluatableID);
 
 	/**
 	 * TODO JAVADOC.

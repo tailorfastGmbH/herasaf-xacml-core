@@ -31,9 +31,6 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class StringEqualFunction implements Function {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = -3491926450245801282L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
 

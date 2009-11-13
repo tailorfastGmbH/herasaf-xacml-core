@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @version 1.0
  */
 public final class ContextAndPolicy {
-	private static final Logger logger = LoggerFactory.getLogger(ContextAndPolicy.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(ContextAndPolicy.class);
 
 	/**
 	 * TODO JAVADOC.
@@ -105,14 +105,14 @@ public final class ContextAndPolicy {
 
 		if (conf.isWriteSchemaLocation()) {
 			if (conf.getSchemaLocationAsString().equals("")) {
-				logger.error("SchemaLocation not initialized.");
+				LOGGER.error("SchemaLocation not initialized.");
 				throw new NotInitializedException("SchemaLocation not initialized.");
 			}
 			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION, conf.getSchemaLocationAsString());
 		}
 		if (conf.isValidateWriting()) {
 			if (conf.getSchema() == null) {
-				logger.error("Schema not initialized.");
+				LOGGER.error("Schema not initialized.");
 				throw new NotInitializedException("Schema not initialized");
 			}
 			marshaller.setSchema(conf.getSchema());

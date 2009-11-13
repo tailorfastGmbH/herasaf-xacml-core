@@ -79,11 +79,11 @@ public class AttributeValueType extends ExpressionType {
 	private static final long serialVersionUID = 632768732L;
 	@XmlMixed
 	@XmlAnyElement(lax = true)
-	protected List<Object> content;
+	private List<Object> content;
 	@XmlAttribute(name = "DataType", required = true)
 	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected DataTypeAttribute<?> dataType;
+	private DataTypeAttribute<?> dataType;
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
 

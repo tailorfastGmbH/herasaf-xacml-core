@@ -87,9 +87,4 @@ public class TestMissingAttributes{
 	public void cleanup() throws Exception {
 		repo.undeploy(eval.getId());
 	}
-	
-	@BeforeClass
-	public void before(){
-		System.out.println("*************************:"+this.getClass().getCanonicalName());
-	}
 }

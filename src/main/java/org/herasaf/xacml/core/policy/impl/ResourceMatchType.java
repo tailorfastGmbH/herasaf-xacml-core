@@ -69,15 +69,15 @@ public class ResourceMatchType implements Serializable, Match {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
-	protected AttributeValueType attributeValue;
+	private AttributeValueType attributeValue;
 	@XmlElement(name = "ResourceAttributeDesignator")
-	protected ResourceAttributeDesignatorType resourceAttributeDesignator;
+	private ResourceAttributeDesignatorType resourceAttributeDesignator;
 	@XmlElement(name = "AttributeSelector")
-	protected AttributeSelectorType attributeSelector;
+	private AttributeSelectorType attributeSelector;
 	@XmlAttribute(name = "MatchId", required = true)
 	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected Function matchFunction;
+	private Function matchFunction;
 
 	/*
 	 * (non-Javadoc)

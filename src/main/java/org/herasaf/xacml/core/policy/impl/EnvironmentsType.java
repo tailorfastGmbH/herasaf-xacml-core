@@ -60,7 +60,7 @@ public class EnvironmentsType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Environment", required = true)
-	protected List<EnvironmentType> environments;
+	private List<EnvironmentType> environments;
 
 	/**
 	 * Gets the value of the environments property.

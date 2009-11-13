@@ -60,7 +60,7 @@ public class ActionType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "ActionMatch", required = true)
-	protected List<ActionMatchType> actionMatches;
+	private List<ActionMatchType> actionMatches;
 
 	/**
 	 * Gets the value of the actionMatches property.

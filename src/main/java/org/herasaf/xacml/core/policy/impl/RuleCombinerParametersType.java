@@ -54,7 +54,7 @@ public class RuleCombinerParametersType extends CombinerParametersType {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "RuleIdRef", required = true)
-	protected String ruleIdRef;
+	private String ruleIdRef;
 
 	/**
 	 * Gets the value of the ruleIdRef property.

@@ -61,12 +61,12 @@ public class AttributeSelectorType extends ExpressionType {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "RequestContextPath", required = true)
-	protected String requestContextPath;
+	private String requestContextPath;
 	@XmlAttribute(name = "DataType", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String dataType;
+	private String dataType;
 	@XmlAttribute(name = "MustBePresent")
-	protected Boolean mustBePresent;
+	private Boolean mustBePresent;
 
 	/**
 	 * Gets the value of the requestContextPath property.

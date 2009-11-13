@@ -34,12 +34,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 
 public class AnyOfAnyFunction implements Function {
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 7426295464640973108L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:any-of-any";
-
+	private static final int MAX_ARGS = 3;
+	
 	/**
 	 * {@inheritDoc} Takes a boolean {@link Function} as first parameter, and
 	 * two {@link List}s as second an third parameter. Applies die function with
@@ -48,7 +46,7 @@ public class AnyOfAnyFunction implements Function {
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != 3) {
+			if (args.length != MAX_ARGS) {
 				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			Function function = (Function) args[0];

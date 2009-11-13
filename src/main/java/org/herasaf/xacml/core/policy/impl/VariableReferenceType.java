@@ -62,7 +62,7 @@ public class VariableReferenceType extends ExpressionType {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "VariableId", required = true)
-	protected String variableId;
+	private String variableId;
 
 	/**
 	 * Gets the value of the variableId property.

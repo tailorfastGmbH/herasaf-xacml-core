@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 public class AllOfAnyFunction implements Function {
 	private static final long serialVersionUID = 7426295464640973108L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:all-of-any";
-
+	private static final int MAX_ARGS = 3;
 	private Function anyOfFunction;
 
 	/**
@@ -55,7 +55,7 @@ public class AllOfAnyFunction implements Function {
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != 3) {
+			if (args.length != MAX_ARGS) {
 				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			Function function = (Function) args[0];

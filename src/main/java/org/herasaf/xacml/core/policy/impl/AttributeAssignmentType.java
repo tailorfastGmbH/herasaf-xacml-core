@@ -56,7 +56,7 @@ public class AttributeAssignmentType extends AttributeValueType {
 	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "AttributeId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String attributeId;
+	private String attributeId;
 
 	/**
 	 * Gets the value of the attributeId property.

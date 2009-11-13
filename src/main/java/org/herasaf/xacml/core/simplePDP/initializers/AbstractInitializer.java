@@ -173,6 +173,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 					logger.debug("The type {} is successfully initialized.", instance.getClass().getCanonicalName());
 				} catch (ClassCastException e) {
 					// nop -- expected
+					logger.trace("Ignoring type: {}", instance.getClass());
 				}
 			} catch (ClassNotFoundException e) {
 				logger.error("Unable to load classes.", e);

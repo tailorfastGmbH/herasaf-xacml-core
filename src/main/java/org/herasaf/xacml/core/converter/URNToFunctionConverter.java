@@ -54,7 +54,7 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 * 
 	 * Contains all the available functions
 	 */
-	static Map<String, Function> functions;
+	private static Map<String, Function> functions;
 
 	/**
 	 * TODO JAVADOC

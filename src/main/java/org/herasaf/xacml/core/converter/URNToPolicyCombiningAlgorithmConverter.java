@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
  */
 public class URNToPolicyCombiningAlgorithmConverter extends XmlAdapter<String, PolicyCombiningAlgorithm> {
 	private final Logger logger = LoggerFactory.getLogger(URNToPolicyCombiningAlgorithmConverter.class);
-	static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
+	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
 
 	/**
 	 * TODO JAVADOC

@@ -64,12 +64,12 @@ public class ObligationType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeAssignment")
-	protected List<AttributeAssignmentType> attributeAssignments;
+	private List<AttributeAssignmentType> attributeAssignments;
 	@XmlAttribute(name = "ObligationId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String obligationId;
+	private String obligationId;
 	@XmlAttribute(name = "FulfillOn", required = true)
-	protected EffectType fulfillOn;
+	private EffectType fulfillOn;
 
 	/**
 	 * TODO JAVADOC.

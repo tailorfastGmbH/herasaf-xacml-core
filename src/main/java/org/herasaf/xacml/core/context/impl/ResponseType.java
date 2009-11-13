@@ -66,7 +66,7 @@ public class ResponseType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Result", required = true)
-	protected List<ResultType> results;
+	private List<ResultType> results;
 
 	/**
 	 * Gets the value of the results property.

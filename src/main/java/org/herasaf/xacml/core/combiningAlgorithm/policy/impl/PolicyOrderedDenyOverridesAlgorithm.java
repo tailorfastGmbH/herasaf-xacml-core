@@ -82,7 +82,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 
-			if (atLeastOneDeny && respectAbandonedEvaluatables && !eval.hasObligations()) {
+			if (atLeastOneDeny && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (atLeastOneDeny == true) and
 				 * the abandoned Obligations must be taken into account
@@ -129,7 +129,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			}
 			switch (decision) {
 			case DENY:
-				if (!respectAbandonedEvaluatables) { // if abandoned
+				if (!isRespectAbandonedEvaluatables()) { // if abandoned
 					// evaluatables should
 					// not be included then
 					// the first deny
@@ -158,10 +158,10 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 		if (atLeastOneDeny) {
 			requestInfo.resetStatus();
 			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY); // To
-																						// filter
-																						// all
-																						// PERMIT-Obligations
-																						// that
+			// filter
+			// all
+			// PERMIT-Obligations
+			// that
 			// were collected so far
 			return DecisionType.DENY;
 		} else if (atLeastOneError) {
@@ -169,11 +169,11 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			return DecisionType.DENY;
 		} else if (atLeastOnePermit) {
 			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT); // The
-																							// decision
-																							// is
-																							// made
-																							// and
-																							// all
+			// decision
+			// is
+			// made
+			// and
+			// all
 			// DENY-Obligations can be filtered out
 
 			/*

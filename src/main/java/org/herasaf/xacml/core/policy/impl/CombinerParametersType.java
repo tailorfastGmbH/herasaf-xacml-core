@@ -63,7 +63,7 @@ public class CombinerParametersType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "CombinerParameter")
-	protected List<CombinerParameterType> combinerParameters;
+	private List<CombinerParameterType> combinerParameters;
 
 	/**
 	 * Gets the value of the combinerParameters property.

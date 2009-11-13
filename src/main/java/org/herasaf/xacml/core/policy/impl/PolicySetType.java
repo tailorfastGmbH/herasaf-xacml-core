@@ -94,11 +94,11 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
-	protected String description;
+	private String description;
 	@XmlElement(name = "PolicySetDefaults")
-	protected DefaultsType policySetDefaults;
+	private DefaultsType policySetDefaults;
 	@XmlElement(name = "Target", required = true)
-	protected TargetType target;
+	private TargetType target;
 	@XmlElementRefs({
 			@XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
@@ -107,23 +107,23 @@ public class PolicySetType implements Evaluatable, Serializable {
 			@XmlElementRef(name = "PolicySet", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicyCombinerParameters", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "Policy", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class) })
-	protected List<JAXBElement<?>> additionalInformation;
+	private List<JAXBElement<?>> additionalInformation;
 	@XmlElement(name = "Obligations")
-	protected ObligationsType obligations;
+	private ObligationsType obligations;
 	@XmlAttribute(name = "PolicySetId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String policySetId;
+	private String policySetId;
 	@XmlAttribute(name = "Version")
-	protected String version;
+	private String version;
 
 	// This field is transient because it is only marshal-/unamrshal-able
 	// together with JAXB.
 	@XmlAttribute(name = "PolicyCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToPolicyCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected PolicyCombiningAlgorithm policyCombiningAlg;
+	private PolicyCombiningAlgorithm policyCombiningAlg;
 	@XmlTransient
-	protected boolean hasObligations; // True if the PolicySet or a SubPolicy
+	private boolean hasObligations; // True if the PolicySet or a SubPolicy
 										// (SubPolicySet) contains any
 										// Obligations.
 

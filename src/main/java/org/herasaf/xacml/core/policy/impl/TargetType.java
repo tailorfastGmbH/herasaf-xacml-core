@@ -61,13 +61,13 @@ public class TargetType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Subjects")
-	protected SubjectsType subjects;
+	private SubjectsType subjects;
 	@XmlElement(name = "Resources")
-	protected ResourcesType resources;
+	private ResourcesType resources;
 	@XmlElement(name = "Actions")
-	protected ActionsType actions;
+	private ActionsType actions;
 	@XmlElement(name = "Environments")
-	protected EnvironmentsType environments;
+	private EnvironmentsType environments;
 
 	/**
 	 * Gets the value of the subjects property.

@@ -75,16 +75,16 @@ public class AttributeType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
-	protected List<AttributeValueType> attributeValues;
+	private List<AttributeValueType> attributeValues;
 	@XmlAttribute(name = "AttributeId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String attributeId;
+	private String attributeId;
 	@XmlAttribute(name = "DataType", required = true)
 	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected DataTypeAttribute<?> dataType;
+	private DataTypeAttribute<?> dataType;
 	@XmlAttribute(name = "Issuer")
-	protected String issuer;
+	private String issuer;
 
 	/**
 	 * Gets the value of the attributeValues property.

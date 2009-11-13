@@ -56,7 +56,7 @@ public class PolicyCombinerParametersType extends CombinerParametersType {
 	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "PolicyIdRef", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String policyIdRef;
+	private String policyIdRef;
 
 	/**
 	 * Gets the value of the policyIdRef property.

@@ -60,7 +60,7 @@ public class ResourcesType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Resource", required = true)
-	protected List<ResourceType> resources;
+	private List<ResourceType> resources;
 
 	/**
 	 * Gets the value of the resources property.

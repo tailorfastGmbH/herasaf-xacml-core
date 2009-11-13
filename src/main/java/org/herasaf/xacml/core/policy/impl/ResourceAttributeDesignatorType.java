@@ -82,10 +82,10 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		List<ResourceType> resources = request.getResources();
 		for (ResourceType res : resources) {
 			for (AttributeType attr : res.getAttributes()) {
-				if (attributeId.equals(attr.getAttributeId())
-						&& dataType.toString().equals(attr.getDataType().toString())) {
-					if (issuer != null) {
-						if (issuer.equals(attr.getIssuer())) {
+				if (getAttributeId().equals(attr.getAttributeId())
+						&& getDataType().toString().equals(attr.getDataType().toString())) {
+					if (getIssuer() != null) {
+						if (getIssuer().equals(attr.getIssuer())) {
 							addAndConvertAttrValue(returnValues, attr.getAttributeValues());
 						}
 					} else {
@@ -103,12 +103,12 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestResourceAttributes(request, attributeId,
-					dataType.toString(), issuer);
+			List<AttributeValueType> attrValues = reqInfo.getPIP().requestResourceAttributes(request, getAttributeId(),
+					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {
-			throw new MissingAttributeException(attributeId, dataType, issuer);
+			throw new MissingAttributeException(getAttributeId(), getDataType(), getIssuer());
 		}
 		return returnValues;
 	}

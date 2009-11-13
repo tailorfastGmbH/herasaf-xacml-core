@@ -48,7 +48,7 @@ import org.slf4j.LoggerFactory;
 public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute<?>> {
 	private final Logger logger = LoggerFactory.getLogger(URNToDataTypeConverter.class);
 
-	static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
+	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
 	/**
 	 * TODO JAVADOC

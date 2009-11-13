@@ -69,13 +69,13 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 public class ResultType implements Serializable {
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Decision", required = true)
-	protected DecisionType decision;
+	private DecisionType decision;
 	@XmlElement(name = "Status")
-	protected StatusType status;
+	private StatusType status;
 	@XmlElement(name = "Obligations", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os")
-	protected ObligationsType obligations;
+	private ObligationsType obligations;
 	@XmlAttribute(name = "ResourceId")
-	protected String resourceId;
+	private String resourceId;
 
 	/**
 	 * Gets the value of the decision property.

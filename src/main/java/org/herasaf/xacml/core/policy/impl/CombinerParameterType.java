@@ -60,9 +60,9 @@ public class CombinerParameterType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
-	protected AttributeValueType attributeValue;
+	private AttributeValueType attributeValue;
 	@XmlAttribute(name = "ParameterName", required = true)
-	protected String parameterName;
+	private String parameterName;
 
 	/**
 	 * Gets the value of the attributeValue property.

@@ -82,7 +82,7 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 
-			if (atLeastOneDeny && respectAbandonedEvaluatables && !eval.hasObligations()) {
+			if (atLeastOneDeny && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (atLeastOneDeny == true) and
 				 * the abandoned Obligations must be taken into account
@@ -129,8 +129,9 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 			}
 			switch (decision) {
 			case DENY:
-				if (!respectAbandonedEvaluatables) { // if abandoned
-					// evaluatables should
+				if (!isRespectAbandonedEvaluatables()) { // if abandoned //
+															// evaluatables
+															// should
 					// not be included then
 					// the first deny
 					// finishes the

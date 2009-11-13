@@ -75,9 +75,9 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType 
 		// A RequestType is not thread safe, because of this you can iterate
 		// over it.
 		for (AttributeType attr : request.getEnvironment().getAttributes()) {
-			if (attributeId.equals(attr.getAttributeId()) && dataType.toString().equals(attr.getDataType().toString())) {
-				if (issuer != null) {
-					if (issuer.equals(attr.getIssuer())) {
+			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
+				if (getIssuer() != null) {
+					if (getIssuer().equals(attr.getIssuer())) {
 						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
 					}
 				} else {
@@ -94,12 +94,12 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType 
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestEnvironmentAttributes(request, attributeId,
-					dataType.toString(), issuer);
+			List<AttributeValueType> attrValues = reqInfo.getPIP().requestEnvironmentAttributes(request, getAttributeId(),
+					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {
-			throw new MissingAttributeException(attributeId, dataType, issuer);
+			throw new MissingAttributeException(getAttributeId(), getDataType(), getIssuer());
 		}
 		return returnValues;
 	}

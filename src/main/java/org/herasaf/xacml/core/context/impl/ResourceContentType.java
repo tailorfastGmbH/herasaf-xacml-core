@@ -72,7 +72,7 @@ public class ResourceContentType implements Serializable {
 	private static final long serialVersionUID = 632768732L;
 	@XmlMixed
 	@XmlAnyElement(lax = true)
-	protected List<Object> content;
+	private List<Object> content;
 	@XmlAnyAttribute
 	private Map<QName, String> otherAttributes;
 

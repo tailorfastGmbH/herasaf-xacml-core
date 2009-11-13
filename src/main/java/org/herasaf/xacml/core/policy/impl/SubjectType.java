@@ -60,7 +60,7 @@ public class SubjectType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "SubjectMatch", required = true)
-	protected List<SubjectMatchType> subjectMatches;
+	private List<SubjectMatchType> subjectMatches;
 
 	/**
 	 * Gets the value of the subjectMatches property.

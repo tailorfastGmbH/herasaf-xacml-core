@@ -63,15 +63,15 @@ public class RuleType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
-	protected String description;
+	private String description;
 	@XmlElement(name = "Target")
-	protected TargetType target;
+	private TargetType target;
 	@XmlElement(name = "Condition")
-	protected ConditionType condition;
+	private ConditionType condition;
 	@XmlAttribute(name = "RuleId", required = true)
-	protected String ruleId;
+	private String ruleId;
 	@XmlAttribute(name = "Effect", required = true)
-	protected EffectType effect;
+	private EffectType effect;
 
 	/**
 	 * Gets the value of the description property.

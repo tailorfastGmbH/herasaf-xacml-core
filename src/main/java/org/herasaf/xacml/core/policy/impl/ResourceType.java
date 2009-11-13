@@ -60,7 +60,7 @@ public class ResourceType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "ResourceMatch", required = true)
-	protected List<ResourceMatchType> resourceMatches;
+	private List<ResourceMatchType> resourceMatches;
 
 	/**
 	 * Gets the value of the resourceMatches property.

@@ -67,9 +67,9 @@ public class ResourceType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "ResourceContent")
-	protected ResourceContentType resourceContent;
+	private ResourceContentType resourceContent;
 	@XmlElement(name = "Attribute")
-	protected List<AttributeType> attributes;
+	private List<AttributeType> attributes;
 
 	/**
 	 * Gets the value of the resourceContent property.

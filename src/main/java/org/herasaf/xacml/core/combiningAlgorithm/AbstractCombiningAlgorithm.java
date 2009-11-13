@@ -48,7 +48,16 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 * If set to true abandoned evaluatables will be included (if
 	 * possible) in the evaluation.
 	 */
-	protected boolean respectAbandonedEvaluatables;
+	private boolean respectAbandonedEvaluatables;
+
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
+	public boolean isRespectAbandonedEvaluatables() {
+		return respectAbandonedEvaluatables;
+	}
 
 	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
 		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;

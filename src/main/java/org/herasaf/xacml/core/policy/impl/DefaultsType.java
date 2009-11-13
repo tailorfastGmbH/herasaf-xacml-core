@@ -63,7 +63,7 @@ public class DefaultsType implements Serializable {
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "XPathVersion")
 	@XmlSchemaType(name = "anyURI")
-	protected String xPathVersion;
+	private String xPathVersion;
 
 	/**
 	 * Gets the value of the xPathVersion property.

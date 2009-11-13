@@ -78,13 +78,13 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)
 	@XmlValue
 	@XmlSchemaType(name = "anyURI")
-	protected String value;
+	private String value;
 	@XmlAttribute(name = "Version")
-	protected String version;
+	private String version;
 	@XmlAttribute(name = "EarliestVersion")
-	protected String earliestVersion;
+	private String earliestVersion;
 	@XmlAttribute(name = "LatestVersion")
-	protected String latestVersion;
+	private String latestVersion;
 
 	/**
 	 * Gets the value of the value property.

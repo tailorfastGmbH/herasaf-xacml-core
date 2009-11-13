@@ -60,7 +60,7 @@ public class ObligationsType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Obligation", required = true)
-	protected List<ObligationType> obligations;
+	private List<ObligationType> obligations;
 
 	/**
 	 * Gets the value of the obligations property.

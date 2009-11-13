@@ -157,10 +157,20 @@
 	</Match>
 	<Match>
 		<!--
-			This static field must be set due to configuration of the initializer.
+			This static field must be set due to configuration of the
+			initializer.
 		-->
 		<Class
 			name="org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsInitializer" />
 		<Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+	</Match>
+	<Match>
+		<!--
+			This field need not to be initialized because it must be set from the
+			XML.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.AttributeDesignatorType" />
+		<Field name="dataType" />
+		<Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
 	</Match>
 </FindBugsFilter>

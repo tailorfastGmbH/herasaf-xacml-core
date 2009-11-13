@@ -85,13 +85,13 @@ public class RequestType implements Serializable {
 	private static final long serialVersionUID = 632768732L;
 
 	@XmlElement(name = "Subject", required = true)
-	protected List<SubjectType> subjects;
+	private List<SubjectType> subjects;
 	@XmlElement(name = "Resource", required = true)
-	protected List<ResourceType> resources;
+	private List<ResourceType> resources;
 	@XmlElement(name = "Action", required = true)
-	protected ActionType action;
+	private ActionType action;
 	@XmlElement(name = "Environment", required = true)
-	protected EnvironmentType environment;
+	private EnvironmentType environment;
 
 	/**
 	 * TODO JAVADOC.

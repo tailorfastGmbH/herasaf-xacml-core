@@ -67,10 +67,10 @@ public class StatusCodeType implements Serializable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "StatusCode")
-	protected StatusCodeType statusCode;
+	private StatusCodeType statusCode;
 	@XmlAttribute(name = "Value", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String value;
+	private String value;
 
 	/**
 	 * Gets the value of the statusCode property.

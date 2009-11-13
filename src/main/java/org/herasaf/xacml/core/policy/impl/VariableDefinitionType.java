@@ -68,9 +68,9 @@ public class VariableDefinitionType implements Serializable, Variable {
 
 	private static final long serialVersionUID = 632768732L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
-	protected JAXBElement<? extends Serializable> expression;
+	private JAXBElement<? extends Serializable> expression;
 	@XmlAttribute(name = "VariableId", required = true)
-	protected String variableId;
+	private String variableId;
 
 	/**
 	 * Gets the value of the expression property.
