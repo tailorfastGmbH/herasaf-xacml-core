@@ -69,8 +69,8 @@ public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgo
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
+			final RequestInformation requestInfo) {
 		boolean atLeastOneError = false;
 		boolean atLeastOneDeny = false;
 		boolean atLeastOnePermit = false;
@@ -78,12 +78,12 @@ public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgo
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
 		 */
-		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
-		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
+		final List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		final List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		final List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
 
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+			final Evaluatable eval = possiblePolicies.get(i);
 
 			if (atLeastOnePermit && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
 				/*

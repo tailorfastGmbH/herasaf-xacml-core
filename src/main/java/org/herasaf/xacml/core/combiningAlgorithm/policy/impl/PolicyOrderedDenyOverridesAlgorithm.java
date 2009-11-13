@@ -69,18 +69,18 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
+			final RequestInformation requestInfo) {
 
-		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
-
+		final List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
+		final List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		
 		boolean atLeastOnePermit = false;
 		boolean atLeastOneDeny = false;
 		boolean atLeastOneError = false;
-		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
 
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+			final Evaluatable eval = possiblePolicies.get(i);
 
 			if (atLeastOneDeny && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
 				/*

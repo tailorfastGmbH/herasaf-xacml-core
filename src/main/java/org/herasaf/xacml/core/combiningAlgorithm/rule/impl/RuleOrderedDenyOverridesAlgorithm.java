@@ -79,20 +79,20 @@ public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgor
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(RequestType request, List<RuleType> rules, RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
 		 */
-		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		final List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		final List<StatusCode> statusCodes = new ArrayList<StatusCode>();
 
 		boolean atLeastOnePermit = false;
 		boolean potentialDeny = false;
 		boolean atLeastOneError = false;
 
 		for (int i = 0; i < rules.size(); i++) {
-			RuleType rule = rules.get(i);
+			final RuleType rule = rules.get(i);
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
 			requestInfo.resetStatus();
@@ -102,7 +102,7 @@ public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgor
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+			final DecisionType decision = this.evaluateRule(request, rule, requestInfo);
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());

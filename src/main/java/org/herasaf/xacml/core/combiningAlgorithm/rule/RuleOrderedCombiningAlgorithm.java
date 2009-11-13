@@ -41,15 +41,15 @@ public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombinin
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
-		DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
+	public DecisionType evaluate(final RequestType request, final Evaluatable evals, final RequestInformation requestInfo) {
+		final DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
 		}
 		try {
 			requestInfo.setVariableDefinitions(((PolicyType) evals).getVariables());
-			DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getOrderedRules(), requestInfo);
+			final DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getOrderedRules(), requestInfo);
 			/*
 			 * If the decision was made, the evaluation process might have set
 			 * the targetMatched variable to false. so it has to be sure that
@@ -77,7 +77,7 @@ public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombinin
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public abstract DecisionType evaluateRuleList(RequestType request, List<RuleType> possiblePolicies,
-			RequestInformation requestInfos);
+	public abstract DecisionType evaluateRuleList(final RequestType request, final List<RuleType> possiblePolicies,
+			final RequestInformation requestInfos);
 
 }

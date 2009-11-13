@@ -59,14 +59,14 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 		return respectAbandonedEvaluatables;
 	}
 
-	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
+	public void setRespectAbandondEvaluatables(final boolean respectAbandondEvaluatables) {
 		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
 	}
 
 	/**
 	 * Sets the TargetMatcher.
 	 */
-	public void setTargetMatcher(TargetMatcher targetMatcher) {
+	public void setTargetMatcher(final TargetMatcher targetMatcher) {
 		this.targetMatcher = targetMatcher;
 	}
 
@@ -82,7 +82,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 *            process.
 	 * @return The decision of matching the target.
 	 */
-	protected DecisionType matchTarget(RequestType request, TargetType target, RequestInformation requestInfo) {
+	protected DecisionType matchTarget(final RequestType request, final TargetType target, final RequestInformation requestInfo) {
 		boolean targetMatchDecision = false;
 		DecisionType decision = DecisionType.INDETERMINATE;
 		try {

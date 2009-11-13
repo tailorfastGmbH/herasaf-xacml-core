@@ -56,16 +56,16 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo) {
+	public DecisionType evaluateRule(final RequestType request, final RuleType rule, final RequestInformation requestInfo) {
 		/*
 		 * Matches the target of the rule
 		 */
-		DecisionType targetDecision = matchTarget(request, rule.getTarget(), requestInfo);
+		final DecisionType targetDecision = matchTarget(request, rule.getTarget(), requestInfo);
 		if (targetDecision != DecisionType.PERMIT) {
 			return targetDecision;
 		}
 
-		ConditionType condition = rule.getCondition();
+		final ConditionType condition = rule.getCondition();
 		Boolean decision = null;
 		/*
 		 * If the rule doesn't contain a condition, the result of the condition
@@ -126,7 +126,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 	/**
 	 *{@inheritDoc}
 	 */
-	public abstract DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules,
-			RequestInformation requestInfos);
+	public abstract DecisionType evaluateRuleList(final RequestType request, final List<RuleType> possibleRules,
+			final RequestInformation requestInfos);
 
 }

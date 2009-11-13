@@ -68,8 +68,8 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
+			final RequestInformation requestInfo) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);

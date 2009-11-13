@@ -73,18 +73,18 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	 */
 
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
+			final RequestInformation requestInfo) {
 		// Variable to keep the first made decision
 		DecisionType firstApplicableDecision = null;
 		// keeps the statuscode of the first decision
 		StatusCode statusCode = null;
 		// remembers the missing Attributes of the first decision
-		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-		List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
+		final List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		final List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
 
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+			final Evaluatable eval = possiblePolicies.get(i);
 			DecisionType decision;
 			try {
 				// Resets the status to go sure, that the returned statuscode is

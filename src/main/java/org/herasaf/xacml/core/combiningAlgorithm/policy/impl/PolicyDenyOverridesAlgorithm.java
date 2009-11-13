@@ -69,8 +69,8 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
 	 */
 	@Override
-	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfo) {
+	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
+			final RequestInformation requestInfo) {
 
 		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
 

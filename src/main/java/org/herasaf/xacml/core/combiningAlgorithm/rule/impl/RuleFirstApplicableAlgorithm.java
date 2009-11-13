@@ -75,10 +75,10 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(RequestType request, List<RuleType> rules, RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
 
 		for (int i = 0; i < rules.size(); i++) {
-			RuleType rule = rules.get(i);
+			final RuleType rule = rules.get(i);
 			/*
 			 * keeps the actual state and missing attributes of this combining
 			 * process.
@@ -90,7 +90,7 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+			final DecisionType decision = this.evaluateRule(request, rule, requestInfo);
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());
