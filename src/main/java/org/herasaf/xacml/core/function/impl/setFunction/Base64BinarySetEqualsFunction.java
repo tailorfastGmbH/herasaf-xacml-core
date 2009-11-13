@@ -34,7 +34,8 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class Base64BinarySetEqualsFunction extends AbstractSetEqualsFunction<Base64Binary> {
+public class Base64BinarySetEqualsFunction extends
+		AbstractSetEqualsFunction<Base64Binary> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-set-equals";
 
@@ -44,7 +45,7 @@ public class Base64BinarySetEqualsFunction extends AbstractSetEqualsFunction<Bas
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

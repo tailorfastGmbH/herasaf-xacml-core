@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
 import java.math.BigInteger;
 import java.util.List;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -41,7 +41,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @param <T>
  *            Implemented Type.
  */
-public abstract class AbstractBagSizeFunction<T> implements Function {
+public abstract class AbstractBagSizeFunction<T> extends AbstractFunction {
 
 	private static final long serialVersionUID = -7932230812638065901L;
 
@@ -60,9 +60,11 @@ public abstract class AbstractBagSizeFunction<T> implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
-			return new BigInteger(Integer.valueOf(((List<T>) args[0]).size()).toString());
+			return new BigInteger(Integer.valueOf(((List<T>) args[0]).size())
+					.toString());
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(e);
 		} catch (Exception e) {

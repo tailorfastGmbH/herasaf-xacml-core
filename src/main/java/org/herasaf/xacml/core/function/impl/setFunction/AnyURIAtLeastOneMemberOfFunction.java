@@ -34,17 +34,16 @@ import java.net.URI;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class AnyURIAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<URI> {
+public class AnyURIAtLeastOneMemberOfFunction extends
+		AbstractAtLeastOneMemberOfFunction<URI> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-at-least-one-member-of";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

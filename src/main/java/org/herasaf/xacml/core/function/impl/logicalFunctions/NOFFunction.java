@@ -18,8 +18,9 @@
 package org.herasaf.xacml.core.function.impl.logicalFunctions;
 
 import java.math.BigInteger;
+import java.util.List;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -32,14 +33,14 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class NOFFunction implements Function {
+public class NOFFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = 5182684637230461983L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:n-of";
 
 	/**
 	 * The first argument is a {@link BigInteger}, the second argument should be
-	 * a list of boolean values. The first argument specifies the
+	 * a {@link List} of boolean values. The first argument specifies the
 	 * minimum amount of true values that should be in the list. if the list is
 	 * shorter then than minimum. value, a {@link FunctionProcessingException}
 	 * is thrown. If the amount of true values is reached, true is returned,
@@ -50,7 +51,8 @@ public class NOFFunction implements Function {
 		int handledArrayFields = 1;
 		try {
 			if (args.length < 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 
 			minOccurence = (int) ((BigInteger) args[0]).longValue();
@@ -83,13 +85,11 @@ public class NOFFunction implements Function {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 

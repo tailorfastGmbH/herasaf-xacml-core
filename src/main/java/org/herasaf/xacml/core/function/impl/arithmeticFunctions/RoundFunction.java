@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.arithmeticFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -35,7 +35,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class RoundFunction implements Function {
+public class RoundFunction extends AbstractFunction {
 	private static final long serialVersionUID = 5250911718301629150L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:round";
 
@@ -46,23 +46,23 @@ public class RoundFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters.");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters.");
 			}
-			return Double.valueOf(Math.round((Double) args[0]));
+			return new Double(Math.round((Double) args[0]));
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

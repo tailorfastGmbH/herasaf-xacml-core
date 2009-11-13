@@ -20,6 +20,7 @@ package org.herasaf.xacml.core.function.impl.higherOrderBagFunctions;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
@@ -34,7 +35,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 
-public class MapFunction implements Function {
+public class MapFunction extends AbstractFunction {
 	/**
 	 *
 	 */
@@ -49,7 +50,8 @@ public class MapFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			Function function = (Function) args[0];
 			List<Object> returnList = new ArrayList<Object>();
@@ -66,14 +68,11 @@ public class MapFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
-
 }

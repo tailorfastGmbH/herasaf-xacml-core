@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.specialMatchFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.RFC822Name;
 
@@ -36,12 +36,12 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class RFC822NameMatchFunction implements Function {
+public class RFC822NameMatchFunction extends AbstractFunction {
 	private static final long serialVersionUID = -3491926450245801282L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match";
 
 	/**
-	 * {@inheritDoc}. <br>
+	 * {@inheritDoc} <br>
 	 * <br>
 	 * Returns true if the first argument matches the second argument according
 	 * the specification on page 125 (A.3.14, special match functions) in <a
@@ -53,11 +53,13 @@ public class RFC822NameMatchFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return ((RFC822Name) args[1]).match((String) args[0]);
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -65,13 +67,11 @@ public class RFC822NameMatchFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

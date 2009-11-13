@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.equalityPredicates;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -30,7 +30,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class StringEqualFunction implements Function {
+public class StringEqualFunction extends AbstractFunction {
+	/**
+	 *
+	 */
 	private static final long serialVersionUID = -3491926450245801282L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
 
@@ -43,7 +46,8 @@ public class StringEqualFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			String string = (String) args[1];
 			return ((String) args[0]).equals(string);
@@ -54,13 +58,11 @@ public class StringEqualFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

@@ -38,13 +38,11 @@ public class HexBinarySubsetFunction extends AbstractSubsetFunction<HexBinary> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-subset";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

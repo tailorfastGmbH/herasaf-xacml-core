@@ -34,18 +34,17 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class Base64BinaryOneAndOnlyFunction extends AbstractOneAndOnlyFunction<Base64Binary> {
+public class Base64BinaryOneAndOnlyFunction extends
+		AbstractOneAndOnlyFunction<Base64Binary> {
 
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

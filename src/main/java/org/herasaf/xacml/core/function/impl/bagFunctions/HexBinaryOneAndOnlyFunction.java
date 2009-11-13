@@ -34,18 +34,17 @@ import org.herasaf.xacml.core.types.HexBinary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class HexBinaryOneAndOnlyFunction extends AbstractOneAndOnlyFunction<HexBinary> {
+public class HexBinaryOneAndOnlyFunction extends
+		AbstractOneAndOnlyFunction<HexBinary> {
 
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

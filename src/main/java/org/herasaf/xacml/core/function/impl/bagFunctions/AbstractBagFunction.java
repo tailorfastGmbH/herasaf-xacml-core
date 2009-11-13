@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -40,7 +40,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @param <T>
  *            Implemented Type.
  */
-public abstract class AbstractBagFunction<T> implements Function {
+public abstract class AbstractBagFunction<T> extends AbstractFunction {
 
 	private static final long serialVersionUID = -7932230812638065901L;
 

@@ -34,17 +34,16 @@ import org.herasaf.xacml.core.types.Date;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<Date> {
+public class DateAtLeastOneMemberOfFunction extends
+		AbstractAtLeastOneMemberOfFunction<Date> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-at-least-one-member-of";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

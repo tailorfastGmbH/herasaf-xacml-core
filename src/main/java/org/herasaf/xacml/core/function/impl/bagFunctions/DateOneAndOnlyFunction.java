@@ -39,13 +39,11 @@ public class DateOneAndOnlyFunction extends AbstractOneAndOnlyFunction<Date> {
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

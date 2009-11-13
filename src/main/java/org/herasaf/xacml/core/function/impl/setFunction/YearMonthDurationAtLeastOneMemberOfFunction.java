@@ -35,17 +35,16 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class YearMonthDurationAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<YearMonthDuration> {
+public class YearMonthDurationAtLeastOneMemberOfFunction extends
+		AbstractAtLeastOneMemberOfFunction<YearMonthDuration> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-at-least-one-member-of";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

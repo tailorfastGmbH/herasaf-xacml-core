@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.nonNumericComparisonFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.Date;
 
@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.types.Date;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateLessThanOrEqualFunction implements Function {
+public class DateLessThanOrEqualFunction extends AbstractFunction {
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal";
 
@@ -63,10 +63,12 @@ public class DateLessThanOrEqualFunction implements Function {
 	// must provide an implicit time zone if no one is set.
 	// This MUST is not considered in this implementation of the function and
 	// must be fixed.
-	public Object handle(Object... args) throws FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException,
+			FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			int result = ((Date) args[0]).compareTo((Date) args[1]);
 			if (result < 0) {
@@ -85,8 +87,11 @@ public class DateLessThanOrEqualFunction implements Function {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

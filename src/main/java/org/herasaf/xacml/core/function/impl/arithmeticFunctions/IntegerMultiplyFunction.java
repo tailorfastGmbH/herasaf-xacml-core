@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.arithmeticFunctions;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -28,16 +28,16 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:integer-multiply function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a
+ * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 108, for further information.
  * </p>
- * 
- * @author Stefan Oberholzer
+ *
+ * @author Stefan Oberholzer 
  * @version 1.0
  */
-public class IntegerMultiplyFunction implements Function {
+public class IntegerMultiplyFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = -1856285242926019575L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-multiply";
@@ -49,24 +49,24 @@ public class IntegerMultiplyFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters.");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters.");
 			}
 
 			return ((BigInteger) args[0]).multiply((BigInteger) args[1]);
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

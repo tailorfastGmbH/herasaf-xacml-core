@@ -39,13 +39,11 @@ public class DateBagSizeFunction extends AbstractBagSizeFunction<Date> {
 	private static final long serialVersionUID = -1322929512635038408L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-bag-size";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 

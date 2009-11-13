@@ -22,7 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -36,11 +36,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- * @param <T> TODO JAVADOC.
+ * 
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public abstract class AbstractUnionFunction<T> implements Function {
+public abstract class AbstractUnionFunction<T> extends AbstractFunction {
 	private static final long serialVersionUID = -367894928512846701L;
 
 	/**
@@ -52,13 +52,15 @@ public abstract class AbstractUnionFunction<T> implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters.");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters.");
 			}
 			Set<T> arg0 = new HashSet<T>((List<T>) args[0]);
 			arg0.addAll((List<T>) args[1]);
 			return new ArrayList<T>(arg0);
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {

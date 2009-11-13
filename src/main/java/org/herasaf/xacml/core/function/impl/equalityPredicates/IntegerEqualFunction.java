@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.equalityPredicates;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Florian Huonder
  * @version 1.0
  */
-public class IntegerEqualFunction implements Function {
+public class IntegerEqualFunction extends AbstractFunction {
 	/**
 	 *
 	 */
@@ -48,23 +48,23 @@ public class IntegerEqualFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return (((BigInteger) args[0]).equals(args[1]));
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

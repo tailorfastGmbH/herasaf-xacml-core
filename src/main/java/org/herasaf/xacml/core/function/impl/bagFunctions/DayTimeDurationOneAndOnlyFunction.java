@@ -34,18 +34,17 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DayTimeDurationOneAndOnlyFunction extends AbstractOneAndOnlyFunction<DayTimeDuration> {
+public class DayTimeDurationOneAndOnlyFunction extends
+		AbstractOneAndOnlyFunction<DayTimeDuration> {
 
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

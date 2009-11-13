@@ -19,6 +19,7 @@ package org.herasaf.xacml.core.function.impl.higherOrderBagFunctions;
 
 import java.util.List;
 
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
@@ -33,11 +34,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 
-public class AnyOfAnyFunction implements Function {
+public class AnyOfAnyFunction extends AbstractFunction {
+	/**
+	 *
+	 */
 	private static final long serialVersionUID = 7426295464640973108L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:any-of-any";
-	private static final int MAX_ARGS = 3;
-	
+
 	/**
 	 * {@inheritDoc} Takes a boolean {@link Function} as first parameter, and
 	 * two {@link List}s as second an third parameter. Applies die function with
@@ -46,8 +49,9 @@ public class AnyOfAnyFunction implements Function {
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != MAX_ARGS) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+			if (args.length != 3) {
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			Function function = (Function) args[0];
 			for (Object obj1 : ((List<?>) args[1])) {
@@ -67,13 +71,11 @@ public class AnyOfAnyFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 

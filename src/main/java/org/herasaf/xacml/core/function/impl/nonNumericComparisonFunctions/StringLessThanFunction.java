@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.nonNumericComparisonFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -35,7 +35,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class StringLessThanFunction implements Function {
+public class StringLessThanFunction extends AbstractFunction {
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-less-than";
 
@@ -46,10 +46,12 @@ public class StringLessThanFunction implements Function {
 	 * http://www.w3.org/2001/XMLSchema#string is lesser than the second
 	 * argument.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException,
+			FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			int result = ((String) args[0]).compareTo((String) args[1]);
 			if (result < 0) {
@@ -68,8 +70,11 @@ public class StringLessThanFunction implements Function {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

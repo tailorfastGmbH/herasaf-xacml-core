@@ -35,18 +35,17 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * @version 1.0
  * 
  */
-public class YearMonthDurationBagFunction extends AbstractBagFunction<YearMonthDuration> {
+public class YearMonthDurationBagFunction extends
+		AbstractBagFunction<YearMonthDuration> {
 
 	private static final long serialVersionUID = 2602950448847221492L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-bag";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -34,12 +34,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * 2006</a> page 115, for further information.
  * </p>
  * 
- * @param <T> TODO JAVADOC.
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  * 
  */
-public abstract class AbstractOneAndOnlyFunction<T> implements Function {
+public abstract class AbstractOneAndOnlyFunction<T> extends AbstractFunction {
 
 	private static final long serialVersionUID = -4986950035747337899L;
 
@@ -59,10 +58,12 @@ public abstract class AbstractOneAndOnlyFunction<T> implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			if (((List<?>) args[0]).size() != 1) {
-				throw new FunctionProcessingException("Invalid number of elements");
+				throw new FunctionProcessingException(
+						"Invalid number of elements");
 			}
 			Object returnValue = ((List<?>) args[0]).get(0);
 

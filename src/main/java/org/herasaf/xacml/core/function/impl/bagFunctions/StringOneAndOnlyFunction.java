@@ -32,18 +32,17 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class StringOneAndOnlyFunction extends AbstractOneAndOnlyFunction<String> {
+public class StringOneAndOnlyFunction extends
+		AbstractOneAndOnlyFunction<String> {
 
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

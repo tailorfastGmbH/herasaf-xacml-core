@@ -34,17 +34,16 @@ import org.herasaf.xacml.core.types.Date;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateIntersectionFunction extends AbstractIntersectionFunction<Date> {
+public class DateIntersectionFunction extends
+		AbstractIntersectionFunction<Date> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-intersection";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

@@ -40,13 +40,11 @@ public class HexBinaryBagFunction extends AbstractBagFunction<HexBinary> {
 	private static final long serialVersionUID = 2602950448847221492L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-bag";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

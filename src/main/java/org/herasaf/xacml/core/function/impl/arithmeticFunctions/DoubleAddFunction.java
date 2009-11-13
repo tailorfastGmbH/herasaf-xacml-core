@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.arithmeticFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -35,7 +35,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Florian Huonder
  * @version 1.0
  */
-public class DoubleAddFunction implements Function {
+public class DoubleAddFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = -5221448849355031705L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-add";
@@ -47,7 +47,8 @@ public class DoubleAddFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length < 2) {
-				throw new FunctionProcessingException("Invalid number of parameters.");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters.");
 			}
 			Double[] integers = new Double[args.length];
 			for (int i = 0; i < args.length; i++) {
@@ -60,19 +61,18 @@ public class DoubleAddFunction implements Function {
 			}
 			return result;
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

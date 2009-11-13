@@ -33,7 +33,8 @@ package org.herasaf.xacml.core.function.impl.setFunction;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class BooleanAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<Boolean> {
+public class BooleanAtLeastOneMemberOfFunction extends
+		AbstractAtLeastOneMemberOfFunction<Boolean> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-at-least-one-member-of";
 
@@ -43,7 +44,7 @@ public class BooleanAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberO
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

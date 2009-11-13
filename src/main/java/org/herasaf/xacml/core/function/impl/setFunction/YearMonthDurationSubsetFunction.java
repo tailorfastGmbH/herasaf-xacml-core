@@ -34,17 +34,16 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class YearMonthDurationSubsetFunction extends AbstractSubsetFunction<YearMonthDuration> {
+public class YearMonthDurationSubsetFunction extends
+		AbstractSubsetFunction<YearMonthDuration> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-subset";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

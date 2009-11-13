@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.stringConversionFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class StringNormalizeToLowerCaseFunction implements Function {
+public class StringNormalizeToLowerCaseFunction extends AbstractFunction {
 	private static final long serialVersionUID = -5323909044560228466L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-normalize-to-lower-case";
 
@@ -48,11 +48,13 @@ public class StringNormalizeToLowerCaseFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return ((String) args[0]).toLowerCase();
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -60,13 +62,11 @@ public class StringNormalizeToLowerCaseFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

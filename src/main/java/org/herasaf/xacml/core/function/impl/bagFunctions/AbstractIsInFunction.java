@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -40,7 +40,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @param <T>
  *            Implemented Type.
  */
-public abstract class AbstractIsInFunction<T> implements Function {
+public abstract class AbstractIsInFunction<T> extends AbstractFunction {
 
 	private static final long serialVersionUID = -7932230812638065901L;
 
@@ -64,7 +64,8 @@ public abstract class AbstractIsInFunction<T> implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			List<T> bagValues = ((List<T>) args[1]);
 			for (T val : bagValues) {

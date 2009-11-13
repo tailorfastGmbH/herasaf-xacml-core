@@ -34,18 +34,17 @@ import javax.security.auth.x500.X500Principal;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class X500NameOneAndOnlyFunction extends AbstractOneAndOnlyFunction<X500Principal> {
+public class X500NameOneAndOnlyFunction extends
+		AbstractOneAndOnlyFunction<X500Principal> {
 
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

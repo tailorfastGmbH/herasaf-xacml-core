@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.regularExpressionBasedFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.DnsName;
 
@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.types.DnsName;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DNSNameRegexpMatchFunction implements Function {
+public class DNSNameRegexpMatchFunction extends AbstractFunction {
 	private static final long serialVersionUID = 7197923951659086946L;
 	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:dnsName-regexp-match";
 
@@ -51,11 +51,13 @@ public class DNSNameRegexpMatchFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return ((DnsName) args[1]).toString().matches((String) args[0]);
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -63,13 +65,11 @@ public class DNSNameRegexpMatchFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

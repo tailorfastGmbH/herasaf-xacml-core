@@ -34,17 +34,16 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class Base64BinaryUnionFunction extends AbstractUnionFunction<Base64Binary> {
+public class Base64BinaryUnionFunction extends
+		AbstractUnionFunction<Base64Binary> {
 	private static final long serialVersionUID = -367894928512846701L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-union";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

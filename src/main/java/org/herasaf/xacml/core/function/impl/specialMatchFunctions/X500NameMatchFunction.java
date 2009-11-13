@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.specialMatchFunctions;
 
 import javax.security.auth.x500.X500Principal;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class X500NameMatchFunction implements Function {
+public class X500NameMatchFunction extends AbstractFunction {
 	private static final long serialVersionUID = -3491926450245801282L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-match";
 
@@ -49,10 +49,13 @@ public class X500NameMatchFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
-			String[] expectedName = ((X500Principal) args[0]).getName(X500Principal.RFC2253).split(",");
-			String[] comparedName = ((X500Principal) args[1]).getName(X500Principal.RFC2253).split(",");
+			String[] expectedName = ((X500Principal) args[0]).getName(
+					X500Principal.RFC2253).split(",");
+			String[] comparedName = ((X500Principal) args[1]).getName(
+					X500Principal.RFC2253).split(",");
 			for (int i = 0; i < expectedName.length; i += 1) {
 				boolean found = false;
 				for (int k = 0; k < comparedName.length; k += 1) {
@@ -66,7 +69,8 @@ public class X500NameMatchFunction implements Function {
 			}
 			return (true);
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -74,13 +78,11 @@ public class X500NameMatchFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

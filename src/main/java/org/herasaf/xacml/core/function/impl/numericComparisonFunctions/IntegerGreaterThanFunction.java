@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.numericComparisonFunctions;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class IntegerGreaterThanFunction implements Function {
+public class IntegerGreaterThanFunction extends AbstractFunction {
 	private static final long serialVersionUID = -2051246209076497725L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-greater-than";
 
@@ -50,14 +50,16 @@ public class IntegerGreaterThanFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters.");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters.");
 			}
 			if (((BigInteger) args[0]).compareTo((BigInteger) args[1]) > 0) {
 				return true;
 			}
 			return false;
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -65,13 +67,11 @@ public class IntegerGreaterThanFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

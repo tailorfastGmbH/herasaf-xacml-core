@@ -39,13 +39,11 @@ public class HexBinaryIsInFunction extends AbstractIsInFunction<HexBinary> {
 	private static final long serialVersionUID = -7932230812638065901L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-is-in";
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 

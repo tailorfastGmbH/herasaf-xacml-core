@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.logicalFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class NotFunction implements Function {
+public class NotFunction extends AbstractFunction {
 	/**
 	 *
 	 */
@@ -44,7 +44,8 @@ public class NotFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return !(Boolean) args[0];
 		} catch (ClassCastException e) {
@@ -54,13 +55,11 @@ public class NotFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

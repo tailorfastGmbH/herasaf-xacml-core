@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.logicalFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class ORFunction implements Function {
+public class ORFunction extends AbstractFunction {
 	/**
 	 *
 	 */
@@ -57,14 +57,11 @@ public class ORFunction implements Function {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
-
 }

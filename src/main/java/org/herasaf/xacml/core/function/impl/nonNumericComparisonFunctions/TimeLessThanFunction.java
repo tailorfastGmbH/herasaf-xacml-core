@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.nonNumericComparisonFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.Time;
 
@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.types.Time;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class TimeLessThanFunction implements Function {
+public class TimeLessThanFunction extends AbstractFunction {
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-less-than";
 
@@ -65,7 +65,8 @@ public class TimeLessThanFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			int result = ((Time) args[0]).compareTo((Time) args[1]);
 			if (result < 0) {
@@ -84,8 +85,11 @@ public class TimeLessThanFunction implements Function {
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

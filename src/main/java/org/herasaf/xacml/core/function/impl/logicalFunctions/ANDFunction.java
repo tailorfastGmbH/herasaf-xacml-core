@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.logicalFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class ANDFunction implements Function {
+public class ANDFunction extends AbstractFunction {
 	private static final long serialVersionUID = -5255352974606706176L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:and";
 
@@ -56,13 +56,11 @@ public class ANDFunction implements Function {
 		return true;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 

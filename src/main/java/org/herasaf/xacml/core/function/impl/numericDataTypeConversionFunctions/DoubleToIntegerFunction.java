@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.numericDataTypeConversionFunctions;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DoubleToIntegerFunction implements Function {
+public class DoubleToIntegerFunction extends AbstractFunction {
 	private static final long serialVersionUID = 8109580159292277163L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-to-integer";
 
@@ -49,11 +49,13 @@ public class DoubleToIntegerFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return BigInteger.valueOf(((Double) args[0]).longValue());
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {
@@ -61,13 +63,11 @@ public class DoubleToIntegerFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

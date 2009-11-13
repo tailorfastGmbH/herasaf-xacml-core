@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.dateAndTimeArithmeticFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.Date;
 import org.herasaf.xacml.core.types.YearMonthDuration;
@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateAddYearMonthDurationFunction implements Function {
+public class DateAddYearMonthDurationFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-add-yearMonthDuration";
@@ -51,7 +51,8 @@ public class DateAddYearMonthDurationFunction implements Function {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			((Date) args[0]).add((YearMonthDuration) args[1]);
 			return args[0];
@@ -62,13 +63,11 @@ public class DateAddYearMonthDurationFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }
