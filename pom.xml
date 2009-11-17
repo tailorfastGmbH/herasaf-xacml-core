@@ -79,29 +79,6 @@
 		</site>
 	</distributionManagement>
 
-	<reporting>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-pmd-plugin</artifactId>
-				<configuration>
-					<excludes>
-						<!-- This is excluded because here the code duplication is ok. -->
-						<exclude>org/herasaf/xacml/core/simplePDP/SimplePDPFactory.java</exclude>
-						<!-- This duplicated code is ok because this is an XACML type. -->
-						<exclude>org/herasaf/xacml/core/policy/impl/ActionAttributeDesignatorType.java</exclude>
-						<!-- This duplicated code is ok because this is an XACML type. -->
-						<exclude>org/herasaf/xacml/core/policy/impl/EnvironmentAttributeDesignatorType.java</exclude>
-						<!-- This duplicated code is ok because this is an XACML type. -->
-						<exclude>org/herasaf/xacml/core/context/impl/MissingAttributeDetailType.java</exclude>
-						<!-- This duplicated code is ok because this is an XACML type. -->
-						<exclude>org/herasaf/xacml/core/context/impl/AttributeType.java</exclude>
-					</excludes>
-				</configuration>
-			</plugin>
-		</plugins>
-	</reporting>
-
 	<properties>
 		<reporting.findbugs.excludeFile.location>src/main/config/reporting/findbugs-excludes.xml</reporting.findbugs.excludeFile.location>
 		<reporting.checkstyle.excludeFile.location>src/main/config/reporting/checkstyle-suppressions.xml</reporting.checkstyle.excludeFile.location>
