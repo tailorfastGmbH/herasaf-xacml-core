@@ -36,8 +36,8 @@ import org.slf4j.MDC;
  * TODO JAVADOC
  * 
  * <p>
- * The implementation of the policy combining algorithm with the
- * Deny-Overrides strategy.
+ * The implementation of the policy combining algorithm with the Deny-Overrides
+ * strategy.
  * </p>
  * <p>
  * The Implementation of the Deny-override implementation oriented at the sample
@@ -79,7 +79,8 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+			final RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.

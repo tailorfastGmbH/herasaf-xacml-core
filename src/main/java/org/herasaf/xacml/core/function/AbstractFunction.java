@@ -59,7 +59,6 @@ public abstract class AbstractFunction implements Function {
 		if (this.getClass().isInstance(obj)) {
 			return hashCode() == obj.hashCode();
 		}
-
 		return false;
 	}
 

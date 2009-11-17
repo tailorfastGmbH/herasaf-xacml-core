@@ -37,6 +37,10 @@ import org.herasaf.xacml.core.types.Time;
  * @version 1.0
  */
 public class TimeInRangeFunction extends AbstractFunction {
+	/**
+	 * 
+	 */
+	private static final int VALID_LENGTH = 3;
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:time-in-range";
 
@@ -48,9 +52,10 @@ public class TimeInRangeFunction extends AbstractFunction {
 	 * the third argument (of type http://www.w3.org/2001/XMLSchema#time)
 	 * inclusively.<br>
 	 * * <br>
-	 * <code style="color:red"> <b>Important Hint:</b><br>The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
+	 * <code style="color:red"> <b>Important Hint:</b><br>
+	 * The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
 	 * Errata 29 June
-	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20</a>
+	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">XACML 2.0</a>
 	 * page 114 function urn:oasis:names:tc:xacml:1.0:function:time-in-range
 	 * must provide an implicit time zone if no one is set.
 	 * This MUST is not considered in this implementation of the function.</code>
@@ -66,9 +71,8 @@ public class TimeInRangeFunction extends AbstractFunction {
 	// implementation of the function and must be fixed.
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != 3) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+			if (args.length != VALID_LENGTH) {
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 
 			if (((Time) args[0]).compareTo((Time) args[1]) < 0) {

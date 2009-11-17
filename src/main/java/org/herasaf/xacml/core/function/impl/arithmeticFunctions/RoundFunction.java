@@ -49,7 +49,7 @@ public class RoundFunction extends AbstractFunction {
 				throw new FunctionProcessingException(
 						"Invalid number of parameters.");
 			}
-			return new Double(Math.round((Double) args[0]));
+			return Double.valueOf(Math.round((Double)args[0]));
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
 					"The arguments were of the wrong datatype.");

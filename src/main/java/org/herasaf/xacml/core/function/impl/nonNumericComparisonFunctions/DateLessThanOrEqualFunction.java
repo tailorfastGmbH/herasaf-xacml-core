@@ -63,12 +63,10 @@ public class DateLessThanOrEqualFunction extends AbstractFunction {
 	// must provide an implicit time zone if no one is set.
 	// This MUST is not considered in this implementation of the function and
 	// must be fixed.
-	public Object handle(Object... args) throws FunctionProcessingException,
-			FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			int result = ((Date) args[0]).compareTo((Date) args[1]);
 			if (result < 0) {

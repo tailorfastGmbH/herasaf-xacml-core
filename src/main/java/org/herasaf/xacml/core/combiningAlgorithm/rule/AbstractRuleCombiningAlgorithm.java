@@ -56,7 +56,8 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluateRule(final RequestType request, final RuleType rule, final RequestInformation requestInfo) {
+	public DecisionType evaluateRule(final RequestType request, final RuleType rule,
+			final RequestInformation requestInfo) {
 		/*
 		 * Matches the target of the rule
 		 */

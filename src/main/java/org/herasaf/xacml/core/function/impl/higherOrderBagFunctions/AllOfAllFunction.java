@@ -34,20 +34,20 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class AllOfAllFunction extends AbstractFunction {
-
+	private static final int VALID_LENGTH = 3;
 	private static final long serialVersionUID = 7426295464640973108L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:all-of-all";
 
 	/**
 	 * {@inheritDoc} Takes a {@link Function} returning a {@link Boolean} value
 	 * as first argument and two {@link List}s as second and thirt arguments.
-	 * Returnes a {@link Boolean} which says wheter the function returnes true
+	 * Returns a {@link Boolean} which says wheter the function returnes true
 	 * if applied to all values of the first {@link List} with every value of
 	 * the second {@link List}.
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != 3) {
+			if (args.length != VALID_LENGTH) {
 				throw new FunctionProcessingException(
 						"Invalid number of parameters");
 			}

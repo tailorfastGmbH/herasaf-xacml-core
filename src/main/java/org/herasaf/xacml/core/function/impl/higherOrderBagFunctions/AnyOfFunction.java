@@ -36,6 +36,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 public class AnyOfFunction extends AbstractFunction {
 
+	/**
+	 * 
+	 */
+	private static final int VALID_LENGTH = 3;
 	private static final long serialVersionUID = 7426295464640973108L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:any-of";
 
@@ -47,7 +51,7 @@ public class AnyOfFunction extends AbstractFunction {
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != 3) {
+			if (args.length != VALID_LENGTH) {
 				throw new FunctionProcessingException(
 						"Invalid number of parameters");
 			}

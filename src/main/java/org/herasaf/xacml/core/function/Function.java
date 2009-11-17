@@ -38,7 +38,7 @@ public interface Function extends Serializable {
 	 * 
 	 * @return URI ID for this function.
 	 */
-	public String getFunctionId();
+	String getFunctionId();
 
 	/**
 	 * 
@@ -49,5 +49,5 @@ public interface Function extends Serializable {
 	 * @return The result of the execution of the handler.
 	 * @throws FunctionProcessingException
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException;
+	Object handle(Object... args) throws FunctionProcessingException;
 }

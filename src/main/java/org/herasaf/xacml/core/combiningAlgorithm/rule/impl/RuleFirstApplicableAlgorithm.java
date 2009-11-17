@@ -75,7 +75,8 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+			final RequestInformation requestInfo) {
 
 		for (int i = 0; i < rules.size(); i++) {
 			final RuleType rule = rules.get(i);

@@ -41,7 +41,8 @@ public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombinin
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(final RequestType request, final Evaluatable evals, final RequestInformation requestInfo) {
+	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
+			final RequestInformation requestInfo) {
 		final DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
@@ -49,7 +50,8 @@ public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombinin
 		}
 		try {
 			requestInfo.setVariableDefinitions(((PolicyType) evals).getVariables());
-			final DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getOrderedRules(), requestInfo);
+			final DecisionType dec = this
+					.evaluateRuleList(request, ((PolicyType) evals).getOrderedRules(), requestInfo);
 			/*
 			 * If the decision was made, the evaluation process might have set
 			 * the targetMatched variable to false. so it has to be sure that

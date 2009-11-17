@@ -46,12 +46,10 @@ public class StringLessThanFunction extends AbstractFunction {
 	 * http://www.w3.org/2001/XMLSchema#string is lesser than the second
 	 * argument.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException,
-			FunctionProcessingException {
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters");
+				throw new FunctionProcessingException("Invalid number of parameters");
 			}
 			int result = ((String) args[0]).compareTo((String) args[1]);
 			if (result < 0) {

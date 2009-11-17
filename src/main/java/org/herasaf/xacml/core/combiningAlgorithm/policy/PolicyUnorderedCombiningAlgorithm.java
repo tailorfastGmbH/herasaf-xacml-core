@@ -41,7 +41,8 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCo
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(final RequestType request, final Evaluatable evals, final RequestInformation requestInfo) {
+	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
+			final RequestInformation requestInfo) {
 		final DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
@@ -72,7 +73,7 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCo
 	/**
 	 * {@inheritDoc}
 	 */
-	public abstract DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
-			final RequestInformation requestInfos);
+	public abstract DecisionType evaluateEvaluatableList(final RequestType request,
+			final List<Evaluatable> possiblePolicies, final RequestInformation requestInfos);
 
 }

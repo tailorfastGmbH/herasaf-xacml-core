@@ -45,8 +45,8 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private TargetMatcher targetMatcher;
 
 	/**
-	 * If set to true abandoned evaluatables will be included (if
-	 * possible) in the evaluation.
+	 * If set to true abandoned evaluatables will be included (if possible) in
+	 * the evaluation.
 	 */
 	private boolean respectAbandonedEvaluatables;
 
@@ -82,7 +82,8 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 *            process.
 	 * @return The decision of matching the target.
 	 */
-	protected DecisionType matchTarget(final RequestType request, final TargetType target, final RequestInformation requestInfo) {
+	protected DecisionType matchTarget(final RequestType request, final TargetType target,
+			final RequestInformation requestInfo) {
 		boolean targetMatchDecision = false;
 		DecisionType decision = DecisionType.INDETERMINATE;
 		try {

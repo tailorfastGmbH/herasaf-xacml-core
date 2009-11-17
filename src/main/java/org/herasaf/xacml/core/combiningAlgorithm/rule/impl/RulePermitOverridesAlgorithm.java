@@ -36,8 +36,8 @@ import org.slf4j.MDC;
  * TODO JAVADOC
  * 
  * <p>
- * The implementation of the policy combining algorithm with the
- * Permit-Override strategy.
+ * The implementation of the policy combining algorithm with the Permit-Override
+ * strategy.
  * </p>
  * <p>
  * The Implementation of the Permit-Override implementation oriented at the
@@ -79,7 +79,8 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 	 * java.util.Map)
 	 */
 	@Override
-	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+			final RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
