@@ -61,12 +61,15 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides";
 	private final Logger logger = LoggerFactory.getLogger(PolicyOrderedPermitOverridesAlgorithm.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
-	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
+	/**
+	 * TODO JAVADOC.
+	 */
+	public PolicyOrderedPermitOverridesAlgorithm(){
+		setIsOrderedCombiningAlgorithm(true);
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,

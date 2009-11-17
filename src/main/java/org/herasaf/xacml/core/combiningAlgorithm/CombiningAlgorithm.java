@@ -50,13 +50,6 @@ public interface CombiningAlgorithm {
 	/**
 	 * TODO JAVADOC.
 	 * 
-	 * @param isOrderedCombiningAlgorithm
-	 */
-	void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm);
-	
-	/**
-	 * TODO JAVADOC.
-	 * 
 	 * @return
 	 */
 	boolean isOrderedCombiningAlgorithm();

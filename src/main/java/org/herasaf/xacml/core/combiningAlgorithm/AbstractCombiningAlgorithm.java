@@ -48,19 +48,19 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	/**
 	 * TODO JAVADOC.
 	 * 
+	 * @param isOrderedCombiningAlgorithm
+	 */
+	protected void setIsOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm){
+		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
+	}
+	
+	/**
+	 * TODO JAVADOC.
+	 * 
 	 * @return
 	 */
 	public boolean isOrderedCombiningAlgorithm() {
 		return isOrderedCombiningAlgorithm;
-	}
-
-	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @param isOrderedCombiningAlgorithm
-	 */
-	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
-		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
 	}
 
 	/**
@@ -131,6 +131,33 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	@Override
 	public String toString() {
 		return getCombiningAlgorithmId();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		
+		if(obj == this){
+			return true;
+		}
+		
+		if(this.getClass().isInstance(obj)){
+			return this.hashCode() == obj.hashCode();
+		}
+		return false;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return getCombiningAlgorithmId().hashCode();
 	}
 
 	/**

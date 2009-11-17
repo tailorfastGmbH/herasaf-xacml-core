@@ -61,12 +61,15 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides";
 	private final Logger logger = LoggerFactory.getLogger(PolicyDenyOverridesAlgorithm.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
-	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
+	/**
+	 * TODO JAVADOC.
+	 */
+	public PolicyDenyOverridesAlgorithm(){
+		setIsOrderedCombiningAlgorithm(false);
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,

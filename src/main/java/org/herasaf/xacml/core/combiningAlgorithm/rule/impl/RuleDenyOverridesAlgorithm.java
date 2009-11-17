@@ -69,14 +69,15 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 		return COMBALGOID;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm
-	 * #evaluateRuleList(org.herasaf.core.context.impl.RequestType,
-	 * java.util.List, org.herasaf.core.dataTypes.RequestInformation,
-	 * java.util.Map)
+	/**
+	 * TODO JAVADOC.
+	 */
+	public RuleDenyOverridesAlgorithm(){
+		setIsOrderedCombiningAlgorithm(false);
+	}
+	
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,

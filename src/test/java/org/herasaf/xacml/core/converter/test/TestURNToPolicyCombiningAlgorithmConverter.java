@@ -35,6 +35,7 @@ import org.testng.annotations.Test;
  * Tests the {@link URNToPolicyCombiningAlgorithmConverter} JAXB converter.
  *
  * @author Sacha Dolski
+ * @author Florian Huonder
  */
 public class TestURNToPolicyCombiningAlgorithmConverter {
 

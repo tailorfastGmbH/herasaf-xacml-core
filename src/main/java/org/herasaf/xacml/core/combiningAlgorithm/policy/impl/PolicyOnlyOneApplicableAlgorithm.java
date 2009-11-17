@@ -63,15 +63,16 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable";
 	private final Logger logger = LoggerFactory.getLogger(PolicyOnlyOneApplicableAlgorithm.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm
-	 * #evaluateEvaluatableList(org.herasaf.core.context.impl.RequestType,
-	 * java.util.List, org.herasaf.core.dataTypes.RequestInformation)
+	/**
+	 * TODO JAVADOC.
 	 */
-
+	public PolicyOnlyOneApplicableAlgorithm(){
+		setIsOrderedCombiningAlgorithm(false);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
 			final RequestInformation requestInfo) {
