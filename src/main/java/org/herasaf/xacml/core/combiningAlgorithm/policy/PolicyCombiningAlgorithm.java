@@ -48,4 +48,18 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	 */
 	DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			RequestInformation requestInfo);
+	
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
+	boolean isRespectAbandonedEvaluatables();
+	
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param respectAbandondEvaluatables
+	 */
+	void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables);
 }

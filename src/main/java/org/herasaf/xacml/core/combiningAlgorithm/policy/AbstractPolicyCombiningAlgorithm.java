@@ -37,5 +37,22 @@ public abstract class AbstractPolicyCombiningAlgorithm extends AbstractCombining
 	 * TODO JAVADOC.
 	 */
 	protected static final String MDC_EVALUATABLE_ID = "org:herasaf:xacml:evaluation:evaluatableid";
+	/**
+	 * If set to true abandoned evaluatables will be included (if possible) in
+	 * the evaluation.
+	 */
+	private boolean respectAbandonedEvaluatables;
 
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
+	public boolean isRespectAbandonedEvaluatables() {
+		return respectAbandonedEvaluatables;
+	}
+
+	public void setRespectAbandondEvaluatables(final boolean respectAbandondEvaluatables) {
+		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
+	}
 }

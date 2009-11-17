@@ -116,16 +116,17 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	// which
 	// root.
 	private List<Evaluatable> rootEvaluatables; // The root evaluatables
-
 	private final Logger logger = LoggerFactory.getLogger(MapBasedSimplePolicyRepository.class);
+	private final boolean isOrderedCombiningAlgorithm;
 
 	/**
 	 * TODO JAVADOC.
 	 */
-	public MapBasedSimplePolicyRepository() {
+	public MapBasedSimplePolicyRepository(boolean isOrderedCombiningAlgorithm) {
 		individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
 		rootEvaluatableMapping = new HashMap<EvaluatableID, List<EvaluatableID>>();
 		rootEvaluatables = new ArrayList<Evaluatable>();
+		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
 	}
 
 	/**
@@ -137,14 +138,13 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			deploy(eval); // Change object can be neglected here
 		}
 	}
-
+	
 	/**
-	 * {@inheritDoc}
+	 * TODO JAVADOC.
+	 * 
+	 * @param newIndividualEvaluatables
 	 */
-	public void deploy(Evaluatable evaluatable) {
-		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
-				.getId());
-
+	private void checkEvaluatable(Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables){
 		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check
 			// for
 			// consistency
@@ -161,9 +161,39 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 				throw new PolicyRepositoryException("The ID must be unique over all PolicySets and Policies.");
 			}
 		}
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public void deploy(Evaluatable evaluatable) {
+		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
+				.getId());
+		
+		checkEvaluatable(newIndividualEvaluatables);
+		
 		individualEvaluatables.putAll(newIndividualEvaluatables);
 		rootEvaluatables.add(evaluatable);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public void deploy(Evaluatable evaluatable, int position) {
+		if(isOrderedCombiningAlgorithm){
+			Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
+					.getId());
+			
+			checkEvaluatable(newIndividualEvaluatables);
+			
+			individualEvaluatables.putAll(newIndividualEvaluatables);
+			rootEvaluatables.add(position, evaluatable);
+		}
+		else {
+			String msg = "Unable to deploy. The root combining algorithm of the PDP is not ordered.";
+			logger.error(msg);
+			throw new PolicyRepositoryException(msg);
+		}
 	}
 
 	/**

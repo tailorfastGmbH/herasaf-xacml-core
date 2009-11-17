@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.simplePDP;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRepository;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.ResponseCtx;
@@ -39,7 +39,7 @@ import org.slf4j.MDC;
 public class SimplePDP implements PDP {
 	private PolicyRepository policyRepository;
 	private PIP pip; // TODO introduce PIP
-	private PolicyUnorderedCombiningAlgorithm rootPolicyCombiningAlgorithm;
+	private PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
 
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
@@ -51,7 +51,7 @@ public class SimplePDP implements PDP {
 	 * @param policyRepository
 	 * @param pip
 	 */
-	public SimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
+	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
 			PIP pip) {
 		this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
@@ -83,7 +83,7 @@ public class SimplePDP implements PDP {
 	 * 
 	 * @return
 	 */
-	public PolicyUnorderedCombiningAlgorithm getRootCombiningAlgorithm() {
+	public PolicyCombiningAlgorithm getRootCombiningAlgorithm() {
 		return rootPolicyCombiningAlgorithm;
 	}
 

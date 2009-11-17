@@ -46,4 +46,18 @@ public interface CombiningAlgorithm {
 	 * @return the decision.
 	 */
 	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestedEvals);
+	
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param isOrderedCombiningAlgorithm
+	 */
+	void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm);
+	
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @return
+	 */
+	boolean isOrderedCombiningAlgorithm();
 }

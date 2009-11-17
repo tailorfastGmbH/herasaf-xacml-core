@@ -17,13 +17,14 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRepository;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
 import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesInitializer;
@@ -45,11 +46,12 @@ public final class SimplePDPFactory {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimplePDPFactory.class);
 	private static boolean respectAbandonedEvaluatables;
 	private static List<Initializer> initializers;
-	private static Class<? extends PolicyUnorderedCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
+	private static Class<? extends PolicyCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
 	private static Class<? extends PolicyRepository> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
 
 	/**
-	 * TODO JAVADOC.
+	 * The constructor is private to avoid instatiation of the factory. It is
+	 * intended to be used in a static manner.
 	 */
 	private SimplePDPFactory() {
 
@@ -98,8 +100,8 @@ public final class SimplePDPFactory {
 	 * @param policyRepository
 	 * @param pip
 	 */
-	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository, PIP pip) {
+	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
+			PIP pip) {
 		if (rootCombiningAlgorithm == null || policyRepository == null) {
 			String msg = "The root combining algorithm and the policy repository must not be null.";
 			LOGGER.error(msg);
@@ -123,16 +125,33 @@ public final class SimplePDPFactory {
 	 * @param rootCombiningAlgorithm
 	 * @param pip
 	 */
-	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm, PIP pip) {
+	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PIP pip) {
 		PolicyRepository policyRepository;
 
 		try {
-			policyRepository = defaultPolicyRepository.newInstance();
+			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
+					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 		} catch (InstantiationException e) {
 			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
 			LOGGER.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
+			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (IllegalArgumentException e) {
+			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (SecurityException e) {
+			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (InvocationTargetException e) {
+			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (NoSuchMethodException e) {
 			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
 			LOGGER.error(msg);
 			throw new InitializationException(msg, e);
@@ -151,7 +170,7 @@ public final class SimplePDPFactory {
 	 * @param pip
 	 */
 	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip) {
-		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
+		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
@@ -179,17 +198,38 @@ public final class SimplePDPFactory {
 	 * 
 	 * @param rootCombiningAlgorithm
 	 */
-	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm) {
+	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm) {
 		PolicyRepository policyRepository;
 
 		try {
-			policyRepository = defaultPolicyRepository.newInstance();
+			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
+					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 		} catch (InstantiationException e) {
 			String msg = "Unable to instantiate the default policy repository: "
 					+ defaultPolicyRepository.getCanonicalName();
 			LOGGER.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (IllegalArgumentException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (SecurityException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (InvocationTargetException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (NoSuchMethodException e) {
 			String msg = "Unable to instantiate the default policy repository: "
 					+ defaultPolicyRepository.getCanonicalName();
 			LOGGER.error(msg);
@@ -209,7 +249,7 @@ public final class SimplePDPFactory {
 	 * @param policyRepository
 	 */
 	public static PDP getSimplePDP(PolicyRepository policyRepository) {
-		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
+		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
@@ -238,7 +278,7 @@ public final class SimplePDPFactory {
 	 * @param pip
 	 */
 	public static PDP getSimplePDP(PIP pip) {
-		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
+		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 		PolicyRepository policyRepository;
 
 		try {
@@ -256,7 +296,8 @@ public final class SimplePDPFactory {
 		}
 
 		try {
-			policyRepository = defaultPolicyRepository.newInstance();
+			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
+					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 
 		} catch (InstantiationException e) {
 			String msg = "Unable to instantiate the default policy repository: "
@@ -264,6 +305,26 @@ public final class SimplePDPFactory {
 			LOGGER.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (IllegalArgumentException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (SecurityException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (InvocationTargetException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (NoSuchMethodException e) {
 			String msg = "Unable to instantiate the default policy repository: "
 					+ defaultPolicyRepository.getCanonicalName();
 			LOGGER.error(msg);
@@ -291,7 +352,7 @@ public final class SimplePDPFactory {
 	 *            the {@link PolicyRepository} of the PDP.
 	 * @return The PDP (singleton).
 	 */
-	public static PDP getSimplePDP(PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm,
+	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRepository policyRepository) {
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
@@ -305,7 +366,7 @@ public final class SimplePDPFactory {
 	 * @return The PDP (singleton).
 	 */
 	public static PDP getSimplePDP() {
-		PolicyUnorderedCombiningAlgorithm rootCombiningAlgorithm;
+		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 		PolicyRepository policyRepository;
 
 		try {
@@ -323,7 +384,8 @@ public final class SimplePDPFactory {
 		}
 
 		try {
-			policyRepository = defaultPolicyRepository.newInstance();
+			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
+					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 
 		} catch (InstantiationException e) {
 			String msg = "Unable to instantiate the default policy repository: "
@@ -331,6 +393,26 @@ public final class SimplePDPFactory {
 			LOGGER.error(msg);
 			throw new InitializationException(msg, e);
 		} catch (IllegalAccessException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (IllegalArgumentException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (SecurityException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (InvocationTargetException e) {
+			String msg = "Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName();
+			LOGGER.error(msg);
+			throw new InitializationException(msg, e);
+		} catch (NoSuchMethodException e) {
 			String msg = "Unable to instantiate the default policy repository: "
 					+ defaultPolicyRepository.getCanonicalName();
 			LOGGER.error(msg);

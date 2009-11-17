@@ -40,6 +40,7 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 
 	/**
 	 * Sets the decision that the combing algorithm shall return.
+	 * 
 	 * @param decision
 	 */
 	public CombiningAlgorithmMock(DecisionType decision) {
@@ -49,13 +50,10 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals,
-			RequestInformation requestInfo) {
+	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
-		for (ObligationType obligation : reqInfo.getObligations()
-				.getObligations()) {
-			obligations.add(new ObligationType(obligation.getObligationId(),
-					obligation.getFulfillOn()));
+		for (ObligationType obligation : reqInfo.getObligations().getObligations()) {
+			obligations.add(new ObligationType(obligation.getObligationId(), obligation.getFulfillOn()));
 		}
 
 		requestInfo.updateStatusCode(reqInfo.getStatusCode());
@@ -65,8 +63,11 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	}
 
 	/**
-	 * Returns the {@link RequestInformation} that is set in this combining algorithm.
-	 * @return The {@link RequestInformation} that is set in this combining algorithm.
+	 * Returns the {@link RequestInformation} that is set in this combining
+	 * algorithm.
+	 * 
+	 * @return The {@link RequestInformation} that is set in this combining
+	 *         algorithm.
 	 */
 	public RequestInformation getReqInfo() {
 		return reqInfo;
@@ -74,9 +75,27 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 
 	/**
 	 * Sets a {@link RequestInformation} into this combining algorithm.
-	 * @param reqInfo The {@link RequestInformation} to set into this combining algorithm.
+	 * 
+	 * @param reqInfo
+	 *            The {@link RequestInformation} to set into this combining
+	 *            algorithm.
 	 */
 	public void setReqInfo(RequestInformation reqInfo) {
 		this.reqInfo = reqInfo;
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 */
+	public boolean isOrderedCombiningAlgorithm() {
+		return false;
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 */
+	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
+		// nop because its ordered.
+
 	}
 }

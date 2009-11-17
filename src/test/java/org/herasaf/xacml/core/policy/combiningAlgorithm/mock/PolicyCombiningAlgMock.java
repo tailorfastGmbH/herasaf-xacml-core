@@ -120,4 +120,36 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 		return decision;
 	}
 
+	/* (non-Javadoc)
+	 * @see org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#isRespectAbandonedEvaluatables()
+	 */
+	public boolean isRespectAbandonedEvaluatables() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/* (non-Javadoc)
+	 * @see org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#setRespectAbandondEvaluatables(boolean)
+	 */
+	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 */
+	public boolean isOrderedCombiningAlgorithm() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 */
+	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
+		// nop. because its unordered.
+		
+	}
+
 }

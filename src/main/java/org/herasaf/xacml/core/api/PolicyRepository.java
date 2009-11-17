@@ -40,6 +40,14 @@ public interface PolicyRepository {
 	 * @param evaluatable
 	 */
 	void deploy(Evaluatable evaluatable);
+	
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param evaluatable
+	 * @param position
+	 */
+	void deploy(Evaluatable evaluatable, int position);
 
 	/**
 	 * TODO JAVADOC.

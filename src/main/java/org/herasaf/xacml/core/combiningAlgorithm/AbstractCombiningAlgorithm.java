@@ -43,24 +43,24 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
-
-	/**
-	 * If set to true abandoned evaluatables will be included (if possible) in
-	 * the evaluation.
-	 */
-	private boolean respectAbandonedEvaluatables;
-
+	private boolean isOrderedCombiningAlgorithm;
+	
 	/**
 	 * TODO JAVADOC.
 	 * 
 	 * @return
 	 */
-	public boolean isRespectAbandonedEvaluatables() {
-		return respectAbandonedEvaluatables;
+	public boolean isOrderedCombiningAlgorithm() {
+		return isOrderedCombiningAlgorithm;
 	}
 
-	public void setRespectAbandondEvaluatables(final boolean respectAbandondEvaluatables) {
-		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
+	/**
+	 * TODO JAVADOC.
+	 * 
+	 * @param isOrderedCombiningAlgorithm
+	 */
+	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
+		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
 	}
 
 	/**
