@@ -138,13 +138,13 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 			deploy(eval); // Change object can be neglected here
 		}
 	}
-	
+
 	/**
 	 * TODO JAVADOC.
 	 * 
 	 * @param newIndividualEvaluatables
 	 */
-	private void checkEvaluatable(Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables){
+	private void checkEvaluatable(Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables) {
 		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check
 			// for
 			// consistency
@@ -169,27 +169,26 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	public void deploy(Evaluatable evaluatable) {
 		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
 				.getId());
-		
+
 		checkEvaluatable(newIndividualEvaluatables);
-		
+
 		individualEvaluatables.putAll(newIndividualEvaluatables);
 		rootEvaluatables.add(evaluatable);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	public void deploy(Evaluatable evaluatable, int position) {
-		if(isOrderedCombiningAlgorithm){
-			Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
-					.getId());
-			
+		if (isOrderedCombiningAlgorithm) {
+			Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable,
+					evaluatable.getId());
+
 			checkEvaluatable(newIndividualEvaluatables);
-			
+
 			individualEvaluatables.putAll(newIndividualEvaluatables);
 			rootEvaluatables.add(position, evaluatable);
-		}
-		else {
+		} else {
 			String msg = "Unable to deploy. The root combining algorithm of the PDP is not ordered.";
 			logger.error(msg);
 			throw new PolicyRepositoryException(msg);

@@ -46,13 +46,11 @@ public class RoundFunction extends AbstractFunction {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException(
-						"Invalid number of parameters.");
+				throw new FunctionProcessingException("Invalid number of parameters.");
 			}
-			return Double.valueOf(Math.round((Double)args[0]));
+			return Double.valueOf(Math.round((Double) args[0]));
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

@@ -64,10 +64,10 @@ public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgo
 	/**
 	 * TODO JAVADOC.
 	 */
-	public PolicyPermitOverridesAlgorithm(){
+	public PolicyPermitOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

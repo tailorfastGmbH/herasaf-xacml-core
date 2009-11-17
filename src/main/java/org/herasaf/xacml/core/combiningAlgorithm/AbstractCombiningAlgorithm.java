@@ -44,16 +44,16 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
 	private boolean isOrderedCombiningAlgorithm;
-	
+
 	/**
 	 * TODO JAVADOC.
 	 * 
 	 * @param isOrderedCombiningAlgorithm
 	 */
-	protected void setIsOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm){
+	protected void setIsOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
 		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
 	}
-	
+
 	/**
 	 * TODO JAVADOC.
 	 * 
@@ -132,26 +132,26 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	public String toString() {
 		return getCombiningAlgorithmId();
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null){
+		if (obj == null) {
 			return false;
 		}
-		
-		if(obj == this){
+
+		if (obj == this) {
 			return true;
 		}
-		
-		if(this.getClass().isInstance(obj)){
+
+		if (this.getClass().isInstance(obj)) {
 			return this.hashCode() == obj.hashCode();
 		}
 		return false;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

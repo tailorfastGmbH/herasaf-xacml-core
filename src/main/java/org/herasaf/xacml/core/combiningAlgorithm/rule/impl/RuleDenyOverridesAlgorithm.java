@@ -72,10 +72,10 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 	/**
 	 * TODO JAVADOC.
 	 */
-	public RuleDenyOverridesAlgorithm(){
+	public RuleDenyOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

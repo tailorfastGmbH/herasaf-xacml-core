@@ -122,6 +122,15 @@
 	</Match>
 	<Match>
 		<!--
+			This implementation of the equals method is correct in our opinion.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm" />
+		<Method name="equals" returns="boolean" params="java.lang.Object" />
+		<Bug pattern="EQ_UNUSUAL" />
+	</Match>
+	<Match>
+		<!--
 			The logger is excluded from marshalling with @XmlTransient. Findbugs
 			does not know this annotation and says therefore that it cannot be
 			serialized correctly. Due to the fact that this class is only

@@ -72,15 +72,16 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 	/**
 	 * TODO JAVADOC.
 	 */
-	public RuleOrderedPermitOverridesAlgorithm(){
+	public RuleOrderedPermitOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(true);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+			final RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.

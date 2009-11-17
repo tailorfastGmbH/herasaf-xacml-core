@@ -68,10 +68,10 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 	/**
 	 * TODO JAVADOC.
 	 */
-	public RuleFirstApplicableAlgorithm(){
+	public RuleFirstApplicableAlgorithm() {
 		setIsOrderedCombiningAlgorithm(false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

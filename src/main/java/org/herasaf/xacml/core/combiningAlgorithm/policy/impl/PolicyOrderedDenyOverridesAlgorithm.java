@@ -64,10 +64,10 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 	/**
 	 * TODO JAVADOC.
 	 */
-	public PolicyOrderedDenyOverridesAlgorithm(){
+	public PolicyOrderedDenyOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(true);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,7 +77,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 
 		final List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
 		final List<StatusCode> statusCodes = new ArrayList<StatusCode>();
-		
+
 		boolean atLeastOnePermit = false;
 		boolean atLeastOneDeny = false;
 		boolean atLeastOneError = false;

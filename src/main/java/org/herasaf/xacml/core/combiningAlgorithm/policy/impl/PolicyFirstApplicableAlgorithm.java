@@ -63,10 +63,10 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 	/**
 	 * TODO JAVADOC.
 	 */
-	public PolicyFirstApplicableAlgorithm(){
+	public PolicyFirstApplicableAlgorithm() {
 		setIsOrderedCombiningAlgorithm(true);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

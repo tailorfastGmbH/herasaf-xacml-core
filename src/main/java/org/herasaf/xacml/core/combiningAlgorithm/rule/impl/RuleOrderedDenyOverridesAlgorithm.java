@@ -72,15 +72,16 @@ public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgor
 	/**
 	 * TODO JAVADOC.
 	 */
-	public RuleOrderedDenyOverridesAlgorithm(){
+	public RuleOrderedDenyOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(true);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules, final RequestInformation requestInfo) {
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+			final RequestInformation requestInfo) {
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.

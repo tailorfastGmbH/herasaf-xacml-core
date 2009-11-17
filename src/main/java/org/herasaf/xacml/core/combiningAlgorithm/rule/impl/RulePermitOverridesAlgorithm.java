@@ -72,10 +72,10 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 	/**
 	 * TODO JAVADOC.
 	 */
-	public RulePermitOverridesAlgorithm(){
+	public RulePermitOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

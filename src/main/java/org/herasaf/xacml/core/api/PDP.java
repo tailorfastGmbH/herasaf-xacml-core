@@ -20,7 +20,6 @@ package org.herasaf.xacml.core.api;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
  * TODO JAVADOC!!!!!!!!
@@ -34,9 +33,9 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> for further information. <br>
  * <br>
- * A Policy Decision Point can handle only one resource per {@link RequestType}.
- * The context handler is responsible for splitting up a {@link RequestType}
- * that contains multiple resources into many {@link RequestType}s. <br>
+ * A Policy Decision Point can handle only one resource per request.
+ * The context handler is responsible for splitting up a request
+ * that contains multiple resources into many requests. <br>
  * See: <a
  * href="See: <a href="http://docs.oasis-open.org/xacml/2.0/access_control
  * -xacml-2.0-mult-profile-spec-os.pdf" >Multiple resource profile of XACML

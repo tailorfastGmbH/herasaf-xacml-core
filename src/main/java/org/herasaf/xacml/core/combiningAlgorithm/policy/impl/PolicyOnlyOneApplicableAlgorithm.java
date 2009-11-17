@@ -66,10 +66,10 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	/**
 	 * TODO JAVADOC.
 	 */
-	public PolicyOnlyOneApplicableAlgorithm(){
+	public PolicyOnlyOneApplicableAlgorithm() {
 		setIsOrderedCombiningAlgorithm(false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

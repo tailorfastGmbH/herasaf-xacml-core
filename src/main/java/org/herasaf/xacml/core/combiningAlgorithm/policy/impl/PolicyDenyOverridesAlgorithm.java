@@ -64,10 +64,10 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 	/**
 	 * TODO JAVADOC.
 	 */
-	public PolicyDenyOverridesAlgorithm(){
+	public PolicyDenyOverridesAlgorithm() {
 		setIsOrderedCombiningAlgorithm(false);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -133,8 +133,8 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 			switch (decision) {
 			case DENY:
 				if (!isRespectAbandonedEvaluatables()) { // if abandoned //
-															// evaluatables
-															// should
+					// evaluatables
+					// should
 					// not be included then
 					// the first deny
 					// finishes the
