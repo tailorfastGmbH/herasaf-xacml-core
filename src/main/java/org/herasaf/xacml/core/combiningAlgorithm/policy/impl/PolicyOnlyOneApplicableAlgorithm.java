@@ -20,6 +20,7 @@ package org.herasaf.xacml.core.combiningAlgorithm.policy.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -76,49 +77,57 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
 			final RequestInformation requestInfo) {
+
+		if (possiblePolicies == null) {
+			requestInfo.resetStatus();
+			logger.debug("Decision is NOT_APPLICABLE because the PolicySet does not contain any Evaluatables.");
+			return DecisionType.NOT_APPLICABLE;
+		}
+
 		// Variable to keep the first made decision
 		DecisionType firstApplicableDecision = null;
 		// keeps the statuscode of the first decision
 		StatusCode statusCode = null;
 		// remembers the missing Attributes of the first decision
-		final List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-		final List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
+		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		List<ObligationType> obligationsOfFirstApplicableEval = new ArrayList<ObligationType>();
 
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			final Evaluatable eval = possiblePolicies.get(i);
+			Evaluatable eval = possiblePolicies.get(i);
+
+			if (eval == null) {
+				continue;
+			}
+
 			DecisionType decision;
-			try {
-				// Resets the status to go sure, that the returned statuscode is
-				// the one of the evaluation.
-				requestInfo.resetStatus();
+			// Resets the status to go sure, that the returned statuscode is
+			// the one of the evaluation.
+			requestInfo.resetStatus();
 
-				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-					logger.debug("Starting evaluation of: {}", eval.getId().getId());
-				}
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				logger.debug("Starting evaluation of: {}", eval.getId().getId());
+			}
 
-				decision = eval.getCombiningAlg().evaluate(request, eval, requestInfo);
-
-				if (logger.isDebugEnabled()) {
-					MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-					logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
-					MDC.remove(MDC_EVALUATABLE_ID);
-				}
-
-				if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
-					obligationsOfFirstApplicableEval.addAll(eval.getContainedObligations(EffectType.fromValue(decision
-							.toString())));
-					obligationsOfFirstApplicableEval.addAll(requestInfo.getObligations().getObligations());
-				}
-			} catch (NullPointerException e) {
-				/*
-				 * If an error occures or a reference returnes null, the answer
-				 * has to be treated as indeterminate. See: OASIS eXtensible
-				 * Access Control Markup Langugage (XACML) 2.0, Errata 29 June
-				 * 2006</a> page 86 and page 139 for further information.
-				 */
+			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
+			if (combiningAlg == null) {
+				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
 				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
+			} else {
+				decision = combiningAlg.evaluate(request, eval, requestInfo);
+			}
+
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
+				MDC.remove(MDC_EVALUATABLE_ID);
+			}
+
+			if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+				obligationsOfFirstApplicableEval.addAll(eval.getContainedObligations(EffectType.fromValue(decision
+						.toString())));
+				obligationsOfFirstApplicableEval.addAll(requestInfo.getObligations().getObligations());
 			}
 			requestInfo.clearObligations();
 			switch (decision) {
