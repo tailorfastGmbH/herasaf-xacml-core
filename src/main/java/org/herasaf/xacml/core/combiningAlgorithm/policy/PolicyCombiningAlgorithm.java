@@ -38,6 +38,9 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	/**
 	 * 
+	 * TODO JAVADOC
+	 * Wirte the the list of possibleEvaluatebles must not contain null values.
+	 * 
 	 * @param request
 	 *            The request that has to be evaluated.
 	 * @param possibleEvaluatables

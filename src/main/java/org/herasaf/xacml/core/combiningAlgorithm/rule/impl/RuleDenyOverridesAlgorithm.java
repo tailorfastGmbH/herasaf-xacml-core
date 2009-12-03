@@ -82,19 +82,41 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 	@Override
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
 			final RequestInformation requestInfo) {
+		
+		if (rules == null) {
+			// It is an illegal state if the list containing the rules is
+			// null.
+			logger.error("the rules list was null. This is an illegal state.");
+			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			return DecisionType.INDETERMINATE;
+		}
+		
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
 		 */
-		final List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-		final List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
 
 		boolean atLeastOnePermit = false;
 		boolean potentialDeny = false;
 		boolean atLeastOneError = false;
 
+		/*
+		 * If the list of rules contains no values, the for-loop is
+		 * skipped and a NOT_APPLICABLE is returned.
+		 */
 		for (int i = 0; i < rules.size(); i++) {
-			final RuleType rule = rules.get(i);
+			RuleType rule = rules.get(i);
+			
+			if (rule == null) {
+				// It is an illegal state if the list contains any 
+				// null.
+				logger.error("The list of rules must not contain any null values.");
+				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				return DecisionType.INDETERMINATE;
+			}
+			
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
 			requestInfo.resetStatus();
@@ -104,7 +126,7 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			final DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());

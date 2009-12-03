@@ -77,9 +77,11 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 			final RequestInformation requestInfo) {
 
 		if (possiblePolicies == null) {
-			requestInfo.resetStatus();
-			logger.debug("Decision is NOT_APPLICABLE because the PolicySet does not contain any Evaluatables.");
-			return DecisionType.NOT_APPLICABLE;
+			// It is an illegal state if the list containing the policies is
+			// null.
+			logger.error("The possiblePolicies list was null. This is an illegal state.");
+			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			return DecisionType.INDETERMINATE;
 		}
 
 		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
@@ -89,11 +91,19 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 		boolean atLeastOneError = false;
 		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
 
+		/*
+		 * If the list of evaluatables contains no values, the for-loop is
+		 * skipped and a NOT_APPLICABLE is returned.
+		 */
 		for (int i = 0; i < possiblePolicies.size(); i++) {
 			Evaluatable eval = possiblePolicies.get(i);
 
 			if (eval == null) {
-				continue;
+				// It is an illegal state if the list contains any 
+				// null.
+				logger.error("The list of possible policies must not contain any null values.");
+				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				return DecisionType.INDETERMINATE;
 			}
 
 			if (atLeastOneDeny && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {

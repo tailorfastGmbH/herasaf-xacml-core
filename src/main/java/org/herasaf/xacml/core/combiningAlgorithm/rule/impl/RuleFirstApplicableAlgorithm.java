@@ -21,6 +21,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
@@ -78,9 +79,22 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 	@Override
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
 			final RequestInformation requestInfo) {
+		
+		
+		if (rules == null) {
+			// It is an illegal state if the list containing the rules is
+			// null.
+			logger.error("the rules list was null. This is an illegal state.");
+			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			return DecisionType.INDETERMINATE;
+		}
 
+		/*
+		 * If the list of rules contains no values, the for-loop is
+		 * skipped and a NOT_APPLICABLE is returned.
+		 */
 		for (int i = 0; i < rules.size(); i++) {
-			final RuleType rule = rules.get(i);
+			RuleType rule = rules.get(i);
 			/*
 			 * keeps the actual state and missing attributes of this combining
 			 * process.
@@ -92,7 +106,7 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			final DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());

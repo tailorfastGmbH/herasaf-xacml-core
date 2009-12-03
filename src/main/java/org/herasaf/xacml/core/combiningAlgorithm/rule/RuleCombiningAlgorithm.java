@@ -53,6 +53,10 @@ public interface RuleCombiningAlgorithm {
 	DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo);
 
 	/**
+	 * TODO JAVADOC
+	 * 
+	 * Write that the rules list must not contain any null values.
+	 * 
 	 * Evaluates all rules given in the rule list and returnes the result.
 	 * 
 	 * @param request
