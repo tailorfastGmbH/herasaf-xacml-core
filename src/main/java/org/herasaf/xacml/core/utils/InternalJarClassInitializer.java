@@ -36,7 +36,7 @@ import org.slf4j.LoggerFactory;
 public class InternalJarClassInitializer {
 	private final Logger logger = LoggerFactory.getLogger(InternalJarClassInitializer.class);
 	private String jarPath;
-	
+
 	/**
 	 * TODO JAVADOC.
 	 * 
@@ -65,9 +65,11 @@ public class InternalJarClassInitializer {
 				}
 			}
 			this.jarPath = jarPath;
-		}
-		else {
-			/*If no jarPath is provided the location from the code source is taken.*/
+		} else {
+			/*
+			 * If no jarPath is provided the location from the code source is
+			 * taken.
+			 */
 			this.jarPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
 		}
 	}
@@ -86,7 +88,8 @@ public class InternalJarClassInitializer {
 		try {
 			jip = new JarInputStream(new FileInputStream(jarPath));
 		} catch (FileNotFoundException e) {
-			// The stream must be closed here (in an error case) and not in the finally block. This
+			// The stream must be closed here (in an error case) and not in the
+			// finally block. This
 			// because the stream is needed after this try-catch block.
 			if (jip != null) {
 				try {
@@ -99,7 +102,8 @@ public class InternalJarClassInitializer {
 			logger.error(ie.getMessage());
 			throw ie;
 		} catch (IOException e) {
-			// The stream must be closed here (in an error case) and not in the finally block. This
+			// The stream must be closed here (in an error case) and not in the
+			// finally block. This
 			// because the stream is needed after this try-catch block.
 			if (jip != null) {
 				try {
@@ -129,14 +133,16 @@ public class InternalJarClassInitializer {
 						clazz = Class.forName(name);
 					} catch (ClassNotFoundException e) {
 						// Must no occur. This would mean an illegal state.
-						InitializationException ie = new InitializationException("Illegal state. Cannot load class "+ name + "from JAR "+ jarPath);
+						InitializationException ie = new InitializationException("Illegal state. Cannot load class "
+								+ name + "from JAR " + jarPath);
 						logger.error(ie.getMessage(), e);
 						throw ie;
 					}
 					Object instance = clazz.newInstance();
-				
-					// Checks if the created instance is of the right type. If not it is ignored.
-					if(classType.isInstance(instance)){
+
+					// Checks if the created instance is of the right type. If
+					// not it is ignored.
+					if (classType.isInstance(instance)) {
 						classes.add(classType.cast(instance));
 					}
 				}
