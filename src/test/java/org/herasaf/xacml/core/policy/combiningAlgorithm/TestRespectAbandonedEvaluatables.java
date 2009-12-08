@@ -76,12 +76,12 @@ public class TestRespectAbandonedEvaluatables {
 		// works properly.
 		for (int i = 1; i < evalFiles.size() + 1; i++) {
 			SimplePDPFactory.respectAbandonedEvaluatables(false);
-			SimplePDPFactory.useDefaultInitializers(true);
+			SimplePDPFactory.useDefaultInitializers();
 			SimplePDPFactory.getSimplePDP();
 			Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
 
 			SimplePDPFactory.respectAbandonedEvaluatables(true);
-			SimplePDPFactory.useDefaultInitializers(true);
+			SimplePDPFactory.useDefaultInitializers();
 			SimplePDPFactory.getSimplePDP();
 			Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
 
@@ -112,7 +112,7 @@ public class TestRespectAbandonedEvaluatables {
 		// algorithm.
 		SimplePDPFactory
 				.respectAbandonedEvaluatables(respectAbandonedEvaluatables);
-		SimplePDPFactory.useDefaultInitializers(true);
+		SimplePDPFactory.useDefaultInitializers();
 		PDP pdp = SimplePDPFactory.getSimplePDP();
 		RequestCtx request = RequestCtxFactory
 				.unmarshal(new File(

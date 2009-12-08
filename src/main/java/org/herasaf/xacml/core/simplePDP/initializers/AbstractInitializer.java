@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.herasaf.xacml.core.simplePDP.InitializationException;
+import org.herasaf.xacml.core.utils.InternalJarClassInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +43,16 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractInitializer<T> implements Initializer {
 	private final Logger logger = LoggerFactory.getLogger(AbstractInitializer.class);
+	public static final String JARPATH_PROPERTY_NAME = "org:herasaf:xacml:core:jarPath";
+	private String jarPath;
+
+	/**
+	 * TODO JAVADOC
+	 */
+	public AbstractInitializer() {
+		jarPath = System.getenv(JARPATH_PROPERTY_NAME);
+		logger.info("JarPath system property is set to " + jarPath);
+	}
 
 	/**
 	 * TODO JAVADOC.
@@ -72,14 +83,77 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	private static final String CLASS_ENDING = ".class";
 
 	/**
+	 * TODO JAVADOC.
+	 * 
+	 * If this method is overridden in a subclass and the property
+	 * org:herasaf:xacml:core:jarPath is not set. this method must be called
+	 * with super.setProperty.
+	 */
+	public void setProperty(String id, Object value) {
+		if (JARPATH_PROPERTY_NAME.equals(id)) {
+			jarPath = (String) value;
+			return;
+		}
+		IllegalArgumentException e = new IllegalArgumentException("Property " + id + "not recognized.");
+		logger.error(e.getMessage());
+		throw e;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	public void run() {
-		List<File> files = collectFiles(getSearchContextPath());
-		List<T> instances = instantiateClasses(files);
+		List<T> instances;
+
+		if (isCodeLocationJAR()) {
+			/*
+			 * JAR-based (code runs inside a JAR).
+			 */
+			InternalJarClassInitializer jarClassLoader = new InternalJarClassInitializer(jarPath);
+			instances = jarClassLoader.loadAllClasses(getSearchContextPath(), getTargetClass());
+		} else {
+			/*
+			 * File-based (code runs not in a JAR).
+			 */
+			List<File> files = collectFiles(getSearchContextPath());
+			instances = instantiateClasses(files);
+		}
+		/*
+		 * Further steps for initialization.
+		 */
 		Map<String, T> instancesMap = convertListToMap(instances);
 		setInstancesIntoConverter(instancesMap);
 		furtherInitializations(instances);
+	}
+
+	/**
+	 * 
+	 * TODO JAVADOC.
+	 * 
+	 * Checks if the code source is a directory or a file. in case it is a file
+	 * it must be a jar.
+	 * 
+	 * @return
+	 */
+	private boolean isCodeLocationJAR() {
+
+		try {
+			File f = null;
+			if (jarPath == null) {
+				f = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
+			} else {
+				f = new File(jarPath);
+			}
+			if (f.isDirectory()) {
+				return false;
+			}
+			return true;
+		} catch (NullPointerException e) {
+			InitializationException ie = new InitializationException("Unable to determine code source.", e);
+			logger.error(ie.getMessage());
+			throw ie;
+		}
+
 	}
 
 	/**
@@ -125,6 +199,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 	/**
 	 * TODO JAVADOC.
+	 * 
+	 * Instantiate classes from file list.
 	 * 
 	 * TODO document code below in detail.
 	 * 
@@ -204,11 +280,9 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 		try {
 			ClassLoader cl = Thread.currentThread().getContextClassLoader();
-			resourceURLs = cl.getResources(searchContext); // TODO VERIFY
-			// behaviour on
-			// other OS!!!!
+			resourceURLs = cl.getResources(searchContext);
 		} catch (IOException e) {
-			logger.error("Unable to load DataTypeAttributes.", e);
+			logger.error("Unable to load classes.", e);
 			throw new InitializationException(e);
 		}
 		while (resourceURLs.hasMoreElements()) {
@@ -219,7 +293,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			try {
 				folder = new File(url.toURI());
 			} catch (URISyntaxException e) {
-				logger.error("Unable to load DataTypeAttributes.", e);
+				logger.error("Unable to load classes.", e);
 				throw new InitializationException(e);
 			}
 			File[] allFiles = folder.listFiles();

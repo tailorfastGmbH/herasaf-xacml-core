@@ -28,4 +28,10 @@ public interface Initializer {
 	 * TODO JAVADOC.
 	 */
 	void run();
+
+	/**
+	 * @param id
+	 * @param value
+	 */
+	void setProperty(String id, Object value);
 }

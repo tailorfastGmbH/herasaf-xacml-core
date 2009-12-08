@@ -29,7 +29,7 @@ public class TestMissingAttributes{
 	
 	@BeforeClass
 	public void init(){
-		SimplePDPFactory.useDefaultInitializers(true);
+		SimplePDPFactory.useDefaultInitializers();
 		pdp = SimplePDPFactory.getSimplePDP();
 	}
 

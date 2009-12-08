@@ -71,4 +71,13 @@ public class ContextAndPolicyInitializer implements Initializer {
 
 		return config;
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setProperty(String id, Object value) {
+		UnsupportedOperationException e = new UnsupportedOperationException("This Initializer does not support any properties."); 
+		logger.error(e.getMessage());
+		throw e;
+	}
 }

@@ -41,7 +41,7 @@ public class TestOrderedDeployment {
 
 	@BeforeTest
 	public void init(){
-		SimplePDPFactory.useDefaultInitializers(true);
+		SimplePDPFactory.useDefaultInitializers();
 		SimplePDPFactory.respectAbandonedEvaluatables(false);
 	}
 	

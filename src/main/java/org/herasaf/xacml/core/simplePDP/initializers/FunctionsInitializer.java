@@ -36,6 +36,7 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
 	private static final Class<Function> TARGET_CLASS = Function.class;
 
+	
 	/**
 	 * {@inheritDoc}
 	 */

@@ -45,12 +45,12 @@ import org.slf4j.LoggerFactory;
 public final class SimplePDPFactory {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimplePDPFactory.class);
 	private static boolean respectAbandonedEvaluatables;
-	private static List<Initializer> initializers;
+	private static List<Initializer> initializers = new ArrayList<Initializer>();
 	private static Class<? extends PolicyCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
 	private static Class<? extends PolicyRepository> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
 
 	/**
-	 * The constructor is private to avoid instatiation of the factory. It is
+	 * The constructor is private to avoid instantiation of the factory. It is
 	 * intended to be used in a static manner.
 	 */
 	private SimplePDPFactory() {
@@ -79,18 +79,28 @@ public final class SimplePDPFactory {
 	/**
 	 * TODO JAVADOC.
 	 * 
+	 * @param jarPath
+	 */
+	public static void setProperty(Class<? extends Initializer> initializerClass, String id, Object value) {
+		for (Initializer initializer : initializers) {
+			if (initializer.getClass().equals(initializerClass)) {
+				initializer.setProperty(id, value);
+			}
+		}
+	}
+
+	/**
+	 * TODO JAVADOC.
+	 * 
 	 * @param useDefaultInitializers
 	 */
-	public static void useDefaultInitializers(boolean useDefaultInitializers) {
+	public static void useDefaultInitializers() {
 		LOGGER.info("The default initializers are in use.");
-		if (useDefaultInitializers) {
-			initializers = new ArrayList<Initializer>();
-			initializers.add(new FunctionsInitializer());
-			initializers.add(new DataTypesInitializer());
-			initializers.add(new RuleCombiningAlgorithmsInitializer());
-			initializers.add(new PolicyCombiningAlgorithmsInitializer(respectAbandonedEvaluatables));
-			initializers.add(new ContextAndPolicyInitializer());
-		}
+		initializers.add(new FunctionsInitializer());
+		initializers.add(new DataTypesInitializer());
+		initializers.add(new RuleCombiningAlgorithmsInitializer());
+		initializers.add(new PolicyCombiningAlgorithmsInitializer(respectAbandonedEvaluatables));
+		initializers.add(new ContextAndPolicyInitializer());
 	}
 
 	/**
@@ -103,14 +113,17 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
 			PIP pip) {
 		if (rootCombiningAlgorithm == null || policyRepository == null) {
-			String msg = "The root combining algorithm and the policy repository must not be null.";
-			LOGGER.error(msg);
-			throw new InitializationException(msg);
+			InitializationException e = new InitializationException(
+					"The root combining algorithm and the policy repository must not be null.");
+			LOGGER.error(e.getMessage());
+			throw e;
 		}
 
 		if (initializers == null) {
-			LOGGER.error("SimplePDPFactory is not initialized. Initializers must be set.");
-			throw new InitializationException("SimplePDPFactory is not initialized. Initializers must be set.");
+			InitializationException e = new InitializationException(
+					"SimplePDPFactory is not initialized. Initializers must be set.");
+			LOGGER.error(e.getMessage());
+			throw e;
 		}
 		runInitializers();
 
@@ -132,29 +145,35 @@ public final class SimplePDPFactory {
 			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
+					+ defaultPolicyRepository.getCanonicalName());
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
+					+ defaultPolicyRepository.getCanonicalName());
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalArgumentException e) {
-			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
+					+ defaultPolicyRepository.getCanonicalName());
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (SecurityException e) {
-			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
+					+ defaultPolicyRepository.getCanonicalName());
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (InvocationTargetException e) {
-			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (NoSuchMethodException e) {
-			String msg = "Unable to instantiate the policy repository: " + defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		LOGGER.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
@@ -175,15 +194,16 @@ public final class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		LOGGER
@@ -205,35 +225,35 @@ public final class SimplePDPFactory {
 			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalArgumentException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (SecurityException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (InvocationTargetException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (NoSuchMethodException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
@@ -253,15 +273,15 @@ public final class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
@@ -284,15 +304,15 @@ public final class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		try {
@@ -300,35 +320,35 @@ public final class SimplePDPFactory {
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalArgumentException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (SecurityException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (InvocationTargetException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (NoSuchMethodException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		LOGGER
@@ -352,8 +372,7 @@ public final class SimplePDPFactory {
 	 *            the {@link PolicyRepository} of the PDP.
 	 * @return The PDP (singleton).
 	 */
-	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository) {
+	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository) {
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
 
@@ -372,15 +391,15 @@ public final class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
+					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		try {
@@ -388,35 +407,35 @@ public final class SimplePDPFactory {
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 
 		} catch (InstantiationException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalAccessException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (IllegalArgumentException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (SecurityException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (InvocationTargetException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		} catch (NoSuchMethodException e) {
-			String msg = "Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName();
-			LOGGER.error(msg);
-			throw new InitializationException(msg, e);
+			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
+					+ defaultPolicyRepository.getCanonicalName(), e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
 		}
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
