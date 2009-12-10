@@ -18,7 +18,7 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO Review René
+ * TODO REVIEW René.
  * 
  * This runtime exception is thrown in case an evaluatable cannot be found.
  * Either it is not deployed to the locale repository or in case of a remote
