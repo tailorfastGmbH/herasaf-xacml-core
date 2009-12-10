@@ -17,7 +17,7 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO REVIEW
+ * TODO REVIEW René.
  * 
  * This class represents a (network) port range. The values can be between 1 and
  * 65535.
@@ -47,7 +47,7 @@ public class PortRange {
 	private int upperValue = UPPER_BOUNDARY;
 
 	/**
-	 * TODO REVIEW
+	 * TODO REVIEW René.
 	 * 
 	 * Creates a new {@link PortRange}.
 	 * 

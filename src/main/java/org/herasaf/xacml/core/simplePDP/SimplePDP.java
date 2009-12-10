@@ -88,7 +88,7 @@ public class SimplePDP implements PDP {
 	}
 
 	/**
-	 * TODO REVIEW.
+	 * TODO REVIEW René.
 	 * 
 	 * {@inheritDoc} The evaluation starts at the predefined root combining
 	 * algorithm.

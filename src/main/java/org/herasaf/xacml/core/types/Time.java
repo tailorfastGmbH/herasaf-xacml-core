@@ -22,7 +22,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * TODO REVIEW
+ * TODO REVIEW René.
  * 
  * Represents the http://www.w3.org/2001/XMLSchema#time data type. The
  * specification can be found at <a
@@ -36,7 +36,7 @@ public class Time implements Comparable<Time> {
 	private XMLGregorianCalendar xmlCalendar;
 
 	/**
-	 * TODO REVIEW
+	 * TODO REVIEW René.
 	 * 
 	 * Initializes a new {@link Time} object.
 	 * 
@@ -63,7 +63,7 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * TODO REVIEW
+	 * TODO REVIEW René.
 	 * 
 	 * Returns the {@link XMLGregorianCalendar} instance of this {@link Time}
 	 * object.
