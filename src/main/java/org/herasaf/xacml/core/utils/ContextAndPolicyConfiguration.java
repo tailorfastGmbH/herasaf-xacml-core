@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +25,8 @@ import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -35,10 +37,9 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Contains the configuration information for an instance which uses a JAXB
- * marshaller or unmarshaller.
+ * This class contains the configuration for the JAXB {@link Marshaller} or {@link Unmarshaller}.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder

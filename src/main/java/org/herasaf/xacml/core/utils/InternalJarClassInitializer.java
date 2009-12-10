@@ -29,7 +29,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This class is responsible of dynamically loading functions, data types and
+ * combining algorithms from a JAR file.
  * 
  * @author Florian Huonder
  */
@@ -38,9 +41,14 @@ public class InternalJarClassInitializer {
 	private String jarPath;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * This constructor checks if the jarPath is an existing JAR file. The path
+	 * to the JAR file may be null, this means that the JAR of the current
+	 * protection domain is taken. This may result in a SecurityException.
 	 * 
 	 * @param jarPath
+	 *            The path to the JAR file.
 	 */
 	public InternalJarClassInitializer(String jarPath) {
 		if (jarPath != null) {
@@ -75,13 +83,22 @@ public class InternalJarClassInitializer {
 	}
 
 	/**
-	 * TODO JAVDOC
+	 * TODO REVIEW René.
 	 * 
 	 * Loads all classes of type T from the path specified by the parameter
-	 * searchContext in the JAR.
+	 * searchContext in the JAR. The classType is only needed to enable a
+	 * typesafe check and cast.
 	 * 
+	 * @param <T>
+	 *            The type of the classes to search and instantiate.
 	 * @param searchContext
-	 * @return
+	 *            The path in the classpath where to search for instances of
+	 *            type <T>.
+	 * @param classType
+	 *            the {@link Class} type of <T>.
+	 * 
+	 * @return A list containing all instantiated objects of type <T> from path
+	 *         searchContext.
 	 */
 	public <T> List<T> loadAllClasses(String searchContext, Class<T> classType) {
 		JarInputStream jip = null;
@@ -121,23 +138,28 @@ public class InternalJarClassInitializer {
 		JarEntry entry = null;
 		try {
 			while (((entry = jip.getNextJarEntry()) != null)) {
+				// Only acceppt class files that are no Abstract, Mock or inner classes
 				if (entry.getName().endsWith(".class") && !entry.isDirectory()
 						&& entry.getName().startsWith(searchContext) && !entry.getName().contains("Abstract")
 						&& !entry.getName().contains("Mock") && !entry.getName().contains("$")) {
 					String name = entry.getName();
+					// Cut off the .class ending.
 					name = name.substring(0, name.indexOf(".class"));
+					//replace all  filepath parameters with a "." (transform name into package.class name)
 					name = name.replaceAll("\\/", ".");
 
 					Class<?> clazz;
 					try {
+						//load the class from the classpath
 						clazz = Class.forName(name);
 					} catch (ClassNotFoundException e) {
-						// Must no occur. This would mean an illegal state.
+						// Must not occur. This would mean an illegal state.
 						InitializationException ie = new InitializationException("Illegal state. Cannot load class "
 								+ name + "from JAR " + jarPath);
 						logger.error(ie.getMessage(), e);
 						throw ie;
 					}
+					// Create an instnace of the class
 					Object instance = clazz.newInstance();
 
 					// Checks if the created instance is of the right type. If

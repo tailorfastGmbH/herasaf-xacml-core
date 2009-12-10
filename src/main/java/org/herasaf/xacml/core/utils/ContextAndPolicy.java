@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.utils;
 
 import javax.xml.bind.JAXBException;
@@ -27,63 +26,66 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Singleton which creates and configures the {@link Marshaller}s and
- * {@link Unmarshaller}s.
+ * This static class is needed for configuring the JAXB {@link Marshaller}s and
+ * {@link Unmarshaller}s. <br />
+ * <br />
+ * The configuration then is saved into a {@ContextAndPolicyConfiguration
  * 
- * The marshaller and unmarshaller configuration is saved in
- * {@link ContextAndPolicyConfiguration} instances.
  * 
+ * 
+ * 
+ * } object.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public final class ContextAndPolicy {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContextAndPolicy.class);
-
-	/**
-	 * TODO JAVADOC.
-	 */
-	private ContextAndPolicy() {
-
-	}
-
-	/**
-	 * This enum contains the possible {@link JAXBProfile}s.
-	 * 
-	 * @author Florian Huonder
-	 * @version 1.0
-	 */
-	public enum JAXBProfile {
-		/**
-		 * Represents the policy profile should be loaded.
-		 */
-		POLICY,
-		/**
-		 * Represents the response profile should be loaded.
-		 */
-		RESPONSE_CTX,
-		/**
-		 * Represents the request profile should be loaded.
-		 */
-		REQUEST_CTX
-	}
-
 	private static ContextAndPolicyConfiguration policyProfile;
 	private static ContextAndPolicyConfiguration requestCtxProfile;
 	private static ContextAndPolicyConfiguration responseCtxProfile;
 	private static ValidationEventHandler validationEventHandler;
 
 	/**
-	 * Returns the marshaller for the given context.
+	 * TODO REVIEW René.
+	 * 
+	 * This constructor is private because no objects of this class shall be
+	 * created.
+	 */
+	private ContextAndPolicy() {
+	}
+
+	/**
+	 * This enum contains the possible {@link JAXBProfile}s.
+	 * 
+	 * @author Florian Huonder
+	 */
+	public enum JAXBProfile {
+		/**
+		 * Represents the policy profile.
+		 */
+		POLICY,
+		/**
+		 * Represents the response profile.
+		 */
+		RESPONSE_CTX,
+		/**
+		 * Represents the request profile.
+		 */
+		REQUEST_CTX
+	}
+
+	/**
+	 * Returns the {@link Marshaller} for the given {@link JAXBProfile}.
 	 * 
 	 * @param profile
 	 *            The {@link JAXBProfile} of the {@link Marshaller}.
-	 * @return The obtained marshaller.
+	 * @return The created {@link Marshaller}.
 	 * @throws JAXBException
+	 *             In case an error occurs.
 	 */
 	public static Marshaller getMarshaller(JAXBProfile profile) throws JAXBException {
 		ContextAndPolicyConfiguration conf;
@@ -126,12 +128,13 @@ public final class ContextAndPolicy {
 	}
 
 	/**
-	 * Returns the unmarshaller for the given context.
+	 * Returns the {@link Unmarshaller} for the given {@link JAXBProfile}.
 	 * 
 	 * @param profile
 	 *            The {@link JAXBProfile} of the {@link Unmarshaller}.
-	 * @return The obtained unmarshaller.
+	 * @return The created {@link Unmarshaller}.
 	 * @throws JAXBException
+	 *             In case an error occurs.
 	 */
 	public static Unmarshaller getUnmarshaller(JAXBProfile profile) throws JAXBException {
 		ContextAndPolicyConfiguration conf;
@@ -160,9 +163,9 @@ public final class ContextAndPolicy {
 	}
 
 	/**
-	 * Returns the {@link ContextAndPolicyConfiguration} of the policy profile.
+	 * Returns the configured {@link ContextAndPolicyConfiguration}.
 	 * 
-	 * @return The {@link ContextAndPolicyConfiguration} of the policy profile.
+	 * @return The {@link ContextAndPolicyConfiguration}.
 	 */
 	public static ContextAndPolicyConfiguration getPolicyProfile() {
 		return policyProfile;
