@@ -18,7 +18,12 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO JAVADOC!!!!!!!!!
+ * TODO REVIEW René
+ * 
+ * This runtime exception is thrown if an an internal error occurs in the policy
+ * repository.
+ * 
+ * @author Florian Huonder
  */
 public class PolicyRepositoryException extends RuntimeException {
 	private static final long serialVersionUID = 8213802064654257318L;
@@ -32,6 +37,10 @@ public class PolicyRepositoryException extends RuntimeException {
 
 	/**
 	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public PolicyRepositoryException(String message) {
 		super(message);
@@ -39,6 +48,14 @@ public class PolicyRepositoryException extends RuntimeException {
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public PolicyRepositoryException(String message, Throwable cause) {
 		super(message, cause);
@@ -48,6 +65,11 @@ public class PolicyRepositoryException extends RuntimeException {
 	 * Constructs a new exception with the specified cause and a detail message
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public PolicyRepositoryException(Throwable cause) {
 		super(cause);

@@ -18,12 +18,12 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René
  * 
- * This exception is thrown when there is a syntax error in the request.
+ * This exception is thrown in case a syntax error is in a structural XACML
+ * element (request, response, policy).
  * 
  * @author Florian Huonder
- * @version 1.0
  */
 public class SyntaxException extends Exception {
 	private static final long serialVersionUID = 8213802064654257318L;
@@ -37,6 +37,10 @@ public class SyntaxException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public SyntaxException(String message) {
 		super(message);
@@ -44,6 +48,14 @@ public class SyntaxException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public SyntaxException(String message, Throwable cause) {
 		super(message, cause);
@@ -53,6 +65,11 @@ public class SyntaxException extends Exception {
 	 * Constructs a new exception with the specified cause and a detail message
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public SyntaxException(Throwable cause) {
 		super(cause);

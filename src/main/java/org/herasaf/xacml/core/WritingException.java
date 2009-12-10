@@ -18,12 +18,12 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René
  * 
- * This exception is thrown when a writing fails.
+ * This exception is thrown in case the writing of structural XACML type
+ * (request, response, policy) to a sink failed.
  * 
  * @author Florian Huonder
- * @version 1.0
  */
 public class WritingException extends Exception {
 	private static final long serialVersionUID = 4577643847561378418L;
@@ -37,6 +37,10 @@ public class WritingException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public WritingException(String message) {
 		super(message);
@@ -44,6 +48,14 @@ public class WritingException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public WritingException(String message, Throwable cause) {
 		super(message, cause);
@@ -53,6 +65,11 @@ public class WritingException extends Exception {
 	 * Constructs a new exception with the specified cause and a detail message
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public WritingException(Throwable cause) {
 		super(cause);
