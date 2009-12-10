@@ -17,41 +17,31 @@
 
 package org.herasaf.xacml.core.api;
 
+import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
 
 /**
- * TODO JAVADOC!!!!!!!!
+ * TODO REVIEW René.
  * 
- * The {@link PDP} is used to evaluate a request provided by the context
- * handler. The context handler sends the request to the {@link PDP}. The
- * {@link PDP} evaluates the {@link RequestCtx} and returns a
- * {@link ResponseCtx}.<br>
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> for further information. <br>
- * <br>
- * A Policy Decision Point can handle only one resource per request.
- * The context handler is responsible for splitting up a request
- * that contains multiple resources into many requests. <br>
- * See: <a
- * href="See: <a href="http://docs.oasis-open.org/xacml/2.0/access_control
+ * This interface describes the Policy Decision Point. The Policy Decision Point
+ * is used to evaluate access control requests. For further information see <a
+ * href="http://docs.oasis-open.org/xacml/2.0/access_control
  * -xacml-2.0-mult-profile-spec-os.pdf" >Multiple resource profile of XACML
- * v2.0, 1 February 2005</a> for further information.
+ * v2.0, 1 February 2005</a>..
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public interface PDP {
+
 	/**
-	 * TODO REVIEW
+	 * TODO REVIEW René.
 	 * 
-	 * The {@link #evaluate(RequestCtx)} method is responsible for evaluating
-	 * XACML conform requests. These requests are provided within a
-	 * {@link RequestCtx} object. When the evaluation has finished a
-	 * {@link ResponseCtx} is created and returned to the requester.
+	 * This method evaluates an XACML access control request. This request is
+	 * encapsulated in a {@link RequestCtx} object. After the evaluation the
+	 * result is returned in a {@link ResponseCtx} object.
 	 * 
 	 * @param request
 	 *            The {@link RequestCtx} that shall be evaluated.
@@ -60,21 +50,32 @@ public interface PDP {
 	ResponseCtx evaluate(RequestCtx request);
 
 	/**
-	 * TODO JAVDOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @return The {@link PolicyRepository} attached to this {@link PDP}.
+	 * Returns the {@link PolicyRepository} that this PDP uses for evaluation.
+	 * 
+	 * @return The {@link PolicyRepository} contained in this {@link PDP}.
 	 */
 	PolicyRepository getPolicyRepository();
 
 	/**
-	 * TODO JAVADOC.
-	 * @return The PIP that is set in this {@link PDP}.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the {@link PIP} that this PDP uses for evaluation. The
+	 * {@link PIP} is an optional component so it may be <code>null</code>.
+	 * 
+	 * @return The {@link PIP} contained in this {@link PDP} or
+	 *         <code>null</code> if none is set.
 	 */
 	PIP getPIP();
 
 	/**
-	 * TODO JAVADOC.
-	 * @return The root combining algorithm of this {@link PDP}.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the {@link PolicyCombiningAlgorithm} that this PDP uses for evaluation.
+	 * This {@link CombiningAlgorithm} combines the evaluation results on the root level.
+	 * 
+	 * @return The root {@link CombiningAlgorithm} of this {@link PDP}.
 	 */
 	PolicyCombiningAlgorithm getRootCombiningAlgorithm();
 }

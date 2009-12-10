@@ -103,7 +103,7 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestResourceAttributes(request, getAttributeId(),
+			List<AttributeValueType> attrValues = reqInfo.getPIP().addResourceAttributesToRequest(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}

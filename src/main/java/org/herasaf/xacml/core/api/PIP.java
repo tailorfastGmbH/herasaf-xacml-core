@@ -23,95 +23,120 @@ import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
- * When a request doesn't contain an attribute, the PDP has to call the PIP for
- * the information of this attribute. An PIP implementation is responsible to
- * resolve Attributes not included in the request. In the standard XACML
- * dataflow, this means, that the PIP is asked for the information. See: <a
- * href=
+ * TODO REVIEW René.
+ * 
+ * When the request does not contain an attribute that is flaged with
+ * "must be present", the PDP has to ask the PIP for it.<br />
+ * <br />
+ * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 78, chapter attribute retrieval for further information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
+ * @author Florian Huonder
  */
 public interface PIP {
 
 	/**
-	 * Extends the given {@link RequestType} with the attributes given through
-	 * the resolved missing attributes and returnes the added
-	 * {@link AttributeValueType}s.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts the requested <b>subject</b> attribute(s) (specified by
+	 * <code>attibuteId</code>, <code>dataType</code>, <code>issuer</code> and
+	 * <code>subjectCategory</code> into the given {@link RequestType}, if the
+	 * attribute(s) could be resolved.
+	 * 
+	 * The return value is a {@link List} containing the resolved attribute(s).
 	 * 
 	 * @param request
-	 *            - The Request to append
+	 *            - The {@link RequestType} that shall be enriched with the
+	 *            attribute(s) to resolve.
 	 * @param attributeId
-	 *            - The AttributeID of the requested AttributeValues
+	 *            - The id of the requested attribute(s).
 	 * @param dataType
-	 *            - The DataType of the requested AttributeValues
+	 *            - The data type of the requested attribute(s).
 	 * @param issuer
-	 *            - The Issuer of the requested AttributeValues
+	 *            - The issuer of the requested attribute(s).
 	 * @param subjectCategory
-	 *            - The SubjectCategory of the requestedValues
-	 * @return The found AttributeValues. If no AttributeValues could be found
-	 *         or an error occurred, an empty list is returned.
+	 *            - The SubjectCategory of the requested attribute(s).
+	 * @return The attribute(s). If no attribute(s) were found an empty
+	 *         {@link List} is returned.
 	 */
-	List<AttributeValueType> requestSubjectAttributes(RequestType request, String attributeId, String dataType,
+	List<AttributeValueType> addSubjectAttributesToRequest(RequestType request, String attributeId, String dataType,
 			String issuer, String subjectCategory);
 
 	/**
-	 * Extends the given {@link RequestType} with the attributes given through
-	 * the resolved missing attributes and returnes the added
-	 * {@link AttributeValueType}s.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts the requested <b>resource</b> attribute(s) (specified by
+	 * <code>attibuteId</code>, <code>dataType</code> and <code>issuer</code>
+	 * into the given {@link RequestType}, if the attribute(s) could be
+	 * resolved.
+	 * 
+	 * The return value is a {@link List} containing the resolved attribute(s).
 	 * 
 	 * @param request
-	 *            - The Request to append
+	 *            - The {@link RequestType} that shall be enriched with the
+	 *            attribute(s) to resolve.
 	 * @param attributeId
-	 *            - The AttributeID of the requested AttributeValues
+	 *            - The id of the requested attribute(s).
 	 * @param dataType
-	 *            - The DataType of the requested AttributeValues
+	 *            - The data type of the requested attribute(s).
 	 * @param issuer
-	 *            - The Issuer of the requested AttributeValues
-	 * @return The found AttributeValues. If no AttributeValues could be found
-	 *         or an error occurred, an empty list is returned.
+	 *            - The issuer of the requested attribute(s).
+	 * @return The attribute(s). If no attribute(s) were found an empty
+	 *         {@link List} is returned.
 	 */
-	List<AttributeValueType> requestResourceAttributes(RequestType request, String attributeId, String dataType,
+	List<AttributeValueType> addResourceAttributesToRequest(RequestType request, String attributeId, String dataType,
 			String issuer);
 
 	/**
-	 * Extends the given {@link RequestType} with the attributes given through
-	 * the resolved missing attributes and returnes the added
-	 * {@link AttributeValueType}s.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts the requested <b>action</b> attribute(s) (specified by
+	 * <code>attibuteId</code>, <code>dataType</code> and <code>issuer</code>
+	 * into the given {@link RequestType}, if the attribute(s) could be
+	 * resolved.
+	 * 
+	 * The return value is a {@link List} containing the resolved attribute(s).
 	 * 
 	 * @param request
-	 *            - The Request to append
+	 *            - The {@link RequestType} that shall be enriched with the
+	 *            attribute(s) to resolve.
 	 * @param attributeId
-	 *            - The AttributeID of the requested AttributeValues
+	 *            - The id of the requested attribute(s).
 	 * @param dataType
-	 *            - The DataType of the requested AttributeValues
+	 *            - The data type of the requested attribute(s).
 	 * @param issuer
-	 *            - The Issuer of the requested AttributeValues
-	 * @return The found AttributeValues. If no AttributeValues could be found
-	 *         or an error occurred, an empty list is returned.
+	 *            - The issuer of the requested attribute(s).
+	 * @return The attribute(s). If no attribute(s) were found an empty
+	 *         {@link List} is returned.
 	 */
-	List<AttributeValueType> requestActionAttributes(RequestType request, String attributeId, String dataType,
+	List<AttributeValueType> addActionAttributesToRequest(RequestType request, String attributeId, String dataType,
 			String issuer);
 
 	/**
-	 * Extends the given {@link RequestType} with the attributes given through
-	 * the resolved missing attributes and returnes the added
-	 * {@link AttributeValueType}s.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts the requested <b>environment</b> attribute(s) (specified by
+	 * <code>attibuteId</code>, <code>dataType</code> and <code>issuer</code>
+	 * into the given {@link RequestType}, if the attribute(s) could be
+	 * resolved.
+	 * 
+	 * The return value is a {@link List} containing the resolved attribute(s).
 	 * 
 	 * @param request
-	 *            - The Request to append
+	 *            - The {@link RequestType} that shall be enriched with the
+	 *            attribute(s) to resolve.
 	 * @param attributeId
-	 *            - The AttributeID of the requested AttributeValues
+	 *            - The id of the requested attribute(s).
 	 * @param dataType
-	 *            - The DataType of the requested AttributeValues
+	 *            - The data type of the requested attribute(s).
 	 * @param issuer
-	 *            - The Issuer of the requested AttributeValues
-	 * @return The found AttributeValues. If no AttributeValues could be found
-	 *         or an error occurred, an empty list is returned.
+	 *            - The issuer of the requested attribute(s).
+	 * @return The attribute(s). If no attribute(s) were found an empty
+	 *         {@link List} is returned.
 	 */
-	List<AttributeValueType> requestEnvironmentAttributes(RequestType request, String attributeId, String dataType,
+	List<AttributeValueType> addEnvironmentAttributesToRequest(RequestType request, String attributeId, String dataType,
 			String issuer);
 }

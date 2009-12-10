@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.api;
 
 import java.util.Collection;
@@ -27,7 +26,16 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
 /**
- * The {@link PolicyRepository} TODO JAVADOC!!!! wait for: HERASAFXACMLCORE-14
+ * TODO REVIEW René.
+ * 
+ * The policy repository contains the deployed and currently active
+ * {@link Evaluatable}s. There are various manipulation methods to add and
+ * remove {@link Evaluatable}s. Further it is possible to determine the state of
+ * this policy repository at any past time.<br />
+ * Further the policy repository is responsible for resolving
+ * {@link Evaluatable}s from "remote" repositories. <br />
+ * <br />
+ * The policy repository may store and/or index the {@link Evaluatable}s.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -35,83 +43,139 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 public interface PolicyRepository {
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts a new {@link Evaluatable} into the policy repository. It is put
+	 * at the end of the list. It does not require a specific (ordered or
+	 * unordered) combining algorithm.
 	 * 
 	 * @param evaluatable
+	 *            The {@link Evaluatable} to add to the policy repository.
 	 */
 	void deploy(Evaluatable evaluatable);
-	
+
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts a new {@link Evaluatable} into the policy repository at the given
+	 * position. It requires an ordered root combining algorithm to work.
 	 * 
 	 * @param evaluatable
+	 *            The {@link Evaluatable} to add to the policy repository.
 	 * @param position
+	 *            The position where the {@link Evaluatable} shall be added to
+	 *            the list.
 	 */
 	void deploy(Evaluatable evaluatable, int position);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Inserts a collection of new {@link Evaluatable}s into the policy
+	 * repository. The {@link Evaluatable} are added randomly to the end of the
+	 * list. It does not require a specific (ordered or unordered) combining
+	 * algorithm.
 	 * 
 	 * @param evaluatables
+	 *            The collection of {@link Evaluatable}s to add to the policy
+	 *            repository.
 	 */
 	void deploy(Collection<Evaluatable> evaluatables);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Removes the {@link Evaluatable} with the given {@link EvaluatableID} from
+	 * the policy repository.
 	 * 
 	 * @param evaluatableID
+	 *            The id of the {@link Evaluatable} to remove.
 	 */
 	void undeploy(EvaluatableID evaluatableID);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Removes the {@link Evaluatable}s with the given {@link EvaluatableID}s
+	 * from the policy repository.
 	 * 
 	 * @param evaluatableIDs
+	 *            The collection containg the {@link EvaluatableID} of the
+	 *            {@link Evaluatable}s to be removed.
 	 */
 	void undeploy(Collection<EvaluatableID> evaluatableIDs);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param diff
+	 * Applies a list of {@link DeploymentModification}s to the currently
+	 * deployed {@link Evaluatable} tree in this policy repository.
+	 * 
+	 * @param deploymentModifications
+	 *            The list containing the {@link DeploymentModification}s.
 	 */
-	void applyDeploymentModifications(List<DeploymentModification> deploymentInstructions);
+	void applyDeploymentModifications(List<DeploymentModification> deploymentModifications);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @return
+	 * Returns the currently deployed {@link Evaluatable}s.
+	 * 
+	 * @return A list containing the currently deployed {@link Evaluatable}s.
 	 */
 	List<Evaluatable> getDeployment();
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the {@link Evaluatable}s that very deployed at the given time
+	 * dateTime.
 	 * 
 	 * @param dateTime
-	 * @return
+	 *            The active-time of the wanted deployment.
+	 * @return A list containing the {@link Evaluatable}s that were active at
+	 *         the given dateTime.
 	 */
 	List<Evaluatable> getDeployment(Date dateTime);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @return
+	 * Returns all deployments that were active since the beginning of life of
+	 * this policy repository.
+	 * 
+	 * @return All deployments since the beginning of life of this policy
+	 *         repository.
 	 */
 	Map<Date, List<Evaluatable>> getDeployments();
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param evaluatableID The {@link EvaluatableID} of the requested {@link Evaluatable}.
+	 * Returns the {@link Evaluatable} with the given {@link EvaluatableID} from
+	 * this or a remote policy repository.
+	 * 
+	 * @param evaluatableID
+	 *            The {@link EvaluatableID} of the requested {@link Evaluatable}
+	 *            .
 	 * @return The {@link Evaluatable} with the given {@link EvaluatableID}.
 	 */
 	Evaluatable getEvaluatable(EvaluatableID evaluatableID);
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns all {@link Evaluatable}s that match the given request. It may be
+	 * possible that {@link Evaluatable}s are returned that do not match the
+	 * request. <br />
+	 * <br />
+	 * This method could work together with an index.
 	 * 
 	 * @param request
-	 * @return A {@link List} pf {@link Evaluatable}s that match onto the given {@link RequestCtx}.
+	 *            The request for whom all returned {@link Evaluatable} shall
+	 *            match.
+	 * @return A {@link List} of {@link Evaluatable}s that may match onto the given
+	 *         {@link RequestCtx}.
 	 */
 	List<Evaluatable> getEvaluatables(RequestCtx request);
 }

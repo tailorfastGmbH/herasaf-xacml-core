@@ -17,7 +17,17 @@
 package org.herasaf.xacml.core.api;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This interface is a marker interface for implementations of deployment
+ * modifications. A deployment modification is a modification of the currently
+ * deployed policy tree in a policy repository. Such a modification could be
+ * add, delete, move, update, ...
+ * 
+ * This interface does not specify any methods because these are specific for
+ * each modification implementation. Further the policy repository
+ * implementation is only able to handle a certain subset of modifications which
+ * must be known.
  * 
  * @author Florian Huonder
  */

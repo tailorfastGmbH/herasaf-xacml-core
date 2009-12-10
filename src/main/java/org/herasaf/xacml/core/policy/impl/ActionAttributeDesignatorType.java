@@ -99,7 +99,7 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestActionAttributes(request, getAttributeId(),
+			List<AttributeValueType> attrValues = reqInfo.getPIP().addActionAttributesToRequest(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}

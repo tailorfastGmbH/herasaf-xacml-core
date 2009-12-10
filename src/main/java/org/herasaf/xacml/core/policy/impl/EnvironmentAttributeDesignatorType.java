@@ -94,7 +94,7 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType 
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestEnvironmentAttributes(request, getAttributeId(),
+			List<AttributeValueType> attrValues = reqInfo.getPIP().addEnvironmentAttributesToRequest(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}

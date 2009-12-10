@@ -135,7 +135,7 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().requestSubjectAttributes(request, getAttributeId(),
+			List<AttributeValueType> attrValues = reqInfo.getPIP().addSubjectAttributesToRequest(request, getAttributeId(),
 					getDataType().toString(), getIssuer(), getSubjectCategory());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
