@@ -56,18 +56,12 @@ public class TestRespectAbandonedEvaluatables {
 	public Object[][] createTestCases() throws Exception {
 
 		List<File> evalFiles = new ArrayList<File>();
-		evalFiles
-				.add(new File(
-						"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-deny-overrides.xml"));
-		evalFiles
-				.add(new File(
-						"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-deny-overrides.xml"));
-		evalFiles
-				.add(new File(
-						"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-permit-overrides.xml"));
-		evalFiles
-				.add(new File(
-						"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-permit-overrides.xml"));
+		evalFiles.add(new File("src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-deny-overrides.xml"));
+		evalFiles.add(new File(
+				"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-deny-overrides.xml"));
+		evalFiles.add(new File("src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-permit-overrides.xml"));
+		evalFiles.add(new File(
+				"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-permit-overrides.xml"));
 		// extend here with further test cases
 
 		Object[][] testcases = new Object[evalFiles.size() * 2][];
@@ -75,12 +69,10 @@ public class TestRespectAbandonedEvaluatables {
 		// The index starts with 1 that the calculation at the end of the method
 		// works properly.
 		for (int i = 1; i < evalFiles.size() + 1; i++) {
-			SimplePDPFactory.respectAbandonedEvaluatables(false);
 			SimplePDPFactory.useDefaultInitializers();
 			SimplePDPFactory.getSimplePDP();
 			Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
 
-			SimplePDPFactory.respectAbandonedEvaluatables(true);
 			SimplePDPFactory.useDefaultInitializers();
 			SimplePDPFactory.getSimplePDP();
 			Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
@@ -105,18 +97,17 @@ public class TestRespectAbandonedEvaluatables {
 	 *             In case an error occurs.
 	 */
 	@Test(dataProvider = "test-cases")
-	public void testRespectAbandonedEvalutables(
-			boolean respectAbandonedEvaluatables, Evaluatable eval)
+	public void testRespectAbandonedEvalutables(boolean respectAbandonedEvaluatables, Evaluatable eval)
 			throws Exception {
 		// These factory settings are needed to properly set the root combining
 		// algorithm.
-		SimplePDPFactory
-				.respectAbandonedEvaluatables(respectAbandonedEvaluatables);
+		if (respectAbandonedEvaluatables) {
+			SimplePDPFactory.respectAbandonedEvaluatables();
+		}
 		SimplePDPFactory.useDefaultInitializers();
 		PDP pdp = SimplePDPFactory.getSimplePDP();
-		RequestCtx request = RequestCtxFactory
-				.unmarshal(new File(
-						"src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
+		RequestCtx request = RequestCtxFactory.unmarshal(new File(
+				"src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
 		repo = pdp.getPolicyRepository();
 
 		repo.deploy(eval);
@@ -125,15 +116,13 @@ public class TestRespectAbandonedEvaluatables {
 
 		if (respectAbandonedEvaluatables) {
 			if (response.getResponse().getResults().get(0).getObligations() != null) {
-				assertEquals(response.getResponse().getResults().get(0)
-						.getObligations().getObligations().get(0)
+				assertEquals(response.getResponse().getResults().get(0).getObligations().getObligations().get(0)
 						.getObligationId(), "expectedObligation");
 			} else {
 				fail("No obligations.");
 			}
 		} else {
-			assertTrue(response.getResponse().getResults().get(0)
-					.getObligations() == null);
+			assertTrue(response.getResponse().getResults().get(0).getObligations() == null);
 		}
 	}
 

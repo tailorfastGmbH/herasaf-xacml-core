@@ -17,40 +17,59 @@
 package org.herasaf.xacml.core.simplePDP;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This runtime exception is thrown in case an unresolvable error during initialization of
+ * the PDP occured.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public class InitializationException extends RuntimeException {
-
 	private static final long serialVersionUID = 5258170600668290526L;
 
 	/**
-	 * 
+	 * Constructs a new exception with null as its detail message.
 	 */
 	public InitializationException() {
 		super();
 	}
 
 	/**
+	 * Constructs a new exception with the specified detail message and cause.
+	 * 
 	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
 	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public InitializationException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
+	 * Constructs a new exception with the specified detail message.
+	 * 
 	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public InitializationException(String message) {
 		super(message);
 	}
 
 	/**
+	 * Constructs a new exception with the specified cause and a detail message
+	 * of (cause==null ? null : cause.toString()) (which typically contains the
+	 * class and detail message of cause).
+	 * 
 	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public InitializationException(Throwable cause) {
 		super(cause);

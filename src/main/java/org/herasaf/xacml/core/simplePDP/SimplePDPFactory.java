@@ -36,11 +36,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This factory is responsible of creating a {@link PDP}. All needed
+ * initialization is done automatically. Various hooks are defined to enhance
+ * the factory with further capabilities.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public final class SimplePDPFactory {
 	private static final Logger LOGGER = LoggerFactory.getLogger(SimplePDPFactory.class);
@@ -58,9 +61,14 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * A user has the possibility to use his/her own initializers to instantiate
+	 * functions, data types, combining algorihtms and JAXB.
 	 * 
 	 * @param initalizers
+	 *            A list containing the initializers that shall run when
+	 *            retrieving a new {@link PDP}.
 	 */
 	public static void setInitalizers(List<Initializer> initalizers) {
 		LOGGER.info("Custom initializers are in use.");
@@ -68,18 +76,30 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param respect
+	 * Enables all policy combining algorithms to respect abandoned
+	 * evaluatables. By default abandoned evaluatables are not respected.
 	 */
-	public static void respectAbandonedEvaluatables(boolean respect) {
-		respectAbandonedEvaluatables = respect;
+	public static void respectAbandonedEvaluatables() {
+		respectAbandonedEvaluatables = true;
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param jarPath
+	 * Custom properties can be set for the initializers.
+	 * 
+	 * <b>Note:</b><br />
+	 * The function-, data type- and combining algorithm initializers respect
+	 * the property <code>org:herasaf:xacml.core:jarPath</code>.
+	 * 
+	 * @param initializerClass
+	 *            The class of the initializer for which the property is.
+	 * @param id
+	 *            The id of the property.
+	 * @param value
+	 *            The value of the property.
 	 */
 	public static void setProperty(Class<? extends Initializer> initializerClass, String id, Object value) {
 		for (Initializer initializer : initializers) {
@@ -90,9 +110,11 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param useDefaultInitializers
+	 * Enables all default initializers to initialize functions, data types,
+	 * combining algorithms and JAXB. <br />
+	 * By default the default initializers are not in use.
 	 */
 	public static void useDefaultInitializers() {
 		LOGGER.info("The default initializers are in use.");
@@ -104,11 +126,21 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns a new {@link PDP} instance that has set a custom root
+	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRepository} and a
+	 * custom {@link PIP}.
 	 * 
 	 * @param rootCombiningAlgorithm
+	 *            The root {@link PolicyCombiningAlgorithm} to use in the
+	 *            {@link PDP}.
 	 * @param policyRepository
+	 *            The {@link PolicyRepository} to use in the {@link PDP}.
 	 * @param pip
+	 *            The {@link PIP} to use in the {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
 			PIP pip) {
@@ -133,10 +165,20 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns a new {@link PDP} instance that has set a custom root
+	 * {@link PolicyCombiningAlgorithm} and a custom {@link PIP}. The default
+	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}) is
+	 * used.
 	 * 
 	 * @param rootCombiningAlgorithm
+	 *            The root {@link PolicyCombiningAlgorithm} to use in the
+	 *            {@link PDP}.
 	 * @param pip
+	 *            The {@link PIP} to use in the {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PIP pip) {
 		PolicyRepository policyRepository;
@@ -183,10 +225,19 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns a new {@link PDP} instance that has set a custom a custom
+	 * {@link PolicyRepository} and a custom {@link PIP}. The default root
+	 * {@link PolicyCombiningAlgorithm} (
+	 * {@link PolicyOnlyOneApplicableAlgorithm}) is used.
 	 * 
 	 * @param policyRepository
+	 *            The {@link PolicyRepository} to use in the {@link PDP}.
 	 * @param pip
+	 *            The {@link PIP} to use in the {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
@@ -200,8 +251,9 @@ public final class SimplePDPFactory {
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -214,9 +266,18 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns a new {@link PDP} instance that has set a custom root
+	 * {@link PolicyCombiningAlgorithm}. The default {@link PIP} (
+	 * <code>null</code>) and the default {@link PolicyRepository} (
+	 * {@link MapBasedSimplePolicyRepository}) is used.
 	 * 
 	 * @param rootCombiningAlgorithm
+	 *            The root {@link PolicyCombiningAlgorithm} to use in the
+	 *            {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm) {
 		PolicyRepository policyRepository;
@@ -225,33 +286,39 @@ public final class SimplePDPFactory {
 			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (NoSuchMethodException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -264,22 +331,33 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns a new {@link PDP} instance that has set a custom root
+	 * {@link PolicyRepository}. The default root
+	 * {@link PolicyCombiningAlgorithm} (
+	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default {@link PIP} (
+	 * <code>null</code>) is used.
 	 * 
 	 * @param policyRepository
+	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PolicyRepository policyRepository) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -293,9 +371,18 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns a new {@link PDP} instance that has set a custom root {@link PIP}
+	 * . The default root {@link PolicyCombiningAlgorithm} (
+	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default
+	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}) is
+	 * used.
 	 * 
 	 * @param pip
+	 *            The {@link PIP} to use in the {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PIP pip) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
@@ -304,13 +391,15 @@ public final class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -320,33 +409,39 @@ public final class SimplePDPFactory {
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 
 		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (NoSuchMethodException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -361,16 +456,19 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * The root combining algorithm must be unordered because it is not possible
-	 * to set a position where to add the eval.
+	 * Returns a new {@link PDP} instance that has set a custom root
+	 * {@link PolicyCombiningAlgorithm} and a custom {@link PolicyRepository}.
+	 * The default {@link PIP} (<code>null</code>) is used.
 	 * 
 	 * @param rootCombiningAlgorithm
-	 *            The root combining algorithm of the PDP.
+	 *            The root {@link PolicyCombiningAlgorithm} to use in the
+	 *            {@link PDP}.
 	 * @param policyRepository
-	 *            the {@link PolicyRepository} of the PDP.
-	 * @return The PDP (singleton).
+	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository) {
 
@@ -380,9 +478,15 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @return The PDP (singleton).
+	 * Returns a new {@link PDP} instance that has set the default root
+	 * {@link PolicyCombiningAlgorithm} (
+	 * {@link PolicyOnlyOneApplicableAlgorithm}), the default
+	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}) and the
+	 * default {@link PIP} (<code>null</code>).
+	 * 
+	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP() {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
@@ -391,13 +495,15 @@ public final class SimplePDPFactory {
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm.newInstance();
 		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default root combining algorithm: "
-					+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default root combining algorithm: "
+							+ defaultRootCombiningAlgorithm.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -407,33 +513,39 @@ public final class SimplePDPFactory {
 					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
 
 		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (NoSuchMethodException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the default policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
+			InitializationException ie = new InitializationException(
+					"Unable to instantiate the default policy repository: "
+							+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -449,7 +561,9 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Runs all {@link Initializer}s sequentially.
 	 */
 	private static void runInitializers() {
 		for (Initializer initializer : initializers) {

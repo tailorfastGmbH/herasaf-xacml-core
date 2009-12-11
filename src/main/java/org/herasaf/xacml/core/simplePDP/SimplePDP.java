@@ -31,28 +31,36 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC!!!!!!!!!! The implementation of the {@link PDP}. <br>
+ * TODO REVIEW René.
+ * 
+ * This class is a <i>simple</i> implementation of a {@link PDP}. It is the
+ * entry point for evaluating an XACML request and returning a response.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public class SimplePDP implements PDP {
 	private PolicyRepository policyRepository;
-	private PIP pip; // TODO introduce PIP
+	private PIP pip;
 	private PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
-
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
+	 * {@link PolicyRepository} and {@link PIP}.<br />
+	 * The {@link PIP} may be <code>null</code>.
 	 * 
 	 * @param rootCombiningAlgorithm
+	 *            The root {@link PolicyCombiningAlgorithm} to use.
 	 * @param policyRepository
+	 *            The {@link PolicyRepository} to use.
 	 * @param pip
+	 *            The {@link PIP} to use (may be <code>null</code>).
 	 */
-	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository,
-			PIP pip) {
+	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository, PIP pip) {
 		this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
 		this.policyRepository = policyRepository;
 		this.pip = pip;
@@ -63,25 +71,21 @@ public class SimplePDP implements PDP {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * {@inheritDoc}
 	 */
 	public PolicyRepository getPolicyRepository() {
 		return policyRepository;
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public PIP getPIP() {
 		return pip;
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public PolicyCombiningAlgorithm getRootCombiningAlgorithm() {
 		return rootPolicyCombiningAlgorithm;
@@ -90,9 +94,8 @@ public class SimplePDP implements PDP {
 	/**
 	 * TODO REVIEW René.
 	 * 
-	 * {@inheritDoc} The evaluation starts at the predefined root combining
-	 * algorithm.
-	 * 
+	 * {@inheritDoc} 
+	 * <br />
 	 * <br />
 	 * <b>Logging:</b><br />
 	 * This section is relevant for all users of the {@link SimplePDP} in a
@@ -107,8 +110,9 @@ public class SimplePDP implements PDP {
 	 * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
 	 * different requesters as described here: <a
 	 * href="http://logback.qos.ch/manual/mdc.html"
-	 * >http://logback.qos.ch/manual/mdc.html</a>. TODO extend log message after
-	 * log issue is handled.
+	 * >http://logback.qos.ch/manual/mdc.html</a>.<br />
+	 * See the description in the Getting Started Guide on the
+	 * HERAS<sup>AF</sup> Wiki of how to configure MDC.
 	 */
 	public ResponseCtx evaluate(RequestCtx request) {
 		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));

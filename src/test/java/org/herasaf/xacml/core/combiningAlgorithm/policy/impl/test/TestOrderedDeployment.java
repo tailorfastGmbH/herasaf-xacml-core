@@ -40,11 +40,10 @@ import org.testng.annotations.Test;
 public class TestOrderedDeployment {
 
 	@BeforeTest
-	public void init(){
+	public void init() {
 		SimplePDPFactory.useDefaultInitializers();
-		SimplePDPFactory.respectAbandonedEvaluatables(false);
 	}
-	
+
 	@Test
 	public void testOrderedDeployment() {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm = new PolicyOrderedDenyOverridesAlgorithm();
@@ -69,7 +68,7 @@ public class TestOrderedDeployment {
 		assertSame(evals.get(0), policy1);
 		assertSame(evals.get(1), policy2);
 		assertSame(evals.get(2), policy3);
-		
+
 		repo.undeploy(policy1.getId());
 		repo.undeploy(policy2.getId());
 		repo.undeploy(policy3.getId());

@@ -36,91 +36,47 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This is the default implementation of the {@link PolicyRepository}. This
+ * policy repository has a limited functionality. It only works as a "provider"
+ * of locally deploed {@link Evaluatable}s. It does not:
+ * <ul>
+ * <li>persist the {@link Evaluatable}s</li>
+ * <li>index the {@link Evaluatable}s</li>
+ * <li>resolve {@link Evaluatable}s from remote (only local) repositories</li>
+ * </ul>
+ * It is not recommended to use this repository in a productive environment.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public class MapBasedSimplePolicyRepository implements PolicyRepository {
-	private Map<EvaluatableID, List<Evaluatable>> individualEvaluatables; // The
-	// reason
-	// that
-	// a
-	// List
-	// is
-	// put
-	// as
-	// value
-	// here
-	// is:
-	// A
-	// map
-	// can
-	// only
-	// store
-	// on
-	// value
-	// per
-	// key.
-	// But
-	// if
-	// a
-	// local
-	// reference
-	// shall
-	// be
-	// in
-	// the
-	// list,
-	// it
-	// has
-	// at
-	// least
-	// two
-	// values
-	// for
-	// that
-	// specific
-	// key.
-	// The
-	// key
-	// shall
-	// be
-	// a
-	// tupel
-	// of
-	// two
-	// elements
-	// (root-key,eval-key).
-	// The
-	// root
-	// key
-	// shall
-	// point
-	// to
-	// the
-	// root
-	// policy
-	// to
-	// which
-	// this
-	// policy
-	// belongs.
-	private Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping; // Mapping
-	// that
-	// tells
-	// which
-	// policies
-	// are
-	// under
-	// which
-	// root.
+	// The reason that a List is put as value here is: A map can only store on
+	// value per key. But if a local reference shall be in the list, it has at
+	// least two values for that specific key. The key shall be a tupel of two
+	// elements (root-key,eval-key). The root key shall point to the root policy
+	// to which this policy belongs.
+	// There can be multiple evaluatables for an id in case of references. a
+	// reference has the same id as the evaluatables itself.
+	private Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
+	// Mapping that tells which policies are under which root.
+	private Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping;
 	private List<Evaluatable> rootEvaluatables; // The root evaluatables
 	private final Logger logger = LoggerFactory.getLogger(MapBasedSimplePolicyRepository.class);
 	private final boolean isOrderedCombiningAlgorithm;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes a new policy repository. It must be configured if the root
+	 * policy combining algorithm in the PDP is ordered or unordered. This is
+	 * essential for the behavior of ordered deployment (
+	 * {@link #deploy(Evaluatable, int)}).
+	 * 
+	 * @param isOrderedCombiningAlgorithm
+	 *            True if the root policy combining algorithm in the PDP is
+	 *            ordered, false otherwise.
 	 */
 	public MapBasedSimplePolicyRepository(boolean isOrderedCombiningAlgorithm) {
 		individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
@@ -135,28 +91,32 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	public void deploy(Collection<Evaluatable> evaluatables) {
 
 		for (Evaluatable eval : evaluatables) {
-			deploy(eval); // Change object can be neglected here
+			deploy(eval);
 		}
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Checks for consistency of the given {@link Evaluatable}s. The provided
+	 * {@link Map} of {@link Evaluatable}s (indexed by the {@link EvaluatableID}
+	 * s). A root {@link Evaluatable} must be consistent in itself.
 	 * 
 	 * @param newIndividualEvaluatables
+	 *            The list of individual (meaning all sub-{@link Evaluatable}s)
+	 *            {@link Evaluatable}s to be checked for consistency.
 	 */
 	private void checkEvaluatable(Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables) {
-		if (!checkReferenceConsistency(newIndividualEvaluatables)) { // check
-			// for
-			// consistency
+
+		// check for reference consistency
+		if (!checkReferenceConsistency(newIndividualEvaluatables)) {
 			throw new PolicyRepositoryException("The PolicySet is not consistent.");
 		}
 
-		for (EvaluatableID id : newIndividualEvaluatables.keySet()) { // Check
-			// for
-			// uniqueness
-			// of
-			// the
-			// keys.
+		// Check for uniqueness of the keys.
+		for (EvaluatableID id : newIndividualEvaluatables.keySet()) {
+			// Checks if the already deployed individual evaluatables contain a
+			// key that already exists.
 			if (individualEvaluatables.containsKey(id)) {
 				throw new PolicyRepositoryException("The ID must be unique over all PolicySets and Policies.");
 			}
@@ -286,48 +246,53 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * This is the entry point to split {@link Evaluatable}s into individuals.
+	 * This means that a policy tree is split into its nodes. The resulting Map
+	 * contains as key all IDs that exist in this tree (of all nodes). The list
+	 * associated with this ID contains all {@link Evaluatable}s that have this
+	 * ID and all references that point to this ID. Here the policy tree is not
+	 * checked for consistency. So illegal states are allowed here.
+	 * 
+	 * @param evaluatable
+	 *            The root {@link Evaluatable} to be split.
+	 * @param rootId
+	 *            The ID of this root {@link Evaluatable}.
+	 * @param initialMap
+	 *            This map contains already {@link Evaluatable}s from a previous
+	 *            step. This beause this method is intended to be called
+	 *            recursivly down the whole policy tree.
+	 * @return A {@link Map} containing the whole policy tree that started at
+	 *         the given {@link Evaluatable} split up into individual policies.
 	 */
 	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(
 			Map<EvaluatableID, List<Evaluatable>> initialMap, Evaluatable evaluatable, EvaluatableID rootId) {
 		Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
 		if (initialMap == null) {
-			individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>(); // This
-			// construct
-			// is
-			// called
-			// MULTIMAP.
+			// (This construct is called MULTIMAP.)
+			individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
 		} else {
 			individualEvaluatables = initialMap;
 		}
 
 		// The following if-else block adds the id of this evaluatable and this
-		// evaluatable to the list of the individual evaluatables
-		if (individualEvaluatables.containsKey(evaluatable.getId())) { // checks
-			// if an
-			// entry
-			// with
-			// this
-			// ID
-			// already
-			// exists.
-			individualEvaluatables.get(evaluatable.getId()).add(evaluatable); // if
-			// yes,
-			// the
-			// additional
-			// evaluatable
-			// is
-			// added.
+		// evaluatable to the list of the individual evaluatables.
+		// Checks if an entry with this ID already exists.
+		if (individualEvaluatables.containsKey(evaluatable.getId())) {
+			// if yes, the additional (additional may be a reference)
+			// evaluatable is added.
+			individualEvaluatables.get(evaluatable.getId()).add(evaluatable);
 		} else { // if no, the first entry at this id is created.
 			List<Evaluatable> value = new ArrayList<Evaluatable>();
 			value.add(evaluatable);
 			individualEvaluatables.put(evaluatable.getId(), value);
 			addRootMapping(evaluatable.getId(), rootId);
 		}
-		if (evaluatable instanceof PolicySetType) { // If the evaluatable is a
-			// PolicySet, this method is
-			// recursively applied to
-			// all sub-policies
+
+		// If the evaluatable is a PolicySet, this method is recursively applied
+		// to all sub-policies
+		if (evaluatable instanceof PolicySetType) {
 			for (Evaluatable eval : ((PolicySetType) evaluatable).getUnorderedEvaluatables(null)) {
 				individualEvaluatables.putAll(splitIntoIndividuals(individualEvaluatables, eval, rootId));
 			}
@@ -335,28 +300,47 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 		return individualEvaluatables;
 	}
 
-	/*
-	 * Entry Point for other methods!
-	 */
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * This is the entry point to split {@link Evaluatable}s into individuals.
+	 * This means that a policy tree is split into its nodes. The resulting Map
+	 * contains as key all IDs that exist in this tree (of all nodes). The list
+	 * associated with this ID contains all {@link Evaluatable}s that have this
+	 * ID and all references that point to this ID. Here the policy tree is not
+	 * checked for consistency. So illegal states are allowed here.
+	 * 
+	 * @param evaluatable
+	 *            The root {@link Evaluatable} to be split.
+	 * @param rootId
+	 *            The ID of this root {@link Evaluatable}.
+	 * 
+	 * @return A {@link Map} containing the whole policy tree that started at
+	 *         the given {@link Evaluatable} split up into individual policies.
 	 */
 	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(Evaluatable evaluatable, EvaluatableID rootId) {
 		return splitIntoIndividuals(null, evaluatable, rootId);
 	}
 
 	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Every {@link Evaluatable}s must be mapped to its root {@link Evaluatable}
+	 * . This because in case of an undeployment. All related sub-
+	 * {@link Evaluatable}s must be removed from the list containing the
+	 * individual {@link Evaluatable}s.
+	 * 
 	 * @param id
+	 *            The ID of the {@link Evaluatable}.
 	 * @param rootId
+	 *            The ID of the corresponding root {@link Evaluatable}.
 	 */
 	private void addRootMapping(EvaluatableID id, EvaluatableID rootId) {
-		if (rootEvaluatableMapping.containsKey(rootId)) { // checks if an entry
-			// with this ID
-			// already exists.
-			rootEvaluatableMapping.get(rootId).add(id); // if yes, the
-			// additional
-			// evaluatableId is
-			// added.
+		// checks if an entry with this ID already exists.
+		if (rootEvaluatableMapping.containsKey(rootId)) {
+			// if yes, the additional (additional may be a reference)
+			// evaluatableId is added.
+			rootEvaluatableMapping.get(rootId).add(id);
 		} else { // if no, the first entry at this id is created.
 			List<EvaluatableID> value = new ArrayList<EvaluatableID>();
 			value.add(id);
@@ -365,14 +349,21 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	}
 
 	/**
-	 * @param individualEvaluatables2
+	 * TODO REVIEW René.
+	 * 
+	 * Checks if a policy is unique (id) and if references are only local
+	 * references.
+	 * 
+	 * @param individualEvaluatables
+	 *            The {@link Map} of {@link Evaluatable} to be checked for
+	 *            consitency.
 	 */
 	private boolean checkReferenceConsistency(Map<EvaluatableID, List<Evaluatable>> individualEvaluatables) {
 		for (List<Evaluatable> evals : individualEvaluatables.values()) {
 			if (evals.size() == 1) {
 				if (evals.get(0) instanceof IdReferenceType) {
 					logger
-							.error("This implementation of the PolicyRepository interface does not support Remote references. Further a local reference must be within the same PolicySet.");
+							.error("This implementation of the PolicyRepository interface does not support remote references. Further a local reference must be within the same PolicySet.");
 					return false; // If the List contains only one element that
 					// is a reference. It must be either a
 					// remote-reference or a local-reference
