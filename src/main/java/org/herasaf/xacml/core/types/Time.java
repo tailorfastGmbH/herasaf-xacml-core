@@ -24,7 +24,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 /**
  * TODO REVIEW René.
  * 
- * Represents the http://www.w3.org/2001/XMLSchema#time data type. The
+ * Represents a http://www.w3.org/2001/XMLSchema#time data type. The
  * specification can be found at <a
  * href="http://www.w3.org/2001/XMLSchema#time">
  * http://www.w3.org/2001/XMLSchema#time</a>.

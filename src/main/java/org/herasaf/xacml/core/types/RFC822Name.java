@@ -18,17 +18,15 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is
- * urn:oasis:names:tc:xacml:2.0:data-type:rfc822Name.<br>
+ * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:rfc822Name".<br>
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class RFC822Name {
 	private String value;

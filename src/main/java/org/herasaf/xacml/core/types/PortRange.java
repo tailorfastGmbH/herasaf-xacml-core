@@ -35,7 +35,6 @@ package org.herasaf.xacml.core.types;
  * minimum value of 1. A &lt;number&gt;- indicates that the upper boundary of
  * the range is the maximum value of 35535.
  * 
- * 
  * @author Florian Huonder
  * @author Stefan Oberholzer
  */

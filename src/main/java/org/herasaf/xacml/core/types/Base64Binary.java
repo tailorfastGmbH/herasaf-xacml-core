@@ -18,10 +18,11 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Takes a string that represents a base64 encoded value. The value is decoded
- * in the constructor.
+ * This is the representation of a value encoded in base64. The constructor
+ * takes a String value and converts it into a base64 value. Via the
+ * {@link #getValue()} method the base64 value can be retrieved.
  * 
  * @author Florian Huonder
  */
@@ -82,8 +83,7 @@ public class Base64Binary {
 	};
 
 	/**
-	 * Takes a base64 encoded value as string and decodes it into a {@code
-	 * byte[]}.
+	 * Takes a string and decodes it into a base64 value.
 	 * 
 	 * @param value
 	 *            The base64 data as string.

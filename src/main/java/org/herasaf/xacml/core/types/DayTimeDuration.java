@@ -22,14 +22,17 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * This class implements a
- * "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see Page 105 of the
- * XACML 2.0Specification) except for the following deviations::
+ * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see
+ * Page 105 of the XACML 2.0 specification). The specification contains an
+ * error. Therefore the implementation has the following except for the
+ * following discrepancy to the specification:
  * <ul>
- * <li>The calculation of the dayTimeDuration in units of seconds is: <code>( ( ('value of the day component' * 24) + ('value of the hour component') * 60) + ('value of the minute component')*60) + ('value of the second component')</code>
- * This seems to be the intent of the XACML 2.0 specification.</li>
+ * <li>The calculation of the dayTimeDuration in units of seconds is:<br />
+ * <code>( ( ('value of the day component' * 24)<br />+ ('value of the hour component') * 60)<br />
+ * + ('value of the minute component')*60)<br />+ ('value of the second component')</code><br /><br />
+ * </li>
  * <li>The duration must be a valid http://www.w3.org/2001/XMLSchema#duration
  * data type (See: <a
  * href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration"
@@ -38,8 +41,6 @@ import javax.xml.datatype.Duration;
  * </ul>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
- * 
  */
 public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	// According to the XACML specification match algorithm a dayTimeDuration

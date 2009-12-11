@@ -22,7 +22,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
  * Represents a http://www.w3.org/2001/XMLSchema#dateTime. The specification can
  * be found at <A HREF="http://www.w3.org/2001/XMLSchema#dateTime"
@@ -30,7 +30,6 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @version 1.0
  */
 public class DateTime implements Comparable<DateTime> {
 	private static final String MATCH_PATTERN = "\\S*-\\S*:\\S*";

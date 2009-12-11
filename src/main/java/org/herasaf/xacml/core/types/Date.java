@@ -22,7 +22,7 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
  * <p>
  * Represents a http://www.w3.org/2001/XMLSchema#date. The specification can be
@@ -30,13 +30,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * TARGET="_blank">http://www.w3.org/2001/XMLSchema#date</A>.
  * </p>
  * <p>
- * NOTE: The standard XMLGregorianCalendar used if none is specified for the
- * DatatypeFactory isn't correct and allows 31Days for every Month.
+ * <b>NOTE:</b> The default {@link XMLGregorianCalendar} used if none is
+ * specified for the DatatypeFactory. To specify a special calendar see the
+ * documentation of the {@link DatatypeFactory} class. <br />
+ * <br />
+ * The default {@link XMLGregorianCalendar} brings an unlovely drawback:<br />
+ * It accepts values that are not valid. E.g. every month may have 31 days.<br />
+ * Example: The date <i>2004-04-31</i> is valid even though April has only 30 days.
  * </p>
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @version 1.0
  */
 public class Date implements Comparable<Date> {
 	private XMLGregorianCalendar xmlCalendar;
