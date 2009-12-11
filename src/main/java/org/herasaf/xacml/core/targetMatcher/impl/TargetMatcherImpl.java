@@ -42,13 +42,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Implementation of the {@link TargetMatcher} interface.
+ * Matches a policy's, a policy set's or a rule's target against a given
+ * request.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class TargetMatcherImpl implements TargetMatcher {
 	private final Logger logger = LoggerFactory.getLogger(TargetMatcherImpl.class);
@@ -259,8 +259,8 @@ public class TargetMatcherImpl implements TargetMatcher {
 			logger.debug("Matching with function: {}", matchFunction.toString());
 			AttributeDesignatorType designator = match.getAttributeDesignator();
 			List<?> requestAttributeValues = (List<?>) designator.handle(request, reqInfo); // Fetches
-																							// all
-																							// AttributeValue-contents
+			// all
+			// AttributeValue-contents
 			// from the element (element = subject,
 			// resource, action or environment)
 			// AttributeDesignator.
