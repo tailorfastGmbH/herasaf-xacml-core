@@ -43,94 +43,102 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestRespectAbandonedEvaluatables {
-	private PolicyRepository repo;
+    private PolicyRepository repo;
 
-	/**
-	 * Initializes the test data.
-	 * 
-	 * @return The test data
-	 * @throws Exception
-	 *             In case of an error.
-	 */
-	@DataProvider(name = "test-cases")
-	public Object[][] createTestCases() throws Exception {
+    /**
+     * Initializes the test data.
+     * 
+     * @return The test data
+     * @throws Exception
+     *             In case of an error.
+     */
+    @DataProvider(name = "test-cases")
+    public Object[][] createTestCases() throws Exception {
 
-		List<File> evalFiles = new ArrayList<File>();
-		evalFiles.add(new File("src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-deny-overrides.xml"));
-		evalFiles.add(new File(
-				"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-deny-overrides.xml"));
-		evalFiles.add(new File("src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-permit-overrides.xml"));
-		evalFiles.add(new File(
-				"src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-permit-overrides.xml"));
-		// extend here with further test cases
+        List<File> evalFiles = new ArrayList<File>();
+        evalFiles.add(new File("src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-deny-overrides.xml"));
+        evalFiles.add(new File(
+                "src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-deny-overrides.xml"));
+        evalFiles.add(new File("src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-permit-overrides.xml"));
+        evalFiles.add(new File(
+                "src/test/resources/org/herasaf/xacml/core/simplePDP/policies/PS-ordered-permit-overrides.xml"));
+        // extend here with further test cases
 
-		Object[][] testcases = new Object[evalFiles.size() * 2][];
+        Object[][] testcases = new Object[evalFiles.size() * 2][];
 
-		// The index starts with 1 that the calculation at the end of the method
-		// works properly.
-		for (int i = 1; i < evalFiles.size() + 1; i++) {
-			SimplePDPFactory.useDefaultInitializers();
-			SimplePDPFactory.getSimplePDP();
-			Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
+        // The index starts with 1 that the calculation at the end of the method
+        // works properly.
+        for (int i = 1; i < evalFiles.size() + 1; i++) {
+            SimplePDPFactory.useDefaultInitializers();
+            SimplePDPFactory.getSimplePDP();
+            Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
 
-			SimplePDPFactory.useDefaultInitializers();
-			SimplePDPFactory.getSimplePDP();
-			Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
+            testcases[2 * i - 1 - 1] = new Object[] { false, eval1 };
+        }
 
-			testcases[2 * i - 1 - 1] = new Object[] { false, eval1 };
-			testcases[2 * i - 1] = new Object[] { true, eval2 };
-		}
+        // The index starts with 1 that the calculation at the end of the method
+        // works properly.
+        for (int i = 1; i < evalFiles.size() + 1; i++) {
+            // this for loop is separate from the one above because the next
+            // step is nonreversible
+            SimplePDPFactory.respectAbandonedEvaluatables();
+            SimplePDPFactory.useDefaultInitializers();
+            SimplePDPFactory.getSimplePDP();
+            Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
 
-		return testcases;
-	}
+            testcases[2 * i - 1] = new Object[] { true, eval2 };
+        }
 
-	/**
-	 * Tests if Obligations of abandoned {@link Evaluatable}s are only collected
-	 * if the corresponding flag in the {@link SimplePDPFactory} is set to true.
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            True if the abandoned {@link Evaluatable}s shall be respected,
-	 *            false otherwise.
-	 * @param eval
-	 *            The {@link Evaluatable} under test.
-	 * @throws Exception
-	 *             In case an error occurs.
-	 */
-	@Test(dataProvider = "test-cases")
-	public void testRespectAbandonedEvalutables(boolean respectAbandonedEvaluatables, Evaluatable eval)
-			throws Exception {
-		// These factory settings are needed to properly set the root combining
-		// algorithm.
-		if (respectAbandonedEvaluatables) {
-			SimplePDPFactory.respectAbandonedEvaluatables();
-		}
-		SimplePDPFactory.useDefaultInitializers();
-		PDP pdp = SimplePDPFactory.getSimplePDP();
-		RequestCtx request = RequestCtxFactory.unmarshal(new File(
-				"src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
-		repo = pdp.getPolicyRepository();
+        return testcases;
+    }
 
-		repo.deploy(eval);
+    /**
+     * Tests if Obligations of abandoned {@link Evaluatable}s are only collected
+     * if the corresponding flag in the {@link SimplePDPFactory} is set to true.
+     * 
+     * @param respectAbandonedEvaluatables
+     *            True if the abandoned {@link Evaluatable}s shall be respected,
+     *            false otherwise.
+     * @param eval
+     *            The {@link Evaluatable} under test.
+     * @throws Exception
+     *             In case an error occurs.
+     */
+    @Test(dataProvider = "test-cases")
+    public void testRespectAbandonedEvalutables(boolean respectAbandonedEvaluatables, Evaluatable eval)
+            throws Exception {
+        // These factory settings are needed to properly set the root combining
+        // algorithm.
+        if (respectAbandonedEvaluatables) {
+            SimplePDPFactory.respectAbandonedEvaluatables();
+        }
+        SimplePDPFactory.useDefaultInitializers();
+        PDP pdp = SimplePDPFactory.getSimplePDP();
+        RequestCtx request = RequestCtxFactory.unmarshal(new File(
+                "src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
+        repo = pdp.getPolicyRepository();
 
-		ResponseCtx response = pdp.evaluate(request);
+        repo.deploy(eval);
 
-		if (respectAbandonedEvaluatables) {
-			if (response.getResponse().getResults().get(0).getObligations() != null) {
-				assertEquals(response.getResponse().getResults().get(0).getObligations().getObligations().get(0)
-						.getObligationId(), "expectedObligation");
-			} else {
-				fail("No obligations.");
-			}
-		} else {
-			assertTrue(response.getResponse().getResults().get(0).getObligations() == null);
-		}
-	}
+        ResponseCtx response = pdp.evaluate(request);
 
-	/**
-	 * Removes the deployment from the {@link PDP}.
-	 */
-	@AfterMethod
-	public void cleanUp() throws Exception {
-		repo.undeploy(repo.getDeployment().get(0).getId());
-	}
+        if (respectAbandonedEvaluatables) {
+            if (response.getResponse().getResults().get(0).getObligations() != null) {
+                assertEquals(response.getResponse().getResults().get(0).getObligations().getObligations().get(0)
+                        .getObligationId(), "expectedObligation");
+            } else {
+                fail("No obligations.");
+            }
+        } else {
+            assertTrue(response.getResponse().getResults().get(0).getObligations() == null);
+        }
+    }
+
+    /**
+     * Removes the deployment from the {@link PDP}.
+     */
+    @AfterMethod
+    public void cleanUp() throws Exception {
+        repo.undeploy(repo.getDeployment().get(0).getId());
+    }
 }
