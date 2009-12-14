@@ -99,15 +99,17 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param subjects
-	 * @param request
-	 * @param reqInfo
+	 * Checks if the <code>&lt;Subjects&gt;</code> element matches the given request.
+	 * 
+	 * @param subjects The <code>&lt;Subjects&gt;</code> element to be matched.
+	 * @param request The requests containing the attributes to be matched against the <code>&lt;Subjects&gt;</code>.
+	 * @param reqInfo The {@link RequestInformation} containing additional information.
 	 * @return
-	 * @throws ProcessingException
-	 * @throws SyntaxException
-	 * @throws MissingAttributeException
+	 * @throws ProcessingException If an exception occurred while processing the matching functions.
+	 * @throws SyntaxException If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
 	 */
 	private boolean subjectsMatch(SubjectsType subjects, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
@@ -134,16 +136,18 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @param resources
-	 * @param request
-	 * @param reqInfo
-	 * @return
-	 * @throws ProcessingException
-	 * @throws SyntaxException
-	 * @throws MissingAttributeException
-	 */
+     * TODO REVIEW René.
+     * 
+     * Checks if the <code>&lt;Resources&gt;</code> element matches the given request.
+     * 
+     * @param resources The <code>&lt;Resources&gt;</code> element to be matched.
+     * @param request The requests containing the attributes to be matched against the <code>&lt;Resources&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+     */
 	private boolean resourcesMatch(ResourcesType resources, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (resources == null) {
@@ -170,16 +174,18 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @param actions
-	 * @param request
-	 * @param reqInfo
-	 * @return
-	 * @throws ProcessingException
-	 * @throws SyntaxException
-	 * @throws MissingAttributeException
-	 */
+     * TODO REVIEW René.
+     * 
+     * Checks if the <code>&lt;Actions&gt;</code> element matches the given request.
+     * 
+     * @param actions The <code>&lt;Actions&gt;</code> element to be matched.
+     * @param request The requests containing the attributes to be matched against the <code>&lt;Actions&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+     */
 	private boolean actionMatch(ActionsType actions, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (actions == null) {
@@ -205,16 +211,18 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @param environments
-	 * @param request
-	 * @param reqInfo
-	 * @return
-	 * @throws ProcessingException
-	 * @throws SyntaxException
-	 * @throws MissingAttributeException
-	 */
+     * TODO REVIEW René.
+     * 
+     * Checks if the <code>&lt;Environments&gt;</code> element matches the given request.
+     * 
+     * @param environments The <code>&lt;Environments&gt;</code> element to be matched.
+     * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+     */
 	private boolean environmentMatch(EnvironmentsType environments, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (environments == null) {
@@ -241,15 +249,15 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param matches
-	 * @param request
-	 * @param reqInfo
-	 * @return
-	 * @throws ProcessingException
-	 * @throws SyntaxException
-	 * @throws MissingAttributeException
+	 * @param matches The matching element (either <code>&lt;SubjectMatch&gt;</code>, <code>&lt;ResourceMatch&gt;</code>, <code>&lt;ActionMatch&gt;</code> or <code>&lt;EnvironmentMatch&gt;</code>) to be matched against the request.
+	 * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
 	 */
 	private boolean match(List<? extends Match> matches, RequestType request, RequestInformation reqInfo)
 			throws ProcessingException, SyntaxException, MissingAttributeException {
