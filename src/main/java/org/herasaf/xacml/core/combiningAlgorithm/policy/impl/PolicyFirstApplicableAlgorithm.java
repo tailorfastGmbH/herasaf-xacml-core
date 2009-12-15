@@ -62,13 +62,6 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 	private final Logger logger = LoggerFactory.getLogger(PolicyFirstApplicableAlgorithm.class);
 
 	/**
-	 * TODO JAVADOC.
-	 */
-	public PolicyFirstApplicableAlgorithm() {
-		setIsOrderedCombiningAlgorithm(true);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -158,5 +151,13 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 	@Override
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return true;
 	}
 }

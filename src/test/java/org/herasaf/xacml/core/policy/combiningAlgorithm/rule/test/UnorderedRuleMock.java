@@ -105,4 +105,12 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 	public String getCombiningAlgorithmId() {
 		return "mockCombiningAlgorithm";
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return false;
+	}
 }

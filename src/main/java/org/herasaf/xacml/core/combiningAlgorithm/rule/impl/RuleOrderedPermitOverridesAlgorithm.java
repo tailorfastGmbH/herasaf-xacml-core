@@ -70,13 +70,6 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 */
-	public RuleOrderedPermitOverridesAlgorithm() {
-		setIsOrderedCombiningAlgorithm(true);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -174,5 +167,13 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 		}
 		return DecisionType.NOT_APPLICABLE;
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return true;
 	}
 }

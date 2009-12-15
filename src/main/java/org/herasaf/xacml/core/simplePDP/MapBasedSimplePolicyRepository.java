@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
  * <li>index the {@link Evaluatable}s</li>
  * <li>resolve {@link Evaluatable}s from remote (only local) repositories</li>
  * </ul>
- * It is not recommended to use this repository in a productive environment.
+ * <b>It is not recommended to use this repository in a productive environment.</b>
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler

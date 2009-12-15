@@ -70,13 +70,6 @@ public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgor
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 */
-	public RuleOrderedDenyOverridesAlgorithm() {
-		setIsOrderedCombiningAlgorithm(true);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -167,5 +160,13 @@ public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgor
 		}
 		return DecisionType.NOT_APPLICABLE;
 
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return true;
 	}
 }

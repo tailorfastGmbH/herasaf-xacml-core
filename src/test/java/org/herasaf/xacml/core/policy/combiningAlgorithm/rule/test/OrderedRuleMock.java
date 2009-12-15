@@ -105,4 +105,12 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	public String getCombiningAlgorithmId() {
 		return "mockCombiningAlgorithm";
 	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return true;
+	}
 }

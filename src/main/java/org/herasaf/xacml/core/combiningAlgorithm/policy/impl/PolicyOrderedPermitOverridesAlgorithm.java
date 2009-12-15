@@ -63,13 +63,6 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 	private final Logger logger = LoggerFactory.getLogger(PolicyOrderedPermitOverridesAlgorithm.class);
 
 	/**
-	 * TODO JAVADOC.
-	 */
-	public PolicyOrderedPermitOverridesAlgorithm() {
-		setIsOrderedCombiningAlgorithm(true);
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -219,5 +212,13 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 	@Override
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return true;
 	}
 }
