@@ -68,6 +68,15 @@ public class SimplePDP implements PDP {
 		if (pip == null) {
 			logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
 		}
+
+		/*
+		 * This check is due to the issue HERASAFXACMLCORE-45.
+		 */
+		String javaVersion = System.getProperty("java.version");
+		if (javaVersion != null && (javaVersion.startsWith("1.6.0") || javaVersion.startsWith("1.7.0"))) {
+			logger.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
+					+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
+		}
 	}
 
 	/**
@@ -94,8 +103,7 @@ public class SimplePDP implements PDP {
 	/**
 	 * TODO REVIEW René.
 	 * 
-	 * {@inheritDoc} 
-	 * <br />
+	 * {@inheritDoc} <br />
 	 * <br />
 	 * <b>Logging:</b><br />
 	 * This section is relevant for all users of the {@link SimplePDP} in a
