@@ -22,24 +22,18 @@ import javax.security.auth.x500.X500Principal;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is
- * urn:oasis:names:tc:xacml:2.0:data-type:x500Name.<br>
+ * This data type represents a urn:oasis:names:tc:xacml:2.0:data-type:x500Name.
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Principal> {
-
-	/** Data type ID URI. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:x500Name";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -8741252348616072890L;
 
 	/** {@inheritDoc} */

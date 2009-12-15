@@ -20,14 +20,13 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Base class for {@link DataTypeAttribute} implementations.
- * 
- * @param <DataType>
- *            the type of data handled by this data type
+ * This abstract class may be used as basis for the implementation of a data type.
+ * It has some default implementations of common methods (like {@link #equals(Object)}).
+ * @param <T>
  */
-public abstract class AbstractDataTypeAttribute<DataType> implements DataTypeAttribute<DataType> {
+public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<T> {
 
 	/** Serial version UID. */
 	private static final long serialVersionUID = -7160783590484665708L;

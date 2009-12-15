@@ -18,8 +18,10 @@
 package org.herasaf.xacml.core.function;
 
 /**
+ * TODO REVIEW René.
+ * 
  * This abstract class may be used as basis for the implementation of a function.
- * It has some default implementations common methods (like {@link #equals(Object)}).
+ * It has some default implementations of common methods (like {@link #equals(Object)}).
  * 
  * @author Ylli Sylejmani
  */

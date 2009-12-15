@@ -21,22 +21,17 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Base64Binary;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this datatype is http://www.w3.org/2001/XMLSchema#base64Binary.<br>
+ * This data type represents a http://www.w3.org/2001/XMLSchema#base64Binary.
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#base64Binary"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#base64Binary</A> for
  * further information.
  * 
  * @author Florian Huonder
- * @version 1.0
  */
 public class Base64BinaryDataTypeAttribute extends AbstractDataTypeAttribute<Base64Binary> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = 229831857554104677L;
 
 	/** {@inheritDoc} */

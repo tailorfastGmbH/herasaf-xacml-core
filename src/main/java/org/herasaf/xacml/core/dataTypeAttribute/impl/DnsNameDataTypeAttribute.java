@@ -21,9 +21,9 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DnsName;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is urn:oasis:names:tc:xacml:2.0:data-type:dnsName.<br>
+ * This data type represents a urn:oasis:names:tc:xacml:2.0:data-type:dnsName.
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
@@ -33,11 +33,7 @@ import org.herasaf.xacml.core.types.DnsName;
  * @version 1.0
  */
 public class DnsNameDataTypeAttribute extends AbstractDataTypeAttribute<DnsName> {
-
-	/** Data type ID URI. */
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dnsName";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = 7841789516189513021L;
 
 	/** {@inheritDoc} */

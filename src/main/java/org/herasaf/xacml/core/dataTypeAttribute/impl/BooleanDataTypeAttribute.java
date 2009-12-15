@@ -20,22 +20,17 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is http://www.w3.org/2001/XMLSchema#boolean.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#boolean. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#boolean</A> for further
  * information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class BooleanDataTypeAttribute extends AbstractDataTypeAttribute<Boolean> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -4881189643269560315L;
 
 	/** {@inheritDoc} */

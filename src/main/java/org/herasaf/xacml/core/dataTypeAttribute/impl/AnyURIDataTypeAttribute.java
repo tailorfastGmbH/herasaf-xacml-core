@@ -23,28 +23,17 @@ import java.net.URISyntaxException;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * A DataType is used as an attribute in the JAXB Objects representing the XACML
- * elements. To get the correct Value of the AttributeElement, the convertTo
- * method should be used to convert the value to the Object. The Name of this
- * datatype is http://www.w3.org/2001/XMLSchema#anyURI. <br/>
- * 
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#anyURI"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#anyURI. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#anyURI"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#anyURI</A> for further
  * information.
- * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#anyURI";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -5182797446805115749L;
 
 	/** {@inheritDoc} */

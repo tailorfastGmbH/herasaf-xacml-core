@@ -21,22 +21,17 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is http://www.w3.org/2001/XMLSchema#date.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#date"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#date. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#date"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#date</A> for further
  * information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#date";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -5112328908612717257L;
 
 	/** {@inheritDoc} */

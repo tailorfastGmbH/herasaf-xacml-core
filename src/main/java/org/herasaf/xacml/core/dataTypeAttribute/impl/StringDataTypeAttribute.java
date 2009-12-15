@@ -18,22 +18,17 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is http://www.w3.org/2001/XMLSchema#string.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#string"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#string. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#string"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#string</A> for further
  * information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = 2908910266915235140L;
 
 	/** {@inheritDoc} */

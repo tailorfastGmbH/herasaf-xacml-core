@@ -20,23 +20,17 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this data type is http://www.w3.org/2001/XMLSchema#double.<br>
- * See: <a href="http://www.w3.org/TR/xmlschema-2/#double"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#double. See: <a
+ * href="http://www.w3.org/TR/xmlschema-2/#double"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A> for further
  * information. target="_blank">http://www.w3.org/TR/xmlschema-2/#double</a>
- * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class DoubleDataTypeAttribute extends AbstractDataTypeAttribute<Double> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#double";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = 8801120753602867144L;
 
 	/** {@inheritDoc} */

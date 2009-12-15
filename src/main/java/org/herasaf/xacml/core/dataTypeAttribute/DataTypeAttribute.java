@@ -20,22 +20,17 @@ package org.herasaf.xacml.core.dataTypeAttribute;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * A DataType is used as an attribute in the JAXB Objects representing the XACML
- * elements. To get the correct value of the attribute-element, the
- * {@link #convertTo(String)} method should be used to convert the value to the
- * object.<br>
- * The data types are defined in the <a href=
+ * A data type represents the type of an attribute value in JAXB. The XACML 2.0
+ * default data types are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix A.2, page 103.
  * 
- * 
  * @author Florian Huonder
- * @version 1.0
  * @param <E>
- *            The data type of the containing attribute.
+ *            The type of the data type.
  */
 public interface DataTypeAttribute<E> extends java.io.Serializable {
 
@@ -47,7 +42,7 @@ public interface DataTypeAttribute<E> extends java.io.Serializable {
 	String getDatatypeURI();
 
 	/**
-	 * Converts a jaxb-representation string into the data type E.
+	 * Converts a JAXB-representation string into the data type E.
 	 * 
 	 * @param jaxbRepresentation
 	 *            The string to convert

@@ -22,22 +22,17 @@ import java.math.BigInteger;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The Name of this datatype is http://www.w3.org/2001/XMLSchema#integer.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#integer"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#integer. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#integer"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for further
  * information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class IntegerDataTypeAttribute extends AbstractDataTypeAttribute<BigInteger> {
-
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#integer";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -6361086876173896623L;
 
 	/** {@inheritDoc} */
