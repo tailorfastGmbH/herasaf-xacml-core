@@ -99,7 +99,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, ContentHandler ch) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, ContentHandler ch) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -133,7 +133,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, File file) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, File file) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -167,7 +167,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, Result result) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, Result result) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -201,7 +201,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, OutputStream out) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, OutputStream out) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -235,7 +235,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, Writer writer) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, Writer writer) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -269,7 +269,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, Node node) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, Node node) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -304,7 +304,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, XMLStreamWriter xmlStreamWriter) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, XMLStreamWriter xmlStreamWriter) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
@@ -339,7 +339,7 @@ public final class PolicyConverter {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshall(Evaluatable evaluatable, XMLEventWriter xmlEventWriter) throws WritingException {
+	public static void marshal(Evaluatable evaluatable, XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
 			if (evaluatable instanceof PolicySetType) {
 				ContextAndPolicy.getMarshaller(CONTEXT).marshal(
