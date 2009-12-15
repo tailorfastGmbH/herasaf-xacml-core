@@ -31,10 +31,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Abstract class for all {@link CombiningAlgorithm}s. It contains the logic for
- * the targetMatch.
+ * This abstraction may be extended. It has implemented common logic that is
+ * valid for all combining algorithms within the PDP.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
@@ -43,28 +43,25 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
-	private boolean isOrderedCombiningAlgorithm;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @param isOrderedCombiningAlgorithm
-	 */
-	protected void setIsOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
-		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
-	}
-
-	/**
-	 * TODO JAVADOC.
+	 * Returns true if the implementation of the combining algorithm is ordered,
+	 * false otherwise.
 	 * 
-	 * @return
+	 * @return true if the implementation of the combining algorithm is ordered,
+	 *         false otherwise.
 	 */
-	public boolean isOrderedCombiningAlgorithm() {
-		return isOrderedCombiningAlgorithm;
-	}
+	public abstract boolean isOrderedCombiningAlgorithm();
 
 	/**
-	 * Sets the TargetMatcher.
+	 * 
+	 * Sets the {@link TargetMatcher}.
+	 * 
+	 * @param targetMatcher
+	 *            The {@link TargetMatcher} to set into this combining
+	 *            algorithm.
 	 */
 	public void setTargetMatcher(final TargetMatcher targetMatcher) {
 		this.targetMatcher = targetMatcher;
@@ -74,11 +71,11 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 * Matches the target of the request.
 	 * 
 	 * @param request
-	 *            the request that should be evaluated.
+	 *            The request that should be evaluated.
 	 * @param target
-	 *            the target of the Evaluatable or rule
+	 *            The target of the Evaluatable or rule
 	 * @param requestInfo
-	 *            the additional informations of this request evaluation
+	 *            The additional informations of this request evaluation
 	 *            process.
 	 * @return The decision of matching the target.
 	 */

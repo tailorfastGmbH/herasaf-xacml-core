@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.combiningAlgorithm;
 
 import org.herasaf.xacml.core.context.RequestInformation;
@@ -23,34 +22,42 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
+ * TODO REVIEW René.
  * 
- * TODO JAVADOC
+ * This interface describes a combining algorithm, rule and policy combining
+ * algorithms. The
+ * {@link #evaluate(RequestType, Evaluatable, RequestInformation)} method is the
+ * entry point for evaluating a request.
  * 
- * Interface for all Combining algorithms.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
- * 
  */
 public interface CombiningAlgorithm {
 
 	/**
-	 * Evaluates a request against a evaluatable.
+	 * TODO REVIEW René.
+	 * 
+	 * Evaluates a request against the given {@link Evaluatable} (that is a
+	 * policy or a policy set).
 	 * 
 	 * @param request
-	 *            the request to evaluate.
+	 *            The request to evaluate.
 	 * @param evals
-	 *            the evaluatable which contains the rules
-	 * @param requestedEvals
-	 *            the additional informations used in this evaluation process.
-	 * @return the decision.
+	 *            The {@link Evaluatable} to evaluate.
+	 * @param requestInfo
+	 *            The evaluation context.
+	 * @return The decision of the evaluation of the given request.
 	 */
-	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestedEvals);
-	
+	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo);
+
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @return
+	 * Returns true if the implementation of the combining algorithm is ordered,
+	 * false otherwise.
+	 * 
+	 * @return true if the implementation of the combining algorithm is ordered,
+	 *         false otherwise.
 	 */
 	boolean isOrderedCombiningAlgorithm();
 }
