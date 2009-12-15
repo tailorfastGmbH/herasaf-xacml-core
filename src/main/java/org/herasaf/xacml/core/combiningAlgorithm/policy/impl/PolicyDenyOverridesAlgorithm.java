@@ -34,28 +34,18 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * The implementation of the policy deny overrides algorithm with the
- * Deny-Overrides strategy.
- * </p>
- * 
- * <p>
- * The Implementation of the Deny-override implementation oriented at the sample
- * implementation in the XACML 2.0 specification.
- * </p>
- * 
- * <p>
+ * The implementation of the default XACML 2.0 <i>policy unordered deny
+ * overrides algorithm</i>.<br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 133-134, for further information.
- * </p>
  * 
  * @author Stefan Oberholzer
+ * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
@@ -92,7 +82,7 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 			Evaluatable eval = possiblePolicies.get(i);
 
 			if (eval == null) {
-				// It is an illegal state if the list contains any 
+				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
 				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
@@ -142,13 +132,9 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 			}
 			switch (decision) {
 			case DENY:
-				if (!isRespectAbandonedEvaluatables()) { // if abandoned //
-					// evaluatables
-					// should
-					// not be included then
-					// the first deny
-					// finishes the
-					// evaluation
+				// if abandoned evaluatables should not be included then the
+				// first deny ends the evaluation.
+				if (!isRespectAbandonedEvaluatables()) {
 					requestInfo.clearObligations();
 					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 					return DecisionType.DENY;

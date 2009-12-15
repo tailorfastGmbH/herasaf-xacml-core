@@ -27,16 +27,15 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
- * the included Evaluatables ordered.
+ * This class may be extended when implementing an ordered policy combining
+ * algorithm. It contains some common code all ordered combining algorithms must
+ * implement.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
- * 
  */
 public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
 
@@ -77,7 +76,7 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
 	 */
 	public abstract DecisionType evaluateEvaluatableList(final RequestType request,
 			final List<Evaluatable> possiblePolicies, final RequestInformation requestInfos);
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

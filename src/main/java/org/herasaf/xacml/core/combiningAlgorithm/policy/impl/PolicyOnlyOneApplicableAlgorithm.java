@@ -35,29 +35,18 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * The implementation of the policy combining algorithm with the
- * Only-One-Applicable strategy.
- * </p>
- * 
- * <p>
- * The Implementation of the Only-One-Applicable implementation oriented at the
- * sample implementation in the XACML 2.0 specification.
- * </p>
- * 
- * <p>
+ * The implementation of the default XACML 2.0 <i>policy only one applicable
+ * algorithm</i>.<br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 139, for further information.
- * </p>
  * 
- * @author Sacha Dolski
  * @author Stefan Oberholzer
+ * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
@@ -95,7 +84,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 			Evaluatable eval = possiblePolicies.get(i);
 
 			if (eval == null) {
-				// It is an illegal state if the list contains any 
+				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
 				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);

@@ -27,10 +27,11 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
- * the included Evaluatables unordered.
+ * This class may be extended when implementing an unordered policy combining
+ * algorithm. It contains some common code all ordered combining algorithms must
+ * implement.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder

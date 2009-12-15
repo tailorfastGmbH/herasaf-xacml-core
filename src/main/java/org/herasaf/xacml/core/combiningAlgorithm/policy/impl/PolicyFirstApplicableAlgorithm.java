@@ -34,27 +34,18 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * The implementation of the policy combining algorithm with the
- * First-Applicable strategy.
- * </p>
- * <p>
- * The Implementation of the First-Applicable implementation oriented at the
- * sample implementation in the XACML 2.0 specification.
- * </p>
- * 
- * <p>
+ * The implementation of the default XACML 2.0 <i>policy first applicable
+ * algorithm</i>.<br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> pages 137-139, for further information.
- * </p>
+ * 2006</a> page 137-139, for further information.
  * 
  * @author Stefan Oberholzer
+ * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
@@ -77,7 +68,7 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 		}
 
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
-		
+
 		/*
 		 * If the list of evaluatables contains no values, the for-loop is
 		 * skipped and a NOT_APPLICABLE is returned.
@@ -86,7 +77,7 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 			Evaluatable eval = possiblePolicies.get(i);
 
 			if (eval == null) {
-				// It is an illegal state if the list contains any 
+				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
 				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);

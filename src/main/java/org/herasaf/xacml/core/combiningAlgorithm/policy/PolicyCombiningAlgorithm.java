@@ -26,43 +26,53 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Interface for the PolicyCombiningAlgorithms.
+ * All policy combining algorithms must implement this interface. It provides
+ * the entry point (
+ * {@link #evaluateEvaluatableList(RequestType, List, RequestInformation)}) for
+ * starting to evaluate sub-evaluatables.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
- * @version 1.1
  */
-
 public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	/**
+	 * TODO REVIEW René.
 	 * 
-	 * TODO JAVADOC
-	 * Wirte the the list of possibleEvaluatebles must not contain null values.
+	 * This method is the entry point for a policy combining algorithm to start
+	 * evaluating its sub-evaluatables.
 	 * 
 	 * @param request
 	 *            The request that has to be evaluated.
 	 * @param possibleEvaluatables
-	 *            List of the evaluatables that have to be evaluated.
+	 *            List of the sub-evaluatables that have to be evaluated.
 	 * @param requestInfo
-	 *            Contains the information that has to be kept for this request.
-	 * @return The decision of the evaluation of the request.
+	 *            The context of this request evaluation.
+	 * @return The combined decision of the evaluation of the request.
 	 */
 	DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			RequestInformation requestInfo);
-	
+
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * @return
+	 * Returns true if abandoned evaluatables shall be respected, false
+	 * otherwise.
+	 * 
+	 * @return true if abandoned evaluatables shall be respected, false
+	 *         otherwise.
 	 */
 	boolean isRespectAbandonedEvaluatables();
-	
+
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Sets if this combining algorithm shall respect abandoned evaluatables.
 	 * 
 	 * @param respectAbandondEvaluatables
+	 *            True if abandoned evaluatables shall be respected, false
+	 *            otherwise.
 	 */
 	void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,44 +14,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.combiningAlgorithm.policy;
 
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
- * the included Evaluatables ordered.
+ * This class handles all commonality of the policy combining algorithms. This
+ * is if a combining algorithm shall respect abandoned evaluatables.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
- * 
  */
 public abstract class AbstractPolicyCombiningAlgorithm extends AbstractCombiningAlgorithm implements
 		PolicyCombiningAlgorithm {
-	/**
-	 * TODO JAVADOC.
-	 */
 	protected static final String MDC_EVALUATABLE_ID = "org:herasaf:xacml:evaluation:evaluatableid";
-	/**
-	 * If set to true abandoned evaluatables will be included (if possible) in
-	 * the evaluation.
-	 */
 	private boolean respectAbandonedEvaluatables;
 
 	/**
-	 * TODO JAVADOC.
-	 * 
-	 * @return
+	 * {@inheritDoc}
 	 */
 	public boolean isRespectAbandonedEvaluatables() {
 		return respectAbandonedEvaluatables;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	public void setRespectAbandondEvaluatables(final boolean respectAbandondEvaluatables) {
 		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
 	}
