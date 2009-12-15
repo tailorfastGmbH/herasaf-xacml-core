@@ -29,11 +29,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This initializer initializes all rule combining algorithms and puts them in
+ * the {@link URNToRuleCombiningAlgorithmConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractRuleCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory.getLogger(RuleCombiningAlgorithmsInitializer.class);
@@ -42,6 +44,15 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	private static final Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
 	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
 
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * This method sets the default {@link TargetMatcher} into the combining
+	 * algorithms.
+	 * 
+	 * @param instances
+	 *            The instances of type T.
+	 */
 	@Override
 	protected void furtherInitializations(List<AbstractRuleCombiningAlgorithm> instances) {
 		for (AbstractRuleCombiningAlgorithm algorithm : instances) {
@@ -85,7 +96,7 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * {@inheritDoc}
 	 */
 	@Override
 	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {

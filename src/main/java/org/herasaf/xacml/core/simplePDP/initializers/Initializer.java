@@ -17,21 +17,31 @@
 package org.herasaf.xacml.core.simplePDP.initializers;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * An initializer that shall be executed by the PDP factory must implement this
+ * interface.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public interface Initializer {
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Within this method the initialization must be done.
 	 */
 	void run();
 
 	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Here various custom properties may be set to the initializer.
+	 * 
 	 * @param id
+	 *            The id of the property.
 	 * @param value
+	 *            The value of the property.
 	 */
 	void setProperty(String id, Object value);
 }

@@ -25,28 +25,39 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This initializer initializes all data types and puts them in the
+ * {@link URNToDataTypeConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 @SuppressWarnings("unchecked")
 public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<?>> {
+	private static final String CLASS_TYPE_NAME = "org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute";
 	private static Logger logger = LoggerFactory.getLogger(DataTypesInitializer.class);
 	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.dataTypeAttribute.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/dataTypeAttribute/impl";
 	private static final Class<DataTypeAttribute<?>> TARGET_CLASS;
 
+	/**
+	 * This block initializes a Class object of the DataTypeAttributeType. This
+	 * is needed beause the DataTypeAttribute type is generic.
+	 */
 	static {
+		Class<?> clazz;
 		try {
-			TARGET_CLASS = (Class<DataTypeAttribute<?>>) Class
-					.forName("org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute");
+			// load the class from the classpath
+			clazz = Class.forName(CLASS_TYPE_NAME);
 		} catch (ClassNotFoundException e) {
-			logger.error("Unable to initialize DatatypeInitializer.", e);
-			throw new InitializationException(e);
+			// Must not occur. This would mean an illegal state.
+			InitializationException ie = new InitializationException("Unable to load the class " + CLASS_TYPE_NAME
+					+ ".");
+			logger.error(ie.getMessage(), e);
+			throw ie;
 		}
-		System.out.println();
+		TARGET_CLASS = (Class<DataTypeAttribute<?>>) clazz;
 	}
 
 	/**
@@ -89,5 +100,4 @@ public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<
 	protected Class<DataTypeAttribute<?>> getTargetClass() {
 		return TARGET_CLASS;
 	}
-
 }

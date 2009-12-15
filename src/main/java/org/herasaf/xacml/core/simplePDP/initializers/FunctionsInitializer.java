@@ -24,11 +24,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This initializer initializes all functions and puts them in the
+ * {@link URNToFunctionConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public class FunctionsInitializer extends AbstractInitializer<Function> {
 	private final Logger logger = LoggerFactory.getLogger(FunctionsInitializer.class);
@@ -36,7 +38,6 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
 	private static final Class<Function> TARGET_CLASS = Function.class;
 
-	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -77,5 +78,4 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 	protected Class<Function> getTargetClass() {
 		return TARGET_CLASS;
 	}
-
 }

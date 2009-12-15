@@ -42,52 +42,60 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class ContextAndPolicyInitializer implements Initializer {
-    private static final boolean FRAGMENT = true;
-    private static final boolean VALIDATE = false;
-    private static final boolean VALIDATE_WRITING = false;
-    private static final boolean FORMATTED_OUTPUT = true;
-    private static final String POLICY_PACKAGE = "org.herasaf.xacml.core.policy.impl";
-    private static final String CONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
-    private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyInitializer.class);
+	private static final boolean FRAGMENT = true;
+	private static final boolean VALIDATE = false;
+	private static final boolean VALIDATE_WRITING = false;
+	private static final boolean FORMATTED_OUTPUT = true;
+	private static final String POLICY_PACKAGE = "org.herasaf.xacml.core.policy.impl";
+	private static final String CONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
+	private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyInitializer.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    public void run() {
-        ContextAndPolicy.setRequestCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
-        ContextAndPolicy.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
-        ContextAndPolicy.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
+	/**
+	 * {@inheritDoc}
+	 */
+	public void run() {
+		ContextAndPolicy.setRequestCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
+		ContextAndPolicy.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
+		ContextAndPolicy.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
 
-        logger.info("JAXB settings for context (request, response) and policy are initialized.");
-    }
+		logger.info("JAXB settings for context (request, response) and policy are initialized.");
+	}
 
-    /**
-     * TODO JAVADOC.
-     */
-    private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath) {
-        ContextAndPolicyConfiguration config = new ContextAndPolicyConfiguration();
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new {@link ContextAndPolicyConfiguration} based on the given
+	 * contextPath.
+	 * 
+	 * @param contextPath
+	 *            The package path to where a new
+	 *            {@link ContextAndPolicyConfiguration} shall be created.
+	 * @return The created {@link ContextAndPolicyConfiguration}.
+	 */
+	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath) {
+		ContextAndPolicyConfiguration config = new ContextAndPolicyConfiguration();
 
-        try {
-            config.setContext(JAXBContext.newInstance(contextPath));
-        } catch (JAXBException e) {
-            logger.error("Unable to initialize JAXB. Verify Context-Path settings.", e);
-            throw new InitializationException(e);
-        }
-        config.setFormattedOutput(FORMATTED_OUTPUT);
-        config.setValidateWriting(VALIDATE_WRITING);
-        config.setValidateParsing(VALIDATE);
-        config.setFragment(FRAGMENT);
+		try {
+			config.setContext(JAXBContext.newInstance(contextPath));
+		} catch (JAXBException e) {
+			logger.error("Unable to initialize JAXB. Verify Context-Path settings.", e);
+			throw new InitializationException(e);
+		}
+		config.setFormattedOutput(FORMATTED_OUTPUT);
+		config.setValidateWriting(VALIDATE_WRITING);
+		config.setValidateParsing(VALIDATE);
+		config.setFragment(FRAGMENT);
 
-        return config;
-    }
+		return config;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public void setProperty(String id, Object value) {
-        UnsupportedOperationException e = new UnsupportedOperationException(
-                "This Initializer does not support any properties.");
-        logger.error(e.getMessage());
-        throw e;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public void setProperty(String id, Object value) {
+		UnsupportedOperationException e = new UnsupportedOperationException(
+				"This Initializer does not support any properties.");
+		logger.error(e.getMessage());
+		throw e;
+	}
 }

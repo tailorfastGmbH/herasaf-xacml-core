@@ -29,31 +29,49 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
+ * 
+ * This initializer initializes all policy combining algorithms and puts them in
+ * the {@link URNToPolicyCombiningAlgorithmConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * 
  */
 public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory.getLogger(PolicyCombiningAlgorithmsInitializer.class);
 	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
 	private static final Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
-	private final TargetMatcher targetMatcher = new TargetMatcherImpl(); // The
-																			// default
-																			// target
-																			// matcher.
+	// The default target matcher.
+	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
 	private static boolean respectAbandondEvaluatables;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes the initializers and sets the the flag if abandoned
+	 * evaluatables shall be respected in the combining algorihtms this
+	 * initializers creates.
+	 * 
+	 * @param respectAbandondEvaluatables
+	 *            True if abandoned evaluatables shall be respected, false
+	 *            otherwise.
 	 */
 	public PolicyCombiningAlgorithmsInitializer(boolean respectAbandondEvaluatables) {
 		logger.info("Respect abandoned Evaluatables: {}", respectAbandondEvaluatables);
 		PolicyCombiningAlgorithmsInitializer.respectAbandondEvaluatables = respectAbandondEvaluatables;
 	}
 
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * This method sets the flag in all combining algorithms if the abandoned
+	 * evaluatables shall be respected. Further it sets the default
+	 * {@link TargetMatcher} into the combining algorithms.
+	 * 
+	 * @param instances
+	 *            The instances of type T.
+	 */
 	@Override
 	protected void furtherInitializations(List<AbstractPolicyCombiningAlgorithm> instances) {
 		for (AbstractPolicyCombiningAlgorithm algorithm : instances) {
@@ -98,7 +116,7 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * {@inheritDoc}.
 	 */
 	@Override
 	protected Class<AbstractPolicyCombiningAlgorithm> getTargetClass() {
