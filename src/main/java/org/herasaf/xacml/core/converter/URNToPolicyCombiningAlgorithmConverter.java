@@ -49,7 +49,7 @@ public class URNToPolicyCombiningAlgorithmConverter extends XmlAdapter<String, P
 	 * This method sets the {@link Map} containing the mapping between policy
 	 * combining algorithms and their ID's into the converter.
 	 * 
-	 * @param functions
+	 * @param algorithms
 	 *            The {@link Map} containing the mapping between ID's and policy
 	 *            combining algorithms.
 	 */

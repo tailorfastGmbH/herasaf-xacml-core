@@ -31,12 +31,7 @@ import org.slf4j.LoggerFactory;
  * This static class is needed for configuring the JAXB {@link Marshaller}s and
  * {@link Unmarshaller}s. <br />
  * <br />
- * The configuration then is saved into a {@ContextAndPolicyConfiguration
- * 
- * 
- * 
- * 
- * } object.
+ * The configuration then is saved into a {@link ContextAndPolicyConfiguration} object.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder

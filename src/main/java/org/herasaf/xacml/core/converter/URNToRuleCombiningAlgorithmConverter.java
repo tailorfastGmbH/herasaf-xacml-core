@@ -49,7 +49,7 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 	 * This method sets the {@link Map} containing the mapping between rule
 	 * combining algorithms and their ID's into the converter.
 	 * 
-	 * @param functions
+	 * @param algorithms
 	 *            The {@link Map} containing the mapping between ID's and rule
 	 *            combining algorithms.
 	 */

@@ -439,9 +439,8 @@ public final class ResponseCtxFactory {
 	 *            The relating {@link RequestType}.
 	 * @param decision
 	 *            The {@link DecisionType} of the evaluation.
-	 * @param requestInfo
-	 *            The {@link RequestInformation} containing the information
-	 *            about status and missing attributes.
+	 * @param code
+	 *            The {@link StatusCode} of the decision.
 	 * @return The created {@link ResponseCtx}.
 	 */
 	public static ResponseCtx create(RequestType req, DecisionType decision, StatusCode code) {
