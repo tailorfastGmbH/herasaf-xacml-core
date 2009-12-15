@@ -22,24 +22,23 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.SubjectType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * A SubjectTransformable contains the information to return a
- * <code>Collection</code> of <code>SubjectType</code> objects.
+ * Transforms subject attributes from any form into a collection of
+ * {@link SubjectType}s. This interface shall be implemented by a PEP-component
+ * to create XACML conform request without creating an XML.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public interface SubjectTransformable {
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * Transforms the information contained in the Transformable to
-	 * <code>Collection</code> of <code>SubjectType</code> objects.
+	 * Transforms the subject attributes in the transformable into
+	 * {@link SubjectType} and returns them in a collection.
 	 * 
-	 * @return <code>Collection</code> of <code>SubjectType</code> objects
-	 *         containing the Information of the Transformable
+	 * @return The collection of {@link SubjectType}s.
 	 */
 	Collection<? extends SubjectType> transform();
 }

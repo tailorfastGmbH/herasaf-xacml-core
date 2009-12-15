@@ -20,24 +20,23 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.ActionType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * A ActionTransformable contains the information to return a
- * <code>ActionType</code>.
+ * Transforms action attributes from any form into an {@link ActionType}. This
+ * interface shall be implemented by a PEP-component to create XACML conform
+ * request without creating an XML.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
- * 
  */
 public interface ActionTransformable {
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * Transforms the information contained in the Transformable to an
-	 * <code>ActionType</code>
+	 * Transforms the action attribute in the transformable into a
+	 * {@link ActionType}.
 	 * 
-	 * @return ActionType containing the Information of the Transformable
+	 * @return The {@link ActionType}.
 	 */
 	ActionType transform();
 }

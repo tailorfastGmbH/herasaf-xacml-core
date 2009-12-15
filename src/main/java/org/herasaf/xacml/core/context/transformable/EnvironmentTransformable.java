@@ -20,24 +20,23 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.EnvironmentType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * A EnvironmentTransformable contains the information to return a
- * <code>EnvironmentType</code>.
+ * Transforms environment attributes from any form into an {@link EnvironmentType}.
+ * This interface shall be implemented by a PEP-component to create XACML
+ * conform request without creating an XML.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
- * 
  */
 public interface EnvironmentTransformable {
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * Transforms the information contained in the Transformable to an
-	 * <code>EnvironmentType</code>
+	 * Transforms the environment attribute in the transformable into a
+	 * {@link EnvironmentType}.
 	 * 
-	 * @return EnvironmentType containing the Information of the Transformable
+	 * @return The {@link EnvironmentType}.
 	 */
 	EnvironmentType transform();
 }

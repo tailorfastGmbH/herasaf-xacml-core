@@ -22,24 +22,23 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.ResourceType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * A ResourceTransformable contains the information to return a
- * <code>Collection</code> of <code>ResourceType</code> objects.
+ * Transforms resource attributes from any form into a collection of
+ * {@link ResourceType}s. This interface shall be implemented by a PEP-component
+ * to create XACML conform request without creating an XML.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public interface ResourceTransformable {
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
 	 * 
-	 * Transforms the information contained in the Transformable to
-	 * <code>Collection</code> of <code>ResourceType</code> objects.
+	 * Transforms the resource attributes in the transformable into
+	 * {@link ResourceType} and returns them in a collection.
 	 * 
-	 * @return <code>Collection</code> of <code>ResourceType</code> objects
-	 *         containing the Information of the Transformable
+	 * @return The collection of {@link ResourceType}s.
 	 */
 	Collection<? extends ResourceType> transform();
 }
