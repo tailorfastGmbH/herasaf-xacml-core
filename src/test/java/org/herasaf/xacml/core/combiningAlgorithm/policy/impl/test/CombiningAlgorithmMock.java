@@ -85,14 +85,14 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * Returns false because it is an unordered combining algorithm.
 	 */
 	public boolean isOrderedCombiningAlgorithm() {
 		return false;
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * nop because its ordered.
 	 */
 	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
 		// nop because its ordered.

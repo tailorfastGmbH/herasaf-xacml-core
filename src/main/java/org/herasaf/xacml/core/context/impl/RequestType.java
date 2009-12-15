@@ -94,8 +94,24 @@ public class RequestType implements Serializable {
 	private EnvironmentType environment;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Sets the following attributes, if not already contained, into the
+	 * request:
+	 * <ul>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-dateTime</li>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-date</li>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-time</li>
+	 * </ul>
+	 * This behavior is required by the XACML 2.0 specification. See: <a href=
+	 * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
+	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29
+	 * June 2006</a> appendix B.8. Environment attributes, for further
+	 * information.
+	 * 
 	 * @param marshaller
+	 *            The {@link Marshaller} with which this request will be
+	 *            marshalled.
 	 */
 	public void beforeMarshal(Marshaller marshaller) {
 		if (!envContainsAttributeId(CURRENT_TIME_DATATYPEID)) {
@@ -110,8 +126,11 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * @return
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new {@link AttributeType} containing the current time.
+	 * 
+	 * @return The {@link AttributeType} containing the current time.
 	 */
 	private AttributeType createCurrentTime() {
 		AttributeType currentTimeAttr = new AttributeType();
@@ -123,8 +142,11 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * @return
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new {@link AttributeType} containing the current date.
+	 * 
+	 * @return The {@link AttributeType} containing the current date.
 	 */
 	private AttributeType createCurrentDate() {
 		AttributeType currentDateAttr = new AttributeType();
@@ -136,8 +158,11 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * @return
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new {@link AttributeType} containing the current dateTime.
+	 * 
+	 * @return The {@link AttributeType} containing the current dateTime.
 	 */
 	private AttributeType createCurrentDateTime() {
 		AttributeType currentDateTimeAttr = new AttributeType();
@@ -149,9 +174,14 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * FIXME Timezone issue (right library usage).
-	 * TODO JAVADOC.
-	 * @return
+	 * FIXME Timezone issue.
+	 * 
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new {@link AttributeValueType} containing the current dateTime
+	 * with the given pattern.
+	 * 
+	 * @return The current dateTime.
 	 */
 	private AttributeValueType createDateTime(String pattern) {
 		Calendar cal = Calendar.getInstance();
@@ -165,8 +195,14 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO JAVADOC.
-	 * @return
+	 * TODO REVIEW René.
+	 * 
+	 * Checks if the environment already contains an element with ID id. It
+	 * returns true if such an element is already in the environment, false
+	 * otherwise.
+	 * 
+	 * @return true if an element with ID id is already in the environment,
+	 *         false otherwise.
 	 */
 	private boolean envContainsAttributeId(String id) {
 		for (AttributeType attr : environment.getAttributes()) {
@@ -278,5 +314,4 @@ public class RequestType implements Serializable {
 	public void setEnvironment(EnvironmentType value) {
 		this.environment = value;
 	}
-
 }

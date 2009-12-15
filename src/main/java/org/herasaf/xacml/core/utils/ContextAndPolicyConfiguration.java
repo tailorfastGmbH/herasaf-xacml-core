@@ -39,7 +39,8 @@ import org.xml.sax.SAXException;
 /**
  * TODO REVIEW René.
  * 
- * This class contains the configuration for the JAXB {@link Marshaller} or {@link Unmarshaller}.
+ * This class contains the configuration for the JAXB {@link Marshaller} or
+ * {@link Unmarshaller}.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
@@ -183,11 +184,17 @@ public class ContextAndPolicyConfiguration {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new schema for validating. IF the schema given by the source
+	 * cannot be loaded <code>null</code> is returned and validating is turned
+	 * off.
 	 * 
 	 * @param sf
+	 *            The factory to create the schema.
 	 * @param source
-	 * @return
+	 *            The source where the schema is.
+	 * @return The created schema or <code>null</code> if it fails.
 	 */
 	private Schema createSchema(SchemaFactory sf, Source source) {
 		try {

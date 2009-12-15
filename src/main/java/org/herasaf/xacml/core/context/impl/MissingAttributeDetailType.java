@@ -107,9 +107,8 @@ public class MissingAttributeDetailType implements Serializable {
 	 * Objects of the following type(s) are allowed in the list
 	 * {@link AttributeValueType }
 	 * 
-	 * @return
+	 * @return The list of {@link AttributeValueType}s
 	 * 
-	 * TODO JAVADOC.
 	 */
 	public List<AttributeValueType> getAttributeValues() {
 		if (attributeValues == null) {

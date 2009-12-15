@@ -73,7 +73,7 @@ import org.herasaf.xacml.core.policy.ExpressionProcessingException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
-@XmlSeeAlso({ AttributeAssignmentType.class })
+@XmlSeeAlso( { AttributeAssignmentType.class })
 public class AttributeValueType extends ExpressionType {
 
 	private static final long serialVersionUID = 632768732L;
@@ -88,7 +88,10 @@ public class AttributeValueType extends ExpressionType {
 	private Map<QName, String> otherAttributes;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new attribute value type and initializes a {@link Map} that can
+	 * contain any attribute value.
 	 */
 	public AttributeValueType() {
 		otherAttributes = new HashMap<QName, String>();
@@ -112,8 +115,8 @@ public class AttributeValueType extends ExpressionType {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list org.w3c.dom.Element,
-	 * {@link String } {@link Object }
+	 * Objects of the following type(s) are allowed in the list
+	 * org.w3c.dom.Element, {@link String } {@link Object }
 	 * 
 	 * 
 	 */

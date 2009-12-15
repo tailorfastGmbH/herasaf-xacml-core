@@ -54,8 +54,7 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 *            The {@link MissingAttributeDetailType} that this combining
 	 *            algorithm shall return.
 	 */
-	public PolicyCombiningAlgMock(DecisionType decision, StatusCode statusCode,
-			MissingAttributeDetailType missingAttr) {
+	public PolicyCombiningAlgMock(DecisionType decision, StatusCode statusCode, MissingAttributeDetailType missingAttr) {
 		this.decision = decision;
 		this.statusCode = statusCode;
 		this.missingAttr = missingAttr;
@@ -76,8 +75,8 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * @param returnTargetFailure
 	 *            True if the target evaluation shall fail, false otherwise.
 	 */
-	public PolicyCombiningAlgMock(DecisionType decision, StatusCode statusCode,
-			MissingAttributeDetailType missingAttr, boolean returnTargetFailure) {
+	public PolicyCombiningAlgMock(DecisionType decision, StatusCode statusCode, MissingAttributeDetailType missingAttr,
+			boolean returnTargetFailure) {
 		this(decision, statusCode, missingAttr);
 		this.returnTargetFailure = returnTargetFailure;
 	}
@@ -89,8 +88,7 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals,
-			RequestInformation requestInfo) {
+	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
 			missingAttributes.add(missingAttr);
@@ -108,8 +106,7 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
-	public DecisionType evaluateEvaluatableList(RequestType request,
-			List<Evaluatable> possibleEvaluatables,
+	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			RequestInformation requestInfo) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
@@ -120,36 +117,41 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 		return decision;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#isRespectAbandonedEvaluatables()
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm
+	 * #isRespectAbandonedEvaluatables()
 	 */
 	public boolean isRespectAbandonedEvaluatables() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
-	/* (non-Javadoc)
-	 * @see org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#setRespectAbandondEvaluatables(boolean)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm
+	 * #setRespectAbandondEvaluatables(boolean)
 	 */
 	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * This mock shall be an unordered combining algorithm.
 	 */
 	public boolean isOrderedCombiningAlgorithm() {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * nothing to set.
 	 */
 	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
 		// nop. because its unordered.
-		
+
 	}
 
 }

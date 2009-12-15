@@ -99,7 +99,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	private DefaultsType policySetDefaults;
 	@XmlElement(name = "Target", required = true)
 	private TargetType target;
-	@XmlElementRefs({
+	@XmlElementRefs( {
 			@XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetCombinerParameters", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
@@ -122,18 +122,24 @@ public class PolicySetType implements Evaluatable, Serializable {
 	@XmlJavaTypeAdapter(URNToPolicyCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
 	private PolicyCombiningAlgorithm policyCombiningAlg;
+
+	// True if the PolicySet or a SubPolicy (SubPolicySet) contains any
+	// Obligations.
 	@XmlTransient
-	private boolean hasObligations; // True if the PolicySet or a SubPolicy
-										// (SubPolicySet) contains any
-										// Obligations.
+	private boolean hasObligations;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes and sets (by default) to true that this policy set (or sub
+	 * policies or policy sets, respectively) contains obligations. This flag is
+	 * intended to be set by an other component (e.g. a pre processor) to
+	 * another value.
 	 */
 	public PolicySetType() {
-		setHasObligations(true); // Must by default be true. It cannot be
-									// assumed that a preprocessor correctly
-									// sets this field.
+		// Must by default be true. It cannot be assumed that a preprocessor
+		// correctly sets this field.
+		setHasObligations(true);
 	}
 
 	/**

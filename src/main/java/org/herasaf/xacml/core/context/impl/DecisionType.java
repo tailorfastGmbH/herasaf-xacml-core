@@ -68,27 +68,34 @@ public enum DecisionType {
 	private final String value;
 
 	/**
-	 * TODO JAVADOC. 
+	 * Sole constructor. Programmers cannot invoke this constructor. It is for
+	 * use by code emitted by the compiler in response to enum type
+	 * declarations.
+	 * 
 	 * @param v
+	 *            The value to set.
 	 */
 	DecisionType(String v) {
 		value = v;
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * Returns the current value.
 	 * 
-	 * @return
+	 * @return The current {@link DecisionType}.
 	 */
 	public String value() {
 		return value;
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the enum-type from the given {@link String} value.
 	 * 
 	 * @param v
-	 * @return
+	 *            The {@link String} value.
+	 * @return The {@link DecisionType} matching the {@link String} value.
 	 */
 	public static DecisionType fromValue(String v) {
 		for (int i = 0; i < DecisionType.values().length; i++) {

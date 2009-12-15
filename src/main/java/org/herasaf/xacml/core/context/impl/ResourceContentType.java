@@ -77,7 +77,9 @@ public class ResourceContentType implements Serializable {
 	private Map<QName, String> otherAttributes;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes a new {@link Map} that may containing any element.
 	 */
 	public ResourceContentType() {
 		otherAttributes = new HashMap<QName, String>();
@@ -101,8 +103,8 @@ public class ResourceContentType implements Serializable {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list org.w3c.dom.Element,
-	 * {@link String } {@link Object }
+	 * Objects of the following type(s) are allowed in the list
+	 * org.w3c.dom.Element, {@link String } {@link Object }
 	 * 
 	 * 
 	 */

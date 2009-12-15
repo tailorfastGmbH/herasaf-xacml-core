@@ -72,14 +72,24 @@ public class ObligationType implements Serializable {
 	private EffectType fulfillOn;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes an empty obligation. effect and id must be set with the
+	 * setters.
 	 */
 	public ObligationType() {
 
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes an obligation with the givven effect and id.
+	 * 
+	 * @param id
+	 *            The id of the obligation.
+	 * @param effect
+	 *            The effect of the obligation.
 	 */
 	public ObligationType(String id, EffectType effect) {
 		this.obligationId = id;
@@ -164,6 +174,8 @@ public class ObligationType implements Serializable {
 	 */
 	@Override
 	public String toString() {
+		// FIXME Replace such code with Apache Commons Lang ToStringBuilder (see
+		// HERASAFXACMLCORE-82)
 		StringBuilder val = new StringBuilder("ObligationType[attributeAssignment=");
 		val.append(attributeAssignments);
 		val.append(", obligationId=");

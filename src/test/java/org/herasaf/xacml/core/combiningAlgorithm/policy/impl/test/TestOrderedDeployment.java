@@ -33,17 +33,24 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- * TODO JAVADOC!!
+ * This tests test the ordered deployment of policies.
  * 
  * @author Florian Huonder
  */
 public class TestOrderedDeployment {
 
+	/**
+	 * Initializes JAXB stuff.
+	 */
 	@BeforeTest
 	public void init() {
 		SimplePDPFactory.useDefaultInitializers();
 	}
 
+	/**
+	 * 
+	 * This method tests if the ordered deployment works as expected.
+	 */
 	@Test
 	public void testOrderedDeployment() {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm = new PolicyOrderedDenyOverridesAlgorithm();
@@ -74,6 +81,10 @@ public class TestOrderedDeployment {
 		repo.undeploy(policy3.getId());
 	}
 
+	/**
+	 * This method tests if ordered deployment fails in case of an unordered
+	 * combining algorithm.
+	 */
 	@Test(expectedExceptions = { PolicyRepositoryException.class })
 	public void testOrderedDeploymentFail() {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm = new PolicyDenyOverridesAlgorithm();

@@ -20,21 +20,31 @@ package org.herasaf.xacml.core.policy.impl;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
 /**
- * TODO JAVADOC.
+ * TODO REVIEW René.
+ * 
+ * This class represents the ID of an evaluatable.
+ * 
+ * @author Florian Huonder
  */
 public class EvaluatableIDImpl implements EvaluatableID {
 	private String id;
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Creates a new {@link EvaluatableID} with the given id.
+	 * 
 	 * @param id
+	 *            The id of this {@link EvaluatableID}.
 	 */
 	public EvaluatableIDImpl(String id) {
 		this.id = id;
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the id of this {@link EvaluatableID} as {@link String}.
 	 */
 	public String getId() {
 		return id;

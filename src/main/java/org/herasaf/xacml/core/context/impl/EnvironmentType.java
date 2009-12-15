@@ -89,9 +89,7 @@ public class EnvironmentType implements Serializable {
 	 * Objects of the following type(s) are allowed in the list
 	 * {@link AttributeType }
 	 * 
-	 * @return
-	 * 
-	 * TODO JAVADOC
+	 * @return The list of {@link AttributeType}s.
 	 */
 	public List<AttributeType> getAttributes() {
 		if (attributes == null) {

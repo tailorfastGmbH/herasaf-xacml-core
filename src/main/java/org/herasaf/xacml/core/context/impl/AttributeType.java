@@ -107,9 +107,7 @@ public class AttributeType implements Serializable {
 	 * Objects of the following type(s) are allowed in the list
 	 * {@link AttributeValueType }
 	 * 
-	 * @return
-	 * 
-	 * TODO JAVADOC.
+	 * @return The list of {@link AttributeValueType}s.
 	 */
 	public List<AttributeValueType> getAttributeValues() {
 		if (attributeValues == null) {
