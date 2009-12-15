@@ -196,12 +196,4 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return false;
-	}
 }

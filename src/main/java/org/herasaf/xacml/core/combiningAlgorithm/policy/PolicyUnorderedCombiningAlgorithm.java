@@ -75,5 +75,13 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCo
 	 */
 	public abstract DecisionType evaluateEvaluatableList(final RequestType request,
 			final List<Evaluatable> possiblePolicies, final RequestInformation requestInfos);
-
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return false;
+	}
 }

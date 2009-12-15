@@ -213,12 +213,4 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return true;
-	}
 }

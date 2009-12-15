@@ -71,15 +71,19 @@ public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombinin
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate
-	 * (org.herasaf.core.context.impl.RequestType, java.util.List)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public abstract DecisionType evaluateRuleList(final RequestType request, final List<RuleType> possiblePolicies,
 			final RequestInformation requestInfos);
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean isOrderedCombiningAlgorithm() {
+		return true;
+	}
 
 }

@@ -225,12 +225,4 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return false;
-	}
 }

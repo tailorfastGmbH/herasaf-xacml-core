@@ -168,12 +168,4 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 		return DecisionType.NOT_APPLICABLE;
 
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return true;
-	}
 }

@@ -118,12 +118,4 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 		return DecisionType.NOT_APPLICABLE;
 
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return false;
-	}
 }

@@ -178,12 +178,4 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 		return DecisionType.NOT_APPLICABLE;
 
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return false;
-	}
 }
