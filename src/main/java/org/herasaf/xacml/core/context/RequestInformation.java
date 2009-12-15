@@ -30,8 +30,18 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.policy.impl.Variable;
 
 /**
- * TODO JAVADOC extend documentation a lot. This is one of the central classes
- * of the implementation.
+ * TODO REVIEW René.
+ * 
+ * This class is the container containing the context of a request evaluation.
+ * It contains
+ * <ul>
+ * <li>The current status code of the evaluation</li>
+ * <li>The reference to the PIP</li>
+ * <li>The missing attributes if there are any</li>
+ * <li>The information if the last target matched</li>
+ * <li>The result of the calculation of a variable definition</li>
+ * <li>The Obligations if there were any collected.</li>
+ * </ul>
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -43,7 +53,6 @@ public class RequestInformation {
 	private boolean targetMatched;
 	private Map<String, Variable> variableDefinitions;
 	private ObligationsType obligations;
-
 	private static ObjectFactory objectFactory;
 
 	/**
@@ -54,11 +63,13 @@ public class RequestInformation {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * TODO REVIEW René.
+	 * 
+	 * Initializes with the given {@link PIP}. This {@link PIP} then is used
+	 * during evaluation to resolve missing attributes.
 	 * 
 	 * @param pip
-	 *            The Attribute finder to place into the
-	 *            {@link RequestInformation}.
+	 *            The {@link PIP} to use during evaluation.
 	 */
 	public RequestInformation(PIP pip) {
 		this.pip = pip;
@@ -84,13 +95,12 @@ public class RequestInformation {
 	 * <ol>
 	 * <li>{@link StatusCode#SYNTAX_ERROR}</li>
 	 * <li>{@link StatusCode#MISSING_ATTRIBUTE}
-	 * <li>
 	 * <li>{@link StatusCode#PROCESSING_ERROR}</li>
 	 * <li>{@link StatusCode#OK}</li>
 	 * </ol>
 	 * 
 	 * @param code
-	 *            The prospective new {@link StatusCode}.
+	 *            The potential new {@link StatusCode}.
 	 */
 	public void updateStatusCode(StatusCode code) {
 
@@ -241,7 +251,9 @@ public class RequestInformation {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
+	 * 
+	 * This method clears all obligations that were collected so far.
 	 */
 	public void clearObligations() {
 		this.obligations.getObligations().clear();
@@ -262,6 +274,8 @@ public class RequestInformation {
 	 */
 	@Override
 	public String toString() {
+		// FIXME Replace such code with Apache Commons Lang ToStringBuilder (see
+		// HERASAFXACMLCORE-82)
 		StringBuilder stringValue = new StringBuilder("RequestInformation[");
 		stringValue.append("pip=");
 		stringValue.append(pip);

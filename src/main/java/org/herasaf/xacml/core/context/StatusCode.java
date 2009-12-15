@@ -18,7 +18,7 @@
 package org.herasaf.xacml.core.context;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
  * The {@link StatusCode} contains the status of the evaluation. See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -26,10 +26,8 @@ package org.herasaf.xacml.core.context;
  * 2006</a> appendix B.9 page 131, for further information.
  * 
  * @author Florian Huonder
- * @version 1.0
  */
 public enum StatusCode {
-
 	/**
 	 * This status indicates success.
 	 */
@@ -52,7 +50,9 @@ public enum StatusCode {
 	private String value;
 
 	/**
-	 * Initializes this enum.
+	 * Sole constructor. Programmers cannot invoke this constructor. It is for
+	 * use by code emitted by the compiler in response to enum type
+	 * declarations.
 	 * 
 	 * @param value
 	 *            The value to set.

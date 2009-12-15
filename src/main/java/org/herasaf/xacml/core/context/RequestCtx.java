@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Result;
@@ -37,26 +38,24 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Encapsulates a {@link RequestType}. Provides various marshalling methods for
- * the {@link RequestType}. Because the marshaller from JAXB <b>is
- * not</b> thread safe it must be newly created in each marshal-method. This
+ * This request context represents a XACML request.
+ * <br />
+ * This request context provides various marshalling methods. Because the {@link Marshaller} of JAXB <b>is
+ * not</b> thread safe it must be created in each marshal-method. This
  * class fully relies on the underlying JAXB implementation.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class RequestCtx {
+	private final Logger LOGGER = LoggerFactory.getLogger(RequestCtx.class);
 	private static final ContextAndPolicy.JAXBProfile REQUESTCTX = ContextAndPolicy.JAXBProfile.REQUEST_CTX;
-	private RequestType request;
 	private static ObjectFactory objectFactory;
-	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
+	private RequestType request;
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Initializes the Object factory.
 	 */
 	static {
@@ -64,8 +63,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Creates a new {@link RequestCtx} from the given {@link RequestType}.
 	 * 
 	 * @param request
@@ -77,8 +74,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO JAVADOC
-	 * 
 	 * Returns the containing {@link RequestType}.
 	 * 
 	 * @return The {@link RequestType} contained in this object.
@@ -88,170 +83,174 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Marshals the contained Request into SAX2 events.
+	 * Marshals this {@link RequestCtx} to the given content handler.
 	 * 
 	 * @param ch
-	 *            XML will be sent to this handler as SAX2 events.
+	 *            The {@link ContentHandler} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(ContentHandler ch) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), ch);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the content handler.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Marshals the contained Request to the file.
+	 * Marshals this {@link RequestCtx} to the given file.
 	 * 
 	 * @param file
-	 *            XML written into this file.
+	 *            The {@link File} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(File file) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), file);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the file.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
+	 * 
+	 * Marshals this {@link RequestCtx} to the given result.
 	 * 
 	 * <p>
-	 * Marshal the contained Request into the specified
-	 * javax.xml.transform.Result.
-	 * </p>
-	 * <p>
+	 * <b>Note:</b><br />
 	 * At least DOMResult, SAXResult and StreamResult are supported. If more
 	 * results are supported, depends on the JAXBImplementation included in this
 	 * Module.
 	 * </p>
 	 * 
 	 * @param result
-	 *            XML will be sent to this Result .
+	 *            The {@link Result} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(Result result) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), result);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the result.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * <p>
-	 * Marshal the contained Request into an output stream.
-	 * </p>
+	 * Marshals this {@link RequestCtx} to the given output stream.
 	 * 
 	 * @param out
-	 *            XML will be added to this stream .
+	 *            The {@link OutputStream} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(OutputStream out) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), out);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the output stream.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * <p>
-	 * Marshal the contained Request into a Writer.
-	 * </p>
+	 * Marshals this {@link RequestCtx} to the given writer.
 	 * 
 	 * @param writer
-	 *            XML will be sent to this writer.
+	 *            The {@link Writer} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(Writer writer) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), writer);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the writer.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Marshals the contained Request into a DOM tree.
+	 * Marshals this {@link RequestCtx} to the given node.
 	 * 
 	 * @param node
-	 *            DOM nodes will be added as children of this node. This
-	 *            parameter must be a Node that accepts children (Document,
-	 *            DocumentFragment, or Element)
-	 * 
+	 *            The {@link Node} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(Node node) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), node);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the node.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Marshal the contained Request into a XMLStreamWriter.
+	 * Marshals this {@link RequestCtx} to the given xml stream writer.
 	 * 
 	 * @param xmlStreamWriter
-	 *            XML will be sent to this writer.
-	 * 
+	 *            The {@link XMLStreamWriter} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(XMLStreamWriter xmlStreamWriter) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlStreamWriter);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the xml stream writer.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Marshal the contained Request into a XMLEventWriter.
+	 * Marshals this {@link RequestCtx} to the given xml event writer.
 	 * 
 	 * @param xmlEventWriter
-	 *            XML will be sent to this writer.
-	 * 
+	 *            The {@link XMLEventWriter} to use.
 	 * @throws WritingException
-	 *             - If any unexpected problem occurs during the marshalling.
+	 *             In case an error occurs.
 	 */
 	public void marshal(XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlEventWriter);
 		} catch (JAXBException e) {
-			throw new WritingException(e);
+			WritingException we = new WritingException("Unable to write to the xml event writer.", e);
+			LOGGER.error(we.getMessage());
+			throw we;
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
@@ -259,7 +258,8 @@ public class RequestCtx {
 		try {
 			this.marshal(os);
 		} catch (WritingException e) {
-			logger.warn("Could not marshal RequestCtx to OutputStream.", e);
+			LOGGER.warn("Could not marshal RequestCtx to OutputStream.", e);
+			return null;
 		}
 		return os.toString();
 	}
