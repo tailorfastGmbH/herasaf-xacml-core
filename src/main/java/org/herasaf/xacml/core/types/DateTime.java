@@ -66,10 +66,8 @@ public class DateTime implements Comparable<DateTime> {
 		return xmlCalendar;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
@@ -77,16 +75,14 @@ public class DateTime implements Comparable<DateTime> {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * {@inheritDoc}
 	 */
 	public int compareTo(DateTime dateTime) {
 		return xmlCalendar.compare(dateTime.getCalendar());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -98,10 +94,8 @@ public class DateTime implements Comparable<DateTime> {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

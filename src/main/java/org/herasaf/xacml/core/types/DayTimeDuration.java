@@ -31,7 +31,8 @@ import javax.xml.datatype.Duration;
  * <ul>
  * <li>The calculation of the dayTimeDuration in units of seconds is:<br />
  * <code>( ( ('value of the day component' * 24)<br />+ ('value of the hour component') * 60)<br />
- * + ('value of the minute component')*60)<br />+ ('value of the second component')</code><br /><br />
+ * + ('value of the minute component')*60)<br />+ ('value of the second component')</code><br />
+ * <br />
  * </li>
  * <li>The duration must be a valid http://www.w3.org/2001/XMLSchema#duration
  * data type (See: <a
@@ -71,10 +72,8 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
@@ -82,16 +81,14 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * {@inheritDoc}
 	 */
 	public int compareTo(DayTimeDuration o) {
 		return duration.compare(o.duration);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -102,10 +99,8 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

@@ -68,10 +68,8 @@ public class IPv4Address extends IPAddress {
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see org.herasaf.core.types.IPAddress#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
@@ -89,10 +87,8 @@ public class IPv4Address extends IPAddress {
 		return builder.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -102,10 +98,8 @@ public class IPv4Address extends IPAddress {
 		return toString().equals(obj.toString());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

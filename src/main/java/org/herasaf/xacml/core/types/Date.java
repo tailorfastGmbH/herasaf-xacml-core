@@ -77,10 +77,8 @@ public class Date implements Comparable<Date> {
 		return xmlCalendar;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
@@ -88,16 +86,14 @@ public class Date implements Comparable<Date> {
 	}
 
 	/**
-	 * TODO JAVADOC.
+	 * {@inheritDoc}
 	 */
 	public int compareTo(Date date) {
 		return xmlCalendar.compare(date.getCalendar());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -109,10 +105,8 @@ public class Date implements Comparable<Date> {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

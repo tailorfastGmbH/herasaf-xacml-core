@@ -47,10 +47,8 @@ public abstract class IPAddress {
 		return new IPv4Address(ipAddress);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public abstract String toString();
