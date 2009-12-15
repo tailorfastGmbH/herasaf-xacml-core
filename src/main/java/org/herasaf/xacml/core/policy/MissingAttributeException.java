@@ -21,13 +21,14 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René
  * 
- * This exception is thrown if a missing attribute cannot be retrieved by the
- * remote loader.
+ * This exception is thrown if a <i>must-be-present</i> attribute that is
+ * missing in the request cannot be resolved (e.g. from a PIP).
+ * 
+ * The exception then contains the IDs of the missing attributes.
  * 
  * @author Florian Huonder
- * @version 1.0
  */
 public class MissingAttributeException extends Exception {
 	private static final long serialVersionUID = 1600393747247326688L;
@@ -39,7 +40,7 @@ public class MissingAttributeException extends Exception {
 	 * @param attributeId
 	 *            The id of the attribute that cannot be obtained.
 	 * @param dataType
-	 *            The datatype of the attribute that cannot be obtained.
+	 *            The data type of the attribute that cannot be obtained.
 	 * @param issuer
 	 *            The issuer of the attribute that cannot be obtained.
 	 */

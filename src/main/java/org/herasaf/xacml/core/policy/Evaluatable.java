@@ -25,84 +25,74 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Represents an type that is evaluatable.
+ * An evaluatable is an evaluable type. Such a type represents an policy or
+ * policy set in XAMCL.
  * 
- * @author Florian Huonder, Patrik Dietschweiler
- * @version 1.1
+ * @author Florian Huonder
  */
 public interface Evaluatable {
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Returns the id of the evaluatable.
+	 * This method returns the ID of the evaluatable.
 	 * 
-	 * @return The Id as string.
+	 * @return The ID of the evaluatable.
 	 */
 	EvaluatableID getId();
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Returns the {@link TargetType} of the evaluatable.
+	 * Returns the target of the evaluatable.
 	 * 
-	 * @return The {@link TargetType} of the evaluatable.
-	 * 
-	 * @throws EvaluatableNotFound
-	 *             if the Evaluatable is an IdReferenceType and it didnt find
-	 *             the Evaluatable (Only in Last Loading Strategy)
+	 * @return The target of the evaluatable.
 	 */
 	TargetType getTarget();
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Returns the {@link CombiningAlgorithm} of the evaluatable.
+	 * Returns the combining algorithm of the evaluatable.
 	 * 
-	 * @return The {@link CombiningAlgorithm} of the evaluatable.
-	 * 
-	 * @throws EvaluatableNotFound
-	 *             if the Evaluatable is an IdReferenceType and it didnt find
-	 *             the Evaluatable (Only in Last Loading Strategy)
+	 * @return The combining algorithm of the evaluatable.
 	 */
 	CombiningAlgorithm getCombiningAlg();
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
 	 * Returns the version of the evaluatable.
 	 * 
-	 * @return The version as string.
-	 * 
-	 * @throws EvaluatableNotFound
-	 *             if the Evaluatable is an IdReferenceType and it didnt find
-	 *             the Evaluatable (Only in Last Loading Strategy)
+	 * @return The version of the evaluatable.
 	 */
 	String getEvalutableVersion();
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
 	 * Returns a boolean value indicating if the current {@link Evaluatable} or
-	 * a sub- {@link Evaluatable} contains one or more Obligations.
+	 * a sub-{@link Evaluatable} contains one or more
+	 * <code>&lt;Obligation&gt;</code>.
 	 * 
-	 * @return True if the current or a sub- {@link Evaluatable} contains one or
-	 *         more Obligations. False otherwise.
+	 * @return True if the current or a sub-{@link Evaluatable} contains one or
+	 *         more <code>&lt;Obligation&gt;</code>, false otherwise.
 	 */
 	boolean hasObligations();
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Returns the Obligations of this {@link Evaluatable} which match the given
-	 * effect.
+	 * Returns the <code>&lt;Obligation&gt;</code>s of this {@link Evaluatable}
+	 * that match the given {@link EffectType}.
 	 * 
 	 * @param effect
-	 *            the {@link EffectType} by which the Obligations should be
-	 *            returned.
-	 * @return The Obligations which match the {@link EffectType}.
+	 *            The {@link EffectType} to which the returned
+	 *            <code>&lt;Obligation&gt;</code>s must match.
+	 * @return The <code>&lt;Obligation&gt;</code>s that match the
+	 *         {@link EffectType}.
 	 */
 	List<ObligationType> getContainedObligations(EffectType effect);
 }
