@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.rule;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
@@ -33,24 +31,15 @@ import org.herasaf.xacml.core.policy.impl.ExpressionType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * The {@link AbstractRuleCombiningAlgorithm} is used to combine
- * {@link RuleType}s.
- * 
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix C, page 83, for further information.
+ * This class handles all commonality of the rule combining algorithms. This is
+ * the evaluation of a single rule.
  * 
  * @author Sacha Dolski
- * @version 1.0
  */
 public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
 		RuleCombiningAlgorithm {
-	/**
-	 * TODO JAVADOC.
-	 */
 	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**
@@ -123,11 +112,4 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 		return DecisionType.NOT_APPLICABLE;
 
 	}
-
-	/**
-	 *{@inheritDoc}
-	 */
-	public abstract DecisionType evaluateRuleList(final RequestType request, final List<RuleType> possibleRules,
-			final RequestInformation requestInfos);
-
 }

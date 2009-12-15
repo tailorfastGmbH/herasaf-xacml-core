@@ -55,7 +55,6 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
 			final RequestInformation requestInfo) {
 

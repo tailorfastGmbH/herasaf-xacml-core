@@ -56,7 +56,6 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
 			final RequestInformation requestInfo) {
 

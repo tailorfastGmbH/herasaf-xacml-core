@@ -115,7 +115,6 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
-	@Override
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possibleEvaluatables,
 			RequestInformation requestInfo) {

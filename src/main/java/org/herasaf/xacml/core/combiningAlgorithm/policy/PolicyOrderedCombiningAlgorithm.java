@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.policy;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -70,12 +68,6 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
 			return DecisionType.INDETERMINATE;
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public abstract DecisionType evaluateEvaluatableList(final RequestType request,
-			final List<Evaluatable> possiblePolicies, final RequestInformation requestInfos);
 
 	/**
 	 * {@inheritDoc}

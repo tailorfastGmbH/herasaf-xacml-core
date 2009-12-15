@@ -33,28 +33,19 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * The implementation of the policy combining algorithm with the Deny-Overrides
- * strategy.
- * </p>
- * <p>
- * The Implementation of the Deny-override implementation oriented at the sample
- * implementation in the XACML 2.0 specification.
- * </p>
- * 
- * <p>
+ * The implementation of the default XACML 2.0 <i>rule unordered deny
+ * overrides algorithm</i>.<br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 133-134, for further information.
- * </p>
  * 
  * @author Sacha Dolski
  * @author Stefan Oberholzer
+ * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
@@ -72,7 +63,6 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
 			final RequestInformation requestInfo) {
 		

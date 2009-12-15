@@ -55,7 +55,6 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
 			final RequestInformation requestInfo) {
 

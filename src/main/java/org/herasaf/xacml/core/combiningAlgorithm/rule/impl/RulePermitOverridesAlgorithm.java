@@ -33,28 +33,19 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * The implementation of the policy combining algorithm with the Permit-Override
- * strategy.
- * </p>
- * <p>
- * The Implementation of the Permit-Override implementation oriented at the
- * sample implementation in the XACML 2.0 specification.
- * </p>
- * 
- * <p>
- * See <a href=
+ * The implementation of the default XACML 2.0 <i>rule ordered deny overrides
+ * algorithm</i>.<br />
+ * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 135-136, for further information.
- * </p>
  * 
+ * @author Sacha Dolski
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
@@ -72,10 +63,9 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
 			final RequestInformation requestInfo) {
-		
+
 		if (rules == null) {
 			// It is an illegal state if the list containing the rules is
 			// null.
@@ -83,7 +73,7 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
-		
+
 		/*
 		 * keeps the actual state and missing attributes of this combining
 		 * process.
@@ -96,20 +86,20 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 		boolean atLeastOneDeny = false;
 
 		/*
-		 * If the list of rules contains no values, the for-loop is
-		 * skipped and a NOT_APPLICABLE is returned.
+		 * If the list of rules contains no values, the for-loop is skipped and
+		 * a NOT_APPLICABLE is returned.
 		 */
 		for (int i = 0; i < rules.size(); i++) {
 			RuleType rule = rules.get(i);
-			
+
 			if (rule == null) {
-				// It is an illegal state if the list contains any 
+				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of rules must not contain any null values.");
 				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
-			
+
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
 			requestInfo.resetStatus();

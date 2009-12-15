@@ -30,28 +30,19 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * <p>
- * The implementation of the policy combining algorithm with the
- * First-Applicable strategy.
- * </p>
- * <p>
- * The Implementation of the First-Applicable implementation oriented at the
- * sample implementation in the XACML 2.0 specification.
- * </p>
- * 
- * <p>
+ * The implementation of the default XACML 2.0 <i>rule first applicable
+ * algorithm</i>.<br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 137, for further information.
- * </p>
  * 
- * @author Florian Huonder
+ * @author Sacha Dolski
  * @author Stefan Oberholzer
+ * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.0
  */
 public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
@@ -69,11 +60,9 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 	/**
 	 * {@inheritDoc}
 	 */
-	@Override
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
 			final RequestInformation requestInfo) {
-		
-		
+
 		if (rules == null) {
 			// It is an illegal state if the list containing the rules is
 			// null.
@@ -83,8 +72,8 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 		}
 
 		/*
-		 * If the list of rules contains no values, the for-loop is
-		 * skipped and a NOT_APPLICABLE is returned.
+		 * If the list of rules contains no values, the for-loop is skipped and
+		 * a NOT_APPLICABLE is returned.
 		 */
 		for (int i = 0; i < rules.size(); i++) {
 			RuleType rule = rules.get(i);

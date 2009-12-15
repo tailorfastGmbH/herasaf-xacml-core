@@ -24,15 +24,22 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * TODO JAVADOC!!
+ * TODO REVIEW René.
  * 
+ * All rule combining algorithms must implement this interface. It provides the
+ * entry point ({@link #evaluateRuleList(RequestType, List, RequestInformation)}
+ * ) for starting to evaluate all containing rules and a method to evaluate a
+ * single rule ({@link #evaluateRule(RequestType, RuleType, RequestInformation)}
+ * ).
+ * 
+ * @author Sacha Dolski
  * @author Florian Huonder
- * @author René Eggenschwiler
- * 
  */
 public interface RuleCombiningAlgorithm {
 
 	/**
+	 * TODO REVIEW René.
+	 * 
 	 * Evaluates a rule.
 	 * 
 	 * The different return values of a rule evaluation are specified in the
@@ -42,32 +49,28 @@ public interface RuleCombiningAlgorithm {
 	 * June 2006</a> page 82, for further information.
 	 * 
 	 * @param request
-	 *            The request to evaluates
+	 *            The request to evaluate.
 	 * @param rule
-	 *            The rule which should be used for the evaluation
+	 *            The rule that shall be evaluated.
 	 * @param requestInfo
-	 *            Information used for this request.
-	 * @return The Decision made by this rule. The returned values for the
-	 *         different situations can be found in the specification.
+	 *            The evaluation context.
+	 * @return The decision of the evaluation.
 	 */
 	DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo);
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Write that the rules list must not contain any null values.
-	 * 
-	 * Evaluates all rules given in the rule list and returnes the result.
+	 * Evaluates all rules given in the rule list and returns the combined
+	 * result.
 	 * 
 	 * @param request
-	 *            the request which should be evaluated
+	 *            The request that should be evaluated.
 	 * @param possibleRules
-	 *            the rules that might match
+	 *            The rules that might match und shall be evaluated.
 	 * @param requestInfos
-	 *            the requestInformation holding the additional information
-	 *            needed to evaluate the request
-	 * @return the decision
+	 *            t The evaluation context.
+	 * @return The decision of the evaluation.
 	 */
-	DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules,
-			RequestInformation requestInfos);
+	DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules, RequestInformation requestInfos);
 }

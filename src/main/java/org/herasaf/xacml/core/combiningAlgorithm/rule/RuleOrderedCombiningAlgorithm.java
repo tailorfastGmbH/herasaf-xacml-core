@@ -17,25 +17,21 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.rule;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
-import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Abstract class for {@link AbstractRuleCombiningAlgorithm}s that evalute the
- * rules ordered.
+ * This class may be extended when implementing an ordered rule combining
+ * algorithm. It contains some common code all ordered combining algorithms must
+ * implement.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
- * 
  */
 public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombiningAlgorithm {
 	/**
@@ -71,13 +67,6 @@ public abstract class RuleOrderedCombiningAlgorithm extends AbstractRuleCombinin
 		}
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public abstract DecisionType evaluateRuleList(final RequestType request, final List<RuleType> possiblePolicies,
-			final RequestInformation requestInfos);
-	
 	/**
 	 * {@inheritDoc}
 	 */
