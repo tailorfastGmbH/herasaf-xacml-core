@@ -18,16 +18,12 @@
 package org.herasaf.xacml.core.function;
 
 /**
- * <p>
- * This is a base class for {@link Function} implementations.
- * </p>
+ * This abstract class may be used as basis for the implementation of a function.
+ * It has some default implementations common methods (like {@link #equals(Object)}).
  * 
  * @author Ylli Sylejmani
- * @version 1.0
  */
 public abstract class AbstractFunction implements Function {
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = 7067251654981893558L;
 
 	/**
@@ -66,5 +62,4 @@ public abstract class AbstractFunction implements Function {
 	 * {@inheritDoc}
 	 */
 	public abstract String getFunctionId();
-
 }

@@ -20,16 +20,17 @@ package org.herasaf.xacml.core.function;
 import java.io.Serializable;
 
 /**
+ * TODO REVIEW René.
  * 
- * The implementation of the XACML 2.0 function. See: Appendix A.3 of the <a
+ * All functions that shall be used in the PDP must implement this interface.
+ * All XACML 2.0 default functions can be found here: Appendix A.3 of the <a
  * href
  * ="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 105, for further information.
+ * 2006</a>.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
- * @version 1.0
  */
 public interface Function extends Serializable {
 
@@ -41,13 +42,16 @@ public interface Function extends Serializable {
 	String getFunctionId();
 
 	/**
+	 * TODO REVIEW René.
 	 * 
-	 * The handler that takes an unspecified amount of arguments to process.
+	 * The handler that takes an unspecified number of arguments to process. The
+	 * exact number of arguments depends on the implementation of the function.
 	 * 
 	 * @param args
 	 *            The arguments needed to process the function.
-	 * @return The result of the execution of the handler.
+	 * @return The result of the execution of the function.
 	 * @throws FunctionProcessingException
+	 *             In case an error occurs while processing the function.
 	 */
 	Object handle(Object... args) throws FunctionProcessingException;
 }
