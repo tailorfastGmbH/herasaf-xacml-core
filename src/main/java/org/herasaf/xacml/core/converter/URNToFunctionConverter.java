@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -28,59 +27,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Converts an URN to a function. The functions are defined in the <a href=
+ * Converts an URN to a function. The default functions are defined in the <a
+ * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix A.3, page 105. <br>
- * <br>
- * The {@link Map} containing the mapping between URNs and functions is static.
- * The setter for this {@link Map} is NOT static. The filling of this
- * {@link Map} takes place through the <a
- * href="http://www.springframework.org/">Springframework</a>.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.1
- * @see Function
  */
 public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	private final Logger logger = LoggerFactory.getLogger(URNToFunctionConverter.class);
-
-	/**
-	 * TODO JAVADOC.
-	 * 
-	 * Contains all the available functions
-	 */
 	private static Map<String, Function> functions;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Is used by the <a
-	 * href="http://www.springframework.org/">Springframework</a> to fill the
-	 * static {@link Map} containing the mapping between URNs and functions.
+	 * This method sets the {@link Map} containing the mapping between functions
+	 * and their ID's into the converter.
 	 * 
 	 * @param functions
-	 *            The map containing the mapping between URNs and functions.
+	 *            The {@link Map} containing the mapping between ID's and
+	 *            functions
 	 */
-	public static void setFunctions(Map<String, Function> functions) {
-		// TODO is a concurrent hashmap really needed?
-		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(functions); // ConcurrentHashMap
-																								// because
-																								// of
-																								// concurrent
-																								// access
-		// possible
+	public static void setFunctions(final Map<String, Function> functions) {
+		URNToFunctionConverter.functions = functions;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(Function function) {
+	public String marshal(final Function function) {
 		String functionString;
 		try {
 			functionString = function.toString();
@@ -95,7 +76,7 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Function unmarshal(String functionId) {
+	public Function unmarshal(final String functionId) {
 		Function func;
 		try {
 			func = functions.get(functionId);

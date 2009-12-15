@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -28,53 +27,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Converts an URN to a data type. The data types are defined in the <a href=
+ * Converts an URN to a data type. The default data types are defined in the <a
+ * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix A.2, page 103. <br>
- * <br>
- * The {@link Map} containing the mapping between URNs and data type is static.
- * The setter for this {@link Map} is NOT static. The filling of this
- * {@link Map} takes place through the <a
- * href="http://www.springframework.org/">Springframework</a>.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @author René Eggenschwiler
- * @version 1.1
  */
 public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute<?>> {
 	private final Logger logger = LoggerFactory.getLogger(URNToDataTypeConverter.class);
-
 	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Is used by the <a
-	 * href="http://www.springframework.org/">Springframework</a> to fill the
-	 * static {@link Map} containing the mapping between URNs and data types.
+	 * This method sets the {@link Map} containing the mapping betweend data types and their ID's into the
+	 * converter.
 	 * 
 	 * @param dataTypes
-	 *            The map containing the mapping between URNs and data types.
+	 *            The {@link Map} containing the mapping between ID's and data
+	 *            types.
 	 */
-	public static void setDataTypeAttributes(Map<String, DataTypeAttribute<?>> dataTypes) {
-		// TODO is a concurrent hashmap really needed?
-		URNToDataTypeConverter.dataTypeAttributes = new ConcurrentHashMap<String, DataTypeAttribute<?>>(dataTypes); // ConcurrentHashMap
-																													// because
-																													// of
-																													// concurrent
-																													// access
-																													// possible
+	public static void setDataTypeAttributes(final Map<String, DataTypeAttribute<?>> dataTypes) {
+		URNToDataTypeConverter.dataTypeAttributes = dataTypes;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(DataTypeAttribute<?> dataTypeAttr) {
+	public String marshal(final DataTypeAttribute<?> dataTypeAttr) {
 		String dataTypeAttrString;
 		try {
 			dataTypeAttrString = dataTypeAttr.toString();
@@ -89,7 +76,7 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	 * {@inheritDoc}
 	 */
 	@Override
-	public DataTypeAttribute<?> unmarshal(String dataTypeId) {
+	public DataTypeAttribute<?> unmarshal(final String dataTypeId) {
 		DataTypeAttribute<?> dta;
 		try {
 			dta = dataTypeAttributes.get(dataTypeId);

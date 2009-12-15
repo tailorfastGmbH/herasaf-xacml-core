@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -28,58 +27,41 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC
+ * TODO REVIEW René.
  * 
- * Converts an URN to a {@link RuleCombiningAlgorithm}. The
+ * Converts an URN to a {@link RuleCombiningAlgorithm}. The default
  * {@link RuleCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix C, page 133. <br>
- * <br>
- * The {@link Map} containing the mapping between URNs and
- * {@link RuleCombiningAlgorithm}s is static. The setter for this {@link Map} is
- * NOT static. The filling of this {@link Map} takes place through the <a
- * href="http://www.springframework.org/">Springframework</a>.
  * 
  * @author Sacha Dolski
  * @author René Eggenschwiler
  * @author Florian Huonder
- * @version 1.0
  */
 public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, RuleCombiningAlgorithm> {
 	private final Logger logger = LoggerFactory.getLogger(URNToRuleCombiningAlgorithmConverter.class);
 	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
 	/**
-	 * TODO JAVADOC
+	 * TODO REVIEW René.
 	 * 
-	 * Is used by the <a
-	 * href="http://www.springframework.org/">Springframework</a> to fill the
-	 * static {@link Map} containing the mapping between URNs and
-	 * {@link RuleCombiningAlgorithm}s.
+	 * This method sets the {@link Map} containing the mapping between rule
+	 * combining algorithms and their ID's into the converter.
 	 * 
-	 * @param algorithms
-	 *            The map containing the mapping between URNs and
-	 *            policy combining algorithms.
+	 * @param functions
+	 *            The {@link Map} containing the mapping between ID's and rule
+	 *            combining algorithms.
 	 */
-	public static void setCombiningAlgorithms(Map<String, RuleCombiningAlgorithm> algorithms) {
-		// TODO is a concurrent hashmap really needed?
-		combiningAlgorithms = new ConcurrentHashMap<String, RuleCombiningAlgorithm>(algorithms); // ConcurrentHashMap
-																									// because
-																									// of
-																									// concurrent
-																									// access
-		// possible
+	public static void setCombiningAlgorithms(final Map<String, RuleCombiningAlgorithm> algorithms) {
+		combiningAlgorithms = algorithms;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(RuleCombiningAlgorithm combAlg) {
+	public String marshal(final RuleCombiningAlgorithm combAlg) {
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
@@ -90,14 +72,11 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 		return combAlgString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public RuleCombiningAlgorithm unmarshal(String combAlgId) {
+	public RuleCombiningAlgorithm unmarshal(final String combAlgId) {
 		RuleCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);
