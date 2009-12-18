@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,7 +39,13 @@ import org.slf4j.LoggerFactory;
  * 
  * This factory is responsible of creating a {@link PDP}. All needed
  * initialization is done automatically. Various hooks are defined to enhance
- * the factory with further capabilities.
+ * the factory with further capabilities.<br /><br />
+ * Defaults are the following
+ * <ul>
+ * <li>Policy repository: {@link MapBasedSimplePolicyRepository}</li>
+ * <li>Root combining algorithm: {@link PolicyOnlyOneApplicableAlgorithm}</li>
+ * <li>PIP: <code>null</code></li>
+ * </ul>
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -184,8 +189,7 @@ public final class SimplePDPFactory {
 		PolicyRepository policyRepository;
 
 		try {
-			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
-					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
+			policyRepository = defaultPolicyRepository.newInstance();
 		} catch (InstantiationException e) {
 			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
 					+ defaultPolicyRepository.getCanonicalName());
@@ -204,16 +208,6 @@ public final class SimplePDPFactory {
 		} catch (SecurityException e) {
 			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
 					+ defaultPolicyRepository.getCanonicalName());
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (NoSuchMethodException e) {
-			InitializationException ie = new InitializationException("Unable to instantiate the policy repository: "
-					+ defaultPolicyRepository.getCanonicalName(), e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -283,8 +277,7 @@ public final class SimplePDPFactory {
 		PolicyRepository policyRepository;
 
 		try {
-			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
-					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
+			policyRepository = defaultPolicyRepository.newInstance();
 		} catch (InstantiationException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to instantiate the default policy repository: "
@@ -304,18 +297,6 @@ public final class SimplePDPFactory {
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (NoSuchMethodException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to instantiate the default policy repository: "
 							+ defaultPolicyRepository.getCanonicalName(), e);
@@ -405,8 +386,7 @@ public final class SimplePDPFactory {
 		}
 
 		try {
-			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
-					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
+			policyRepository = defaultPolicyRepository.newInstance();
 
 		} catch (InstantiationException e) {
 			InitializationException ie = new InitializationException(
@@ -427,18 +407,6 @@ public final class SimplePDPFactory {
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (NoSuchMethodException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to instantiate the default policy repository: "
 							+ defaultPolicyRepository.getCanonicalName(), e);
@@ -509,8 +477,7 @@ public final class SimplePDPFactory {
 		}
 
 		try {
-			policyRepository = defaultPolicyRepository.getConstructor(boolean.class).newInstance(
-					rootCombiningAlgorithm.isOrderedCombiningAlgorithm());
+			policyRepository = defaultPolicyRepository.newInstance();
 
 		} catch (InstantiationException e) {
 			InitializationException ie = new InitializationException(
@@ -531,18 +498,6 @@ public final class SimplePDPFactory {
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (InvocationTargetException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (NoSuchMethodException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to instantiate the default policy repository: "
 							+ defaultPolicyRepository.getCanonicalName(), e);

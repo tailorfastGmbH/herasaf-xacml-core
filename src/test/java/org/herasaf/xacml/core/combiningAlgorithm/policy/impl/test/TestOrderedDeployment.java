@@ -20,14 +20,10 @@ import static org.testng.Assert.assertSame;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.PolicyRepositoryException;
-import org.herasaf.xacml.core.api.PDP;
-import org.herasaf.xacml.core.api.PolicyRepository;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOrderedDenyOverridesAlgorithm;
+import org.herasaf.xacml.core.api.OrderedPolicyRepository;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
+import org.herasaf.xacml.core.simplePDP.OrderedMapBasedSimplePolicyRepository;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -53,11 +49,7 @@ public class TestOrderedDeployment {
 	 */
 	@Test
 	public void testOrderedDeployment() {
-		PolicyCombiningAlgorithm rootCombiningAlgorithm = new PolicyOrderedDenyOverridesAlgorithm();
-		rootCombiningAlgorithm.setRespectAbandondEvaluatables(false);
-
-		PDP pdp = SimplePDPFactory.getSimplePDP(rootCombiningAlgorithm);
-		PolicyRepository repo = pdp.getPolicyRepository();
+		OrderedPolicyRepository repo = new OrderedMapBasedSimplePolicyRepository();
 
 		PolicyType policy1 = new PolicyType();
 		policy1.setPolicyId("policy1");
@@ -79,22 +71,5 @@ public class TestOrderedDeployment {
 		repo.undeploy(policy1.getId());
 		repo.undeploy(policy2.getId());
 		repo.undeploy(policy3.getId());
-	}
-
-	/**
-	 * This method tests if ordered deployment fails in case of an unordered
-	 * combining algorithm.
-	 */
-	@Test(expectedExceptions = { PolicyRepositoryException.class })
-	public void testOrderedDeploymentFail() {
-		PolicyCombiningAlgorithm rootCombiningAlgorithm = new PolicyDenyOverridesAlgorithm();
-		rootCombiningAlgorithm.setRespectAbandondEvaluatables(false);
-
-		PDP pdp = SimplePDPFactory.getSimplePDP(rootCombiningAlgorithm);
-		PolicyRepository repo = pdp.getPolicyRepository();
-
-		PolicyType policy = new PolicyType();
-
-		repo.deploy(policy, 0);
 	}
 }

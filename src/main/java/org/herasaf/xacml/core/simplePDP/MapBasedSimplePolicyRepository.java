@@ -40,13 +40,14 @@ import org.slf4j.LoggerFactory;
  * 
  * This is the default implementation of the {@link PolicyRepository}. This
  * policy repository has a limited functionality. It only works as a "provider"
- * of locally deploed {@link Evaluatable}s. It does not:
+ * of locally deployed {@link Evaluatable}s. It does not:
  * <ul>
  * <li>persist the {@link Evaluatable}s</li>
  * <li>index the {@link Evaluatable}s</li>
  * <li>resolve {@link Evaluatable}s from remote (only local) repositories</li>
  * </ul>
- * <b>It is not recommended to use this repository in a productive environment.</b>
+ * <b>It is not recommended to use this repository in a productive
+ * environment.</b>
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -59,12 +60,11 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	// to which this policy belongs.
 	// There can be multiple evaluatables for an id in case of references. a
 	// reference has the same id as the evaluatables itself.
-	private Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
+	protected Map<EvaluatableID, List<Evaluatable>> individualEvaluatables;
 	// Mapping that tells which policies are under which root.
-	private Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping;
-	private List<Evaluatable> rootEvaluatables; // The root evaluatables
+	protected Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping;
+	protected List<Evaluatable> rootEvaluatables; // The root evaluatables
 	private final Logger logger = LoggerFactory.getLogger(MapBasedSimplePolicyRepository.class);
-	private final boolean isOrderedCombiningAlgorithm;
 
 	/**
 	 * TODO REVIEW René.
@@ -78,11 +78,10 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 *            True if the root policy combining algorithm in the PDP is
 	 *            ordered, false otherwise.
 	 */
-	public MapBasedSimplePolicyRepository(boolean isOrderedCombiningAlgorithm) {
+	public MapBasedSimplePolicyRepository() {
 		individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
 		rootEvaluatableMapping = new HashMap<EvaluatableID, List<EvaluatableID>>();
 		rootEvaluatables = new ArrayList<Evaluatable>();
-		this.isOrderedCombiningAlgorithm = isOrderedCombiningAlgorithm;
 	}
 
 	/**
@@ -106,7 +105,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 *            The list of individual (meaning all sub-{@link Evaluatable}s)
 	 *            {@link Evaluatable}s to be checked for consistency.
 	 */
-	private void checkEvaluatable(Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables) {
+	protected void checkEvaluatable(Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables) {
 
 		// check for reference consistency
 		if (!checkReferenceConsistency(newIndividualEvaluatables)) {
@@ -134,25 +133,6 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 
 		individualEvaluatables.putAll(newIndividualEvaluatables);
 		rootEvaluatables.add(evaluatable);
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public void deploy(Evaluatable evaluatable, int position) {
-		if (isOrderedCombiningAlgorithm) {
-			Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable,
-					evaluatable.getId());
-
-			checkEvaluatable(newIndividualEvaluatables);
-
-			individualEvaluatables.putAll(newIndividualEvaluatables);
-			rootEvaluatables.add(position, evaluatable);
-		} else {
-			String msg = "Unable to deploy. The root combining algorithm of the PDP is not ordered.";
-			logger.error(msg);
-			throw new PolicyRepositoryException(msg);
-		}
 	}
 
 	/**
@@ -318,7 +298,7 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 	 * @return A {@link Map} containing the whole policy tree that started at
 	 *         the given {@link Evaluatable} split up into individual policies.
 	 */
-	private Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(Evaluatable evaluatable, EvaluatableID rootId) {
+	protected Map<EvaluatableID, List<Evaluatable>> splitIntoIndividuals(Evaluatable evaluatable, EvaluatableID rootId) {
 		return splitIntoIndividuals(null, evaluatable, rootId);
 	}
 

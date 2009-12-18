@@ -17,10 +17,13 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
+import org.herasaf.xacml.core.api.OrderedPolicyRepository;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.ResponseCtx;
@@ -61,22 +64,36 @@ public class SimplePDP implements PDP {
 	 *            The {@link PIP} to use (may be <code>null</code>).
 	 */
 	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository, PIP pip) {
-		this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
-		this.policyRepository = policyRepository;
-		this.pip = pip;
-
-		if (pip == null) {
-			logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
-		}
-
 		/*
-		 * This check is due to the issue HERASAFXACMLCORE-45.
+		 * Checks if the policy repository are both of the same type. The type
+		 * is either ordered or unordered (exclusive OR).
 		 */
-		String javaVersion = System.getProperty("java.version");
-		if (javaVersion != null && (javaVersion.startsWith("1.6.0") || javaVersion.startsWith("1.7.0"))) {
-			logger.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
-					+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
+		if ((PolicyOrderedCombiningAlgorithm.class.isInstance(rootCombiningAlgorithm) && OrderedPolicyRepository.class
+				.isInstance(policyRepository))
+				^ PolicyUnorderedCombiningAlgorithm.class.isInstance(rootCombiningAlgorithm)) {
+			this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
+			this.policyRepository = policyRepository;
+			this.pip = pip;
+
+			if (pip == null) {
+				logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
+			}
+
+			/*
+			 * This check is due to the issue HERASAFXACMLCORE-45.
+			 */
+			String javaVersion = System.getProperty("java.version");
+			if (javaVersion != null && (javaVersion.startsWith("1.6.0") || javaVersion.startsWith("1.7.0"))) {
+				logger.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
+						+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
+			}
+		} else {
+			InitializationException ie = new InitializationException(
+					"Root combining algorithm and policy repository are not of the same type (type is either ordered or unordered).");
+			logger.error(ie.getMessage());
+			throw ie;
 		}
+
 	}
 
 	/**

@@ -35,7 +35,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * Further the policy repository is responsible for resolving
  * {@link Evaluatable}s from "remote" repositories. <br />
  * <br />
- * The policy repository may store and/or index the {@link Evaluatable}s.
+ * The policy repository may store and/or index the {@link Evaluatable}s. <br />
+ * <br />
+ * <b>Note:</b><br />
+ * This policy repository does only support <u>unordered</u> deployment of
+ * {@link Evaluatable}s (see {@link #deploy(Evaluatable)}).
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -53,20 +57,6 @@ public interface PolicyRepository {
 	 *            The {@link Evaluatable} to add to the policy repository.
 	 */
 	void deploy(Evaluatable evaluatable);
-
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Inserts a new {@link Evaluatable} into the policy repository at the given
-	 * position. It requires an ordered root combining algorithm to work.
-	 * 
-	 * @param evaluatable
-	 *            The {@link Evaluatable} to add to the policy repository.
-	 * @param position
-	 *            The position where the {@link Evaluatable} shall be added to
-	 *            the list.
-	 */
-	void deploy(Evaluatable evaluatable, int position);
 
 	/**
 	 * TODO REVIEW René.
@@ -174,8 +164,8 @@ public interface PolicyRepository {
 	 * @param request
 	 *            The request for whom all returned {@link Evaluatable} shall
 	 *            match.
-	 * @return A {@link List} of {@link Evaluatable}s that may match onto the given
-	 *         {@link RequestCtx}.
+	 * @return A {@link List} of {@link Evaluatable}s that may match onto the
+	 *         given {@link RequestCtx}.
 	 */
 	List<Evaluatable> getEvaluatables(RequestCtx request);
 }
