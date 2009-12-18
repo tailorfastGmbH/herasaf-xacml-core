@@ -45,17 +45,6 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private TargetMatcher targetMatcher;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns true if the implementation of the combining algorithm is ordered,
-	 * false otherwise.
-	 * 
-	 * @return true if the implementation of the combining algorithm is ordered,
-	 *         false otherwise.
-	 */
-	public abstract boolean isOrderedCombiningAlgorithm();
-
-	/**
 	 * 
 	 * Sets the {@link TargetMatcher}.
 	 * 

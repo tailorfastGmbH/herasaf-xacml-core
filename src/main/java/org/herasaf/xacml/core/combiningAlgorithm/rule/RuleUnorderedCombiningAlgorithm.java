@@ -67,13 +67,4 @@ public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombin
 			return DecisionType.INDETERMINATE;
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return false;
-	}
-
 }

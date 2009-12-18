@@ -68,12 +68,4 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCo
 			return DecisionType.INDETERMINATE;
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return false;
-	}
 }

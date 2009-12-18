@@ -68,12 +68,4 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
 			return DecisionType.INDETERMINATE;
 		}
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean isOrderedCombiningAlgorithm() {
-		return true;
-	}
 }

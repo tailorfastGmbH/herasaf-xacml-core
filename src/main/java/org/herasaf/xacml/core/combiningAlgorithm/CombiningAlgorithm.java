@@ -49,15 +49,4 @@ public interface CombiningAlgorithm {
 	 * @return The decision of the evaluation of the given request.
 	 */
 	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo);
-
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns true if the implementation of the combining algorithm is ordered,
-	 * false otherwise.
-	 * 
-	 * @return true if the implementation of the combining algorithm is ordered,
-	 *         false otherwise.
-	 */
-	boolean isOrderedCombiningAlgorithm();
 }
