@@ -17,8 +17,8 @@
 package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.AbstractPolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -62,6 +62,7 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 		PolicyCombiningAlgorithmsInitializer.respectAbandondEvaluatables = respectAbandondEvaluatables;
 	}
 
+	
 	/**
 	 * TODO REVIEW René.
 	 * 
@@ -73,7 +74,7 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	 *            The instances of type T.
 	 */
 	@Override
-	protected void furtherInitializations(List<AbstractPolicyCombiningAlgorithm> instances) {
+	protected void furtherInitializations(Set<AbstractPolicyCombiningAlgorithm> instances) {
 		for (AbstractPolicyCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
 			algorithm.setRespectAbandondEvaluatables(respectAbandondEvaluatables);

@@ -32,16 +32,4 @@ public interface Initializer {
 	 * Within this method the initialization must be done.
 	 */
 	void run();
-
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Here various custom properties may be set to the initializer.
-	 * 
-	 * @param id
-	 *            The id of the property.
-	 * @param value
-	 *            The value of the property.
-	 */
-	void setProperty(String id, Object value);
 }

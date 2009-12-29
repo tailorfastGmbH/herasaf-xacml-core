@@ -18,17 +18,20 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Modifier;
-import java.net.URISyntaxException;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.net.URLConnection;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import org.herasaf.xacml.core.simplePDP.InitializationException;
-import org.herasaf.xacml.core.utils.InternalJarClassInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,317 +48,357 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public abstract class AbstractInitializer<T> implements Initializer {
-    private final Logger logger = LoggerFactory.getLogger(AbstractInitializer.class);
-    private static final String CLASS_ENDING = ".class";
-    public static final String JARPATH_PROPERTY_NAME = "org:herasaf:xacml:core:jarPath";
-    private String jarPath;
+	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractInitializer.class);
+	private static final String CLASS_ENDING = ".class";
+	private static final String DOLLAR_SIGN = "$";
+	private static final String MOCK_KEYWORD = "Mock";
+	private static final String ABSTRACT_KEYWORD = "Abstract";
+	private static final String URL_PROTOCOL_JAR = "jar";
+	private static final String URL_PROTOCOL_FILE = "file";
+	private static final String URL_PROTOCOL_ZIP = "zip";
+	private static final String URL_PROTOCOL_WSJAR = "wsjar";
+	private static final String URL_PROTOCOL_CODE_SOURCE = "code-source";
+	private static final String JAR_URL_SEPARATOR = "!/";
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Initializes the initializer and sets the path of the jarPath to that set
-     * in the given system property. The path remains <code>null</code> if no
-     * path is provided.
-     */
-    public AbstractInitializer() {
-        jarPath = System.getenv(JARPATH_PROPERTY_NAME);
-        logger.info("JarPath system property is set to " + jarPath);
-    }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * This method returns the search context within the classpath (the search
+	 * context's delimiter is a &quot;.&quot;).
+	 * 
+	 * @return The String containing the search context.
+	 */
+	protected abstract String getSearchContext();
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * This method returns the search context within the classpath (the search
-     * context's delimiter is a &quot;.&quot;).
-     * 
-     * @return The String containing the search context.
-     */
-    protected abstract String getSearchContext();
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * This method returns the search context within the classpath (the search
+	 * context's delimiter is a &quot;/&quot;).
+	 * 
+	 * @return The String containing the search context.
+	 */
+	protected abstract String getSearchContextPath();
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * This method returns the search context within the classpath (the search
-     * context's delimiter is a &quot;/&quot;).
-     * 
-     * @return The String containing the search context.
-     */
-    protected abstract String getSearchContextPath();
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the {@link Class} of the type T. This is needed for a proper
+	 * instantiation.
+	 * 
+	 * @return Returns the {@link Class} of the type T.
+	 */
+	protected abstract Class<T> getTargetClass();
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Returns the {@link Class} of the type T. This is needed for a proper
-     * instantiation.
-     * 
-     * @return Returns the {@link Class} of the type T.
-     */
-    protected abstract Class<T> getTargetClass();
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Returns the URI, id, of the instance of type T. This method is needed
+	 * because it cannot be determined from T how the id can be obtained.
+	 * 
+	 * @param instance
+	 *            The type from which the URI shall be returned.
+	 * @return The URI, id, of the given instance.
+	 */
+	protected abstract String getURIFromType(T instance);
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Here a initializer-specific property can be set. The abstract initializer
-     * only knows the jarPath property.<br />
-     * 
-     * <b>Note:</b><br />
-     * If this method is overridden in a subclass and the property
-     * org:herasaf:xacml:core:jarPath is not set. this method must be called
-     * with super.setProperty.
-     */
-    public void setProperty(String id, Object value) {
-        if (JARPATH_PROPERTY_NAME.equals(id)) {
-            jarPath = (String) value;
-            return;
-        }
-        IllegalArgumentException e = new IllegalArgumentException("Property " + id + "not recognized.");
-        logger.error(e.getMessage());
-        throw e;
-    }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Sets the instances into the converter map. The converter map is the map
+	 * needed by the JAXB type adapter.
+	 * 
+	 * @param instancesMap
+	 *            The map containing the instances. Key is the id of the object
+	 *            of type T, the value is the object itself.
+	 */
+	protected abstract void setInstancesIntoConverter(Map<String, T> instancesMap);
 
-    /**
-     * {@inheritDoc}
-     */
-    public void run() {
-        List<T> instances;
+	/**
+	 * {@inheritDoc}
+	 */
+	public void run() {
+		Set<String> classNames = new HashSet<String>();
+		ClassLoader cl = Thread.currentThread().getContextClassLoader();
+		// Get all resources that are at the location given by the
+		// searchContext.
+		Enumeration<URL> resourceURLs;
+		try {
+			resourceURLs = cl.getResources(getSearchContextPath());
+		} catch (IOException e1) {
+			InitializationException ie = new InitializationException("Unable to get resources from classpath.");
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		}
 
-        if (isCodeLocationJAR()) {
-            /*
-             * JAR-based (code runs inside a JAR).
-             */
-            InternalJarClassInitializer jarClassLoader = new InternalJarClassInitializer(jarPath);
-            instances = jarClassLoader.loadAllClasses(getSearchContextPath(), getTargetClass());
-        } else {
-            /*
-             * File-based (code runs not in a JAR).
-             */
-            List<File> files = collectFiles(getSearchContextPath());
-            instances = instantiateClasses(files);
-        }
-        /*
-         * Further steps for initialization.
-         */
-        Map<String, T> instancesMap = convertListToMap(instances);
-        setInstancesIntoConverter(instancesMap);
-        furtherInitializations(instances);
-    }
+		while (resourceURLs.hasMoreElements()) {
+			URL url = resourceURLs.nextElement();
+			if (isJarURL(url)) {
+				/* JAR handling */
+				classNames = loadClassNamesFromJar(url);
+			} else if (URL_PROTOCOL_FILE.equals(url.getProtocol())) {
+				/* Directory handling */
+				classNames = collectClassNamesFromFile(url);
+			} else {
+				InitializationException e = new InitializationException(
+						"The search context path must either point to a JAR (.jar, .zip (BEA WebLogic, WebSphere), .wsjar (BEA WebLogic, WebSphere), code-source (Oracle OC4J)) file or to a directory");
+				LOGGER.error(e.getMessage());
+				throw e;
+			}
+		}
 
-    /**
-     * 
-     * TODO REVIEW René.
-     * 
-     * Checks if the code source is a directory or a file. in case it is a file
-     * it must be a jar.
-     * 
-     * @return True if the location is a JAR file, false otherwise.
-     */
-    private boolean isCodeLocationJAR() {
+		Set<T> instances = createInstancesFromClassNames(classNames, getTargetClass());
+		Map<String, T> instancesMap = convertSetToMap(instances);
+		setInstancesIntoConverter(instancesMap);
+		furtherInitializations(instances);
+	}
 
-        try {
-            File f = null;
-            if (jarPath == null) {
-                f = new File(this.getClass().getProtectionDomain().getCodeSource().getLocation().getFile());
-            } else {
-                f = new File(jarPath);
-            }
-            if (f.isDirectory()) {
-                return false;
-            }
-            return true;
-        } catch (NullPointerException e) {
-            InitializationException ie = new InitializationException("Unable to determine code source.", e);
-            logger.error(ie.getMessage());
-            throw ie;
-        }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * This method allows to do further initialization steps on the instantiated
+	 * classes of type T. By default this method does nothing. It may be
+	 * overridden by an implementing subclass.
+	 * 
+	 * @param instances
+	 *            The instances of type T.
+	 */
+	protected void furtherInitializations(Set<T> instances) {
+		// to be overridden in concrete subclass if needed.
+	}
 
-    }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Converts the list of instances into a map where the key is the id of the
+	 * instance.
+	 * 
+	 * @param instances
+	 *            The {@link List} of instances that shall be converted into a
+	 *            {@link Map}.
+	 * @return The {@link Map} containing the instances.
+	 */
+	private Map<String, T> convertSetToMap(Set<T> instances) {
+		Map<String, T> targetMap = new HashMap<String, T>();
+		for (T instance : instances) {
+			targetMap.put(getURIFromType(instance), instance);
+		}
+		return targetMap;
+	}
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * This method allows to do further initialization steps on the instantiated
-     * classes of type T. By default this method does nothing. It may be
-     * overridden by an implementing subclass.
-     * 
-     * @param instances
-     *            The instances of type T.
-     */
-    protected void furtherInitializations(List<T> instances) {
-        // to be overridden in concrete subclass if needed.
-    }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * This method determines if the given {@link URL} points to a JAR file.
+	 * This is if it has protocol "jar", "zip", "wsjar" or "code-source".
+	 * <p>
+	 * "zip" and "wsjar" are used by BEA WebLogic Server and IBM WebSphere,
+	 * respectively, but can be treated like JAR files. The same applies to
+	 * &quot;code-source&quot; URLs on Oracle OC4J, provided that the path
+	 * contains a JAR separator.
+	 * 
+	 * @param url
+	 *            The {@link URL} to check.
+	 * @return True if the {@link URL} has been identified as JAR, false
+	 *         otherwise.
+	 */
+	private static boolean isJarURL(URL url) {
+		String protocol = url.getProtocol();
+		return (URL_PROTOCOL_JAR.equals(protocol) || URL_PROTOCOL_ZIP.equals(protocol)
+				|| URL_PROTOCOL_WSJAR.equals(protocol) || (URL_PROTOCOL_CODE_SOURCE.equals(protocol) && url.getPath()
+				.contains(JAR_URL_SEPARATOR)));
+	}
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Sets the instances into the converter map. The converter map is the map
-     * needed by the JAXB type adapter.
-     * 
-     * @param instancesMap
-     *            The map containing the instances. Key is the id of the object
-     *            of type T, the value is the object itself.
-     */
-    protected abstract void setInstancesIntoConverter(Map<String, T> instancesMap);
+	/**
+	 * 
+	 * TODO REVIEW René.
+	 * 
+	 * Checks if the JAR entry is a valid class. Means if the class can be
+	 * instatiated.
+	 * 
+	 * @param entry
+	 *            The JAR entry to check.
+	 * @return True if the entry is valid, false otherwise.
+	 */
+	private static boolean isJarEntryValid(JarEntry entry) {
+		String name = entry.getName();
+		return name.endsWith(CLASS_ENDING) && !entry.isDirectory() && !name.contains(ABSTRACT_KEYWORD)
+				&& !name.contains(MOCK_KEYWORD) && !name.contains(DOLLAR_SIGN);
+	}
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Converts the list of instances into a map where the key is the id of the
-     * instance.
-     * 
-     * @param instances
-     *            The {@link List} of instances that shall be converted into a
-     *            {@link Map}.
-     * @return The {@link Map} containing the instances.
-     */
-    private Map<String, T> convertListToMap(List<T> instances) {
-        Map<String, T> targetMap = new HashMap<String, T>();
-        for (T instance : instances) {
-            targetMap.put(getURIFromType(instance), instance);
-        }
-        return targetMap;
-    }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Gets a {@link JarFile} from the given {@link URL}.
+	 * 
+	 * @param url
+	 *            The URL from that the file shall be retrieved.
+	 * @return The {@link JarFile} of the given {@link URL}.
+	 */
+	private static JarFile getJarFileFromURL(URL url) {
+		JarURLConnection jarUrlConnection;
+		URLConnection urlConnection;
+		JarFile jarFile;
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Returns the URI, id, of the instance of type T. This method is needed
-     * because it cannot be determined from T how the id can be obtained.
-     * 
-     * @param instance
-     *            The type from which the URI shall be returned.
-     * @return The URI, id, of the given instance.
-     */
-    protected abstract String getURIFromType(T instance);
+		try {
+			urlConnection = url.openConnection();
+		} catch (IOException e) {
+			InitializationException ie = new InitializationException("Unable to open URL connection to JAR file.", e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		}
+		if (urlConnection instanceof JarURLConnection) {
+			jarUrlConnection = (JarURLConnection) urlConnection;
+			try {
+				jarFile = jarUrlConnection.getJarFile();
+			} catch (IOException e) {
+				InitializationException ie = new InitializationException(
+						"Unable to retrieve JAR file from the jar url connection.", e);
+				LOGGER.error(ie.getMessage());
+				throw ie;
+			}
+		} else {
+			InitializationException e = new InitializationException("Unable to read the JAR file.");
+			LOGGER.error(e.getMessage());
+			throw e;
+		}
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Is needed in case the files to instantiate from the classpath are not in
-     * a JAR. Then a list of class files is provided and these are instantiated.
-     * 
-     * @param files
-     *            The {@link List} of files from which instances shall be
-     *            created.
-     * @return The {@link List} containing the instances.
-     */
-    @SuppressWarnings("unchecked")
-    private List<T> instantiateClasses(List<File> files) {
-        List<T> listOfInstances = new ArrayList<T>();
-        String path = null;
-        for (File file : files) {
-            try {
-                path = file.getCanonicalPath();
-            } catch (IOException e) {
-                logger.error("Unable to load classes.", e);
-                throw new InitializationException(e);
-            }
-            // cuts of the .class ending from the file.
-            path = path.substring(0, path.indexOf(CLASS_ENDING));
-            // replace the file delimiter with a dot.
-            if (File.separator.equals("\\")) {
-                path = path.replaceAll("\\\\", ".");
-            } else {
-                String separator;
-                if (File.separatorChar == '\\') { // Avoids problems with the
-                    // replaceAll-regex function
-                    // in case of windows file
-                    // separator.
-                    separator = "\\\\";
-                } else {
-                    separator = File.separator;
-                }
-                path = path.replaceAll(separator, ".");
-            }
-            // Retrieves the class name.
-            String className = path.substring(path.indexOf(getSearchContext()));
+		return jarFile;
+	}
 
-            try {
-                // Gets the class object of the current class
-                Class clazz = Class.forName(className);
-                if (Modifier.isAbstract(clazz.getModifiers())) {
-                    continue;
-                }
-                // Instantiates the class.
-                Object instance = clazz.newInstance();
-                try {
-                    // Try to cast the instance.
-                    getTargetClass().cast(instance);
-                    // If successful, add the instance to the list of instances
-                    // to return.
-                    listOfInstances.add((T) instance);
-                    logger.debug("The type {} is successfully initialized.", instance.getClass().getCanonicalName());
-                } catch (ClassCastException e) {
-                    // nop -- expected
-                    logger.trace("Ignoring type: {}", instance.getClass());
-                }
-            } catch (ClassNotFoundException e) {
-                logger.error("Unable to load classes.", e);
-                throw new InitializationException(e);
-            } catch (InstantiationException e) {
-                logger.error("Unable to load classes.", e);
-                throw new InitializationException(e);
-            } catch (IllegalAccessException e) {
-                logger.error("Unable to load classes.", e);
-                throw new InitializationException(e);
-            }
-        }
-        return listOfInstances;
-    }
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Loads all valid class names from the given URL.
+	 * 
+	 * @return A {@link Set} containing all class names.
+	 */
+	private Set<String> loadClassNamesFromJar(URL url) {
+		JarFile jarFile = getJarFileFromURL(url);
+		Set<String> classNames = new HashSet<String>();
+		for (Enumeration<JarEntry> entries = jarFile.entries(); entries.hasMoreElements();) {
+			JarEntry entry = entries.nextElement();
+			if (isJarEntryValid(entry) && entry.getName().startsWith(getSearchContextPath())) {
+				String name = entry.getName();
+				// Cut off the .class ending.
+				name = name.substring(0, name.indexOf(".class"));
+				// replace all filepath parameters with a "." (transform
+				// name into package.class name)
+				name = name.replaceAll("\\/", ".");
+				classNames.add(name);
+			}
+		}
+		return classNames;
+	}
 
-    /**
-     * TODO REVIEW René.
-     * 
-     * Collect all files that are in the given search context. <br />
-     * <b> Excluded files are:</b><br />
-     * non-java classes, abstract classes, mock classes and ananymous inner
-     * classes.
-     * 
-     * @param searchContext
-     *            The search context where the files shall be searched.
-     * @return A list containing all valid files contained within the search
-     *         context.
-     */
-    private List<File> collectFiles(final String searchContext) {
-        List<URL> urls = new ArrayList<URL>();
-        Enumeration<URL> resourceURLs;
-        List<File> files = new ArrayList<File>();
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Collect all files that are in the given search context. <br />
+	 * <b> Excluded files are:</b><br />
+	 * non-java classes, abstract classes, mock classes and ananymous inner
+	 * classes.
+	 * 
+	 * @param searchContext
+	 *            The search context where the files shall be searched.
+	 * @return A list containing all valid files contained within the search
+	 *         context.
+	 */
+	private Set<String> collectClassNamesFromFile(final URL url) {
+		Set<String> classNames = new HashSet<String>();
 
-        try {
-            ClassLoader cl = Thread.currentThread().getContextClassLoader();
-            // Get all resources that are at the location given by the
-            // searchContext.
-            resourceURLs = cl.getResources(searchContext);
-        } catch (IOException e) {
-            logger.error("Unable to load classes.", e);
-            throw new InitializationException(e);
-        }
-        while (resourceURLs.hasMoreElements()) {
-            urls.add(resourceURLs.nextElement());
-        }
-        File folder = null;
-        for (URL url : urls) {
-            try {
-                folder = new File(url.toURI());
-            } catch (URISyntaxException e) {
-                logger.error("Unable to load classes.", e);
-                throw new InitializationException(e);
-            }
-            // recursivley call this method for all subfolders.
-            File[] allFiles = folder.listFiles();
-            for (int i = 0; i < allFiles.length; i++) {
-                if (allFiles[i].isDirectory()) {
-                    files.addAll(collectFiles(searchContext + "/" + allFiles[i].getName()));
-                } else {
-                    // Only add files that are possible candidates. Exclude
-                    // non-java classes, abstract classes, mock classes and
-                    // ananymous inner classes.
-                    if (allFiles[i].getName().endsWith(".class") && !allFiles[i].getName().startsWith("Abstract")
-                            && !allFiles[i].getName().contains("Mock") && !allFiles[i].getName().contains("$")) {
-                        files.add(allFiles[i]);
-                    }
-                }
-            }
-        }
-        return files;
-    }
+		File directory = new File(url.getFile());
+		if (directory.isDirectory()) {
+			File[] allFiles = directory.listFiles();
+			for (int i = 0; i < allFiles.length; i++) {
+				if (allFiles[i].isDirectory()) {
+					try {
+						classNames.addAll(collectClassNamesFromFile(new URL(URL_PROTOCOL_FILE, url.getHost(), url
+								.getPath()
+								+ "/" + allFiles[i].getName())));
+					} catch (MalformedURLException e) {
+						InitializationException ie = new InitializationException(
+								"Unable to load classes from file system.", e);
+						LOGGER.error(ie.getMessage());
+						throw ie;
+					}
+				} else {
+					// Only add files that are possible candidates. Exclude
+					// non-java classes, abstract classes, mock classes and
+					// anonymous inner classes.
+					if (allFiles[i].getName().endsWith(CLASS_ENDING)
+							&& !allFiles[i].getName().startsWith(ABSTRACT_KEYWORD)
+							&& !allFiles[i].getName().contains(MOCK_KEYWORD)
+							&& !allFiles[i].getName().contains(DOLLAR_SIGN)) {
+
+						String path = url.getPath();
+						path = path.substring(path.indexOf(getSearchContextPath()));
+
+						path = path.replaceAll("/", ".");
+
+						String name = path + "." + allFiles[i].getName();
+						classNames.add(name.substring(0, name.indexOf(CLASS_ENDING)));
+					}
+				}
+			}
+		} else {
+			InitializationException ie = new InitializationException("The URL pointing to " + url.getFile()
+					+ " must be a directory.");
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		}
+
+		return classNames;
+	}
+
+	/**
+	 * TODO REVIEW René.
+	 * 
+	 * Instanitates all classes given in the {@link Set} of class names.
+	 * 
+	 * @param T
+	 *            The type of classes to be instantiated.
+	 * @param classType
+	 *            The Class of the classes to be instantiated.
+	 * @param classNames
+	 *            The {@link Set} containing the names of the classes to be
+	 *            instantiated.
+	 * @return
+	 */
+	private Set<T> createInstancesFromClassNames(Set<String> classNames, Class<T> classType) {
+		Set<T> classes = new HashSet<T>();
+		for (String name : classNames) {
+			Class<?> clazz;
+			try {
+				// load the class from the classpath
+				clazz = Class.forName(name);
+			} catch (ClassNotFoundException e) {
+				// Must not occur. This would mean an illegal state.
+				InitializationException ie = new InitializationException("Illegal state. Cannot load class " + name
+						+ " from JAR.");
+				LOGGER.error(ie.getMessage(), e);
+				throw ie;
+			}
+			// Create an instance of the class
+			Object instance;
+			try {
+				instance = clazz.newInstance();
+			} catch (InstantiationException e) {
+				InitializationException ie = new InitializationException("Cannot read class file from JAR.", e);
+				LOGGER.error(ie.getMessage());
+				throw ie;
+			} catch (IllegalAccessException e) {
+				InitializationException ie = new InitializationException("Cannot read class file from JAR.", e);
+				LOGGER.error(ie.getMessage());
+				throw ie;
+			}
+
+			// Checks if the created instance is of the right type. If
+			// not it is ignored.
+			if (classType.isInstance(instance)) {
+				classes.add(classType.cast(instance));
+			}
+		}
+		return classes;
+	}
 }

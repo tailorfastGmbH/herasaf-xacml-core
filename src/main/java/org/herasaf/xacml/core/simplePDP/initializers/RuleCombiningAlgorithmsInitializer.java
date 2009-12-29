@@ -17,8 +17,8 @@
 package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
@@ -54,7 +54,7 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	 *            The instances of type T.
 	 */
 	@Override
-	protected void furtherInitializations(List<AbstractRuleCombiningAlgorithm> instances) {
+	protected void furtherInitializations(Set<AbstractRuleCombiningAlgorithm> instances) {
 		for (AbstractRuleCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
 		}

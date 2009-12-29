@@ -93,30 +93,6 @@ public final class SimplePDPFactory {
 	/**
 	 * TODO REVIEW René.
 	 * 
-	 * Custom properties can be set for the initializers.
-	 * 
-	 * <b>Note:</b><br />
-	 * The function-, data type- and combining algorithm initializers respect
-	 * the property <code>org:herasaf:xacml.core:jarPath</code>.
-	 * 
-	 * @param initializerClass
-	 *            The class of the initializer for which the property is.
-	 * @param id
-	 *            The id of the property.
-	 * @param value
-	 *            The value of the property.
-	 */
-	public static void setProperty(Class<? extends Initializer> initializerClass, String id, Object value) {
-		for (Initializer initializer : initializers) {
-			if (initializer.getClass().equals(initializerClass)) {
-				initializer.setProperty(id, value);
-			}
-		}
-	}
-
-	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Enables all default initializers to initialize functions, data types,
 	 * combining algorithms and JAXB. <br />
 	 * By default the default initializers are not in use.
