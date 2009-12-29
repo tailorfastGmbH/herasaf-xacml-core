@@ -213,7 +213,6 @@ public final class SimplePDPFactory {
 		}
 
 		LOGGER.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
-		LOGGER.warn("The default policy repository is in use. This must not be used in a productive environment.");
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}
@@ -306,7 +305,6 @@ public final class SimplePDPFactory {
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
 		LOGGER.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
-		LOGGER.warn("The default policy repository is in use. This must not be used in a productive environment.");
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}
@@ -418,7 +416,6 @@ public final class SimplePDPFactory {
 				.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm
 						.getCanonicalName());
 		LOGGER.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
-		LOGGER.warn("The default policy repository is in use. This must not be used in a productive environment.");
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip);
 	}
@@ -510,7 +507,6 @@ public final class SimplePDPFactory {
 				.info("Using the default root combining algorithm : {}", defaultRootCombiningAlgorithm
 						.getCanonicalName());
 		LOGGER.info("Using the default policy repository: {}", defaultPolicyRepository.getCanonicalName());
-		LOGGER.warn("The default policy repository is in use. This must not be used in a productive environment.");
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null);
 	}

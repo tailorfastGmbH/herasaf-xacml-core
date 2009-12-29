@@ -82,6 +82,8 @@ public class MapBasedSimplePolicyRepository implements PolicyRepository {
 		individualEvaluatables = new HashMap<EvaluatableID, List<Evaluatable>>();
 		rootEvaluatableMapping = new HashMap<EvaluatableID, List<EvaluatableID>>();
 		rootEvaluatables = new ArrayList<Evaluatable>();
+		
+		logger.warn("This policy repository ({}) must not be used in a productive environment.", this.getClass().getCanonicalName());
 	}
 
 	/**
