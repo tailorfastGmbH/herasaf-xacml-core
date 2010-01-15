@@ -23,19 +23,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This JAXB {@link ValidationEventHandler} is used to handle JAXB validation
  * events. Herewith it is possible to log the events properly.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class DefaultValidationEventHandler implements ValidationEventHandler {
 	private final Logger logger = LoggerFactory.getLogger(DefaultValidationEventHandler.class);
 
 	/**
-	 * TODO REVIEW René
+	 * TODO REVIEW Renï¿½
 	 * 
 	 * {@inheritDoc} Logs a warning message on an
 	 * {@link ValidationEvent#WARNING} event and an error message an a

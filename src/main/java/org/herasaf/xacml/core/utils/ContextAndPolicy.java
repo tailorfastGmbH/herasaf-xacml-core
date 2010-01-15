@@ -26,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This static class is needed for configuring the JAXB {@link Marshaller}s and
  * {@link Unmarshaller}s. <br />
  * <br />
@@ -35,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public final class ContextAndPolicy {
 	private static final Logger LOGGER = LoggerFactory.getLogger(ContextAndPolicy.class);
@@ -45,8 +43,6 @@ public final class ContextAndPolicy {
 	private static ValidationEventHandler validationEventHandler;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This constructor is private because no objects of this class shall be
 	 * created.
 	 */
