@@ -42,8 +42,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * Matches a policy's, a policy set's or a rule's target against a given
  * request.
  * 
@@ -99,8 +97,6 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Checks if the <code>&lt;Subjects&gt;</code> element matches the given request.
 	 * 
 	 * @param subjects The <code>&lt;Subjects&gt;</code> element to be matched.
@@ -136,8 +132,6 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-     * TODO REVIEW René.
-     * 
      * Checks if the <code>&lt;Resources&gt;</code> element matches the given request.
      * 
      * @param resources The <code>&lt;Resources&gt;</code> element to be matched.
@@ -174,8 +168,6 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-     * TODO REVIEW René.
-     * 
      * Checks if the <code>&lt;Actions&gt;</code> element matches the given request.
      * 
      * @param actions The <code>&lt;Actions&gt;</code> element to be matched.
@@ -211,8 +203,6 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-     * TODO REVIEW René.
-     * 
      * Checks if the <code>&lt;Environments&gt;</code> element matches the given request.
      * 
      * @param environments The <code>&lt;Environments&gt;</code> element to be matched.
@@ -249,8 +239,6 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * @param matches The matching element (either <code>&lt;SubjectMatch&gt;</code>, <code>&lt;ResourceMatch&gt;</code>, <code>&lt;ActionMatch&gt;</code> or <code>&lt;EnvironmentMatch&gt;</code>) to be matched against the request.
 	 * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
      * @param reqInfo The {@link RequestInformation} containing additional information.

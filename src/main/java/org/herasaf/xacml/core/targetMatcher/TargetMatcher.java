@@ -25,8 +25,6 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
- * TODO REVIEW René.
- * 
  * The target matcher is responsible of matching a policy's, a policy set's or a
  * rule's target to an incoming request. This component determines based on the
  * provided attributes (in the request) whether a policy (or policy, rule) is
@@ -36,8 +34,6 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  */
 public interface TargetMatcher {
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method matches the given target with the given requests. It returns
 	 * true if the target matched, false otherwise.
 	 * 
