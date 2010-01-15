@@ -60,8 +60,6 @@ public class ContextAndPolicyInitializer implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW Ren�.
-	 * 
 	 * Creates a new {@link ContextAndPolicyConfiguration} based on the given
 	 * contextPath.
 	 * 
