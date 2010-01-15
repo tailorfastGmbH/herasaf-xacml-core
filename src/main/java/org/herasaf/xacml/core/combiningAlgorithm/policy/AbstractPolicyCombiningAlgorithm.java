@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public abstract class AbstractPolicyCombiningAlgorithm extends AbstractCombiningAlgorithm implements
 		PolicyCombiningAlgorithm {

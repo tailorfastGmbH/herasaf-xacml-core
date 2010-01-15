@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * 2006</a> appendix C, page 133. <br>
  * 
  * @author Sacha Dolski
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  * @author Florian Huonder
  */
 public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, RuleCombiningAlgorithm> {

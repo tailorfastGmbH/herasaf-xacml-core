@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * {@link URNToDataTypeConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author Ren� Eggenschwiler
+ * @author René Eggenschwiler
  */
 @SuppressWarnings("unchecked")
 public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<?>> {

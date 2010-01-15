@@ -31,7 +31,7 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
 
