@@ -22,8 +22,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
 /**
- * TODO REVIEW René.
- * 
  * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see
  * Page 105 of the XACML 2.0 specification). The specification contains an
  * error. Therefore the implementation has the following except for the

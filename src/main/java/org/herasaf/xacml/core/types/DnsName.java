@@ -18,8 +18,6 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO REVIEW René.
- * 
  * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dnsName".<br>
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">

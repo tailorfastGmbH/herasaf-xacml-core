@@ -88,8 +88,6 @@ public class AttributeValueType extends ExpressionType {
 	private Map<QName, String> otherAttributes;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Creates a new attribute value type and initializes a {@link Map} that can
 	 * contain any attribute value.
 	 */

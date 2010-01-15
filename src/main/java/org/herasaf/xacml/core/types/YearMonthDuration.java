@@ -22,8 +22,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
 /**
- * TODO REVIEW René.
- * 
  * Represetns a "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration".<br>
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">

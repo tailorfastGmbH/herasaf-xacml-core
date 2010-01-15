@@ -22,8 +22,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * TODO REVIEW René.
- * 
  * Represents a http://www.w3.org/2001/XMLSchema#time data type. The
  * specification can be found at <a
  * href="http://www.w3.org/2001/XMLSchema#time">
@@ -36,8 +34,6 @@ public class Time implements Comparable<Time> {
 	private XMLGregorianCalendar xmlCalendar;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Initializes a new {@link Time} object.
 	 * 
 	 * @param lexicalRepresentation
@@ -63,8 +59,6 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Returns the {@link XMLGregorianCalendar} instance of this {@link Time}
 	 * object.
 	 * 

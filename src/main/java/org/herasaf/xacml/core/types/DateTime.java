@@ -22,8 +22,6 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * TODO REVIEW René.
- * 
  * Represents a http://www.w3.org/2001/XMLSchema#dateTime. The specification can
  * be found at <A HREF="http://www.w3.org/2001/XMLSchema#dateTime"
  * TARGET="_blank">http://www.w3.org/2001/XMLSchema#dateTime</A>.

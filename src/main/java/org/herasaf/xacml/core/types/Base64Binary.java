@@ -18,8 +18,6 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO REVIEW René.
- * 
  * This is the representation of a value encoded in base64. The constructor
  * takes a String value and converts it into a base64 value. Via the
  * {@link #getValue()} method the base64 value can be retrieved.
