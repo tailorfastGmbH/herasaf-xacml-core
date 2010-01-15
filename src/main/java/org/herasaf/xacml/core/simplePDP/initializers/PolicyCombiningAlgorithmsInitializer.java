@@ -29,13 +29,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This initializer initializes all policy combining algorithms and puts them in
  * the {@link URNToPolicyCombiningAlgorithmConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory.getLogger(PolicyCombiningAlgorithmsInitializer.class);
@@ -47,10 +45,8 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	private static boolean respectAbandondEvaluatables;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Initializes the initializers and sets the the flag if abandoned
-	 * evaluatables shall be respected in the combining algorihtms this
+	 * evaluatables shall be respected in the combining algorithms this
 	 * initializers creates.
 	 * 
 	 * @param respectAbandondEvaluatables
@@ -64,8 +60,6 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 
 	
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method sets the flag in all combining algorithms if the abandoned
 	 * evaluatables shall be respected. Further it sets the default
 	 * {@link TargetMatcher} into the combining algorithms.

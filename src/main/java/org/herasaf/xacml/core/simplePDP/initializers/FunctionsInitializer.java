@@ -24,13 +24,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This initializer initializes all functions and puts them in the
  * {@link URNToFunctionConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author Renï¿½ Eggenschwiler
  */
 public class FunctionsInitializer extends AbstractInitializer<Function> {
 	private final Logger logger = LoggerFactory.getLogger(FunctionsInitializer.class);

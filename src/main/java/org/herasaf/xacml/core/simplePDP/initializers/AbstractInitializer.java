@@ -36,8 +36,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This initializer is the base class for all initializers that load classes for
  * the classpath and make them available for the JAXB type-adapters.
  * 
@@ -45,7 +43,7 @@ import org.slf4j.LoggerFactory;
  *            The type this initializer is made for.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public abstract class AbstractInitializer<T> implements Initializer {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractInitializer.class);
@@ -61,8 +59,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	private static final String JAR_URL_SEPARATOR = "!/";
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method returns the search context within the classpath (the search
 	 * context's delimiter is a &quot;.&quot;).
 	 * 
@@ -71,8 +67,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract String getSearchContext();
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method returns the search context within the classpath (the search
 	 * context's delimiter is a &quot;/&quot;).
 	 * 
@@ -81,8 +75,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract String getSearchContextPath();
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Returns the {@link Class} of the type T. This is needed for a proper
 	 * instantiation.
 	 * 
@@ -91,8 +83,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract Class<T> getTargetClass();
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Returns the URI, id, of the instance of type T. This method is needed
 	 * because it cannot be determined from T how the id can be obtained.
 	 * 
@@ -103,8 +93,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	protected abstract String getURIFromType(T instance);
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Sets the instances into the converter map. The converter map is the map
 	 * needed by the JAXB type adapter.
 	 * 
@@ -154,8 +142,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method allows to do further initialization steps on the instantiated
 	 * classes of type T. By default this method does nothing. It may be
 	 * overridden by an implementing subclass.
@@ -168,8 +154,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Converts the list of instances into a map where the key is the id of the
 	 * instance.
 	 * 
@@ -187,8 +171,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method determines if the given {@link URL} points to a JAR file.
 	 * This is if it has protocol "jar", "zip", "wsjar" or "code-source".
 	 * <p>
@@ -210,11 +192,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * 
-	 * TODO REVIEW René.
-	 * 
 	 * Checks if the JAR entry is a valid class. Means if the class can be
-	 * instatiated.
+	 * instantiated.
 	 * 
 	 * @param entry
 	 *            The JAR entry to check.
@@ -227,8 +206,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Gets a {@link JarFile} from the given {@link URL}.
 	 * 
 	 * @param url
@@ -267,8 +244,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Loads all valid class names from the given URL.
 	 * 
 	 * @return A {@link Set} containing all class names.
@@ -292,8 +267,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Collect all files that are in the given search context. <br />
 	 * <b> Excluded files are:</b><br />
 	 * non-java classes, abstract classes, mock classes and ananymous inner
@@ -352,9 +325,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Instanitates all classes given in the {@link Set} of class names.
+	 * Instantiates all classes given in the {@link Set} of class names.
 	 * 
 	 * @param T
 	 *            The type of classes to be instantiated.

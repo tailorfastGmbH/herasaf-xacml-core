@@ -26,8 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This initializer initializes the behavior of the JAXB marshallers and
  * unmarshallers. The default values are:<br />
  * <ul>
@@ -39,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * To alter these settings a custom initializer must be used.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class ContextAndPolicyInitializer implements Initializer {
 	private static final boolean FRAGMENT = true;
@@ -62,7 +60,7 @@ public class ContextAndPolicyInitializer implements Initializer {
 	}
 
 	/**
-	 * TODO REVIEW René.
+	 * TODO REVIEW Renï¿½.
 	 * 
 	 * Creates a new {@link ContextAndPolicyConfiguration} based on the given
 	 * contextPath.

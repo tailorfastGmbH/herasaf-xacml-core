@@ -19,27 +19,21 @@ package org.herasaf.xacml.core.api;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
- * TODO REVIEW René
- * 
- * This policy enhances to capability of the {@link PolicyRepository} with
- * <u>ordered</u> deployment of {@link Evaluatable}s (see
- * {@link #deploy(Evaluatable, int)}).
+ * This policy enhances to capability of the {@link PolicyRepository} with <u>ordered</u> deployment of
+ * {@link Evaluatable}s (see {@link #deploy(Evaluatable, int)}).
  * 
  * @author Florian Huonder
  */
 public interface OrderedPolicyRepository extends PolicyRepository {
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Inserts a new {@link Evaluatable} into the policy repository at the given
-	 * position. It requires an ordered root combining algorithm to work.
-	 * 
-	 * @param evaluatable
-	 *            The {@link Evaluatable} to add to the policy repository.
-	 * @param position
-	 *            The position where the {@link Evaluatable} shall be added to
-	 *            the list.
-	 */
-	void deploy(Evaluatable evaluatable, int position);
+    /**
+     * Inserts a new {@link Evaluatable} into the policy repository at the given position. It requires an ordered root
+     * combining algorithm to work.
+     * 
+     * @param evaluatable
+     *            The {@link Evaluatable} to add to the policy repository.
+     * @param position
+     *            The position where the {@link Evaluatable} shall be added to the list.
+     */
+    void deploy(Evaluatable evaluatable, int position);
 }

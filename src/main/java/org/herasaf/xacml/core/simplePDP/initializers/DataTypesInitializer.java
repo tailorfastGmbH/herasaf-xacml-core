@@ -25,13 +25,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This initializer initializes all data types and puts them in the
  * {@link URNToDataTypeConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author Renï¿½ Eggenschwiler
  */
 @SuppressWarnings("unchecked")
 public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<?>> {
@@ -43,7 +41,7 @@ public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<
 
 	/**
 	 * This block initializes a Class object of the DataTypeAttributeType. This
-	 * is needed beause the DataTypeAttribute type is generic.
+	 * is needed because the DataTypeAttribute type is generic.
 	 */
 	static {
 		Class<?> clazz;

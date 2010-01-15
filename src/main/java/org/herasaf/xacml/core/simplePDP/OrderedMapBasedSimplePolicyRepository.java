@@ -24,35 +24,30 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
 /**
- * TODO REVIEW René.
- * 
- * This is the default implementation of the
- * {@link OrderedMapBasedSimplePolicyRepository}. This policy repository has a
- * limited functionality. It only works as a "provider" of locally deployed
- * {@link Evaluatable}s. It does not:
+ * This is a very simple implementation of the {@link OrderedMapBasedSimplePolicyRepository}. This policy repository has
+ * a limited functionality. It only works as a "provider" of locally deployed {@link Evaluatable}s. It does not:
  * <ul>
  * <li>persist the {@link Evaluatable}s</li>
  * <li>index the {@link Evaluatable}s</li>
  * <li>resolve {@link Evaluatable}s from remote (only local) repositories</li>
  * </ul>
- * <b>It is not recommended to use this repository in a productive
- * environment.</b
+ * <b>It is not recommended to use this repository in a productive environment.</b
  * 
  * @author Florian Huonder
  */
 public class OrderedMapBasedSimplePolicyRepository extends MapBasedSimplePolicyRepository implements
-		OrderedPolicyRepository {
+        OrderedPolicyRepository {
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public void deploy(Evaluatable evaluatable, int position) {
-		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
-				.getId());
+    /**
+     * {@inheritDoc}
+     */
+    public void deploy(Evaluatable evaluatable, int position) {
+        Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(evaluatable, evaluatable
+                .getId());
 
-		checkEvaluatable(newIndividualEvaluatables);
+        checkEvaluatable(newIndividualEvaluatables);
 
-		individualEvaluatables.putAll(newIndividualEvaluatables);
-		rootEvaluatables.add(position, evaluatable);
-	}
+        individualEvaluatables.putAll(newIndividualEvaluatables);
+        rootEvaluatables.add(position, evaluatable);
+    }
 }

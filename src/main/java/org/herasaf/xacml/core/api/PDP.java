@@ -57,7 +57,8 @@ public interface PDP {
     ResponseCtx evaluate(RequestCtx request);
 
     /**
-     * Returns the {@link PolicyRepository} that this PDP uses for evaluation.
+     * Returns the {@link PolicyRepository} that this PDP uses for evaluation. <br />
+     * If the used implementation is an OrderedPolicyRepository a cast must be done manually.
      * 
      * @return The {@link PolicyRepository} contained in this {@link PDP}.
      */

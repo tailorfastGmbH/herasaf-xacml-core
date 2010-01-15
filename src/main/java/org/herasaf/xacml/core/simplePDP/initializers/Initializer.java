@@ -17,18 +17,14 @@
 package org.herasaf.xacml.core.simplePDP.initializers;
 
 /**
- * TODO REVIEW René.
- * 
- * An initializer that shall be executed by the PDP factory must implement this
+ * An initializer that shall be executed by the SimplePDPFactory must implement this
  * interface.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public interface Initializer {
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Within this method the initialization must be done.
 	 */
 	void run();
