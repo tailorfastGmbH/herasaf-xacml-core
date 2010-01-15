@@ -39,8 +39,6 @@ public interface Evaluatable {
     EvaluatableID getId();
 
     /**
-     * TODO REVIEW Ren�.
-     * 
      * Returns the target of the evaluatable.
      * 
      * @return The target of the evaluatable.

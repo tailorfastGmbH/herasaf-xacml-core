@@ -129,8 +129,6 @@ public class PolicySetType implements Evaluatable, Serializable {
 	private boolean hasObligations;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Initializes and sets (by default) to true that this policy set (or sub
 	 * policies or policy sets, respectively) contains obligations. This flag is
 	 * intended to be set by an other component (e.g. a pre processor) to
