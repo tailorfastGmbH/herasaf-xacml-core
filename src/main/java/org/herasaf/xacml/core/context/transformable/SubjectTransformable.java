@@ -22,8 +22,6 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.SubjectType;
 
 /**
- * TODO REVIEW René.
- * 
  * Transforms subject attributes from any form into a collection of
  * {@link SubjectType}s. This interface shall be implemented by a PEP-component
  * to create XACML conform request without creating an XML.
@@ -33,8 +31,6 @@ import org.herasaf.xacml.core.context.impl.SubjectType;
 public interface SubjectTransformable {
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Transforms the subject attributes in the transformable into
 	 * {@link SubjectType} and returns them in a collection.
 	 * 

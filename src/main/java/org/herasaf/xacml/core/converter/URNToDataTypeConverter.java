@@ -27,8 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * Converts an URN to a data type. The default data types are defined in the <a
  * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -44,9 +42,7 @@ public class URNToDataTypeConverter extends XmlAdapter<String, DataTypeAttribute
 	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
-	 * This method sets the {@link Map} containing the mapping betweend data types and their ID's into the
+	 * This method sets the {@link Map} containing the mapping between data types and their ID's into the
 	 * converter.
 	 * 
 	 * @param dataTypes

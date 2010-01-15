@@ -20,8 +20,6 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.EnvironmentType;
 
 /**
- * TODO REVIEW René.
- * 
  * Transforms environment attributes from any form into an {@link EnvironmentType}.
  * This interface shall be implemented by a PEP-component to create XACML
  * conform request without creating an XML.
@@ -31,8 +29,6 @@ import org.herasaf.xacml.core.context.impl.EnvironmentType;
 public interface EnvironmentTransformable {
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Transforms the environment attribute in the transformable into a
 	 * {@link EnvironmentType}.
 	 * 

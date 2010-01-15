@@ -27,8 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * Converts an URN to a function. The default functions are defined in the <a
  * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -44,8 +42,6 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 	private static Map<String, Function> functions;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method sets the {@link Map} containing the mapping between functions
 	 * and their ID's into the converter.
 	 * 

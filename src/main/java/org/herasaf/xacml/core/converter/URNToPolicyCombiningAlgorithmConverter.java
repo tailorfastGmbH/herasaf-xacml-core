@@ -27,8 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * Converts an URN to a {@link PolicyCombiningAlgorithm}. The default
  * {@link PolicyCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -44,8 +42,6 @@ public class URNToPolicyCombiningAlgorithmConverter extends XmlAdapter<String, P
 	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method sets the {@link Map} containing the mapping between policy
 	 * combining algorithms and their ID's into the converter.
 	 * 

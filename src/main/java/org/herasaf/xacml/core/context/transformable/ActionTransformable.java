@@ -20,8 +20,6 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.ActionType;
 
 /**
- * TODO REVIEW René.
- * 
  * Transforms action attributes from any form into an {@link ActionType}. This
  * interface shall be implemented by a PEP-component to create XACML conform
  * request without creating an XML.
@@ -31,8 +29,6 @@ import org.herasaf.xacml.core.context.impl.ActionType;
 public interface ActionTransformable {
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Transforms the action attribute in the transformable into a
 	 * {@link ActionType}.
 	 * 

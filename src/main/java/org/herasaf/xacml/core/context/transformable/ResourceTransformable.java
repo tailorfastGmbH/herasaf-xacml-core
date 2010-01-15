@@ -22,8 +22,6 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.ResourceType;
 
 /**
- * TODO REVIEW René.
- * 
  * Transforms resource attributes from any form into a collection of
  * {@link ResourceType}s. This interface shall be implemented by a PEP-component
  * to create XACML conform request without creating an XML.
@@ -33,8 +31,6 @@ import org.herasaf.xacml.core.context.impl.ResourceType;
 public interface ResourceTransformable {
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Transforms the resource attributes in the transformable into
 	 * {@link ResourceType} and returns them in a collection.
 	 * 

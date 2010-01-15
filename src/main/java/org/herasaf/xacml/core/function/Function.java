@@ -20,8 +20,6 @@ package org.herasaf.xacml.core.function;
 import java.io.Serializable;
 
 /**
- * TODO REVIEW René.
- * 
  * All functions that shall be used in the PDP must implement this interface.
  * All XACML 2.0 default functions can be found here: Appendix A.3 of the <a
  * href
@@ -42,8 +40,6 @@ public interface Function extends Serializable {
 	String getFunctionId();
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * The handler that takes an unspecified number of arguments to process. The
 	 * exact number of arguments depends on the implementation of the function.
 	 * 

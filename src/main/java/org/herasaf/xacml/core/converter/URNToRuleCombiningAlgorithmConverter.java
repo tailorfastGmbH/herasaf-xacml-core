@@ -27,8 +27,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * Converts an URN to a {@link RuleCombiningAlgorithm}. The default
  * {@link RuleCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
@@ -44,8 +42,6 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method sets the {@link Map} containing the mapping between rule
 	 * combining algorithms and their ID's into the converter.
 	 * 
