@@ -54,7 +54,7 @@ public class TimeGreaterThanOrEqualFunction extends AbstractFunction {
 	 * must provide an implicit time zone if no one is set.
 	 * This MUST is not considered in this implementation of the function.</code>
 	 */
-	// FIXME Time zone awareness.
+	// FIXME Time zone awareness (see HERASAFXACMLCORE-28).
 	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
 	// Errata 29 June
 	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
