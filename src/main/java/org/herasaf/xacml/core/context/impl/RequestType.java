@@ -166,7 +166,7 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * FIXME Timezone issue (see HERASAFXACMLCORE-28).
+	 * FIXME Timezone awareness (see HERASAFXACMLCORE-28).
 	 * 
 	 * Creates a new {@link AttributeValueType} containing the current dateTime
 	 * with the given pattern.
