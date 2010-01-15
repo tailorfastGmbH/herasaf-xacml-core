@@ -18,62 +18,55 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO REVIEW René.
- * 
- * This runtime exception is thrown in case an evaluatable cannot be found.
- * Either it is not deployed to the locale repository or in case of a remote
- * reference it cannot be resolved.
+ * This runtime exception is thrown in case an evaluatable cannot be found. Either it is not deployed to the locale
+ * repository or in case of a remote reference it cannot be resolved.
  * 
  * @author Florian Huonder
  * @author Patrik Dietschweiler
  */
 public class EvaluatableNotFoundException extends RuntimeException {
-	private static final long serialVersionUID = 8213802064654257318L;
+    private static final long serialVersionUID = 8213802064654257318L;
 
-	/**
-	 * Constructs a new exception with null as its detail message.
-	 */
-	public EvaluatableNotFoundException() {
-		super();
-	}
+    /**
+     * Constructs a new exception with null as its detail message.
+     */
+    public EvaluatableNotFoundException() {
+        super();
+    }
 
-	/**
-	 * Constructs a new exception with the specified detail message.
-	 * 
-	 * @param message
-	 *            The detail message. The detail message is saved for later
-	 *            retrieval by the {@link #getMessage()} method.
-	 */
-	public EvaluatableNotFoundException(String message) {
-		super(message);
-	}
+    /**
+     * Constructs a new exception with the specified detail message.
+     * 
+     * @param message
+     *            The detail message. The detail message is saved for later retrieval by the {@link #getMessage()}
+     *            method.
+     */
+    public EvaluatableNotFoundException(String message) {
+        super(message);
+    }
 
-	/**
-	 * Constructs a new exception with the specified detail message and cause.
-	 * 
-	 * @param message
-	 *            The detail message (which is saved for later retrieval by the
-	 *            {@link #getMessage()} method).
-	 * @param cause
-	 *            The cause (which is saved for later retrieval by the
-	 *            {@link #getCause()} method). (A null value is permitted, and
-	 *            indicates that the cause is nonexistent or unknown.)
-	 */
-	public EvaluatableNotFoundException(String message, Throwable cause) {
-		super(message, cause);
-	}
+    /**
+     * Constructs a new exception with the specified detail message and cause.
+     * 
+     * @param message
+     *            The detail message (which is saved for later retrieval by the {@link #getMessage()} method).
+     * @param cause
+     *            The cause (which is saved for later retrieval by the {@link #getCause()} method). (A null value is
+     *            permitted, and indicates that the cause is nonexistent or unknown.)
+     */
+    public EvaluatableNotFoundException(String message, Throwable cause) {
+        super(message, cause);
+    }
 
-	/**
-	 * Constructs a new exception with the specified cause and a detail message
-	 * of (cause==null ? null : cause.toString()) (which typically contains the
-	 * class and detail message of cause).
-	 * 
-	 * @param cause
-	 *            The cause (which is saved for later retrieval by the
-	 *            {@link #getCause()} method). (A null value is permitted, and
-	 *            indicates that the cause is nonexistent or unknown.)
-	 */
-	public EvaluatableNotFoundException(Throwable cause) {
-		super(cause);
-	}
+    /**
+     * Constructs a new exception with the specified cause and a detail message of (cause==null ? null :
+     * cause.toString()) (which typically contains the class and detail message of cause).
+     * 
+     * @param cause
+     *            The cause (which is saved for later retrieval by the {@link #getCause()} method). (A null value is
+     *            permitted, and indicates that the cause is nonexistent or unknown.)
+     */
+    public EvaluatableNotFoundException(Throwable cause) {
+        super(cause);
+    }
 }

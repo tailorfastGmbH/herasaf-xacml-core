@@ -21,8 +21,6 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
- * TODO REVIEW René
- * 
  * This exception is thrown if a <i>must-be-present</i> attribute that is
  * missing in the request cannot be resolved (e.g. from a PIP).
  * 

@@ -18,8 +18,6 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO REVIEW René
- * 
  * This runtime exception is thrown if an error occurs while processing a function or an
  * expression.
  * 

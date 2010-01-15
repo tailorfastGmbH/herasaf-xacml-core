@@ -17,12 +17,10 @@
 package org.herasaf.xacml.core;
 
 /**
- * TODO REVIEW René
- * 
  * This runtime exception is thrown in case an initialization error occurs.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author Renï¿½ Eggenschwiler
  */
 public class NotInitializedException extends RuntimeException {
 	private static final long serialVersionUID = 4169969483147086614L;

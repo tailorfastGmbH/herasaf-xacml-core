@@ -20,8 +20,6 @@ package org.herasaf.xacml.core.policy;
 import org.herasaf.xacml.core.ProcessingException;
 
 /**
- * TODO REVIEW René
- * 
  * This runtime exception is thrown if an error occurs while processing an
  * expression.
  * 

@@ -33,8 +33,6 @@ public class DefaultValidationEventHandler implements ValidationEventHandler {
 	private final Logger logger = LoggerFactory.getLogger(DefaultValidationEventHandler.class);
 
 	/**
-	 * TODO REVIEW Ren�
-	 * 
 	 * {@inheritDoc} Logs a warning message on an
 	 * {@link ValidationEvent#WARNING} event and an error message an a
 	 * {@link ValidationEvent#ERROR} and {@link ValidationEvent#FATAL_ERROR}
