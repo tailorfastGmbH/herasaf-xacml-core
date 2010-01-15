@@ -94,8 +94,6 @@ public class RequestType implements Serializable {
 	private EnvironmentType environment;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Sets the following attributes, if not already contained, into the
 	 * request:
 	 * <ul>
@@ -126,8 +124,6 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Creates a new {@link AttributeType} containing the current time.
 	 * 
 	 * @return The {@link AttributeType} containing the current time.
@@ -142,8 +138,6 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Creates a new {@link AttributeType} containing the current date.
 	 * 
 	 * @return The {@link AttributeType} containing the current date.
@@ -158,8 +152,6 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Creates a new {@link AttributeType} containing the current dateTime.
 	 * 
 	 * @return The {@link AttributeType} containing the current dateTime.
@@ -174,9 +166,7 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * FIXME Timezone issue.
-	 * 
-	 * TODO REVIEW René.
+	 * FIXME Timezone issue (see HERASAFXACMLCORE-28).
 	 * 
 	 * Creates a new {@link AttributeValueType} containing the current dateTime
 	 * with the given pattern.
@@ -195,8 +185,6 @@ public class RequestType implements Serializable {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Checks if the environment already contains an element with ID id. It
 	 * returns true if such an element is already in the environment, false
 	 * otherwise.

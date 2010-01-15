@@ -77,8 +77,6 @@ public class ResourceContentType implements Serializable {
 	private Map<QName, String> otherAttributes;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Initializes a new {@link Map} that may containing any element.
 	 */
 	public ResourceContentType() {

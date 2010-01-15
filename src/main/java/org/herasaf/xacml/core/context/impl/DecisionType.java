@@ -89,8 +89,6 @@ public enum DecisionType {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Returns the enum-type from the given {@link String} value.
 	 * 
 	 * @param v
