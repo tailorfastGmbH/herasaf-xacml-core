@@ -38,8 +38,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 
 /**
- * TODO REVIEW René.
- * 
  * This request context represents a XACML request.
  * <br />
  * This request context provides various marshalling methods. Because the {@link Marshaller} of JAXB <b>is
@@ -47,7 +45,7 @@ import org.xml.sax.ContentHandler;
  * class fully relies on the underlying JAXB implementation.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class RequestCtx {
 	private final Logger LOGGER = LoggerFactory.getLogger(RequestCtx.class);
@@ -83,8 +81,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given content handler.
 	 * 
 	 * @param ch
@@ -103,8 +99,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given file.
 	 * 
 	 * @param file
@@ -123,8 +117,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given result.
 	 * 
 	 * <p>
@@ -150,8 +142,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given output stream.
 	 * 
 	 * @param out
@@ -170,8 +160,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given writer.
 	 * 
 	 * @param writer
@@ -190,8 +178,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given node.
 	 * 
 	 * @param node
@@ -210,8 +196,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given xml stream writer.
 	 * 
 	 * @param xmlStreamWriter
@@ -230,8 +214,6 @@ public class RequestCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link RequestCtx} to the given xml event writer.
 	 * 
 	 * @param xmlEventWriter

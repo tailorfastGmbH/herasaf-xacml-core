@@ -18,72 +18,67 @@
 package org.herasaf.xacml.core.context;
 
 /**
- * TODO REVIEW René.
+ * The StatusCode contains the status of the evaluation.
  * 
- * The {@link StatusCode} contains the status of the evaluation. See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix B.9 page 131, for further information.
+ * @see <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ *      Control Markup Language (XACML) 2.0, Errata 29 June 2006</a> appendix B.9 page 131, for further information.
  * 
  * @author Florian Huonder
  */
 public enum StatusCode {
-	/**
-	 * This status indicates success.
-	 */
-	OK("urn:oasis:names:tc:xacml:1.0:status:ok"),
-	/**
-	 * This status indicates that an error occurred during policy evaluation.
-	 */
-	PROCESSING_ERROR("urn:oasis:names:tc:xacml:1.0:status:processing-error"),
-	/**
-	 * This status indicates that all attributes necessary to make a policy
-	 * decision were not available.
-	 */
-	MISSING_ATTRIBUTE("urn:oasis:names:tc:xacml:1.0:status:missing-attribute"),
-	/**
-	 * This status indicates that some attribute values contained a syntax
-	 * error.
-	 */
-	SYNTAX_ERROR("urn:oasis:names:tc:xacml:1.0:status:syntax-error");
+    /**
+     * This status indicates success.
+     */
+    OK("urn:oasis:names:tc:xacml:1.0:status:ok"),
+    /**
+     * This status indicates that an error occurred during policy evaluation.
+     */
+    PROCESSING_ERROR("urn:oasis:names:tc:xacml:1.0:status:processing-error"),
+    /**
+     * This status indicates that all attributes necessary to make a policy decision were not available.
+     */
+    MISSING_ATTRIBUTE("urn:oasis:names:tc:xacml:1.0:status:missing-attribute"),
+    /**
+     * This status indicates that some attribute values contained a syntax error.
+     */
+    SYNTAX_ERROR("urn:oasis:names:tc:xacml:1.0:status:syntax-error");
 
-	private String value;
+    private String value;
 
-	/**
-	 * Sole constructor. Programmers cannot invoke this constructor. It is for
-	 * use by code emitted by the compiler in response to enum type
-	 * declarations.
-	 * 
-	 * @param value
-	 *            The value to set.
-	 */
-	StatusCode(String value) {
-		this.value = value;
-	}
+    /**
+     * Sole constructor. Programmers cannot invoke this constructor. It is for use by code emitted by the compiler in
+     * response to enum type declarations.
+     * 
+     * @param value
+     *            The value to set.
+     */
+    StatusCode(String value) {
+        this.value = value;
+    }
 
-	/**
-	 * Returns the current value.
-	 * 
-	 * @return The current {@link StatusCode}.
-	 */
-	public String getValue() {
-		return value;
-	}
+    /**
+     * Returns the current value.
+     * 
+     * @return The current {@link StatusCode}.
+     */
+    public String getValue() {
+        return value;
+    }
 
-	/**
-	 * Returns the {@link StatusCode} referenced by its String-Representation.
-	 * 
-	 * @param value
-	 *            The String value of the {@link StatusCode}.
-	 * @return The {@link StatusCode}.
-	 */
-	public static StatusCode getStatusCode(String value) {
-		for (int i = 0; i < StatusCode.values().length; i++) {
-			StatusCode code = StatusCode.values()[i];
-			if (code.getValue().equals(value)) {
-				return code;
-			}
-		}
-		return null;
-	}
+    /**
+     * Returns the {@link StatusCode} referenced by its String-Representation.
+     * 
+     * @param value
+     *            The String value of the {@link StatusCode}.
+     * @return The {@link StatusCode}.
+     */
+    public static StatusCode getStatusCode(String value) {
+        for (int i = 0; i < StatusCode.values().length; i++) {
+            StatusCode code = StatusCode.values()[i];
+            if (code.getValue().equals(value)) {
+                return code;
+            }
+        }
+        return null;
+    }
 }

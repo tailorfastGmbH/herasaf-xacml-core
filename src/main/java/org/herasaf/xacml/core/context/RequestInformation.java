@@ -30,8 +30,6 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.policy.impl.Variable;
 
 /**
- * TODO REVIEW René.
- * 
  * This class is the container containing the context of a request evaluation.
  * It contains
  * <ul>
@@ -44,7 +42,7 @@ import org.herasaf.xacml.core.policy.impl.Variable;
  * </ul>
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author Renï¿½ Eggenschwiler
  */
 public class RequestInformation {
 	private PIP pip;
@@ -63,8 +61,6 @@ public class RequestInformation {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Initializes with the given {@link PIP}. This {@link PIP} then is used
 	 * during evaluation to resolve missing attributes.
 	 * 
@@ -251,8 +247,6 @@ public class RequestInformation {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method clears all obligations that were collected so far.
 	 */
 	public void clearObligations() {

@@ -37,8 +37,6 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 
 /**
- * TODO REVIEW René.
- * 
  * This response context represents a XACML response.
  * <br />
  * This response context provides various marshalling methods. Because the {@link Marshaller} of JAXB <b>is
@@ -81,8 +79,6 @@ public class ResponseCtx {
 
 	
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given content handler.
 	 * 
 	 * @param ch
@@ -101,8 +97,6 @@ public class ResponseCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given file.
 	 * 
 	 * @param file
@@ -122,8 +116,6 @@ public class ResponseCtx {
 
 	
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given result.
 	 * 
 	 * <p>
@@ -149,8 +141,6 @@ public class ResponseCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given output stream.
 	 * 
 	 * @param out
@@ -169,8 +159,6 @@ public class ResponseCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given writer.
 	 * 
 	 * @param writer
@@ -189,8 +177,6 @@ public class ResponseCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given node.
 	 * 
 	 * @param node
@@ -209,8 +195,6 @@ public class ResponseCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given xml stream writer.
 	 * 
 	 * @param xmlStreamWriter
@@ -230,8 +214,6 @@ public class ResponseCtx {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Marshals this {@link ResponseCtx} to the given xml event writer.
 	 * 
 	 * @param xmlEventWriter
