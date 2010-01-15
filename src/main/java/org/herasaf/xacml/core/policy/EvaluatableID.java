@@ -18,19 +18,15 @@
 package org.herasaf.xacml.core.policy;
 
 /**
- * TODO REVIEW René.
- * 
  * The {@link EvaluatableID} represents the id of an {@link Evaluatable}.
  * 
  * @author Stefan Oberholzer
  */
 public interface EvaluatableID {
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns the id of the {@link Evaluatable} as {@link String}.
-	 * 
-	 * @return The id of the {@link Evaluatable}.
-	 */
-	String getId();
+    /**
+     * Returns the id of the {@link Evaluatable} as {@link String}.
+     * 
+     * @return The id of the {@link Evaluatable}.
+     */
+    String getId();
 }

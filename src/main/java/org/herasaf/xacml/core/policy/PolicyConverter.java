@@ -63,8 +63,6 @@ public final class PolicyConverter {
     private static final ContextAndPolicy.JAXBProfile CONTEXT = ContextAndPolicy.JAXBProfile.POLICY;
 
     /**
-     *TODO REVIEW Ren�.
-     * 
      * Initializes the object factory.
      */
     static {
@@ -72,8 +70,6 @@ public final class PolicyConverter {
     }
 
     /**
-     * TODO REVIEW Ren�.
-     * 
      * The default constructor is private because it must no be possible to instantiate an object of this type. It is
      * intended to be used in a static way.
      */

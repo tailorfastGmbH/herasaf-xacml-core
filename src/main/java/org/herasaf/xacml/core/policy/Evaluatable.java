@@ -25,74 +25,57 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
- * TODO REVIEW René.
- * 
- * An evaluatable is an evaluable type. Such a type represents an policy or
- * policy set in XAMCL.
+ * An evaluatable is an evaluable type. Such a type represents an policy or policy set in XAMCL.
  * 
  * @author Florian Huonder
  */
 public interface Evaluatable {
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * This method returns the ID of the evaluatable.
-	 * 
-	 * @return The ID of the evaluatable.
-	 */
-	EvaluatableID getId();
+    /**
+     * This method returns the ID of the evaluatable.
+     * 
+     * @return The ID of the evaluatable.
+     */
+    EvaluatableID getId();
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns the target of the evaluatable.
-	 * 
-	 * @return The target of the evaluatable.
-	 */
-	TargetType getTarget();
+    /**
+     * TODO REVIEW Renï¿½.
+     * 
+     * Returns the target of the evaluatable.
+     * 
+     * @return The target of the evaluatable.
+     */
+    TargetType getTarget();
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns the combining algorithm of the evaluatable.
-	 * 
-	 * @return The combining algorithm of the evaluatable.
-	 */
-	CombiningAlgorithm getCombiningAlg();
+    /**
+     * Returns the combining algorithm of the evaluatable.
+     * 
+     * @return The combining algorithm of the evaluatable.
+     */
+    CombiningAlgorithm getCombiningAlg();
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns the version of the evaluatable.
-	 * 
-	 * @return The version of the evaluatable.
-	 */
-	String getEvalutableVersion();
+    /**
+     * Returns the version of the evaluatable.
+     * 
+     * @return The version of the evaluatable.
+     */
+    String getEvalutableVersion();
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns a boolean value indicating if the current {@link Evaluatable} or
-	 * a sub-{@link Evaluatable} contains one or more
-	 * <code>&lt;Obligation&gt;</code>.
-	 * 
-	 * @return True if the current or a sub-{@link Evaluatable} contains one or
-	 *         more <code>&lt;Obligation&gt;</code>, false otherwise.
-	 */
-	boolean hasObligations();
+    /**
+     * Returns a boolean value indicating if the current {@link Evaluatable} or a sub-{@link Evaluatable} contains one
+     * or more <code>&lt;Obligation&gt;</code>.
+     * 
+     * @return True if the current or a sub-{@link Evaluatable} contains one or more <code>&lt;Obligation&gt;</code>,
+     *         false otherwise.
+     */
+    boolean hasObligations();
 
-	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Returns the <code>&lt;Obligation&gt;</code>s of this {@link Evaluatable}
-	 * that match the given {@link EffectType}.
-	 * 
-	 * @param effect
-	 *            The {@link EffectType} to which the returned
-	 *            <code>&lt;Obligation&gt;</code>s must match.
-	 * @return The <code>&lt;Obligation&gt;</code>s that match the
-	 *         {@link EffectType}.
-	 */
-	List<ObligationType> getContainedObligations(EffectType effect);
+    /**
+     * Returns the <code>&lt;Obligation&gt;</code>s of this {@link Evaluatable} that match the given {@link EffectType}.
+     * 
+     * @param effect
+     *            The {@link EffectType} to which the returned <code>&lt;Obligation&gt;</code>s must match.
+     * @return The <code>&lt;Obligation&gt;</code>s that match the {@link EffectType}.
+     */
+    List<ObligationType> getContainedObligations(EffectType effect);
 }
