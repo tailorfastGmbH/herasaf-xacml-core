@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,6 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
- * TODO REVIEW René.
- * 
  * This abstract class may be used as basis for the implementation of a data type.
  * It has some default implementations of common methods (like {@link #equals(Object)}).
  * @param <T>

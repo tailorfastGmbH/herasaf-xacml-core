@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -72,8 +72,6 @@ public class ObligationType implements Serializable {
 	private EffectType fulfillOn;
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Initializes an empty obligation. effect and id must be set with the
 	 * setters.
 	 */
@@ -82,9 +80,7 @@ public class ObligationType implements Serializable {
 	}
 
 	/**
-	 * TODO REVIEW René.
-	 * 
-	 * Initializes an obligation with the givven effect and id.
+	 * Initializes an obligation with the given effect and id.
 	 * 
 	 * @param id
 	 *            The id of the obligation.

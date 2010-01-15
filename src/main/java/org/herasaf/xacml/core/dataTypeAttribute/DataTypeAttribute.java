@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,8 +20,6 @@ package org.herasaf.xacml.core.dataTypeAttribute;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO REVIEW René.
- * 
  * A data type represents the type of an attribute value in JAXB. The XACML 2.0
  * default data types are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">

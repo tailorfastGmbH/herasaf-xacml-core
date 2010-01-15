@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +22,6 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
- * TODO REVIEW René.
- * 
  * This interface describes a combining algorithm, rule and policy combining
  * algorithms. The
  * {@link #evaluate(RequestType, Evaluatable, RequestInformation)} method is the
@@ -35,8 +33,6 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 public interface CombiningAlgorithm {
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Evaluates a request against the given {@link Evaluatable} (that is a
 	 * policy or a policy set).
 	 * 

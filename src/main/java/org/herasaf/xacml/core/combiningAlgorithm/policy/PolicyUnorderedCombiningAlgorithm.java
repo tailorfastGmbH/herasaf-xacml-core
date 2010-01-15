@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +25,6 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
- * TODO REVIEW René.
- * 
  * This class may be extended when implementing an unordered policy combining
  * algorithm. It contains some common code all ordered combining algorithms must
  * implement.

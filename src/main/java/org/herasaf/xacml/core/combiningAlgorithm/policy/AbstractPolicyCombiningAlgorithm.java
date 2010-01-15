@@ -19,8 +19,6 @@ package org.herasaf.xacml.core.combiningAlgorithm.policy;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 
 /**
- * TODO REVIEW René.
- * 
  * This class handles all commonality of the policy combining algorithms. This
  * is if a combining algorithm shall respect abandoned evaluatables.
  * 

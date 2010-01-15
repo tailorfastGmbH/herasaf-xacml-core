@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,8 +22,6 @@ import java.math.BigInteger;
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * TODO REVIEW René.
- * 
  * This data type represents a http://www.w3.org/2001/XMLSchema#integer. See: <A
  * HREF="http://www.w3.org/TR/xmlschema-2/#integer"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for further

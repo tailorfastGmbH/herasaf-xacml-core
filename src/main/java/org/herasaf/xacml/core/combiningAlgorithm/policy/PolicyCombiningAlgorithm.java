@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,8 +26,6 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
- * TODO REVIEW René.
- * 
  * All policy combining algorithms must implement this interface. It provides
  * the entry point (
  * {@link #evaluateEvaluatableList(RequestType, List, RequestInformation)}) for
@@ -38,8 +36,6 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  */
 public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * This method is the entry point for a policy combining algorithm to start
 	 * evaluating its sub-evaluatables.
 	 * 
@@ -55,8 +51,6 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 			RequestInformation requestInfo);
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Returns true if abandoned evaluatables shall be respected, false
 	 * otherwise.
 	 * 
@@ -66,8 +60,6 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	boolean isRespectAbandonedEvaluatables();
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Sets if this combining algorithm shall respect abandoned evaluatables.
 	 * 
 	 * @param respectAbandondEvaluatables

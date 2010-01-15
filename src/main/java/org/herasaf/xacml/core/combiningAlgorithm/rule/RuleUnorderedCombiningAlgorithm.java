@@ -25,8 +25,6 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 
 /**
- * TODO REVIEW René.
- * 
  * This class may be extended when implementing an unordered rule combining
  * algorithm. It contains some common code all ordered combining algorithms must
  * implement.

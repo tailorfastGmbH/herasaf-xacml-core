@@ -31,8 +31,6 @@ import org.herasaf.xacml.core.policy.impl.ExpressionType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * TODO REVIEW René.
- * 
  * This class handles all commonality of the rule combining algorithms. This is
  * the evaluation of a single rule.
  * 

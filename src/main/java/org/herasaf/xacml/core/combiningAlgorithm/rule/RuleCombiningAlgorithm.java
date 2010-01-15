@@ -24,8 +24,6 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * TODO REVIEW René.
- * 
  * All rule combining algorithms must implement this interface. It provides the
  * entry point ({@link #evaluateRuleList(RequestType, List, RequestInformation)}
  * ) for starting to evaluate all containing rules and a method to evaluate a
@@ -38,8 +36,6 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
 public interface RuleCombiningAlgorithm {
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Evaluates a rule.
 	 * 
 	 * The different return values of a rule evaluation are specified in the
@@ -59,8 +55,6 @@ public interface RuleCombiningAlgorithm {
 	DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo);
 
 	/**
-	 * TODO REVIEW René.
-	 * 
 	 * Evaluates all rules given in the rule list and returns the combined
 	 * result.
 	 * 

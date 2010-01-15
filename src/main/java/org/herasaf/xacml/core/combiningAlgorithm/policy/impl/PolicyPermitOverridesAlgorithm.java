@@ -35,8 +35,6 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * TODO REVIEW René.
- * 
  * The implementation of the default XACML 2.0 <i>policy unordered permit
  * overrides algorithm</i>.<br />
  * See: <a href=

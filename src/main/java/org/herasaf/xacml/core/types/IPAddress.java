@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,8 +18,6 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * TODO REVIEW René.
- * 
  * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:ipAddress".<br>
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">

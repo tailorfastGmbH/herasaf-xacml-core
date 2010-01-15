@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,8 +31,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO REVIEW René.
- * 
  * This abstraction may be extended. It has implemented common logic that is
  * valid for all combining algorithms within the PDP.
  * 
@@ -45,7 +43,6 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private TargetMatcher targetMatcher;
 
 	/**
-	 * 
 	 * Sets the {@link TargetMatcher}.
 	 * 
 	 * @param targetMatcher
