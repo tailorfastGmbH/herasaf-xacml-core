@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -33,7 +33,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -41,11 +41,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 /**
  * <p>
  * Java class for PolicyType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;PolicyType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -69,50 +69,49 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 52, for further information.
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 52, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
- * @author Florian Huonder
  */
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults",
-		"target", "additionalInformation", "obligations" })
+@XmlRootElement
+@XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
+		"obligations" })
 public class PolicyType implements Evaluatable, Serializable {
-
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
-	protected String description;
+	private String description;
 	@XmlElement(name = "PolicyDefaults")
-	protected DefaultsType policyDefaults;
+	private DefaultsType policyDefaults;
 	@XmlElement(name = "Target", required = true)
-	protected TargetType target;
-	@XmlElements( {
-			@XmlElement(name = "Rule", type = RuleType.class),
+	private TargetType target;
+	@XmlElements({ @XmlElement(name = "Rule", type = RuleType.class),
 			@XmlElement(name = "VariableDefinition", type = VariableDefinitionType.class),
 			@XmlElement(name = "RuleCombinerParameters", type = RuleCombinerParametersType.class),
 			@XmlElement(name = "CombinerParameters", type = CombinerParametersType.class) })
-	protected List<Object> additionalInformation;
+	private List<Object> additionalInformation;
 	@XmlElement(name = "Obligations")
-	protected ObligationsType obligations;
+	private ObligationsType obligations;
 	@XmlAttribute(name = "PolicyId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String policyId;
+	private String policyId;
 	@XmlAttribute(name = "Version")
-	protected String version;
+	private String version;
 	@XmlAttribute(name = "RuleCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToRuleCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected RuleCombiningAlgorithm ruleCombiningAlg;
+	private AbstractRuleCombiningAlgorithm ruleCombiningAlg;
 
 	/**
 	 * Gets the value of the description property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getDescription() {
 		return description;
@@ -120,10 +119,10 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the description property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setDescription(String value) {
 		this.description = value;
@@ -131,9 +130,9 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the policyDefaults property.
-	 *
+	 * 
 	 * @return possible object is {@link DefaultsType }
-	 *
+	 * 
 	 */
 	public DefaultsType getPolicyDefaults() {
 		return policyDefaults;
@@ -141,10 +140,10 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the policyDefaults property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link DefaultsType }
-	 *
+	 * 
 	 */
 	public void setPolicyDefaults(DefaultsType value) {
 		this.policyDefaults = value;
@@ -152,9 +151,9 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the target property.
-	 *
+	 * 
 	 * @return possible object is {@link TargetType }
-	 *
+	 * 
 	 */
 	public TargetType getTarget() {
 		return target;
@@ -162,10 +161,10 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the target property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link TargetType }
-	 *
+	 * 
 	 */
 	public void setTarget(TargetType value) {
 		this.target = value;
@@ -173,27 +172,27 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the additionalInformation property.
-	 *
+	 * 
 	 * <p>
 	 * This accessor method returns a reference to the live list, not a
 	 * snapshot. Therefore any modification you make to the returned list will
 	 * be present inside the JAXB object. This is why there is not a
 	 * <CODE>set</CODE> method for the additionalInformation property.
-	 *
+	 * 
 	 * <p>
 	 * For example, to add a new item, do as follows:
-	 *
+	 * 
 	 * <pre>
 	 * getAdditionalInformation().add(newItem);
 	 * </pre>
-	 *
-	 *
+	 * 
+	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link RuleType } {@link VariableDefinitionType }
-	 * {@link RuleCombinerParametersType } {@link CombinerParametersType }
-	 *
-	 *
+	 * Objects of the following type(s) are allowed in the list {@link RuleType }
+	 * {@link VariableDefinitionType } {@link RuleCombinerParametersType }
+	 * {@link CombinerParametersType }
+	 * 
+	 * 
 	 */
 	public List<Object> getAdditionalInformation() {
 		if (additionalInformation == null) {
@@ -204,9 +203,9 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the obligations property.
-	 *
+	 * 
 	 * @return possible object is {@link ObligationsType }
-	 *
+	 * 
 	 */
 	public ObligationsType getObligations() {
 		return obligations;
@@ -214,10 +213,10 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the obligations property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link ObligationsType }
-	 *
+	 * 
 	 */
 	public void setObligations(ObligationsType value) {
 		this.obligations = value;
@@ -225,9 +224,9 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the policyId property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getPolicyId() {
 		return policyId;
@@ -235,10 +234,10 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the policyId property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setPolicyId(String value) {
 		this.policyId = value;
@@ -246,9 +245,9 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the version property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getVersion() {
 		if (version == null) {
@@ -259,10 +258,10 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the version property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setVersion(String value) {
 		this.version = value;
@@ -270,19 +269,20 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getCombiningAlg()
 	 */
-	public RuleCombiningAlgorithm getCombiningAlg() {
+	public AbstractRuleCombiningAlgorithm getCombiningAlg() {
 		return ruleCombiningAlg;
 	}
 
 	/**
 	 * Sets the value of the ruleCombiningAlg property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
 	 */
-	public void setCombiningAlg(RuleCombiningAlgorithm value) {
+	public void setCombiningAlg(AbstractRuleCombiningAlgorithm value) {
 		this.ruleCombiningAlg = value;
 	}
 
@@ -293,8 +293,8 @@ public class PolicyType implements Evaluatable, Serializable {
 	 */
 	public List<RuleType> getOrderedRules() {
 		List<RuleType> rules = new ArrayList<RuleType>();
-		for (int i = 0; i < additionalInformation.size(); i++){
-			Object obj = additionalInformation.get(i);
+		for (int i = 0; i < getAdditionalInformation().size(); i++) {
+			Object obj = getAdditionalInformation().get(i);
 			if (obj instanceof RuleType) {
 				rules.add((RuleType) obj);
 			}
@@ -312,14 +312,15 @@ public class PolicyType implements Evaluatable, Serializable {
 	}
 
 	/**
-	 * Returns a {@link Map} containing the {@link VariableDefinitionType}s with their Id as key.
+	 * Returns a {@link Map} containing the {@link VariableDefinitionType}s with
+	 * their Id as key.
 	 * 
 	 * @return The {@link Map} contianing the {@link VariableDefinitionType}s.
 	 */
-	public Map<String, Variable> getVariables(){
+	public Map<String, Variable> getVariables() {
 		Map<String, Variable> variables = new HashMap<String, Variable>();
-		for (Object obj : additionalInformation) {
-			if (obj instanceof VariableDefinitionType){
+		for (Object obj : getAdditionalInformation()) {
+			if (obj instanceof VariableDefinitionType) {
 				VariableDefinitionType variable = (VariableDefinitionType) obj;
 				variables.put(variable.getVariableId(), variable);
 			}
@@ -329,13 +330,16 @@ public class PolicyType implements Evaluatable, Serializable {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
 	public EvaluatableID getId() {
 		return new EvaluatableIDImpl(getPolicyId());
 	}
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
 	public String getEvalutableVersion() {
@@ -346,7 +350,9 @@ public class PolicyType implements Evaluatable, Serializable {
 	 * {@inheritDoc}
 	 */
 	public boolean hasObligations() {
-		if(obligations == null) return false;
+		if (obligations == null) {
+			return false;
+		}
 		return obligations.getObligations().size() > 0;
 	}
 
@@ -355,11 +361,11 @@ public class PolicyType implements Evaluatable, Serializable {
 	 */
 	public List<ObligationType> getContainedObligations(EffectType effect) {
 		List<ObligationType> result = new ArrayList<ObligationType>();
-		if(obligations != null){	
+		if (obligations != null) {
 			List<ObligationType> oblis = obligations.getObligations();
-			for(int i = 0; i < oblis.size(); i++){
+			for (int i = 0; i < oblis.size(); i++) {
 				ObligationType obli = oblis.get(i);
-				if(obli.getFulfillOn() == effect){
+				if (obli.getFulfillOn() == effect) {
 					result.add(obli);
 				}
 			}

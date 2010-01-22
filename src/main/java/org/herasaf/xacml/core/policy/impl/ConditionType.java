@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,20 @@
 package org.herasaf.xacml.core.policy.impl;
 
 import java.io.Serializable;
+
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for ConditionType complex type.
+ * <p>
+ * Java class for ConditionType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ConditionType">
@@ -42,63 +45,66 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 59, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 59, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ConditionType", propOrder = {
-    "expression"
-})
-public class ConditionType
-    implements Serializable
-{
+@XmlType(name = "ConditionType", propOrder = { "expression" })
+public class ConditionType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
-    protected JAXBElement<?> expression;
+	private static final long serialVersionUID = 632768732L;
+	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
+	private JAXBElement<?> expression;
 
-    /**
-     * Gets the value of the expression property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SubjectAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ResourceAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvironmentAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ActionAttributeDesignatorType }{@code >}
-     *     
-     */
-    public JAXBElement<?> getExpression() {
-        return expression;
-    }
+	/**
+	 * Gets the value of the expression property.
+	 * 
+	 * @return possible object is {@link JAXBElement }{@code <}
+	 *         {@link AttributeSelectorType }{@code >} {@link JAXBElement }{@code
+	 *         <}{@link ExpressionType }{@code >} {@link JAXBElement }{@code <}
+	 *         {@link FunctionType }{@code >} {@link JAXBElement }{@code <}
+	 *         {@link ApplyType }{@code >} {@link JAXBElement }{@code <}
+	 *         {@link SubjectAttributeDesignatorType }{@code >}
+	 *         {@link JAXBElement }{@code <}
+	 *         {@link ResourceAttributeDesignatorType }{@code >}
+	 *         {@link JAXBElement }{@code <}
+	 *         {@link EnvironmentAttributeDesignatorType }{@code >}
+	 *         {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code
+	 *         >} {@link JAXBElement }{@code <}{@link AttributeValueType }{@code
+	 *         >} {@link JAXBElement }{@code <}
+	 *         {@link ActionAttributeDesignatorType }{@code >}
+	 * 
+	 */
+	public JAXBElement<?> getExpression() {
+		return expression;
+	}
 
-    /**
-     * Sets the value of the expression property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SubjectAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ResourceAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvironmentAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ActionAttributeDesignatorType }{@code >}
-     *     
-     */
-    public void setExpression(JAXBElement<?> value) {
-        this.expression = value;
-    }
+	/**
+	 * Sets the value of the expression property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link JAXBElement }{@code <}
+	 *            {@link AttributeSelectorType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link ExpressionType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link FunctionType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link ApplyType }{@code >} {@link JAXBElement }{@code
+	 *            <}{@link SubjectAttributeDesignatorType }{@code >}
+	 *            {@link JAXBElement }{@code <}
+	 *            {@link ResourceAttributeDesignatorType }{@code >}
+	 *            {@link JAXBElement }{@code <}
+	 *            {@link EnvironmentAttributeDesignatorType }{@code >}
+	 *            {@link JAXBElement }{@code <}{@link VariableReferenceType }
+	 *            {@code >} {@link JAXBElement }{@code <}
+	 *            {@link AttributeValueType }{@code >} {@link JAXBElement }{@code
+	 *            <}{@link ActionAttributeDesignatorType }{@code >}
+	 * 
+	 */
+	public void setExpression(JAXBElement<?> value) {
+		this.expression = value;
+	}
 }

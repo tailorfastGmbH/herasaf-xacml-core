@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,20 +20,19 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.ActionType;
 
 /**
- * A ActionTransformable contains the information to return a
- * <code>ActionType</code>.
- *
+ * Transforms action attributes from any form into an {@link ActionType}. This
+ * interface shall be implemented by a PEP-component to create XACML conform
+ * request without creating an XML.
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
- *
  */
 public interface ActionTransformable {
 
 	/**
-	 * Transforms the information contained in the Transformable to an
-	 * <code>ActionType</code>
-	 *
-	 * @return ActionType containing the Information of the Transformable
+	 * Transforms the action attribute in the transformable into a
+	 * {@link ActionType}.
+	 * 
+	 * @return The {@link ActionType}.
 	 */
-	public ActionType transform();
+	ActionType transform();
 }

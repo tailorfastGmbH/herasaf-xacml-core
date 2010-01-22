@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,32 +19,56 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.YearMonthDurationDataTypeAttribute;
 import org.herasaf.xacml.core.types.YearMonthDuration;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link YearMonthDurationDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestYearMonthDurationDataTypeAttribute {
-
 	private YearMonthDurationDataTypeAttribute dataType;
 
+	/**
+	 * Initializes a new {@link YearMonthDurationDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new YearMonthDurationDataTypeAttribute();
 	}
 
+	/**
+	 * Tests the positive data.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput1() throws Exception {
 		assertEquals(dataType.convertTo("-P9Y3M"), new YearMonthDuration(
 				"-P9Y3M"));
 	}
 
+	/**
+	 * Tests the negative data.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
 		dataType.convertTo("+P9Y3M");
 	}
 
+	/**
+	 * Tests if the {@link YearMonthDurationDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

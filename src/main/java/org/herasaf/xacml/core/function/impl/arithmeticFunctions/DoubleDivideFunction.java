@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.arithmeticFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -26,16 +26,16 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 108, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DoubleDivideFunction implements Function {
+public class DoubleDivideFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = -1728727376490360406L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-divide";
@@ -54,7 +54,7 @@ public class DoubleDivideFunction implements Function {
 			 * If the function should divide by zero, indeterminate has to be
 			 * returned. The Function Processing exception is used for
 			 * indeterminate return values with the state indeterminate.
-			 *
+			 * 
 			 * This is tested, because double doesn't throw an invalid argument
 			 * exception if it should divide by zero.
 			 */
@@ -72,13 +72,11 @@ public class DoubleDivideFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

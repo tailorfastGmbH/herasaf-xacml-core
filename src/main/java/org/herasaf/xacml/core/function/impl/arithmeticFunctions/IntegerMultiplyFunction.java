@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.arithmeticFunctions;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer 
  * @version 1.0
  */
-public class IntegerMultiplyFunction implements Function {
+public class IntegerMultiplyFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = -1856285242926019575L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-multiply";
@@ -62,13 +62,11 @@ public class IntegerMultiplyFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

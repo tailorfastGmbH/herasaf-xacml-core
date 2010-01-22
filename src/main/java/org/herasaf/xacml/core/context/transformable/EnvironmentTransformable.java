@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,19 +20,19 @@ package org.herasaf.xacml.core.context.transformable;
 import org.herasaf.xacml.core.context.impl.EnvironmentType;
 
 /**
- * A EnvironmentTransformable contains the information to return a
- * <code>EnvironmentType</code>.
- *
+ * Transforms environment attributes from any form into an {@link EnvironmentType}.
+ * This interface shall be implemented by a PEP-component to create XACML
+ * conform request without creating an XML.
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
- *
  */
 public interface EnvironmentTransformable {
+
 	/**
-	 * Transforms the information contained in the Transformable to an
-	 * <code>EnvironmentType</code>
-	 *
-	 * @return EnvironmentType containing the Information of the Transformable
+	 * Transforms the environment attribute in the transformable into a
+	 * {@link EnvironmentType}.
+	 * 
+	 * @return The {@link EnvironmentType}.
 	 */
-	public EnvironmentType transform();
+	EnvironmentType transform();
 }

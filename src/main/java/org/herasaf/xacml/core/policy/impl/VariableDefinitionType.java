@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,17 +26,20 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlType;
 
-import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
 /**
- * <p>Java class for VariableDefinitionType complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * <p>
+ * Java class for VariableDefinitionType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
  * <pre>
  * &lt;complexType name="VariableDefinitionType">
  *   &lt;complexContent>
@@ -49,98 +52,100 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 58, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 58, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "VariableDefinitionType", propOrder = {
-    "expression"
-})
-public class VariableDefinitionType implements Serializable, Variable
-{
+@XmlType(name = "VariableDefinitionType", propOrder = { "expression" })
+public class VariableDefinitionType implements Serializable, Variable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
-    protected JAXBElement<? extends Serializable> expression;
-    @XmlAttribute(name = "VariableId", required = true)
-    protected String variableId;
+	private static final long serialVersionUID = 632768732L;
+	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
+	private JAXBElement<? extends Serializable> expression;
+	@XmlAttribute(name = "VariableId", required = true)
+	private String variableId;
 
-    /**
-     * Gets the value of the expression property.
-     *
-     * @return
-     *     possible object is
-     *     {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SubjectAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvironmentAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ResourceAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ActionAttributeDesignatorType }{@code >}
-     */
-    public JAXBElement<? extends Serializable> getExpression() {
-        return expression;
-    }
+	/**
+	 * Gets the value of the expression property.
+	 * 
+	 * @return possible object is {@link JAXBElement }{@code <}
+	 *         {@link AttributeSelectorType }{@code >} {@link JAXBElement }{@code
+	 *         <}{@link ExpressionType }{@code >} {@link JAXBElement }{@code <}
+	 *         {@link FunctionType }{@code >} {@link JAXBElement }{@code <}
+	 *         {@link ApplyType }{@code >} {@link JAXBElement }{@code <}
+	 *         {@link SubjectAttributeDesignatorType }{@code >}
+	 *         {@link JAXBElement }{@code <}
+	 *         {@link EnvironmentAttributeDesignatorType }{@code >}
+	 *         {@link JAXBElement }{@code <}
+	 *         {@link ResourceAttributeDesignatorType }{@code >}
+	 *         {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code
+	 *         >} {@link JAXBElement }{@code <}{@link AttributeValueType }{@code
+	 *         >} {@link JAXBElement }{@code <}
+	 *         {@link ActionAttributeDesignatorType }{@code >}
+	 */
+	public JAXBElement<? extends Serializable> getExpression() {
+		return expression;
+	}
 
-    /**
-     * Sets the value of the expression property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link SubjectAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link EnvironmentAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ResourceAttributeDesignatorType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-     *     {@link JAXBElement }{@code <}{@link ActionAttributeDesignatorType }{@code >}
-     *
-     */
-    public void setExpression(JAXBElement<? extends Serializable> value) {
-        this.expression = value;
-    }
+	/**
+	 * Sets the value of the expression property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link JAXBElement }{@code <}
+	 *            {@link AttributeSelectorType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link ExpressionType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link FunctionType }{@code >} {@link JAXBElement }
+	 *            {@code <}{@link ApplyType }{@code >} {@link JAXBElement }{@code
+	 *            <}{@link SubjectAttributeDesignatorType }{@code >}
+	 *            {@link JAXBElement }{@code <}
+	 *            {@link EnvironmentAttributeDesignatorType }{@code >}
+	 *            {@link JAXBElement }{@code <}
+	 *            {@link ResourceAttributeDesignatorType }{@code >}
+	 *            {@link JAXBElement }{@code <}{@link VariableReferenceType }
+	 *            {@code >} {@link JAXBElement }{@code <}
+	 *            {@link AttributeValueType }{@code >} {@link JAXBElement }{@code
+	 *            <}{@link ActionAttributeDesignatorType }{@code >}
+	 * 
+	 */
+	public void setExpression(JAXBElement<? extends Serializable> value) {
+		this.expression = value;
+	}
 
-    /**
-     * Gets the value of the variableId property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     */
-    public String getVariableId() {
-        return variableId;
-    }
+	/**
+	 * Gets the value of the variableId property.
+	 * 
+	 * @return possible object is {@link String }
+	 */
+	public String getVariableId() {
+		return variableId;
+	}
 
-    /**
-     * Sets the value of the variableId property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     */
-    public void setVariableId(String value) {
-        this.variableId = value;
-    }
+	/**
+	 * Sets the value of the variableId property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 */
+	public void setVariableId(String value) {
+		this.variableId = value;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
-     */
-	public Object getValue(RequestType request,
-			RequestInformation reqInfo)
-			throws MissingAttributeException, SyntaxException,
-			ProcessingException {
-		return ((ExpressionType)getExpression().getValue()).handle(request, reqInfo);
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml
+	 * .core.context.impl.RequestType, java.util.Map)
+	 */
+	public Object getValue(RequestType request, RequestInformation reqInfo) throws MissingAttributeException,
+			SyntaxException, ProcessingException {
+		return ((ExpressionType) getExpression().getValue()).handle(request, reqInfo);
 	}
 }

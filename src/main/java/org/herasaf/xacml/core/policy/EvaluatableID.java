@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,19 +17,16 @@
 
 package org.herasaf.xacml.core.policy;
 
-
 /**
  * The {@link EvaluatableID} represents the id of an {@link Evaluatable}.
- * It is used for a cleaner API.
- *
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public interface EvaluatableID {
-	/**
-	 * Returns the id of the {@link Evaluatable} as {@link String}.
-	 * 
-	 * @return The id of the {@link Evaluatable}.
-	 */
-	public String getId();
+    /**
+     * Returns the id of the {@link Evaluatable} as {@link String}.
+     * 
+     * @return The id of the {@link Evaluatable}.
+     */
+    String getId();
 }

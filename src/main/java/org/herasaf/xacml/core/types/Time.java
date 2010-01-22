@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,32 +22,34 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 
 /**
- * Represents a http://www.w3.org/2001/XMLSchema#time. The specification can be
- * found at <A HREF="http://www.w3.org/2001/XMLSchema#time"
- * TARGET="_blank">http://www.w3.org/2001/XMLSchema#time</A>.
- *
- * @author Stefan Oberholzer 
- * @author Florian Huonder 
- * @version 1.0
+ * Represents a http://www.w3.org/2001/XMLSchema#time data type. The
+ * specification can be found at <a
+ * href="http://www.w3.org/2001/XMLSchema#time">
+ * http://www.w3.org/2001/XMLSchema#time</a>.
+ * 
+ * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class Time implements Comparable<Time> {
 	private XMLGregorianCalendar xmlCalendar;
 
 	/**
 	 * Initializes a new {@link Time} object.
-	 *
+	 * 
 	 * @param lexicalRepresentation
 	 *            The {@link String} representation of the time to created with
 	 *            this class.
 	 * @throws ConvertException
+	 *             In case the {@link String} cannot be converted into <a
+	 *             href="http://www.w3.org/2001/XMLSchema#time">
+	 *             http://www.w3.org/2001/XMLSchema#time</a>.
 	 */
 	public Time(String lexicalRepresentation) {
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
-			
+
 			if (lexicalRepresentation.matches("\\d\\d:\\d\\d:\\d\\d(\\.\\d(\\d)?(\\d)?)?([-+]\\d\\d:\\d\\d)?")) {
-				this.xmlCalendar = factory
-						.newXMLGregorianCalendar(lexicalRepresentation);
+				this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
 			} else {
 				throw new IllegalArgumentException();
 			}
@@ -57,51 +59,45 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * Returns the instance of the {@link XMLGregorianCalendar} of this
-	 * {@link Time} class.
-	 *
+	 * Returns the {@link XMLGregorianCalendar} instance of this {@link Time}
+	 * object.
+	 * 
 	 * @return The {@link XMLGregorianCalendar} instance.
 	 */
 	public XMLGregorianCalendar getCalendar() {
 		return xmlCalendar;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		return xmlCalendar.toXMLFormat();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	public int compareTo(Time time) {
 		return xmlCalendar.compare(time.getCalendar());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof Time) {
-			if (this.compareTo((Time) obj) == 0){
+			if (this.compareTo((Time) obj) == 0) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,16 +26,30 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.EnvironmentAttributeDesignatorType;
 
+/**
+ * A mock of the {@link EnvironmentAttributeDesignatorType}.
+ * 
+ * @author Florian Huonder
+ */
 public class EnvironmentAttributeDesignatorMock extends EnvironmentAttributeDesignatorType {
 	private static final long serialVersionUID = 888802881998266493L;
 	private String[] reqValues;
 	private boolean exception;
 
+	/**
+	 * Initializes the {@link EnvironmentAttributeDesignatorType}.
+	 * @param exception True if the mock shall throw an exception.
+	 */
 	public EnvironmentAttributeDesignatorMock(boolean exception) {
 		this.reqValues = new String[0];
 		this.exception = exception;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Throws an exception if set so or returns the request values.
+	 */
 	@Override
 	public Object handle(RequestType request, RequestInformation reqInfo)
 			throws ExpressionProcessingException {
@@ -45,11 +59,21 @@ public class EnvironmentAttributeDesignatorMock extends EnvironmentAttributeDesi
 		return Arrays.asList(reqValues);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns always a {@link StringDataTypeAttribute}.
+	 */
 	@Override
 	public DataTypeAttribute<?> getDataType() {
 		return new StringDataTypeAttribute();
 	}
 
+	/**
+	 * Extends the request values with additional values.
+	 * 
+	 * @param values The values to add.
+	 */
 	public void extendValues(String[] values){
 		String[] newValues = new String[values.length + reqValues.length];
 		for(int i = 0; i < newValues.length; i++){

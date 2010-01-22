@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,9 +27,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This test tests if the IntegerAdd function works properly. 
+ *  
+ * @author Florian Huonder
+ */
 public class TestIntegerAddFunction {
 	private Function ia;
 
+	/**
+	 * Creates tests that add 2 integer values. The third column is the expected result of the addition.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -40,6 +50,11 @@ public class TestIntegerAddFunction {
 		};
 	}
 
+	/**
+	 * Creates tests that add 3 integer values. The fourth column is the expected result of the addition.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data3Args")
 	public Object[][] createData3Args(){
 		return new Object[][]{
@@ -50,21 +65,44 @@ public class TestIntegerAddFunction {
 		};
 	}
 
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new IntegerAddFunction();
 	}
 
+	/**
+	 * Tests all test cases with 2 integer values.
+	 * 
+	 * @param i1 The first integer value.
+	 * @param i2 The second integer value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data2Args")
 	public void testAdd2Args(BigInteger i1, BigInteger i2, String result) throws Exception {
 		assertEquals(ia.handle(i1, i2).toString(), result);
 	}
 
+	/**
+	 * Tests all test cases with 2 integer values.
+	 * 
+	 * @param i1 The first integer value.
+	 * @param i2 The second integer value.
+	 * @param i3 The third integer value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data3Args")
 	public void testAdd3Args(BigInteger i1, BigInteger i2, BigInteger i3, String result) throws Exception {
 		assertEquals(ia.handle(i1, i2, i3).toString(), result);
 	}
 
+	/**
+	 * Tests if the function returns the right ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:integer-add");

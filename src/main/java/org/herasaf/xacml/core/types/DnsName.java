@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,71 +17,79 @@
 
 package org.herasaf.xacml.core.types;
 
-
 /**
- * The Name of this datatype is urn:oasis:names:tc:xacml:2.0:data-type:dnsName.<br>
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 103, for further information.
- *
- * @author Florian Huonder 
- * @version 1.0
+ * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dnsName".<br>
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 103, for further information.
+ * 
+ * @author Florian Huonder
  */
 public class DnsName {
 	private static final String DNS_NAME_PART_DELIMITER = "\\.";
 	private static final String PORT_RANGE_DELIMITER = ":";
-	private static final String AC = "[^!#\\$%&'()\\*\\+,/:;=\\?@\\[\\]\\s]"; //AC = allowed characters
-	private static final String MATCHPATTERN = "^(("+ AC +"+(\\."+ AC +"+)*)|(\\*)|(\\*\\."+ AC +"+(\\."+ AC +"+)*))(:[\\d\\-]+)??$";
+	private static final String AC = "[^!#\\$%&'()\\*\\+,/:;=\\?@\\[\\]\\s]"; // AC
+	// =
+	// allowed
+	// characters
+	private static final String MATCHPATTERN = "^((" + AC + "+(\\." + AC + "+)*)|(\\*)|(\\*\\." + AC + "+(\\." + AC
+			+ "+)*))(:[\\d\\-]+)??$";
 	private PortRange portRange;
 	private String[] dnsNameParts = null;
 
 	/**
 	 * Initializes a new {@link DnsName} from the given string.
-	 *
-	 * @param stringRepresentation The {@link String} to create the {@link DnsName} from.
+	 * 
+	 * @param stringRepresentation
+	 *            The {@link String} to create the {@link DnsName} from.
 	 */
 	public DnsName(String stringRepresentation) {
-		if(!stringRepresentation.matches(MATCHPATTERN)) {
+		if (!stringRepresentation.matches(MATCHPATTERN)) {
 			throw new IllegalArgumentException("String is not a dns name: " + stringRepresentation);
 		}
 		int colonPosition = stringRepresentation.indexOf(PORT_RANGE_DELIMITER);
-		if(colonPosition != -1){
+		if (colonPosition != -1) {
 			portRange = new PortRange(stringRepresentation.substring(colonPosition + 1, stringRepresentation.length()));
 			dnsNameParts = stringRepresentation.split(PORT_RANGE_DELIMITER)[0].split(DNS_NAME_PART_DELIMITER);
-		}
-		else {
+		} else {
 			dnsNameParts = stringRepresentation.split(DNS_NAME_PART_DELIMITER);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		StringBuilder dnsName = new StringBuilder();
-		for(int i = 0; i < dnsNameParts.length; i++){
-			dnsName.append(i == 0 ? dnsNameParts[i] : "." + dnsNameParts[i]);
+		for (int i = 0; i < dnsNameParts.length; i++) {
+			String dnsNamePart;
+			dnsNamePart = dnsNameParts[i];
+			if (i != 0) {
+				dnsNamePart = "." + dnsNamePart;
+			}
+			dnsName.append(dnsNamePart);
 		}
-		if(portRange != null){
+		if (portRange != null) {
 			dnsName.append(PORT_RANGE_DELIMITER + portRange.toString());
 		}
 		return dnsName.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null) return false;
+		if (obj == null) {
+			return false;
+		}
 		return toString().equals(obj.toString());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

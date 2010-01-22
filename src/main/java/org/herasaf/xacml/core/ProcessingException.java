@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,11 +18,10 @@
 package org.herasaf.xacml.core;
 
 /**
- * This exception is thrown if an error while processing a function or
+ * This runtime exception is thrown if an error occurs while processing a function or an
  * expression.
- *
+ * 
  * @author Florian Huonder
- * @version 1.0
  */
 public abstract class ProcessingException extends Exception {
 	private static final long serialVersionUID = -7535706787860940155L;
@@ -36,6 +35,10 @@ public abstract class ProcessingException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public ProcessingException(String message) {
 		super(message);
@@ -43,6 +46,14 @@ public abstract class ProcessingException extends Exception {
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public ProcessingException(String message, Throwable cause) {
 		super(message, cause);
@@ -52,6 +63,11 @@ public abstract class ProcessingException extends Exception {
 	 * Constructs a new exception with the specified cause and a detail message
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public ProcessingException(Throwable cause) {
 		super(cause);

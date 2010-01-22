@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlElementRef;
 import javax.xml.bind.annotation.XmlElementRefs;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -42,11 +43,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 /**
  * <p>
  * Java class for PolicySetType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;PolicySetType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -73,9 +74,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 58, for further information.
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 58, for further information.
  * 
  * @version 1.2
  * @author <i>generated</i>
@@ -83,20 +86,20 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * @author Patrik Dietschweiler
  * @author Florian Huonder
  */
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "PolicySetType", propOrder = { "description",
-		"policySetDefaults", "target", "additionalInformation", "obligations" })
+@XmlRootElement
+@XmlType(name = "PolicySetType", propOrder = { "description", "policySetDefaults", "target", "additionalInformation",
+		"obligations" })
 public class PolicySetType implements Evaluatable, Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "Description")
-	protected String description;
+	private String description;
 	@XmlElement(name = "PolicySetDefaults")
-	protected DefaultsType policySetDefaults;
+	private DefaultsType policySetDefaults;
 	@XmlElement(name = "Target", required = true)
-	protected TargetType target;
-	@XmlElementRefs( {
+	private TargetType target;
+	@XmlElementRefs({
 			@XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetCombinerParameters", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
@@ -104,30 +107,44 @@ public class PolicySetType implements Evaluatable, Serializable {
 			@XmlElementRef(name = "PolicySet", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicyCombinerParameters", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "Policy", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class) })
-	protected List<JAXBElement<?>> additionalInformation;
+	private List<JAXBElement<?>> additionalInformation;
 	@XmlElement(name = "Obligations")
-	protected ObligationsType obligations;
+	private ObligationsType obligations;
 	@XmlAttribute(name = "PolicySetId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String policySetId;
+	private String policySetId;
 	@XmlAttribute(name = "Version")
-	protected String version;
+	private String version;
+
+	// This field is transient because it is only marshal-/unamrshal-able
+	// together with JAXB.
 	@XmlAttribute(name = "PolicyCombiningAlgId", required = true)
 	@XmlJavaTypeAdapter(URNToPolicyCombiningAlgorithmConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected PolicyCombiningAlgorithm policyCombiningAlg;
-	
-	protected transient boolean hasObligations; //True if the PolicySet or a SubPolicy (SubPolicySet) contains any Obligations.
+	private PolicyCombiningAlgorithm policyCombiningAlg;
 
+	// True if the PolicySet or a SubPolicy (SubPolicySet) contains any
+	// Obligations.
+	@XmlTransient
+	private boolean hasObligations;
+
+	/**
+	 * Initializes and sets (by default) to true that this policy set (or sub
+	 * policies or policy sets, respectively) contains obligations. This flag is
+	 * intended to be set by an other component (e.g. a pre processor) to
+	 * another value.
+	 */
 	public PolicySetType() {
-		setHasObligations(true); //Must by default be true. It cannot be assumed that a preprocessor correctly sets this field.
+		// Must by default be true. It cannot be assumed that a preprocessor
+		// correctly sets this field.
+		setHasObligations(true);
 	}
-	
+
 	/**
 	 * Gets the value of the description property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getDescription() {
 		return description;
@@ -135,10 +152,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the description property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setDescription(String value) {
 		this.description = value;
@@ -146,9 +163,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the policySetDefaults property.
-	 *
+	 * 
 	 * @return possible object is {@link DefaultsType }
-	 *
+	 * 
 	 */
 	public DefaultsType getPolicySetDefaults() {
 		return policySetDefaults;
@@ -156,10 +173,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the policySetDefaults property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link DefaultsType }
-	 *
+	 * 
 	 */
 	public void setPolicySetDefaults(DefaultsType value) {
 		this.policySetDefaults = value;
@@ -167,9 +184,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the target property.
-	 *
+	 * 
 	 * @return possible object is {@link TargetType }
-	 *
+	 * 
 	 */
 	public TargetType getTarget() {
 		return target;
@@ -177,10 +194,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the target property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link TargetType }
-	 *
+	 * 
 	 */
 	public void setTarget(TargetType value) {
 		this.target = value;
@@ -188,32 +205,32 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the additionalInformation property.
-	 *
+	 * 
 	 * <p>
 	 * This accessor method returns a reference to the live list, not a
 	 * snapshot. Therefore any modification you make to the returned list will
 	 * be present inside the JAXB object. This is why there is not a
 	 * <CODE>set</CODE> method for the additionalInformation property.
-	 *
+	 * 
 	 * <p>
 	 * For example, to add a new item, do as follows:
-	 *
+	 * 
 	 * <pre>
 	 * getAdditionalInformation().add(newItem);
 	 * </pre>
-	 *
-	 *
+	 * 
+	 * 
 	 * <p>
 	 * Objects of the following type(s) are allowed in the list
 	 * {@link JAXBElement }{@code <}{@link IdReferenceType }{@code >}
 	 * {@link JAXBElement }{@code <}{@link IdReferenceType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link PolicySetCombinerParametersType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link CombinerParametersType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link PolicySetType }{@code >}
+	 * {@link JAXBElement }{@code <}{@link PolicySetCombinerParametersType }
+	 * {@code >} {@link JAXBElement }{@code <}{@link CombinerParametersType }
+	 * {@code >} {@link JAXBElement }{@code <}{@link PolicySetType }{@code >}
 	 * {@link JAXBElement }{@code <}{@link PolicyCombinerParametersType }{@code >}
 	 * {@link JAXBElement }{@code <}{@link PolicyType }{@code >}
-	 *
-	 *
+	 * 
+	 * 
 	 */
 	public List<JAXBElement<?>> getAdditionalInformation() {
 		if (additionalInformation == null) {
@@ -224,9 +241,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the obligations property.
-	 *
+	 * 
 	 * @return possible object is {@link ObligationsType }
-	 *
+	 * 
 	 */
 	public ObligationsType getObligations() {
 		return obligations;
@@ -234,10 +251,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the obligations property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link ObligationsType }
-	 *
+	 * 
 	 */
 	public void setObligations(ObligationsType value) {
 		this.obligations = value;
@@ -245,9 +262,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the policySetId property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getPolicySetId() {
 		return policySetId;
@@ -255,10 +272,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the policySetId property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setPolicySetId(String value) {
 		this.policySetId = value;
@@ -266,9 +283,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the version property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getVersion() {
 		if (version == null) {
@@ -279,10 +296,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the version property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setVersion(String value) {
 		this.version = value;
@@ -290,9 +307,9 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Gets the value of the policyCombiningAlg property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public PolicyCombiningAlgorithm getCombiningAlg() {
 		return policyCombiningAlg;
@@ -300,10 +317,10 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Sets the value of the policyCombiningAlg property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setCombiningAlg(PolicyCombiningAlgorithm value) {
 		this.policyCombiningAlg = value;
@@ -311,13 +328,15 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Returns an ordered {@link List} of the containing {@link Evaluatable}s.
-	 * This {@link List} may contain null-values in case that a remote reference was not resolvable.
+	 * This {@link List} may contain null-values in case that a remote reference
+	 * was not resolvable.
 	 * 
-	 * @param reqInfo The {@link RequestInformation} is provided for setting the references.
+	 * @param reqInfo
+	 *            The {@link RequestInformation} is provided for setting the
+	 *            references.
 	 * @return A {@link List} of ordered {@link Evaluatable}s.
 	 */
-	public List<Evaluatable> getOrderedEvaluatables(
-			RequestInformation reqInfo) {
+	public List<Evaluatable> getOrderedEvaluatables(RequestInformation reqInfo) {
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		// No foreach iterator to ensure thread safety.
 		for (int i = 0; i < getAdditionalInformation().size(); i++) {
@@ -329,25 +348,30 @@ public class PolicySetType implements Evaluatable, Serializable {
 
 	/**
 	 * Returns an unordered {@link List} of the containing {@link Evaluatable}s.
-	 * This {@link List} may contain null-values in case that a remote reference was not resolvable.
+	 * This {@link List} may contain null-values in case that a remote reference
+	 * was not resolvable.
 	 * 
-	 * @param reqInfo The {@link RequestInformation} is provided for setting the references.
+	 * @param reqInfo
+	 *            The {@link RequestInformation} is provided for setting the
+	 *            references.
 	 * @return A {@link List} of {@link Evaluatable}s.
 	 */
-	public List<Evaluatable> getUnorderedEvaluatables(
-			RequestInformation reqInfo) {
+	public List<Evaluatable> getUnorderedEvaluatables(RequestInformation reqInfo) {
 		return getOrderedEvaluatables(reqInfo);
 	}
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
 	public EvaluatableID getId() {
 		return new EvaluatableIDImpl(getPolicySetId());
 	}
+
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
 	public String getEvalutableVersion() {
@@ -355,22 +379,23 @@ public class PolicySetType implements Evaluatable, Serializable {
 	}
 
 	/**
-	 * Set the field hasObligations to the proper value.
-	 * True if the current PolicySet has Obligations or a subpolicy or policyset, respectively.
+	 * Set the field hasObligations to the proper value. True if the current
+	 * PolicySet has Obligations or a subpolicy or policyset, respectively.
 	 * False otherwise.
 	 * 
 	 * It is intended that this method is called by e.g. a preprocessor.
 	 * 
-	 * @param value The boolean value to set.
+	 * @param value
+	 *            The boolean value to set.
 	 */
 	public void setHasObligations(boolean value) {
 		hasObligations = value;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean hasObligations(){
+	public boolean hasObligations() {
 		return hasObligations;
 	}
 
@@ -379,11 +404,11 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 */
 	public List<ObligationType> getContainedObligations(EffectType effect) {
 		List<ObligationType> result = new ArrayList<ObligationType>();
-		if(obligations != null){
+		if (obligations != null) {
 			List<ObligationType> oblis = obligations.getObligations();
-			for(int i = 0; i < oblis.size(); i++){
+			for (int i = 0; i < oblis.size(); i++) {
 				ObligationType obli = oblis.get(i);
-				if(obli.getFulfillOn() == effect){
+				if (obli.getFulfillOn() == effect) {
 					result.add(obli);
 				}
 			}

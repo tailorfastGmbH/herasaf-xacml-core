@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,37 +17,56 @@
 package org.herasaf.xacml.core;
 
 /**
- * This {@link RuntimeException} is thrown when a component needed for
- * evaluation is not properly initialized.
- * 
- * E.g. if the JAXB engine is not configured as expected.
+ * This runtime exception is thrown in case an initialization error occurs.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class NotInitializedException extends RuntimeException {
 	private static final long serialVersionUID = 4169969483147086614L;
 
+	/**
+	 * Constructs a new exception with null as its detail message.
+	 */
 	public NotInitializedException() {
 		super();
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public NotInitializedException(String message, Throwable cause) {
 		super(message, cause);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public NotInitializedException(String message) {
 		super(message);
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Constructs a new exception with the specified cause and a detail message
+	 * of (cause==null ? null : cause.toString()) (which typically contains the
+	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public NotInitializedException(Throwable cause) {
 		super(cause);

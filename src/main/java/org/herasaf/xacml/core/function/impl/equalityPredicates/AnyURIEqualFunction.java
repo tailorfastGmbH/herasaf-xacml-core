@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,20 +19,20 @@ package org.herasaf.xacml.core.function.impl.equalityPredicates;
 
 import java.net.URI;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:anyURI-equal
- * function. See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * function. See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
- *
- * @author Florian Huonder 
+ * 
+ * @author Florian Huonder
  * @version 1.0
  */
-public class AnyURIEqualFunction implements Function {
+public class AnyURIEqualFunction extends AbstractFunction {
 	/**
 	 *
 	 */
@@ -41,7 +41,7 @@ public class AnyURIEqualFunction implements Function {
 
 	/**
 	 * {@inheritDoc}
-	 *
+	 * 
 	 * Takes two {@link URI} objects as parameters and returns wheter they are
 	 * equal or not as {@link Boolean} value.
 	 */
@@ -60,13 +60,11 @@ public class AnyURIEqualFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,11 +30,13 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
 import org.herasaf.xacml.core.function.Function;
 
-
 /**
- * <p>Java class for ResourceMatchType complex type.
+ * <p>
+ * Java class for ResourceMatchType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="ResourceMatchType">
@@ -53,121 +55,115 @@ import org.herasaf.xacml.core.function.Function;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 48, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 48, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "ResourceMatchType", propOrder = {
-    "attributeValue",
-    "resourceAttributeDesignator",
-    "attributeSelector"
-})
-public class ResourceMatchType
-    implements Serializable, Match
-{
+@XmlType(name = "ResourceMatchType", propOrder = { "attributeValue", "resourceAttributeDesignator", "attributeSelector" })
+public class ResourceMatchType implements Serializable, Match {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "AttributeValue", required = true)
-    protected AttributeValueType attributeValue;
-    @XmlElement(name = "ResourceAttributeDesignator")
-    protected ResourceAttributeDesignatorType resourceAttributeDesignator;
-    @XmlElement(name = "AttributeSelector")
-    protected AttributeSelectorType attributeSelector;
-    @XmlAttribute(name = "MatchId", required = true)
-    @XmlJavaTypeAdapter(URNToFunctionConverter.class)
-    @XmlSchemaType(name = "anyURI")
-    protected Function matchFunction;
+	private static final long serialVersionUID = 632768732L;
+	@XmlElement(name = "AttributeValue", required = true)
+	private AttributeValueType attributeValue;
+	@XmlElement(name = "ResourceAttributeDesignator")
+	private ResourceAttributeDesignatorType resourceAttributeDesignator;
+	@XmlElement(name = "AttributeSelector")
+	private AttributeSelectorType attributeSelector;
+	@XmlAttribute(name = "MatchId", required = true)
+	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
+	@XmlSchemaType(name = "anyURI")
+	private Function matchFunction;
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.core.policy.impl.Match#getAttributeValue()
-     */
-    public AttributeValueType getAttributeValue() {
-        return attributeValue;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.herasaf.core.policy.impl.Match#getAttributeValue()
+	 */
+	public AttributeValueType getAttributeValue() {
+		return attributeValue;
+	}
 
-    /**
-     * Sets the value of the attributeValue property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AttributeValueType }
-     *     
-     */
-    public void setAttributeValue(AttributeValueType value) {
-        this.attributeValue = value;
-    }
+	/**
+	 * Sets the value of the attributeValue property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AttributeValueType }
+	 * 
+	 */
+	public void setAttributeValue(AttributeValueType value) {
+		this.attributeValue = value;
+	}
 
-    /**
-     * Gets the value of the resourceAttributeDesignator property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link AttributeDesignatorType }
-     *     
-     */
-    public AttributeDesignatorType getResourceAttributeDesignator() {
-        return resourceAttributeDesignator;
-    }
+	/**
+	 * Gets the value of the resourceAttributeDesignator property.
+	 * 
+	 * @return possible object is {@link AttributeDesignatorType }
+	 * 
+	 */
+	public AttributeDesignatorType getResourceAttributeDesignator() {
+		return resourceAttributeDesignator;
+	}
 
-    /**
-     * Sets the value of the resourceAttributeDesignator property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link ResourceAttributeDesignatorType }
-     *     
-     */
-    public void setResourceAttributeDesignator(ResourceAttributeDesignatorType value) {
-        this.resourceAttributeDesignator = value;
-    }
+	/**
+	 * Sets the value of the resourceAttributeDesignator property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link ResourceAttributeDesignatorType }
+	 * 
+	 */
+	public void setResourceAttributeDesignator(ResourceAttributeDesignatorType value) {
+		this.resourceAttributeDesignator = value;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.core.policy.impl.Match#getAttributeSelector()
-     */
-    public AttributeSelectorType getAttributeSelector() {
-        return attributeSelector;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.herasaf.core.policy.impl.Match#getAttributeSelector()
+	 */
+	public AttributeSelectorType getAttributeSelector() {
+		return attributeSelector;
+	}
 
-    /**
-     * Sets the value of the attributeSelector property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link AttributeSelectorType }
-     *     
-     */
-    public void setAttributeSelector(AttributeSelectorType value) {
-        this.attributeSelector = value;
-    }
+	/**
+	 * Sets the value of the attributeSelector property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link AttributeSelectorType }
+	 * 
+	 */
+	public void setAttributeSelector(AttributeSelectorType value) {
+		this.attributeSelector = value;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.core.policy.impl.Match#getMatchFunction()
-     */
-    public Function getMatchFunction() {
-        return matchFunction;
-    }
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.herasaf.core.policy.impl.Match#getMatchFunction()
+	 */
+	public Function getMatchFunction() {
+		return matchFunction;
+	}
 
-    /**
-     * Sets the value of the matchFunction property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     */
-    public void setMatchFunction(Function value) {
-        this.matchFunction = value;
-    }
+	/**
+	 * Sets the value of the matchFunction property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 */
+	public void setMatchFunction(Function value) {
+		this.matchFunction = value;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.core.policy.impl.Match#getAttributeDesignator()
-     */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see org.herasaf.core.policy.impl.Match#getAttributeDesignator()
+	 */
 	public AttributeDesignatorType getAttributeDesignator() {
 		return getResourceAttributeDesignator();
 	}

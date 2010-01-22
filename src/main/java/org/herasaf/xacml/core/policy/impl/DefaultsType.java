@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,17 +18,20 @@
 package org.herasaf.xacml.core.policy.impl;
 
 import java.io.Serializable;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for DefaultsType complex type.
+ * <p>
+ * Java class for DefaultsType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="DefaultsType">
@@ -44,47 +47,42 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> pages 44 (PolicySetDefaults)
- * and page 54 (PolicyDefaults), for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> pages 44 (PolicySetDefaults) and page 54 (PolicyDefaults), for
+ * further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "DefaultsType", propOrder = {
-    "xPathVersion"
-})
-public class DefaultsType
-    implements Serializable
-{
+@XmlType(name = "DefaultsType", propOrder = { "xPathVersion" })
+public class DefaultsType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "XPathVersion")
-    @XmlSchemaType(name = "anyURI")
-    protected String xPathVersion;
+	private static final long serialVersionUID = 632768732L;
+	@XmlElement(name = "XPathVersion")
+	@XmlSchemaType(name = "anyURI")
+	private String xPathVersion;
 
-    /**
-     * Gets the value of the xPathVersion property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getXPathVersion() {
-        return xPathVersion;
-    }
+	/**
+	 * Gets the value of the xPathVersion property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getXPathVersion() {
+		return xPathVersion;
+	}
 
-    /**
-     * Sets the value of the xPathVersion property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setXPathVersion(String value) {
-        this.xPathVersion = value;
-    }
+	/**
+	 * Sets the value of the xPathVersion property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setXPathVersion(String value) {
+		this.xPathVersion = value;
+	}
 }

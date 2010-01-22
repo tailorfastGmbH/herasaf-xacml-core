@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,8 +23,8 @@ import static org.testng.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
+import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
@@ -36,26 +36,32 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.EnvironmentAttributeDesignatorType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeClass;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
-@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
-public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringContextTests{
-	@Autowired
-	private RequestInformationFactoryMock requestInformationFactory;
+/**
+ * This class tests the {@link EnvironmentAttributeDesignatorType}.
+ * 
+ * @author Florian Huonder
+ */
+public class TestEnvironmentAttributeDesignator {
 	RequestInformation reqInfo;
-	
-	@BeforeClass
-	public void beforeClass(){
-		reqInfo = requestInformationFactory.createRequestInformation(null, new AttributeFinderMock());
+
+	/**
+	 * Initializes the {@link RequestInformation} with an mock for the {@link PIP}.
+	 */
+	@BeforeTest
+	public void init() {
+
+		reqInfo = new RequestInformation(null); //null means no PIP
 	}
 	
+	/**
+	 * Initializes the test successful cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "successfulEnvironmentAttrDesignator")
 	public Object[][] successfulEnvironmentAttrDesignator() {
 		return new Object[][] {
@@ -111,6 +117,11 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		};
 	}
 
+	/**
+	 * Initializes the exception test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "environmentAttrDesignatorException")
 	public Object[][] environmentAttrDesignatorException() {
 		return new Object[][] {
@@ -145,6 +156,14 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		};
 	}
 
+	/**
+	 * Test the successful cases.
+	 * 
+	 * @param req The {@link RequestInformation}.
+	 * @param designator The {@link EnvironmentAttributeDesignatorType} (is under test)
+	 * @param result The expected result.
+	 * @throws Exception In case an error occurs.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(enabled = true, dataProvider = "successfulEnvironmentAttrDesignator")
 	public void testHandle(RequestType req,
@@ -158,6 +177,14 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		}
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link MissingAttributeException}.
+	 * 
+	 * @param req The {@link RequestInformation}.
+	 * @param designator The {@link EnvironmentAttributeDesignatorType} (is under test)
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, dataProvider = "environmentAttrDesignatorException", expectedExceptions = MissingAttributeException.class)
 	public void testHandle(RequestType req,
 			EnvironmentAttributeDesignatorType designator) throws Throwable {
@@ -168,6 +195,12 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		}
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link SyntaxException}.
+	 * 
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = SyntaxException.class)
 	public void testHandleClassCastException() throws Throwable {
 		RequestType req = initializeRequest(initializeEnvironmentWithIllegalType(
@@ -177,6 +210,12 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		designator.handle(req, reqInfo);
 	}
 
+	/**
+	 * Tests if all error-cases throw the proper exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Throwable In case an unexpected error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExpressionProcessingException() throws Throwable {
 		RequestType req = initializeRequest(initializeEnvironment(
@@ -187,6 +226,12 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		designator.handle(req, reqInfo);
 	}
 
+	/**
+	 * Checks if a certain {@link String} is contained in a {@link List} of {@link Object}s.
+	 * @param elem The {@link String} that is expected.
+	 * @param list The list the may contain the element.
+	 * @return True if the element is contained in the {@link List}, false otherwise.
+	 */
 	private boolean isContained(String elem, List<Object> list) {
 		for (Object obj : list) {
 			if (elem.equals(obj.toString())) {
@@ -196,6 +241,16 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		return false;
 	}
 
+	/**
+	 * Initializes the {@link EnvironmentAttributeDesignatorType} with ID, data type, issuer and must be present.
+	 * 
+	 * @param attrId The attribute ID.
+	 * @param dataType The data type of the designator.
+	 * @param issuer The issuer of the designator.
+	 * @param mustBePresent True if mustbepresent is on.
+	 * 
+	 * @return The initialized {@link EnvironmentAttributeDesignatorType}.
+	 */
 	private EnvironmentAttributeDesignatorType initializeDesignator(
 			String attrId, DataTypeAttribute<?> dataType, String issuer,
 			Boolean mustBePresent) {
@@ -208,6 +263,16 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		return designator;
 	}
 
+	/**
+	 * Initializes the {@link EnvironmentType}.
+	 * 
+	 * @param attrId The Attribute ID of the of the attribute contained in the {@link EnvironmentType}.
+	 * @param dataType The datatype of the attribute.
+	 * @param issuer The issuer of the attribute.
+	 * @param value The value of the attribute
+	 * @param multiContent True if the attribute contains multi content.
+	 * @return The created {@link EnvironmentType}.
+	 */
 	private EnvironmentType initializeEnvironment(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, String value,
 			boolean multiContent) {
@@ -232,6 +297,15 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		return env;
 	}
 
+	/**
+	 * Creates an environment with an illegal type.
+	 * 
+	 * @param attrId The Attribute ID of the of the attribute contained in the {@link EnvironmentType}.
+	 * @param dataType The datatype of the attribute.
+	 * @param issuer The issuer of the attribute.
+	 * @param value The value of the attribute
+	 * @return The created {@link EnvironmentType}.
+	 */
 	private EnvironmentType initializeEnvironmentWithIllegalType(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, Integer value) {
 
@@ -254,12 +328,24 @@ public class TestEnvironmentAttributeDesignator extends AbstractTestNGSpringCont
 		return env;
 	}
 
+	/**
+	 * Initializes the request with the given {@link EnvironmentType}.
+	 * 
+	 * @param e1 The environment type to place into the {@link RequestType}.
+	 * @return The initialized {@link RequestType}.
+	 */
 	private RequestType initializeRequest(EnvironmentType e1) {
 		RequestType req = new RequestType();
 		req.setEnvironment(e1);
 		return req;
 	}
 
+	/**
+	 * Initializes the expected results.
+	 * 
+	 * @param args The resultes.
+	 * @return The {@link List} containing the results.
+	 */
 	private List<String> initResult(String... args) {
 		List<String> returnValues = new ArrayList<String>();
 		for (String str : args) {

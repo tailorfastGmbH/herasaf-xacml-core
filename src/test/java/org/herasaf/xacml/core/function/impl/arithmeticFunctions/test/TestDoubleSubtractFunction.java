@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,9 +25,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This test tests if the DoubleSubtract function works properly. 
+ *  
+ * @author Florian Huonder
+ */
 public class TestDoubleSubtractFunction {
 	private Function ia;
 
+	/**
+	 * Creates tests that subtract 2 double values. The third column is the expected result of the subtraction.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -40,16 +50,30 @@ public class TestDoubleSubtractFunction {
 		};
 	}
 
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new DoubleSubtractFunction();
 	}
 
+	/**
+	 * Tests if the subtraction of 2 double values works properly.
+	 * 
+	 * @param i1 The first double value.
+	 * @param i2 The second double value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data2Args")
 	public void testSubtract2Args(Double i1, Double i2, Double result) throws Exception {
 		assertEquals(ia.handle(i1, i2), result);
 	}
 
+	/**
+	 * Tests if the function returns the right ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:double-subtract");

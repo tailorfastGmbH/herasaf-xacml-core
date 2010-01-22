@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.function.impl.arithmeticFunctions;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -28,16 +28,16 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:integer-subtract function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 108, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
-public class IntegerSubtractFunction implements Function {
+public class IntegerSubtractFunction extends AbstractFunction {
 	/**
 	 *
 	 */
@@ -46,7 +46,8 @@ public class IntegerSubtractFunction implements Function {
 
 	/**
 	 * {@inheritDoc} Takes two {@link BigInteger} values as parameter and
-	 * returns the result of subtracting the second from the first as {@link BigInteger}.
+	 * returns the result of subtracting the second from the first as
+	 * {@link BigInteger}.
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
@@ -63,13 +64,11 @@ public class IntegerSubtractFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

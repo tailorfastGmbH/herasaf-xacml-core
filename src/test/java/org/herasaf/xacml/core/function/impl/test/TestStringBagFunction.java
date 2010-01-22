@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,14 +28,28 @@ import org.herasaf.xacml.core.function.impl.bagFunctions.StringBagFunction;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the StringBag function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestStringBagFunction {
 	private Function stringBagFunction;
 
+	/**
+	 * Initializes the function. 
+	 */
 	@BeforeMethod
 	public void init() {
 		stringBagFunction = new StringBagFunction();
 	}
 
+	/**
+	 * Tests if the {@link StringBagFunction} properly works.
+	 * It tests if all given arguments are returned in a single bag ( {@link List} )
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(enabled = true)
 	public void testHandleStringsTwoArgs() throws Exception {
@@ -48,6 +62,11 @@ public class TestStringBagFunction {
 		assertTrue(actualResult.containsAll(Arrays.asList(expectedResult)));
 	}
 
+	/**
+	 * Tests if the function also works without any argument.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(enabled = true)
 	public void testHandleStringsWithoutArgs() throws Exception {
@@ -59,6 +78,9 @@ public class TestStringBagFunction {
 		assertTrue(actualResult.containsAll(Arrays.asList(expectedResult)));
 	}
 
+	/**
+	 * Tests if the {@link StringBagFunction} returns the proper ID.
+	 */
 	@Test(enabled = true)
 	public void testID() {
 		assertEquals(stringBagFunction.toString(),

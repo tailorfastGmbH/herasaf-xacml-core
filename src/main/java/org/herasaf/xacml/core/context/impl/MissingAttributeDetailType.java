@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,7 +31,6 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -48,18 +47,18 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * this class.
  * 
  * <pre>
- * &lt;complexType name=&quot;MissingAttributeDetailType&quot;&gt;
- *   &lt;complexContent&gt;
- *     &lt;restriction base=&quot;{http://www.w3.org/2001/XMLSchema}anyType&quot;&gt;
- *       &lt;sequence&gt;
- *         &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:context:schema:os}AttributeValue&quot; maxOccurs=&quot;unbounded&quot; minOccurs=&quot;0&quot;/&gt;
- *       &lt;/sequence&gt;
- *       &lt;attribute name=&quot;AttributeId&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}anyURI&quot; /&gt;
- *       &lt;attribute name=&quot;DataType&quot; use=&quot;required&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}anyURI&quot; /&gt;
- *       &lt;attribute name=&quot;Issuer&quot; type=&quot;{http://www.w3.org/2001/XMLSchema}string&quot; /&gt;
- *     &lt;/restriction&gt;
- *   &lt;/complexContent&gt;
- * &lt;/complexType&gt;
+ * &lt;complexType name="MissingAttributeDetailType">
+ *   &lt;complexContent>
+ *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
+ *       &lt;sequence>
+ *         &lt;element ref="{urn:oasis:names:tc:xacml:2.0:context:schema:os}AttributeValue" maxOccurs="unbounded" minOccurs="0"/>
+ *       &lt;/sequence>
+ *       &lt;attribute name="AttributeId" use="required" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
+ *       &lt;attribute name="DataType" use="required" type="{http://www.w3.org/2001/XMLSchema}anyURI" />
+ *       &lt;attribute name="Issuer" type="{http://www.w3.org/2001/XMLSchema}string" />
+ *     &lt;/restriction>
+ *   &lt;/complexContent>
+ * &lt;/complexType>
  * </pre>
  * 
  * See: <a href=
@@ -70,25 +69,22 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @version 1.0
  * @author <i>generated</i>
  */
-//This is needed because the MissingAttributeDetail is contained within the
-//StatusDetail. The content of the StatusDetail is not specified.
-@XmlRootElement
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MissingAttributeDetailType", propOrder = { "attributeValues" })
 public class MissingAttributeDetailType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue")
-	protected List<AttributeValueType> attributeValues;
+	private List<AttributeValueType> attributeValues;
 	@XmlAttribute(name = "AttributeId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String attributeId;
+	private String attributeId;
 	@XmlAttribute(name = "DataType", required = true)
 	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected DataTypeAttribute<?> dataType;
+	private DataTypeAttribute<?> dataType;
 	@XmlAttribute(name = "Issuer")
-	protected String issuer;
+	private String issuer;
 
 	/**
 	 * Gets the value of the attributeValues property.
@@ -111,6 +107,7 @@ public class MissingAttributeDetailType implements Serializable {
 	 * Objects of the following type(s) are allowed in the list
 	 * {@link AttributeValueType }
 	 * 
+	 * @return The list of {@link AttributeValueType}s
 	 * 
 	 */
 	public List<AttributeValueType> getAttributeValues() {

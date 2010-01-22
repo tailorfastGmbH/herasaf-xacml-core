@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,74 +19,61 @@ package org.herasaf.xacml.core.policy;
 
 import java.util.List;
 
-import org.herasaf.xacml.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
- * Represents an type that is evaluatable.
+ * An evaluatable is an evaluable type. Such a type represents an policy or policy set in XAMCL.
  * 
- * @author Florian Huonder, Patrik Dietschweiler
- * @version 1.1
+ * @author Florian Huonder
  */
 public interface Evaluatable {
 
-	/**
-	 * Returns the id of the evaluatable.
-	 * 
-	 * @return The Id as string.
-	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
-	 */
-	public EvaluatableID getId() throws EvaluatableNotFoundException; 
-	
-	/**
-	 * Returns the {@link TargetType} of the evaluatable.
-	 * 
-	 * @return The {@link TargetType} of the evaluatable.
-	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
-	 */
-	public TargetType getTarget() throws EvaluatableNotFoundException;
-	
-	/**
-	 * Returns the {@link CombiningAlgorithm} of the evaluatable.
-	 * 
-	 * @return The {@link CombiningAlgorithm} of the evaluatable.
-	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
-	 */
-	public CombiningAlgorithm getCombiningAlg() throws EvaluatableNotFoundException;
-	
-	/**
-	 * Returns the version of the evaluatable.
-	 * 
-	 * @return The version as string.
-	 * 
-	 * @throws EvaluatableNotFound if the Evaluatable is an IdReferenceType
-	 * and it didnt find the Evaluatable (Only in Last Loading Strategy)
-	 */
-	public String getEvalutableVersion() throws EvaluatableNotFoundException;
-	
-	/**
-	 * Returns a boolean value indicating if the current {@link Evaluatable} or a sub- {@link Evaluatable} contains
-	 * one or more Obligations.
-	 * 
-	 * @return True if the current or a sub- {@link Evaluatable} contains one or more Obligations.
-	 *         False otherwise.
-	 */
-	public boolean hasObligations();
-	
-	/**
-	 * Returns the Obligations of this {@link Evaluatable} which match the given effect.
-	 * 	
-	 * @param effect the {@link EffectType} by which the Obligations should be returned.
-	 * @return The Obligations which match the {@link EffectType}.
-	 */
-	public List<ObligationType> getContainedObligations(EffectType effect);
+    /**
+     * This method returns the ID of the evaluatable.
+     * 
+     * @return The ID of the evaluatable.
+     */
+    EvaluatableID getId();
+
+    /**
+     * Returns the target of the evaluatable.
+     * 
+     * @return The target of the evaluatable.
+     */
+    TargetType getTarget();
+
+    /**
+     * Returns the combining algorithm of the evaluatable.
+     * 
+     * @return The combining algorithm of the evaluatable.
+     */
+    CombiningAlgorithm getCombiningAlg();
+
+    /**
+     * Returns the version of the evaluatable.
+     * 
+     * @return The version of the evaluatable.
+     */
+    String getEvalutableVersion();
+
+    /**
+     * Returns a boolean value indicating if the current {@link Evaluatable} or a sub-{@link Evaluatable} contains one
+     * or more <code>&lt;Obligation&gt;</code>.
+     * 
+     * @return True if the current or a sub-{@link Evaluatable} contains one or more <code>&lt;Obligation&gt;</code>,
+     *         false otherwise.
+     */
+    boolean hasObligations();
+
+    /**
+     * Returns the <code>&lt;Obligation&gt;</code>s of this {@link Evaluatable} that match the given {@link EffectType}.
+     * 
+     * @param effect
+     *            The {@link EffectType} to which the returned <code>&lt;Obligation&gt;</code>s must match.
+     * @return The <code>&lt;Obligation&gt;</code>s that match the {@link EffectType}.
+     */
+    List<ObligationType> getContainedObligations(EffectType effect);
 }

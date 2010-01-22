@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -28,53 +27,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a function. The functions are defined in the <a href=
+ * Converts an URN to a function. The default functions are defined in the <a
+ * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix A.3, page 105. <br>
- * <br>
- * The {@link Map} containing the mapping between URNs and functions is static.
- * The setter for this {@link Map} is NOT static. The filling of this
- * {@link Map} takes place through the <a
- * href="http://www.springframework.org/">Springframework</a>.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
- * @author René Eggenschwiler
- * @version 1.1
- * @see Function
+ * @author RenÃ© Eggenschwiler
  */
 public class URNToFunctionConverter extends XmlAdapter<String, Function> {
-	private static final Logger logger = LoggerFactory
-			.getLogger(URNToFunctionConverter.class);
+	private final Logger logger = LoggerFactory.getLogger(URNToFunctionConverter.class);
+	private static Map<String, Function> functions;
 
 	/**
-	 * Contains all the available functions
-	 */
-	static Map<String, Function> functions;
-
-	/**
-	 * Is used by the <a
-	 * href="http://www.springframework.org/">Springframework</a> to fill the
-	 * static {@link Map} containing the mapping between URNs and functions.
+	 * This method sets the {@link Map} containing the mapping between functions
+	 * and their ID's into the converter.
 	 * 
 	 * @param functions
-	 *            The map containing the mapping between URNs and functions.
+	 *            The {@link Map} containing the mapping between ID's and
+	 *            functions
 	 */
-	public static void setFunctions(Map<String, Function> functions) {
-		URNToFunctionConverter.functions = new ConcurrentHashMap<String, Function>(
-				functions); // ConcurrentHashMap because of concurrent access
-		// possible
+	public static void setFunctions(final Map<String, Function> functions) {
+		URNToFunctionConverter.functions = functions;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(Function function) throws IllegalArgumentException {
+	public String marshal(final Function function) {
 		String functionString;
 		try {
 			functionString = function.toString();
@@ -85,15 +68,11 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 		return functionString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Function unmarshal(String functionId)
-			throws IllegalArgumentException {
+	public Function unmarshal(final String functionId) {
 		Function func;
 		try {
 			func = functions.get(functionId);
@@ -104,7 +83,6 @@ public class URNToFunctionConverter extends XmlAdapter<String, Function> {
 		if (func != null) {
 			return func;
 		}
-		throw new IllegalArgumentException("Function " + functionId
-				+ " unknown.");
+		throw new IllegalArgumentException("Function " + functionId + " unknown.");
 	}
 }

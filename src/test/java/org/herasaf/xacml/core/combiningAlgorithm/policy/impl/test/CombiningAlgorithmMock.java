@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,38 +28,74 @@ import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 
 /**
+ * This mock object represents a combining algorithm that returns a predefined
+ * decision and the matching obligations.
+ * 
  * @author Florian Huonder
  * @author Stefan Oberholzer
  */
-public class CombiningAlgorithmMock implements CombiningAlgorithm{
-
-	private static final long serialVersionUID = -631513345878367721L;
+public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	RequestInformation reqInfo;
 	DecisionType decision;
-	public CombiningAlgorithmMock(DecisionType decision){
+
+	/**
+	 * Sets the decision that the combing algorithm shall return.
+	 * 
+	 * @param decision
+	 */
+	public CombiningAlgorithmMock(DecisionType decision) {
 		this.decision = decision;
 	}
-	
-	public DecisionType evaluate(RequestType request, Evaluatable evals,
-			RequestInformation requestInfo) {
-//		requestInfo.resetStatus();
-//		requestInfo.clearObligations();
+
+	/**
+	 * {@inheritDoc}
+	 */
+	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
-		for (ObligationType obligation : reqInfo.getObligations().getObligations()){
+		for (ObligationType obligation : reqInfo.getObligations().getObligations()) {
 			obligations.add(new ObligationType(obligation.getObligationId(), obligation.getFulfillOn()));
 		}
-		
+
 		requestInfo.updateStatusCode(reqInfo.getStatusCode());
 		requestInfo.addObligations(obligations, EffectType.PERMIT);
 		requestInfo.addObligations(obligations, EffectType.DENY);
 		return decision;
 	}
 
+	/**
+	 * Returns the {@link RequestInformation} that is set in this combining
+	 * algorithm.
+	 * 
+	 * @return The {@link RequestInformation} that is set in this combining
+	 *         algorithm.
+	 */
 	public RequestInformation getReqInfo() {
 		return reqInfo;
 	}
 
+	/**
+	 * Sets a {@link RequestInformation} into this combining algorithm.
+	 * 
+	 * @param reqInfo
+	 *            The {@link RequestInformation} to set into this combining
+	 *            algorithm.
+	 */
 	public void setReqInfo(RequestInformation reqInfo) {
 		this.reqInfo = reqInfo;
+	}
+
+	/**
+	 * Returns false because it is an unordered combining algorithm.
+	 */
+	public boolean isOrderedCombiningAlgorithm() {
+		return false;
+	}
+
+	/**
+	 * nop because its ordered.
+	 */
+	public void setOrderedCombiningAlgorithm(boolean isOrderedCombiningAlgorithm) {
+		// nop because its ordered.
+
 	}
 }

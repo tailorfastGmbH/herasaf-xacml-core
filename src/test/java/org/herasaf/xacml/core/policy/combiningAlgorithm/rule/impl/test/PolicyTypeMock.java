@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,14 +25,20 @@ import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.Variable;
 
+/**
+ * A mock of the {@link PolicyType}.
+ * 
+ * @author Florian Huonder
+ */
 public class PolicyTypeMock extends PolicyType {
-
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 555197990866583034L;
 	private List<RuleType> rules;
 
+	/**
+	 * Creates a mock with the given containing rules.
+	 * 
+	 * @param rulesArray The rules to add to the mock.
+	 */
 	public PolicyTypeMock(RuleType[] rulesArray ){
 		List<RuleType> rules = new ArrayList<RuleType>();
 		for (RuleType rule : rulesArray){
@@ -41,23 +47,37 @@ public class PolicyTypeMock extends PolicyType {
 		this.rules = rules;
 	}
 
+	/**
+	 * Creates a new mock that contains an empty {@link RuleType}.
+	 */
 	public PolicyTypeMock(){
 		rules = new ArrayList<RuleType>();
 		rules.add(new RuleType());
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<RuleType> getOrderedRules() {
 		return rules;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public List<RuleType> getUnorderedRules() {
 		return rules;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns always null because there are no {@link Variable}s.
+	 */
 	@Override
 	public Map<String, Variable> getVariables() {
 		return null;
 	}
-
 }

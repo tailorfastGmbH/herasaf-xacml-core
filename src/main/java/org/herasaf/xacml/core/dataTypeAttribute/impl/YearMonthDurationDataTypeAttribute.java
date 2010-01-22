@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,32 +17,24 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.YearMonthDuration;
 
 /**
- * The Name of this data type is
- * urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration.<br>
- * See: <a href=
+ * This data type represents a
+ * urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration. See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
-public class YearMonthDurationDataTypeAttribute extends
-		AbstractDataTypeAttribute<YearMonthDuration> {
-
-	/** Data type ID URI. */
+public class YearMonthDurationDataTypeAttribute extends AbstractDataTypeAttribute<YearMonthDuration> {
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -9096516144266375543L;
 
 	/** {@inheritDoc} */
-	public YearMonthDuration convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public YearMonthDuration convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new YearMonthDuration(jaxbRepresentation.trim());
 		} catch (IllegalArgumentException e) {

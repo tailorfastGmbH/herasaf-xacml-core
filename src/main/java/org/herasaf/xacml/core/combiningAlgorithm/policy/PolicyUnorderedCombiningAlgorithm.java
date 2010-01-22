@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,9 +17,6 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.policy;
 
-import java.util.List;
-
-import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -28,36 +25,29 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 
 /**
- * Abstract class {@link PolicyCombiningAlgorithm} implementation that evaluate
- * the included Evaluatables unordered.
- *
+ * This class may be extended when implementing an unordered policy combining
+ * algorithm. It contains some common code all ordered combining algorithms must
+ * implement.
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
- *
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  */
-public abstract class PolicyUnorderedCombiningAlgorithm extends
-		AbstractCombiningAlgorithm implements PolicyCombiningAlgorithm {
-	private static final long serialVersionUID = 3587482340234936823L;
-	
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      org.herasaf.core.policy.impl.Evaluatable,
-	 *      org.herasaf.core.dataTypes.RequestInformation)
+public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
+
+	/**
+	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(RequestType request,
-			Evaluatable evals, RequestInformation requestInfo) {
-		DecisionType decision = matchTarget(request,
-				evals.getTarget(), requestInfo);
+	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
+			final RequestInformation requestInfo) {
+		final DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
 		}
 		try {
-			DecisionType dec = this
-					.evaluateEvaluatableList(request, ((PolicySetType) evals)
-							.getUnorderedEvaluatables(requestInfo), requestInfo);
+			final DecisionType dec = this.evaluateEvaluatableList(request, ((PolicySetType) evals)
+					.getUnorderedEvaluatables(requestInfo), requestInfo);
 			/*
 			 * The evaluateEvaluatableList method may set the targetMatched
 			 * value to false. So it has to be set to true to go sure that it is
@@ -76,15 +66,4 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends
 			return DecisionType.INDETERMINATE;
 		}
 	}
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List)
-	 */
-	public abstract DecisionType evaluateEvaluatableList(
-			RequestType request, List<Evaluatable> possiblePolicies,
-			RequestInformation requestInfos);
-
 }

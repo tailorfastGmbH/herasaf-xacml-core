@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,29 +17,25 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.HexBinary;
 
 /**
- * The Name of this data type is http://www.w3.org/2001/XMLSchema#hexBinary.<br>
+ * This data type represents a http://www.w3.org/2001/XMLSchema#hexBinary.
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#hexBinary"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#hexBinary</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBinary> {
-	
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#hexBinary";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -1876089138053432795L;
 
-	/** {@inheritDoc} */
-	public HexBinary convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	/**
+	 * {@inheritDoc}
+	 */
+	public HexBinary convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new HexBinary(jaxbRepresentation.trim());
 		} catch (IllegalArgumentException e) {
@@ -47,7 +43,9 @@ public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBin
 		}
 	}
 
-	/** {@inheritDoc} */
+	/**
+	 * {@inheritDoc}
+	 */
 	public String getDatatypeURI() {
 		return ID;
 	}

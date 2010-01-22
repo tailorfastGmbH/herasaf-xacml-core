@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.specialMatchFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.RFC822Name;
 
@@ -27,16 +27,16 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
-public class RFC822NameMatchFunction implements Function {
+public class RFC822NameMatchFunction extends AbstractFunction {
 	private static final long serialVersionUID = -3491926450245801282L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match";
 
@@ -45,8 +45,9 @@ public class RFC822NameMatchFunction implements Function {
 	 * <br>
 	 * Returns true if the first argument matches the second argument according
 	 * the specification on page 125 (A.3.14, special match functions) in <a
-	 * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
-	 * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29
+	 * href=
+	 * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
+	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29
 	 * June 2006</a>
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
@@ -66,13 +67,11 @@ public class RFC822NameMatchFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

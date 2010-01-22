@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,38 +21,66 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URI;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.AnyURIDataTypeAttribute;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link AnyURIDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestAnyURIDataTypeAttribute {
-
 	private AnyURIDataTypeAttribute dataType;
 	
+	/**
+	 * Initializes a new {@link AnyURIDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new AnyURIDataTypeAttribute();
 	}
 	
+	/**
+	 * Tests if the datatype works with an URL.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput1() throws Exception{
 		assertEquals(dataType.convertTo("www.hallo.ch"), new URI("www.hallo.ch"));
 	}
 	
+	/**
+	 * Tests if the datatype works with an URI.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput0() throws Exception{
 		assertEquals(dataType.convertTo("hallo/du/.ch"), new URI("hallo/du/.ch"));
 	}
 	
+	/**
+	 * Tests if the datatype does not accept illegal arguments.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test(expectedExceptions={SyntaxException.class})
 	public void testInputtrueWrongSpelled() throws Exception{
 		dataType.convertTo("-\\1234");
 	}
 	
+	/**
+	 * Tests if the {@link AnyURIDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(), "http://www.w3.org/2001/XMLSchema#anyURI");
 	}
 }
-

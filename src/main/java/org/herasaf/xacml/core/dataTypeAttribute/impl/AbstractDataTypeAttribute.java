@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,13 +20,11 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
- * Base class for {@link DataTypeAttribute} implementations.
- * 
- * @param <DataType>
- *            the type of data handled by this data type
+ * This abstract class may be used as basis for the implementation of a data type.
+ * It has some default implementations of common methods (like {@link #equals(Object)}).
+ * @param <T>
  */
-public abstract class AbstractDataTypeAttribute<DataType> implements
-		DataTypeAttribute<DataType> {
+public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<T> {
 
 	/** Serial version UID. */
 	private static final long serialVersionUID = -7160783590484665708L;
@@ -35,12 +33,12 @@ public abstract class AbstractDataTypeAttribute<DataType> implements
 	public String toString() {
 		return getDatatypeURI();
 	}
-	
+
 	/** {@inheritDoc} */
 	public int hashCode() {
 		return getDatatypeURI().hashCode();
 	}
-	
+
 	/** {@inheritDoc} */
 	public boolean equals(Object o) {
 		if (o == null) {
@@ -54,7 +52,7 @@ public abstract class AbstractDataTypeAttribute<DataType> implements
 		if (this.getClass().isInstance(o)) {
 			return hashCode() == o.hashCode();
 		}
-		
+
 		return false;
 	}
 }

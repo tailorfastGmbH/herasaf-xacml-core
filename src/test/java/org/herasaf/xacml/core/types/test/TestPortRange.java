@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,8 +23,18 @@ import org.herasaf.xacml.core.types.PortRange;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-
+/**
+ *  Tests the {@link PortRange} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestPortRange {
+	
+	/**
+	 * Creates positive test cases. 
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "positiveCases")
 	public Object[][] createPositiveCases(){
 		return new Object[][] {
@@ -34,6 +44,11 @@ public class TestPortRange {
 		};
 	}
 
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider (name = "negativeCases")
 	public Object[][] createNegativeCases(){
 		return new Object[][] {
@@ -44,11 +59,24 @@ public class TestPortRange {
 		};
 	}
 	
+	/**
+	 * Test if the {@link PortRange} objects are properly created.
+	 * 
+	 * @param input The port range in its String representation.
+	 * @param expected The expected String on {@link PortRange#toString()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positiveCases", enabled = true)
 	public void testAllowed(String input, String expected) throws Exception {
 			assertEquals(new PortRange(input).toString(), expected);
 	}
 	
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal port range representations.
+
+	 * @param input The illegal port range strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
 	public void testNotAllowed(String input) throws Exception {
 		new PortRange(input);

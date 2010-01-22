@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,23 +17,18 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * The Name of this data type is http://www.w3.org/2001/XMLSchema#boolean.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#boolean. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#boolean</A> for further
  * information.
- *
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class BooleanDataTypeAttribute extends AbstractDataTypeAttribute<Boolean> {
-	
-	/** Data type ID URI. */
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -4881189643269560315L;
 
 	/** {@inheritDoc} */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.dateAndTimeArithmeticFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.Date;
 import org.herasaf.xacml.core.types.YearMonthDuration;
@@ -29,16 +29,16 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * function.
  * </p>
  * <p>
- * See Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 111, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateSubtractYearMonthDurationFunction implements Function {
+public class DateSubtractYearMonthDurationFunction extends AbstractFunction {
 
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-subtract-yearMonthDuration";
@@ -46,8 +46,8 @@ public class DateSubtractYearMonthDurationFunction implements Function {
 	/**
 	 * {@inheritDoc} Takes a {@link Date} as first parameter and a
 	 * {@link YearMonthDuration} duration as second parameter and returns the
-	 * result of subtracting the {@link YearMonthDuration} from the {@link Date}.
-	 * The return value is a {@link Date}.
+	 * result of subtracting the {@link YearMonthDuration} from the {@link Date}
+	 * . The return value is a {@link Date}.
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
@@ -64,13 +64,11 @@ public class DateSubtractYearMonthDurationFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

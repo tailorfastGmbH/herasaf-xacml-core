@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,9 +26,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * be found at <A HREF="http://www.w3.org/2001/XMLSchema#dateTime"
  * TARGET="_blank">http://www.w3.org/2001/XMLSchema#dateTime</A>.
  * 
- * @author Stefan Oberholzer 
- * @author Florian Huonder 
- * @version 1.0
+ * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class DateTime implements Comparable<DateTime> {
 	private static final String MATCH_PATTERN = "\\S*-\\S*:\\S*";
@@ -46,8 +45,7 @@ public class DateTime implements Comparable<DateTime> {
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
 			if (lexicalRepresentation.matches(MATCH_PATTERN)) {
-				this.xmlCalendar = factory
-						.newXMLGregorianCalendar(lexicalRepresentation);
+				this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
 			} else {
 				throw new IllegalArgumentException("Only a Date is allowed");
 			}
@@ -66,29 +64,23 @@ public class DateTime implements Comparable<DateTime> {
 		return xmlCalendar;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		return xmlCalendar.toXMLFormat();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	public int compareTo(DateTime dateTime) {
 		return xmlCalendar.compare(dateTime.getCalendar());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -100,10 +92,8 @@ public class DateTime implements Comparable<DateTime> {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
@@ -138,11 +128,9 @@ public class DateTime implements Comparable<DateTime> {
 	 */
 	public void subtract(DayTimeDuration duration) {
 		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new DayTimeDuration(duration.getDuration()
-					.toString().substring(1)).getDuration());
+			this.xmlCalendar.add(new DayTimeDuration(duration.getDuration().toString().substring(1)).getDuration());
 		} else {
-			this.xmlCalendar.add(new DayTimeDuration("-"
-					+ duration.getDuration().toString()).getDuration());
+			this.xmlCalendar.add(new DayTimeDuration("-" + duration.getDuration().toString()).getDuration());
 		}
 	}
 
@@ -154,11 +142,9 @@ public class DateTime implements Comparable<DateTime> {
 	 */
 	public void subtract(YearMonthDuration duration) {
 		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration()
-					.toString().substring(1)).getDuration());
+			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration().toString().substring(1)).getDuration());
 		} else {
-			this.xmlCalendar.add(new YearMonthDuration("-"
-					+ duration.getDuration().toString()).getDuration());
+			this.xmlCalendar.add(new YearMonthDuration("-" + duration.getDuration().toString()).getDuration());
 		}
 	}
 }

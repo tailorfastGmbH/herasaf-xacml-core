@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,6 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
@@ -31,11 +30,13 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for StatusType complex type.
+ * <p>
+ * Java class for StatusType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="StatusType">
@@ -51,100 +52,87 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 73, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 73, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "StatusType", propOrder = {
-    "statusCode",
-    "statusMessage",
-    "statusDetail"
-})
-public class StatusType
-    implements Serializable
-{
+@XmlType(name = "StatusType", propOrder = { "statusCode", "statusMessage", "statusDetail" })
+public class StatusType implements Serializable {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlElement(name = "StatusCode", required = true)
-    protected StatusCodeType statusCode;
-    @XmlElement(name = "StatusMessage")
-    protected String statusMessage;
-    @XmlElement(name = "StatusDetail")
-    protected StatusDetailType statusDetail;
+	private static final long serialVersionUID = 632768732L;
+	@XmlElement(name = "StatusCode", required = true)
+	private StatusCodeType statusCode;
+	@XmlElement(name = "StatusMessage")
+	private String statusMessage;
+	@XmlElement(name = "StatusDetail")
+	private StatusDetailType statusDetail;
 
-    /**
-     * Gets the value of the statusCode property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusCodeType }
-     *     
-     */
-    public StatusCodeType getStatusCode() {
-        return statusCode;
-    }
+	/**
+	 * Gets the value of the statusCode property.
+	 * 
+	 * @return possible object is {@link StatusCodeType }
+	 * 
+	 */
+	public StatusCodeType getStatusCode() {
+		return statusCode;
+	}
 
-    /**
-     * Sets the value of the statusCode property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusCodeType }
-     *     
-     */
-    public void setStatusCode(StatusCodeType value) {
-        this.statusCode = value;
-    }
+	/**
+	 * Sets the value of the statusCode property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link StatusCodeType }
+	 * 
+	 */
+	public void setStatusCode(StatusCodeType value) {
+		this.statusCode = value;
+	}
 
-    /**
-     * Gets the value of the statusMessage property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getStatusMessage() {
-        return statusMessage;
-    }
+	/**
+	 * Gets the value of the statusMessage property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getStatusMessage() {
+		return statusMessage;
+	}
 
-    /**
-     * Sets the value of the statusMessage property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setStatusMessage(String value) {
-        this.statusMessage = value;
-    }
+	/**
+	 * Sets the value of the statusMessage property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setStatusMessage(String value) {
+		this.statusMessage = value;
+	}
 
-    /**
-     * Gets the value of the statusDetail property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link StatusDetailType }
-     *     
-     */
-    public StatusDetailType getStatusDetail() {
-        return statusDetail;
-    }
+	/**
+	 * Gets the value of the statusDetail property.
+	 * 
+	 * @return possible object is {@link StatusDetailType }
+	 * 
+	 */
+	public StatusDetailType getStatusDetail() {
+		return statusDetail;
+	}
 
-    /**
-     * Sets the value of the statusDetail property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link StatusDetailType }
-     *     
-     */
-    public void setStatusDetail(StatusDetailType value) {
-        this.statusDetail = value;
-    }
+	/**
+	 * Sets the value of the statusDetail property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link StatusDetailType }
+	 * 
+	 */
+	public void setStatusDetail(StatusDetailType value) {
+		this.statusDetail = value;
+	}
 
 }

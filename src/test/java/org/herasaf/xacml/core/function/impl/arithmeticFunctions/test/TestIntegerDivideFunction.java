@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,9 +28,19 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * This test tests if the IntegerDivide function works properly. 
+ *  
+ * @author Florian Huonder
+ */
 public class TestIntegerDivideFunction {
 	private Function ia;
 
+	/**
+	 * Creates tests that divides 2 intger values. The third column is the expected result of the division.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -39,6 +49,11 @@ public class TestIntegerDivideFunction {
 		};
 	}
 
+	/**
+	 * Creates test cases where these integer values are divided by 0.
+	 * 
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="dataBy0")
 	public Object[][] createDataBy0(){
 		return new Object[][]{
@@ -46,21 +61,43 @@ public class TestIntegerDivideFunction {
 			new Object[] { new BigInteger("99")},
 		};
 	}
+	
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new IntegerDivideFunction();
 	}
 
+	/**
+	 * Tests the division of 2 integer values.
+	 * 
+	 * @param i1 The first integer value.
+	 * @param i2 The second integer value.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="data2Args")
 	public void testDivide2Args(BigInteger i1, BigInteger i2, String result) throws Exception {
 		assertEquals(ia.handle(i1, i2).toString(), result);
 	}
 
+	/**
+	 * Tests the division by 0.
+	 * This test expects a {@link FunctionProcessingException}.
+	 * 
+	 * @param i1 The integer value that shall be divided by 0.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="dataBy0", expectedExceptions={FunctionProcessingException.class})
 	public void testDivideBy0Args(BigInteger i1) throws Exception {
 		ia.handle(i1, new BigInteger("0"));
 	}
 
+	/**
+	 * Tests if the function returns the right ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:integer-divide");

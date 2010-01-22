@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,29 +19,22 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import java.math.BigInteger;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * The Name of this datatype is http://www.w3.org/2001/XMLSchema#integer.<br>
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#integer"
+ * This data type represents a http://www.w3.org/2001/XMLSchema#integer. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#integer"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for further
  * information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
-public class IntegerDataTypeAttribute extends
-		AbstractDataTypeAttribute<BigInteger> {
-
-	/** Data type ID URI. */
+public class IntegerDataTypeAttribute extends AbstractDataTypeAttribute<BigInteger> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#integer";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = -6361086876173896623L;
 
 	/** {@inheritDoc} */
-	public BigInteger convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public BigInteger convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new BigInteger(jaxbRepresentation.trim());
 		} catch (Exception e) {

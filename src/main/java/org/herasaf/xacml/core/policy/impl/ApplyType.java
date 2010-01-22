@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,8 +29,8 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
@@ -41,11 +40,11 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 /**
  * <p>
  * Java class for ApplyType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;ApplyType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -58,57 +57,60 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 60, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 60, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ApplyType", propOrder = { "expressions" })
-public class ApplyType extends ExpressionType implements Serializable {
+public class ApplyType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
-	protected List<JAXBElement<?>> expressions;
+	private List<JAXBElement<?>> expressions;
 	@XmlAttribute(name = "FunctionId", required = true)
 	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected Function function;
+	private Function function;
 
 	/**
 	 * Gets the value of the expressions property.
-	 *
+	 * 
 	 * <p>
 	 * This accessor method returns a reference to the live list, not a
 	 * snapshot. Therefore any modification you make to the returned list will
 	 * be present inside the JAXB object. This is why there is not a
 	 * <CODE>set</CODE> method for the expressions property.
-	 *
+	 * 
 	 * <p>
 	 * For example, to add a new item, do as follows:
-	 *
+	 * 
 	 * <pre>
 	 * getExpressions().add(newItem);
 	 * </pre>
-	 *
-	 *
+	 * 
+	 * 
 	 * <p>
 	 * Objects of the following type(s) are allowed in the list
-	 * {@link JAXBElement }{@code <}{@link ResourceAttributeDesignatorType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link AttributeSelectorType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link VariableReferenceType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link EnvironmentAttributeDesignatorType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link AttributeValueType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link SubjectAttributeDesignatorType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link FunctionType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link ExpressionType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link ApplyType }{@code >}
-	 * {@link JAXBElement }{@code <}{@link ActionAttributeDesignatorType }{@code >}
-	 *
-	 *
+	 * {@link JAXBElement }{@code <}{@link ResourceAttributeDesignatorType }
+	 * {@code >} {@link JAXBElement }{@code <}{@link AttributeSelectorType }
+	 * {@code >} {@link JAXBElement }{@code <}{@link VariableReferenceType }
+	 * {@code >} {@link JAXBElement }{@code <}
+	 * {@link EnvironmentAttributeDesignatorType }{@code >} {@link JAXBElement }
+	 * {@code <}{@link AttributeValueType }{@code >} {@link JAXBElement }{@code <}
+	 * {@link SubjectAttributeDesignatorType }{@code >} {@link JAXBElement }
+	 * {@code <}{@link FunctionType }{@code >} {@link JAXBElement }{@code <}
+	 * {@link ExpressionType }{@code >} {@link JAXBElement }{@code <}
+	 * {@link ApplyType }{@code >} {@link JAXBElement }{@code <}
+	 * {@link ActionAttributeDesignatorType }{@code >}
+	 * 
+	 * 
 	 */
 	public List<JAXBElement<?>> getExpressions() {
 		if (expressions == null) {
@@ -119,9 +121,9 @@ public class ApplyType extends ExpressionType implements Serializable {
 
 	/**
 	 * Gets the value of the function property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public Function getFunction() {
 		return function;
@@ -129,10 +131,10 @@ public class ApplyType extends ExpressionType implements Serializable {
 
 	/**
 	 * Sets the value of the function property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setFunction(Function value) {
 		this.function = value;
@@ -140,25 +142,24 @@ public class ApplyType extends ExpressionType implements Serializable {
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.
+	 * xacml.core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo)
-			throws MissingAttributeException, SyntaxException,
-			ProcessingException {
+	public Object handle(RequestType request, RequestInformation reqInfo) throws MissingAttributeException,
+			SyntaxException, ProcessingException {
 		try {
 			List<Object> params = new ArrayList<Object>();
 
-			for (int i = 0; i < getExpressions().size(); i++){
+			for (int i = 0; i < getExpressions().size(); i++) {
 				JAXBElement<?> jaxbElem = getExpressions().get(i);
 				if (jaxbElem.getValue() instanceof ApplyType) {
-					params.add(((ApplyType) jaxbElem.getValue()).handle(
-							request, reqInfo));
+					params.add(((ApplyType) jaxbElem.getValue()).handle(request, reqInfo));
 					continue;
 				}
-				params.add(((ExpressionType) jaxbElem.getValue()).handle(
-						request, reqInfo));
+				params.add(((ExpressionType) jaxbElem.getValue()).handle(request, reqInfo));
 			}
 			return getFunction().handle(params.toArray());
 		} catch (ClassCastException e) {

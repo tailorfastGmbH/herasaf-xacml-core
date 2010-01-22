@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,13 @@
 
 package org.herasaf.xacml.core.types.test;
 
+import org.herasaf.xacml.core.types.Base64Binary;
+
+/**
+ * A Base64 encoder used as utility to test the {@link Base64Binary} data type.
+ * 
+ * @author Florian Huonder
+ */
 public class Base64Encoder {
 	/** Specify encoding (value is <tt>true</tt>). */
     public final static boolean ENCODE = true;

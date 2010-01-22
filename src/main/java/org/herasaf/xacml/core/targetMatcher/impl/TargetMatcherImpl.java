@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,8 +19,8 @@ package org.herasaf.xacml.core.targetMatcher.impl;
 
 import java.util.List;
 
-import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.function.Function;
@@ -42,55 +42,45 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of the {@link TargetMatcher} interface.
+ * Matches a policy's, a policy set's or a rule's target against a given
+ * request.
  * 
  * @author Florian Huonder
- * @version 1.0
+ * @author René Eggenschwiler
  */
 public class TargetMatcherImpl implements TargetMatcher {
-	private static final long serialVersionUID = 9099144198373918560L;
-	private final Logger logger = LoggerFactory
-			.getLogger(TargetMatcherImpl.class);
+	private final Logger logger = LoggerFactory.getLogger(TargetMatcherImpl.class);
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.targetMatcher.TargetMatcher#match(org.herasaf.core.context
-	 * .impl.RequestType, org.herasaf.core.policy.impl.TargetType)
+	/**
+	 * {@inheritDoc}
 	 */
-	public boolean match(RequestType request, TargetType target,
-			RequestInformation reqInfo) throws SyntaxException,
+	public boolean match(RequestType request, TargetType target, RequestInformation reqInfo) throws SyntaxException,
 			ProcessingException, MissingAttributeException {
 		if (target != null) {
-			boolean subjectsMatches = subjectsMatch(target.getSubjects(),
-					request, reqInfo);
-			logger.debug("Request meets subject target requirements: {}",
-					subjectsMatches);
+			logger.debug("Starting subjects match.");
+			boolean subjectsMatches = subjectsMatch(target.getSubjects(), request, reqInfo);
+			logger.debug("Subjects match resulted in: {}", subjectsMatches);
 			if (!subjectsMatches) {
 				return false;
 			}
 
-			boolean resourcesMatches = resourcesMatch(target.getResources(),
-					request, reqInfo);
-			logger.debug("Request meets resource target requirements: {}",
-					resourcesMatches);
+			logger.debug("Starting recources match.");
+			boolean resourcesMatches = resourcesMatch(target.getResources(), request, reqInfo);
+			logger.debug("Resources match resulted in: {}", resourcesMatches);
 			if (!resourcesMatches) {
 				return false;
 			}
 
-			boolean actionsMatches = actionMatch(target.getActions(), request,
-					reqInfo);
-			logger.debug("Request meets action target requirements: {}",
-					actionsMatches);
+			logger.debug("Starting actions match.");
+			boolean actionsMatches = actionMatch(target.getActions(), request, reqInfo);
+			logger.debug("Actions match resulted in: {}", actionsMatches);
 			if (!actionsMatches) {
 				return false;
 			}
 
-			boolean environmentsMatches = environmentMatch(target
-					.getEnvironments(), request, reqInfo);
-			logger.debug("Request meets environment target requirements: {}",
-					environmentsMatches);
+			logger.debug("Starting environments match.");
+			boolean environmentsMatches = environmentMatch(target.getEnvironments(), request, reqInfo);
+			logger.debug("Environments match resulted in: {}", environmentsMatches);
 			if (!environmentsMatches) {
 				return false;
 			}
@@ -106,125 +96,167 @@ public class TargetMatcherImpl implements TargetMatcher {
 		return true;
 	}
 
-	private boolean subjectsMatch(SubjectsType subjects, RequestType request,
-			RequestInformation reqInfo) throws ProcessingException,
-			SyntaxException, MissingAttributeException {
+	/**
+	 * Checks if the <code>&lt;Subjects&gt;</code> element matches the given request.
+	 * 
+	 * @param subjects The <code>&lt;Subjects&gt;</code> element to be matched.
+	 * @param request The requests containing the attributes to be matched against the <code>&lt;Subjects&gt;</code>.
+	 * @param reqInfo The {@link RequestInformation} containing additional information.
+	 * @return
+	 * @throws ProcessingException If an exception occurred while processing the matching functions.
+	 * @throws SyntaxException If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+	 */
+	private boolean subjectsMatch(SubjectsType subjects, RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (subjects == null) {
+			logger.debug("No subjects present.");
 			return true;
 		}
-
-		SubjectType targetSubject;
 		for (int i = 0; i < subjects.getSubjects().size(); i++) {
-			targetSubject = subjects.getSubjects().get(i);
-			boolean matches = match(targetSubject.getSubjectMatches(), request,
-					reqInfo);
+			SubjectType targetSubject = subjects.getSubjects().get(i);
+			logger.debug("Starting subject match. (id:{})", targetSubject.toString());
+			boolean matches = match(targetSubject.getSubjectMatches(), request, reqInfo);
 			if (matches) {
 				// If one subject matches the subjects matches and returns true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Language (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 46 (5.6).
+				logger.debug("Subject match resulted in: {}", matches);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean resourcesMatch(ResourcesType resources,
-			RequestType request, RequestInformation reqInfo)
-			throws ProcessingException, SyntaxException,
-			MissingAttributeException {
+	/**
+     * Checks if the <code>&lt;Resources&gt;</code> element matches the given request.
+     * 
+     * @param resources The <code>&lt;Resources&gt;</code> element to be matched.
+     * @param request The requests containing the attributes to be matched against the <code>&lt;Resources&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+     */
+	private boolean resourcesMatch(ResourcesType resources, RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (resources == null) {
+			logger.debug("No resources present.");
 			return true;
 		}
-
-		ResourceType targetResource;
 		for (int i = 0; i < resources.getResources().size(); i++) {
-			targetResource = resources.getResources().get(i);
-			boolean matches = match(targetResource.getResourceMatches(),
-					request, reqInfo);
+			ResourceType targetResource = resources.getResources().get(i);
+			logger.debug("Starting resource match. (id:{})", targetResource.toString());
+			boolean matches = match(targetResource.getResourceMatches(), request, reqInfo);
 			if (matches) {
 				// If one resource matches the resources matches and returns
 				// true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Language (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 47 (5.9).
+				logger.debug("Resource match resulted in: {}", matches);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean actionMatch(ActionsType actions, RequestType request,
-			RequestInformation reqInfo) throws ProcessingException,
-			SyntaxException, MissingAttributeException {
+	/**
+     * Checks if the <code>&lt;Actions&gt;</code> element matches the given request.
+     * 
+     * @param actions The <code>&lt;Actions&gt;</code> element to be matched.
+     * @param request The requests containing the attributes to be matched against the <code>&lt;Actions&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+     */
+	private boolean actionMatch(ActionsType actions, RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (actions == null) {
+			logger.debug("No actions present.");
 			return true;
 		}
-
-		ActionType targetAction;
 		for (int i = 0; i < actions.getActions().size(); i++) {
-			targetAction = actions.getActions().get(i);
-			boolean matches = match(targetAction.getActionMatches(), request,
-					reqInfo);
+			ActionType targetAction = actions.getActions().get(i);
+			logger.debug("Starting action match. (id:{})", targetAction.toString());
+			boolean matches = match(targetAction.getActionMatches(), request, reqInfo);
 			if (matches) {
 				// If one action matches the actions matches and returns true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Language (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 48 (5.12).
+				logger.debug("Action match resulted in: {}", matches);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean environmentMatch(EnvironmentsType environments,
-			RequestType request, RequestInformation reqInfo)
-			throws ProcessingException, SyntaxException,
-			MissingAttributeException {
+	/**
+     * Checks if the <code>&lt;Environments&gt;</code> element matches the given request.
+     * 
+     * @param environments The <code>&lt;Environments&gt;</code> element to be matched.
+     * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+     */
+	private boolean environmentMatch(EnvironmentsType environments, RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException, MissingAttributeException {
 		if (environments == null) {
+			logger.debug("No environments present.");
 			return true;
 		}
-
-		EnvironmentType targetEnvironment;
 		for (int i = 0; i < environments.getEnvironments().size(); i++) {
-			targetEnvironment = environments.getEnvironments().get(i);
-			boolean matches = match(targetEnvironment.getEnvironmentMatches(),
-					request, reqInfo);
+			EnvironmentType targetEnvironment = environments.getEnvironments().get(i);
+			logger.debug("Starting environment match. (id:{})", targetEnvironment.toString());
+			boolean matches = match(targetEnvironment.getEnvironmentMatches(), request, reqInfo);
 			if (matches) {
 				// If one environment matches the environments matches and
 				// returns true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Language (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 50 (5.15).
+				logger.debug("Environment match resulted in: {}", matches);
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean match(List<? extends Match> matches, RequestType request,
-			RequestInformation reqInfo) throws ProcessingException,
-			SyntaxException, MissingAttributeException {
-
-		Match match;
-		Function matchFunction;
-		AttributeDesignatorType designator;
-		List<?> requestAttributeValues;
-		Object requestAttributeValue;
+	/**
+	 * @param matches The matching element (either <code>&lt;SubjectMatch&gt;</code>, <code>&lt;ResourceMatch&gt;</code>, <code>&lt;ActionMatch&gt;</code> or <code>&lt;EnvironmentMatch&gt;</code>) to be matched against the request.
+	 * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
+     * @param reqInfo The {@link RequestInformation} containing additional information.
+     * @return
+     * @throws ProcessingException If an exception occurred while processing the matching functions.
+     * @throws SyntaxException If the request or the policy contained a syntax error.
+     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+	 */
+	private boolean match(List<? extends Match> matches, RequestType request, RequestInformation reqInfo)
+			throws ProcessingException, SyntaxException, MissingAttributeException {
 		for (int i = 0; i < matches.size(); i++) {
-			match = matches.get(i);
-			matchFunction = match.getMatchFunction();
-			designator = match.getAttributeDesignator();
-			requestAttributeValues = (List<?>) designator.handle(request,
-					reqInfo); // Fetches all AttributeValue-contents
+			Match match = matches.get(i);
+			Function matchFunction = match.getMatchFunction();
+			logger.debug("Matching with function: {}", matchFunction.toString());
+			AttributeDesignatorType designator = match.getAttributeDesignator();
+			List<?> requestAttributeValues = (List<?>) designator.handle(request, reqInfo); // Fetches
+			// all
+			// AttributeValue-contents
 			// from the element (element = subject,
 			// resource, action or environment)
 			// AttributeDesignator.
@@ -235,10 +267,11 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// checked.
 			//
 			// This part references OASIS eXtensible Access Control Markup
-			// Language (XACML) 2.0, Errata 29 June 2006
+			// Langugage (XACML) 2.0, Errata 29 June 2006
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 			// on page 79 (Match evaluation, line 3394).
 			if (requestAttributeValues.size() == 0) {
+				logger.debug("Request did not contain the required attributes.");
 				return false;
 			}
 
@@ -247,20 +280,22 @@ public class TargetMatcherImpl implements TargetMatcher {
 			boolean matchMatches = false;
 
 			for (int k = 0; k < requestAttributeValues.size(); k++) {
-				requestAttributeValue = requestAttributeValues.get(k);
+				Object requestAttributeValue = requestAttributeValues.get(k);
 				// The attribute value specified in the matching element must be
 				// supplied as the first argument.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Language (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 79 (Match evaluation, line 3371).
-
 				AttributeValueType policyAttributeValue = match.getAttributeValue();
-				matchMatches = (Boolean) matchFunction.handle(policyAttributeValue
-						.getDataType().convertTo(
-								(String) policyAttributeValue.getContent().get(0)),
-						requestAttributeValue);
+				matchMatches = (Boolean) matchFunction.handle(policyAttributeValue.getDataType().convertTo(
+						(String) policyAttributeValue.getContent().get(0)), requestAttributeValue);
+				logger
+						.debug(
+								"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
+								new Object[] { matchMatches, policyAttributeValue.getDataType(),
+										policyAttributeValue.getContent().get(0), requestAttributeValue });
 
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request
@@ -268,7 +303,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// (therefore the break)
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Language (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 79 (Match evaluation, line 3398).
 				if (matchMatches) {
@@ -284,7 +319,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// does not match the request.
 			//
 			// This part references OASIS eXtensible Access Control Markup
-			// Language (XACML) 2.0, Errata 29 June 2006
+			// Langugage (XACML) 2.0, Errata 29 June 2006
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 			// on page 46 (5.7).
 			if (!matchMatches) {

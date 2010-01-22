@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,13 +28,21 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests the {@link URNToDataTypeConverter} JAXB converter.
+ * 
+ * @author Sacha Dolski
+ */
 public class TestURNToDataTypeAttributeConverter {
-
 	static final String DATATYPE_ID = "http://www.w3.org/2001/XMLSchema#string";
 	private URNToDataTypeConverter converter;
 	private DataTypeAttribute<String> dataTypeAttr;
 	private Map<String, DataTypeAttribute<?>> map;
 
+	/**
+	 * Initializes {@link URNToDataTypeConverter} with a
+	 * {@link StringDataTypeAttribute}.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		converter = new URNToDataTypeConverter();
@@ -45,6 +53,14 @@ public class TestURNToDataTypeAttributeConverter {
 		URNToDataTypeConverter.setDataTypeAttributes(map);
 	}
 
+	/**
+	 * Tests if the unmarshalling works correctly. That means that the
+	 * {@link URNToDataTypeConverter#unmarshal(String)} returns the proper
+	 * object.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             In case of an improper argument.
+	 */
 	@Test
 	public void testConvertToStringEqualsFunction()
 			throws IllegalArgumentException {
@@ -52,12 +68,26 @@ public class TestURNToDataTypeAttributeConverter {
 		assertEquals(converter.unmarshal(DATATYPE_ID), dataTypeAttr);
 	}
 
+	/**
+	 * Tests if the marshalling works correctly. That means that the
+	 * {@link URNToDataTypeConverter#marshal(DataTypeAttribute)} returns the
+	 * proper {@link String}.
+	 * 
+	 * @throws IllegalArgumentException
+	 *             In case of an improper {@link DataTypeAttribute}.
+	 */
 	@Test
 	public void testConvertToFunctionId() throws IllegalArgumentException {
 
 		assertEquals(converter.marshal(dataTypeAttr), DATATYPE_ID);
 	}
 
+	/**
+	 * Expects an {@link IllegalArgumentException} because an improper argument
+	 * is given to the {@link URNToDataTypeConverter#unmarshal(String)} method.
+	 * 
+	 * @throws IllegalArgumentException
+	 */
 	@SuppressWarnings("unchecked")
 	@Test(enabled = true, expectedExceptions = { IllegalArgumentException.class })
 	public void testConvertException() throws IllegalArgumentException {

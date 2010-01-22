@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,8 +34,6 @@ import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
-import org.w3c.dom.Element;
-
 /**
  * <p>
  * Java class for StatusDetailType complex type.
@@ -63,24 +61,21 @@ import org.w3c.dom.Element;
  * 
  * @version 1.0
  * @author <i>generated</i>
- * @author Florian Huonder
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "StatusDetailType", propOrder = { "content" })
 public class StatusDetailType implements Serializable {
-
-	private static ObjectFactory factory;
+	private static final ObjectFactory OBJECT_FACTORY;
+	private static final long serialVersionUID = 632768732L;
+	@XmlAnyElement(lax = true)
+	private List<Object> content;
 
 	/**
 	 * Initializes the object factory.
 	 */
 	static {
-		factory = new ObjectFactory();
+		OBJECT_FACTORY = new ObjectFactory();
 	}
-
-	private final static long serialVersionUID = 632768732L;
-	@XmlAnyElement(lax = true)
-	protected List<Object> content;
 
 	/**
 	 * Gets the value of the content property.
@@ -100,7 +95,7 @@ public class StatusDetailType implements Serializable {
 	 * 
 	 * 
 	 * <p>
-	 * Objects of the following type(s) are allowed in the list {@link Element }
+	 * Objects of the following type(s) are allowed in the list org.w3c.dom.Element,
 	 * {@link Object }
 	 * 
 	 * 
@@ -113,11 +108,14 @@ public class StatusDetailType implements Serializable {
 	}
 
 	/**
-	 * This method returns the {@link MissingAttributeDetailType}s contained in this {@link StatusDetailType}.
-	 * It is now allowed to add a new {@link MissingAttributeDetailType} with <code>getMissingAttributeDetails().add(...)</code>.
-	 * Use {@link #addMissingAttribute(MissingAttributeDetailType)} instead.
+	 * This method returns the {@link MissingAttributeDetailType}s contained in
+	 * this {@link StatusDetailType}. It is now allowed to add a new
+	 * {@link MissingAttributeDetailType} with
+	 * <code>getMissingAttributeDetails().add(...)</code>. Use
+	 * {@link #addMissingAttribute(MissingAttributeDetailType)} instead.
 	 * 
-	 * @return The {@link MissingAttributeDetailType}s contained in this {@link StatusDetailType}.
+	 * @return The {@link MissingAttributeDetailType}s contained in this
+	 *         {@link StatusDetailType}.
 	 */
 	@XmlTransient
 	public List<MissingAttributeDetailType> getMissingAttributeDetails() {
@@ -131,10 +129,13 @@ public class StatusDetailType implements Serializable {
 	}
 
 	/**
-	 * Add a new {@link MissingAttributeDetailType} to this {@link StatusDetailType}.
-	 * @param missingAttribute The {@link MissingAttributeDetailType} to add.
+	 * Add a new {@link MissingAttributeDetailType} to this
+	 * {@link StatusDetailType}.
+	 * 
+	 * @param missingAttribute
+	 *            The {@link MissingAttributeDetailType} to add.
 	 */
-	public void addMissingAttribute(MissingAttributeDetailType missingAttribute){
-    	content.add(factory.createMissingAttributeDetail(missingAttribute));
-    }
+	public void addMissingAttribute(MissingAttributeDetailType missingAttribute) {
+		content.add(OBJECT_FACTORY.createMissingAttributeDetail(missingAttribute));
+	}
 }

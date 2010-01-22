@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,23 +22,24 @@ import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.Duration;
 
 /**
- * This class implements a
- * "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see Page 105 of the
- * XACML 2.0Specification) except for the following deviations::
+ * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see
+ * Page 105 of the XACML 2.0 specification). The specification contains an
+ * error. Therefore the implementation has the following except for the
+ * following discrepancy to the specification:
  * <ul>
- * <li> The calculation of the dayTimeDuration in units of seconds is:
- * <code>( ( ('value of the day component' * 24) + ('value of the hour component') * 60) + ('value of the minute component')*60) + ('value of the second component')</code>
- * This seems to be the intent of the XACML 2.0 specification.</li>
+ * <li>The calculation of the dayTimeDuration in units of seconds is:<br />
+ * <code>( ( ('value of the day component' * 24)<br />+ ('value of the hour component') * 60)<br />
+ * + ('value of the minute component')*60)<br />+ ('value of the second component')</code><br />
+ * <br />
+ * </li>
  * <li>The duration must be a valid http://www.w3.org/2001/XMLSchema#duration
  * data type (See: <a
- * href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration">http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration</a>
- * for further information.) Therefore the data type accepts a shortened range
- * of values.</li>
+ * href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration"
+ * >http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration</a> for further
+ * information.) Therefore the data type accepts a shortened range of values.</li>
  * </ul>
  * 
- * @author Stefan Oberholzer 
- * @version 1.0
- * 
+ * @author Stefan Oberholzer
  */
 public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	// According to the XACML specification match algorithm a dayTimeDuration
@@ -59,8 +60,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	public DayTimeDuration(String duration) {
 
 		if (!duration.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException("The format of the argument: \""
-					+ duration + "\" isn't correct");
+			throw new IllegalArgumentException("The format of the argument: \"" + duration + "\" isn't correct");
 		}
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
@@ -70,29 +70,23 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		return duration.toString();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	public int compareTo(DayTimeDuration o) {
 		return duration.compare(o.duration);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -103,10 +97,8 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

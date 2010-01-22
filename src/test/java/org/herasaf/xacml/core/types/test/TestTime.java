@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,7 +24,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link Time} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestTime {
+	
+	/**
+	 * Creates positive test cases. 
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "positiveCases")
 	public Object[][] createPositiveCases() {
 		return new Object[][] { new Object[] { "12:00:01.239" },
@@ -35,6 +46,11 @@ public class TestTime {
 		};
 	}
 
+	/**
+	 * Creates comparison test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "comparison")
 	public Object[][] createComparisonData() {
 		return new Object[][] { new Object[] { "12:00:00", "13:00:00", -1 },
@@ -45,34 +61,67 @@ public class TestTime {
 				new Object[] { "13:00:00.978", "13:00:00.978", 0 }, };
 	}
 
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
 		return new Object[][] { new Object[] { "12.00.01" },
 				new Object[] { "2005-10-10" }, };
 	}
 
+	/**
+	 * Clears the property javax.xml.datatype.DatatypeFactory.
+	 * This is only relevant for the {@link #testNoDataFactoryFound()} method.
+	 */
 	@AfterMethod
 	public void afterMethod() {
 		System.clearProperty("javax.xml.datatype.DatatypeFactory");
 	}
 
+	/**
+	 * Test if the {@link Time} objects are properly created.
+	 * 
+	 * @param input The time in its String representation.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "positiveCases")
 	public void testInput1(String input) throws Exception {
 		Time time = new Time(input);
 		assertEquals(time.toString(), input);
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal time representations.
+	 * @param input The illegal time strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { IllegalArgumentException.class })
 	public void testInputFail(String input) throws Exception {
 		new Time(input);
 	}
 
+	/**
+	 * Tests if an exception is thrown when a non-existing DatatypeFactory is set.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(expectedExceptions = { IllegalArgumentException.class })
 	public void testNoDataFactoryFound() throws Exception {
 		System.setProperty("javax.xml.datatype.DatatypeFactory", "bla");
 		new Time("12:00:01");
 	}
 
+	/**
+	 * Tests if the comparison function of {@link Time} works properly.
+	 * 
+	 * @param input1 The first string.
+	 * @param input2 The second time string.
+	 * @param expected The expected result (-1, 0, 1).
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "comparison")
 	public void testCompare(String input1, String input2, int expected)
 			throws Exception {

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,39 +19,33 @@ package org.herasaf.xacml.core.combiningAlgorithm.rule.impl;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 
 /**
- * <p>
- * The implementation of the {@link PolicyCombiningAlgorithm} with the
- * First-Applicable strategy.
- * </p>
- * <p>
- * The Implementation of the First-Applicable implementation oriented at the
- * sample implementation in the XACML 2.0 specification.
- * </p>
- *
- * <p>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * The implementation of the default XACML 2.0 <i>rule first applicable
+ * algorithm</i>.<br />
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 137, for further information.
- * </p>
- *
+ * 
+ * @author Sacha Dolski
  * @author Stefan Oberholzer
- * @version 1.0
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  */
-public class RuleFirstApplicableAlgorithm extends
-		RuleUnorderedCombiningAlgorithm {
-	private static final long serialVersionUID = -5712159891343195803L;
+public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorithm {
 	// XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
-
+	private final Logger logger = LoggerFactory.getLogger(RuleFirstApplicableAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -60,18 +54,25 @@ public class RuleFirstApplicableAlgorithm extends
 	public String getCombiningAlgorithmId() {
 		return COMBALGOID;
 	}
-	
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm#evaluateRuleList(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.List, org.herasaf.core.dataTypes.RequestInformation,
-	 *      java.util.Map)
-	 */
-	@Override
-	public DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> rules, RequestInformation requestInfo) {
 
+	/**
+	 * {@inheritDoc}
+	 */
+	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+			final RequestInformation requestInfo) {
+
+		if (rules == null) {
+			// It is an illegal state if the list containing the rules is
+			// null.
+			logger.error("the rules list was null. This is an illegal state.");
+			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			return DecisionType.INDETERMINATE;
+		}
+
+		/*
+		 * If the list of rules contains no values, the for-loop is skipped and
+		 * a NOT_APPLICABLE is returned.
+		 */
 		for (int i = 0; i < rules.size(); i++) {
 			RuleType rule = rules.get(i);
 			/*
@@ -79,13 +80,24 @@ public class RuleFirstApplicableAlgorithm extends
 			 * process.
 			 */
 			requestInfo.resetStatus();
-			DecisionType decision = this.evaluateRule(request, rule,
-					requestInfo);
+
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
+				logger.debug("Starting evaluation of: {}", rule.getRuleId());
+			}
+
+			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
+				logger.debug("Evaluation of {} was: {}", rule.getRuleId(), decision.toString());
+				MDC.remove(MDC_RULE_ID);
+			}
+
 			switch (decision) {
+			// default case is not required here.
 			case DENY:
-				return decision;
-			case  INDETERMINATE:
-				return decision;
+			case INDETERMINATE:
 			case PERMIT:
 				return decision;
 			}

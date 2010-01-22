@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.nonNumericComparisonFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.DateTime;
 
@@ -27,16 +27,16 @@ import org.herasaf.xacml.core.types.DateTime;
  * urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than-or-equal function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateTimeLessThanOrEqualFunction implements Function {
+public class DateTimeLessThanOrEqualFunction extends AbstractFunction {
 	private static final long serialVersionUID = -8657888777873703249L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than-or-equal";
 
@@ -44,7 +44,8 @@ public class DateTimeLessThanOrEqualFunction implements Function {
 	 * {@inheritDoc} <br>
 	 * <br>
 	 * Returns true if the first argument of type
-	 * http://www.w3.org/2001/XMLSchema#dateTime is lesser than or equal the second argument.<br>
+	 * http://www.w3.org/2001/XMLSchema#dateTime is lesser than or equal the
+	 * second argument.<br>
 	 * * <br>
 	 * <code style="color:red"> <b>Important Hint:</b><br>The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
 	 * Errata 29 June
@@ -53,11 +54,12 @@ public class DateTimeLessThanOrEqualFunction implements Function {
 	 * must provide an implicit time zone if no one is set.
 	 * This MUST is not considered in this implementation of the function.</code>
 	 */
-	// FIXME Time zone awareness.
+	// FIXME Time zone awareness (see HERASAFXACMLCORE-28).
 	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
 	// Errata 29 June
 	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-	// page 114 function urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than-or-equal
+	// page 114 function
+	// urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than-or-equal
 	// must provide an implicit time zone if no one is set.
 	// This MUST is not considered in this implementation of the function and
 	// must be fixed.
@@ -67,25 +69,28 @@ public class DateTimeLessThanOrEqualFunction implements Function {
 				throw new FunctionProcessingException(
 						"Invalid number of parameters");
 			}
-			int result =  ((DateTime) args[0]).compareTo((DateTime)args[1]);
-			if (result < 0 ){
+			int result = ((DateTime) args[0]).compareTo((DateTime) args[1]);
+			if (result < 0) {
 				return true;
-			} else if (result > 0){
+			} else if (result > 0) {
 				return false;
 			}
 			return true;
 
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(e);
-		} catch (FunctionProcessingException e){
+		} catch (FunctionProcessingException e) {
 			throw e;
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

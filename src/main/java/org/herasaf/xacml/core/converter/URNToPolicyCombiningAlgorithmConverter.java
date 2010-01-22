@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,7 +18,6 @@
 package org.herasaf.xacml.core.converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
@@ -28,52 +27,37 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a {@link PolicyCombiningAlgorithm}. The
+ * Converts an URN to a {@link PolicyCombiningAlgorithm}. The default
  * {@link PolicyCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix C, page 133. <br>
- * <br>
- * The {@link Map} containing the mapping between URNs and
- * {@link PolicyCombiningAlgorithm}s is static. The setter for this {@link Map}
- * is NOT static. The filling of this {@link Map} takes place through the <a
- * href="http://www.springframework.org/">Springframework</a>.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
- * @author René Eggenschwiler
- * @version 1.1
+ * @author RenÃ© Eggenschwiler
  */
-public class URNToPolicyCombiningAlgorithmConverter extends
-		XmlAdapter<String, PolicyCombiningAlgorithm> {
-	private static final Logger logger = LoggerFactory
-			.getLogger(URNToPolicyCombiningAlgorithmConverter.class);
-	static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
+public class URNToPolicyCombiningAlgorithmConverter extends XmlAdapter<String, PolicyCombiningAlgorithm> {
+	private final Logger logger = LoggerFactory.getLogger(URNToPolicyCombiningAlgorithmConverter.class);
+	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
 
 	/**
-	 * Fills the static {@link Map} containing the mapping between URNs and
-	 * {@link PolicyCombiningAlgorithm}s.
+	 * This method sets the {@link Map} containing the mapping between policy
+	 * combining algorithms and their ID's into the converter.
 	 * 
 	 * @param algorithms
-	 *            The map containing the mapping between URNs and
-	 *            {@link PolicyCombiningAlgorithm}s.
+	 *            The {@link Map} containing the mapping between ID's and policy
+	 *            combining algorithms.
 	 */
-	public static void setCombiningAlgorithms(
-			Map<String, PolicyCombiningAlgorithm> algorithms) {
-		combiningAlgorithms = new ConcurrentHashMap<String, PolicyCombiningAlgorithm>(
-				algorithms); // ConcurrentHashMap because of concurrent access
-		// possible
+	public static void setCombiningAlgorithms(final Map<String, PolicyCombiningAlgorithm> algorithms) {
+		combiningAlgorithms = algorithms;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(PolicyCombiningAlgorithm combAlg)
-			throws IllegalArgumentException {
+	public String marshal(final PolicyCombiningAlgorithm combAlg) {
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
@@ -84,27 +68,21 @@ public class URNToPolicyCombiningAlgorithmConverter extends
 		return combAlgString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public PolicyCombiningAlgorithm unmarshal(String combAlgId)
-			throws IllegalArgumentException {
+	public PolicyCombiningAlgorithm unmarshal(final String combAlgId) {
 		PolicyCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);
 		} catch (NullPointerException e) {
-			logger
-					.error("URNToPolicyCombiningAlgorithmConverter not properly initialized.");
+			logger.error("URNToPolicyCombiningAlgorithmConverter not properly initialized.");
 			throw new NotInitializedException(e);
 		}
 		if (combAlg != null) {
 			return combAlg;
 		}
-		throw new IllegalArgumentException("Combining Algorithm " + combAlgId
-				+ " unknown.");
+		throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
 	}
 }

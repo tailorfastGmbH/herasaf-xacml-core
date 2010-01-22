@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,19 +22,19 @@ import java.util.Collection;
 import org.herasaf.xacml.core.context.impl.SubjectType;
 
 /**
- * A SubjectTransformable contains the information to return a
- * <code>Collection</code> of <code>SubjectType</code> objects.
- *
+ * Transforms subject attributes from any form into a collection of
+ * {@link SubjectType}s. This interface shall be implemented by a PEP-component
+ * to create XACML conform request without creating an XML.
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public interface SubjectTransformable {
+
 	/**
-	 * Transforms the information contained in the Transformable to
-	 * <code>Collection</code> of <code>SubjectType</code> objects.
-	 *
-	 * @return <code>Collection</code> of <code>SubjectType</code> objects
-	 *         containing the Information of the Transformable
+	 * Transforms the subject attributes in the transformable into
+	 * {@link SubjectType} and returns them in a collection.
+	 * 
+	 * @return The collection of {@link SubjectType}s.
 	 */
-	public Collection<? extends SubjectType> transform();
+	Collection<? extends SubjectType> transform();
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,18 +17,19 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
-
 /**
- * <p>Java class for PolicyCombinerParametersType complex type.
+ * <p>
+ * Java class for PolicyCombinerParametersType complex type.
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="PolicyCombinerParametersType">
@@ -40,45 +41,41 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 56, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 56, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "PolicyCombinerParametersType")
-public class PolicyCombinerParametersType
-    extends CombinerParametersType
-    implements Serializable
-{
+public class PolicyCombinerParametersType extends CombinerParametersType {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlAttribute(name = "PolicyIdRef", required = true)
-    @XmlSchemaType(name = "anyURI")
-    protected String policyIdRef;
+	private static final long serialVersionUID = 632768732L;
+	@XmlAttribute(name = "PolicyIdRef", required = true)
+	@XmlSchemaType(name = "anyURI")
+	private String policyIdRef;
 
-    /**
-     * Gets the value of the policyIdRef property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link String }
-     *     
-     */
-    public String getPolicyIdRef() {
-        return policyIdRef;
-    }
+	/**
+	 * Gets the value of the policyIdRef property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public String getPolicyIdRef() {
+		return policyIdRef;
+	}
 
-    /**
-     * Sets the value of the policyIdRef property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *     
-     */
-    public void setPolicyIdRef(String value) {
-        this.policyIdRef = value;
-    }
+	/**
+	 * Sets the value of the policyIdRef property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setPolicyIdRef(String value) {
+		this.policyIdRef = value;
+	}
 }

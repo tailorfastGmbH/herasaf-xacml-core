@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,94 +17,97 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.ProcessingException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Abstract class for all {@link CombiningAlgorithm}s. It contains the logic
- * for the targetMatch.
- *
+ * This abstraction may be extended. It has implemented common logic that is
+ * valid for all combining algorithms within the PDP.
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
- *
+ * @author Florian Huonder
+ * @author René Eggenschwiler
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
-	private static final long serialVersionUID = -5423784677434727360L;
+	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
-	
-	/** If set to true abandoned {@link Evaluatable}s will be included (if possible) in the evaluation. */
-	protected boolean respectAbandonedEvaluatables;
 
-	public void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables) {
-		this.respectAbandonedEvaluatables = respectAbandondEvaluatables;
-	}
-	
 	/**
-	 * Sets the TargetMatcher.
+	 * Sets the {@link TargetMatcher}.
+	 * 
+	 * @param targetMatcher
+	 *            The {@link TargetMatcher} to set into this combining
+	 *            algorithm.
 	 */
-	public void setTargetMatcher(TargetMatcher targetMatcher) {
+	public void setTargetMatcher(final TargetMatcher targetMatcher) {
 		this.targetMatcher = targetMatcher;
 	}
 
-
 	/**
 	 * Matches the target of the request.
-	 *
+	 * 
 	 * @param request
-	 *            the request that should be evaluated.
+	 *            The request that should be evaluated.
 	 * @param target
-	 *            the target of the Evaluatable or rule
+	 *            The target of the Evaluatable or rule
 	 * @param requestInfo
-	 *            the additional informations of this request evaluation process.
+	 *            The additional informations of this request evaluation
+	 *            process.
 	 * @return The decision of matching the target.
 	 */
-	protected DecisionType matchTarget(RequestType request,
-			TargetType target, RequestInformation requestInfo) {
-		boolean targetMatchDecision;
+	protected DecisionType matchTarget(final RequestType request, final TargetType target,
+			final RequestInformation requestInfo) {
+		boolean targetMatchDecision = false;
+		DecisionType decision = DecisionType.INDETERMINATE;
 		try {
+			logger.debug("Starting target match.");
 			targetMatchDecision = targetMatcher.match(request, target, requestInfo);
+
+			/*
+			 * The target match can't return "not Applicable". If the
+			 * targetMatchDecision is deny, the policy has to return not
+			 * applicable. See: OASIS eXtensible Access Control Markup Langugage
+			 * (XACML) 2.0, Errata 29 June 2006</a> page 83, chapter Policy
+			 * evaluation for further information.
+			 */
+			if (targetMatchDecision) {
+				decision = DecisionType.PERMIT;
+			} else {
+				requestInfo.setTargetMatched(false);
+				decision = DecisionType.NOT_APPLICABLE;
+			}
+		} catch (NullPointerException e) {
+			logger.error("TargetMatcher not initialized.", e);
+			throw new NotInitializedException(e);
 		} catch (SyntaxException e) {
 			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			requestInfo.setTargetMatched(false);
-			return DecisionType.INDETERMINATE;
+			logger.debug("Syntax error occurred.");
 		} catch (ProcessingException e) {
 			requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
 			requestInfo.setTargetMatched(false);
-			return DecisionType.INDETERMINATE;
-		} catch (NullPointerException e) {
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
-			requestInfo.setTargetMatched(false);
-			return DecisionType.INDETERMINATE;
+			logger.debug("Processing error occurred.");
 		} catch (MissingAttributeException e) {
 			requestInfo.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
 			requestInfo.addMissingAttributes(e.getMissingAttribute());
 			requestInfo.setTargetMatched(false);
-			return DecisionType.INDETERMINATE;
+			logger.debug("Missing attribute error occurred.");
 		}
 
-		/*
-		 * The target match can't return "not Applicable". If the
-		 * targetMatchDecision is deny, the policy has to return not applicable.
-		 * See: OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-		 * Errata 29 June 2006</a> page 83, chapter Policy evaluation for
-		 * further information.
-		 */
-
-		if (!targetMatchDecision) {
-			requestInfo.setTargetMatched(false);
-			return DecisionType.NOT_APPLICABLE;
-		}
-		return DecisionType.PERMIT;
+		logger.debug("Target match resulted in: {}", decision);
+		return decision;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -112,7 +115,34 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	public String toString() {
 		return getCombiningAlgorithmId();
 	}
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+
+		if (obj == this) {
+			return true;
+		}
+
+		if (this.getClass().isInstance(obj)) {
+			return this.hashCode() == obj.hashCode();
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return getCombiningAlgorithmId().hashCode();
+	}
+
 	/**
 	 * Returns the ID of the combining algorithm.
 	 * 

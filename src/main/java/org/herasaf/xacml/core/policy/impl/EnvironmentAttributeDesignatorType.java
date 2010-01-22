@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,7 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
@@ -36,11 +35,11 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 /**
  * <p>
  * Java class for EnvironmentAttributeDesignatorType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;EnvironmentAttributeDesignatorType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -49,40 +48,36 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 63, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 63, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "EnvironmentAttributeDesignatorType")
-public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType
-		implements Serializable {
+public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf.core.context.impl.RequestType,
-	 *      java.util.Map)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo)
-			throws ExpressionProcessingException, MissingAttributeException, SyntaxException {
+	public Object handle(RequestType request, RequestInformation reqInfo) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
 		// A RequestType is not thread safe, because of this you can iterate
 		// over it.
 		for (AttributeType attr : request.getEnvironment().getAttributes()) {
-			if (attributeId.equals(attr.getAttributeId())
-					&& dataType.toString().equals(attr.getDataType().toString())) {
-				if (issuer != null) {
-					if (issuer.equals(attr.getIssuer())) {
+			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
+				if (getIssuer() != null) {
+					if (getIssuer().equals(attr.getIssuer())) {
 						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
 					}
 				} else {
@@ -93,22 +88,20 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType
 		/*
 		 * If no Attribute could be found, the attribute has to be requested
 		 * from a Policy Information Point.
-		 *
+		 * 
 		 * See: the OASIS eXtensible Access Control Markup Langugage (XACML)
 		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
 		 * further information.
 		 */
-		if (returnValues.size() == 0 && reqInfo.getAttributeFinder() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getAttributeFinder()
-					.requestEnvironmentAttributes(request, attributeId, dataType.toString(),
-							issuer);
+		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
+			List<AttributeValueType> attrValues = reqInfo.getPIP().addEnvironmentAttributesToRequest(request, getAttributeId(),
+					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
 		if (returnValues.size() == 0 && isMustBePresent()) {
-			throw new MissingAttributeException(attributeId, dataType, issuer);
+			throw new MissingAttributeException(getAttributeId(), getDataType(), getIssuer());
 		}
 		return returnValues;
 	}
-
 
 }

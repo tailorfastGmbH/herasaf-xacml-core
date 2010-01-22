@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,33 +19,58 @@ package org.herasaf.xacml.core.policy.impl;
 
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
+/**
+ * This class represents the ID of an evaluatable.
+ * 
+ * @author Florian Huonder
+ */
 public class EvaluatableIDImpl implements EvaluatableID {
-	private String id;
-	
-	public EvaluatableIDImpl(String id){
-		this.id = id;
-	}
-	
-	public String getId() {
-		return id;
-	}
+    private String id;
 
-	@Override
-	public String toString() {
-		return id;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if(obj == null) return false;
-		if(obj instanceof EvaluatableID){
-			return ((EvaluatableID)obj).getId().equals(id);
-		}
-		return false;
-	}
-	
-	@Override
-	public int hashCode() {
-		return id.hashCode();
-	}
+    /**
+     * Creates a new {@link EvaluatableID} with the given id.
+     * 
+     * @param id
+     *            The id of this {@link EvaluatableID}.
+     */
+    public EvaluatableIDImpl(String id) {
+        this.id = id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String toString() {
+        return id;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (obj instanceof EvaluatableID) {
+            return ((EvaluatableID) obj).getId().equals(id);
+        }
+        return false;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

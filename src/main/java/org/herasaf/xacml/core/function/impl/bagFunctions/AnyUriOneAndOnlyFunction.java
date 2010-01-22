@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -39,13 +39,11 @@ public class AnyUriOneAndOnlyFunction extends AbstractOneAndOnlyFunction<URI> {
 	private static final long serialVersionUID = -4986950035747337899L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-one-and-only";
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

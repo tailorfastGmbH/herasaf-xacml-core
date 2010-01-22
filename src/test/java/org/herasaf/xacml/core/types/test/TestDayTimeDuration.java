@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,7 +26,18 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link DayTimeDuration} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDayTimeDuration {
+	
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "positivePossibleData")
 	public Object[][] createPositivePossibleData() {
 		return new Object[][] {
@@ -54,6 +65,11 @@ public class TestDayTimeDuration {
 		};
 	}
 
+	/**
+	 * Creates negative test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "positiveComparableData")
 	public Object[][] createPositiveComparableData() {
 		return new Object[][] {
@@ -69,7 +85,11 @@ public class TestDayTimeDuration {
 		};
 	}
 
-
+	/**
+	 * Creates comparison test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
 		return new Object[][] { new Object[] {
@@ -95,23 +115,50 @@ public class TestDayTimeDuration {
 		};
 	}
 
+	/**
+	 * Clears the property javax.xml.datatype.DatatypeFactory.
+	 */
 	@AfterMethod
 	public void afterMethod() {
 		System.clearProperty("javax.xml.datatype.DatatypeFactory");
 	}
 
+	/**
+	 * Test if the {@link DayTimeDuration} objects are properly created.
+	 * Positive values.
+	 * 
+	 * @param input The day time duration in its String representation.
+	 * @param expected The expected String on {@link DayTimeDuration#toString()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positivePossibleData", enabled = true)
 	public void testsuccessfulPositiveValues(String input, String expected) throws Exception {
 		DayTimeDuration duration = new DayTimeDuration(input);
 		assertEquals(duration.toString(), expected);
 	}
 
+	/**
+	 * Test if the {@link DayTimeDuration} objects are properly created.
+	 * Negative values.
+	 * 
+	 * @param input The day time duration in its String representation.
+	 * @param expected The expected String on {@link DayTimeDuration#toString()}.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positivePossibleData", enabled = true)
 	public void testsuccessfulNegativeValues(String input, String expected) throws Exception {
 		DayTimeDuration duration = new DayTimeDuration("-" + input);
 		assertEquals(duration.toString(), "-" + expected);
 	}
 
+	/**
+	 * Tests if the comparison function of {@link DayTimeDuration} works properly.
+	 * 
+	 * @param input1 The first string.
+	 * @param input2 The second day time duration string.
+	 * @param input3 A controlling flag.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="positiveComparableData", enabled = true)
 	public void testComparable(String input1, String input2, String input3) throws Exception {
 		DayTimeDuration duration1 = new DayTimeDuration(input1);
@@ -127,11 +174,23 @@ public class TestDayTimeDuration {
 		}
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal day time duration representations.
+	 * Positive values.
+	 * @param input The illegal day time duration strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
 	public void testFailuresPositiveValues(String input) throws Exception {
 		new DayTimeDuration(input);
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal day time duration representations.
+	 * Negative values.
+	 * @param input The illegal day time duration strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
 	public void testFailuresNegativeValues(String input) throws Exception {
 		new DayTimeDuration("-" + input);

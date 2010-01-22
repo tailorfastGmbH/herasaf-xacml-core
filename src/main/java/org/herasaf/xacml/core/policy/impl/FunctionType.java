@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,8 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
-
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -31,12 +29,14 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
 import org.herasaf.xacml.core.function.Function;
 
-
 /**
- * <p>Java class for FunctionType complex type.
- *
- * <p>The following schema fragment specifies the expected content contained within this class.
- *
+ * <p>
+ * Java class for FunctionType complex type.
+ * 
+ * <p>
+ * The following schema fragment specifies the expected content contained within
+ * this class.
+ * 
  * <pre>
  * &lt;complexType name="FunctionType">
  *   &lt;complexContent>
@@ -46,58 +46,56 @@ import org.herasaf.xacml.core.function.Function;
  *   &lt;/complexContent>
  * &lt;/complexType>
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 60, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 60, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "FunctionType")
-public class FunctionType
-    extends ExpressionType
-    implements Serializable
-{
+public class FunctionType extends ExpressionType {
 
-    private final static long serialVersionUID = 632768732L;
-    @XmlAttribute(name = "FunctionId", required = true)
-    @XmlJavaTypeAdapter(URNToFunctionConverter.class)
-    @XmlSchemaType(name = "anyURI")
-    protected Function function;
+	private static final long serialVersionUID = 632768732L;
+	@XmlAttribute(name = "FunctionId", required = true)
+	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
+	@XmlSchemaType(name = "anyURI")
+	private Function function;
 
-    /**
-     * Gets the value of the function property.
-     *
-     * @return
-     *     possible object is
-     *     {@link String }
-     *
-     */
-    public Function getFunction() {
-        return function;
-    }
+	/**
+	 * Gets the value of the function property.
+	 * 
+	 * @return possible object is {@link String }
+	 * 
+	 */
+	public Function getFunction() {
+		return function;
+	}
 
-    /**
-     * Sets the value of the function property.
-     *
-     * @param value
-     *     allowed object is
-     *     {@link String }
-     *
-     */
-    public void setFunction(Function value) {
-        this.function = value;
-    }
+	/**
+	 * Sets the value of the function property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link String }
+	 * 
+	 */
+	public void setFunction(Function value) {
+		this.function = value;
+	}
 
-    /*
-     * (non-Javadoc)
-     * @see org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
-     */
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.
+	 * xacml.core.context.impl.RequestType, java.util.Map)
+	 */
 	@Override
-	public Object handle(RequestType request,
-			RequestInformation reqInfo) {
+	public Object handle(RequestType request, RequestInformation reqInfo) {
 		return function;
 	}
 }

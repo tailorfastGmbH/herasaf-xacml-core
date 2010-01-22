@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,32 +17,23 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Base64Binary;
 
 /**
- * The Name of this datatype is http://www.w3.org/2001/XMLSchema#base64Binary.<br>
+ * This data type represents a http://www.w3.org/2001/XMLSchema#base64Binary.
  * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#base64Binary"
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#base64Binary</A> for
  * further information.
  * 
  * @author Florian Huonder
- * @version 1.0
- * @see DataTypeAttribute
  */
-public class Base64BinaryDataTypeAttribute extends
-		AbstractDataTypeAttribute<Base64Binary> {
-
-	/** Data type ID URI. */
+public class Base64BinaryDataTypeAttribute extends AbstractDataTypeAttribute<Base64Binary> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
-
-	/** Serial version UID. */
 	private static final long serialVersionUID = 229831857554104677L;
 
 	/** {@inheritDoc} */
-	public Base64Binary convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public Base64Binary convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new Base64Binary(jaxbRepresentation.trim());
 		} catch (Exception e) {

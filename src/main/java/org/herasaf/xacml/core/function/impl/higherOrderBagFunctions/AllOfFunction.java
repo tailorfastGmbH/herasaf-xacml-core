@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,38 +19,35 @@ package org.herasaf.xacml.core.function.impl.higherOrderBagFunctions;
 
 import java.util.List;
 
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:all-of
- * function. See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * function. See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 122, for further information.
- *
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
 
-
-public class AllOfFunction implements Function {
-	/**
-	 *
-	 */
+public class AllOfFunction extends AbstractFunction {
+	private static final int VALID_LENGTH = 3;
 	private static final long serialVersionUID = 7426295464640973108L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:all-of";
 
 	/**
-	 * {@inheritDoc}
-	 * Takes a Boolean {@link Function} as first argument, an Object as second
-	 * type and a {@link List} as third type. Calls the function with the second
-	 * argument and every value in the list and returns the {@link Boolean} true
-	 * if all of them result in true.
+	 * {@inheritDoc} Takes a Boolean {@link Function} as first argument, an
+	 * Object as second type and a {@link List} as third type. Calls the
+	 * function with the second argument and every value in the list and returns
+	 * the {@link Boolean} true if all of them result in true.
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if (args.length != 3) {
+			if (args.length != VALID_LENGTH) {
 				throw new FunctionProcessingException(
 						"Invalid number of parameters");
 			}
@@ -70,12 +67,11 @@ public class AllOfFunction implements Function {
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 

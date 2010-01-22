@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,19 +18,16 @@
 package org.herasaf.xacml.core.policy;
 
 import org.herasaf.xacml.core.ProcessingException;
-import org.herasaf.xacml.core.policy.impl.ExpressionType;
 
 /**
+ * This runtime exception is thrown if an error occurs while processing an
+ * expression.
  * 
- * This exception is thrown when the processing of the a {@link ExpressionType} fails.
- * 
- * @author Sacha Dolski (sdolski@solnet.ch)
- * @version 1.0
- *
+ * @author Sacha Dolski
  */
 public class ExpressionProcessingException extends ProcessingException {
 	private static final long serialVersionUID = 1600393747247326688L;
-	
+
 	/**
 	 * Constructs a new exception with null as its detail message.
 	 */
@@ -40,6 +37,10 @@ public class ExpressionProcessingException extends ProcessingException {
 
 	/**
 	 * Constructs a new exception with the specified detail message.
+	 * 
+	 * @param message
+	 *            The detail message. The detail message is saved for later
+	 *            retrieval by the {@link #getMessage()} method.
 	 */
 	public ExpressionProcessingException(String message) {
 		super(message);
@@ -47,6 +48,14 @@ public class ExpressionProcessingException extends ProcessingException {
 
 	/**
 	 * Constructs a new exception with the specified detail message and cause.
+	 * 
+	 * @param message
+	 *            The detail message (which is saved for later retrieval by the
+	 *            {@link #getMessage()} method).
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public ExpressionProcessingException(String message, Throwable cause) {
 		super(message, cause);
@@ -56,6 +65,11 @@ public class ExpressionProcessingException extends ProcessingException {
 	 * Constructs a new exception with the specified cause and a detail message
 	 * of (cause==null ? null : cause.toString()) (which typically contains the
 	 * class and detail message of cause).
+	 * 
+	 * @param cause
+	 *            The cause (which is saved for later retrieval by the
+	 *            {@link #getCause()} method). (A null value is permitted, and
+	 *            indicates that the cause is nonexistent or unknown.)
 	 */
 	public ExpressionProcessingException(Throwable cause) {
 		super(cause);

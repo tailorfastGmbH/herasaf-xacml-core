@@ -1,5 +1,5 @@
 /*
- * Copyright 2009 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,38 +23,30 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The default validation handler for JAXB. It handles all warnings, errors and
- * fatal errors.
- * 
- * Warnings are only logged. All types of errors force a termination of the JAXB
- * marshalling or unmarshalling process.
+ * This JAXB {@link ValidationEventHandler} is used to handle JAXB validation
+ * events. Herewith it is possible to log the events properly.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class DefaultValidationEventHandler implements ValidationEventHandler {
-
-	private final Logger logger = LoggerFactory
-			.getLogger(DefaultValidationEventHandler.class);
+	private final Logger logger = LoggerFactory.getLogger(DefaultValidationEventHandler.class);
 
 	/**
-	 * {@inheritDoc}
-	 * 
-	 * Warnings are only logged. All types of errors force a termination of the JAXB
-	 * marshalling or unmarshalling process.
-	 * 
+	 * {@inheritDoc} Logs a warning message on an
+	 * {@link ValidationEvent#WARNING} event and an error message an a
+	 * {@link ValidationEvent#ERROR} and {@link ValidationEvent#FATAL_ERROR}
+	 * event.
 	 */
 	public boolean handleEvent(ValidationEvent event) {
 		switch (event.getSeverity()) {
 		case ValidationEvent.WARNING:
-			logger.warn("JAXB validation event handled: ", event
-					.getLinkedException());
+			logger.warn("JAXB validation event handled: ", event.getLinkedException());
 			return true;
 		case ValidationEvent.ERROR:
 		case ValidationEvent.FATAL_ERROR:
 		default:
-			logger.error("JAXB validation event handled: ", event
-					.getLinkedException());
+			logger.error("JAXB validation event handled: ", event.getLinkedException());
 			return false;
 		}
 	}

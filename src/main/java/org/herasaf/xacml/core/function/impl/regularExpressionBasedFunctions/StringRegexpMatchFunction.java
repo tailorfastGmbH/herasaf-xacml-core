@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.regularExpressionBasedFunctions;
 
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 /**
@@ -26,16 +26,16 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:string-regexp-match function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 105, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
-public class StringRegexpMatchFunction implements Function {
+public class StringRegexpMatchFunction extends AbstractFunction {
 	private static final long serialVersionUID = 7197923951659086946L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-regexp-match";
 
@@ -44,30 +44,30 @@ public class StringRegexpMatchFunction implements Function {
 	 * <br>
 	 * Returns true if the first argument of type
 	 * http://www.w3.org/2001/XMLSchema#string (must be an expression) matches
-	 * the second argument of type
-	 * http://www.w3.org/2001/XMLSchema#string.
+	 * the second argument of type http://www.w3.org/2001/XMLSchema#string.
 	 */
-	public Object handle(Object... args) throws FunctionProcessingException{
+	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
-			if(args.length != 2){
-				throw new FunctionProcessingException("Invalid number of parameters");
+			if (args.length != 2) {
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
-			return ((String)args[1]).trim().matches(((String)args[0]).trim());
-		} catch (ClassCastException e){
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
-		} catch (FunctionProcessingException e){
+			return ((String) args[1]).trim().matches(((String) args[0]).trim());
+		} catch (ClassCastException e) {
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.");
+		} catch (FunctionProcessingException e) {
 			throw e;
-		} catch (Exception e){
+		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see org.herasaf.core.function.FunctionAC#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String toString() {
+	public String getFunctionId() {
 		return ID;
 	}
 }

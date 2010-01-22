@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,49 +17,36 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.rule;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
-import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
- * Abstract class for {@link RuleCombiningAlgorithm}s that evaluate the rules
- * unordered.
- *
+ * This class may be extended when implementing an unordered rule combining
+ * algorithm. It contains some common code all ordered combining algorithms must
+ * implement.
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
- *
  */
-public abstract class RuleUnorderedCombiningAlgorithm extends
-		RuleCombiningAlgorithm {
-	private static final long serialVersionUID = -5692513372812026683L;
-
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see org.herasaf.core.combiningAlgorithm.CombiningAlgorithm#evaluate(org.herasaf.core.context.impl.RequestType,
-	 *      org.herasaf.core.policy.impl.Evaluatable,
-	 *      org.herasaf.core.dataTypes.RequestInformation)
+public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombiningAlgorithm {
+	/**
+	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals,
-			RequestInformation requestInfo) {
-		DecisionType decision = matchTarget(request, evals.getTarget(),
-				requestInfo);
+	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
+			final RequestInformation requestInfo) {
+		final DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
 		}
 
 		try {
-			requestInfo.setVariableDefinitions(((PolicyType) evals)
-					.getVariables());
-			DecisionType dec = this.evaluateRuleList(request,
-					((PolicyType) evals).getUnorderedRules(), requestInfo);
+			requestInfo.setVariableDefinitions(((PolicyType) evals).getVariables());
+			final DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getUnorderedRules(),
+					requestInfo);
 			/*
 			 * If the decision was made, the evaluation process might have set
 			 * the targetMatched variable to false. so it has to be sure that

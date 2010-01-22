@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,48 +19,68 @@ package org.herasaf.xacml.core.policy.test;
 
 import static org.testng.Assert.assertEquals;
 
+import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.AttributeValueType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
-public class TestAttributeValueType extends AbstractTestNGSpringContextTests{
+
+/**
+ * Tests the {@link AttributeValueType}.
+ * 
+ * @author Florian Huonder
+ */
+public class TestAttributeValueType {
 	AttributeValueType attrVal;
-	@Autowired
-	private RequestInformationFactoryMock requestInformationFactory;	
+
+	/**
+	 * Initializes an {@link AttributeValueType}.
+	 */
 	@BeforeMethod
 	public void beforeMethod() {
 		attrVal = new AttributeValueType();
 	}
 
+	/**
+	 * Tests the {@link AttributeValueType#handle(RequestType, RequestInformation)} method.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add("test");
 
 		assertEquals("test", (String) attrVal.handle(new RequestType(),
-				requestInformationFactory.createRequestInformation(null, null)));
+				new RequestInformation(null)));
 	}
 
+	/**
+	 * Tests cases where the {@link AttributeValueType#handle(RequestType, RequestInformation)} throws an exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleException() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add("test");
 		attrVal.getContent().add("test2");
 
-		attrVal.handle(new RequestType(), requestInformationFactory.createRequestInformation(null, null));
+		attrVal.handle(new RequestType(), new RequestInformation(null));
 	}
 
+	/**
+	 * Tests cases where the {@link AttributeValueType#handle(RequestType, RequestInformation)} throws an exception.
+	 * Expects a {@link ExpressionProcessingException}.
+	 * 
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add(new Integer("1"));
-		attrVal.handle(new RequestType(), requestInformationFactory.createRequestInformation(null, null));
+		attrVal.handle(new RequestType(), new RequestInformation(null));
 	}
 }

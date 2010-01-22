@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,8 +21,9 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
- * The result of the calculation if the Expression in a {@link VariableDefinitionType}.
- *
+ * The result of the calculation if the Expression in a
+ * {@link VariableDefinitionType}.
+ * 
  * @author Sacha Dolski (sdolski@solnet.ch)
  * @version 1.0
  */
@@ -32,12 +33,14 @@ public class VariableValue implements Variable {
 	/**
 	 * Initzializes an empty value.
 	 */
-	public VariableValue() {}
+	public VariableValue() {
+	}
 
 	/**
 	 * Initializes the Variable value with the given value.
-	 *
-	 * @param value The value to place in this {@link VariableValue}.
+	 * 
+	 * @param value
+	 *            The value to place in this {@link VariableValue}.
 	 */
 	public VariableValue(Object value) {
 		this();
@@ -46,19 +49,22 @@ public class VariableValue implements Variable {
 
 	/**
 	 * Sets the value of this {@link VariableValue}.
-	 *
-	 * @param value The value to set.
+	 * 
+	 * @param value
+	 *            The value to set.
 	 */
-	public void setValue(Object value){
+	public void setValue(Object value) {
 		this.value = value;
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml
+	 * .core.context.impl.RequestType, java.util.Map)
 	 */
-	public Object getValue(RequestType request,
-			RequestInformation reqInfo) {
+	public Object getValue(RequestType request, RequestInformation reqInfo) {
 		return value;
 	}
 }

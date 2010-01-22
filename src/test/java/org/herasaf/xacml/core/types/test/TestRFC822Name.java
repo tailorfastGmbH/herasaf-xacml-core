@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,18 @@ import org.herasaf.xacml.core.types.RFC822Name;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ *  Tests the {@link RFC822Name} basic data type.
+ * 
+ * @author Florian Huonder
+ */
 public class TestRFC822Name {
+	
+	/**
+	 * Creates positive test cases. 
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "positiveCases")
 	public Object[][] createPositiveCases() {
 		return new Object[][] { new Object[] { "@hallo.ch" },
@@ -32,6 +43,11 @@ public class TestRFC822Name {
 				new Object[] { "HansMeier@192.169.0.1" }, };
 	}
 
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
 		return new Object[][] { new Object[] { "hallo.ch" },
@@ -40,6 +56,11 @@ public class TestRFC822Name {
 				new Object[] { "Hallo@ch.du@ja" }, };
 	}
 
+	/**
+	 * Creates match test cases.
+	 * 
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "matchCases")
 	public Object[][] createMatchCases() {
 		return new Object[][] {
@@ -71,22 +92,36 @@ public class TestRFC822Name {
 						"@test.ch", false }, };
 	}
 
+	/**
+	 * Test if the {@link RFC822Name} objects are properly created.
+	 * 
+	 * @param input The rfc822Name in its String representation.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "positiveCases", enabled = true)
 	public void testAllowed(String input) throws Exception {
 		assertEquals(new RFC822Name(input).toString(), input);
 	}
 
+	/**
+	 * Tests if an {@link IllegalArgumentException} is thrown on illegal rfc822Name representations.
+
+	 * @param input The illegal rfc822Name strings.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { IllegalArgumentException.class }, enabled = true)
 	public void testNotAllowed(String input) throws Exception {
 		new RFC822Name(input);
 	}
 
-	//such a test does not make sense
-//	@Test(expectedExceptions = { NullPointerException.class }, enabled = true)
-//	public void testNullValue() throws Exception {
-//		new RFC822Name(null);
-//	}
+	/**
+	 * Tests the match of {@link RFC822Name}.
 
+	 * @param rfcName The first input.
+	 * @param matchValue The second argument.
+	 * @param result The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "matchCases", enabled = true)
 	public void testMatchCases(String rfcName, String matchValue, Boolean result)
 			throws Exception {

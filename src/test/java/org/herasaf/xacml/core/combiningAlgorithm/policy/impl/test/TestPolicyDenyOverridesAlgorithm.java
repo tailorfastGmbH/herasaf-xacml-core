@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,16 +23,24 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverrides
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
+import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.testng.annotations.Test;
 
 /**
+ * This test tests the {@link PolicyDenyOverridesAlgorithm}. It tests various
+ * combinations of different {@link PolicyCombiningAlgorithm}s and
+ * {@link Evaluatable}s.
+ * 
  * @author Florian Huonder
  * @author Stefan Oberholzer
  */
 public class TestPolicyDenyOverridesAlgorithm extends
 		TestPolicyCombiningAlgorithm {
-	
+
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected PolicyCombiningAlgorithm getCombiningAlgorithm() {
 		PolicyDenyOverridesAlgorithm alg = new PolicyDenyOverridesAlgorithm();
@@ -40,6 +48,10 @@ public class TestPolicyDenyOverridesAlgorithm extends
 		return alg;
 	}
 
+	/**
+	 * This test calls the test method in the super class ({@link TestPolicyCombiningAlgorithm}).
+	 * This is only done to avoid duplicate code. This test method is equal for all combining algorithms.
+	 */
 	@Test(enabled = true, dataProvider = "evaluatableCombinations")
 	protected void testPolicySetMatchAndOneEvaluatable(
 			PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
@@ -53,6 +65,9 @@ public class TestPolicyDenyOverridesAlgorithm extends
 				expectedStatusCode, expectedHasTargetMatched);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	protected DecisionType evaluateDecision(EvaluatableMock eval1,
 			EvaluatableMock eval2) {

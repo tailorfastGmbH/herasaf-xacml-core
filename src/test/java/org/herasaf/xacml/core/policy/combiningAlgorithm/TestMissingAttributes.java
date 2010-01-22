@@ -3,10 +3,8 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm;
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import org.herasaf.xacml.core.attributeFinder.impl.AttributeFinderMock;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -27,6 +25,7 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
+import org.herasaf.xacml.core.function.impl.equalityPredicates.StringEqualFunction;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
@@ -139,33 +138,23 @@ public class TestMissingAttributes {
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) }, };
+						new RequestInformation(null) }, };
 	}
 
 	@DataProvider(name = "testDataForHierarchyForPolicySets")
@@ -176,30 +165,22 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) }, };
+						new RequestInformation(null) }, };
 	}
 
 	private List<Evaluatable> createEvaluatableList(
@@ -225,6 +206,7 @@ public class TestMissingAttributes {
 		subjectAttributeDesignator.setDataType(new StringDataTypeAttribute());
 		subjectAttributeDesignator.setMustBePresent(true);
 		subjectMatch.setSubjectAttributeDesignator(subjectAttributeDesignator);
+		subjectMatch.setMatchFunction(new StringEqualFunction());
 		subject.getSubjectMatches().add(subjectMatch);
 		subjects.getSubjects().add(subject);
 		target.setSubjects(subjects);
@@ -250,79 +232,57 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) },
+						new RequestInformation(null) },
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(
-								new HashMap<String, Evaluatable>(),
-								new AttributeFinderMock()) } };
+						new RequestInformation(null) } };
 	}
 
 	private AbstractCombiningAlgorithm createCombiningAlgorihtm(
@@ -351,6 +311,7 @@ public class TestMissingAttributes {
 		subjectAttributeDesignator.setDataType(new StringDataTypeAttribute());
 		subjectAttributeDesignator.setMustBePresent(true);
 		subjectMatch.setSubjectAttributeDesignator(subjectAttributeDesignator);
+		subjectMatch.setMatchFunction(new StringEqualFunction());
 		subject.getSubjectMatches().add(subjectMatch);
 		subjects.getSubjects().add(subject);
 		target.setSubjects(subjects);

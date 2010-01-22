@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,7 +23,8 @@ import java.util.Arrays;
 
 import javax.xml.bind.JAXBElement;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResourceType;
@@ -36,23 +37,27 @@ import org.herasaf.xacml.core.function.impl.equalityPredicates.StringEqualFuncti
 import org.herasaf.xacml.core.function.impl.higherOrderBagFunctions.AnyOfFunction;
 import org.herasaf.xacml.core.policy.impl.ApplyType;
 import org.herasaf.xacml.core.policy.impl.AttributeValueType;
+import org.herasaf.xacml.core.policy.impl.ExpressionType;
 import org.herasaf.xacml.core.policy.impl.FunctionType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.ResourceAttributeDesignatorType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.relaxng.datatype.Datatype;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
-public class TestApplyType extends AbstractTestNGSpringContextTests{
+/**
+ * Tests the {@link ApplyType}.
+ * @author Florian Huonder
+ */
+public class TestApplyType {
 	ObjectFactory factory;
-	@Autowired
-	private RequestInformationFactoryMock requestInformationFactory;	
+	
+	/**
+	 * Creates successful test cases.
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "successfulApplyType")
 	public Object[][] successfulApplyType() {
 		return new Object[][] { new Object[] {
@@ -68,6 +73,10 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 								new StringDataTypeAttribute()) }), true }, };
 	}
 
+	/**
+	 * Creates test cases that cause an exception.
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "applyTypeExceptions")
 	public Object[][] applyTypeExceptions() {
 		return new Object[][] {
@@ -88,6 +97,10 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 								new JAXBElement<?>[] { null }), true } };
 	}
 
+	/**
+	 * Creates test cases with the {@link FunctionType}.
+	 * @return The test cases.
+	 */
 	@DataProvider(name = "applyWithFunctionType")
 	public Object[][] applyWithFunctionType() {
 		return new Object[][] {
@@ -106,36 +119,69 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 								new StringDataTypeAttribute()) }) }), true } };
 	}
 
+	/**
+	 * Initializes the {@link ObjectFactory}.
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		factory = new ObjectFactory();
 	}
 
+	/**
+	 * Tests if the {@link ApplyType} behaves as expected.
+	 * @param request The {@link RequestType} needed to for the handle method.
+	 * @param JaxbElem The jaxb element containing the {@link ApplyType}.
+	 * @param result The expected result.
+	 * @throws Exception In case an error occurs.
+	 */
 	@Test(enabled = true, dataProvider = "successfulApplyType")
 	public void testHandle(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, requestInformationFactory.createRequestInformation(null, null)),
+		assertEquals(apply.handle(request, new RequestInformation(null)),
 				result);
 	}
 
+	/**
+	 * Tests if the error cases throw the proper exception.
+	 * The expected exception is {@link SyntaxException}.
+	 * 
+	 * @param request The {@link RequestType} needed to for the handle method.
+	 * @param JaxbElem The jaxb element containing the {@link ApplyType}.
+	 * @param result The expected result.
+	 * @throws Exception In case an error occurs.
+	 */
 	@Test(enabled = true, dataProvider = "applyTypeExceptions", expectedExceptions = SyntaxException.class)
 	public void testHandleExceptions(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request,requestInformationFactory.createRequestInformation(null, null)),
+		assertEquals(apply.handle(request, new RequestInformation(null)),
 				result);
 	}
 
+	/**
+	 * Tests the {@link ApplyType} with the {@link FunctionType}.
+	 * 
+	 * @param JaxbElem The jaxb element containing the {@link ApplyType}.
+	 * @param result The expected result.
+	 * @throws Exception In case an error occurs.
+	 */
 	@Test(enabled = true, dataProvider = "applyWithFunctionType")
 	public void testApplyWithFunctionType(JAXBElement<ApplyType> JaxbElem,
 			Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(new RequestType(), requestInformationFactory.createRequestInformation(null, null)),
+		assertEquals(apply.handle(new RequestType(), new RequestInformation(null)),
 				result);
 
 	}
 
+	/**
+	 * Initializes the ApplyType with a {@link Function}.
+	 * 
+	 * @param function The function to place in the {@link ApplyType}.
+	 * @param expressions The {@link ExpressionType}s to place into the {@link ApplyType}
+	 * @return The created {@link ApplyType} within a {@link JAXBElement}.
+	 */
 	private JAXBElement<ApplyType> initApply(Function function,
 			JAXBElement<?>[] expressions) {
 		ApplyType apply = new ApplyType();
@@ -145,6 +191,12 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 		return factory.createApply(apply);
 	}
 
+	/**
+	 * Creates the {@link AttributeValueType}.
+	 * @param content The content of the {@link AttributeValueType}.
+	 * @param dataType The data type of the content.
+	 * @return The created {@link AttributeValueType} within a {@link JAXBElement}.
+	 */
 	private JAXBElement<AttributeValueType> initAttributeValue(String content,
 			DataTypeAttribute<?> dataType) {
 		AttributeValueType attrVal = new AttributeValueType();
@@ -154,6 +206,15 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 		return factory.createAttributeValue(attrVal);
 	}
 
+	/**
+	 * Creates a new {@link ResourceAttributeDesignatorType}.
+	 * 
+	 * @param attrId The attribute ID of the {@link ResourceAttributeDesignatorType}.
+	 * @param dataType The data type of the {@link ResourceAttributeDesignatorType}.
+	 * @param issuer The issuer of the {@link ResourceAttributeDesignatorType}.
+	 * @param mustBePresent True if the {@link ResourceAttributeDesignatorType} shall have mustBePresent set on, false otherwise.
+	 * @return The created {@link ResourceAttributeDesignatorType} within a {@link JAXBElement}.
+	 */
 	private JAXBElement<ResourceAttributeDesignatorType> initResAttrDesignator(
 			String attrId, DataTypeAttribute<?> dataType, String issuer,
 			Boolean mustBePresent) {
@@ -166,6 +227,14 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 		return factory.createResourceAttributeDesignator(designator);
 	}
 
+	/**
+	 * Initializes the {@link ResourceType}.
+	 * @param attrId The attribute ID of the attribute of the {@link ResourceType}.
+	 * @param dataType The {@link Datatype} of the attribute of the {@link ResourceType}.
+	 * @param issuer The issuer of the attribute of the {@link ResourceType}.
+	 * @param value The attribute value.
+	 * @return The created {@link ResourceType}.
+	 */
 	private ResourceType initializeResource(String attrId,
 			DataTypeAttribute<?> dataType, String issuer, String value) {
 
@@ -186,67 +255,26 @@ public class TestApplyType extends AbstractTestNGSpringContextTests{
 		return res;
 	}
 
+	/**
+	 * Initializes a {@link RequestType} containing a {@link ResourceType}.
+	 * @param r1 The {@link ResourceType} to place in the {@link RequestType}.
+	 * @return The created {@link RequestType}.
+	 */
 	private RequestType initializeRequest(ResourceType r1) {
 		RequestType req = new RequestType();
 		req.getResources().add(r1);
 		return req;
 	}
 
+	/**
+	 * Initializes the {@link FunctionType} with a concrete {@link Function}.
+	 * @param function The {@link Function} to place into the {@link FunctionType}.
+	 * @return The created {@link FunctionType} within a {@link JAXBElement}.
+	 */
 	private JAXBElement<FunctionType> initFunction(Function function) {
 		FunctionType func = new FunctionType();
 		func.setFunction(function);
 
 		return factory.createFunction(func);
 	}
-
-	//
-	//
-	// private JAXBElement<AttributeDesignatorType> initSubAttrDesignator(
-	// String attrId, DataTypeAttribute<?> dataType, String issuer,
-	// Boolean mustBePresent, String subCat) {
-	// SubjectAttributeDesignatorType designator = new
-	// SubjectAttributeDesignatorType();
-	// designator.setAttributeId(attrId);
-	// designator.setDataType(dataType);
-	// designator.setIssuer(issuer);
-	// designator.setMustBePresent(mustBePresent);
-	// designator.setSubjectCategory(subCat);
-	//
-	// return factory.createEnvironmentAttributeDesignator(designator);
-	// }
-	//
-	//
-	//
-	// private JAXBElement<VariableReferenceType> initVariableRef(String varId)
-	// {
-	// VariableReferenceType varRef = new VariableReferenceType();
-	// varRef.setVariableId(varId);
-	//
-	// return factory.createVariableReference(varRef);
-	// }
-	//
-	// private JAXBElement<AttributeDesignatorType> initActAttrDesignator(
-	// String attrId, DataTypeAttribute<?> dataType, String issuer,
-	// Boolean mustBePresent) {
-	// ActionAttributeDesignatorType designator = new
-	// ActionAttributeDesignatorType();
-	// designator.setAttributeId(attrId);
-	// designator.setDataType(dataType);
-	// designator.setIssuer(issuer);
-	// designator.setMustBePresent(mustBePresent);
-	//
-	// return factory.createActionAttributeDesignator(designator);
-	// }
-	// private JAXBElement<AttributeDesignatorType> initEnvAttrDesignator(
-	// String attrId, DataTypeAttribute<?> dataType, String issuer,
-	// Boolean mustBePresent) {
-	// EnvironmentAttributeDesignatorType designator = new
-	// EnvironmentAttributeDesignatorType();
-	// designator.setAttributeId(attrId);
-	// designator.setDataType(dataType);
-	// designator.setIssuer(issuer);
-	// designator.setMustBePresent(mustBePresent);
-	//
-	// return factory.createEnvironmentAttributeDesignator(designator);
-	// }
 }

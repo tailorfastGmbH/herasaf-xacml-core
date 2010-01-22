@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,15 +27,26 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the X500NameMatch function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestX500NameMatchFunction {
-
 	private Function function;
 
+	/**
+	 * Initializes the function. 
+	 */
 	@BeforeTest
 	public void beforeTest() {
 		this.function = new X500NameMatchFunction();
 	}
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name = "functionTest")
 	public Object[][] createArgs() {
 		return new Object[][] {
@@ -63,6 +74,14 @@ public class TestX500NameMatchFunction {
 						false }, };
 	}
 
+	/**
+	 * Tests if the {@link X500NameMatchFunction} works properly.
+	 * 
+	 * @param principal1 The first X500Name principal argument.
+	 * @param principal2 The second X500Name principal argument.
+	 * @param expectedResult The expected result.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider = "functionTest")
 	public void testFunction(X500Principal principal1,
 			X500Principal principal2, Boolean expectedResult) throws Exception {

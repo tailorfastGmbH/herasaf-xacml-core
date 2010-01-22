@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.mock;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -30,35 +30,59 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 
-public class RuleCombiningAlgMock extends RuleCombiningAlgorithm {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -6985362616120672850L;
+/**
+ * This is a mock object of a rule combining algorithm. This mock can be fed
+ * with a {@link TargetMatcher} or it uses the {@link TargetMatcherMock}.
+ * 
+ * @author Florian Huonder
+ */
+public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	public DecisionType decision;
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;
 
+	/**
+	 * Creates a new mock with a given TargetMatcher.
+	 * 
+	 * @param matcher The {@link TargetMatcher} to use.
+	 */
 	public RuleCombiningAlgMock(TargetMatcher matcher){
 		super.setTargetMatcher(matcher);
 	}
 	
+	/**
+	 * Creates a new mock with a {@link TargetMatcherMock}.
+	 */
 	public RuleCombiningAlgMock(){
 		super.setTargetMatcher(new TargetMatcherMock());
 	}
 
-
-
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public DecisionType evaluateRule(RequestType request,
 			RuleType rule, RequestInformation requestInfo) {
 		return super.evaluateRule(request, rule, requestInfo);
 	}
+	
+	/**
+	 * Creates a new mock with a given {@link DecisionType}.
+	 * 
+	 * @param decision The {@link DecisionType} to use.
+	 */
 	public RuleCombiningAlgMock(DecisionType decision){
 		this();
 		this.decision = decision;
 	}
 
+	/**
+	 * Creates a new mock with a given {@link DecisionType}, {@link StatusCode} and {@link MissingAttributeDetailType}.
+	 * 
+	 * @param decision The {@link DecisionType} to use.
+	 * @param statusCode The {@link StatusCode} to use.
+	 * @param missingAttr The {@link MissingAttributeDetailType} to use.
+	 */
 	public RuleCombiningAlgMock(DecisionType decision,
 			StatusCode statusCode, MissingAttributeDetailType missingAttr) {
 		this(decision);
@@ -66,7 +90,13 @@ public class RuleCombiningAlgMock extends RuleCombiningAlgorithm {
 		this.missingAttr = missingAttr;
 	}
 
-
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns a {@link DecisionType} containing the predefined
+	 * {@link StatusCode}, {@link DecisionType} and
+	 * {@link MissingAttributeDetailType}.
+	 */
 	public DecisionType evaluate(RequestType request,
 			Evaluatable evals, RequestInformation requestInfo) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
@@ -78,7 +108,13 @@ public class RuleCombiningAlgMock extends RuleCombiningAlgorithm {
 		return decision;
 	}
 
-	@Override
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Returns a {@link DecisionType} containing the predefined
+	 * {@link StatusCode}, {@link DecisionType} and
+	 * {@link MissingAttributeDetailType}.
+	 */
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possibleEvaluatables,
 			RequestInformation requestInfo) {

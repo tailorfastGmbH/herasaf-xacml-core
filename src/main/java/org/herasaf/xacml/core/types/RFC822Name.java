@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,22 +18,20 @@
 package org.herasaf.xacml.core.types;
 
 /**
- * The Name of this data type is
- * urn:oasis:names:tc:xacml:2.0:data-type:rfc822Name.<br>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:rfc822Name".<br>
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
- *
- * @author Stefan Oberholzer 
- * @version 1.0
+ * 
+ * @author Stefan Oberholzer
  */
 public class RFC822Name {
 	private String value;
 
 	/**
 	 * Initializes a new {@link RFC822Name}.
-	 *
+	 * 
 	 * @param value
 	 *            The value to create the {@link RFC822Name} from.
 	 */
@@ -50,10 +48,8 @@ public class RFC822Name {
 		this.value = parts[0] + "@" + parts[1].toLowerCase();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
@@ -66,13 +62,13 @@ public class RFC822Name {
 	 * domain-part. The local-part is case-sensitive, while the domain-part
 	 * (which is usually a DNS name) is not case-sensitive.4
 	 * </p>
-	 *
+	 * 
 	 * <p>
 	 * The second argument contains a complete rfc822Name. The first argument is
 	 * a complete or partial rfc822Name used to select appropriate values in the
 	 * second argument as follows.
 	 * </p>
-	 *
+	 * 
 	 * <p>
 	 * In order to match a particular address in the second argument, the first
 	 * argument must specify the complete mail address to be matched. For
@@ -81,7 +77,7 @@ public class RFC822Name {
 	 * “Anderson@SUN.COM”, but not “Anne.Anderson@sun.com”, “anderson@sun.com”
 	 * or “Anderson@east.sun.com”.
 	 * </p>
-	 *
+	 * 
 	 * <p>
 	 * In order to match any address at a particular domain in the second
 	 * argument, the first argument must specify only a domain name (usually a
@@ -89,7 +85,7 @@ public class RFC822Name {
 	 * a value in the first argument of “Anderson@sun.com” or “Baxter@SUN.COM”,
 	 * but not “Anderson@east.sun.com”.
 	 * </p>
-	 *
+	 * 
 	 * <p>
 	 * In order to match any address in a particular domain in the second
 	 * argument, the first argument must specify the desired domain-part with a
@@ -97,8 +93,9 @@ public class RFC822Name {
 	 * matches a value in the second argument of "Anderson@east.sun.com" and
 	 * "anne.anderson@ISRG.EAST.SUN.COM" but not "Anderson@sun.com".
 	 * </p>
-	 *
-	 * @param value The {@link String}-value of the possible rfc822Name.
+	 * 
+	 * @param value
+	 *            The {@link String}-value of the possible rfc822Name.
 	 * @return True if the value is an rfc822Name, false otherwise.
 	 */
 	public boolean match(String value) {
@@ -145,24 +142,21 @@ public class RFC822Name {
 			 * begins with a point.
 			 */
 			for (int i = 0; i < compValue.length - 1; i++) {
-				if (!compValue[compValue.length - 1 - i]
-						.equalsIgnoreCase(thisValue[thisValue.length - 1 - i])) {
+				if (!compValue[compValue.length - 1 - i].equalsIgnoreCase(thisValue[thisValue.length - 1 - i])) {
 					return false;
 				}
 			}
 			return true;
 		}
 		/*
-		 * If none of the upper cases applies, the compValue is a complete domain
-		 * name.
+		 * If none of the upper cases applies, the compValue is a complete
+		 * domain name.
 		 */
 		return this.value.split("@")[1].equalsIgnoreCase(value);
 	}
 
-	/*
-	 * (non-Javadoc)
-	 *
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -173,9 +167,8 @@ public class RFC822Name {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {

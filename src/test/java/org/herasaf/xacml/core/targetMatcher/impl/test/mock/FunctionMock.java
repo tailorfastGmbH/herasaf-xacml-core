@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,24 +17,48 @@
 
 package org.herasaf.xacml.core.targetMatcher.impl.test.mock;
 
+import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 
-public class FunctionMock implements Function {
-	/**
-	 *
-	 */
+/**
+ * A mock of the {@link Function} type.
+ * 
+ * @author Florian Huonder
+ */
+public class FunctionMock extends AbstractFunction {
 	private static final long serialVersionUID = -5717424357552861113L;
 	private boolean exceptionProcessing;
 
+	/**
+	 * Initializes the mock.
+	 * 
+	 * @param exceptionProcessing
+	 *            True if the mock shall throw an exception.
+	 */
 	public FunctionMock(boolean exceptionProcessing) {
 		this.exceptionProcessing = exceptionProcessing;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Throws an exception if set so or returns the request values.
+	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
-		if(exceptionProcessing){
+		if (exceptionProcessing) {
 			throw new FunctionProcessingException();
 		}
 		return args[0].equals(args[1]);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String getFunctionId() {
+		return null;
 	}
 }

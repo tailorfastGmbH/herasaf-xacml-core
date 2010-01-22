@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,16 +19,27 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.dataTypeAttribute.impl.HexBinaryDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.IpAddressDataTypeAttribute;
 import org.herasaf.xacml.core.types.IPAddress;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link HexBinaryDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestIPAddressDataTypeAttribute {
 	private IpAddressDataTypeAttribute dataType;
 
+	/**
+	 * Creates positive test cases for the test.
+	 * 
+	 * @return The positive test cases.
+	 */
 	@DataProvider(name = "positiveCases")
 	public Object[][] createPositiveCases() {
 		return new Object[][] {
@@ -59,6 +70,11 @@ public class TestIPAddressDataTypeAttribute {
 				new Object[] { "[12AB:0:0:CD30::]" }, };
 	}
 
+	/**
+	 * Creates negative test cases for the test.
+	 * 
+	 * @return The negative test cases.
+	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
 		return new Object[][] { new Object[] { "256.168.0.1" },
@@ -72,21 +88,43 @@ public class TestIPAddressDataTypeAttribute {
 				new Object[] { "[12AB::CD3/60]" }, };
 	}
 
+	/**
+	 * Initializes a new {@link IpAddressDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new IpAddressDataTypeAttribute();
 	}
 
+	/**
+	 * Tests the positive data.
+	 * 
+	 * @param input The positive data.
+	 * @throws Exception In case of an error.
+	 */
 	@Test(dataProvider = "positiveCases")
 	public void testInput(String input) throws Exception {
 		assertEquals(dataType.convertTo(input), IPAddress.newInstance(input));
 	}
 
+	/**
+	 * Tests the negative data.
+	 * 
+	 * @param input The negative data.
+	 * @throws Exception In case of an error.
+	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
 	public void testWrongInput(String input) throws Exception {
 		dataType.convertTo(input);
 	}
 
+	/**
+	 * Tests if the {@link IpAddressDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

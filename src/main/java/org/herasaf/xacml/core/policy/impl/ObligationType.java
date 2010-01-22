@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,7 @@ package org.herasaf.xacml.core.policy.impl;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -61,19 +62,31 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ObligationType", propOrder = { "attributeAssignments" })
 public class ObligationType implements Serializable {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeAssignment")
-	protected List<AttributeAssignmentType> attributeAssignments;
+	private List<AttributeAssignmentType> attributeAssignments;
 	@XmlAttribute(name = "ObligationId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String obligationId;
+	private String obligationId;
 	@XmlAttribute(name = "FulfillOn", required = true)
-	protected EffectType fulfillOn;
+	private EffectType fulfillOn;
 
+	/**
+	 * Initializes an empty obligation. effect and id must be set with the
+	 * setters.
+	 */
 	public ObligationType() {
 
 	}
 
+	/**
+	 * Initializes an obligation with the given effect and id.
+	 * 
+	 * @param id
+	 *            The id of the obligation.
+	 * @param effect
+	 *            The effect of the obligation.
+	 */
 	public ObligationType(String id, EffectType effect) {
 		this.obligationId = id;
 		this.fulfillOn = effect;
@@ -151,16 +164,22 @@ public class ObligationType implements Serializable {
 	public void setFulfillOn(EffectType value) {
 		this.fulfillOn = value;
 	}
-	
-	public String toString(){
-    	StringBuilder val = new StringBuilder("ObligationType[attributeAssignment=");
-    	val.append(attributeAssignments);
-    	val.append(", obligationId=");
-    	val.append(obligationId);
-    	val.append(", fulfillOn=");
-    	val.append(fulfillOn);
-    	val.append("]");
- 
-    	return val.toString();
-    }
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		// FIXME Replace such code with Apache Commons Lang ToStringBuilder (see
+		// HERASAFXACMLCORE-82)
+		StringBuilder val = new StringBuilder("ObligationType[attributeAssignment=");
+		val.append(attributeAssignments);
+		val.append(", obligationId=");
+		val.append(obligationId);
+		val.append(", fulfillOn=");
+		val.append(fulfillOn);
+		val.append("]");
+
+		return val.toString();
+	}
 }

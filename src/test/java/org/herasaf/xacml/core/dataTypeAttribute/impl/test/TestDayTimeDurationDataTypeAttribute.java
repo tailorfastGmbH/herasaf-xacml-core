@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,32 +19,57 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DayTimeDurationDataTypeAttribute;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the {@link DayTimeDurationDataTypeAttribute} works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDayTimeDurationDataTypeAttribute {
 
 	private DayTimeDurationDataTypeAttribute dataType;
 
+	/**
+	 * Initializes a new {@link DayTimeDurationDataTypeAttribute}.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@BeforeTest
 	public void beforeTest() throws Exception {
 		dataType = new DayTimeDurationDataTypeAttribute();
 	}
 
+	/**
+	 * Test a case with a day-time-duration that is valid.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testInput1() throws Exception {
 		assertEquals(dataType.convertTo("-P9DT4H"), new DayTimeDuration(
 				"-P9DT4H"));
 	}
 
+	/**
+	 * Test an illegal value.
+	 * 
+	 * @throws Exception
+	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
 		dataType.convertTo("+P4DT4H");
 	}
 
+	/**
+	 * Tests if the {@link DayTimeDurationDataTypeAttribute} returns the proper ID.
+	 * 
+	 * @throws Exception In case of an error.
+	 */
 	@Test
 	public void testToString() throws Exception {
 		assertEquals(dataType.toString(),

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -28,7 +27,7 @@ import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -40,11 +39,11 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 /**
  * <p>
  * Java class for AttributeDesignatorType complex type.
- *
+ * 
  * <p>
  * The following schema fragment specifies the expected content contained within
  * this class.
- *
+ * 
  * <pre>
  * &lt;complexType name=&quot;AttributeDesignatorType&quot;&gt;
  *   &lt;complexContent&gt;
@@ -57,41 +56,40 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- *
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 61, for further information.
- *
+ * 
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 61, for further information.
+ * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeDesignatorType")
-@XmlSeeAlso( { SubjectAttributeDesignatorType.class,
-		ResourceAttributeDesignatorType.class,
-		EnvironmentAttributeDesignatorType.class,
-		ActionAttributeDesignatorType.class })
-public abstract class AttributeDesignatorType extends ExpressionType implements
-		Serializable {
+@XmlSeeAlso({ SubjectAttributeDesignatorType.class, ResourceAttributeDesignatorType.class,
+		EnvironmentAttributeDesignatorType.class, ActionAttributeDesignatorType.class })
+public abstract class AttributeDesignatorType extends ExpressionType {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlAttribute(name = "AttributeId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	protected String attributeId;
+	private String attributeId;
 	@XmlAttribute(name = "DataType", required = true)
 	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected DataTypeAttribute<?> dataType;
+	private DataTypeAttribute<?> dataType;
 	@XmlAttribute(name = "Issuer")
-	protected String issuer;
+	private String issuer;
 	@XmlAttribute(name = "MustBePresent")
-	protected Boolean mustBePresent;
+	private Boolean mustBePresent;
 
 	/**
 	 * Gets the value of the attributeId property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getAttributeId() {
 		return attributeId;
@@ -99,10 +97,10 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Sets the value of the attributeId property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setAttributeId(String value) {
 		this.attributeId = value;
@@ -110,9 +108,9 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Gets the value of the dataType property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public DataTypeAttribute<?> getDataType() {
 		return dataType;
@@ -120,10 +118,10 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Sets the value of the dataType property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setDataType(DataTypeAttribute<?> value) {
 		this.dataType = value;
@@ -131,9 +129,9 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Gets the value of the issuer property.
-	 *
+	 * 
 	 * @return possible object is {@link String }
-	 *
+	 * 
 	 */
 	public String getIssuer() {
 		return issuer;
@@ -141,10 +139,10 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Sets the value of the issuer property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link String }
-	 *
+	 * 
 	 */
 	public void setIssuer(String value) {
 		this.issuer = value;
@@ -152,9 +150,9 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Gets the value of the mustBePresent property.
-	 *
+	 * 
 	 * @return possible object is {@link Boolean }
-	 *
+	 * 
 	 */
 	public boolean isMustBePresent() {
 		if (mustBePresent == null) {
@@ -165,10 +163,10 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/**
 	 * Sets the value of the mustBePresent property.
-	 *
+	 * 
 	 * @param value
 	 *            allowed object is {@link Boolean }
-	 *
+	 * 
 	 */
 	public void setMustBePresent(Boolean value) {
 		this.mustBePresent = value;
@@ -176,33 +174,33 @@ public abstract class AttributeDesignatorType extends ExpressionType implements
 
 	/*
 	 * (non-Javadoc)
-	 * @see org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.xacml.core.context.impl.RequestType, java.util.Map)
+	 * 
+	 * @see
+	 * org.herasaf.xacml.core.policy.impl.ExpressionType#handle(org.herasaf.
+	 * xacml.core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public abstract Object handle(RequestType request,
-			RequestInformation reqInfo)
+	public abstract Object handle(RequestType request, RequestInformation reqInfo)
 			throws ExpressionProcessingException, MissingAttributeException, SyntaxException;
 
 	/**
 	 * Receives an AttributeType and a list. Converts containing
 	 * AttributeValueTypes of the AttributeType in the specified dataType and
 	 * adds it to the list returnValues.
-	 *
+	 * 
 	 * @param returnValues
 	 * @param attrValues
 	 * @throws ExpressionProcessingException
 	 * @throws SyntaxException
 	 */
-	protected void addAndConvertAttrValue(List<Object> returnValues,
-			List<AttributeValueType> attrValues) throws ExpressionProcessingException, SyntaxException {
+	protected void addAndConvertAttrValue(List<Object> returnValues, List<AttributeValueType> attrValues)
+			throws ExpressionProcessingException, SyntaxException {
 		for (AttributeValueType attrVal : attrValues) {
 			if (attrVal.getContent().size() > 1) {
-				throw new ExpressionProcessingException(
-						"The content of the AttributeValueType can't be greater than 1");
+				throw new ExpressionProcessingException("The content of the AttributeValueType can't be greater than 1");
 			}
 			try {
-				returnValues.add(dataType.convertTo((String) attrVal
-						.getContent().get(0)));
+				returnValues.add(dataType.convertTo((String) attrVal.getContent().get(0)));
 			} catch (ClassCastException e) {
 				throw new SyntaxException(e);
 			}

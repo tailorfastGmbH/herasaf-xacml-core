@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,6 +26,7 @@ import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.StatusCodeType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
@@ -36,14 +37,35 @@ import org.testng.annotations.DataProvider;
  * @author Stefan Oberholzer
  */
 public abstract class TestPolicyCombiningAlgorithm {
+	private static final Boolean[] trueFalse = { true, false };
 
+	/**
+	 * This method returns the combining algorithm needed for the specific test
+	 * case (in sub class).
+	 * 
+	 * @return The combining algorithm.
+	 */
 	protected abstract PolicyCombiningAlgorithm getCombiningAlgorithm();
 
+	/**
+	 * This method evaluates the decision of the {@link EvaluatableMock}s
+	 * regarding the {@link PolicyCombiningAlgorithm} the test case is for (in
+	 * sub class).
+	 * 
+	 * @param eval1 The first {@link Evaluatable}.
+	 * @param eval2 The second {@link Evaluatable}.
+	 * @return The {@link DecisionType} of the evaluation.
+	 */
 	protected abstract DecisionType evaluateDecision(EvaluatableMock eval1,
 			EvaluatableMock eval2);
 
-	private static final Boolean[] trueFalse = { true, false };
-
+	/**
+	 * Creates various combinations of combining algorithms.
+	 * 
+	 * @return The testcases.
+	 * @throws Exception
+	 *             In case something goes wrong.
+	 */
 	@DataProvider(name = "evaluatableCombinations")
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		List<Object[]> data = new ArrayList<Object[]>();
@@ -94,6 +116,17 @@ public abstract class TestPolicyCombiningAlgorithm {
 		return retVal;
 	}
 
+	/**
+	 * Creates a {@link List} of various {@link RequestInformation}s with
+	 * different {@link StatusCode}s, {@link ObligationType}s and target matched
+	 * true/false.
+	 * 
+	 * @param eval
+	 *            The {@link Evaluatable} to get the decision from.
+	 * @return A {@link List} of {@link RequestInformation}s with different
+	 *         {@link StatusCode}s, {@link ObligationType}s and target matched
+	 *         true/false.
+	 */
 	protected static List<RequestInformation> createReqInfoCombinations(
 			EvaluatableMock eval) {
 		List<RequestInformation> reqInfos = new ArrayList<RequestInformation>();
@@ -130,11 +163,27 @@ public abstract class TestPolicyCombiningAlgorithm {
 		return reqInfos;
 	}
 
+	/**
+	 * Creates a new request information.
+	 * 
+	 * @param reqInfReturnesPermitObligation
+	 *            True if the {@link RequestInformation} contains permit
+	 *            {@link ObligationType}s, false otherwise.
+	 * @param reqInfReturnesDenyObligation
+	 *            True if the {@link RequestInformation} contains deny
+	 *            {@link ObligationType}s, false otherwise.
+	 * @param reqInfStatusCode
+	 *            The {@link StatusCode} that is in the
+	 *            {@link RequestInformation}.
+	 * @param reqInfTargetMatched
+	 *            True if the target matched, false otherwise.
+	 * @return The created {@link RequestInformation}.
+	 */
 	protected static RequestInformation buildRequestInformation(
 			boolean reqInfReturnesPermitObligation,
 			boolean reqInfReturnesDenyObligation, StatusCode reqInfStatusCode,
 			boolean reqInfTargetMatched) {
-		RequestInformation reqInfo = new RequestInformation(null, null);
+		RequestInformation reqInfo = new RequestInformation(null);
 		reqInfo.setTargetMatched(reqInfTargetMatched);
 		reqInfo.updateStatusCode(reqInfStatusCode);
 		if (reqInfReturnesPermitObligation) {
@@ -152,6 +201,12 @@ public abstract class TestPolicyCombiningAlgorithm {
 		return reqInfo;
 	}
 
+	/**
+	 * Creates different {@link Evaluatable}s with different obligations and
+	 * decisions.
+	 * 
+	 * @return A {@link List} of {@link Evaluatable}s.
+	 */
 	protected static List<EvaluatableMock> createEvalCombinations() {
 		List<EvaluatableMock> evals = new ArrayList<EvaluatableMock>();
 		for (DecisionType decision : DecisionType.values()) {
@@ -171,11 +226,22 @@ public abstract class TestPolicyCombiningAlgorithm {
 				}
 			}
 		}
-
 		return evals;
-
 	}
 
+	/**
+	 * Adds the {@link ObligationType}s from the {@link RequestInformation} to
+	 * the given {@link List} if it matches with the {@link DecisionType}.
+	 * 
+	 * @param obligations
+	 *            The {@link List} where the {@link ObligationType} shall be
+	 *            added.
+	 * @param reqInf
+	 *            The {@link RequestInformation} where the
+	 *            {@link ObligationType}s are taken from.
+	 * @param algDecision
+	 *            The {@link DecisionType} of the combining algorithm.
+	 */
 	protected void addObligations(List<ObligationType> obligations,
 			RequestInformation reqInf, DecisionType algDecision) {
 		for (ObligationType obl : reqInf.getObligations().getObligations()) {
@@ -191,12 +257,29 @@ public abstract class TestPolicyCombiningAlgorithm {
 
 	}
 
+	/**
+	 * Returns the Obligations from the both given {@link Evaluatable}s.
+	 * 
+	 * @param algDecision
+	 *            The decision of the combining algorithm.
+	 * @param requestInf1
+	 *            The {@link RequestInformation} of the first
+	 *            {@link Evaluatable}.
+	 * @param eval1
+	 *            The first {@link Evaluatable}.
+	 * @param requestInf2
+	 *            The {@link RequestInformation} of the second
+	 *            {@link Evaluatable}.
+	 * @param eval2
+	 *            The second {@link Evaluatable}.
+	 * @return The obligations the are returned by the combining algorithm.
+	 */
 	private Object determineObligations(DecisionType algDecision,
 			RequestInformation requestInf1, EvaluatableMock eval1,
 			RequestInformation requestInf2, EvaluatableMock eval2) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 
-		// The check that both are not indeterminate is because the aldDecision
+		// The check that both are not indeterminate is because the algDecision
 		// overrides with DENY in case of an INDETERMINATE.
 		if ((algDecision == DecisionType.PERMIT || algDecision == DecisionType.DENY)
 				&& (!eval1.getDecision().equals(DecisionType.INDETERMINATE) && !eval2
@@ -222,6 +305,24 @@ public abstract class TestPolicyCombiningAlgorithm {
 		return obligations;
 	}
 
+	/**
+	 * Returns the {@link StatusCode} from the both given {@link Evaluatable}s.
+	 * 
+	 * @param algDecision
+	 *            The decision of the combining algorithm.
+	 * @param requestInf1
+	 *            The {@link RequestInformation} of the first
+	 *            {@link Evaluatable}.
+	 * @param eval1
+	 *            The first {@link Evaluatable}.
+	 * @param requestInf2
+	 *            The {@link RequestInformation} of the second
+	 *            {@link Evaluatable}.
+	 * @param eval2
+	 *            The second {@link Evaluatable}.
+	 * @return The {@link StatusCode} the are returned by the combining
+	 *         algorithm.
+	 */
 	protected Object determineStatusCode(DecisionType algDecision,
 			RequestInformation requestInf1, EvaluatableMock eval1,
 			RequestInformation requestInf2, EvaluatableMock eval2) {
@@ -251,7 +352,36 @@ public abstract class TestPolicyCombiningAlgorithm {
 
 	}
 
-	// @Test(enabled = true, dataProvider = "evaluatableCombinations")
+	/**
+	 * Tests a {@link PolicyCombiningAlgorithm} with various combinations (always 2 {@link Evaluatable}s).
+	 * E.g. Eval1 = Permit, Eval2 = Deny;
+	 *      Eval1 = Deny, Eval2 = Indeterminate;
+	 *      ...
+	 * 
+	 * 
+	 * @param alg
+	 *            The combining algorithm.
+	 * @param eval1
+	 *            The first {@link Evaluatable}.
+	 * @param reqInfo1
+	 *            The {@link RequestInformation} from the first
+	 *            {@link Evaluatable}.
+	 * @param eval2
+	 *            The second {@link Evaluatable}.
+	 * @param reqInfo2
+	 *            The {@link RequestInformation} from the first
+	 *            {@link Evaluatable}.
+	 * @param expectedDecision
+	 *            The expected {@link DecisionType}.
+	 * @param expectedObligations
+	 *            A {@link List} of expected {@link ObligationType}s.
+	 * @param expectedStatusCode
+	 *            The expected {@link StatusCodeType}.
+	 * @param expectedHasTargetMatched
+	 *            True if the target is expected to match.
+	 * @throws Exception
+	 *             In case something goes wrong.
+	 */
 	protected void testPolicySetMatchAndOneEvaluatable(
 			PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
 			RequestInformation reqInfo1, EvaluatableMock eval2,
@@ -259,7 +389,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		RequestInformation reqInfo = new RequestInformation(null, null);
+		RequestInformation reqInfo = new RequestInformation(null);
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);

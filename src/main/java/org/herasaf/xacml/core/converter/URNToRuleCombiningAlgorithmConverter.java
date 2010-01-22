@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,65 +18,46 @@
 package org.herasaf.xacml.core.converter;
 
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.NotInitializedException;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a {@link RuleCombiningAlgorithm}. The
+ * Converts an URN to a {@link RuleCombiningAlgorithm}. The default
  * {@link RuleCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> appendix C, page 133. <br>
- * <br>
- * The {@link Map} containing the mapping between URNs and
- * {@link RuleCombiningAlgorithm}s is static. The setter for this {@link Map} is
- * NOT static. The filling of this {@link Map} takes place through the <a
- * href="http://www.springframework.org/">Springframework</a>.
  * 
  * @author Sacha Dolski
+ * @author RenÃ© Eggenschwiler
  * @author Florian Huonder
- * @author René Eggenschwiler
- * @version 1.0
  */
-public class URNToRuleCombiningAlgorithmConverter extends
-		XmlAdapter<String, RuleCombiningAlgorithm> {
-	private static final Logger logger = LoggerFactory
-			.getLogger(URNToRuleCombiningAlgorithmConverter.class);
-	static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
+public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, RuleCombiningAlgorithm> {
+	private final Logger logger = LoggerFactory.getLogger(URNToRuleCombiningAlgorithmConverter.class);
+	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
 	/**
-	 * Is used by the <a
-	 * href="http://www.springframework.org/">Springframework</a> to fill the
-	 * static {@link Map} containing the mapping between URNs and
-	 * {@link RuleCombiningAlgorithm}s.
+	 * This method sets the {@link Map} containing the mapping between rule
+	 * combining algorithms and their ID's into the converter.
 	 * 
 	 * @param algorithms
-	 *            The map containing the mapping between URNs and
-	 *            {@link PolicyCombiningAlgorithm}s.
+	 *            The {@link Map} containing the mapping between ID's and rule
+	 *            combining algorithms.
 	 */
-	public static void setCombiningAlgorithms(
-			Map<String, RuleCombiningAlgorithm> algorithms) {
-		combiningAlgorithms = new ConcurrentHashMap<String, RuleCombiningAlgorithm>(
-				algorithms); // ConcurrentHashMap because of concurrent access
-								// possible
+	public static void setCombiningAlgorithms(final Map<String, RuleCombiningAlgorithm> algorithms) {
+		combiningAlgorithms = algorithms;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#marshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(RuleCombiningAlgorithm combAlg)
-			throws IllegalArgumentException {
+	public String marshal(final RuleCombiningAlgorithm combAlg) {
 		String combAlgString;
 		try {
 			combAlgString = combAlg.toString();
@@ -87,27 +68,21 @@ public class URNToRuleCombiningAlgorithmConverter extends
 		return combAlgString;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * javax.xml.bind.annotation.adapters.XmlAdapter#unmarshal(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
-	public RuleCombiningAlgorithm unmarshal(String combAlgId)
-			throws IllegalArgumentException {
+	public RuleCombiningAlgorithm unmarshal(final String combAlgId) {
 		RuleCombiningAlgorithm combAlg;
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);
 		} catch (NullPointerException e) {
-			logger
-					.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
+			logger.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
 			throw new NotInitializedException(e);
 		}
 		if (combAlg != null) {
 			return combAlg;
 		}
-		throw new IllegalArgumentException("Combining Algorithm " + combAlgId
-				+ " unknown.");
+		throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
 	}
 }

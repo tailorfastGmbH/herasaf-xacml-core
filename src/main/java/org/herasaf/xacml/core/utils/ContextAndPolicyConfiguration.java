@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +25,6 @@ import java.util.List;
 
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.Source;
 import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
@@ -37,249 +35,269 @@ import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
 /**
- * Contains the configuration information for an instance which uses a JAXB
- * {@link Marshaller} or {@link Unmarshaller}.
+ * This class contains the configuration for the JAXB {@link Marshaller} or {@link Unmarshaller}.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
- * @version 1.1
  */
 public class ContextAndPolicyConfiguration {
-	private static final String CLASSPATH_PREFIX = "classpath:";
-	private static final String FILE_PREFIX = "file:";
-	private static final String URL_PREFIX = "url:";
-	/** Tells if the output should be formatted. */
-	private boolean formatted_output;
-	/** Tells if the output should be fragmented. */
-	private boolean fragment;
-	/** Tells if the schema location should be added to the output. */
-	private boolean writeSchemaLocation;
-	/** The list with the schema locations. */
-	private List<String> schemaLocation;
-	/** The used Schema. */
-	private Schema schema;
-	/** Tells if the input should be validated before parsing. */
-	private boolean validateParsing;
-	/** Tells if the output should be validated before writing. */
-	private boolean validateWriting;
-	/** The context. */
-	private JAXBContext context;
-	
-	/** Class logger. */
-	private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyConfiguration.class);
+    private static final String CLASSPATH_PREFIX = "classpath:";
+    private static final String FILE_PREFIX = "file:";
+    private static final String URL_PREFIX = "url:";
+    /** Tells if the output should be formatted. */
+    private boolean formattedOutput;
+    /** Tells if the output should be fragmented. */
+    private boolean fragment;
+    /** Tells if the schema location should be added to the output. */
+    private boolean writeSchemaLocation;
+    /** The list with the schema locations. */
+    private List<String> schemaLocation;
+    /** The used Schema. */
+    private Schema schema;
+    /** Tells if the input should be validated before parsing. */
+    private boolean validateParsing;
+    /** Tells if the output should be validated before writing. */
+    private boolean validateWriting;
+    /** The context. */
+    private JAXBContext context;
 
-	/**
-	 * Returns if the output should be formatted.
-	 * 
-	 * @return True if the output should be formatted, else otherwise.
-	 */
-	public boolean isFormatted_output() {
-		return formatted_output;
-	}
+    /** Class logger. */
+    private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyConfiguration.class);
 
-	/**
-	 * Set if the output should be formatted.
-	 * 
-	 * @param formatted_output
-	 *            True if the output should be formatted, false otherwise.
-	 */
-	public void setFormatted_output(boolean formatted_output) {
-		this.formatted_output = formatted_output;
-	}
+    /**
+     * Returns if the output should be formatted.
+     * 
+     * @return True if the output should be formatted, else otherwise.
+     */
+    public boolean isFormattedOutput() {
+        return formattedOutput;
+    }
 
-	/**
-	 * Returns if the output should be fragmented.
-	 * 
-	 * @return True if the output should be fragmented, false otherwise.
-	 */
-	public boolean isFragment() {
-		return fragment;
-	}
+    /**
+     * Set if the output should be formatted.
+     * 
+     * @param formattedOutput
+     *            True if the output should be formatted, false otherwise.
+     */
+    public void setFormattedOutput(boolean formattedOutput) {
+        this.formattedOutput = formattedOutput;
+    }
 
-	/**
-	 * Sets if the output should be fragmented.
-	 * 
-	 * @param fragment
-	 *            True if the output should be fragmented, false otherwise.
-	 */
-	public void setFragment(boolean fragment) {
-		this.fragment = fragment;
-	}
+    /**
+     * Returns if the output should be fragmented.
+     * 
+     * @return True if the output should be fragmented, false otherwise.
+     */
+    public boolean isFragment() {
+        return fragment;
+    }
 
-	/**
-	 * Returns the schema.
-	 * 
-	 * @return The schema.
-	 * @throws SAXException
-	 */
-	public Schema getSchema() {
-		return schema;
-	}
+    /**
+     * Sets if the output should be fragmented.
+     * 
+     * @param fragment
+     *            True if the output should be fragmented, false otherwise.
+     */
+    public void setFragment(boolean fragment) {
+        this.fragment = fragment;
+    }
 
-	/**
-	 * Sets the Path to the schema file.
-	 * 
-	 * The file can be loaded from three different resources.
-	 * URL, Classpath and File (no prefix results in classpath:)
-	 * 
-	 * Example strings:
-	 * <br />
-	 * <code>url:http://schemas.herasaf.org/mySchema.xsd<br />
-	 * classpath:/org/herasaf/schemas/mySchema.xsd<br />
-	 * file:C:/herasaf/schemas/mySchema.xsd<br />
-	 * /org/herasaf/schemas/mySchema.xsd</code> (no prefix results in classpath:)
-	 * 
-	 * @param schemaPath
-	 *            The path to the schema file.
-	 * @throws SAXException
-	 */
-	public void setSchemaByPath(String schemaPath) throws SAXException, MalformedURLException {
-		SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		String schema = schemaPath.trim();
-		if(schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())){ //if the schemaPath has the url: prefix
-			URL url = new URL(schema.substring(URL_PREFIX.length()));
-			if(url == null) throw new IllegalArgumentException(schema);
-			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
-		} else if(schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX.length())){ //if the schemaPath has the file: prefix
-			File file = new File(schema.substring(FILE_PREFIX.length()));
-			if(file == null) throw new IllegalArgumentException(schema);
-			this.schema = createSchema(sf, new StreamSource(file));
-		} else if(schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())){ //if the schemaPath has the classpath: prefix
-			URL url = getClass().getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
-			if(url == null) throw new IllegalArgumentException(schema);
-			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
-		} else { //if no prefix is provided, the default is classpath:
-			URL url = getClass().getResource(leadingSlash(schema));
-			if(url == null) throw new IllegalArgumentException(schema);
-			this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
-		}
-	}
+    /**
+     * Returns the schema.
+     * 
+     * @return The schema.
+     * @throws SAXException
+     */
+    public Schema getSchema() {
+        return schema;
+    }
 
-	private Schema createSchema(SchemaFactory sf, Source source) {
-		try {
-			return sf.newSchema(source);
-		} catch (SAXException e){
-			setValidateParsing(false);
-			setValidateWriting(false);
-			logger.warn("Validating turned off because schema could not be initialized.");
-		}
-		return null;
-	}
-	
-	/**
-	 * checks if a given String has a leading slash and adds one otherwise
-	 * 
-	 * @param input The String to add a leading slash if missing.
-	 * @return The String with a leading slash.
-	 */
-	private String leadingSlash(String input){
-		if(input.startsWith("/")) return input;
-		else return "/" + input;
-	}
+    /**
+     * Sets the Path to the schema file.
+     * 
+     * The file can be loaded from three different resources. URL, Classpath and File (no prefix results in classpath:)
+     * 
+     * Example strings: <br />
+     * <code>url:http://schemas.herasaf.org/mySchema.xsd<br />
+     * classpath:/org/herasaf/schemas/mySchema.xsd<br />
+     * file:C:/herasaf/schemas/mySchema.xsd<br />
+     * /org/herasaf/schemas/mySchema.xsd</code> (no prefix results in classpath:)
+     * 
+     * @param schemaPath
+     *            The path to the schema file.
+     * @throws SAXException
+     */
+    public void setSchemaByPath(String schemaPath) throws SAXException, MalformedURLException {
+        SchemaFactory sf = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
+        String schema = schemaPath.trim();
+        if (schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())) { // if
+            // the schemaPath has the url: prefix
+            URL url = new URL(schema.substring(URL_PREFIX.length()));
+            if (url == null) {
+                throw new IllegalArgumentException(schema);
+            }
+            this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
+        } else if (schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX.length())) { // if
+            // the schemaPath has the file: prefix
+            File file = new File(schema.substring(FILE_PREFIX.length()));
+            if (file == null) {
+                throw new IllegalArgumentException(schema);
+            }
+            this.schema = createSchema(sf, new StreamSource(file));
+        } else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0, CLASSPATH_PREFIX.length())) { // if
+            // the schemaPath has the classpath: prefix
+            URL url = getClass().getClassLoader()
+                    .getResource(leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
+            if (url == null) {
+                throw new IllegalArgumentException(schema);
+            }
+            this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
+        } else { // if no prefix is provided, the default is classpath:
+            URL url = getClass().getClassLoader().getResource(leadingSlash(schema));
+            if (url == null) {
+                throw new IllegalArgumentException(schema);
+            }
+            this.schema = createSchema(sf, new StreamSource(url.toExternalForm()));
+        }
+    }
 
-	/**
-	 * Gets the location of the schema file as string.
-	 * 
-	 * @return The location of the schema file.
-	 */
-	public String getSchemaLocationAsString() {
-		StringBuilder sb = new StringBuilder();
-		for (String str : schemaLocation) {
-			sb.append(str);
-			sb.append(" ");
-		}
+    /**
+     * Creates a new schema for validating. If the schema given by the source cannot be loaded <code>null</code> is
+     * returned and validating is turned off.
+     * 
+     * @param sf
+     *            The factory to create the schema.
+     * @param source
+     *            The source where the schema is.
+     * @return The created schema or <code>null</code> if it fails.
+     */
+    private Schema createSchema(SchemaFactory sf, Source source) {
+        try {
+            return sf.newSchema(source);
+        } catch (SAXException e) {
+            setValidateParsing(false);
+            setValidateWriting(false);
+            logger.warn("Validating turned off because schema could not be initialized.");
+        }
+        return null;
+    }
 
-		return sb.toString();
-	}
+    /**
+     * checks if a given String has a leading slash and adds one otherwise.
+     * 
+     * @param input
+     *            The String to add a leading slash if missing.
+     * @return The String with a leading slash.
+     */
+    private String leadingSlash(String input) {
+        if (input.startsWith("/")) {
+            return input;
+        } else {
+            return "/" + input;
+        }
+    }
 
-	/**
-	 * Sets the schema locations.
-	 * 
-	 * @param schemaLocation
-	 *            The list of schema locations.
-	 */
-	public void setSchemaLocation(List<String> schemaLocation) {
-		this.schemaLocation = new ArrayList<String>();
-		for (String str : schemaLocation) {
-			this.schemaLocation.add(str.trim());
-		}
-	}
+    /**
+     * Gets the location of the schema file as string.
+     * 
+     * @return The location of the schema file.
+     */
+    public String getSchemaLocationAsString() {
+        StringBuilder sb = new StringBuilder();
+        for (String str : schemaLocation) {
+            sb.append(str);
+            sb.append(" ");
+        }
 
-	/**
-	 * Tells if the input should be validated before parsing.
-	 * 
-	 * @return True if the input should be validated, false otherwise.
-	 */
-	public boolean isValidateParsing() {
-		return validateParsing;
-	}
+        return sb.toString();
+    }
 
-	/**
-	 * Sets if the input should be validated before parsing.
-	 * 
-	 * @param validate
-	 *            True if the input should be validated, false otherwise.
-	 */
-	public void setValidateParsing(boolean validate) {
-		this.validateParsing = validate;
-	}
+    /**
+     * Sets the schema locations.
+     * 
+     * @param schemaLocation
+     *            The list of schema locations.
+     */
+    public void setSchemaLocation(List<String> schemaLocation) {
+        this.schemaLocation = new ArrayList<String>();
+        for (String str : schemaLocation) {
+            this.schemaLocation.add(str.trim());
+        }
+    }
 
-	/**
-	 * Returns the context.
-	 * 
-	 * @return The context.
-	 */
-	public JAXBContext getContext() {
-		return context;
-	}
+    /**
+     * Tells if the input should be validated before parsing.
+     * 
+     * @return True if the input should be validated, false otherwise.
+     */
+    public boolean isValidateParsing() {
+        return validateParsing;
+    }
 
-	/**
-	 * Sets the context.
-	 * 
-	 * @param context
-	 *            The context to set.
-	 */
-	public void setContext(JAXBContext context) {
-		this.context = context;
-	}
+    /**
+     * Sets if the input should be validated before parsing.
+     * 
+     * @param validate
+     *            True if the input should be validated, false otherwise.
+     */
+    public void setValidateParsing(boolean validate) {
+        this.validateParsing = validate;
+    }
 
-	/**
-	 * Tells if the output should be validated before writing.
-	 * 
-	 * @return True if the output should be validated, false otherwise.
-	 */
-	public boolean isValidateWriting() {
-		return validateWriting;
-	}
+    /**
+     * Returns the context.
+     * 
+     * @return The context.
+     */
+    public JAXBContext getContext() {
+        return context;
+    }
 
-	/**
-	 * Sets if the output should be validated before writing.
-	 * 
-	 * @param validateWriting
-	 *            True if the output should be validated, false otherwise.
-	 */
-	public void setValidateWriting(boolean validateWriting) {
-		this.validateWriting = validateWriting;
-	}
+    /**
+     * Sets the context.
+     * 
+     * @param context
+     *            The context to set.
+     */
+    public void setContext(JAXBContext context) {
+        this.context = context;
+    }
 
-	/**
-	 * Tells if the schema location should be added to the output.
-	 * 
-	 * @return True if the schema location should be added to the output, false
-	 *         otherwise.
-	 */
-	public boolean isWriteSchemaLocation() {
-		return writeSchemaLocation;
-	}
+    /**
+     * Tells if the output should be validated before writing.
+     * 
+     * @return True if the output should be validated, false otherwise.
+     */
+    public boolean isValidateWriting() {
+        return validateWriting;
+    }
 
-	/**
-	 * Sets if the schema location should be added to the output.
-	 * 
-	 * @param writeSchemaLocation
-	 *            True if the schema location should be added to the output,
-	 *            false otherwise.
-	 */
-	public void setWriteSchemaLocation(boolean writeSchemaLocation) {
-		this.writeSchemaLocation = writeSchemaLocation;
-	}
+    /**
+     * Sets if the output should be validated before writing.
+     * 
+     * @param validateWriting
+     *            True if the output should be validated, false otherwise.
+     */
+    public void setValidateWriting(boolean validateWriting) {
+        this.validateWriting = validateWriting;
+    }
+
+    /**
+     * Tells if the schema location should be added to the output.
+     * 
+     * @return True if the schema location should be added to the output, false otherwise.
+     */
+    public boolean isWriteSchemaLocation() {
+        return writeSchemaLocation;
+    }
+
+    /**
+     * Sets if the schema location should be added to the output.
+     * 
+     * @param writeSchemaLocation
+     *            True if the schema location should be added to the output, false otherwise.
+     */
+    public void setWriteSchemaLocation(boolean writeSchemaLocation) {
+        this.writeSchemaLocation = writeSchemaLocation;
+    }
 }

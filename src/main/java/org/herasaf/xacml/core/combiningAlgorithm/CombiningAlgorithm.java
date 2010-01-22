@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.combiningAlgorithm;
-
-import java.io.Serializable;
 
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -25,25 +22,27 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
- * Interface for all Combining algorithms.
- *
+ * This interface describes a combining algorithm, rule and policy combining
+ * algorithms. The
+ * {@link #evaluate(RequestType, Evaluatable, RequestInformation)} method is the
+ * entry point for evaluating a request.
+ * 
+ * 
  * @author Stefan Oberholzer
- * @version 1.0
- *
  */
-public interface CombiningAlgorithm extends Serializable {
+public interface CombiningAlgorithm {
 
 	/**
-	 * Evaluates a request against a evaluatable.
-	 *
+	 * Evaluates a request against the given {@link Evaluatable} (that is a
+	 * policy or a policy set).
+	 * 
 	 * @param request
-	 *            the request to evaluate.
+	 *            The request to evaluate.
 	 * @param evals
-	 *            the evaluatable which contains the rules
-	 * @param requestedEvals
-	 *            the additional informations used in this evaluation process.
-	 * @return the decision.
+	 *            The {@link Evaluatable} to evaluate.
+	 * @param requestInfo
+	 *            The evaluation context.
+	 * @return The decision of the evaluation of the given request.
 	 */
-	public DecisionType evaluate(RequestType request,
-			Evaluatable evals, RequestInformation requestedEvals);
+	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo);
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,13 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import org.herasaf.xacml.SyntaxException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 
 /**
- * The Name of this data type is
- * urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration.<br>
- * See: <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * This data type represents a
+ * urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration. See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 103, for further information.
  * 
@@ -32,16 +31,11 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * @version 1.0
  */
 public class DayTimeDurationDataTypeAttribute extends AbstractDataTypeAttribute<DayTimeDuration> {
-	
-	/** Data type ID URI. */
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration";
-	
-	/** Serial version UID. */
 	private static final long serialVersionUID = -2483527344156125328L;
-	
+
 	/** {@inheritDoc} */
-	public DayTimeDuration convertTo(String jaxbRepresentation)
-			throws SyntaxException {
+	public DayTimeDuration convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new DayTimeDuration(jaxbRepresentation.trim());
 		} catch (IllegalArgumentException e) {

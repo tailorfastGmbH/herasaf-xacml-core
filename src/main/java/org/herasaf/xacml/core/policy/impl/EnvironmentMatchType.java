@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -55,31 +55,34 @@ import org.herasaf.xacml.core.function.Function;
  * &lt;/complexType&gt;
  * </pre>
  * 
- * See:	<a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> page 50, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> page 50, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "EnvironmentMatchType", propOrder = { "attributeValue",
-		"environmentAttributeDesignator", "attributeSelector" })
+@XmlType(name = "EnvironmentMatchType", propOrder = { "attributeValue", "environmentAttributeDesignator",
+		"attributeSelector" })
 public class EnvironmentMatchType implements Serializable, Match {
 
-	private final static long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 632768732L;
 	@XmlElement(name = "AttributeValue", required = true)
-	protected AttributeValueType attributeValue;
+	private AttributeValueType attributeValue;
 	@XmlElement(name = "EnvironmentAttributeDesignator")
-	protected EnvironmentAttributeDesignatorType environmentAttributeDesignator;
+	private EnvironmentAttributeDesignatorType environmentAttributeDesignator;
 	@XmlElement(name = "AttributeSelector")
-	protected AttributeSelectorType attributeSelector;
+	private AttributeSelectorType attributeSelector;
 	@XmlAttribute(name = "MatchId", required = true)
 	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
 	@XmlSchemaType(name = "anyURI")
-	protected Function matchFunction;
+	private Function matchFunction;
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getAttributeValue()
 	 */
 	public AttributeValueType getAttributeValue() {
@@ -120,6 +123,7 @@ public class EnvironmentMatchType implements Serializable, Match {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getAttributeSelector()
 	 */
 	public AttributeSelectorType getAttributeSelector() {
@@ -139,6 +143,7 @@ public class EnvironmentMatchType implements Serializable, Match {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getMatchFunction()
 	 */
 	public Function getMatchFunction() {
@@ -158,6 +163,7 @@ public class EnvironmentMatchType implements Serializable, Match {
 
 	/*
 	 * (non-Javadoc)
+	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getAttributeDesignator()
 	 */
 	public AttributeDesignatorType getAttributeDesignator() {

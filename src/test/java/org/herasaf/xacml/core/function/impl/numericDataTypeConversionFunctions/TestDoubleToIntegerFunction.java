@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -27,9 +27,18 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+/**
+ * Tests if the DoubleToInteger function works properly.
+ * 
+ * @author Florian Huonder
+ */
 public class TestDoubleToIntegerFunction {
 	private Function ia;
 
+	/**
+	 * Creates various test cases.
+	 * @return The created test cases.
+	 */
 	@DataProvider(name="args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
@@ -40,18 +49,29 @@ public class TestDoubleToIntegerFunction {
 		};
 	}
 
-
+	/**
+	 * Initializes the function.
+	 */
 	@BeforeMethod
 	public void init(){
 		ia = new DoubleToIntegerFunction();
 	}
 
+	/**
+	 * Tests all test cases.
+	 * 
+	 * @param i1 The double value.
+	 * @param result The expected integer value.
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(dataProvider="args")
 	public void testArgs(String i1, String result) throws Exception {
 		assertEquals(((BigInteger)ia.handle(new Double(i1))).toString(), result);
 	}
 
-
+	/**
+	 * Tests if the DoubleToInteger function returns the proper ID.
+	 */
 	@Test
 	public void testID(){
 		assertEquals(ia.toString(), "urn:oasis:names:tc:xacml:1.0:function:double-to-integer");

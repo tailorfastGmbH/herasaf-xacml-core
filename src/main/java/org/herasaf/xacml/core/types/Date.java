@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,13 +28,17 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * TARGET="_blank">http://www.w3.org/2001/XMLSchema#date</A>.
  * </p>
  * <p>
- * NOTE: The standard XMLGregorianCalendar used if none is specified for the
- * DatatypeFactory isn't correct and allows 31Days for every Month.
+ * <b>NOTE:</b> The default {@link XMLGregorianCalendar} used if none is
+ * specified for the DatatypeFactory. To specify a special calendar see the
+ * documentation of the {@link DatatypeFactory} class. <br />
+ * <br />
+ * The default {@link XMLGregorianCalendar} brings an unlovely drawback:<br />
+ * It accepts values that are not valid. E.g. every month may have 31 days.<br />
+ * Example: The date <i>2004-04-31</i> is valid even though April has only 30 days.
  * </p>
  * 
- * @author Stefan Oberholzer 
- * @author Florian Huonder 
- * @version 1.0
+ * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class Date implements Comparable<Date> {
 	private XMLGregorianCalendar xmlCalendar;
@@ -50,13 +54,12 @@ public class Date implements Comparable<Date> {
 	 */
 	public Date(String lexicalRepresentation) {
 		if (!lexicalRepresentation.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException("The format of the argument: \""
-					+ lexicalRepresentation + "\" isn't correct");
+			throw new IllegalArgumentException("The format of the argument: \"" + lexicalRepresentation
+					+ "\" isn't correct");
 		}
 		try {
 			DatatypeFactory factory = DatatypeFactory.newInstance();
-			this.xmlCalendar = factory
-					.newXMLGregorianCalendar(lexicalRepresentation);
+			this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
 		} catch (DatatypeConfigurationException e) {
 			throw new IllegalArgumentException(e);
 		}
@@ -72,29 +75,23 @@ public class Date implements Comparable<Date> {
 		return xmlCalendar;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public String toString() {
 		return xmlCalendar.toXMLFormat();
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	public int compareTo(Date date) {
 		return xmlCalendar.compare(date.getCalendar());
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public boolean equals(Object obj) {
@@ -106,10 +103,8 @@ public class Date implements Comparable<Date> {
 		return false;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#hashCode()
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public int hashCode() {
@@ -134,11 +129,9 @@ public class Date implements Comparable<Date> {
 	 */
 	public void subtract(YearMonthDuration duration) {
 		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration()
-					.toString().substring(1)).getDuration());
+			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration().toString().substring(1)).getDuration());
 		} else {
-			this.xmlCalendar.add(new YearMonthDuration("-"
-					+ duration.getDuration().toString()).getDuration());
+			this.xmlCalendar.add(new YearMonthDuration("-" + duration.getDuration().toString()).getDuration());
 		}
 	}
 }

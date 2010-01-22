@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,12 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
- * This exception is thrown if a missing attribute cannot be retrieved by the
- * remote loader.
+ * This exception is thrown if a <i>must-be-present</i> attribute that is
+ * missing in the request cannot be resolved (e.g. from a PIP).
  * 
- * @author Florian Huonder 
- * @version 1.0
+ * The exception then contains the IDs of the missing attributes.
+ * 
+ * @author Florian Huonder
  */
 public class MissingAttributeException extends Exception {
 	private static final long serialVersionUID = 1600393747247326688L;
@@ -37,12 +38,11 @@ public class MissingAttributeException extends Exception {
 	 * @param attributeId
 	 *            The id of the attribute that cannot be obtained.
 	 * @param dataType
-	 *            The datatype of the attribute that cannot be obtained.
+	 *            The data type of the attribute that cannot be obtained.
 	 * @param issuer
 	 *            The issuer of the attribute that cannot be obtained.
 	 */
-	public MissingAttributeException(String attributeId,
-			DataTypeAttribute<?> dataType, String issuer) {
+	public MissingAttributeException(String attributeId, DataTypeAttribute<?> dataType, String issuer) {
 		missingAttribute = new MissingAttributeDetailType();
 		missingAttribute.setAttributeId(attributeId);
 		missingAttribute.setIssuer(issuer);

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,37 +17,40 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.util.Map;
-
-import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
 /**
- * Is for the result of a {@link VariableDefinitionType} or the {@link VariableDefinitionType} itself.
- * Guarantees that the expression is calculatete only once.
- *
+ * Is for the result of a {@link VariableDefinitionType} or the
+ * {@link VariableDefinitionType} itself. Guarantees that the expression is
+ * calculatete only once.
+ * 
  * @author Sacha Dolski
  * @version 1.0
  */
 public interface Variable {
 
 	/**
-	 * Returns the calculateted value directly or after calculating if that is not already done.
-	 *
-	 * @param request The corresponding request.
-	 * @param reqInfo The RequestInformation instance containing the {@link Map} which containing the {@link VariableDefinitionType}s or the calculated values.
-	 *                            At beginning this {@link Map} only contains {@link VariableDefinitionType}s. After using one of
-	 *                            them the element is replaced by a {@link VariableValue} and must not be recalculated later.
+	 * Returns the calculateted value directly or after calculating if that is
+	 * not already done.
+	 * 
+	 * @param request
+	 *            The corresponding request.
+	 * @param reqInfo
+	 *            The RequestInformation instance containing the map
+	 *            which containing the {@link VariableDefinitionType}s or the
+	 *            calculated values. At beginning this map only contains
+	 *            {@link VariableDefinitionType}s. After using one of them the
+	 *            element is replaced by a {@link VariableValue} and must not be
+	 *            recalculated later.
 	 * @return The value of the {@link VariableDefinitionType}.
 	 * @throws ProcessingException
 	 * @throws MissingAttributeException
 	 * @throws SyntaxException
 	 */
-	public Object getValue(RequestType request,
-			RequestInformation reqInfo)
-			throws ProcessingException, MissingAttributeException,
-			SyntaxException;
+	Object getValue(RequestType request, RequestInformation reqInfo) throws ProcessingException,
+			MissingAttributeException, SyntaxException;
 }

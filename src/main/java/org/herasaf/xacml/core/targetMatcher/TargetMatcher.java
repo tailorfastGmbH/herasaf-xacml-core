@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,34 +17,41 @@
 
 package org.herasaf.xacml.core.targetMatcher;
 
-import java.io.Serializable;
-
-import org.herasaf.xacml.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
- * The {@link TargetMatcher} is used to match a given {@link TargetType} to a
- * {@link RequestType}.
- *
- * @author Sacha Dolski (sdolski@solnet.ch)
+ * The target matcher is responsible of matching a policy's, a policy set's or a
+ * rule's target to an incoming request. This component determines based on the
+ * provided attributes (in the request) whether a policy (or policy, rule) is
+ * applicable for the current request.
+ * 
+ * @author Sacha Dolski
  */
-public interface TargetMatcher extends Serializable {
+public interface TargetMatcher {
 	/**
-	 * Matches a {@link TargetType} to a {@link RequestType}.
-	 *
-	 * @param req
-	 *            The {@link RequestType} for the match.
+	 * This method matches the given target with the given requests. It returns
+	 * true if the target matched, false otherwise.
+	 * 
+	 * @param request
+	 *            The {@link RequestType} containing the attributes.
 	 * @param target
-	 *            The {@link TargetType} for the match.
-	 * @return An boolean containing the result of the
-	 *         matching.
+	 *            The target of a policy, policy set or rule that shall be
+	 *            checked for applicability.
+	 * @return True if the target matched the request, false otherwise.
 	 * @throws SyntaxException
+	 *             If the request contains illegal attributes (e.g. wrong
+	 *             attribute data type).
 	 * @throws ProcessingException
+	 *             If more than one value is provided in an attribute value.
+	 * @throws MissingAttributeException
+	 *             If a must-be-present attribute cannot be resolved (neither
+	 *             from the request nor from a PIP).
 	 */
-	public boolean match(RequestType req, TargetType target, RequestInformation requestInformation)
+	boolean match(RequestType request, TargetType target, RequestInformation requestInformation)
 			throws SyntaxException, ProcessingException, MissingAttributeException;
 }

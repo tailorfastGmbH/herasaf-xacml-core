@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -34,27 +34,34 @@ import org.herasaf.xacml.core.policy.impl.Variable;
 import org.herasaf.xacml.core.policy.impl.VariableDefinitionType;
 import org.herasaf.xacml.core.policy.impl.VariableReferenceType;
 import org.herasaf.xacml.core.policy.impl.VariableValue;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
-@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
-public class TestVariableReference extends AbstractTestNGSpringContextTests{
+/**
+ * Tests if the {@link VariableReferenceType} behaves properly.
+ * 
+ * @author Florian Huonder
+ */
+public class TestVariableReference {
 	ObjectFactory factory;
-	@Autowired
-	private RequestInformationFactoryMock requestInformationFactory;
-	@BeforeMethod
-	public void beforeMethod() {
+
+	/**
+	 * Initializes the {@link ObjectFactory}.
+	 */
+	@BeforeTest
+	public void init() {
 		factory = new ObjectFactory();
 	}
 
+	/**
+	 * Tests if the {@link VariableReferenceType#handle(RequestType, RequestInformation)} method behaves properly.
+	 * 
+	 *@throws Exception If an error occurs.
+	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		Object[] values = new Object[]{"test1", "test2", "test3"};
-		RequestInformation reqInfo = requestInformationFactory.createRequestInformation(null, null);
+		RequestInformation reqInfo = new RequestInformation(null);
 		reqInfo.setVariableDefinitions(initVariableDefinitions(values));
 
 		VariableReferenceType varRef1 = new VariableReferenceType();
@@ -68,20 +75,14 @@ public class TestVariableReference extends AbstractTestNGSpringContextTests{
 		VariableReferenceType varRef3 = new VariableReferenceType();
 		varRef3.setVariableId("3");
 		assertEquals(varRef3.handle(new RequestType(), reqInfo), values[2]);
-
-
-
-
-
-//		assertEquals(variableDefinitions.get("1").getValue(new RequestType(),
-//				variableDefinitions), values[0]);
-//		assertEquals(variableDefinitions.get("2").getValue(new RequestType(),
-//				variableDefinitions), values[1]);
-//		assertEquals(variableDefinitions.get("3").getValue(new RequestType(),
-//				variableDefinitions), values[2]);
-
 	}
 
+	/**
+	 * Initializes some {@link VariableDefinitionType}s.
+	 * 
+	 * @param values The {@link AttributeValueType}s to place into the expressions of the {@link VariableDefinitionType}.
+	 * @return A map containing the {@link VariableDefinitionType}s.
+	 */
 	private Map<String, Variable> initVariableDefinitions(Object[] values) {
 		Map<String, Variable> variableDefinitions = new HashMap<String, Variable>();
 
@@ -104,6 +105,12 @@ public class TestVariableReference extends AbstractTestNGSpringContextTests{
 		return variableDefinitions;
 	}
 
+	/**
+	 * Initializes an {@link AttributeValueType}.
+	 * @param object The content of the {@link AttributeValueType}.
+	 * @param dataType The data type of the {@link AttributeValueType}.
+	 * @return The created {@link AttributeValueType} contained within a {@link JAXBElement}.
+	 */
 	private JAXBElement<AttributeValueType> initAttributeValue(Object object,
 			DataTypeAttribute<?> dataType) {
 		AttributeValueType attrVal = new AttributeValueType();

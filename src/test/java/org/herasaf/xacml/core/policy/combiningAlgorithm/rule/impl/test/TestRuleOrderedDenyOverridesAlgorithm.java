@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 HERAS-AF (www.herasaf.org)
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -21,11 +21,8 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.herasaf.xacml.SyntaxException;
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
+import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.context.RequestInformation;
 import org.herasaf.xacml.core.context.StatusCode;
@@ -35,45 +32,55 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.EffectType;
-import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
-import org.herasaf.xacml.core.policy.requestinformationfactory.RequestInformationFactoryMock;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-@ContextConfiguration(locations = { "classpath:context/ApplicationContext.xml" })
-public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringContextTests{
-	private RuleCombiningAlgorithm combAlg;
+/**
+ * Tests the {@link RuleOrderedDenyOverridesAlgorithm}.
+ *
+ * @author Florian Huonder.
+ */
+public class TestRuleOrderedDenyOverridesAlgorithm {
+	private AbstractRuleCombiningAlgorithm combAlg;
 	private TargetMatcherMock targetMatcher;
 	private RuleOrderedDenyOverridesAlgorithm[] ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray;
 	private RuleOrderedDenyOverridesAlgorithm ruleOrderedDenyOverridesAlgorithmWithTRUEFALSEDecisions;
-	@Autowired
-	private RequestInformationFactoryMock requestInformationFactory;	
-	public TestRuleOrderedDenyOverridesAlgorithm() {
-		
+
+	/**
+	 * Initializes the {@link RuleOrderedDenyOverridesAlgorithm}s.
+	 */
+	@BeforeTest
+	public void init() {
 		ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray = new RuleOrderedDenyOverridesAlgorithm[11];
 		for (int i = 0; i < ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray.length; i++) {
 			ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[i] = new RuleOrderedDenyOverridesAlgorithm();
-			ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[i].setTargetMatcher(new TargetMatcherMock(
-					new TargetMatcherMock.Decisions[] {
-							TargetMatcherMock.Decisions.TRUE,
-							TargetMatcherMock.Decisions.TRUE,
-							TargetMatcherMock.Decisions.TRUE }));
-		} 
-		
+			ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[i]
+					.setTargetMatcher(new TargetMatcherMock(
+							new TargetMatcherMock.Decisions[] {
+									TargetMatcherMock.Decisions.TRUE,
+									TargetMatcherMock.Decisions.TRUE,
+									TargetMatcherMock.Decisions.TRUE }));
+		}
+
 		ruleOrderedDenyOverridesAlgorithmWithTRUEFALSEDecisions = new RuleOrderedDenyOverridesAlgorithm();
-		ruleOrderedDenyOverridesAlgorithmWithTRUEFALSEDecisions.setTargetMatcher(new TargetMatcherMock(
-				new TargetMatcherMock.Decisions[] {
-						TargetMatcherMock.Decisions.TRUE,
-						TargetMatcherMock.Decisions.FALSE,
-						TargetMatcherMock.Decisions.FALSE }));
+		ruleOrderedDenyOverridesAlgorithmWithTRUEFALSEDecisions
+				.setTargetMatcher(new TargetMatcherMock(
+						new TargetMatcherMock.Decisions[] {
+								TargetMatcherMock.Decisions.TRUE,
+								TargetMatcherMock.Decisions.FALSE,
+								TargetMatcherMock.Decisions.FALSE }));
 	}
 
+	/**
+	 * Creates the test cases.
+	 * 
+	 * @return The test cases.
+	 * @throws Exception If an error occurs.
+	 */
 	@DataProvider(name = "testData")
 	public Object[][] evaluationData() throws Exception {
 		return new Object[][] {
@@ -84,7 +91,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 										new ConditionMock(true, null)),
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true, null)), },
-										ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[0],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[0],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit false null",
@@ -93,7 +100,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 										new ConditionMock(false, null)),
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true, null)), },
-										ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[1],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[1],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true prcocessingException",
@@ -106,7 +113,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 												true,
 												new FunctionProcessingException(
 														"test"))), },
-														ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[2],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[2],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true SyntaxException",
@@ -116,7 +123,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true,
 												new SyntaxException("test"))), },
-												ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[3],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[3],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true missingAttributeException",
@@ -131,9 +138,8 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 														"ID",
 														new StringDataTypeAttribute(),
 														"Issuer"))), },
-														ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[4],
-						DecisionType.PERMIT,
-						StatusCode.OK, false, },
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[4],
+						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true SyntaxException, permit true FunctionProcessingException",
 						new RuleType[] {
@@ -146,24 +152,23 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 												true,
 												new FunctionProcessingException(
 														"Test"))), },
-														ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[5],
-						DecisionType.INDETERMINATE,
-						StatusCode.SYNTAX_ERROR, false, },
-				new Object[] {
-						"permit true SyntaxException, permit true FunctionProcessingException",
-						new RuleType[] {
-								initializeRule(EffectType.PERMIT,
-										new ConditionMock(true,
-												new SyntaxException("Test"))),
-								initializeRule(
-										EffectType.PERMIT,
-										new ConditionMock(
-												true,
-												new FunctionProcessingException(
-														"Test"))), },
-														ruleOrderedDenyOverridesAlgorithmWithTRUEFALSEDecisions,
-						DecisionType.NOT_APPLICABLE, StatusCode.OK,
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[5],
+						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						false, },
+				new Object[] {
+						"permit true SyntaxException, permit true FunctionProcessingException",
+						new RuleType[] {
+								initializeRule(EffectType.PERMIT,
+										new ConditionMock(true,
+												new SyntaxException("Test"))),
+								initializeRule(
+										EffectType.PERMIT,
+										new ConditionMock(
+												true,
+												new FunctionProcessingException(
+														"Test"))), },
+						ruleOrderedDenyOverridesAlgorithmWithTRUEFALSEDecisions,
+						DecisionType.NOT_APPLICABLE, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true null",
 						new RuleType[] {
@@ -171,7 +176,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 										new ConditionMock(true, null)),
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true, null)), },
-										ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[6],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[6],
 						DecisionType.DENY, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit false null",
@@ -180,7 +185,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 										new ConditionMock(false, null)),
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true, null)), },
-										ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[7],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[7],
 						DecisionType.DENY, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true processingException",
@@ -193,7 +198,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 												true,
 												new FunctionProcessingException(
 														"test"))), },
-														ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[8],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[8],
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, false, },
 				new Object[] {
@@ -204,9 +209,9 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true,
 												new SyntaxException("test"))), },
-												ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[9],
-						DecisionType.INDETERMINATE,
-						StatusCode.SYNTAX_ERROR, false, },
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[9],
+						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						false, },
 				new Object[] {
 						"permit true null, permit true missingAttribueException",
 						new RuleType[] {
@@ -220,11 +225,18 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 														"ID",
 														new StringDataTypeAttribute(),
 														"Issuer"))), },
-														ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[10],
+						ruleOrderedDenyOverridesAlgorithmWithTRUEDecisionsArray[10],
 						DecisionType.INDETERMINATE,
 						StatusCode.MISSING_ATTRIBUTE, true, }, };
 	}
 
+	/**
+	 * Creates a {@link RuleType}.
+	 * 
+	 * @param effect The {@link EffectType} that the created rule shall return.
+	 * @param condition The {@link ConditionMock} that the {@link RuleType} shall contain.
+	 * @return The created {@link RuleType}.
+	 */
 	private RuleType initializeRule(EffectType effect, ConditionMock condition) {
 		RuleType rule = new RuleType();
 		rule.setCondition(condition);
@@ -232,6 +244,9 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 		return rule;
 	}
 
+	/**
+	 * Initializes the {@link RuleOrderedDenyOverridesAlgorithm} and sets {@link TargetMatcherMock} into it.
+	 */
 	@BeforeMethod
 	public void beforeTest() {
 		targetMatcher = new TargetMatcherMock();
@@ -239,29 +254,43 @@ public class TestRuleOrderedDenyOverridesAlgorithm extends AbstractTestNGSpringC
 		combAlg.setTargetMatcher(targetMatcher);
 	}
 
+	/**
+	 * Tests if the {@link RuleOrderedDenyOverridesAlgorithm} returns a proper ID:
+	 * @throws Exception If an error occurs.
+	 */
 	@Test(enabled = true)
 	public void testID() throws Exception {
 		assertEquals(combAlg.toString(),
 				"urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides");
 	}
+
+	/**
+	 * Tests if the {@link RuleOrderedDenyOverridesAlgorithm} works properly.
+	 * 
+	 * @param testID An ID for the test case.
+	 * @param rulesArray An array containing all {@link RuleType}s.
+	 * @param alg The combining algorithm to test.
+	 * @param expectedDecision The expected {@link DecisionType}.
+	 * @param expectedStatusCode The expected {@link StatusCode}.
+	 * @param expectMissingAttribute True if missing attributes are expected, false otherwise.
+	 * @throws Exception
+	 */
 	@Test(dataProvider = "testData")
 	public void testCombiningAlg(String testID, RuleType[] rulesArray,
-			RuleCombiningAlgorithm alg, DecisionType expectedDecision,
-			StatusCode expectedStatusCode, boolean expectMissintAttribute)
+			AbstractRuleCombiningAlgorithm alg, DecisionType expectedDecision,
+			StatusCode expectedStatusCode, boolean expectMissingAttribute)
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		List<IdReferenceType> references = new ArrayList<IdReferenceType>();
-		RequestInformation infos = requestInformationFactory.createRequestInformation(references,null);
+		RequestInformation infos = new RequestInformation(null);
 		DecisionType decision = alg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);
-		if (expectMissintAttribute) {
+		if (expectMissingAttribute) {
 			assertFalse(infos.getMissingAttributes().isEmpty());
 		} else {
 			assertTrue(infos.getMissingAttributes().isEmpty());
 		}
-
 	}
 }
