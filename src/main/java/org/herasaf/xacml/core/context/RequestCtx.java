@@ -23,7 +23,6 @@ import java.io.OutputStream;
 import java.io.Writer;
 
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Result;
@@ -48,7 +47,7 @@ import org.xml.sax.ContentHandler;
  * @author René Eggenschwiler
  */
 public class RequestCtx {
-	private final Logger LOGGER = LoggerFactory.getLogger(RequestCtx.class);
+	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
 	private static final ContextAndPolicy.JAXBProfile REQUESTCTX = ContextAndPolicy.JAXBProfile.REQUEST_CTX;
 	private static ObjectFactory objectFactory;
 	private RequestType request;
@@ -93,7 +92,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), ch);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the content handler.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -111,7 +110,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), file);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the file.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -136,7 +135,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), result);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the result.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -154,7 +153,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), out);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the output stream.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -172,7 +171,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), writer);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the writer.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -190,7 +189,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), node);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the node.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -208,7 +207,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlStreamWriter);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the xml stream writer.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -226,7 +225,7 @@ public class RequestCtx {
 			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlEventWriter);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException("Unable to write to the xml event writer.", e);
-			LOGGER.error(we.getMessage());
+			logger.error(we.getMessage());
 			throw we;
 		}
 	}
@@ -240,7 +239,7 @@ public class RequestCtx {
 		try {
 			this.marshal(os);
 		} catch (WritingException e) {
-			LOGGER.warn("Could not marshal RequestCtx to OutputStream.", e);
+			logger.warn("Could not marshal RequestCtx to OutputStream.", e);
 			return null;
 		}
 		return os.toString();

@@ -99,7 +99,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	private DefaultsType policySetDefaults;
 	@XmlElement(name = "Target", required = true)
 	private TargetType target;
-	@XmlElementRefs( {
+	@XmlElementRefs({
 			@XmlElementRef(name = "PolicyIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetIdReference", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),
 			@XmlElementRef(name = "PolicySetCombinerParameters", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class),

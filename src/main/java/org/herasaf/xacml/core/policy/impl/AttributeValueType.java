@@ -73,7 +73,7 @@ import org.herasaf.xacml.core.policy.ExpressionProcessingException;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
-@XmlSeeAlso( { AttributeAssignmentType.class })
+@XmlSeeAlso({ AttributeAssignmentType.class })
 public class AttributeValueType extends ExpressionType {
 
 	private static final long serialVersionUID = 632768732L;

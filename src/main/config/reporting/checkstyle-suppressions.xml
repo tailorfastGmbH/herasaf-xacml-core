@@ -26,7 +26,12 @@
 	<suppress checks="MissingSwitchDefault" files="RuleOrderedDenyOverridesAlgorithm.java" />
 	<suppress checks="MissingSwitchDefault" files="RuleOrderedPermitOverridesAlgorithm.java" />
 	<suppress checks="MissingSwitchDefault" files="RulePermitOverridesAlgorithm.java" />
-
+	
+	<!--
+		These variables can be protected because they allow easier access to 
+		specialized Policy Repository Classes.
+	-->
+	<suppress checks="VisibilityModifier" files="MapBasedSimplePolicyRepository.java" />
 
 	<!--
 		These line numbers can be longer than 120 characters because it is

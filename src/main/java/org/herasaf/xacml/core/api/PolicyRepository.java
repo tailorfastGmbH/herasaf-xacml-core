@@ -123,7 +123,8 @@ public interface PolicyRepository {
      * <br />
      * An advanced PolicyRepository implementation could e.g. use an index to reduce the amount of returned policies, so
      * that the PDP can evaluate less polices. That could speed up overall performance. It is very important that the
-     * implementation does only "not return" policies which can be explicitly "not be applicable" for the given RequestCtx.
+     * implementation does only "not return" policies which can be explicitly "not be applicable" for the given 
+     * RequestCtx.
      * 
      * @param request
      *            The request for whom all returned {@link Evaluatable} shall match.

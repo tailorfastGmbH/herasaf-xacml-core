@@ -23,7 +23,8 @@ import org.herasaf.xacml.core.context.ResponseCtx;
 
 /**
  * The PDP interface represents a core component in XACML - The Policy Decision Point.<br />
- * A PDP is responsible for evaluating authorization requests against the deployed policies from a PolicyRepository. <br />
+ * A PDP is responsible for evaluating authorization requests against the deployed policies from a PolicyRepository.
+ * <br />
  * <br />
  * The PDP evaluates a request ({@link RequestCtx}) against all policies retrieved from the Policy Repository, evaluates
  * them and returns a response inlcuding the decision <br />

@@ -41,7 +41,6 @@ import org.herasaf.xacml.core.context.impl.ResultType;
 import org.herasaf.xacml.core.context.impl.StatusCodeType;
 import org.herasaf.xacml.core.context.impl.StatusDetailType;
 import org.herasaf.xacml.core.context.impl.StatusType;
-import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.utils.ContextAndPolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
