@@ -3,13 +3,13 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>org.herasaf.xacml.new</groupId>
+		<groupId>org.herasaf.xacml</groupId>
 		<artifactId>herasaf-xacml</artifactId>
 		<version>1.0.0-M1-SNAPSHOT</version> <!-- use most recent, final RootRoot-POM -->
 	</parent>
 
 	<!-- Project -->
-	<groupId>org.herasaf.xacml.new.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
+	<groupId>org.herasaf.xacml.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
 	<artifactId>herasaf-xacml-core</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
 	<packaging>jar</packaging>
 	<version>1.0.0-M1-SNAPSHOT</version>
