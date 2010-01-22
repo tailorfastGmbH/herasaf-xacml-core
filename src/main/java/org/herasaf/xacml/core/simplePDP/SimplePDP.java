@@ -86,8 +86,8 @@ public class SimplePDP implements PDP {
             }
         } else {
             InitializationException ie = new InitializationException(
-                    "Root combining algorithm and policy repository are not of the same type " +
-                    "(type is either ordered or unordered).");
+                    "Root combining algorithm and policy repository are not of the same type "
+                            + "(type is either ordered or unordered).");
             logger.error(ie.getMessage());
             throw ie;
         }
