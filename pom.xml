@@ -58,13 +58,13 @@
 	</ciManagement>
 	<scm>
 		<connection>
-			scm:svn:http://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml/herasaf-xacml-core
+			scm:svn:http://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml-core
 		</connection>
 		<developerConnection>
-			scm:svn:https://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml/herasaf-xacml-core
+			scm:svn:https://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml-core
 		</developerConnection>
 		<url>
-			http://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml/herasaf-xacml-core
+			http://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml-core
 		</url>
 	</scm>
 	<distributionManagement>
