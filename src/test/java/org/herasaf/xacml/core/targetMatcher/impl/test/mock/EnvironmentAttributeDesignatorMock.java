@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.targetMatcher.impl.test.mock;
 
 import java.util.Arrays;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -51,7 +51,7 @@ public class EnvironmentAttributeDesignatorMock extends EnvironmentAttributeDesi
 	 * Throws an exception if set so or returns the request values.
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo)
+	public Object handle(RequestType request, EvaluationContext evaluationContext)
 			throws ExpressionProcessingException {
 		if(exception){
 			throw new ExpressionProcessingException();

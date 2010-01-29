@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 
 /**
@@ -64,7 +64,7 @@ public class VariableValue implements Variable {
 	 * org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml
 	 * .core.context.impl.RequestType, java.util.Map)
 	 */
-	public Object getValue(RequestType request, RequestInformation reqInfo) {
+	public Object getValue(RequestType request, EvaluationContext evaluationContext) {
 		return value;
 	}
 }

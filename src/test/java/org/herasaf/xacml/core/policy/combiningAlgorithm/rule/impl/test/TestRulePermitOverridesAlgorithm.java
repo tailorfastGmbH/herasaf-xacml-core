@@ -24,7 +24,7 @@ import static org.testng.Assert.assertTrue;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RulePermitOverridesAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -296,7 +296,7 @@ public class TestRulePermitOverridesAlgorithm {
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		RequestInformation infos = new RequestInformation(null);
+		EvaluationContext infos = new EvaluationContext(null);
 		DecisionType decision = alg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

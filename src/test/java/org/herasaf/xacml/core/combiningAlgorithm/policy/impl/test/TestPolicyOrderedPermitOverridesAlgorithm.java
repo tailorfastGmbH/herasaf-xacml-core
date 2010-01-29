@@ -20,7 +20,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOrderedPermitOverridesAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -55,13 +55,13 @@ public class TestPolicyOrderedPermitOverridesAlgorithm extends
 	@Test(enabled = true, dataProvider = "evaluatableCombinations")
 	protected void testPolicySetMatchAndOneEvaluatable(
 			PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
-			RequestInformation reqInfo1, EvaluatableMock eval2,
-			RequestInformation reqInfo2, DecisionType expectedDecision,
+			EvaluationContext evaluationContext1, EvaluatableMock eval2,
+			EvaluationContext evaluationContext2, DecisionType expectedDecision,
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		super.testPolicySetMatchAndOneEvaluatable(alg, eval1, reqInfo1, eval2,
-				reqInfo2, expectedDecision, expectedObligations,
+		super.testPolicySetMatchAndOneEvaluatable(alg, eval1, evaluationContext1, eval2,
+				evaluationContext2, expectedDecision, expectedObligations,
 				expectedStatusCode, expectedHasTargetMatched);
 	}
 

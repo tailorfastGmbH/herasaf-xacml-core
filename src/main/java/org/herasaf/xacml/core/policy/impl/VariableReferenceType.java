@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
@@ -91,12 +91,12 @@ public class VariableReferenceType extends ExpressionType {
 	 * xacml.core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo) throws MissingAttributeException,
+	public Object handle(RequestType request, EvaluationContext evaluationContext) throws MissingAttributeException,
 			SyntaxException, ProcessingException {
 
-		Map<String, Variable> variableDefinitions = reqInfo.getVariableDefinitions();
+		Map<String, Variable> variableDefinitions = evaluationContext.getVariableDefinitions();
 		Variable var = variableDefinitions.get(variableId);
-		Object value = var.getValue(request, reqInfo);
+		Object value = var.getValue(request, evaluationContext);
 		if (var instanceof VariableDefinitionType) {
 			variableDefinitions.put(variableId, new VariableValue(value));
 		}

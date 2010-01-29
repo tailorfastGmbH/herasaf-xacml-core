@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PIP;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -46,18 +46,18 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestSubjectAttributeDesignator {
-	RequestInformation reqInfo;
+	EvaluationContext evaluationContext;
 
 	/**
-	 * Initializes the {@link RequestInformation} with an mock for the {@link PIP}.
+	 * Initializes the {@link EvaluationContext} with an mock for the {@link PIP}.
 	 */
 	@BeforeTest
 	public void init() {
-		reqInfo = new RequestInformation(null); //null means no PIP
+		evaluationContext = new EvaluationContext(null); //null means no PIP
 	}
 
 	/**
-	 * Initializes the {@link RequestInformation} with an mock for the {@link PIP}.
+	 * Initializes the {@link EvaluationContext} with an mock for the {@link PIP}.
 	 */
 	@DataProvider(name = "successfulSubjectAttrDesignator")
 	public Object[][] successfulSubjectAttrDesignator() {
@@ -284,7 +284,7 @@ public class TestSubjectAttributeDesignator {
 	/**
 	 * Test the successful cases.
 	 * 
-	 * @param req The {@link RequestInformation}.
+	 * @param req The {@link EvaluationContext}.
 	 * @param designator The {@link SubjectAttributeDesignatorType} (is under test)
 	 * @param result The expected result.
 	 * @throws Exception In case an error occurs.
@@ -296,7 +296,7 @@ public class TestSubjectAttributeDesignator {
 			throws Exception {
 
 		List<Object> returnValue = (List<Object>) designator.handle(req,
-				reqInfo);
+				evaluationContext);
 		assertEquals(returnValue.size(), result.size());
 		for (Object obj : returnValue) {
 			assertTrue(isContained(obj.toString(), result));
@@ -307,7 +307,7 @@ public class TestSubjectAttributeDesignator {
 	 * Tests if all error-cases throw the proper exception.
 	 * Expects a {@link MissingAttributeException}.
 	 * 
-	 * @param req The {@link RequestInformation}.
+	 * @param req The {@link EvaluationContext}.
 	 * @param designator The {@link SubjectAttributeDesignatorType} (is under test)
 	 * @throws Throwable In case an unexpected error occurs.
 	 */
@@ -315,7 +315,7 @@ public class TestSubjectAttributeDesignator {
 	public void testHandle(RequestType req,
 			SubjectAttributeDesignatorType designator) throws Throwable {
 		try {
-			designator.handle(req, reqInfo);
+			designator.handle(req, evaluationContext);
 		} catch (ExpressionProcessingException e) {
 			throw e.getCause();
 		}
@@ -338,7 +338,7 @@ public class TestSubjectAttributeDesignator {
 		SubjectAttributeDesignatorType designator = initializeDesignator(
 				"test", "subject-role", new StringDataTypeAttribute(), null,
 				false);
-		designator.handle(req, reqInfo);
+		designator.handle(req, evaluationContext);
 	}
 
 	/**
@@ -358,7 +358,7 @@ public class TestSubjectAttributeDesignator {
 		SubjectAttributeDesignatorType designator = initializeDesignator(
 				"test", "subject-role", new StringDataTypeAttribute(), null,
 				false);
-		designator.handle(req, reqInfo);
+		designator.handle(req, evaluationContext);
 	}
 
 	/**

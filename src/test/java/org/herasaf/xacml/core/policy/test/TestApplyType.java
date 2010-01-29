@@ -24,7 +24,7 @@ import java.util.Arrays;
 import javax.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResourceType;
@@ -138,7 +138,7 @@ public class TestApplyType {
 	public void testHandle(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, new RequestInformation(null)),
+		assertEquals(apply.handle(request, new EvaluationContext(null)),
 				result);
 	}
 
@@ -155,7 +155,7 @@ public class TestApplyType {
 	public void testHandleExceptions(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, new RequestInformation(null)),
+		assertEquals(apply.handle(request, new EvaluationContext(null)),
 				result);
 	}
 
@@ -170,7 +170,7 @@ public class TestApplyType {
 	public void testApplyWithFunctionType(JAXBElement<ApplyType> JaxbElem,
 			Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(new RequestType(), new RequestInformation(null)),
+		assertEquals(apply.handle(new RequestType(), new EvaluationContext(null)),
 				result);
 
 	}

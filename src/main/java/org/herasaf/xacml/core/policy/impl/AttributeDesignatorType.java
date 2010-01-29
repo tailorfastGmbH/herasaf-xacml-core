@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
@@ -180,7 +180,7 @@ public abstract class AttributeDesignatorType extends ExpressionType {
 	 * xacml.core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public abstract Object handle(RequestType request, RequestInformation reqInfo)
+	public abstract Object handle(RequestType request, EvaluationContext evaluationContext)
 			throws ExpressionProcessingException, MissingAttributeException, SyntaxException;
 
 	/**

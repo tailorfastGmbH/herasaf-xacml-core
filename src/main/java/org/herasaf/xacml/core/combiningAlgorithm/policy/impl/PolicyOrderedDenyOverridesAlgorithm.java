@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -54,13 +54,13 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
-			final RequestInformation requestInfo) {
+			final EvaluationContext evaluationContext) {
 
 		if (possiblePolicies == null) {
 			// It is an illegal state if the list containing the policies is
 			// null.
 			logger.error("The possiblePolicies list was null. This is an illegal state.");
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -82,7 +82,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 
@@ -100,7 +100,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			DecisionType decision;
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
-			requestInfo.resetStatus();
+			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
@@ -110,10 +110,10 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
 			if (combiningAlg == null) {
 				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			} else {
-				decision = combiningAlg.evaluate(request, eval, requestInfo);
+				decision = combiningAlg.evaluate(request, eval, evaluationContext);
 			}
 
 			if (logger.isDebugEnabled()) {
@@ -125,7 +125,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
 				obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision
 						.toString())));
-				obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
+				obligationsOfApplicableEvals.addAll(evaluationContext.getObligations().getObligations());
 			}
 			switch (decision) {
 			case DENY:
@@ -135,8 +135,8 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 					// the first deny
 					// finishes the
 					// evaluation
-					requestInfo.clearObligations();
-					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
+					evaluationContext.clearObligations();
+					evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
 					return DecisionType.DENY;
 				} else {
 					atLeastOneDeny = true;
@@ -146,18 +146,18 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 				atLeastOnePermit = true;
 				break;
 			case INDETERMINATE:
-				statusCodes.add(requestInfo.getStatusCode());
+				statusCodes.add(evaluationContext.getStatusCode());
 				atLeastOneError = true;
 				break;
 			case NOT_APPLICABLE:
 				break;
 			}
-			requestInfo.clearObligations();
+			evaluationContext.clearObligations();
 		}
 
 		if (atLeastOneDeny) {
-			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY); // To
+			evaluationContext.resetStatus();
+			evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.DENY); // To
 			// filter
 			// all
 			// PERMIT-Obligations
@@ -165,10 +165,10 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			// were collected so far
 			return DecisionType.DENY;
 		} else if (atLeastOneError) {
-			requestInfo.resetStatus();
+			evaluationContext.resetStatus();
 			return DecisionType.DENY;
 		} else if (atLeastOnePermit) {
-			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT); // The
+			evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT); // The
 			// decision
 			// is
 			// made
@@ -179,10 +179,10 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
-			requestInfo.resetStatus();
+			evaluationContext.resetStatus();
 			return DecisionType.PERMIT;
 		}
-		requestInfo.clearObligations();
+		evaluationContext.clearObligations();
 		return DecisionType.NOT_APPLICABLE;
 	}
 

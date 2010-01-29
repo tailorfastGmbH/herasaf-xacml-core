@@ -22,7 +22,7 @@ import static org.testng.Assert.assertEquals;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -337,7 +337,7 @@ public class TestRuleEvaluation {
 			StatusCode expectedStatusCode,
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
-		RequestInformation info = new RequestInformation(null);
+		EvaluationContext info = new EvaluationContext(null);
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule, info);
 		assertEquals(madeDecision, expectedDecision);
 		assertEquals(info.getStatusCode(), expectedStatusCode);

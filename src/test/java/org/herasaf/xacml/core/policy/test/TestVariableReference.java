@@ -24,7 +24,7 @@ import java.util.Map;
 
 import javax.xml.bind.JAXBElement;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -54,27 +54,27 @@ public class TestVariableReference {
 	}
 
 	/**
-	 * Tests if the {@link VariableReferenceType#handle(RequestType, RequestInformation)} method behaves properly.
+	 * Tests if the {@link VariableReferenceType#handle(RequestType, EvaluationContext)} method behaves properly.
 	 * 
 	 *@throws Exception If an error occurs.
 	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		Object[] values = new Object[]{"test1", "test2", "test3"};
-		RequestInformation reqInfo = new RequestInformation(null);
-		reqInfo.setVariableDefinitions(initVariableDefinitions(values));
+		EvaluationContext evaluationContext = new EvaluationContext(null);
+		evaluationContext.setVariableDefinitions(initVariableDefinitions(values));
 
 		VariableReferenceType varRef1 = new VariableReferenceType();
 		varRef1.setVariableId("1");
-		assertEquals(varRef1.handle(new RequestType(), reqInfo), values[0]);
+		assertEquals(varRef1.handle(new RequestType(), evaluationContext), values[0]);
 
 		VariableReferenceType varRef2 = new VariableReferenceType();
 		varRef2.setVariableId("2");
-		assertEquals(varRef2.handle(new RequestType(), reqInfo), values[1]);
+		assertEquals(varRef2.handle(new RequestType(), evaluationContext), values[1]);
 
 		VariableReferenceType varRef3 = new VariableReferenceType();
 		varRef3.setVariableId("3");
-		assertEquals(varRef3.handle(new RequestType(), reqInfo), values[2]);
+		assertEquals(varRef3.handle(new RequestType(), evaluationContext), values[2]);
 	}
 
 	/**

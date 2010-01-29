@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -55,13 +55,13 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
-			final RequestInformation requestInfo) {
+			final EvaluationContext evaluationContext) {
 
 		if (possiblePolicies == null) {
 			// It is an illegal state if the list containing the policies is
 			// null.
 			logger.error("The possiblePolicies list was null. This is an illegal state.");
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -87,7 +87,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 
@@ -105,7 +105,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 			DecisionType decision;
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
-			requestInfo.resetStatus();
+			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
@@ -115,10 +115,10 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
 			if (combiningAlg == null) {
 				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			} else {
-				decision = combiningAlg.evaluate(request, eval, requestInfo);
+				decision = combiningAlg.evaluate(request, eval, evaluationContext);
 			}
 
 			if (logger.isDebugEnabled()) {
@@ -130,18 +130,18 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 			if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
 				obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision
 						.toString())));
-				obligationsOfApplicableEvals.addAll(requestInfo.getObligations().getObligations());
+				obligationsOfApplicableEvals.addAll(evaluationContext.getObligations().getObligations());
 			}
 
 			switch (decision) {
 			case PERMIT:
 				if (!isRespectAbandonedEvaluatables()) {
-					requestInfo.clearObligations();
-					requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
+					evaluationContext.clearObligations();
+					evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 					/*
 					 * If the result is permit, the statuscode is always ok.
 					 */
-					requestInfo.resetStatus();
+					evaluationContext.resetStatus();
 					return DecisionType.PERMIT;
 				} else {
 					atLeastOnePermit = true;
@@ -152,8 +152,8 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 				 * If the decision of the evaluatable is deny, the status has to
 				 * be saved.
 				 */
-				missingAttributes.addAll(requestInfo.getMissingAttributes());
-				statusCodes.add(requestInfo.getStatusCode());
+				missingAttributes.addAll(evaluationContext.getMissingAttributes());
+				statusCodes.add(evaluationContext.getStatusCode());
 				atLeastOneDeny = true;
 				break;
 			case INDETERMINATE:
@@ -161,36 +161,36 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 				 * If the decision of the evaluatable is Indeterminate, the
 				 * status has to be saved.
 				 */
-				missingAttributes.addAll(requestInfo.getMissingAttributes());
-				statusCodes.add(requestInfo.getStatusCode());
+				missingAttributes.addAll(evaluationContext.getMissingAttributes());
+				statusCodes.add(evaluationContext.getStatusCode());
 				atLeastOneError = true;
 				break;
 			case NOT_APPLICABLE:
 				break;
 			}
-			requestInfo.clearObligations();
+			evaluationContext.clearObligations();
 		}
 		if (atLeastOnePermit) {
 			/*
 			 * If the result is permit, the statuscode is always ok.
 			 */
-			requestInfo.resetStatus();
-			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
+			evaluationContext.resetStatus();
+			evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 			return DecisionType.PERMIT;
 		} else if (atLeastOneDeny) {
 			// The obligationsOfApplicableEvals may not be revised because it
 			// can only contain DENY-Obligations.
-			requestInfo.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
-			requestInfo.setMissingAttributes(missingAttributes);
-			// requestInfo.updateStatusCode(statusCodes);
-			requestInfo.resetStatus();
+			evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
+			evaluationContext.setMissingAttributes(missingAttributes);
+			// evaluationContext.updateStatusCode(statusCodes);
+			evaluationContext.resetStatus();
 			return DecisionType.DENY;
 		} else if (atLeastOneError) {
-			requestInfo.setMissingAttributes(missingAttributes);
-			requestInfo.updateStatusCode(statusCodes);
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
 			return DecisionType.INDETERMINATE;
 		}
-		requestInfo.clearObligations();
+		evaluationContext.clearObligations();
 		return DecisionType.NOT_APPLICABLE;
 	}
 

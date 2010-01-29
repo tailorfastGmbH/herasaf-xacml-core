@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
@@ -67,12 +67,12 @@ public abstract class ExpressionType implements Serializable {
 	 * Executes the expression.
 	 * 
 	 * @param request
-	 * @param reqInfo
+	 * @param evaluationContext
 	 * @return The result of the expression.
 	 * @throws ProcessingException
 	 * @throws MissingAttributeException
 	 * @throws SyntaxException
 	 */
-	public abstract Object handle(RequestType request, RequestInformation reqInfo) throws ProcessingException,
+	public abstract Object handle(RequestType request, EvaluationContext evaluationContext) throws ProcessingException,
 			MissingAttributeException, SyntaxException;
 }

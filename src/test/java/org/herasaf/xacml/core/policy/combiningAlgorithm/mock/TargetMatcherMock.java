@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.mock;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
@@ -66,7 +66,7 @@ public class TargetMatcherMock implements TargetMatcher {
 	 * {@inheritDoc}
 	 */
 	public boolean match(RequestType req, TargetType target,
-			RequestInformation reqInfo) throws SyntaxException,
+			EvaluationContext evaluationContext) throws SyntaxException,
 			ProcessingException {
 		Decisions dec = decisions[counter];
 		setCounter(counter);

@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.combiningAlgorithm.rule;
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -44,11 +44,11 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluateRule(final RequestType request, final RuleType rule,
-			final RequestInformation requestInfo) {
+			final EvaluationContext evaluationContext) {
 		/*
 		 * Matches the target of the rule
 		 */
-		final DecisionType targetDecision = matchTarget(request, rule.getTarget(), requestInfo);
+		final DecisionType targetDecision = matchTarget(request, rule.getTarget(), evaluationContext);
 		if (targetDecision != DecisionType.PERMIT) {
 			return targetDecision;
 		}
@@ -67,16 +67,16 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 
 		}
 		try {
-			decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request, requestInfo);
+			decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request, evaluationContext);
 		} catch (ProcessingException e) {
-			requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;
 		} catch (MissingAttributeException e) {
-			requestInfo.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
-			requestInfo.addMissingAttributes(e.getMissingAttribute());
+			evaluationContext.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
+			evaluationContext.addMissingAttributes(e.getMissingAttribute());
 			return DecisionType.INDETERMINATE;
 		} catch (SyntaxException e) {
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		} catch (Exception e) {
 			/*
@@ -86,7 +86,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 			 * (XACML) 2.0, Errata 29 June 2006</a> page 85, for further
 			 * information.
 			 */
-			requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 		if (decision) {

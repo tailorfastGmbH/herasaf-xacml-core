@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.combiningAlgorithm.rule;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -36,23 +36,23 @@ public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombin
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
-			final RequestInformation requestInfo) {
-		final DecisionType decision = matchTarget(request, evals.getTarget(), requestInfo);
+			final EvaluationContext evaluationContext) {
+		final DecisionType decision = matchTarget(request, evals.getTarget(), evaluationContext);
 
 		if (decision != DecisionType.PERMIT) {
 			return decision;
 		}
 
 		try {
-			requestInfo.setVariableDefinitions(((PolicyType) evals).getVariables());
+			evaluationContext.setVariableDefinitions(((PolicyType) evals).getVariables());
 			final DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getUnorderedRules(),
-					requestInfo);
+					evaluationContext);
 			/*
 			 * If the decision was made, the evaluation process might have set
 			 * the targetMatched variable to false. so it has to be sure that
 			 * true is returned in this variable.
 			 */
-			requestInfo.setTargetMatched(true);
+			evaluationContext.setTargetMatched(true);
 			return dec;
 		} catch (ClassCastException e) {
 			/*
@@ -61,7 +61,7 @@ public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombin
 			 * June 2006</a> page 86, chapter "Syntax and type errors" for
 			 * further information.
 			 */
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 	}

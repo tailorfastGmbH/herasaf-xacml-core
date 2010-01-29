@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.combiningAlgorithm.policy;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -28,7 +28,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 /**
  * All policy combining algorithms must implement this interface. It provides
  * the entry point (
- * {@link #evaluateEvaluatableList(RequestType, List, RequestInformation)}) for
+ * {@link #evaluateEvaluatableList(RequestType, List, EvaluationContext)}) for
  * starting to evaluate sub-evaluatables.
  * 
  * @author Sacha Dolski
@@ -43,12 +43,12 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	 *            The request that has to be evaluated.
 	 * @param possibleEvaluatables
 	 *            List of the sub-evaluatables that have to be evaluated.
-	 * @param requestInfo
+	 * @param evaluationContext
 	 *            The context of this request evaluation.
 	 * @return The combined decision of the evaluation of the request.
 	 */
 	DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
-			RequestInformation requestInfo);
+			EvaluationContext evaluationContext);
 
 	/**
 	 * Returns true if abandoned evaluatables shall be respected, false

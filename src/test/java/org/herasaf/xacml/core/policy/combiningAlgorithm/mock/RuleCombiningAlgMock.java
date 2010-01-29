@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -62,8 +62,8 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	 */
 	@Override
 	public DecisionType evaluateRule(RequestType request,
-			RuleType rule, RequestInformation requestInfo) {
-		return super.evaluateRule(request, rule, requestInfo);
+			RuleType rule, EvaluationContext evaluationContext) {
+		return super.evaluateRule(request, rule, evaluationContext);
 	}
 	
 	/**
@@ -98,13 +98,13 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	 * {@link MissingAttributeDetailType}.
 	 */
 	public DecisionType evaluate(RequestType request,
-			Evaluatable evals, RequestInformation requestInfo) {
+			Evaluatable evals, EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
 			missingAttributes.add(missingAttr);
 		}
-		requestInfo.setMissingAttributes(missingAttributes);
-		requestInfo.updateStatusCode(statusCode);
+		evaluationContext.setMissingAttributes(missingAttributes);
+		evaluationContext.updateStatusCode(statusCode);
 		return decision;
 	}
 
@@ -117,13 +117,13 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	 */
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possibleEvaluatables,
-			RequestInformation requestInfo) {
+			EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
 			missingAttributes.add(missingAttr);
 		}
-		requestInfo.setMissingAttributes(missingAttributes);
-		requestInfo.updateStatusCode(statusCode);
+		evaluationContext.setMissingAttributes(missingAttributes);
+		evaluationContext.updateStatusCode(statusCode);
 		return decision;
 	}
 

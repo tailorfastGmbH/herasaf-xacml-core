@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -88,14 +88,14 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
+	public DecisionType evaluate(RequestType request, Evaluatable evals, EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
 			missingAttributes.add(missingAttr);
 		}
-		requestInfo.setMissingAttributes(missingAttributes);
-		requestInfo.updateStatusCode(statusCode);
-		requestInfo.setTargetMatched(returnTargetFailure);
+		evaluationContext.setMissingAttributes(missingAttributes);
+		evaluationContext.updateStatusCode(statusCode);
+		evaluationContext.setTargetMatched(returnTargetFailure);
 		return decision;
 	}
 
@@ -107,13 +107,13 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * {@link MissingAttributeDetailType}.
 	 */
 	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
-			RequestInformation requestInfo) {
+			EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
 			missingAttributes.add(missingAttr);
 		}
-		requestInfo.setMissingAttributes(missingAttributes);
-		requestInfo.updateStatusCode(statusCode);
+		evaluationContext.setMissingAttributes(missingAttributes);
+		evaluationContext.updateStatusCode(statusCode);
 		return decision;
 	}
 

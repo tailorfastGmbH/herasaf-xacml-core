@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -73,7 +73,7 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 	 * .core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo) throws ExpressionProcessingException,
+	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
@@ -102,8 +102,8 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
 		 * further information.
 		 */
-		if (returnValues.size() == 0 && reqInfo.getPIP() != null) {
-			List<AttributeValueType> attrValues = reqInfo.getPIP().addResourceAttributesToRequest(request, getAttributeId(),
+		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
+			List<AttributeValueType> attrValues = evaluationContext.getPIP().addResourceAttributesToRequest(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}

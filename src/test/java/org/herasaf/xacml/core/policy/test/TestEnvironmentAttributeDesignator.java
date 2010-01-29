@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PIP;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.EnvironmentType;
@@ -46,15 +46,15 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestEnvironmentAttributeDesignator {
-	RequestInformation reqInfo;
+	EvaluationContext evaluationContext;
 
 	/**
-	 * Initializes the {@link RequestInformation} with an mock for the {@link PIP}.
+	 * Initializes the {@link EvaluationContext} with an mock for the {@link PIP}.
 	 */
 	@BeforeTest
 	public void init() {
 
-		reqInfo = new RequestInformation(null); //null means no PIP
+		evaluationContext = new EvaluationContext(null); //null means no PIP
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class TestEnvironmentAttributeDesignator {
 	/**
 	 * Test the successful cases.
 	 * 
-	 * @param req The {@link RequestInformation}.
+	 * @param req The {@link EvaluationContext}.
 	 * @param designator The {@link EnvironmentAttributeDesignatorType} (is under test)
 	 * @param result The expected result.
 	 * @throws Exception In case an error occurs.
@@ -170,7 +170,7 @@ public class TestEnvironmentAttributeDesignator {
 			EnvironmentAttributeDesignatorType designator, List<Object> result)
 			throws Exception{
 
-		List<Object> returnValue = (List<Object>) designator.handle(req, reqInfo);
+		List<Object> returnValue = (List<Object>) designator.handle(req, evaluationContext);
 		assertEquals(returnValue.size(), result.size());
 		for (Object obj : returnValue) {
 			assertTrue(isContained(obj.toString(), result));
@@ -181,7 +181,7 @@ public class TestEnvironmentAttributeDesignator {
 	 * Tests if all error-cases throw the proper exception.
 	 * Expects a {@link MissingAttributeException}.
 	 * 
-	 * @param req The {@link RequestInformation}.
+	 * @param req The {@link EvaluationContext}.
 	 * @param designator The {@link EnvironmentAttributeDesignatorType} (is under test)
 	 * @throws Throwable In case an unexpected error occurs.
 	 */
@@ -189,7 +189,7 @@ public class TestEnvironmentAttributeDesignator {
 	public void testHandle(RequestType req,
 			EnvironmentAttributeDesignatorType designator) throws Throwable {
 		try {
-			designator.handle(req, reqInfo);
+			designator.handle(req, evaluationContext);
 		} catch (ExpressionProcessingException e) {
 			throw e.getCause();
 		}
@@ -207,7 +207,7 @@ public class TestEnvironmentAttributeDesignator {
 				"environment-Id", new StringDataTypeAttribute(), "hsr", 1));
 		EnvironmentAttributeDesignatorType designator = initializeDesignator(
 				"environment-Id", new StringDataTypeAttribute(), null, false);
-		designator.handle(req, reqInfo);
+		designator.handle(req, evaluationContext);
 	}
 
 	/**
@@ -223,7 +223,7 @@ public class TestEnvironmentAttributeDesignator {
 				"Fredi", true));
 		EnvironmentAttributeDesignatorType designator = initializeDesignator(
 				"environment-Id", new StringDataTypeAttribute(), null, false);
-		designator.handle(req, reqInfo);
+		designator.handle(req, evaluationContext);
 	}
 
 	/**

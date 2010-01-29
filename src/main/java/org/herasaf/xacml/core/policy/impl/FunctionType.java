@@ -24,7 +24,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
 import org.herasaf.xacml.core.function.Function;
@@ -95,7 +95,7 @@ public class FunctionType extends ExpressionType {
 	 * xacml.core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo) {
+	public Object handle(RequestType request, EvaluationContext evaluationContext) {
 		return function;
 	}
 }

@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.policy.test;
 
 import static org.testng.Assert.assertEquals;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
@@ -44,7 +44,7 @@ public class TestAttributeValueType {
 	}
 
 	/**
-	 * Tests the {@link AttributeValueType#handle(RequestType, RequestInformation)} method.
+	 * Tests the {@link AttributeValueType#handle(RequestType, EvaluationContext)} method.
 	 * @throws Exception If an error occurs.
 	 */
 	@Test(enabled = true)
@@ -53,11 +53,11 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 
 		assertEquals("test", (String) attrVal.handle(new RequestType(),
-				new RequestInformation(null)));
+				new EvaluationContext(null)));
 	}
 
 	/**
-	 * Tests cases where the {@link AttributeValueType#handle(RequestType, RequestInformation)} throws an exception.
+	 * Tests cases where the {@link AttributeValueType#handle(RequestType, EvaluationContext)} throws an exception.
 	 * Expects a {@link ExpressionProcessingException}.
 	 * 
 	 * @throws Exception If an error occurs.
@@ -68,11 +68,11 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 		attrVal.getContent().add("test2");
 
-		attrVal.handle(new RequestType(), new RequestInformation(null));
+		attrVal.handle(new RequestType(), new EvaluationContext(null));
 	}
 
 	/**
-	 * Tests cases where the {@link AttributeValueType#handle(RequestType, RequestInformation)} throws an exception.
+	 * Tests cases where the {@link AttributeValueType#handle(RequestType, EvaluationContext)} throws an exception.
 	 * Expects a {@link ExpressionProcessingException}.
 	 * 
 	 * @throws Exception If an error occurs.
@@ -81,6 +81,6 @@ public class TestAttributeValueType {
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add(new Integer("1"));
-		attrVal.handle(new RequestType(), new RequestInformation(null));
+		attrVal.handle(new RequestType(), new EvaluationContext(null));
 	}
 }

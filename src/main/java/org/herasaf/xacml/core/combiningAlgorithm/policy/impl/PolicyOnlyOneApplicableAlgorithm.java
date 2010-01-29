@@ -22,7 +22,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -55,13 +55,13 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
-			final RequestInformation requestInfo) {
+			final EvaluationContext evaluationContext) {
 
 		if (possiblePolicies == null) {
 			// It is an illegal state if the list containing the policies is
 			// null.
 			logger.error("The possiblePolicies list was null. This is an illegal state.");
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -84,14 +84,14 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 
 			DecisionType decision;
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
-			requestInfo.resetStatus();
+			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
@@ -101,10 +101,10 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
 			if (combiningAlg == null) {
 				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			} else {
-				decision = combiningAlg.evaluate(request, eval, requestInfo);
+				decision = combiningAlg.evaluate(request, eval, evaluationContext);
 			}
 
 			if (logger.isDebugEnabled()) {
@@ -116,9 +116,9 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 			if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
 				obligationsOfFirstApplicableEval.addAll(eval.getContainedObligations(EffectType.fromValue(decision
 						.toString())));
-				obligationsOfFirstApplicableEval.addAll(requestInfo.getObligations().getObligations());
+				obligationsOfFirstApplicableEval.addAll(evaluationContext.getObligations().getObligations());
 			}
-			requestInfo.clearObligations();
+			evaluationContext.clearObligations();
 			switch (decision) {
 			case NOT_APPLICABLE:
 				// If the target of the evaluated policy has matched, the
@@ -126,22 +126,22 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 				// itself was Applicable and only its rules/inner policy haven't
 				// been
 				// applicable.
-				if (requestInfo.isTargetMatched()) {
+				if (evaluationContext.isTargetMatched()) {
 					// If there was already another applicable Evaluatable,
 					// Indeterminate has to be thrown.
 					if (firstApplicableDecision != null) {
 						/*
 						 * When indeterminate is returned, it has to be sure
 						 * that the returned error is a processing exception.
-						 * because of this, the request information have to be
+						 * because of this, the evaluation context have to be
 						 * reset and set to Processing-exception. See: OASIS
 						 * eXtensible Access Control Markup Langugage (XACML)
 						 * 2.0, Errata 29 June 2006</a> page 86 and page 139 and
 						 * the specification of the only-one-applicable
 						 * algorithm for further information.
 						 */
-						requestInfo.resetStatus();
-						requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
+						evaluationContext.resetStatus();
+						evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
 						return DecisionType.INDETERMINATE;
 					}
 					/*
@@ -149,8 +149,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 					 * remembered including the status code and the missing
 					 * attribute data.
 					 */
-					statusCode = requestInfo.getStatusCode();
-					missingAttributes.addAll(requestInfo.getMissingAttributes());
+					statusCode = evaluationContext.getStatusCode();
+					missingAttributes.addAll(evaluationContext.getMissingAttributes());
 					firstApplicableDecision = decision;
 				}
 				break;
@@ -163,21 +163,21 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 				 */
 				if (firstApplicableDecision == null) {
 					firstApplicableDecision = decision;
-					statusCode = requestInfo.getStatusCode();
-					missingAttributes.addAll(requestInfo.getMissingAttributes());
+					statusCode = evaluationContext.getStatusCode();
+					missingAttributes.addAll(evaluationContext.getMissingAttributes());
 				} else {
 					/*
 					 * When indeterminate is returned, it has to be sure that
 					 * the returned error is a processing exception. because of
-					 * this, the request information have to be reset and set to
+					 * this, the evaluation context have to be reset and set to
 					 * Processing-exception. See: OASIS eXtensible Access
 					 * Control Markup Langugage (XACML) 2.0, Errata 29 June
 					 * 2006</a> page 86 and page 139 and the specification of
 					 * the only-one-applicable algorithm for further
 					 * information.
 					 */
-					requestInfo.resetStatus();
-					requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
+					evaluationContext.resetStatus();
+					evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
 					return DecisionType.INDETERMINATE;
 				}
 				break;
@@ -190,14 +190,14 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 		 * of the decision. Or if the policy is not applicable it has to be sure
 		 * that no chances of the state have been made.
 		 */
-		requestInfo.resetStatus();
+		evaluationContext.resetStatus();
 		if (firstApplicableDecision != null) {
-			requestInfo.setMissingAttributes(missingAttributes);
-			requestInfo.updateStatusCode(statusCode);
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCode);
 			if (firstApplicableDecision == DecisionType.DENY) {
-				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.DENY);
+				evaluationContext.addObligations(obligationsOfFirstApplicableEval, EffectType.DENY);
 			} else if (firstApplicableDecision == DecisionType.PERMIT) {
-				requestInfo.addObligations(obligationsOfFirstApplicableEval, EffectType.PERMIT);
+				evaluationContext.addObligations(obligationsOfFirstApplicableEval, EffectType.PERMIT);
 			}
 			return firstApplicableDecision;
 		}

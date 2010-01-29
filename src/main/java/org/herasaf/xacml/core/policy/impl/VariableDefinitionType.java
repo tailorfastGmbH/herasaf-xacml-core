@@ -28,7 +28,7 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
@@ -144,8 +144,8 @@ public class VariableDefinitionType implements Serializable, Variable {
 	 * org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml
 	 * .core.context.impl.RequestType, java.util.Map)
 	 */
-	public Object getValue(RequestType request, RequestInformation reqInfo) throws MissingAttributeException,
+	public Object getValue(RequestType request, EvaluationContext evaluationContext) throws MissingAttributeException,
 			SyntaxException, ProcessingException {
-		return ((ExpressionType) getExpression().getValue()).handle(request, reqInfo);
+		return ((ExpressionType) getExpression().getValue()).handle(request, evaluationContext);
 	}
 }

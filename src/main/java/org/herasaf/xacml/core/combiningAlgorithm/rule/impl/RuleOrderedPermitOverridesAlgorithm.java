@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleOrderedCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -62,13 +62,13 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
-			final RequestInformation requestInfo) {
+			final EvaluationContext evaluationContext) {
 
 		if (rules == null) {
 			// It is an illegal state if the list containing the rules is
 			// null.
 			logger.error("the rules list was null. This is an illegal state.");
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -94,20 +94,20 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of rules must not contain any null values.");
-				requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 
 			// Resets the status to go sure, that the returned statuscode is
 			// the one of the evaluation.
-			requestInfo.resetStatus();
+			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			DecisionType decision = this.evaluateRule(request, rule, requestInfo);
+			DecisionType decision = this.evaluateRule(request, rule, evaluationContext);
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());
@@ -120,8 +120,8 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 				atLeastOneDeny = true;
 				break;
 			case INDETERMINATE:
-				missingAttributes.addAll(requestInfo.getMissingAttributes());
-				statusCodes.add(requestInfo.getStatusCode());
+				missingAttributes.addAll(evaluationContext.getMissingAttributes());
+				statusCodes.add(evaluationContext.getStatusCode());
 				atLeastOneError = true;
 				/*
 				 * If the Effect is permit and the result is indeterminate, the
@@ -136,21 +136,21 @@ public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlg
 			}
 		}
 		if (potentialPermit) {
-			requestInfo.resetStatus();
-			requestInfo.setMissingAttributes(missingAttributes);
-			requestInfo.updateStatusCode(statusCodes);
+			evaluationContext.resetStatus();
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
 			return DecisionType.INDETERMINATE;
 		}
 		if (atLeastOneDeny) {
-			requestInfo.resetStatus();
-			requestInfo.setMissingAttributes(missingAttributes);
-			requestInfo.updateStatusCode(statusCodes);
+			evaluationContext.resetStatus();
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
 			return DecisionType.DENY;
 		}
 		if (atLeastOneError) {
-			requestInfo.resetStatus();
-			requestInfo.setMissingAttributes(missingAttributes);
-			requestInfo.updateStatusCode(statusCodes);
+			evaluationContext.resetStatus();
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
 			return DecisionType.INDETERMINATE;
 		}
 		return DecisionType.NOT_APPLICABLE;

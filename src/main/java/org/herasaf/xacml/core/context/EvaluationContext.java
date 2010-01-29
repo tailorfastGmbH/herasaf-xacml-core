@@ -44,7 +44,7 @@ import org.herasaf.xacml.core.policy.impl.Variable;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class RequestInformation {
+public class EvaluationContext {
 	private PIP pip;
 	private StatusCode statusCode;
 	private List<MissingAttributeDetailType> missingAttributes;
@@ -67,7 +67,7 @@ public class RequestInformation {
 	 * @param pip
 	 *            The {@link PIP} to use during evaluation.
 	 */
-	public RequestInformation(PIP pip) {
+	public EvaluationContext(PIP pip) {
 		this.pip = pip;
 		statusCode = StatusCode.OK;
 		missingAttributes = new ArrayList<MissingAttributeDetailType>();
@@ -76,16 +76,16 @@ public class RequestInformation {
 	}
 
 	/**
-	 * Returns the {@link StatusCode} set in this {@link RequestInformation}.
+	 * Returns the {@link StatusCode} set in this {@link EvaluationContext}.
 	 * 
-	 * @return The {@link StatusCode} of this {@link RequestInformation}.
+	 * @return The {@link StatusCode} of this {@link EvaluationContext}.
 	 */
 	public StatusCode getStatusCode() {
 		return statusCode;
 	}
 
 	/**
-	 * Updates the {@link StatusCode} in this {@link RequestInformation}. This
+	 * Updates the {@link StatusCode} in this {@link EvaluationContext}. This
 	 * update is aware of the priority of a {@link StatusCode} what means that a
 	 * weak one cannot override a strong one. Priorities:
 	 * <ol>
@@ -123,7 +123,7 @@ public class RequestInformation {
 
 	/**
 	 * Sets the strongest {@link StatusCode} from the {@link List} into this
-	 * {@link RequestInformation}.
+	 * {@link EvaluationContext}.
 	 * 
 	 * @param statusCodes
 	 *            The {@link List} of {@link StatusCode}s.
@@ -196,7 +196,7 @@ public class RequestInformation {
 
 	/**
 	 * Gets the variable Definitions actually appended to the
-	 * requestInformation.
+	 * EvaluationContext.
 	 * 
 	 * @return a Map with the VariableDefinitions. The key value is the
 	 *         identifier of the variable.
@@ -206,7 +206,7 @@ public class RequestInformation {
 	}
 
 	/**
-	 * Sets the variable definitions to the RequestInformation.
+	 * Sets the variable definitions to the EvaluationContext.
 	 * 
 	 * @param variableDefinitions
 	 *            The Map with the Variabledefinitions to set. The key value is
@@ -217,7 +217,7 @@ public class RequestInformation {
 	}
 
 	/**
-	 * Gets the PIP for this Request.
+	 * Gets the PIP for this Context.
 	 * 
 	 * @return Returns the PIP
 	 */
@@ -255,7 +255,7 @@ public class RequestInformation {
 
 	/**
 	 * Returns the {@link ObligationsType} contained in this
-	 * {@link RequestInformation} object.
+	 * {@link EvaluationContext} object.
 	 * 
 	 * @return the {@link ObligationsType}.
 	 */
@@ -270,7 +270,7 @@ public class RequestInformation {
 	public String toString() {
 		// FIXME Replace such code with Apache Commons Lang ToStringBuilder (see
 		// HERASAFXACMLCORE-82)
-		StringBuilder stringValue = new StringBuilder("RequestInformation[");
+		StringBuilder stringValue = new StringBuilder("EvaluationContext[");
 		stringValue.append("pip=");
 		stringValue.append(pip);
 		stringValue.append(", statusCode=");

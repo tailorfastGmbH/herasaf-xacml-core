@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -331,12 +331,12 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * This {@link List} may contain null-values in case that a remote reference
 	 * was not resolvable.
 	 * 
-	 * @param reqInfo
-	 *            The {@link RequestInformation} is provided for setting the
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} is provided for setting the
 	 *            references.
 	 * @return A {@link List} of ordered {@link Evaluatable}s.
 	 */
-	public List<Evaluatable> getOrderedEvaluatables(RequestInformation reqInfo) {
+	public List<Evaluatable> getOrderedEvaluatables(EvaluationContext evaluationContext) {
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		// No foreach iterator to ensure thread safety.
 		for (int i = 0; i < getAdditionalInformation().size(); i++) {
@@ -351,13 +351,13 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * This {@link List} may contain null-values in case that a remote reference
 	 * was not resolvable.
 	 * 
-	 * @param reqInfo
-	 *            The {@link RequestInformation} is provided for setting the
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} is provided for setting the
 	 *            references.
 	 * @return A {@link List} of {@link Evaluatable}s.
 	 */
-	public List<Evaluatable> getUnorderedEvaluatables(RequestInformation reqInfo) {
-		return getOrderedEvaluatables(reqInfo);
+	public List<Evaluatable> getUnorderedEvaluatables(EvaluationContext evaluationContext) {
+		return getOrderedEvaluatables(evaluationContext);
 	}
 
 	/*

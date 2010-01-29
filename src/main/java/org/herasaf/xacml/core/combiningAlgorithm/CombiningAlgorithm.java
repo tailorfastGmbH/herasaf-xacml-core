@@ -16,7 +16,7 @@
  */
 package org.herasaf.xacml.core.combiningAlgorithm;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -24,7 +24,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 /**
  * This interface describes a combining algorithm, rule and policy combining
  * algorithms. The
- * {@link #evaluate(RequestType, Evaluatable, RequestInformation)} method is the
+ * {@link #evaluate(RequestType, Evaluatable, EvaluationContext)} method is the
  * entry point for evaluating a request.
  * 
  * 
@@ -40,9 +40,9 @@ public interface CombiningAlgorithm {
 	 *            The request to evaluate.
 	 * @param evals
 	 *            The {@link Evaluatable} to evaluate.
-	 * @param requestInfo
+	 * @param evaluationContext
 	 *            The evaluation context.
 	 * @return The decision of the evaluation of the given request.
 	 */
-	DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo);
+	DecisionType evaluate(RequestType request, Evaluatable evals, EvaluationContext evaluationContext);
 }

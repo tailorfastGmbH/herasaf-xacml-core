@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.rule.test;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleOrderedCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -69,7 +69,7 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	 */
 	@Override
 	public DecisionType evaluateRule(RequestType request,
-			RuleType rule, RequestInformation requestInfo) {
+			RuleType rule, EvaluationContext evaluationContext) {
 		return null;
 	}
 
@@ -80,12 +80,12 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	 */
 	@Override
 	protected DecisionType matchTarget(RequestType request,
-			TargetType target, RequestInformation requestInfo) {
-		requestInfo.resetStatus();
+			TargetType target, EvaluationContext evaluationContext) {
+		evaluationContext.resetStatus();
 		if (targetMissingAttribute != null) {
-			requestInfo.addMissingAttributes(targetMissingAttribute);
+			evaluationContext.addMissingAttributes(targetMissingAttribute);
 		}
-		requestInfo.updateStatusCode(targetStatusCode);
+		evaluationContext.updateStatusCode(targetStatusCode);
 		return targetDecision;
 	}
 
@@ -93,7 +93,7 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	 * Returns always permit.
 	 */
 	public DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> possiblePolicies, RequestInformation requestInfos) {
+			List<RuleType> possiblePolicies, EvaluationContext evaluationContexts) {
 		return DecisionType.PERMIT;
 	}
 	

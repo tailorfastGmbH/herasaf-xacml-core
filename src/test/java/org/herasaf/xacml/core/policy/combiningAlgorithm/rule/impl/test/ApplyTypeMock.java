@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.ProcessingException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.ApplyType;
@@ -70,7 +70,7 @@ public class ApplyTypeMock extends ApplyType {
 	 */
 	@Override
 	public Object handle(RequestType request,
-			RequestInformation reqInfo)
+			EvaluationContext evaluationContext)
 			throws ProcessingException, MissingAttributeException,
 			org.herasaf.xacml.core.SyntaxException {
 		if (returnException != null) {

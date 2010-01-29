@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.targetMatcher;
 
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
@@ -52,6 +52,6 @@ public interface TargetMatcher {
 	 *             If a must-be-present attribute cannot be resolved (neither
 	 *             from the request nor from a PIP).
 	 */
-	boolean match(RequestType request, TargetType target, RequestInformation requestInformation)
+	boolean match(RequestType request, TargetType target, EvaluationContext evaluationContext)
 			throws SyntaxException, ProcessingException, MissingAttributeException;
 }

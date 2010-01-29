@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -35,7 +35,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * @author Stefan Oberholzer
  */
 public class CombiningAlgorithmMock implements CombiningAlgorithm {
-	RequestInformation reqInfo;
+	EvaluationContext evaluationContext;
 	DecisionType decision;
 
 	/**
@@ -50,38 +50,38 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(RequestType request, Evaluatable evals, RequestInformation requestInfo) {
+	public DecisionType evaluate(RequestType request, Evaluatable evals, EvaluationContext evalContext) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
-		for (ObligationType obligation : reqInfo.getObligations().getObligations()) {
+		for (ObligationType obligation : evaluationContext.getObligations().getObligations()) {
 			obligations.add(new ObligationType(obligation.getObligationId(), obligation.getFulfillOn()));
 		}
 
-		requestInfo.updateStatusCode(reqInfo.getStatusCode());
-		requestInfo.addObligations(obligations, EffectType.PERMIT);
-		requestInfo.addObligations(obligations, EffectType.DENY);
+		evalContext.updateStatusCode(evaluationContext.getStatusCode());
+		evalContext.addObligations(obligations, EffectType.PERMIT);
+		evalContext.addObligations(obligations, EffectType.DENY);
 		return decision;
 	}
 
 	/**
-	 * Returns the {@link RequestInformation} that is set in this combining
+	 * Returns the {@link EvaluationContext} that is set in this combining
 	 * algorithm.
 	 * 
-	 * @return The {@link RequestInformation} that is set in this combining
+	 * @return The {@link EvaluationContext} that is set in this combining
 	 *         algorithm.
 	 */
-	public RequestInformation getReqInfo() {
-		return reqInfo;
+	public EvaluationContext getEvaluationContext() {
+		return evaluationContext;
 	}
 
 	/**
-	 * Sets a {@link RequestInformation} into this combining algorithm.
+	 * Sets a {@link EvaluationContext} into this combining algorithm.
 	 * 
-	 * @param reqInfo
-	 *            The {@link RequestInformation} to set into this combining
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} to set into this combining
 	 *            algorithm.
 	 */
-	public void setReqInfo(RequestInformation reqInfo) {
-		this.reqInfo = reqInfo;
+	public void setEvaluationContext(EvaluationContext evaluationContext) {
+		this.evaluationContext = evaluationContext;
 	}
 
 	/**

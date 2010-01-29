@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import javax.xml.namespace.QName;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
@@ -172,7 +172,7 @@ public class AttributeValueType extends ExpressionType {
 	 * .impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo) throws ExpressionProcessingException,
+	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			SyntaxException {
 		if (content.size() > 1) {
 			throw new ExpressionProcessingException("The content of the AttributeValueType can't be greater than 1");

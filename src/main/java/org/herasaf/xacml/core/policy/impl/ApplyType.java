@@ -31,7 +31,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
 import org.herasaf.xacml.core.function.Function;
@@ -148,7 +148,7 @@ public class ApplyType extends ExpressionType {
 	 * xacml.core.context.impl.RequestType, java.util.Map)
 	 */
 	@Override
-	public Object handle(RequestType request, RequestInformation reqInfo) throws MissingAttributeException,
+	public Object handle(RequestType request, EvaluationContext evaluationContext) throws MissingAttributeException,
 			SyntaxException, ProcessingException {
 		try {
 			List<Object> params = new ArrayList<Object>();
@@ -156,10 +156,10 @@ public class ApplyType extends ExpressionType {
 			for (int i = 0; i < getExpressions().size(); i++) {
 				JAXBElement<?> jaxbElem = getExpressions().get(i);
 				if (jaxbElem.getValue() instanceof ApplyType) {
-					params.add(((ApplyType) jaxbElem.getValue()).handle(request, reqInfo));
+					params.add(((ApplyType) jaxbElem.getValue()).handle(request, evaluationContext));
 					continue;
 				}
-				params.add(((ExpressionType) jaxbElem.getValue()).handle(request, reqInfo));
+				params.add(((ExpressionType) jaxbElem.getValue()).handle(request, evaluationContext));
 			}
 			return getFunction().handle(params.toArray());
 		} catch (ClassCastException e) {

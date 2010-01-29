@@ -18,16 +18,16 @@ package org.herasaf.xacml.core.combiningAlgorithm.rule;
 
 import java.util.List;
 
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 
 /**
  * All rule combining algorithms must implement this interface. It provides the
- * entry point ({@link #evaluateRuleList(RequestType, List, RequestInformation)}
+ * entry point ({@link #evaluateRuleList(RequestType, List, EvaluationContext)}
  * ) for starting to evaluate all containing rules and a method to evaluate a
- * single rule ({@link #evaluateRule(RequestType, RuleType, RequestInformation)}
+ * single rule ({@link #evaluateRule(RequestType, RuleType, EvaluationContext)}
  * ).
  * 
  * @author Sacha Dolski
@@ -48,11 +48,11 @@ public interface RuleCombiningAlgorithm {
 	 *            The request to evaluate.
 	 * @param rule
 	 *            The rule that shall be evaluated.
-	 * @param requestInfo
+	 * @param evaluationContext
 	 *            The evaluation context.
 	 * @return The decision of the evaluation.
 	 */
-	DecisionType evaluateRule(RequestType request, RuleType rule, RequestInformation requestInfo);
+	DecisionType evaluateRule(RequestType request, RuleType rule, EvaluationContext evaluationContext);
 
 	/**
 	 * Evaluates all rules given in the rule list and returns the combined
@@ -62,9 +62,9 @@ public interface RuleCombiningAlgorithm {
 	 *            The request that should be evaluated.
 	 * @param possibleRules
 	 *            The rules that might match und shall be evaluated.
-	 * @param requestInfos
+	 * @param evaluationContexts
 	 *            t The evaluation context.
 	 * @return The decision of the evaluation.
 	 */
-	DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules, RequestInformation requestInfos);
+	DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules, EvaluationContext evaluationContexts);
 }

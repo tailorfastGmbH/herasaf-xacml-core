@@ -352,15 +352,15 @@ public final class ResponseCtxFactory {
      *            The relating {@link RequestType}.
      * @param decision
      *            The {@link DecisionType} of the evaluation.
-     * @param requestInfo
-     *            The {@link RequestInformation} containing the information about status and missing attributes.
+     * @param evaluationContext
+     *            The {@link EvaluationContext} containing the information about status and missing attributes.
      * @return The created {@link ResponseCtx}.
      */
-    public static ResponseCtx create(RequestType req, DecisionType decision, RequestInformation requestInfo) {
-        ResponseCtx resCtx = create(req, decision, requestInfo.getStatusCode());
+    public static ResponseCtx create(RequestType req, DecisionType decision, EvaluationContext evaluationContext) {
+        ResponseCtx resCtx = create(req, decision, evaluationContext.getStatusCode());
         // This check is here because only MissingAttributeDetails are
         // supported in the the StatusDetail
-        if (requestInfo.getMissingAttributes().size() > 0) {
+        if (evaluationContext.getMissingAttributes().size() > 0) {
             StatusDetailType statusDetail = factory.createStatusDetailType();
             /*
              * If the request contains any MissingAttributeDetails those must be added to the List in the
@@ -369,15 +369,15 @@ public final class ResponseCtxFactory {
              * MissingAttributeDetailType JAXB is unable to marshal the MissingAttributeDetail correctly.
              */
             List<JAXBElement<MissingAttributeDetailType>> missingAttributesJaxb = new ArrayList<JAXBElement<MissingAttributeDetailType>>();
-            for (MissingAttributeDetailType madt : requestInfo.getMissingAttributes()) {
+            for (MissingAttributeDetailType madt : evaluationContext.getMissingAttributes()) {
                 missingAttributesJaxb.add(factory.createMissingAttributeDetail(madt));
             }
             statusDetail.getContent().addAll(missingAttributesJaxb);
             resCtx.getResponse().getResults().get(0).getStatus().setStatusDetail(statusDetail);
         }
         // Add the Obligations to the response
-        if (requestInfo.getObligations().getObligations().size() > 0) {
-            resCtx.getResponse().getResults().get(0).setObligations(requestInfo.getObligations());
+        if (evaluationContext.getObligations().getObligations().size() > 0) {
+            resCtx.getResponse().getResults().get(0).setObligations(evaluationContext.getObligations());
         }
         return resCtx;
     }

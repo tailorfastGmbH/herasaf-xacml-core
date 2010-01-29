@@ -23,7 +23,7 @@ import java.util.Arrays;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PIP;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
@@ -59,15 +59,15 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestTargetMatcher {
-	RequestInformation reqInfo;
+	EvaluationContext evaluationContext;
 
 	/**
-	 * Initializes the {@link RequestInformation} containing an mock for the
+	 * Initializes the {@link EvaluationContext} containing an mock for the
 	 * {@link PIP}.
 	 */
 	@BeforeTest
 	public void init() {
-		reqInfo = new RequestInformation(null); //null means no PIP
+		evaluationContext = new EvaluationContext(null); //null means no PIP
 	}
 
 	/**
@@ -301,7 +301,7 @@ public class TestTargetMatcher {
 		}
 
 		TargetMatcher matcher = new TargetMatcherImpl();
-		assertEquals(matcher.match(null, target, reqInfo), result); // Request
+		assertEquals(matcher.match(null, target, evaluationContext), result); // Request
 		// can be
 		// null
 		// because
@@ -502,7 +502,7 @@ public class TestTargetMatcher {
 		emt.setAttributeValue(attrValue);
 
 		TargetMatcher matcher = new TargetMatcherImpl();
-		assertEquals(matcher.match(null, target, reqInfo), result); // Request
+		assertEquals(matcher.match(null, target, evaluationContext), result); // Request
 		// can be
 		// null
 		// because
@@ -526,7 +526,7 @@ public class TestTargetMatcher {
 		TargetType target = new TargetType();
 
 		TargetMatcher matcher = new TargetMatcherImpl();
-		assertEquals(matcher.match(null, target, reqInfo), true); // Request can
+		assertEquals(matcher.match(null, target, evaluationContext), true); // Request can
 		// be null
 		// because
 		// the data

@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.combiningAlgorithm;
 import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -60,18 +60,18 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 *            The request that should be evaluated.
 	 * @param target
 	 *            The target of the Evaluatable or rule
-	 * @param requestInfo
+	 * @param evaluationContext
 	 *            The additional informations of this request evaluation
 	 *            process.
 	 * @return The decision of matching the target.
 	 */
 	protected DecisionType matchTarget(final RequestType request, final TargetType target,
-			final RequestInformation requestInfo) {
+			final EvaluationContext evaluationContext) {
 		boolean targetMatchDecision = false;
 		DecisionType decision = DecisionType.INDETERMINATE;
 		try {
 			logger.debug("Starting target match.");
-			targetMatchDecision = targetMatcher.match(request, target, requestInfo);
+			targetMatchDecision = targetMatcher.match(request, target, evaluationContext);
 
 			/*
 			 * The target match can't return "not Applicable". If the
@@ -83,24 +83,24 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			if (targetMatchDecision) {
 				decision = DecisionType.PERMIT;
 			} else {
-				requestInfo.setTargetMatched(false);
+				evaluationContext.setTargetMatched(false);
 				decision = DecisionType.NOT_APPLICABLE;
 			}
 		} catch (NullPointerException e) {
 			logger.error("TargetMatcher not initialized.", e);
 			throw new NotInitializedException(e);
 		} catch (SyntaxException e) {
-			requestInfo.updateStatusCode(StatusCode.SYNTAX_ERROR);
-			requestInfo.setTargetMatched(false);
+			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.setTargetMatched(false);
 			logger.debug("Syntax error occurred.");
 		} catch (ProcessingException e) {
-			requestInfo.updateStatusCode(StatusCode.PROCESSING_ERROR);
-			requestInfo.setTargetMatched(false);
+			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
+			evaluationContext.setTargetMatched(false);
 			logger.debug("Processing error occurred.");
 		} catch (MissingAttributeException e) {
-			requestInfo.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
-			requestInfo.addMissingAttributes(e.getMissingAttribute());
-			requestInfo.setTargetMatched(false);
+			evaluationContext.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
+			evaluationContext.addMissingAttributes(e.getMissingAttribute());
+			evaluationContext.setTargetMatched(false);
 			logger.debug("Missing attribute error occurred.");
 		}
 

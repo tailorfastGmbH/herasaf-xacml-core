@@ -25,7 +25,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.context.impl.DecisionType;
@@ -131,12 +131,12 @@ public class SimplePDP implements PDP {
     public ResponseCtx evaluate(RequestCtx request) {
         MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
         logger.debug("Evaluating Request: {}", request.toString());
-        RequestInformation reqInfo = new RequestInformation(pip);
+        EvaluationContext evaluationContext = new EvaluationContext(pip);
 
         DecisionType decision = rootPolicyCombiningAlgorithm.evaluateEvaluatableList(request.getRequest(),
-                policyRepository.getEvaluatables(request), reqInfo);
+                policyRepository.getEvaluatables(request), evaluationContext);
 
         MDC.remove(MDC_REQUEST_TIME);
-        return ResponseCtxFactory.create(request.getRequest(), decision, reqInfo);
+        return ResponseCtxFactory.create(request.getRequest(), decision, evaluationContext);
     }
 }

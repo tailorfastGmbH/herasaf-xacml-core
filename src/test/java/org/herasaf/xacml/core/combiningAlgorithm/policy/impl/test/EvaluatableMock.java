@@ -21,7 +21,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.EvaluatableNotFoundException;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -41,7 +41,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	private DecisionType decision;
 	private ObligationType denyObligation;
 	private ObligationType permitObligation;
-	private RequestInformation reqInfo;
+	private EvaluationContext evaluationContext;
 
 	/**
 	 * Creates a new mock with or without deny/permit obligations and a specific
@@ -77,7 +77,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 			throws EvaluatableNotFoundException {
 
 		CombiningAlgorithmMock mock = new CombiningAlgorithmMock(decision);
-		mock.setReqInfo(reqInfo);
+		mock.setEvaluationContext(evaluationContext);
 		return mock;
 	}
 
@@ -140,7 +140,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * {@inheritDoc} 
 	 */
 	public boolean hasObligations() {
-		return (denyObligation != null || permitObligation != null || reqInfo
+		return (denyObligation != null || permitObligation != null || evaluationContext
 				.getObligations().getObligations().size() > 0);
 	}
 
@@ -190,12 +190,12 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	}
 
 	/**
-	 * Sets the {@link RequestInformation} for this {@link Evaluatable}.
+	 * Sets the {@link EvaluationContext} for this {@link Evaluatable}.
 	 * 
-	 * @param reqInfo The {@link RequestInformation} to set into this {@link Evaluatable}.
+	 * @param evaluationContext The {@link EvaluationContext} to set into this {@link Evaluatable}.
 	 */
-	public void setReqInfo(RequestInformation reqInfo) {
-		this.reqInfo = reqInfo;
+	public void setEvaluationContext(EvaluationContext evaluationContext) {
+		this.evaluationContext = evaluationContext;
 	}
 
 	/**

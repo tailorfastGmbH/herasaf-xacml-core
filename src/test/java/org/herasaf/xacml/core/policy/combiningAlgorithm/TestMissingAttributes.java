@@ -20,7 +20,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleFirstApplicableAl
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedPermitOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RulePermitOverridesAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -49,26 +49,26 @@ public class TestMissingAttributes {
 	 * @param eval
 	 *            the evaluatable that has an attribute that is not present in
 	 *            the request.
-	 * @param requestInfo
-	 *            the {@link RequestInformation} needed for evaluation.
+	 * @param evaluationContext
+	 *            the {@link EvaluationContext} needed for evaluation.
 	 * @throws Exception
 	 *             If an error occurs.
 	 */
 	@Test(dataProvider = "testDataForTargetMatch")
 	public void testMissingAttributesInTargetMatch(
 			CombiningAlgorithm combiningAlgorithm, Evaluatable eval,
-			RequestInformation requestInfo) throws Exception {
+			EvaluationContext evaluationContext) throws Exception {
 		DecisionType decision = combiningAlgorithm.evaluate(new RequestType(),
-				eval, requestInfo);
+				eval, evaluationContext);
 
 		assertEquals(decision, DecisionType.INDETERMINATE);
-		assertEquals(requestInfo.getStatusCode(), StatusCode.MISSING_ATTRIBUTE);
-		assertEquals(requestInfo.getMissingAttributes().size(), 1); // A missing
+		assertEquals(evaluationContext.getStatusCode(), StatusCode.MISSING_ATTRIBUTE);
+		assertEquals(evaluationContext.getMissingAttributes().size(), 1); // A missing
 		// attribute
 		// is
 		// expected
 		assertEquals(
-				requestInfo.getMissingAttributes().get(0).getAttributeId(),
+				evaluationContext.getMissingAttributes().get(0).getAttributeId(),
 				"urn:org:herasaf:xacml:test:my-subject-id");
 	}
 
@@ -79,26 +79,26 @@ public class TestMissingAttributes {
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param evals
-	 * @param requestInfo
+	 * @param evaluationContext
 	 * @throws Exception
 	 */
 	@Test(dataProvider = "testDataForHierarchyForPolicies")
 	public void testMissingAttributesInHierarchyForPolicies(
 			RuleCombiningAlgorithm rootCombiningAlgorithm,
-			List<RuleType> rules, RequestInformation requestInfo)
+			List<RuleType> rules, EvaluationContext evaluationContext)
 			throws Exception {
 
 		DecisionType decision = rootCombiningAlgorithm.evaluateRuleList(
-				new RequestType(), rules, requestInfo);
+				new RequestType(), rules, evaluationContext);
 
 		assertEquals(decision, DecisionType.INDETERMINATE);
-		assertEquals(requestInfo.getStatusCode(), StatusCode.MISSING_ATTRIBUTE);
-		assertEquals(requestInfo.getMissingAttributes().size(), 1); // A missing
+		assertEquals(evaluationContext.getStatusCode(), StatusCode.MISSING_ATTRIBUTE);
+		assertEquals(evaluationContext.getMissingAttributes().size(), 1); // A missing
 		// attribute
 		// is
 		// expected
 		assertEquals(
-				requestInfo.getMissingAttributes().get(0).getAttributeId(),
+				evaluationContext.getMissingAttributes().get(0).getAttributeId(),
 				"urn:org:herasaf:xacml:test:my-subject-id");
 	}
 
@@ -109,26 +109,26 @@ public class TestMissingAttributes {
 	 * 
 	 * @param rootCombiningAlgorithm
 	 * @param evals
-	 * @param requestInfo
+	 * @param evaluationContext
 	 * @throws Exception
 	 */
 	@Test(dataProvider = "testDataForHierarchyForPolicySets")
 	public void testMissingAttributesInHierarchyForPolicySets(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			List<Evaluatable> evals, RequestInformation requestInfo)
+			List<Evaluatable> evals, EvaluationContext evaluationContext)
 			throws Exception {
 
 		DecisionType decision = rootCombiningAlgorithm.evaluateEvaluatableList(
-				new RequestType(), evals, requestInfo);
+				new RequestType(), evals, evaluationContext);
 
 		assertEquals(decision, DecisionType.INDETERMINATE);
-		assertEquals(requestInfo.getStatusCode(), StatusCode.MISSING_ATTRIBUTE);
-		assertEquals(requestInfo.getMissingAttributes().size(), 1); // A missing
+		assertEquals(evaluationContext.getStatusCode(), StatusCode.MISSING_ATTRIBUTE);
+		assertEquals(evaluationContext.getMissingAttributes().size(), 1); // A missing
 		// attribute
 		// is
 		// expected
 		assertEquals(
-				requestInfo.getMissingAttributes().get(0).getAttributeId(),
+				evaluationContext.getMissingAttributes().get(0).getAttributeId(),
 				"urn:org:herasaf:xacml:test:my-subject-id");
 	}
 
@@ -138,23 +138,23 @@ public class TestMissingAttributes {
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createRuleList(),
-						new RequestInformation(null) }, };
+						new EvaluationContext(null) }, };
 	}
 
 	@DataProvider(name = "testDataForHierarchyForPolicySets")
@@ -165,22 +165,22 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new RequestInformation(null) }, };
+						new EvaluationContext(null) }, };
 	}
 
 	private List<Evaluatable> createEvaluatableList(
@@ -232,57 +232,57 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) },
+						new EvaluationContext(null) },
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new RequestInformation(null) } };
+						new EvaluationContext(null) } };
 	}
 
 	private AbstractCombiningAlgorithm createCombiningAlgorihtm(

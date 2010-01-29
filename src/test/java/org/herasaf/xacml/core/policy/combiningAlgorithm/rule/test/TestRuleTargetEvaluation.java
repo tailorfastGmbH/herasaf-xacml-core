@@ -22,7 +22,7 @@ import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -90,7 +90,7 @@ public class TestRuleTargetEvaluation {
 			Evaluatable eval, DecisionType expectedDecision,
 			StatusCode expectedStatusCode, boolean missingAttributeExpected) {
 
-		RequestInformation infos = new RequestInformation(null);
+		EvaluationContext infos = new EvaluationContext(null);
 		DecisionType decision = alg.evaluate(null, eval, infos);
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

@@ -25,7 +25,7 @@ import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PIP;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -46,16 +46,16 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestResourceAttributeDesignator {
-	RequestInformation reqInfo;
+	EvaluationContext evaluationContext;
 
 	@BeforeTest
 	public void init() {
 
-		reqInfo = new RequestInformation(null); // null means no PIP
+		evaluationContext = new EvaluationContext(null); // null means no PIP
 	}
 
 	/**
-	 * Initializes the {@link RequestInformation} with an mock for the {@link PIP}.
+	 * Initializes the {@link EvaluationContext} with an mock for the {@link PIP}.
 	 */
 	@DataProvider(name = "successfulResourceAttrDesignator")
 	public Object[][] successfulResourceAttrDesignator() {
@@ -176,7 +176,7 @@ public class TestResourceAttributeDesignator {
 	/**
 	 * Test the successful cases.
 	 * 
-	 * @param req The {@link RequestInformation}.
+	 * @param req The {@link EvaluationContext}.
 	 * @param designator The {@link ResourceAttributeDesignatorType} (is under test)
 	 * @param result The expected result.
 	 * @throws Exception In case an error occurs.
@@ -188,7 +188,7 @@ public class TestResourceAttributeDesignator {
 			throws Exception {
 
 		List<Object> returnValue = (List<Object>) designator.handle(req,
-				reqInfo);
+				evaluationContext);
 		assertEquals(returnValue.size(), result.size());
 		for (Object obj : returnValue) {
 			assertTrue(isContained(obj.toString(), result));
@@ -199,7 +199,7 @@ public class TestResourceAttributeDesignator {
 	 * Tests if all error-cases throw the proper exception.
 	 * Expects a {@link MissingAttributeException}.
 	 * 
-	 * @param req The {@link RequestInformation}.
+	 * @param req The {@link EvaluationContext}.
 	 * @param designator The {@link ResourceAttributeDesignatorType} (is under test)
 	 * @throws Throwable In case an unexpected error occurs.
 	 */
@@ -207,7 +207,7 @@ public class TestResourceAttributeDesignator {
 	public void testHandle(RequestType req,
 			ResourceAttributeDesignatorType designator) throws Throwable {
 		try {
-			designator.handle(req, reqInfo);
+			designator.handle(req, evaluationContext);
 		} catch (ExpressionProcessingException e) {
 			throw e.getCause();
 		}
@@ -229,7 +229,7 @@ public class TestResourceAttributeDesignator {
 						new StringDataTypeAttribute(), "hsr", 1));
 		ResourceAttributeDesignatorType designator = initializeDesignator(
 				"resource-name", new StringDataTypeAttribute(), null, false);
-		designator.handle(req, reqInfo);
+		designator.handle(req, evaluationContext);
 	}
 
 	/**
@@ -248,7 +248,7 @@ public class TestResourceAttributeDesignator {
 						new StringDataTypeAttribute(), "hsr", "Fredi", false));
 		ResourceAttributeDesignatorType designator = initializeDesignator(
 				"resource-name", new StringDataTypeAttribute(), null, false);
-		designator.handle(req, reqInfo);
+		designator.handle(req, evaluationContext);
 	}
 
 	/**

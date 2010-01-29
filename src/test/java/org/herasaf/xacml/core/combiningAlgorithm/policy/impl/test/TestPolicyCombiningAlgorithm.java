@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestInformation;
+import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -71,26 +71,26 @@ public abstract class TestPolicyCombiningAlgorithm {
 		List<Object[]> data = new ArrayList<Object[]>();
 
 		for (EvaluatableMock templEval1 : createEvalCombinations()) {
-			for (RequestInformation reqInfo1 : createReqInfoCombinations(templEval1))
+			for (EvaluationContext evaluationContext1 : createEvaluationContextCombinations(templEval1))
 				for (EvaluatableMock templEval2 : createEvalCombinations()) {
-					for (RequestInformation reqInfo2 : createReqInfoCombinations(templEval2)) {
+					for (EvaluationContext evaluationContext2 : createEvaluationContextCombinations(templEval2)) {
 						EvaluatableMock eval1 = templEval2.clone();
-						eval1.setReqInfo(reqInfo1);
+						eval1.setEvaluationContext(evaluationContext1);
 						EvaluatableMock eval2 = templEval2.clone();
-						eval2.setReqInfo(reqInfo2);
+						eval2.setEvaluationContext(evaluationContext2);
 						Object[] dataSet = new Object[9];
 						dataSet[0] = getCombiningAlgorithm();
 						dataSet[1] = eval1;
-						dataSet[2] = reqInfo1;
+						dataSet[2] = evaluationContext1;
 						dataSet[3] = eval2;
-						dataSet[4] = reqInfo2;
+						dataSet[4] = evaluationContext2;
 						dataSet[5] = evaluateDecision(eval1, eval2);
 						dataSet[6] = determineObligations(
-								(DecisionType) dataSet[5], reqInfo1, eval1,
-								reqInfo2, eval2);
+								(DecisionType) dataSet[5], evaluationContext1, eval1,
+								evaluationContext2, eval2);
 						dataSet[7] = determineStatusCode(
-								(DecisionType) dataSet[5], reqInfo1, eval1,
-								reqInfo2, eval2);
+								(DecisionType) dataSet[5], evaluationContext1, eval1,
+								evaluationContext2, eval2);
 						dataSet[8] = true;
 						data.add(dataSet);
 
@@ -117,88 +117,88 @@ public abstract class TestPolicyCombiningAlgorithm {
 	}
 
 	/**
-	 * Creates a {@link List} of various {@link RequestInformation}s with
+	 * Creates a {@link List} of various {@link EvaluationContext}s with
 	 * different {@link StatusCode}s, {@link ObligationType}s and target matched
 	 * true/false.
 	 * 
 	 * @param eval
 	 *            The {@link Evaluatable} to get the decision from.
-	 * @return A {@link List} of {@link RequestInformation}s with different
+	 * @return A {@link List} of {@link EvaluationContext}s with different
 	 *         {@link StatusCode}s, {@link ObligationType}s and target matched
 	 *         true/false.
 	 */
-	protected static List<RequestInformation> createReqInfoCombinations(
+	protected static List<EvaluationContext> createEvaluationContextCombinations(
 			EvaluatableMock eval) {
-		List<RequestInformation> reqInfos = new ArrayList<RequestInformation>();
+		List<EvaluationContext> evaluationContexts = new ArrayList<EvaluationContext>();
 		switch (eval.getDecision()) {
 		case INDETERMINATE:
-			reqInfos.add(buildRequestInformation(false, false,
+			evaluationContexts.add(buildEvaluationContext(false, false,
 					StatusCode.MISSING_ATTRIBUTE, true));
-			reqInfos.add(buildRequestInformation(false, false,
+			evaluationContexts.add(buildEvaluationContext(false, false,
 					StatusCode.PROCESSING_ERROR, true));
-			reqInfos.add(buildRequestInformation(false, false,
+			evaluationContexts.add(buildEvaluationContext(false, false,
 					StatusCode.SYNTAX_ERROR, true));
-			reqInfos.add(buildRequestInformation(false, true,
+			evaluationContexts.add(buildEvaluationContext(false, true,
 					StatusCode.SYNTAX_ERROR, false));
-			reqInfos.add(buildRequestInformation(false, false,
+			evaluationContexts.add(buildEvaluationContext(false, false,
 					StatusCode.MISSING_ATTRIBUTE, true));
 			break;
 		case NOT_APPLICABLE:
-			reqInfos.add(buildRequestInformation(false, true, StatusCode.OK,
+			evaluationContexts.add(buildEvaluationContext(false, true, StatusCode.OK,
 					false));
-			reqInfos.add(buildRequestInformation(false, false, StatusCode.OK,
+			evaluationContexts.add(buildEvaluationContext(false, false, StatusCode.OK,
 					false));
 			break;
 		case PERMIT: // Same as Deny
 		case DENY:
-			for (boolean reqInfReturnesPermitObligation : trueFalse) {
-				for (boolean reqInfReturnesDenyObligation : trueFalse) {
-					reqInfos.add(buildRequestInformation(
-							reqInfReturnesPermitObligation,
-							reqInfReturnesDenyObligation, StatusCode.OK, true));
+			for (boolean evaluationContextReturnesPermitObligation : trueFalse) {
+				for (boolean evaluationContextReturnesDenyObligation : trueFalse) {
+					evaluationContexts.add(buildEvaluationContext(
+							evaluationContextReturnesPermitObligation,
+							evaluationContextReturnesDenyObligation, StatusCode.OK, true));
 				}
 			}
 		}
 
-		return reqInfos;
+		return evaluationContexts;
 	}
 
 	/**
-	 * Creates a new request information.
+	 * Creates a new evaluation context.
 	 * 
-	 * @param reqInfReturnesPermitObligation
-	 *            True if the {@link RequestInformation} contains permit
+	 * @param evaluationContextReturnesPermitObligation
+	 *            True if the {@link EvaluationContext} contains permit
 	 *            {@link ObligationType}s, false otherwise.
-	 * @param reqInfReturnesDenyObligation
-	 *            True if the {@link RequestInformation} contains deny
+	 * @param evaluationContextReturnesDenyObligation
+	 *            True if the {@link EvaluationContext} contains deny
 	 *            {@link ObligationType}s, false otherwise.
-	 * @param reqInfStatusCode
+	 * @param evaluationContextStatusCode
 	 *            The {@link StatusCode} that is in the
-	 *            {@link RequestInformation}.
-	 * @param reqInfTargetMatched
+	 *            {@link EvaluationContext}.
+	 * @param evaluationContextTargetMatched
 	 *            True if the target matched, false otherwise.
-	 * @return The created {@link RequestInformation}.
+	 * @return The created {@link EvaluationContext}.
 	 */
-	protected static RequestInformation buildRequestInformation(
-			boolean reqInfReturnesPermitObligation,
-			boolean reqInfReturnesDenyObligation, StatusCode reqInfStatusCode,
-			boolean reqInfTargetMatched) {
-		RequestInformation reqInfo = new RequestInformation(null);
-		reqInfo.setTargetMatched(reqInfTargetMatched);
-		reqInfo.updateStatusCode(reqInfStatusCode);
-		if (reqInfReturnesPermitObligation) {
+	protected static EvaluationContext buildEvaluationContext(
+			boolean evaluationContextReturnesPermitObligation,
+			boolean evaluationContextReturnesDenyObligation, StatusCode evaluationContextStatusCode,
+			boolean evaluationContextTargetMatched) {
+		EvaluationContext evaluationContext = new EvaluationContext(null);
+		evaluationContext.setTargetMatched(evaluationContextTargetMatched);
+		evaluationContext.updateStatusCode(evaluationContextStatusCode);
+		if (evaluationContextReturnesPermitObligation) {
 			List<ObligationType> obligations = new ArrayList<ObligationType>();
 			obligations.add(new ObligationType("permitObligation",
 					EffectType.PERMIT));
-			reqInfo.addObligations(obligations, EffectType.PERMIT);
+			evaluationContext.addObligations(obligations, EffectType.PERMIT);
 		}
-		if (reqInfReturnesDenyObligation) {
+		if (evaluationContextReturnesDenyObligation) {
 			List<ObligationType> obligations = new ArrayList<ObligationType>();
 			obligations.add(new ObligationType("denyObligation",
 					EffectType.DENY));
-			reqInfo.addObligations(obligations, EffectType.DENY);
+			evaluationContext.addObligations(obligations, EffectType.DENY);
 		}
-		return reqInfo;
+		return evaluationContext;
 	}
 
 	/**
@@ -230,21 +230,21 @@ public abstract class TestPolicyCombiningAlgorithm {
 	}
 
 	/**
-	 * Adds the {@link ObligationType}s from the {@link RequestInformation} to
+	 * Adds the {@link ObligationType}s from the {@link EvaluationContext} to
 	 * the given {@link List} if it matches with the {@link DecisionType}.
 	 * 
 	 * @param obligations
 	 *            The {@link List} where the {@link ObligationType} shall be
 	 *            added.
-	 * @param reqInf
-	 *            The {@link RequestInformation} where the
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} where the
 	 *            {@link ObligationType}s are taken from.
 	 * @param algDecision
 	 *            The {@link DecisionType} of the combining algorithm.
 	 */
 	protected void addObligations(List<ObligationType> obligations,
-			RequestInformation reqInf, DecisionType algDecision) {
-		for (ObligationType obl : reqInf.getObligations().getObligations()) {
+			EvaluationContext evaluationContext, DecisionType algDecision) {
+		for (ObligationType obl : evaluationContext.getObligations().getObligations()) {
 			if (obl.getFulfillOn().equals(EffectType.PERMIT)
 					&& algDecision.equals(DecisionType.PERMIT)) {
 				obligations.add(obl);
@@ -262,21 +262,21 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 * 
 	 * @param algDecision
 	 *            The decision of the combining algorithm.
-	 * @param requestInf1
-	 *            The {@link RequestInformation} of the first
+	 * @param evaluationContext1
+	 *            The {@link EvaluationContext} of the first
 	 *            {@link Evaluatable}.
 	 * @param eval1
 	 *            The first {@link Evaluatable}.
-	 * @param requestInf2
-	 *            The {@link RequestInformation} of the second
+	 * @param evaluationContext2
+	 *            The {@link EvaluationContext} of the second
 	 *            {@link Evaluatable}.
 	 * @param eval2
 	 *            The second {@link Evaluatable}.
 	 * @return The obligations the are returned by the combining algorithm.
 	 */
 	private Object determineObligations(DecisionType algDecision,
-			RequestInformation requestInf1, EvaluatableMock eval1,
-			RequestInformation requestInf2, EvaluatableMock eval2) {
+			EvaluationContext evaluationContext1, EvaluatableMock eval1,
+			EvaluationContext evaluationContext2, EvaluatableMock eval2) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 
 		// The check that both are not indeterminate is because the algDecision
@@ -284,8 +284,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 		if ((algDecision == DecisionType.PERMIT || algDecision == DecisionType.DENY)
 				&& (!eval1.getDecision().equals(DecisionType.INDETERMINATE) && !eval2
 						.getDecision().equals(DecisionType.INDETERMINATE))) {
-			addObligations(obligations, requestInf1, algDecision);
-			addObligations(obligations, requestInf2, algDecision);
+			addObligations(obligations, evaluationContext1, algDecision);
+			addObligations(obligations, evaluationContext2, algDecision);
 			if (algDecision == DecisionType.PERMIT) {
 				if (eval1.getPermitObligation() != null) {
 					obligations.add(eval1.getPermitObligation());
@@ -310,13 +310,13 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 * 
 	 * @param algDecision
 	 *            The decision of the combining algorithm.
-	 * @param requestInf1
-	 *            The {@link RequestInformation} of the first
+	 * @param evaluationContext1
+	 *            The {@link EvaluationContext} of the first
 	 *            {@link Evaluatable}.
 	 * @param eval1
 	 *            The first {@link Evaluatable}.
-	 * @param requestInf2
-	 *            The {@link RequestInformation} of the second
+	 * @param evaluationContext2
+	 *            The {@link EvaluationContext} of the second
 	 *            {@link Evaluatable}.
 	 * @param eval2
 	 *            The second {@link Evaluatable}.
@@ -324,8 +324,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 *         algorithm.
 	 */
 	protected Object determineStatusCode(DecisionType algDecision,
-			RequestInformation requestInf1, EvaluatableMock eval1,
-			RequestInformation requestInf2, EvaluatableMock eval2) {
+			EvaluationContext evaluationContext1, EvaluatableMock eval1,
+			EvaluationContext evaluationContext2, EvaluatableMock eval2) {
 		if (algDecision == DecisionType.PERMIT) {
 			return StatusCode.OK;
 		}
@@ -333,16 +333,16 @@ public abstract class TestPolicyCombiningAlgorithm {
 			return StatusCode.OK;
 		}
 		if (algDecision == DecisionType.INDETERMINATE) {
-			if (requestInf1.getStatusCode() == StatusCode.SYNTAX_ERROR
-					|| requestInf2.getStatusCode() == StatusCode.SYNTAX_ERROR) {
+			if (evaluationContext1.getStatusCode() == StatusCode.SYNTAX_ERROR
+					|| evaluationContext2.getStatusCode() == StatusCode.SYNTAX_ERROR) {
 				return StatusCode.SYNTAX_ERROR;
 			}
-			if (requestInf1.getStatusCode() == StatusCode.MISSING_ATTRIBUTE
-					|| requestInf2.getStatusCode() == StatusCode.MISSING_ATTRIBUTE) {
+			if (evaluationContext1.getStatusCode() == StatusCode.MISSING_ATTRIBUTE
+					|| evaluationContext2.getStatusCode() == StatusCode.MISSING_ATTRIBUTE) {
 				return StatusCode.MISSING_ATTRIBUTE;
 			}
 
-			return StatusCode.PROCESSING_ERROR; // In case of one request
+			return StatusCode.PROCESSING_ERROR; // In case of one context
 			// information contains status
 			// code
 			// Processing_error
@@ -363,13 +363,13 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 *            The combining algorithm.
 	 * @param eval1
 	 *            The first {@link Evaluatable}.
-	 * @param reqInfo1
-	 *            The {@link RequestInformation} from the first
+	 * @param evaluationContext1
+	 *            The {@link EvaluationContext} from the first
 	 *            {@link Evaluatable}.
 	 * @param eval2
 	 *            The second {@link Evaluatable}.
-	 * @param reqInfo2
-	 *            The {@link RequestInformation} from the first
+	 * @param evaluationContext2
+	 *            The {@link EvaluationContext} from the first
 	 *            {@link Evaluatable}.
 	 * @param expectedDecision
 	 *            The expected {@link DecisionType}.
@@ -384,27 +384,27 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 */
 	protected void testPolicySetMatchAndOneEvaluatable(
 			PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
-			RequestInformation reqInfo1, EvaluatableMock eval2,
-			RequestInformation reqInfo2, DecisionType expectedDecision,
+			EvaluationContext evaluationContext1, EvaluatableMock eval2,
+			EvaluationContext evaluationContext2, DecisionType expectedDecision,
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		RequestInformation reqInfo = new RequestInformation(null);
+		EvaluationContext evaluationContext = new EvaluationContext(null);
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);
 		DecisionType decision = alg.evaluateEvaluatableList(new RequestType(),
-				evals, reqInfo);
+				evals, evaluationContext);
 
 		assertEquals(decision, expectedDecision);
 
-		assertEquals(reqInfo.getStatusCode(), expectedStatusCode);
-		assertEquals((Boolean) reqInfo.isTargetMatched(),
+		assertEquals(evaluationContext.getStatusCode(), expectedStatusCode);
+		assertEquals((Boolean) evaluationContext.isTargetMatched(),
 				expectedHasTargetMatched);
-		if (reqInfo.getObligations() == null) {
+		if (evaluationContext.getObligations() == null) {
 			assertEquals(0, expectedObligations.size());
 		} else {
-			assertEquals(reqInfo.getObligations().getObligations().size(),
+			assertEquals(evaluationContext.getObligations().getObligations().size(),
 					expectedObligations.size());
 		}
 	}
