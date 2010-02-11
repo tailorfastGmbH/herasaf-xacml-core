@@ -53,7 +53,7 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 
 		assertEquals("test", (String) attrVal.handle(new RequestType(),
-				new EvaluationContext(null)));
+				new EvaluationContext()));
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 		attrVal.getContent().add("test2");
 
-		attrVal.handle(new RequestType(), new EvaluationContext(null));
+		attrVal.handle(new RequestType(), new EvaluationContext());
 	}
 
 	/**
@@ -81,6 +81,6 @@ public class TestAttributeValueType {
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add(new Integer("1"));
-		attrVal.handle(new RequestType(), new EvaluationContext(null));
+		attrVal.handle(new RequestType(), new EvaluationContext());
 	}
 }

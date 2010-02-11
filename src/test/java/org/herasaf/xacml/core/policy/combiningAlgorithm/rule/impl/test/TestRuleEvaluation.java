@@ -337,7 +337,7 @@ public class TestRuleEvaluation {
 			StatusCode expectedStatusCode,
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
-		EvaluationContext info = new EvaluationContext(null);
+		EvaluationContext info = new EvaluationContext();
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule, info);
 		assertEquals(madeDecision, expectedDecision);
 		assertEquals(info.getStatusCode(), expectedStatusCode);

@@ -59,10 +59,22 @@ public class EvaluationContext {
 	static {
 		objectFactory = new ObjectFactory();
 	}
+	
+	/**
+	 * Initializes the EvaluationContext. The following default settings are applied:
+	 * <ul>
+	 * <li>{@link PIP} = null</li>
+	 * <li>Status Code = OK</li>
+	 * </ul>
+	 */
+	public EvaluationContext(){
+	    this(null);
+	}
 
 	/**
 	 * Initializes with the given {@link PIP}. This {@link PIP} then is used
 	 * during evaluation to resolve missing attributes.
+	 * The Status Code is set to OK.
 	 * 
 	 * @param pip
 	 *            The {@link PIP} to use during evaluation.

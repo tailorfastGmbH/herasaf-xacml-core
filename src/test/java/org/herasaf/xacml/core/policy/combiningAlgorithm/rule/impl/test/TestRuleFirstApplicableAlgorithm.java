@@ -280,7 +280,7 @@ public class TestRuleFirstApplicableAlgorithm {
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		EvaluationContext infos = new EvaluationContext(null);
+		EvaluationContext infos = new EvaluationContext();
 		DecisionType decision = alg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

@@ -138,23 +138,23 @@ public class TestMissingAttributes {
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createRuleList(),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createRuleList(),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createRuleList(),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createRuleList(),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createRuleList(),
-						new EvaluationContext(null) }, };
+						new EvaluationContext() }, };
 	}
 
 	@DataProvider(name = "testDataForHierarchyForPolicySets")
@@ -165,22 +165,22 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(null) }, };
+						new EvaluationContext() }, };
 	}
 
 	private List<Evaluatable> createEvaluatableList(
@@ -232,57 +232,57 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) },
+						new EvaluationContext() },
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(null) } };
+						new EvaluationContext() } };
 	}
 
 	private AbstractCombiningAlgorithm createCombiningAlgorihtm(

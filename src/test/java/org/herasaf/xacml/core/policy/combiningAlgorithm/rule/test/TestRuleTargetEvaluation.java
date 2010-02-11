@@ -90,7 +90,7 @@ public class TestRuleTargetEvaluation {
 			Evaluatable eval, DecisionType expectedDecision,
 			StatusCode expectedStatusCode, boolean missingAttributeExpected) {
 
-		EvaluationContext infos = new EvaluationContext(null);
+		EvaluationContext infos = new EvaluationContext();
 		DecisionType decision = alg.evaluate(null, eval, infos);
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

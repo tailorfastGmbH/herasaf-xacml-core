@@ -183,7 +183,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			boolean evaluationContextReturnesPermitObligation,
 			boolean evaluationContextReturnesDenyObligation, StatusCode evaluationContextStatusCode,
 			boolean evaluationContextTargetMatched) {
-		EvaluationContext evaluationContext = new EvaluationContext(null);
+		EvaluationContext evaluationContext = new EvaluationContext();
 		evaluationContext.setTargetMatched(evaluationContextTargetMatched);
 		evaluationContext.updateStatusCode(evaluationContextStatusCode);
 		if (evaluationContextReturnesPermitObligation) {
@@ -389,7 +389,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		EvaluationContext evaluationContext = new EvaluationContext(null);
+		EvaluationContext evaluationContext = new EvaluationContext();
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);

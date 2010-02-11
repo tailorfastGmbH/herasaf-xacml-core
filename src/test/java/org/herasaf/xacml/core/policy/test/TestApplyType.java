@@ -138,7 +138,7 @@ public class TestApplyType {
 	public void testHandle(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, new EvaluationContext(null)),
+		assertEquals(apply.handle(request, new EvaluationContext()),
 				result);
 	}
 
@@ -155,7 +155,7 @@ public class TestApplyType {
 	public void testHandleExceptions(RequestType request,
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(request, new EvaluationContext(null)),
+		assertEquals(apply.handle(request, new EvaluationContext()),
 				result);
 	}
 
@@ -170,7 +170,7 @@ public class TestApplyType {
 	public void testApplyWithFunctionType(JAXBElement<ApplyType> JaxbElem,
 			Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
-		assertEquals(apply.handle(new RequestType(), new EvaluationContext(null)),
+		assertEquals(apply.handle(new RequestType(), new EvaluationContext()),
 				result);
 
 	}

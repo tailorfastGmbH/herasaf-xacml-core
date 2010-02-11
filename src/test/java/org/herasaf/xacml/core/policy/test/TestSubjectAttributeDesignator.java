@@ -53,7 +53,7 @@ public class TestSubjectAttributeDesignator {
 	 */
 	@BeforeTest
 	public void init() {
-		evaluationContext = new EvaluationContext(null); //null means no PIP
+		evaluationContext = new EvaluationContext();
 	}
 
 	/**

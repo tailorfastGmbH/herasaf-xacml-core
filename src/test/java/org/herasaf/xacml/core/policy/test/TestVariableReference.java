@@ -61,7 +61,7 @@ public class TestVariableReference {
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
 		Object[] values = new Object[]{"test1", "test2", "test3"};
-		EvaluationContext evaluationContext = new EvaluationContext(null);
+		EvaluationContext evaluationContext = new EvaluationContext();
 		evaluationContext.setVariableDefinitions(initVariableDefinitions(values));
 
 		VariableReferenceType varRef1 = new VariableReferenceType();
