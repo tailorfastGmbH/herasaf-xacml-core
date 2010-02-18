@@ -42,9 +42,10 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class SimplePDP implements PDP {
-    private PolicyRepository policyRepository;
-    private PIP pip;
-    private PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
+    private final PolicyRepository policyRepository;
+    private final PIP pip;
+    private final PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
+    private final boolean respectAbandonedEvaluatables;
     private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
     private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 
@@ -60,16 +61,18 @@ public class SimplePDP implements PDP {
      * @param pip
      *            The {@link PIP} to use (may be <code>null</code>).
      */
-    public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository, PIP pip) {
+    public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository, PIP pip,
+            boolean respectAbandonedEvaluatables) {
         /*
-         * Checks if the policy repository are both of the same type. The type is either ordered or unordered (exclusive
-         * OR).
+         * Checks if the policy repository and the root combining algorithm are both of the same type. The type is
+         * either ordered or unordered (exclusive OR).
          */
         if ((PolicyOrderedCombiningAlgorithm.class.isInstance(rootCombiningAlgorithm) && OrderedPolicyRepository.class
                 .isInstance(policyRepository))
                 ^ PolicyUnorderedCombiningAlgorithm.class.isInstance(rootCombiningAlgorithm)) {
             this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
             this.policyRepository = policyRepository;
+            this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
             this.pip = pip;
 
             if (pip == null) {
@@ -131,7 +134,7 @@ public class SimplePDP implements PDP {
     public ResponseCtx evaluate(RequestCtx request) {
         MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
         logger.debug("Evaluating Request: {}", request.toString());
-        EvaluationContext evaluationContext = new EvaluationContext(pip);
+        EvaluationContext evaluationContext = new EvaluationContext(pip, respectAbandonedEvaluatables);
 
         DecisionType decision = rootPolicyCombiningAlgorithm.evaluateEvaluatableList(request.getRequest(),
                 policyRepository.getEvaluatables(request), evaluationContext);

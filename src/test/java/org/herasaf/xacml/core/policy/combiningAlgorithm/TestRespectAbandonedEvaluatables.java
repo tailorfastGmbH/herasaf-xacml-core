@@ -37,8 +37,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- * This test tests if the respect abandoned evaluatables flag of the
- * {@link SimplePDPFactory} is set and interpreted correctly.
+ * This test tests if the respect abandoned evaluatables flag of the {@link SimplePDPFactory} is set and interpreted
+ * correctly.
  * 
  * @author Florian Huonder
  */
@@ -70,22 +70,11 @@ public class TestRespectAbandonedEvaluatables {
         // works properly.
         for (int i = 1; i < evalFiles.size() + 1; i++) {
             SimplePDPFactory.useDefaultInitializers();
-            SimplePDPFactory.getSimplePDP();
+            SimplePDPFactory.getSimplePDP(); //this is needed that jaxb is initialized.
             Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
-
-            testcases[2 * i - 1 - 1] = new Object[] { false, eval1 };
-        }
-
-        // The index starts with 1 that the calculation at the end of the method
-        // works properly.
-        for (int i = 1; i < evalFiles.size() + 1; i++) {
-            // this for loop is separate from the one above because the next
-            // step is nonreversible
-            SimplePDPFactory.respectAbandonedEvaluatables();
-            SimplePDPFactory.useDefaultInitializers();
-            SimplePDPFactory.getSimplePDP();
             Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
 
+            testcases[2 * i - 1 - 1] = new Object[] { false, eval1 };
             testcases[2 * i - 1] = new Object[] { true, eval2 };
         }
 
@@ -93,12 +82,11 @@ public class TestRespectAbandonedEvaluatables {
     }
 
     /**
-     * Tests if Obligations of abandoned {@link Evaluatable}s are only collected
-     * if the corresponding flag in the {@link SimplePDPFactory} is set to true.
+     * Tests if Obligations of abandoned {@link Evaluatable}s are only collected if the corresponding flag in the
+     * {@link SimplePDPFactory} is set to true.
      * 
      * @param respectAbandonedEvaluatables
-     *            True if the abandoned {@link Evaluatable}s shall be respected,
-     *            false otherwise.
+     *            True if the abandoned {@link Evaluatable}s shall be respected, false otherwise.
      * @param eval
      *            The {@link Evaluatable} under test.
      * @throws Exception
@@ -109,11 +97,8 @@ public class TestRespectAbandonedEvaluatables {
             throws Exception {
         // These factory settings are needed to properly set the root combining
         // algorithm.
-        if (respectAbandonedEvaluatables) {
-            SimplePDPFactory.respectAbandonedEvaluatables();
-        }
         SimplePDPFactory.useDefaultInitializers();
-        PDP pdp = SimplePDPFactory.getSimplePDP();
+        PDP pdp = SimplePDPFactory.getSimplePDP(respectAbandonedEvaluatables);
         RequestCtx request = RequestCtxFactory.unmarshal(new File(
                 "src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
         repo = pdp.getPolicyRepository();

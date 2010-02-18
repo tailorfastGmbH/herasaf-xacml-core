@@ -49,22 +49,4 @@ public interface PolicyCombiningAlgorithm extends CombiningAlgorithm {
 	 */
 	DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			EvaluationContext evaluationContext);
-
-	/**
-	 * Returns true if abandoned evaluatables shall be respected, false
-	 * otherwise.
-	 * 
-	 * @return true if abandoned evaluatables shall be respected, false
-	 *         otherwise.
-	 */
-	boolean isRespectAbandonedEvaluatables();
-
-	/**
-	 * Sets if this combining algorithm shall respect abandoned evaluatables.
-	 * 
-	 * @param respectAbandondEvaluatables
-	 *            True if abandoned evaluatables shall be respected, false
-	 *            otherwise.
-	 */
-	void setRespectAbandondEvaluatables(boolean respectAbandondEvaluatables);
 }

@@ -91,7 +91,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 				return DecisionType.INDETERMINATE;
 			}
 
-			if (atLeastOnePermit && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
+			if (atLeastOnePermit && evaluationContext.isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (decisionPermit == true) and
 				 * the abandoned Obligations must be taken into account
@@ -135,7 +135,7 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 
 			switch (decision) {
 			case PERMIT:
-				if (!isRespectAbandonedEvaluatables()) {
+				if (!evaluationContext.isRespectAbandonedEvaluatables()) {
 					evaluationContext.clearObligations();
 					evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
 					/*

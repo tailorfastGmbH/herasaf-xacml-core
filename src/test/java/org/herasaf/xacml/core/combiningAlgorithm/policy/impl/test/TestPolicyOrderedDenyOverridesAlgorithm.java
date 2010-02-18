@@ -44,7 +44,6 @@ public class TestPolicyOrderedDenyOverridesAlgorithm extends
 	@Override
 	protected PolicyCombiningAlgorithm getCombiningAlgorithm() {
 		PolicyOrderedDenyOverridesAlgorithm alg = new PolicyOrderedDenyOverridesAlgorithm();
-		alg.setRespectAbandondEvaluatables(true);
 		return alg;
 	}
 

@@ -42,21 +42,6 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	private static final Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
 	// The default target matcher.
 	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
-	private static boolean respectAbandondEvaluatables;
-
-	/**
-	 * Initializes the initializers and sets the the flag if abandoned
-	 * evaluatables shall be respected in the combining algorithms this
-	 * initializers creates.
-	 * 
-	 * @param respectAbandondEvaluatables
-	 *            True if abandoned evaluatables shall be respected, false
-	 *            otherwise.
-	 */
-	public PolicyCombiningAlgorithmsInitializer(boolean respectAbandondEvaluatables) {
-		logger.info("Respect abandoned Evaluatables: {}", respectAbandondEvaluatables);
-		PolicyCombiningAlgorithmsInitializer.respectAbandondEvaluatables = respectAbandondEvaluatables;
-	}
 
 	
 	/**
@@ -71,7 +56,6 @@ public class PolicyCombiningAlgorithmsInitializer extends AbstractInitializer<Ab
 	protected void furtherInitializations(Set<AbstractPolicyCombiningAlgorithm> instances) {
 		for (AbstractPolicyCombiningAlgorithm algorithm : instances) {
 			algorithm.setTargetMatcher(targetMatcher);
-			algorithm.setRespectAbandondEvaluatables(respectAbandondEvaluatables);
 		}
 	}
 

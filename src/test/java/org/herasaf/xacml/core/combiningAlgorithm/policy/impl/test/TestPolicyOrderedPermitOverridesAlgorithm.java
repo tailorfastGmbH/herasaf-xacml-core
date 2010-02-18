@@ -44,7 +44,6 @@ public class TestPolicyOrderedPermitOverridesAlgorithm extends
 	@Override
 	protected PolicyCombiningAlgorithm getCombiningAlgorithm() {
 		PolicyOrderedPermitOverridesAlgorithm alg = new PolicyOrderedPermitOverridesAlgorithm();
-		alg.setRespectAbandondEvaluatables(true);
 		return alg;
 	}
 

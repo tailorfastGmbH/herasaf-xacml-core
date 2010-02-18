@@ -86,7 +86,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 				return DecisionType.INDETERMINATE;
 			}
 
-			if (atLeastOneDeny && isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
+			if (atLeastOneDeny && evaluationContext.isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
 				/*
 				 * If a decision is already made (atLeastOneDeny == true) and
 				 * the abandoned Obligations must be taken into account
@@ -129,7 +129,7 @@ public class PolicyOrderedDenyOverridesAlgorithm extends PolicyOrderedCombiningA
 			}
 			switch (decision) {
 			case DENY:
-				if (!isRespectAbandonedEvaluatables()) { // if abandoned
+				if (!evaluationContext.isRespectAbandonedEvaluatables()) { // if abandoned
 					// evaluatables should
 					// not be included then
 					// the first deny
