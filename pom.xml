@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.herasaf.xacml</groupId>
 		<artifactId>herasaf-xacml</artifactId>
-		<version>1.0.0-M1</version> <!-- use most recent, final RootRoot-POM -->
+		<version>1.0.0-M2-SNAPSHOT</version> <!-- use most recent, final RootRoot-POM -->
 	</parent>
 
 	<!-- Project -->
@@ -40,7 +40,7 @@
 	<!-- Project Environment/Infrastructure ### MANDATORY ### -->
 	<issueManagement>
 		<system>JIRA</system> <!-- This value must be JIRA! -->
-		<url>http://jira.herasaf.org/browse/HERASAFXACMLCORE</url>
+		<url>http://jira.herasaf.org/BrowseProject.jspa?id=10061</url>
 		<!--
 			always pattern: "<JIRA Server>/browse/<componentKey>" (e.g.
 			"http://jira.herasaf.org/POLICYREPOSITORY"
