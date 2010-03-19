@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.Enumeration;
@@ -45,7 +46,8 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public abstract class AbstractInitializer<T> implements Initializer {
-	private static final Logger LOGGER = LoggerFactory.getLogger(AbstractInitializer.class);
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(AbstractInitializer.class);
 	private static final String CLASS_ENDING = ".class";
 	private static final String DOLLAR_SIGN = "$";
 	private static final String MOCK_KEYWORD = "Mock";
@@ -99,7 +101,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 *            The map containing the instances. Key is the id of the object
 	 *            of type T, the value is the object itself.
 	 */
-	protected abstract void setInstancesIntoConverter(Map<String, T> instancesMap);
+	protected abstract void setInstancesIntoConverter(
+			Map<String, T> instancesMap);
 
 	/**
 	 * {@inheritDoc}
@@ -113,7 +116,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 		try {
 			resourceURLs = cl.getResources(getSearchContextPath());
 		} catch (IOException e1) {
-			InitializationException ie = new InitializationException("Unable to get resources from classpath.");
+			InitializationException ie = new InitializationException(
+					"Unable to get resources from classpath.");
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -134,7 +138,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			}
 		}
 
-		Set<T> instances = createInstancesFromClassNames(classNames, getTargetClass());
+		Set<T> instances = createInstancesFromClassNames(classNames,
+				getTargetClass());
 		Map<String, T> instancesMap = convertSetToMap(instances);
 		setInstancesIntoConverter(instancesMap);
 		furtherInitializations(instances);
@@ -185,9 +190,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 */
 	private static boolean isJarURL(URL url) {
 		String protocol = url.getProtocol();
-		return (URL_PROTOCOL_JAR.equals(protocol) || URL_PROTOCOL_ZIP.equals(protocol)
-				|| URL_PROTOCOL_WSJAR.equals(protocol) || (URL_PROTOCOL_CODE_SOURCE.equals(protocol) && url.getPath()
-				.contains(JAR_URL_SEPARATOR)));
+		return (URL_PROTOCOL_JAR.equals(protocol)
+				|| URL_PROTOCOL_ZIP.equals(protocol)
+				|| URL_PROTOCOL_WSJAR.equals(protocol) || (URL_PROTOCOL_CODE_SOURCE
+				.equals(protocol) && url.getPath().contains(JAR_URL_SEPARATOR)));
 	}
 
 	/**
@@ -200,7 +206,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 */
 	private static boolean isJarEntryValid(JarEntry entry) {
 		String name = entry.getName();
-		return name.endsWith(CLASS_ENDING) && !entry.isDirectory() && !name.contains(ABSTRACT_KEYWORD)
+		return name.endsWith(CLASS_ENDING) && !entry.isDirectory()
+				&& !name.contains(ABSTRACT_KEYWORD)
 				&& !name.contains(MOCK_KEYWORD) && !name.contains(DOLLAR_SIGN);
 	}
 
@@ -219,7 +226,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 		try {
 			urlConnection = url.openConnection();
 		} catch (IOException e) {
-			InitializationException ie = new InitializationException("Unable to open URL connection to JAR file.", e);
+			InitializationException ie = new InitializationException(
+					"Unable to open URL connection to JAR file.", e);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -229,12 +237,14 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				jarFile = jarUrlConnection.getJarFile();
 			} catch (IOException e) {
 				InitializationException ie = new InitializationException(
-						"Unable to retrieve JAR file from the jar url connection.", e);
+						"Unable to retrieve JAR file from the jar url connection.",
+						e);
 				LOGGER.error(ie.getMessage());
 				throw ie;
 			}
 		} else {
-			InitializationException e = new InitializationException("Unable to read the JAR file.");
+			InitializationException e = new InitializationException(
+					"Unable to read the JAR file.");
 			LOGGER.error(e.getMessage());
 			throw e;
 		}
@@ -250,9 +260,11 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	private Set<String> loadClassNamesFromJar(URL url) {
 		JarFile jarFile = getJarFileFromURL(url);
 		Set<String> classNames = new HashSet<String>();
-		for (Enumeration<JarEntry> entries = jarFile.entries(); entries.hasMoreElements();) {
+		for (Enumeration<JarEntry> entries = jarFile.entries(); entries
+				.hasMoreElements();) {
 			JarEntry entry = entries.nextElement();
-			if (isJarEntryValid(entry) && entry.getName().startsWith(getSearchContextPath())) {
+			if (isJarEntryValid(entry)
+					&& entry.getName().startsWith(getSearchContextPath())) {
 				String name = entry.getName();
 				// Cut off the .class ending.
 				name = name.substring(0, name.indexOf(".class"));
@@ -279,15 +291,23 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	private Set<String> collectClassNamesFromFile(final URL url) {
 		Set<String> classNames = new HashSet<String>();
 
-		File directory = new File(url.getFile());
+		File directory;
+		try {
+			directory = new File(url.toURI().getPath());
+		} catch (URISyntaxException e) {
+			InitializationException ie = new InitializationException(
+					"Unable to retreive path to the files.", e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		}
 		if (directory.isDirectory()) {
 			File[] allFiles = directory.listFiles();
 			for (int i = 0; i < allFiles.length; i++) {
 				if (allFiles[i].isDirectory()) {
 					try {
-						classNames.addAll(collectClassNamesFromFile(new URL(URL_PROTOCOL_FILE, url.getHost(), url
-								.getPath()
-								+ "/" + allFiles[i].getName())));
+						classNames.addAll(collectClassNamesFromFile(new URL(
+								URL_PROTOCOL_FILE, url.getHost(), url.getPath()
+										+ "/" + allFiles[i].getName())));
 					} catch (MalformedURLException e) {
 						InitializationException ie = new InitializationException(
 								"Unable to load classes from file system.", e);
@@ -299,23 +319,35 @@ public abstract class AbstractInitializer<T> implements Initializer {
 					// non-java classes, abstract classes, mock classes and
 					// anonymous inner classes.
 					if (allFiles[i].getName().endsWith(CLASS_ENDING)
-							&& !allFiles[i].getName().startsWith(ABSTRACT_KEYWORD)
+							&& !allFiles[i].getName().startsWith(
+									ABSTRACT_KEYWORD)
 							&& !allFiles[i].getName().contains(MOCK_KEYWORD)
 							&& !allFiles[i].getName().contains(DOLLAR_SIGN)) {
 
 						String path = url.getPath();
-						path = path.substring(path.indexOf(getSearchContextPath()));
+						path = path.substring(path
+								.indexOf(getSearchContextPath()));
 
 						path = path.replaceAll("/", ".");
 
 						String name = path + "." + allFiles[i].getName();
-						classNames.add(name.substring(0, name.indexOf(CLASS_ENDING)));
+						classNames.add(name.substring(0, name
+								.indexOf(CLASS_ENDING)));
 					}
 				}
 			}
 		} else {
-			InitializationException ie = new InitializationException("The URL pointing to " + url.getFile()
-					+ " must be a directory.");
+			String path;
+			try {
+				path = url.toURI().getPath();
+			} catch (URISyntaxException e) {
+				InitializationException ie = new InitializationException(
+						"Unable to retreive path to the files.", e);
+				LOGGER.error(ie.getMessage());
+				throw ie;
+			}
+			InitializationException ie = new InitializationException(
+					"The URL pointing to " + path + " must be a directory.");
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -335,7 +367,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 *            instantiated.
 	 * @return
 	 */
-	private Set<T> createInstancesFromClassNames(Set<String> classNames, Class<T> classType) {
+	private Set<T> createInstancesFromClassNames(Set<String> classNames,
+			Class<T> classType) {
 		Set<T> classes = new HashSet<T>();
 		for (String name : classNames) {
 			Class<?> clazz;
@@ -344,8 +377,9 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				clazz = Class.forName(name);
 			} catch (ClassNotFoundException e) {
 				// Must not occur. This would mean an illegal state.
-				InitializationException ie = new InitializationException("Illegal state. Cannot load class " + name
-						+ " from JAR.");
+				InitializationException ie = new InitializationException(
+						"Illegal state. Cannot load class " + name
+								+ " from JAR.");
 				LOGGER.error(ie.getMessage(), e);
 				throw ie;
 			}
@@ -354,11 +388,13 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			try {
 				instance = clazz.newInstance();
 			} catch (InstantiationException e) {
-				InitializationException ie = new InitializationException("Cannot read class file from JAR.", e);
+				InitializationException ie = new InitializationException(
+						"Cannot read class file from JAR.", e);
 				LOGGER.error(ie.getMessage());
 				throw ie;
 			} catch (IllegalAccessException e) {
-				InitializationException ie = new InitializationException("Cannot read class file from JAR.", e);
+				InitializationException ie = new InitializationException(
+						"Cannot read class file from JAR.", e);
 				LOGGER.error(ie.getMessage());
 				throw ie;
 			}
