@@ -18,6 +18,7 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
 import java.net.JarURLConnection;
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -126,7 +127,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			URL url = resourceURLs.nextElement();
 			if (isJarURL(url)) {
 				/* JAR handling */
-				classNames = loadClassNamesFromJar(url);
+				classNames = collectClassNamesFromJar(url);
 			} else if (URL_PROTOCOL_FILE.equals(url.getProtocol())) {
 				/* Directory handling */
 				classNames = collectClassNamesFromFile(url);
@@ -257,7 +258,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * 
 	 * @return A {@link Set} containing all class names.
 	 */
-	private Set<String> loadClassNamesFromJar(URL url) {
+	private Set<String> collectClassNamesFromJar(URL url) {
 		JarFile jarFile = getJarFileFromURL(url);
 		Set<String> classNames = new HashSet<String>();
 		for (Enumeration<JarEntry> entries = jarFile.entries(); entries
@@ -383,6 +384,13 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				LOGGER.error(ie.getMessage(), e);
 				throw ie;
 			}
+
+			int modifier = clazz.getModifiers();
+			if(Modifier.isAbstract(modifier) || Modifier.isInterface(modifier)){
+			    LOGGER.warn("The class " + clazz.getName() + " cannot be instatiated because it is either abstract or an interface.");
+			    continue; //The clazz is skipped if it is not instantiable.
+			}
+			
 			// Create an instance of the class
 			Object instance;
 			try {
