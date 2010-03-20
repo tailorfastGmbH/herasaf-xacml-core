@@ -74,8 +74,9 @@ public class ContextAndPolicyInitializer implements Initializer {
 		try {
 			config.setContext(JAXBContext.newInstance(contextPath));
 		} catch (JAXBException e) {
-			logger.error("Unable to initialize JAXB. Verify Context-Path settings.", e);
-			throw new InitializationException(e);
+			InitializationException ie = new InitializationException("Unable to initialize JAXB. Verify Context-Path settings.");
+		    logger.error(ie.getMessage());
+			throw ie;
 		}
 		config.setFormattedOutput(FORMATTED_OUTPUT);
 		config.setValidateWriting(VALIDATE_WRITING);
