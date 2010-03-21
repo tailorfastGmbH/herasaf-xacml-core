@@ -32,11 +32,10 @@ import java.net.URI;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class AnyURIAtLeastOneMemberOfFunction extends
 		AbstractAtLeastOneMemberOfFunction<URI> {
-	private static final long serialVersionUID = -367894928512846701L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-at-least-one-member-of";
 
 	/**

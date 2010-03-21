@@ -31,7 +31,7 @@ import org.herasaf.xacml.core.types.RFC822Name;
  */
 public class RFC822NameDataTypeAttribute extends AbstractDataTypeAttribute<RFC822Name> {
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name";
-	private static final long serialVersionUID = 3529004809034784066L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public RFC822Name convertTo(String jaxbRepresentation) throws SyntaxException {

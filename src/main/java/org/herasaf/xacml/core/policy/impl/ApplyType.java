@@ -63,15 +63,13 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 60, for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ApplyType", propOrder = { "expressions" })
 public class ApplyType extends ExpressionType {
-
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
 	private List<JAXBElement<?>> expressions;
 	@XmlAttribute(name = "FunctionId", required = true)

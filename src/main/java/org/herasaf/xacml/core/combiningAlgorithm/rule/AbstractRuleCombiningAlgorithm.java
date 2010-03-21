@@ -38,7 +38,8 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  */
 public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
 		RuleCombiningAlgorithm {
-	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
+    private static final long serialVersionUID = 1L;
+    protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**
 	 * {@inheritDoc}

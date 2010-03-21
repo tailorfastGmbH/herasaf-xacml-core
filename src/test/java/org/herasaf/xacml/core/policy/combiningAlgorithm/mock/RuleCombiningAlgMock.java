@@ -37,7 +37,8 @@ import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
  * @author Florian Huonder
  */
 public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
-	public DecisionType decision;
+    private static final long serialVersionUID = 1L;
+    public DecisionType decision;
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;
 

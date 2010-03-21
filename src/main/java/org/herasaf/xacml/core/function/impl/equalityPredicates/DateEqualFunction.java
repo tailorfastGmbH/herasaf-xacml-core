@@ -35,7 +35,7 @@ public class DateEqualFunction extends AbstractFunction {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 796935578473513470L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-equal";
 
 	/**

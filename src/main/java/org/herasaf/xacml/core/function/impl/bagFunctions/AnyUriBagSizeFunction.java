@@ -36,7 +36,7 @@ import java.net.URI;
  */
 public class AnyUriBagSizeFunction extends AbstractBagSizeFunction<URI> {
 
-	private static final long serialVersionUID = -1322929512635038408L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-bag-size";
 
 	/**

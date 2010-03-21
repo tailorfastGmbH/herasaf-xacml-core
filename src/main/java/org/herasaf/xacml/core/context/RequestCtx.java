@@ -20,6 +20,7 @@ package org.herasaf.xacml.core.context;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.io.Writer;
 
 import javax.xml.bind.JAXBException;
@@ -46,8 +47,9 @@ import org.xml.sax.ContentHandler;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class RequestCtx {
-	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
+public class RequestCtx implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
 	private static final ContextAndPolicy.JAXBProfile REQUESTCTX = ContextAndPolicy.JAXBProfile.REQUEST_CTX;
 	private static ObjectFactory objectFactory;
 	private RequestType request;

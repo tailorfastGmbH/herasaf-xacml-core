@@ -34,7 +34,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
  * 
  */
 public class AnyUriBagFunction extends AbstractBagFunction<java.net.URI> {
-	private static final long serialVersionUID = 2602950448847221492L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-bag";
 
 	/**

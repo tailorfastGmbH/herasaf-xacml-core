@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.types.Date;
  */
 public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#date";
-	private static final long serialVersionUID = -5112328908612717257L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public Date convertTo(String jaxbRepresentation) throws SyntaxException {

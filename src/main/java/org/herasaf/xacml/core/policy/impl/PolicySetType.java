@@ -80,7 +80,6 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 58, for further information.
  * 
- * @version 1.2
  * @author <i>generated</i>
  * @author Stefan Oberholzer
  * @author Patrik Dietschweiler
@@ -91,8 +90,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 @XmlType(name = "PolicySetType", propOrder = { "description", "policySetDefaults", "target", "additionalInformation",
 		"obligations" })
 public class PolicySetType implements Evaluatable, Serializable {
-
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "Description")
 	private String description;
 	@XmlElement(name = "PolicySetDefaults")

@@ -34,7 +34,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class NOFFunction extends AbstractFunction {
 
-	private static final long serialVersionUID = 5182684637230461983L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:n-of";
 
 	/**

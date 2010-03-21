@@ -32,11 +32,10 @@ import org.herasaf.xacml.core.types.Date;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class DateAtLeastOneMemberOfFunction extends
 		AbstractAtLeastOneMemberOfFunction<Date> {
-	private static final long serialVersionUID = -367894928512846701L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-at-least-one-member-of";
 
 	/**

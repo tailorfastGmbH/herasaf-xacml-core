@@ -36,7 +36,8 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * @author Florian Huonder
  */
 public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
-	public DecisionType decision;
+    private static final long serialVersionUID = 1L;
+    public DecisionType decision;
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;
 	public boolean returnTargetFailure;

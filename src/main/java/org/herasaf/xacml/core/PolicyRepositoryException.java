@@ -24,7 +24,7 @@ package org.herasaf.xacml.core;
  * @author Florian Huonder
  */
 public class PolicyRepositoryException extends RuntimeException {
-	private static final long serialVersionUID = 8213802064654257318L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a new exception with null as its detail message.

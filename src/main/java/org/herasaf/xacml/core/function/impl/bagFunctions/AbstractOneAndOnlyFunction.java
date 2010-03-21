@@ -40,7 +40,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public abstract class AbstractOneAndOnlyFunction<T> extends AbstractFunction {
 
-	private static final long serialVersionUID = -4986950035747337899L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}

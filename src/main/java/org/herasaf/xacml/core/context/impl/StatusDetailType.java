@@ -66,7 +66,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "StatusDetailType", propOrder = { "content" })
 public class StatusDetailType implements Serializable {
 	private static final ObjectFactory OBJECT_FACTORY;
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlAnyElement(lax = true)
 	private List<Object> content;
 

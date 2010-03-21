@@ -26,7 +26,7 @@ import org.herasaf.xacml.core.ProcessingException;
  * @author Florian Huonder
  */
 public class FunctionProcessingException extends ProcessingException {
-	private static final long serialVersionUID = 8213802064654257318L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a new exception with null as its detail message.

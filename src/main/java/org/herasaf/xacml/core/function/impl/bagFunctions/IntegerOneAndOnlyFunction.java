@@ -37,7 +37,7 @@ import java.math.BigInteger;
 public class IntegerOneAndOnlyFunction extends
 		AbstractOneAndOnlyFunction<BigInteger> {
 
-	private static final long serialVersionUID = -4986950035747337899L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only";
 
 	/**

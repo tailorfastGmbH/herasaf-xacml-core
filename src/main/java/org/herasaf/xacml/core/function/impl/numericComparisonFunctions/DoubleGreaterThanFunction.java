@@ -33,10 +33,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class DoubleGreaterThanFunction extends AbstractFunction {
-	private static final long serialVersionUID = 7218398749748498825L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-greater-than";
 
 	/**

@@ -39,7 +39,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class IntegerAddFunction extends AbstractFunction {
 
-	private static final long serialVersionUID = -230014331787748451L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-add";
 
 	/**

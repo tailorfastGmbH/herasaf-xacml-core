@@ -53,14 +53,12 @@ import javax.xml.bind.annotation.XmlType;
  * 2006</a> pages 44 (PolicySetDefaults) and page 54 (PolicyDefaults), for
  * further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "DefaultsType", propOrder = { "xPathVersion" })
 public class DefaultsType implements Serializable {
-
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "XPathVersion")
 	@XmlSchemaType(name = "anyURI")
 	private String xPathVersion;

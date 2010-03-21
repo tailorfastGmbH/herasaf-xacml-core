@@ -82,7 +82,7 @@ public class RequestType implements Serializable {
 	private static final String CURRENT_DATE_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-date";
 	private static final String CURRENT_TIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-time";
 
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 
 	@XmlElement(name = "Subject", required = true)
 	private List<SubjectType> subjects;

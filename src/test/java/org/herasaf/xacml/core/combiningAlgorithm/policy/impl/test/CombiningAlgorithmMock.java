@@ -35,7 +35,8 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
  * @author Stefan Oberholzer
  */
 public class CombiningAlgorithmMock implements CombiningAlgorithm {
-	EvaluationContext evaluationContext;
+    private static final long serialVersionUID = 1L;
+    EvaluationContext evaluationContext;
 	DecisionType decision;
 
 	/**

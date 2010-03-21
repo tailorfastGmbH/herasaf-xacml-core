@@ -41,7 +41,7 @@ public class IntegerSubtractFunction extends AbstractFunction {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 6342077466149190323L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-subtract";
 
 	/**

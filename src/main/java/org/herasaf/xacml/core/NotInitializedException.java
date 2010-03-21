@@ -23,7 +23,7 @@ package org.herasaf.xacml.core;
  * @author René Eggenschwiler
  */
 public class NotInitializedException extends RuntimeException {
-	private static final long serialVersionUID = 4169969483147086614L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a new exception with null as its detail message.

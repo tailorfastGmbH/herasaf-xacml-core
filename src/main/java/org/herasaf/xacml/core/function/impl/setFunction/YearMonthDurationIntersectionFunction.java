@@ -33,11 +33,10 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class YearMonthDurationIntersectionFunction extends
 		AbstractIntersectionFunction<YearMonthDuration> {
-	private static final long serialVersionUID = -367894928512846701L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-intersection";
 
 	/**

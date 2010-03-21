@@ -67,7 +67,6 @@ import org.herasaf.xacml.core.policy.ExpressionProcessingException;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 65, for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
@@ -75,8 +74,7 @@ import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
 @XmlSeeAlso({ AttributeAssignmentType.class })
 public class AttributeValueType extends ExpressionType {
-
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlMixed
 	@XmlAnyElement(lax = true)
 	private List<Object> content;

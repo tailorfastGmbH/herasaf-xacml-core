@@ -42,7 +42,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public abstract class AbstractBagFunction<T> extends AbstractFunction {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}

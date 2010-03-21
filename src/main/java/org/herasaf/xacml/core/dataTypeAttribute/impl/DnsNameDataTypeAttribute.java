@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.types.DnsName;
  */
 public class DnsNameDataTypeAttribute extends AbstractDataTypeAttribute<DnsName> {
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dnsName";
-	private static final long serialVersionUID = 7841789516189513021L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public DnsName convertTo(String jaxbRepresentation) throws SyntaxException {

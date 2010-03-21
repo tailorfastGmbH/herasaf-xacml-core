@@ -23,7 +23,7 @@ package org.herasaf.xacml.core.simplePDP;
  * @author René Eggenschwiler
  */
 public class InitializationException extends RuntimeException {
-    private static final long serialVersionUID = 5258170600668290526L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructs a new exception with null as its detail message.

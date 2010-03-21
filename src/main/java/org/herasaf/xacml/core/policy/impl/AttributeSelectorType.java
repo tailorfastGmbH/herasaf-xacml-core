@@ -51,7 +51,6 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 64, for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
@@ -59,7 +58,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 @XmlType(name = "AttributeSelectorType")
 public class AttributeSelectorType extends ExpressionType {
 
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlAttribute(name = "RequestContextPath", required = true)
 	private String requestContextPath;
 	@XmlAttribute(name = "DataType", required = true)

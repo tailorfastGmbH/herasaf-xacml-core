@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class FloorFunction extends AbstractFunction {
 
-	private static final long serialVersionUID = -2910660766680021283L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:floor";
 
 	/**

@@ -36,7 +36,7 @@ import javax.security.auth.x500.X500Principal;
  */
 public class X500NameIsInFunction extends AbstractIsInFunction<X500Principal> {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-is-in";
 
 	/**

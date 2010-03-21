@@ -35,10 +35,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class IntegerLessThanOrEqualFunction extends AbstractFunction {
-	private static final long serialVersionUID = -7935027761981680311L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-less-than-or-equal";
 
 	/**

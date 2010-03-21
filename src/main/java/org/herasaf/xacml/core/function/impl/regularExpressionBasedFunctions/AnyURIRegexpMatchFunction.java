@@ -35,10 +35,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class AnyURIRegexpMatchFunction extends AbstractFunction {
-	private static final long serialVersionUID = 7197923951659086946L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:anyURI-regexp-match";
 
 	/**

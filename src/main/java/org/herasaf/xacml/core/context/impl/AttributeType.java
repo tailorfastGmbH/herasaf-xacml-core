@@ -73,7 +73,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 @XmlType(name = "AttributeType", propOrder = { "attributeValues" })
 public class AttributeType implements Serializable {
 
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "AttributeValue", required = true)
 	private List<AttributeValueType> attributeValues;
 	@XmlAttribute(name = "AttributeId", required = true)

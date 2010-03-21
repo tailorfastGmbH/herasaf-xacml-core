@@ -27,7 +27,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<T> {
 
 	/** Serial version UID. */
-	private static final long serialVersionUID = -7160783590484665708L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public String toString() {

@@ -29,7 +29,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @author Florian Huonder
  */
 public class MissingAttributeException extends Exception {
-	private static final long serialVersionUID = 1600393747247326688L;
+	private static final long serialVersionUID = 1L;
 	private MissingAttributeDetailType missingAttribute;
 
 	/**

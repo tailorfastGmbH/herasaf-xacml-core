@@ -31,13 +31,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * 2006</a> page 105, for further information.
  * 
  * @author Florian Huonder
- * @version 1.0
  */
 public class X500NameEqualFunction extends AbstractFunction {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 7247582964453019262L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-equal";
 
 	/**

@@ -65,7 +65,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "ResourceType", propOrder = { "resourceContent", "attributes" })
 public class ResourceType implements Serializable {
 
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "ResourceContent")
 	private ResourceContentType resourceContent;
 	@XmlElement(name = "Attribute")

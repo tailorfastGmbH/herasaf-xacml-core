@@ -33,11 +33,10 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * 2006</a> page 105, for further information.
  * </p>
  * 
- * @author Sacha Dolski (sdolski@solnet.ch)
- * @version 1.0
+ * @author Sacha Dolski
  */
 public class RFC822NameMatchFunction extends AbstractFunction {
-	private static final long serialVersionUID = -3491926450245801282L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match";
 
 	/**

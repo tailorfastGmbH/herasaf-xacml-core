@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.SyntaxException;
  */
 public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Principal> {
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:x500Name";
-	private static final long serialVersionUID = -8741252348616072890L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public X500Principal convertTo(String jaxbRepresentation) throws SyntaxException {

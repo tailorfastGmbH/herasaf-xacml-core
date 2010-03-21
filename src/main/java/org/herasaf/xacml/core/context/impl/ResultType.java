@@ -67,7 +67,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ResultType", propOrder = { "decision", "status", "obligations" })
 public class ResultType implements Serializable {
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "Decision", required = true)
 	private DecisionType decision;
 	@XmlElement(name = "Status")

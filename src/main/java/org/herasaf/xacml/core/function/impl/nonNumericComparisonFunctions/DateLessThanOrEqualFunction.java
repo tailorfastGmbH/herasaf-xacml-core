@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.types.Date;
  * @version 1.0
  */
 public class DateLessThanOrEqualFunction extends AbstractFunction {
-	private static final long serialVersionUID = -8657888777873703249L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal";
 
 	/**

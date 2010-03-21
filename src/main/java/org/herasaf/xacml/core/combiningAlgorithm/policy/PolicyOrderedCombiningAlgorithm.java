@@ -34,8 +34,9 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
  * @author René Eggenschwiler
  */
 public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
+    private static final long serialVersionUID = 1L;
 
-	/**
+    /**
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluate(final RequestType request, final Evaluatable evals,

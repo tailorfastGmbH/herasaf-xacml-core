@@ -38,7 +38,8 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  * @author Stefan Oberholzer
  */
 public class EvaluatableMock implements Evaluatable, Cloneable {
-	private DecisionType decision;
+    private static final long serialVersionUID = 1L;
+    private DecisionType decision;
 	private ObligationType denyObligation;
 	private ObligationType permitObligation;
 	private EvaluationContext evaluationContext;

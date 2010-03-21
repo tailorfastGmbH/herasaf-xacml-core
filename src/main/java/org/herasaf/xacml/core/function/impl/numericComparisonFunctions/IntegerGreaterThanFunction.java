@@ -35,10 +35,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class IntegerGreaterThanFunction extends AbstractFunction {
-	private static final long serialVersionUID = -2051246209076497725L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-greater-than";
 
 	/**

@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.types.Time;
  */
 public class TimeBagFunction extends AbstractBagFunction<Time> {
 
-	private static final long serialVersionUID = 2602950448847221492L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-bag";
 
 	/**

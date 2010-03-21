@@ -52,7 +52,6 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 59, for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
@@ -61,7 +60,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlSeeAlso({ AttributeSelectorType.class, ApplyType.class, FunctionType.class, VariableReferenceType.class,
 		AttributeDesignatorType.class })
 public abstract class ExpressionType implements Serializable {
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Executes the expression.

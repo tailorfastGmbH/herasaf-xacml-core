@@ -34,7 +34,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
  */
 public class StringBagSizeFunction extends AbstractBagSizeFunction<String> {
 
-	private static final long serialVersionUID = -1322929512635038408L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-bag-size";
 
 	/**

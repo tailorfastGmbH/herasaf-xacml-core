@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.types.DateTime;
  */
 public class DateTimeDataTypeAttribute extends AbstractDataTypeAttribute<DateTime> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#dateTime";
-	private static final long serialVersionUID = 258484197947468750L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public DateTime convertTo(String jaxbRepresentation) throws SyntaxException {

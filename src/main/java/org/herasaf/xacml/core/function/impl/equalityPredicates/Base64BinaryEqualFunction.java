@@ -36,7 +36,7 @@ public class Base64BinaryEqualFunction extends AbstractFunction {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = -7435684893189502404L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-equal";
 
 	/**

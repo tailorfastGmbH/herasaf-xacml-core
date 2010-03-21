@@ -27,7 +27,7 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
  */
 public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
-	private static final long serialVersionUID = 2908910266915235140L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public String convertTo(String jaxbRepresentation) {

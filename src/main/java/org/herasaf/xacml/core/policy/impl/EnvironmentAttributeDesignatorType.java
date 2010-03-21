@@ -54,15 +54,13 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 63, for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "EnvironmentAttributeDesignatorType")
 public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType {
-
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}

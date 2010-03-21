@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.types.HexBinary;
  */
 public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBinary> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#hexBinary";
-	private static final long serialVersionUID = -1876089138053432795L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}

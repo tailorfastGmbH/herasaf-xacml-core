@@ -35,10 +35,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public abstract class AbstractSubsetFunction<T> extends AbstractFunction {
-	private static final long serialVersionUID = -367894928512846701L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc} <br>

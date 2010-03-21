@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.types.Date;
  */
 public class DateIsInFunction extends AbstractIsInFunction<Date> {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-is-in";
 
 	/**

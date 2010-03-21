@@ -34,7 +34,7 @@ public class ORFunction extends AbstractFunction {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = -2040013787765467157L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:or";
 
 	/**

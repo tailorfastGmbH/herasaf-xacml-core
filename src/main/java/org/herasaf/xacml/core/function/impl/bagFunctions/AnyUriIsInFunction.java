@@ -36,7 +36,7 @@ import java.net.URI;
  */
 public class AnyUriIsInFunction extends AbstractIsInFunction<URI> {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-is-in";
 
 	/**

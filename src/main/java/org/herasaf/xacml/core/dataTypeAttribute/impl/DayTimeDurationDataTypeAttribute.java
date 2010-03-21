@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  */
 public class DayTimeDurationDataTypeAttribute extends AbstractDataTypeAttribute<DayTimeDuration> {
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration";
-	private static final long serialVersionUID = -2483527344156125328L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public DayTimeDuration convertTo(String jaxbRepresentation) throws SyntaxException {

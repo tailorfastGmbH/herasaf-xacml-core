@@ -39,7 +39,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class IntegerDivideFunction extends AbstractFunction {
 
-	private static final long serialVersionUID = 316883768610169110L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-divide";
 
 	/**

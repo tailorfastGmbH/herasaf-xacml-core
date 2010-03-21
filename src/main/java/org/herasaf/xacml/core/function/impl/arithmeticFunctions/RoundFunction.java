@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class RoundFunction extends AbstractFunction {
-	private static final long serialVersionUID = 5250911718301629150L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:round";
 
 	/**

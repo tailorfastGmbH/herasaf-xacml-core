@@ -34,10 +34,9 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class RFC822NameRegexpMatchFunction extends AbstractFunction {
-	private static final long serialVersionUID = 7197923951659086946L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:rfc822Name-regexp-match";
 
 	/**

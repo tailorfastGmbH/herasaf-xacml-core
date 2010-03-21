@@ -32,7 +32,9 @@ import org.herasaf.xacml.core.policy.impl.PolicyType;
  * @author Stefan Oberholzer
  */
 public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombiningAlgorithm {
-	/**
+    private static final long serialVersionUID = 1L;
+
+    /**
 	 * {@inheritDoc}
 	 */
 	public DecisionType evaluate(final RequestType request, final Evaluatable evals,

@@ -34,7 +34,7 @@ public class BooleanEqualFunction extends AbstractFunction {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 6557132839638865902L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-equal";
 
 	/**

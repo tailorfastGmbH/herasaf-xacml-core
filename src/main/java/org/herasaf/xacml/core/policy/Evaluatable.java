@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.policy;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
@@ -29,7 +30,7 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  * 
  * @author Florian Huonder
  */
-public interface Evaluatable {
+public interface Evaluatable extends Serializable {
 
     /**
      * This method returns the ID of the evaluatable.

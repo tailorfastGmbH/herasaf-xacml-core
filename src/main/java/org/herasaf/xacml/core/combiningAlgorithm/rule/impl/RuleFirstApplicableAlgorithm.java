@@ -43,7 +43,8 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorithm {
-	// XACML Name of the Combining Algorithm
+    private static final long serialVersionUID = 1L;
+    // XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
 	private final Logger logger = LoggerFactory.getLogger(RuleFirstApplicableAlgorithm.class);
 

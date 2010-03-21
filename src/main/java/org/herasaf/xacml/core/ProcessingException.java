@@ -24,7 +24,7 @@ package org.herasaf.xacml.core;
  * @author Florian Huonder
  */
 public abstract class ProcessingException extends Exception {
-	private static final long serialVersionUID = -7535706787860940155L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * Constructs a new exception with null as its detail message.

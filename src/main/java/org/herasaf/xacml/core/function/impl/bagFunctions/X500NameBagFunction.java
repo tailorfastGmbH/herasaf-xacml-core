@@ -37,7 +37,7 @@ import javax.security.auth.x500.X500Principal;
  */
 public class X500NameBagFunction extends AbstractBagFunction<X500Principal> {
 
-	private static final long serialVersionUID = 2602950448847221492L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-bag";
 
 	/**

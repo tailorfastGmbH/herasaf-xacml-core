@@ -62,15 +62,10 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "ResourceAttributeDesignatorType")
 public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
+	private static final long serialVersionUID = 1L;
 
-	private static final long serialVersionUID = 632768732L;
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf
-	 * .core.context.impl.RequestType, java.util.Map)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,

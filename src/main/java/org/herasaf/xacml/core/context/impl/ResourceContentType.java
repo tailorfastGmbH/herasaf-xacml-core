@@ -69,7 +69,7 @@ import javax.xml.namespace.QName;
 @XmlType(name = "ResourceContentType", propOrder = { "content" })
 public class ResourceContentType implements Serializable {
 
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlMixed
 	@XmlAnyElement(lax = true)
 	private List<Object> content;

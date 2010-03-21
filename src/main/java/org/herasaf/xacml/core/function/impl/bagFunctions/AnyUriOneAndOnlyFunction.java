@@ -36,7 +36,7 @@ import java.net.URI;
  */
 public class AnyUriOneAndOnlyFunction extends AbstractOneAndOnlyFunction<URI> {
 
-	private static final long serialVersionUID = -4986950035747337899L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-one-and-only";
 
 	/**

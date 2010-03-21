@@ -23,7 +23,7 @@ package org.herasaf.xacml.core;
  * @author Florian Huonder
  */
 public class WritingException extends Exception {
-    private static final long serialVersionUID = 4577643847561378418L;
+    private static final long serialVersionUID = 1L;
 
     /**
      * Constructs a new exception with null as its detail message.

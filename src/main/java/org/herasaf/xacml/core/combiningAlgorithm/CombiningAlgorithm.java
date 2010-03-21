@@ -16,6 +16,8 @@
  */
 package org.herasaf.xacml.core.combiningAlgorithm;
 
+import java.io.Serializable;
+
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -30,7 +32,7 @@ import org.herasaf.xacml.core.policy.Evaluatable;
  * 
  * @author Stefan Oberholzer
  */
-public interface CombiningAlgorithm {
+public interface CombiningAlgorithm extends Serializable {
 
 	/**
 	 * Evaluates a request against the given {@link Evaluatable} (that is a

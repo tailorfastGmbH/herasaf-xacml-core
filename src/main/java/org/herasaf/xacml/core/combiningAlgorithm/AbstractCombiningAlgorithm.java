@@ -39,7 +39,8 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
-	private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
+    private static final long serialVersionUID = 1L;
+    private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
 	private TargetMatcher targetMatcher;
 
 	/**

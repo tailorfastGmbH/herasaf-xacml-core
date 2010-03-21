@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.types.HexBinary;
 public class HexBinaryOneAndOnlyFunction extends
 		AbstractOneAndOnlyFunction<HexBinary> {
 
-	private static final long serialVersionUID = -4986950035747337899L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-one-and-only";
 
 	/**

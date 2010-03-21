@@ -24,7 +24,7 @@ package org.herasaf.xacml.core.function;
  * @author Ylli Sylejmani
  */
 public abstract class AbstractFunction implements Function {
-	private static final long serialVersionUID = 7067251654981893558L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}

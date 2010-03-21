@@ -29,7 +29,7 @@ import org.herasaf.xacml.core.SyntaxException;
  */
 public class BooleanDataTypeAttribute extends AbstractDataTypeAttribute<Boolean> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
-	private static final long serialVersionUID = -4881189643269560315L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public Boolean convertTo(String jaxbRepresentation) throws SyntaxException {

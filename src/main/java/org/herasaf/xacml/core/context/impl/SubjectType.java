@@ -67,7 +67,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SubjectType", propOrder = { "attributes" })
 public class SubjectType implements Serializable {
 
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "Attribute")
 	private List<AttributeType> attributes;
 	@XmlAttribute(name = "SubjectCategory")

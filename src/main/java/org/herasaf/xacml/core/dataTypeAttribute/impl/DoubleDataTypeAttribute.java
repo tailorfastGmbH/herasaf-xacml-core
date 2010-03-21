@@ -29,7 +29,7 @@ import org.herasaf.xacml.core.SyntaxException;
  */
 public class DoubleDataTypeAttribute extends AbstractDataTypeAttribute<Double> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#double";
-	private static final long serialVersionUID = 8801120753602867144L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public Double convertTo(String jaxbRepresentation) throws SyntaxException {

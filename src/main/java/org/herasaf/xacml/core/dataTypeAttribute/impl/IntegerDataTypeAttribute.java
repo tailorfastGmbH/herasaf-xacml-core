@@ -31,7 +31,7 @@ import org.herasaf.xacml.core.SyntaxException;
  */
 public class IntegerDataTypeAttribute extends AbstractDataTypeAttribute<BigInteger> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#integer";
-	private static final long serialVersionUID = -6361086876173896623L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public BigInteger convertTo(String jaxbRepresentation) throws SyntaxException {

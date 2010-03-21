@@ -37,7 +37,7 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
 public class DayTimeDurationBagSizeFunction extends
 		AbstractBagSizeFunction<DayTimeDuration> {
 
-	private static final long serialVersionUID = -1322929512635038408L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-bag-size";
 
 	/**

@@ -83,7 +83,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
 		"obligations" })
 public class PolicyType implements Evaluatable, Serializable {
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "Description")
 	private String description;
 	@XmlElement(name = "PolicyDefaults")

@@ -54,14 +54,12 @@ import javax.xml.bind.annotation.XmlType;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 57, for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "RuleType", propOrder = { "description", "target", "condition" })
 public class RuleType implements Serializable {
-
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlElement(name = "Description")
 	private String description;
 	@XmlElement(name = "Target")

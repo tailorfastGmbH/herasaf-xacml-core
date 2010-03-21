@@ -36,7 +36,7 @@ public class DayTimeDurationEqualFunction extends AbstractFunction {
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = -5620522507211577606L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-equal";
 
 	/**

@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.targetMatcher;
 
+import java.io.Serializable;
+
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
@@ -32,7 +34,7 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  * 
  * @author Sacha Dolski
  */
-public interface TargetMatcher {
+public interface TargetMatcher extends Serializable {
 	/**
 	 * This method matches the given target with the given requests. It returns
 	 * true if the target matched, false otherwise.

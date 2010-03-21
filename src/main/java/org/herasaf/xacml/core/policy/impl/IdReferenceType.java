@@ -62,7 +62,6 @@ import org.slf4j.LoggerFactory;
  * 2006</a> page 51 (PolicySetIdReferenceType) and page 52
  * (PolicyIdReferenceType), for further information.
  * 
- * @version 1.0
  * @author <i>generated</i>
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -71,7 +70,7 @@ import org.slf4j.LoggerFactory;
 @XmlType(name = "IdReferenceType", propOrder = { "value" })
 public class IdReferenceType implements Serializable, Evaluatable {
 	@XmlTransient
-	private static final long serialVersionUID = 632768732L;
+	private static final long serialVersionUID = 1L;
 	@XmlTransient
 	private final Logger logger = LoggerFactory.getLogger(IdReferenceType.class);
 

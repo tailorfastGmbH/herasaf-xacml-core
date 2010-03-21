@@ -33,10 +33,7 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * @version 1.0
  */
 public class Rfc822NameEqualFunction extends AbstractFunction {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = -7246057432017748010L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-equal";
 
 	/**

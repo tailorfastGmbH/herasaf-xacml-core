@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.SyntaxException;
  */
 public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#anyURI";
-	private static final long serialVersionUID = -5182797446805115749L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public URI convertTo(String jaxbRepresentation) throws SyntaxException {

@@ -36,10 +36,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 
 public class MapFunction extends AbstractFunction {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 7426295464640973108L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:map";
 
 	/**

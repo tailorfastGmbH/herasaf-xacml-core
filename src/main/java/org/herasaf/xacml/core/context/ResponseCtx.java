@@ -19,6 +19,7 @@ package org.herasaf.xacml.core.context;
 
 import java.io.File;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.io.Writer;
 
 import javax.xml.bind.JAXBException;
@@ -44,8 +45,9 @@ import org.xml.sax.ContentHandler;
  * 
  * @author Florian Huonder
  */
-public class ResponseCtx {
-	private static final Logger LOGGER = LoggerFactory.getLogger(ResponseCtx.class); 
+public class ResponseCtx implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ResponseCtx.class); 
 	private static final ContextAndPolicy.JAXBProfile RESPONSECTX = ContextAndPolicy.JAXBProfile.RESPONSE_CTX;
 	private static ObjectFactory objectFactory;
 	private ResponseType response;

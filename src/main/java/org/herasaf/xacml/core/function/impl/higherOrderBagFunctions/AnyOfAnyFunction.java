@@ -36,7 +36,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
 
 public class AnyOfAnyFunction extends AbstractFunction {
 	private static final int VALID_LENGTH = 3;
-	private static final long serialVersionUID = 7426295464640973108L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:any-of-any";
 
 	/**

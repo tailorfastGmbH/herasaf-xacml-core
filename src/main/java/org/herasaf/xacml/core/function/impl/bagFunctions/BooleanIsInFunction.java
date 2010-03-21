@@ -34,7 +34,7 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
  */
 public class BooleanIsInFunction extends AbstractIsInFunction<Boolean> {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-is-in";
 
 	/**

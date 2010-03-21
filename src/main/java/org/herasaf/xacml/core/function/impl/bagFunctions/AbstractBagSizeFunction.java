@@ -43,13 +43,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public abstract class AbstractBagSizeFunction<T> extends AbstractFunction {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * This method SHALL take a bag of ‘type’ values as an argument and SHALL
-	 * return an “http://www.w3.org/2001/XMLSchema#integer” indicating the
+	 * This method SHALL take a bag of ï¿½typeï¿½ values as an argument and SHALL
+	 * return an ï¿½http://www.w3.org/2001/XMLSchema#integerï¿½ indicating the
 	 * number of values in the bag.
 	 * </p>
 	 * <p>

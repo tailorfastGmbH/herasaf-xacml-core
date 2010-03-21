@@ -37,7 +37,7 @@ import java.math.BigInteger;
  */
 public class IntegerBagFunction extends AbstractBagFunction<BigInteger> {
 
-	private static final long serialVersionUID = 2602950448847221492L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-bag";
 
 	/**

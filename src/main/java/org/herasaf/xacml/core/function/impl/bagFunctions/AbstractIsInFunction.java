@@ -42,17 +42,17 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public abstract class AbstractIsInFunction<T> extends AbstractFunction {
 
-	private static final long serialVersionUID = -7932230812638065901L;
+	private static final long serialVersionUID = 1L;
 
 	/**
 	 * {@inheritDoc}
 	 * <p>
-	 * This method SHALL take an argument of ‘type’ as the first argument and a
+	 * This method SHALL take an argument of ï¿½typeï¿½ as the first argument and a
 	 * bag of type values as the second argument and SHALL return an
-	 * “http://www.w3.org/2001/XMLSchema#boolean”. The function SHALL evaluate
+	 * ï¿½http://www.w3.org/2001/XMLSchema#booleanï¿½. The function SHALL evaluate
 	 * to "True" if and only if the first argument matches by the
 	 * "urn:oasis:names:tc:xacml:x.x:function:typeequal" any value in the bag.
-	 * Otherwise, it SHALL return “False”.
+	 * Otherwise, it SHALL return ï¿½Falseï¿½.
 	 * </p>
 	 * <p>
 	 * takes a value as first parameter and a {@link List} as second parameter

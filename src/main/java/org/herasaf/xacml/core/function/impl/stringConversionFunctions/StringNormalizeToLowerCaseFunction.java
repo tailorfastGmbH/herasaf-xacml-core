@@ -34,10 +34,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class StringNormalizeToLowerCaseFunction extends AbstractFunction {
-	private static final long serialVersionUID = -5323909044560228466L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-normalize-to-lower-case";
 
 	/**

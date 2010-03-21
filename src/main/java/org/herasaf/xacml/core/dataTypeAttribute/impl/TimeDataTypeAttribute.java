@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.types.Time;
  */
 public class TimeDataTypeAttribute extends AbstractDataTypeAttribute<Time> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#time";
-	private static final long serialVersionUID = 7476359216854881540L;
+	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public Time convertTo(String jaxbRepresentation) throws SyntaxException {

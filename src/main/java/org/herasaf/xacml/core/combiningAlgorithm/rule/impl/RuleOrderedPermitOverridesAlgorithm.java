@@ -46,7 +46,8 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class RuleOrderedPermitOverridesAlgorithm extends RuleOrderedCombiningAlgorithm {
-	// XACML Name of the Combining Algorithm
+    private static final long serialVersionUID = 1L;
+    // XACML Name of the Combining Algorithm
 	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-permit-overrides";
 	private final Logger logger = LoggerFactory.getLogger(RuleOrderedPermitOverridesAlgorithm.class);
 

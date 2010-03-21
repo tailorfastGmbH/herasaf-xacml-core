@@ -33,10 +33,9 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class DoubleLessThanOrEqualFunction extends AbstractFunction {
-	private static final long serialVersionUID = -6927358278958209608L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-less-than-or-equal";
 
 	/**

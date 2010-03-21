@@ -31,10 +31,7 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class DoubleEqualFunction extends AbstractFunction {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 7138825458440183803L;
+	private static final long serialVersionUID = 1L;
 	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-equal";
 
 	/**
