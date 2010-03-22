@@ -127,10 +127,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			URL url = resourceURLs.nextElement();
 			if (isJarURL(url)) {
 				/* JAR handling */
-				classNames = collectClassNamesFromJar(url);
+				classNames.addAll(collectClassNamesFromJar(url));
 			} else if (URL_PROTOCOL_FILE.equals(url.getProtocol())) {
 				/* Directory handling */
-				classNames = collectClassNamesFromFile(url);
+				classNames.addAll(collectClassNamesFromFile(url));
 			} else {
 				InitializationException e = new InitializationException(
 						"The search context path must either point to a JAR (.jar, .zip (BEA WebLogic, WebSphere), .wsjar (BEA WebLogic, WebSphere), code-source (Oracle OC4J)) file or to a directory");
