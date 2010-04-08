@@ -36,8 +36,10 @@ import org.herasaf.xacml.core.types.DateTime;
  */
 public class DateTimeBagSizeFunction extends AbstractBagSizeFunction<DateTime> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-bag-size";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-bag-size";
 
 	/**
 	 * {@inheritDoc}

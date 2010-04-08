@@ -34,11 +34,12 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class Base64BinaryIsInFunction extends
-		AbstractIsInFunction<Base64Binary> {
+public class Base64BinaryIsInFunction extends AbstractIsInFunction<Base64Binary> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-is-in";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-is-in";
 
 	/**
 	 * {@inheritDoc}

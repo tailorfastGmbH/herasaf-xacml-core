@@ -34,10 +34,12 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * 
  * @author Stefan Oberholzer
  */
-public class DayTimeDurationAtLeastOneMemberOfFunction extends
-		AbstractAtLeastOneMemberOfFunction<DayTimeDuration> {
+public class DayTimeDurationAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<DayTimeDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-at-least-one-member-of";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-at-least-one-member-of";
 
 	/**
 	 * {@inheritDoc}

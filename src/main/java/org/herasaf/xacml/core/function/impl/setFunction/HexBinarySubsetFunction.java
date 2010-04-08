@@ -34,8 +34,11 @@ import org.herasaf.xacml.core.types.HexBinary;
  * @author Stefan Oberholzer
  */
 public class HexBinarySubsetFunction extends AbstractSubsetFunction<HexBinary> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-subset";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-subset";
 
 	/**
 	 * {@inheritDoc}

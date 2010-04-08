@@ -33,10 +33,12 @@ import javax.security.auth.x500.X500Principal;
  * 
  * @author Stefan Oberholzer
  */
-public class X500NameIntersectionFunction extends
-		AbstractIntersectionFunction<X500Principal> {
+public class X500NameIntersectionFunction extends AbstractIntersectionFunction<X500Principal> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-intersection";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-intersection";
 
 	/**
 	 * {@inheritDoc}

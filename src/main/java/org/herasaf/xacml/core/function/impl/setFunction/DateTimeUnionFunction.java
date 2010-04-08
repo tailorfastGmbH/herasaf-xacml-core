@@ -34,8 +34,11 @@ import org.herasaf.xacml.core.types.DateTime;
  * @author Stefan Oberholzer
  */
 public class DateTimeUnionFunction extends AbstractUnionFunction<DateTime> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-union";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-union";
 
 	/**
 	 * {@inheritDoc}

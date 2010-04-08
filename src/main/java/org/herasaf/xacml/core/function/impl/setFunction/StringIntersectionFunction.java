@@ -31,10 +31,12 @@ package org.herasaf.xacml.core.function.impl.setFunction;
  * 
  * @author Stefan Oberholzer
  */
-public class StringIntersectionFunction extends
-		AbstractIntersectionFunction<String> {
+public class StringIntersectionFunction extends AbstractIntersectionFunction<String> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-intersection";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-intersection";
 
 	/**
 	 * {@inheritDoc}

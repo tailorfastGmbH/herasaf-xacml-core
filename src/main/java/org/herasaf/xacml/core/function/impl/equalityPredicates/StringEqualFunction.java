@@ -30,8 +30,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski
  */
 public class StringEqualFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
 
 	/**
 	 * {@inheritDoc}

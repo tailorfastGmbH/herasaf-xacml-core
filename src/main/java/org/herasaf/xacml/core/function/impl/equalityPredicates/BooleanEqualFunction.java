@@ -31,12 +31,12 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class BooleanEqualFunction extends AbstractFunction {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-equal";
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-equal";
+
+	private static final long serialVersionUID = 1L;
+	
 	/**
 	 * {@inheritDoc}
 	 * 

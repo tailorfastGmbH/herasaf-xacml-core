@@ -41,6 +41,11 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	public StatusCode statusCode;
 	public MissingAttributeDetailType missingAttr;
 	public boolean returnTargetFailure;
+	
+	/** {@inheritDoc} */
+	public String getCombiningAlgorithmId() {
+		return "CombiningAlgorithmMock";
+	}
 
 	/**
 	 * Creates a new {@link PolicyCombiningAlgMock}.

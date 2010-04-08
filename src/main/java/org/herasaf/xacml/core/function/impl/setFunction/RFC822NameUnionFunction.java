@@ -34,8 +34,11 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * @author Stefan Oberholzer
  */
 public class RFC822NameUnionFunction extends AbstractUnionFunction<RFC822Name> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-union";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-union";
 
 	/**
 	 * {@inheritDoc}

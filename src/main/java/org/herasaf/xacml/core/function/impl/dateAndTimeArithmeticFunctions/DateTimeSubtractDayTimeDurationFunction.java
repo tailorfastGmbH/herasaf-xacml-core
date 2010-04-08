@@ -40,8 +40,10 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  */
 public class DateTimeSubtractDayTimeDurationFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-subtract-dayTimeDuration";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-subtract-dayTimeDuration";
 
 	/**
 	 * {@inheritDoc}Takes a {@link DateTime} value as first parameter and a

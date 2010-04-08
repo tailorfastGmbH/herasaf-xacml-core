@@ -40,8 +40,10 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  */
 public class DateSubtractYearMonthDurationFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-subtract-yearMonthDuration";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-subtract-yearMonthDuration";
 
 	/**
 	 * {@inheritDoc} Takes a {@link Date} as first parameter and a

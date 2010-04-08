@@ -36,8 +36,10 @@ import org.herasaf.xacml.core.types.DateTime;
  */
 public class DateTimeIsInFunction extends AbstractIsInFunction<DateTime> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-is-in";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-is-in";
 
 	/**
 	 * {@inheritDoc}

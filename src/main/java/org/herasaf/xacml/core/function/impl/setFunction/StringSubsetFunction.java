@@ -32,8 +32,11 @@ package org.herasaf.xacml.core.function.impl.setFunction;
  * @author Stefan Oberholzer
  */
 public class StringSubsetFunction extends AbstractSubsetFunction<String> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-subset";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:string-subset";
 
 	/**
 	 * {@inheritDoc}

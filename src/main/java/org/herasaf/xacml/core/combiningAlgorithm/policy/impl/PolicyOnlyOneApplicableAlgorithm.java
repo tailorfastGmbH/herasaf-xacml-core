@@ -47,10 +47,13 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAlgorithm {
+
+	/** XACMLcombining algorithm ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable";
+
     private static final long serialVersionUID = 1L;
-    // XACML Name of the Combining Algorithm
-	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:only-one-applicable";
-	private final Logger logger = LoggerFactory.getLogger(PolicyOnlyOneApplicableAlgorithm.class);
+
+    private final Logger logger = LoggerFactory.getLogger(PolicyOnlyOneApplicableAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -210,6 +213,6 @@ public class PolicyOnlyOneApplicableAlgorithm extends PolicyUnorderedCombiningAl
 	 */
 	@Override
 	public String getCombiningAlgorithmId() {
-		return COMBALGOID;
+		return ID;
 	}
 }

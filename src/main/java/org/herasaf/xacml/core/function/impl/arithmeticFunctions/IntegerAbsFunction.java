@@ -39,8 +39,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class IntegerAbsFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-abs";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-abs";
 
 	/**
 	 * {@inheritDoc} takes one {@link BigInteger} value as parameter and

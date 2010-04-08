@@ -37,8 +37,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Stefan Oberholzer
  */
 public class X500NameRegexpMatchFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:function:x500Name-regexp-match";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:x500Name-regexp-match";
 
 	/**
 	 * {@inheritDoc} <br>

@@ -35,6 +35,13 @@ import org.herasaf.xacml.core.policy.Evaluatable;
 public interface CombiningAlgorithm extends Serializable {
 
 	/**
+	 * Returns the ID of the combining algorithm.
+	 * 
+	 * @return The ID of the combining algorithm.
+	 */
+	public String getCombiningAlgorithmId();
+	
+	/**
 	 * Evaluates a request against the given {@link Evaluatable} (that is a
 	 * policy or a policy set).
 	 * 

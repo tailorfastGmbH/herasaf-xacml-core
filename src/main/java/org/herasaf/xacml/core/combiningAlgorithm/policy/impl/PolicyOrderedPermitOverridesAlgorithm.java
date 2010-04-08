@@ -47,10 +47,13 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombiningAlgorithm {
+	
+	/** XACMLcombining algorithm ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides";
+	
     private static final long serialVersionUID = 1L;
-    // XACML Name of the Combining Algorithm
-	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides";
-	private final Logger logger = LoggerFactory.getLogger(PolicyOrderedPermitOverridesAlgorithm.class);
+
+    private final Logger logger = LoggerFactory.getLogger(PolicyOrderedPermitOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -200,6 +203,6 @@ public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombinin
 	 */
 	@Override
 	public String getCombiningAlgorithmId() {
-		return COMBALGOID;
+		return ID;
 	}
 }

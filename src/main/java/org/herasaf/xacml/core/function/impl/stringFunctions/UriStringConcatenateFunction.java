@@ -37,8 +37,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @author Sacha Dolski
  */
 public class UriStringConcatenateFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:function:uri-string-concatenate";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:uri-string-concatenate";
 
 	/**
 	 * {@inheritDoc} <br>

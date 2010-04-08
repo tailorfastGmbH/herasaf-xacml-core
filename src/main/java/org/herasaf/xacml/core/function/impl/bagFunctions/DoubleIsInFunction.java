@@ -34,8 +34,10 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
  */
 public class DoubleIsInFunction extends AbstractIsInFunction<Double> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-is-in";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-is-in";
 
 	/**
 	 * {@inheritDoc}

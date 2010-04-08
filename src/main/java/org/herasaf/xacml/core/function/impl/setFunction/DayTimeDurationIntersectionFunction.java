@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * 
  * @author Stefan Oberholzer
  */
-public class DayTimeDurationIntersectionFunction extends
-		AbstractIntersectionFunction<DayTimeDuration> {
+public class DayTimeDurationIntersectionFunction extends AbstractIntersectionFunction<DayTimeDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-intersection";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-intersection";
 
 	/**
 	 * {@inheritDoc}

@@ -32,11 +32,12 @@ package org.herasaf.xacml.core.function.impl.bagFunctions;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class BooleanOneAndOnlyFunction extends
-		AbstractOneAndOnlyFunction<Boolean> {
+public class BooleanOneAndOnlyFunction extends AbstractOneAndOnlyFunction<Boolean> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-one-and-only";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-one-and-only";
 
 	/**
 	 * {@inheritDoc}

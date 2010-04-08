@@ -46,9 +46,12 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgorithm {
+
+	/** XACMLcombining algorithm ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides";
+	
     private static final long serialVersionUID = 1L;
-    // XACML Name of the Combining Algorithm
-	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides";
+    
 	private final Logger logger = LoggerFactory.getLogger(PolicyDenyOverridesAlgorithm.class);
 
 	/**
@@ -178,6 +181,6 @@ public class PolicyDenyOverridesAlgorithm extends PolicyUnorderedCombiningAlgori
 	 */
 	@Override
 	public String getCombiningAlgorithmId() {
-		return COMBALGOID;
+		return ID;
 	}
 }

@@ -34,10 +34,12 @@ import org.herasaf.xacml.core.types.DateTime;
  * 
  * @author Stefan Oberholzer
  */
-public class DateTimeAtLeastOneMemberOfFunction extends
-		AbstractAtLeastOneMemberOfFunction<DateTime> {
+public class DateTimeAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<DateTime> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-at-least-one-member-of";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-at-least-one-member-of";
 
 	/**
 	 * {@inheritDoc}

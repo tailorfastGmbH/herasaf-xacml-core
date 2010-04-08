@@ -36,9 +36,12 @@ import org.herasaf.xacml.core.types.Time;
  * @author Stefan Oberholzer
  */
 public class TimeInRangeFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:function:time-in-range";
+
 	private static final int VALID_LENGTH = 3;
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:time-in-range";
 
 	/**
 	 * {@inheritDoc} <br>

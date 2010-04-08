@@ -34,11 +34,12 @@ import java.math.BigInteger;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class IntegerOneAndOnlyFunction extends
-		AbstractOneAndOnlyFunction<BigInteger> {
+public class IntegerOneAndOnlyFunction extends AbstractOneAndOnlyFunction<BigInteger> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-one-and-only";
 
 	/**
 	 * {@inheritDoc}

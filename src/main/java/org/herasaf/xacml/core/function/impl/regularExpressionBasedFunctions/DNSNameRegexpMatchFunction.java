@@ -36,8 +36,11 @@ import org.herasaf.xacml.core.types.DnsName;
  * @author Stefan Oberholzer
  */
 public class DNSNameRegexpMatchFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:function:dnsName-regexp-match";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:dnsName-regexp-match";
 
 	/**
 	 * {@inheritDoc} <br>

@@ -31,8 +31,11 @@ import org.herasaf.xacml.core.types.Time;
  * @author Stefan Oberholzer
  */
 public class TimeEqualFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-equal";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-equal";
 
 	/**
 	 * {@inheritDoc}

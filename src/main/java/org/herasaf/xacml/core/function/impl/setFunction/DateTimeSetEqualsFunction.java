@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.DateTime;
  * 
  * @author Stefan Oberholzer
  */
-public class DateTimeSetEqualsFunction extends
-		AbstractSetEqualsFunction<DateTime> {
+public class DateTimeSetEqualsFunction extends AbstractSetEqualsFunction<DateTime> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-set-equals";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-set-equals";
 
 	/**
 	 * {@inheritDoc}

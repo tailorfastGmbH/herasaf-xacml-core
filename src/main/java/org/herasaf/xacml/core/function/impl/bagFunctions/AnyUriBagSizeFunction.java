@@ -36,8 +36,10 @@ import java.net.URI;
  */
 public class AnyUriBagSizeFunction extends AbstractBagSizeFunction<URI> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-bag-size";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-bag-size";
 
 	/**
 	 * {@inheritDoc}

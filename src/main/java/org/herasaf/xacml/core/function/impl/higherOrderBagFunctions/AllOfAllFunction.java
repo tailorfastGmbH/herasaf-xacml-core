@@ -34,9 +34,12 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class AllOfAllFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:all-of-all";
+	
 	private static final int VALID_LENGTH = 3;
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:all-of-all";
 
 	/**
 	 * {@inheritDoc} Takes a {@link Function} returning a {@link Boolean} value

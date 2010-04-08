@@ -40,8 +40,10 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  */
 public class DateTimeAddYearMonthDurationFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-add-yearMonthDuration";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-add-yearMonthDuration";
 
 	/**
 	 * {@inheritDoc}Takes a {@link DateTime} value as first parameter and a

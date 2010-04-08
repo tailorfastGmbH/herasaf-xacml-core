@@ -36,8 +36,11 @@ import org.herasaf.xacml.core.types.IPAddress;
  * @author Stefan Oberholzer
  */
 public class IPAddressRegexpMatchFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:2.0:function:ipAddress-regexp-match";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:2.0:function:ipAddress-regexp-match";
 
 	/**
 	 * {@inheritDoc} <br>

@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * 
  * @author Stefan Oberholzer
  */
-public class Base64BinarySubsetFunction extends
-		AbstractSubsetFunction<Base64Binary> {
+public class Base64BinarySubsetFunction extends AbstractSubsetFunction<Base64Binary> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-subset";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-subset";
 
 	/**
 	 * {@inheritDoc}

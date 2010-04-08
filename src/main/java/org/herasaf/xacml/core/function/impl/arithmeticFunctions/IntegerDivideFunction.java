@@ -39,8 +39,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class IntegerDivideFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-divide";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-divide";
 
 	/**
 	 * {@inheritDoc} Takes two {@link BigInteger} values as parameter and

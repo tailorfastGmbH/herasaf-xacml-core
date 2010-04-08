@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * 
  * @author Sacha Dolski
  */
-public class YearMonthDurationUnionFunction extends
-		AbstractUnionFunction<YearMonthDuration> {
+public class YearMonthDurationUnionFunction extends AbstractUnionFunction<YearMonthDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-union";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-union";
 
 	/**
 	 * {@inheritDoc}

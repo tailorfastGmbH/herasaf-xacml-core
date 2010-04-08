@@ -34,8 +34,11 @@ import java.net.URI;
  * @author Stefan Oberholzer
  */
 public class AnyURISetEqualsFunction extends AbstractSetEqualsFunction<URI> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-set-equals";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-set-equals";
 
 	/**
 	 * {@inheritDoc}

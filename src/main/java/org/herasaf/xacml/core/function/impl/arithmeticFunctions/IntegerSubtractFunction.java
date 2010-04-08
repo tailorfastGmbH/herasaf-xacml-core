@@ -38,11 +38,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class IntegerSubtractFunction extends AbstractFunction {
-	/**
-	 *
-	 */
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-subtract";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-subtract";
 
 	/**
 	 * {@inheritDoc} Takes two {@link BigInteger} values as parameter and

@@ -36,8 +36,10 @@ import java.net.URI;
  */
 public class AnyUriOneAndOnlyFunction extends AbstractOneAndOnlyFunction<URI> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-one-and-only";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-one-and-only";
 
 	/**
 	 * {@inheritDoc}

@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * 
  * @author Stefan Oberholzer
  */
-public class DayTimeDurationSubsetFunction extends
-		AbstractSubsetFunction<DayTimeDuration> {
+public class DayTimeDurationSubsetFunction extends AbstractSubsetFunction<DayTimeDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-subset";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-subset";
 
 	/**
 	 * {@inheritDoc}

@@ -36,8 +36,11 @@ import org.herasaf.xacml.core.types.DateTime;
  * @author Stefan Oberholzer
  */
 public class DateTimeLessThanFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than";
 
 	/**
 	 * {@inheritDoc} <br>

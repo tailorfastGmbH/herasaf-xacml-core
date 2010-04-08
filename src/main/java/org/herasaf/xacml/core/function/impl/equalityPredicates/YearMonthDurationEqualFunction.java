@@ -33,8 +33,11 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * @version 1.0
  */
 public class YearMonthDurationEqualFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-equal";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-equal";
 
 	/**
 	 * {@inheritDoc}

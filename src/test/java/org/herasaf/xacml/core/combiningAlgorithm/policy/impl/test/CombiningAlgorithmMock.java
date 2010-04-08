@@ -47,6 +47,11 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	public CombiningAlgorithmMock(DecisionType decision) {
 		this.decision = decision;
 	}
+	
+	/** {@inheritDoc} */
+	public String getCombiningAlgorithmId() {
+		return "CombiningAlgorithmMock";
+	}
 
 	/**
 	 * {@inheritDoc}

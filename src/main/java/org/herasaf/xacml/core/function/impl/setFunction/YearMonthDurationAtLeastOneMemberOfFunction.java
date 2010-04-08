@@ -34,10 +34,12 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * 
  * @author Stefan Oberholzer
  */
-public class YearMonthDurationAtLeastOneMemberOfFunction extends
-		AbstractAtLeastOneMemberOfFunction<YearMonthDuration> {
+public class YearMonthDurationAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<YearMonthDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-at-least-one-member-of";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:yearMonthDuration-at-least-one-member-of";
 
 	/**
 	 * {@inheritDoc}

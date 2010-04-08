@@ -46,17 +46,20 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgorithm {
+	
+	/** XACMLcombining algorithm ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides";
+	
     private static final long serialVersionUID = 1L;
-    // XACML Name of the Combining Algorithm
-	private static final String COMBALGOID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides";
-	private final Logger logger = LoggerFactory.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
+
+    private final Logger logger = LoggerFactory.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public String getCombiningAlgorithmId() {
-		return COMBALGOID;
+		return ID;
 	}
 
 	/**

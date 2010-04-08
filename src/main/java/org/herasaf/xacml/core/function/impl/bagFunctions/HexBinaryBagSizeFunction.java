@@ -34,11 +34,12 @@ import org.herasaf.xacml.core.types.HexBinary;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class HexBinaryBagSizeFunction extends
-		AbstractBagSizeFunction<HexBinary> {
+public class HexBinaryBagSizeFunction extends AbstractBagSizeFunction<HexBinary> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-bag-size";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-bag-size";
 
 	/**
 	 * {@inheritDoc}

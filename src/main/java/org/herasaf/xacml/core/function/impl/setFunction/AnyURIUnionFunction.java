@@ -34,8 +34,11 @@ import java.net.URI;
  * @author Stefan Oberholzer
  */
 public class AnyURIUnionFunction extends AbstractUnionFunction<URI> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-union";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:anyURI-union";
 
 	/**
 	 * {@inheritDoc}

@@ -34,11 +34,12 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class RFC822NameBagSizeFunction extends
-		AbstractBagSizeFunction<RFC822Name> {
+public class RFC822NameBagSizeFunction extends AbstractBagSizeFunction<RFC822Name> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-bag-size";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:rfc822Name-bag-size";
 
 	/**
 	 * {@inheritDoc}

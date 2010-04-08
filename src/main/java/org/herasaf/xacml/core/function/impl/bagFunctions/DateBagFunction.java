@@ -37,8 +37,10 @@ import org.herasaf.xacml.core.types.Date;
  */
 public class DateBagFunction extends AbstractBagFunction<Date> {
 
+	/** XACML function ID. */
+	public  static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-bag";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-bag";
 
 	/**
 	 * {@inheritDoc}

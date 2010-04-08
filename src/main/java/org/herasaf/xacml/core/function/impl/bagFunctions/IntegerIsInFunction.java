@@ -36,8 +36,10 @@ import java.math.BigInteger;
  */
 public class IntegerIsInFunction extends AbstractIsInFunction<BigInteger> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-is-in";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-is-in";
 
 	/**
 	 * {@inheritDoc}

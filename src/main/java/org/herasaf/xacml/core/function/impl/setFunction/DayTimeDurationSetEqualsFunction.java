@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * 
  * @author Stefan Oberholzer
  */
-public class DayTimeDurationSetEqualsFunction extends
-		AbstractSetEqualsFunction<DayTimeDuration> {
+public class DayTimeDurationSetEqualsFunction extends AbstractSetEqualsFunction<DayTimeDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-set-equals";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-set-equals";
 
 	/**
 	 * {@inheritDoc}

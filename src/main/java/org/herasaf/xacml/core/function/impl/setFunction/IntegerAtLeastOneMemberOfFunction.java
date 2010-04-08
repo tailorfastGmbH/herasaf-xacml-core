@@ -32,10 +32,12 @@ package org.herasaf.xacml.core.function.impl.setFunction;
  * 
  * @author Stefan Oberholzer
  */
-public class IntegerAtLeastOneMemberOfFunction extends
-		AbstractAtLeastOneMemberOfFunction<Integer> {
+public class IntegerAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<Integer> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-at-least-one-member-of";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:integer-at-least-one-member-of";
 
 	/**
 	 * {@inheritDoc}

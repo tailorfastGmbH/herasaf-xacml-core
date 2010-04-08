@@ -33,11 +33,11 @@ import org.herasaf.xacml.core.types.Base64Binary;
  * @version 1.0
  */
 public class Base64BinaryEqualFunction extends AbstractFunction {
-	/**
-	 *
-	 */
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-equal";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:base64Binary-equal";
 
 	/**
 	 * {@inheritDoc}

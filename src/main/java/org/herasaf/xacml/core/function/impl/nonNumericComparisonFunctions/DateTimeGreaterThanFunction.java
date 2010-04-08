@@ -37,8 +37,11 @@ import org.herasaf.xacml.core.types.DateTime;
  * @version 1.0
  */
 public class DateTimeGreaterThanFunction extends AbstractFunction {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-greater-than";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-greater-than";
 
 	/**
 	 * {@inheritDoc} <br>

@@ -37,8 +37,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class DoubleDivideFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-divide";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-divide";
 
 	/**
 	 * {@inheritDoc} takes 2 {@link Double} parameters and returne the result

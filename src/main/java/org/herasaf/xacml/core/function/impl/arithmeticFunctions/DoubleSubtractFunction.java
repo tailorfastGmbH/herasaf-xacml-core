@@ -37,8 +37,10 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  */
 public class DoubleSubtractFunction extends AbstractFunction {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-subtract";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-subtract";
 
 	/**
 	 * {@inheritDoc} Takes two {@link Double} values as parameters and returns

@@ -33,10 +33,12 @@ import org.herasaf.xacml.core.types.DateTime;
  * 
  * @author Stefan Oberholzer
  */
-public class DateTimeIntersectionFunction extends
-		AbstractIntersectionFunction<DateTime> {
+public class DateTimeIntersectionFunction extends AbstractIntersectionFunction<DateTime> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-intersection";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-intersection";
 
 	/**
 	 * {@inheritDoc}

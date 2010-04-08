@@ -36,8 +36,10 @@ import org.herasaf.xacml.core.types.Time;
  */
 public class TimeOneAndOnlyFunction extends AbstractOneAndOnlyFunction<Time> {
 
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-one-and-only";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-one-and-only";
 
 	/**
 	 * {@inheritDoc}

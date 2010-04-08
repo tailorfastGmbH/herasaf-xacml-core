@@ -34,11 +34,12 @@ import org.herasaf.xacml.core.types.DayTimeDuration;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DayTimeDurationBagSizeFunction extends
-		AbstractBagSizeFunction<DayTimeDuration> {
+public class DayTimeDurationBagSizeFunction extends AbstractBagSizeFunction<DayTimeDuration> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-bag-size";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dayTimeDuration-bag-size";
 
 	/**
 	 * {@inheritDoc}

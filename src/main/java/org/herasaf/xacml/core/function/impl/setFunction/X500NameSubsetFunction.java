@@ -33,10 +33,12 @@ import javax.security.auth.x500.X500Principal;
  * 
  * @author Stefan Oberholzer
  */
-public class X500NameSubsetFunction extends
-		AbstractSubsetFunction<X500Principal> {
+public class X500NameSubsetFunction extends AbstractSubsetFunction<X500Principal> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-subset";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:x500Name-subset";
 
 	/**
 	 * {@inheritDoc}

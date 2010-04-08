@@ -31,11 +31,11 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * @version 1.0
  */
 public class NotFunction extends AbstractFunction {
-	/**
-	 *
-	 */
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:not";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:not";
 
 	/**
 	 * Takes at one {@link Boolean} value as parameter. And returns the inverted

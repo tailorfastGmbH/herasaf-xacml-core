@@ -32,10 +32,12 @@ package org.herasaf.xacml.core.function.impl.setFunction;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DoubleIntersectionFunction extends
-		AbstractIntersectionFunction<Double> {
+public class DoubleIntersectionFunction extends AbstractIntersectionFunction<Double> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-intersection";
+
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:double-intersection";
 
 	/**
 	 * {@inheritDoc}

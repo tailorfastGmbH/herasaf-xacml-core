@@ -34,11 +34,12 @@ import org.herasaf.xacml.core.types.DateTime;
  * @author Stefan Oberholzer
  * @version 1.0
  */
-public class DateTimeOneAndOnlyFunction extends
-		AbstractOneAndOnlyFunction<DateTime> {
+public class DateTimeOneAndOnlyFunction extends AbstractOneAndOnlyFunction<DateTime> {
+
+	/** XACML function ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-one-and-only";
 
 	private static final long serialVersionUID = 1L;
-	private static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-one-and-only";
 
 	/**
 	 * {@inheritDoc}
