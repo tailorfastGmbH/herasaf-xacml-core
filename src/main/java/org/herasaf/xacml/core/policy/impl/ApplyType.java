@@ -21,10 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -66,7 +65,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "ApplyType", propOrder = { "expressions" })
 public class ApplyType extends ExpressionType {
 	private static final long serialVersionUID = 1L;

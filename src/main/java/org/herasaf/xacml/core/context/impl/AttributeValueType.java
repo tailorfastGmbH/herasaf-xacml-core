@@ -30,11 +30,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAnyAttribute;
 import javax.xml.bind.annotation.XmlAnyElement;
 import javax.xml.bind.annotation.XmlMixed;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.namespace.QName;
 
@@ -66,7 +65,7 @@ import javax.xml.namespace.QName;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
 public class AttributeValueType implements Serializable {
 	private static final long serialVersionUID = 1L;

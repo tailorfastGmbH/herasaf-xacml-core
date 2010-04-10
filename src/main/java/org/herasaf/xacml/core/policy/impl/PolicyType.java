@@ -23,8 +23,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -78,7 +76,6 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
 		"obligations" })

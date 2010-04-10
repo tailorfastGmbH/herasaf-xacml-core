@@ -19,10 +19,9 @@ package org.herasaf.xacml.core.policy.impl;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -62,7 +61,7 @@ import org.herasaf.xacml.core.function.Function;
  * 
  * @author <i>generated</i>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "EnvironmentMatchType", propOrder = { "attributeValue", "environmentAttributeDesignator",
 		"attributeSelector" })
 public class EnvironmentMatchType implements Serializable, Match {

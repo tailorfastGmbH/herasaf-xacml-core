@@ -19,6 +19,7 @@ package org.herasaf.xacml.core.policy.impl;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -48,6 +49,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author <i>generated</i>
  * @author Florian Huonder
  */
+@XmlRootElement
 @XmlType(name = "EffectType")
 @XmlEnum
 public enum EffectType {

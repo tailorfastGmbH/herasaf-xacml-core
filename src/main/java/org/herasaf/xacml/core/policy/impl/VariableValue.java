@@ -24,7 +24,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  * The result of the calculation if the Expression in a
  * {@link VariableDefinitionType}.
  * 
- * @author Sacha Dolski (sdolski@solnet.ch)
+ * @author Sacha Dolski
  * @version 1.0
  */
 public class VariableValue implements Variable {
@@ -57,12 +57,8 @@ public class VariableValue implements Variable {
 		this.value = value;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml
-	 * .core.context.impl.RequestType, java.util.Map)
+	/**
+	 * {@inheritDoc}
 	 */
 	public Object getValue(RequestType request, EvaluationContext evaluationContext) {
 		return value;

@@ -31,9 +31,8 @@ import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateDataTypeAttribute;
@@ -71,7 +70,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "RequestType", propOrder = { "subjects", "resources", "action", "environment" })
 public class RequestType implements Serializable {
 

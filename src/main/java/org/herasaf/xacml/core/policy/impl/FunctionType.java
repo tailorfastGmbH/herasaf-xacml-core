@@ -17,9 +17,8 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -55,7 +54,7 @@ import org.herasaf.xacml.core.function.Function;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "FunctionType")
 public class FunctionType extends ExpressionType {
 	private static final long serialVersionUID = 1L;

@@ -17,9 +17,8 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
@@ -54,7 +53,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "AttributeSelectorType")
 public class AttributeSelectorType extends ExpressionType {
 

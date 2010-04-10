@@ -26,6 +26,7 @@ package org.herasaf.xacml.core.context.impl;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlEnumValue;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
@@ -56,6 +57,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
+@XmlRootElement
 @XmlType(name = "DecisionType")
 @XmlEnum
 public enum DecisionType {

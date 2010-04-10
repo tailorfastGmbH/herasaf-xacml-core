@@ -19,9 +19,8 @@ package org.herasaf.xacml.core.policy.impl;
 
 import java.util.Map;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.ProcessingException;
@@ -55,7 +54,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * 
  * @author <i>generated</i>
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "VariableReferenceType")
 public class VariableReferenceType extends ExpressionType {
 	private static final long serialVersionUID = 1L;

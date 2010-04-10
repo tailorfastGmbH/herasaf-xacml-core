@@ -20,8 +20,7 @@ package org.herasaf.xacml.core.policy.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.SyntaxException;
@@ -57,7 +56,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "EnvironmentAttributeDesignatorType")
 public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType {
 	private static final long serialVersionUID = 1L;

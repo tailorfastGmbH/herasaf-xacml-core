@@ -20,10 +20,9 @@ package org.herasaf.xacml.core.policy.impl;
 import java.io.Serializable;
 
 import javax.xml.bind.JAXBElement;
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElementRef;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.ProcessingException;
@@ -61,7 +60,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "VariableDefinitionType", propOrder = { "expression" })
 public class VariableDefinitionType implements Serializable, Variable {
 

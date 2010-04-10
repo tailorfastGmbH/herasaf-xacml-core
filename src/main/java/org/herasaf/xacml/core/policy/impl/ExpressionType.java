@@ -19,8 +19,7 @@ package org.herasaf.xacml.core.policy.impl;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.bind.annotation.XmlType;
 
@@ -55,7 +54,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement
 @XmlType(name = "ExpressionType")
 @XmlSeeAlso({ AttributeSelectorType.class, ApplyType.class, FunctionType.class, VariableReferenceType.class,
 		AttributeDesignatorType.class })
