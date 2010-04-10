@@ -69,7 +69,6 @@ public class TestRespectAbandonedEvaluatables {
         // The index starts with 1 that the calculation at the end of the method
         // works properly.
         for (int i = 1; i < evalFiles.size() + 1; i++) {
-            SimplePDPFactory.useDefaultInitializers();
             SimplePDPFactory.getSimplePDP(); //this is needed that jaxb is initialized.
             Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
             Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
@@ -97,7 +96,6 @@ public class TestRespectAbandonedEvaluatables {
             throws Exception {
         // These factory settings are needed to properly set the root combining
         // algorithm.
-        SimplePDPFactory.useDefaultInitializers();
         PDP pdp = SimplePDPFactory.getSimplePDP(respectAbandonedEvaluatables);
         RequestCtx request = RequestCtxFactory.unmarshal(new File(
                 "src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));

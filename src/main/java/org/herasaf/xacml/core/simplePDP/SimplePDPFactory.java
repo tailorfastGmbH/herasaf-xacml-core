@@ -17,8 +17,8 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
@@ -59,10 +59,8 @@ import org.slf4j.LoggerFactory;
  * </ul>
  * <b>Usage:</b><br />
  * <blockquote><code><pre>
- * SimplePDPFactory.useDefaultInitializers();       // 1. Setup the factory to use the default 
- *                                                                      configuration/initializers <br />
- * PDP simplePDP = SimplePDPFactory.getSimplePDP(); // 2. Retrieve an instance of a PDP </pre>
- * </code> </blockquote>
+ * PDP simplePDP = SimplePDPFactory.getSimplePDP();
+ * </pre></code></blockquote>
  * 
  * <b>Note:</b><br />
  * All getSimplePDP(...) methods exist in two ways. On with a flag {@code respectAbandonedEvaluatables } and one without
@@ -98,7 +96,7 @@ import org.slf4j.LoggerFactory;
  */
 public final class SimplePDPFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(SimplePDPFactory.class);
-    private static List<Initializer> initializers = new ArrayList<Initializer>();
+    private static Set<Initializer> initializers;
     private static Class<? extends PolicyCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
     private static Class<? extends PolicyRepository> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
     private static boolean defaultBehaviorOfRespectAbandonedEvaluatables = false;
@@ -107,7 +105,26 @@ public final class SimplePDPFactory {
      * The constructor is private to avoid instantiation of the factory. It is intended to be used in a static way.
      */
     private SimplePDPFactory() {
+    }
 
+    /**
+     * Gets the default list of initializers.
+     * 
+     * This list includes the {@link FunctionsInitializer}, {@link DataTypesInitializer},
+     * {@link RuleCombiningAlgorithmsInitializer}, {@link PolicyCombiningAlgorithmsInitializer}, and
+     * {@link ContextAndPolicyInitializer}.
+     * 
+     * @return the default list of initializers
+     */
+    public static Set<Initializer> getDefaultInitializers() {
+        Set<Initializer> initializers = new HashSet<Initializer>();
+        initializers.add(new FunctionsInitializer());
+        initializers.add(new DataTypesInitializer());
+        initializers.add(new RuleCombiningAlgorithmsInitializer());
+        initializers.add(new PolicyCombiningAlgorithmsInitializer());
+        initializers.add(new ContextAndPolicyInitializer());
+
+        return initializers;
     }
 
     /**
@@ -117,36 +134,23 @@ public final class SimplePDPFactory {
      * If other initializers than the default initializers are needed. The custom list should be created and handed over
      * to this method. <br />
      * <br />
-     * If custom initializers are used the <code>useDefaultInitializers()</code> must not be called!
+     * If custom initializers are used the {@link #useDefaultInitializers()} must not be called!
      * 
      * @param initalizers
      *            A list containing the initializers that shall run when retrieving a new {@link PDP}.
      * 
      * @see {@link #useDefaultInitializers()}
      */
-    public static void setInitalizers(List<Initializer> initalizers) {
+    public static void setInitalizers(Set<Initializer> initalizers) {
         LOGGER.info("Custom initializers are in use.");
         SimplePDPFactory.initializers = initalizers;
     }
 
     /**
-     * Enables all default initializers to initialize functions, data types, combining algorithms and JAXB. <br />
-     * <br />
-     * By default the default initializers are not in use.<br />
-     * <br />
-     * If the default initializers will be used (by calling this method), the factory will be configured to use
-     * {@link FunctionsInitializer}, {@link DataTypesInitializer}, {@link RuleCombiningAlgorithmsInitializer},
-     * {@link PolicyCombiningAlgorithmsInitializer}, and {@link ContextAndPolicyInitializer}.
-     * 
-     * @see {@link #setInitalizers(List)}
+     * Resets the factory to only use the default initializers.
      */
-    public static void useDefaultInitializers() {
-        LOGGER.info("The default initializers are in use.");
-        initializers.add(new FunctionsInitializer());
-        initializers.add(new DataTypesInitializer());
-        initializers.add(new RuleCombiningAlgorithmsInitializer());
-        initializers.add(new PolicyCombiningAlgorithmsInitializer());
-        initializers.add(new ContextAndPolicyInitializer());
+    public static void resetInitializers() {
+        SimplePDPFactory.initializers = getDefaultInitializers();
     }
 
     /**
@@ -174,12 +178,6 @@ public final class SimplePDPFactory {
             throw e;
         }
 
-        if (initializers == null) {
-            InitializationException e = new InitializationException(
-                    "SimplePDPFactory is not initialized. Initializers must be set.");
-            LOGGER.error(e.getMessage());
-            throw e;
-        }
         runInitializers();
 
         return new SimplePDP(rootCombiningAlgorithm, policyRepository, pip, respectAbandonedEvaluatables);
@@ -700,11 +698,22 @@ public final class SimplePDPFactory {
     }
 
     /**
-     * Runs all {@link Initializer}s sequentially.
+     * Runs all {@link Initializer}s. If no custom initializers were set then use the default initializers as retrieved
+     * by {@link #getDefaultInitializers()}.
      */
     private static void runInitializers() {
-        for (Initializer initializer : initializers) {
-            initializer.run();
+        Set<Initializer> inits;
+
+        if (initializers == null) {
+            inits = getDefaultInitializers();
+        } else {
+            inits = initializers;
+        }
+
+        if (inits != null) {
+            for (Initializer initializer : inits) {
+                initializer.run();
+            }
         }
     }
 }

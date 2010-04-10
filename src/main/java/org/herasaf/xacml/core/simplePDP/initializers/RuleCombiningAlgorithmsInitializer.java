@@ -98,4 +98,22 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {
 		return TARGET_CLASS;
 	}
+	
+	/** {@inheritDoc} */
+	public int hashCode() {
+		return getClass().getName().hashCode();
+	}
+	
+	/** {@inheritDoc} */
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		
+		if(!(obj instanceof RuleCombiningAlgorithmsInitializer)){
+			return false;
+		}
+		
+		return hashCode() == obj.hashCode();
+	}
 }

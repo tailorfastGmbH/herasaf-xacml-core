@@ -95,4 +95,22 @@ public class ContextAndPolicyInitializer implements Initializer {
 		logger.error(e.getMessage());
 		throw e;
 	}
+	
+	/** {@inheritDoc} */
+	public int hashCode() {
+		return getClass().getName().hashCode();
+	}
+	
+	/** {@inheritDoc} */
+	public boolean equals(Object obj) {
+		if(obj == null){
+			return false;
+		}
+		
+		if(!(obj instanceof ContextAndPolicyInitializer)){
+			return false;
+		}
+		
+		return hashCode() == obj.hashCode();
+	}
 }

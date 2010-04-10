@@ -85,7 +85,6 @@ public class SimplePDPTest {
 	 */
 	@BeforeClass
 	public void init() {
-		SimplePDPFactory.useDefaultInitializers();
 		simplePDP = SimplePDPFactory.getSimplePDP();
 	}
 

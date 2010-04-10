@@ -40,7 +40,7 @@ public class TestOrderedDeployment {
 	 */
 	@BeforeTest
 	public void init() {
-		SimplePDPFactory.useDefaultInitializers();
+		SimplePDPFactory.getSimplePDP();
 	}
 
 	/**
