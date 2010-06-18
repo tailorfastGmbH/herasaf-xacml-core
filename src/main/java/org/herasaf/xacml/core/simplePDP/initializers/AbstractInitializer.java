@@ -386,11 +386,14 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			}
 
 			int modifier = clazz.getModifiers();
-			if(Modifier.isAbstract(modifier) || Modifier.isInterface(modifier)){
-			    LOGGER.warn("The class " + clazz.getName() + " cannot be instatiated because it is either abstract or an interface.");
-			    continue; //The clazz is skipped if it is not instantiable.
+			if (Modifier.isAbstract(modifier) || Modifier.isInterface(modifier)) {
+				LOGGER
+						.warn("The class "
+								+ clazz.getName()
+								+ " cannot be instatiated because it is either abstract or an interface.");
+				continue; // The clazz is skipped if it is not instantiable.
 			}
-			
+
 			// Create an instance of the class
 			Object instance;
 			try {

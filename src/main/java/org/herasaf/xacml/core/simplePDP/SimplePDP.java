@@ -24,122 +24,148 @@ import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.context.impl.DecisionType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
  * This class is a <i>simple</i> (easy to use) implementation of a {@link PDP}.<br />
- * The PDP needs an initialized JAXB environment (Functions, DataTypes, CombiningAlgorithms etc.) and a
- * PolicyRepository. A PIP can optionally be plugged in.
+ * The PDP needs an initialized JAXB environment (Functions, DataTypes,
+ * CombiningAlgorithms etc.) and a PolicyRepository. A PIP can optionally be
+ * plugged in.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public class SimplePDP implements PDP {
-    private final PolicyRepository policyRepository;
-    private final PIP pip;
-    private final PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
-    private final boolean respectAbandonedEvaluatables;
-    private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
-    private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
+	private final PolicyRepository policyRepository;
+	private final PIP pip;
+	private final PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
+	private final TargetMatcher targetMatcher;
+	private final boolean respectAbandonedEvaluatables;
+	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
+	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 
-    /**
-     * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm}, {@link PolicyRepository} and
-     * {@link PIP}.<br />
-     * The {@link PIP} may be <code>null</code>.
-     * 
-     * @param rootCombiningAlgorithm
-     *            The root {@link PolicyCombiningAlgorithm} to use.
-     * @param policyRepository
-     *            The {@link PolicyRepository} to use.
-     * @param pip
-     *            The {@link PIP} to use (may be <code>null</code>).
-     */
-    public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm, PolicyRepository policyRepository, PIP pip,
-            boolean respectAbandonedEvaluatables) {
-        /*
-         * Checks if the policy repository and the root combining algorithm are both of the same type. The type is
-         * either ordered or unordered (exclusive OR).
-         */
-        if ((PolicyOrderedCombiningAlgorithm.class.isInstance(rootCombiningAlgorithm) && OrderedPolicyRepository.class
-                .isInstance(policyRepository))
-                ^ PolicyUnorderedCombiningAlgorithm.class.isInstance(rootCombiningAlgorithm)) {
-            this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
-            this.policyRepository = policyRepository;
-            this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
-            this.pip = pip;
+	/**
+	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
+	 * {@link PolicyRepository}, {@link PIP} and {@link TargetMatcher}.<br />
+	 * The {@link PIP} may be <code>null</code>.
+	 * 
+	 * @param rootCombiningAlgorithm
+	 *            The root {@link PolicyCombiningAlgorithm} to use.
+	 * @param policyRepository
+	 *            The {@link PolicyRepository} to use.
+	 * @param pip
+	 *            The {@link PIP} to use (may be <code>null</code>).
+	 * @param respectAbandonedEvaluatables
+	 *            If true then abandoned evaluatables are respected.
+	 * @param targetMatcher
+	 *            The {@link TargetMatcher} to use during evaluation.
+	 */
+	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
+			PolicyRepository policyRepository, PIP pip,
+			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher) {
+		/*
+		 * Checks if the policy repository and the root combining algorithm are
+		 * both of the same type. The type is either ordered or unordered
+		 * (exclusive OR).
+		 */
+		if ((PolicyOrderedCombiningAlgorithm.class
+				.isInstance(rootCombiningAlgorithm) && OrderedPolicyRepository.class
+				.isInstance(policyRepository))
+				^ PolicyUnorderedCombiningAlgorithm.class
+						.isInstance(rootCombiningAlgorithm)) {
+			this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
+			this.policyRepository = policyRepository;
+			this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
+			this.pip = pip;
+			this.targetMatcher = targetMatcher;
 
-            if (pip == null) {
-                logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
-            }
+			if (pip == null) {
+				logger
+						.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
+			}
 
-            /*
-             * This check is due to the issue HERASAFXACMLCORE-45.
-             */
-            String javaVersion = System.getProperty("java.version");
-            if (javaVersion != null && (javaVersion.startsWith("1.6.0") || javaVersion.startsWith("1.7.0"))) {
-                logger.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
-                        + "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
-            }
-        } else {
-            InitializationException ie = new InitializationException(
-                    "Root combining algorithm and policy repository are not of the same type "
-                            + "(type is either ordered or unordered).");
-            logger.error(ie.getMessage());
-            throw ie;
-        }
+			/*
+			 * This check is due to the issue HERASAFXACMLCORE-45.
+			 */
+			String javaVersion = System.getProperty("java.version");
+			if (javaVersion != null
+					&& (javaVersion.startsWith("1.6.0") || javaVersion
+							.startsWith("1.7.0"))) {
+				logger
+						.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
+								+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
+			}
+		} else {
+			InitializationException ie = new InitializationException(
+					"Root combining algorithm and policy repository are not of the same type "
+							+ "(type is either ordered or unordered).");
+			logger.error(ie.getMessage());
+			throw ie;
+		}
 
-    }
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public PolicyRepository getPolicyRepository() {
-        return policyRepository;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public PolicyRepository getPolicyRepository() {
+		return policyRepository;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public PIP getPIP() {
-        return pip;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public PIP getPIP() {
+		return pip;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public PolicyCombiningAlgorithm getRootCombiningAlgorithm() {
-        return rootPolicyCombiningAlgorithm;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	public PolicyCombiningAlgorithm getRootCombiningAlgorithm() {
+		return rootPolicyCombiningAlgorithm;
+	}
 
-    /**
-     * {@inheritDoc} <br />
-     * <br />
-     * <b>Logging:</b><br />
-     * This section is relevant for all users of the {@link SimplePDP} in a multi-threaded environment. All logging
-     * messages during the evaluation should be connected with a correlation ID to be able to distinguish the different
-     * requesters. Due to the fact that this connection lays with the requester here is a hint how this could be
-     * realized with the SLF4J Logging Framework (<a href="http://www.slf4j.org">http://www.slf4j.org</a>) used here if
-     * the underlying logging framework (such as logback) supports MDC (Mapped Diagnostic Context).<br />
-     * The MDC (Mapped Diagnostic Context) shall be used to distinguish the different requesters as described here: <a
-     * href="http://logback.qos.ch/manual/mdc.html" >http://logback.qos.ch/manual/mdc.html</a>.<br />
-     * See the description in the Getting Started Guide on the HERAS<sup>AF</sup> Wiki of how to configure MDC.
-     */
-    public ResponseCtx evaluate(RequestCtx request) {
-        MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
-        logger.debug("Evaluating Request: {}", request.toString());
-        EvaluationContext evaluationContext = new EvaluationContext(pip, respectAbandonedEvaluatables);
+	/**
+	 * {@inheritDoc} <br />
+	 * <br />
+	 * <b>Logging:</b><br />
+	 * This section is relevant for all users of the {@link SimplePDP} in a
+	 * multi-threaded environment. All logging messages during the evaluation
+	 * should be connected with a correlation ID to be able to distinguish the
+	 * different requesters. Due to the fact that this connection lays with the
+	 * requester here is a hint how this could be realized with the SLF4J
+	 * Logging Framework (<a
+	 * href="http://www.slf4j.org">http://www.slf4j.org</a>) used here if the
+	 * underlying logging framework (such as logback) supports MDC (Mapped
+	 * Diagnostic Context).<br />
+	 * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
+	 * different requesters as described here: <a
+	 * href="http://logback.qos.ch/manual/mdc.html"
+	 * >http://logback.qos.ch/manual/mdc.html</a>.<br />
+	 * See the description in the Getting Started Guide on the
+	 * HERAS<sup>AF</sup> Wiki of how to configure MDC.
+	 */
+	public ResponseCtx evaluate(RequestCtx request) {
+		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
+		logger.debug("Evaluating Request: {}", request.toString());
+		EvaluationContext evaluationContext = new EvaluationContext(
+				targetMatcher, pip, respectAbandonedEvaluatables);
 
-        DecisionType decision = rootPolicyCombiningAlgorithm.evaluateEvaluatableList(request.getRequest(),
-                policyRepository.getEvaluatables(request), evaluationContext);
+		DecisionType decision = rootPolicyCombiningAlgorithm
+				.evaluateEvaluatableList(request.getRequest(), policyRepository
+						.getEvaluatables(request), evaluationContext);
 
-        MDC.remove(MDC_REQUEST_TIME);
-        return ResponseCtxFactory.create(request.getRequest(), decision, evaluationContext);
-    }
+		MDC.remove(MDC_REQUEST_TIME);
+		return ResponseCtxFactory.create(request.getRequest(), decision,
+				evaluationContext);
+	}
 }

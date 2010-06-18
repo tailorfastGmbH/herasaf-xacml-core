@@ -32,9 +32,11 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 @SuppressWarnings("unchecked")
-public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<?>> {
+public class DataTypesInitializer extends
+		AbstractInitializer<DataTypeAttribute<?>> {
 	private static final String CLASS_TYPE_NAME = "org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute";
-	private static Logger logger = LoggerFactory.getLogger(DataTypesInitializer.class);
+	private static Logger logger = LoggerFactory
+			.getLogger(DataTypesInitializer.class);
 	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.dataTypeAttribute.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/dataTypeAttribute/impl";
 	private static final Class<DataTypeAttribute<?>> TARGET_CLASS;
@@ -50,8 +52,8 @@ public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<
 			clazz = Class.forName(CLASS_TYPE_NAME);
 		} catch (ClassNotFoundException e) {
 			// Must not occur. This would mean an illegal state.
-			InitializationException ie = new InitializationException("Unable to load the class " + CLASS_TYPE_NAME
-					+ ".");
+			InitializationException ie = new InitializationException(
+					"Unable to load the class " + CLASS_TYPE_NAME + ".");
 			logger.error(ie.getMessage(), e);
 			throw ie;
 		}
@@ -86,9 +88,11 @@ public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void setInstancesIntoConverter(Map<String, DataTypeAttribute<?>> instancesMap) {
+	protected void setInstancesIntoConverter(
+			Map<String, DataTypeAttribute<?>> instancesMap) {
 		URNToDataTypeConverter.setDataTypeAttributes(instancesMap);
-		logger.info("{} DataTypeAttributes are initialized.", instancesMap.size());
+		logger.info("{} DataTypeAttributes are initialized.", instancesMap
+				.size());
 	}
 
 	/**
@@ -98,22 +102,22 @@ public class DataTypesInitializer extends AbstractInitializer<DataTypeAttribute<
 	protected Class<DataTypeAttribute<?>> getTargetClass() {
 		return TARGET_CLASS;
 	}
-	
+
 	/** {@inheritDoc} */
 	public int hashCode() {
 		return getClass().getName().hashCode();
 	}
-	
+
 	/** {@inheritDoc} */
 	public boolean equals(Object obj) {
-		if(obj == null){
+		if (obj == null) {
 			return false;
 		}
-		
-		if(!(obj instanceof DataTypesInitializer)){
+
+		if (!(obj instanceof DataTypesInitializer)) {
 			return false;
 		}
-		
+
 		return hashCode() == obj.hashCode();
 	}
 }

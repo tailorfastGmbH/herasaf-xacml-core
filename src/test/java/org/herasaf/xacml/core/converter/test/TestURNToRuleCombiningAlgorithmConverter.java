@@ -22,7 +22,6 @@ import static org.testng.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
@@ -30,13 +29,12 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgo
 import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
-import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
  * Tests the {@link URNToRuleCombiningAlgorithmConverter} JAXB converter.
- *
+ * 
  * @author Sacha Dolski
  */
 public class TestURNToRuleCombiningAlgorithmConverter {
@@ -46,13 +44,13 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 	private Map<String, RuleCombiningAlgorithm> map;
 
 	/**
-	 * Initializes {@link URNToPolicyCombiningAlgorithmConverter} with a {@link PolicyCombiningAlgorithm}.
+	 * Initializes {@link URNToPolicyCombiningAlgorithmConverter} with a
+	 * {@link PolicyCombiningAlgorithm}.
 	 */
 	@BeforeTest
 	public void beforeTest() {
 		converter = new URNToRuleCombiningAlgorithmConverter();
 		comAlg = new RuleDenyOverridesAlgorithm();
-		((AbstractCombiningAlgorithm)comAlg).setTargetMatcher(new TargetMatcherMock());
 		map = new HashMap<String, RuleCombiningAlgorithm>();
 		map.put(DENY_OVERRIDES_ID, comAlg);
 		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(map);
@@ -60,8 +58,8 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 
 	/**
 	 * Tests if the unmarshalling works correctly. That means that the
-	 * {@link URNToRuleCombiningAlgorithmConverter#unmarshal(String)} returns the proper
-	 * object.
+	 * {@link URNToRuleCombiningAlgorithmConverter#unmarshal(String)} returns
+	 * the proper object.
 	 * 
 	 * @throws IllegalArgumentException
 	 *             In case of an improper argument.
@@ -74,8 +72,8 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 
 	/**
 	 * Tests if the marshalling works correctly. That means that the
-	 * {@link URNToRuleCombiningAlgorithmConverter#marshal(RuleCombiningAlgorithm)} returns the proper
-	 * {@link String}.
+	 * {@link URNToRuleCombiningAlgorithmConverter#marshal(RuleCombiningAlgorithm)}
+	 * returns the proper {@link String}.
 	 * 
 	 * @throws IllegalArgumentException
 	 *             In case of an improper {@link DataTypeAttribute}.
@@ -87,7 +85,8 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 
 	/**
 	 * Expects an {@link IllegalArgumentException} because an improper argument
-	 * is given to the {@link URNToPolicyCombiningAlgorithmConverter#unmarshal(String)} method.
+	 * is given to the
+	 * {@link URNToPolicyCombiningAlgorithmConverter#unmarshal(String)} method.
 	 * 
 	 * @throws IllegalArgumentException
 	 */

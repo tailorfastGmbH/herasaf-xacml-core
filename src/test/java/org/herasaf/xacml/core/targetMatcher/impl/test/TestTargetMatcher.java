@@ -67,7 +67,7 @@ public class TestTargetMatcher {
 	 */
 	@BeforeTest
 	public void init() {
-		evaluationContext = new EvaluationContext();
+		evaluationContext = new EvaluationContext(new TargetMatcherImpl());
 	}
 
 	/**
@@ -492,10 +492,10 @@ public class TestTargetMatcher {
 		AttributeValueType attrValue = new AttributeValueType();
 		attrValue.getContent().add(MATCH);
 		attrValue.setDataType(new StringDataTypeAttribute()); // String is fix
-																// because all
-																// tests need
-																// string as
-																// data type
+		// because all
+		// tests need
+		// string as
+		// data type
 		smt.setAttributeValue(attrValue);
 		rmt.setAttributeValue(attrValue);
 		amt.setAttributeValue(attrValue);
@@ -526,7 +526,8 @@ public class TestTargetMatcher {
 		TargetType target = new TargetType();
 
 		TargetMatcher matcher = new TargetMatcherImpl();
-		assertEquals(matcher.match(null, target, evaluationContext), true); // Request can
+		assertEquals(matcher.match(null, target, evaluationContext), true); // Request
+																			// can
 		// be null
 		// because
 		// the data

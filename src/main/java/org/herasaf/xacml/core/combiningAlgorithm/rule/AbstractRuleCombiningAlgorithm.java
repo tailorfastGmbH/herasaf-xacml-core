@@ -36,20 +36,21 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * 
  * @author Sacha Dolski
  */
-public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
-		RuleCombiningAlgorithm {
-    private static final long serialVersionUID = 1L;
-    protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
+public abstract class AbstractRuleCombiningAlgorithm extends
+		AbstractCombiningAlgorithm implements RuleCombiningAlgorithm {
+	private static final long serialVersionUID = 1L;
+	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluateRule(final RequestType request, final RuleType rule,
-			final EvaluationContext evaluationContext) {
+	public DecisionType evaluateRule(final RequestType request,
+			final RuleType rule, final EvaluationContext evaluationContext) {
 		/*
 		 * Matches the target of the rule
 		 */
-		final DecisionType targetDecision = matchTarget(request, rule.getTarget(), evaluationContext);
+		final DecisionType targetDecision = matchTarget(request, rule
+				.getTarget(), evaluationContext);
 		if (targetDecision != DecisionType.PERMIT) {
 			return targetDecision;
 		}
@@ -68,7 +69,8 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 
 		}
 		try {
-			decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request, evaluationContext);
+			decision = (Boolean) ((ExpressionType) condition.getExpression()
+					.getValue()).handle(request, evaluationContext);
 		} catch (ProcessingException e) {
 			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;

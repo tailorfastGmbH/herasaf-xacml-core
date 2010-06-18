@@ -25,34 +25,36 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 
 /**
  * This is a mock of the {@link RuleOrderedCombiningAlgorithm}.
- *
+ * 
  * @author Florian Huonder
  */
 public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
-    private static final long serialVersionUID = 1L;
-    public DecisionType targetDecision;
+	private static final long serialVersionUID = 1L;
+	public DecisionType targetDecision;
 	public StatusCode targetStatusCode;
 	public MissingAttributeDetailType targetMissingAttribute;
 
 	/**
-	 * Creates a new mock that contains a {@link TargetMatcherMock}.
+	 * Creates a new {@link OrderedRuleMock}.
 	 */
 	public OrderedRuleMock() {
-		super.setTargetMatcher(new TargetMatcherMock());
 	}
 
 	/**
 	 * Creates a new mock.
 	 * 
-	 * @param targetDecision The {@link DecisionType} of the combining algorithm.
-	 * @param targetStatusCode The {@link StatusCode} of the combing algorithm.
-	 * @param targetMissingAttribute The {@link MissingAttributeDetailType} of the combining algorithm.
+	 * @param targetDecision
+	 *            The {@link DecisionType} of the combining algorithm.
+	 * @param targetStatusCode
+	 *            The {@link StatusCode} of the combing algorithm.
+	 * @param targetMissingAttribute
+	 *            The {@link MissingAttributeDetailType} of the combining
+	 *            algorithm.
 	 */
 	public OrderedRuleMock(DecisionType targetDecision,
 			StatusCode targetStatusCode,
@@ -69,8 +71,8 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	 * Returns always null because this method is not needed.
 	 */
 	@Override
-	public DecisionType evaluateRule(RequestType request,
-			RuleType rule, EvaluationContext evaluationContext) {
+	public DecisionType evaluateRule(RequestType request, RuleType rule,
+			EvaluationContext evaluationContext) {
 		return null;
 	}
 
@@ -80,8 +82,8 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	 * Returns the predefined {@link DecisionType}.
 	 */
 	@Override
-	protected DecisionType matchTarget(RequestType request,
-			TargetType target, EvaluationContext evaluationContext) {
+	protected DecisionType matchTarget(RequestType request, TargetType target,
+			EvaluationContext evaluationContext) {
 		evaluationContext.resetStatus();
 		if (targetMissingAttribute != null) {
 			evaluationContext.addMissingAttributes(targetMissingAttribute);
@@ -94,10 +96,11 @@ public class OrderedRuleMock extends RuleOrderedCombiningAlgorithm {
 	 * Returns always permit.
 	 */
 	public DecisionType evaluateRuleList(RequestType request,
-			List<RuleType> possiblePolicies, EvaluationContext evaluationContexts) {
+			List<RuleType> possiblePolicies,
+			EvaluationContext evaluationContexts) {
 		return DecisionType.PERMIT;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */

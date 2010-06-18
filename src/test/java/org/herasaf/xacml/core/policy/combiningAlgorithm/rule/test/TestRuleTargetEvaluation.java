@@ -26,6 +26,7 @@ import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test.PolicyTypeMock;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
@@ -38,59 +39,66 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestRuleTargetEvaluation {
-	
+
 	/**
 	 * Creates the tests cases.
+	 * 
 	 * @return The test cases.
-	 * @throws Exception If an error occurs.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@DataProvider(name = "TargetEvaluationInput")
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		return new Object[][] {
 				new Object[] {
-						new OrderedRuleMock(DecisionType.PERMIT,
-								StatusCode.OK, null), new PolicyTypeMock(),
-								DecisionType.PERMIT, StatusCode.OK, false },
+						new OrderedRuleMock(DecisionType.PERMIT, StatusCode.OK,
+								null), new PolicyTypeMock(),
+						DecisionType.PERMIT, StatusCode.OK, false },
 				new Object[] {
-						new OrderedRuleMock(DecisionType.DENY,
-								StatusCode.OK, null), new PolicyTypeMock(),
-								DecisionType.DENY, StatusCode.OK, false },
+						new OrderedRuleMock(DecisionType.DENY, StatusCode.OK,
+								null), new PolicyTypeMock(), DecisionType.DENY,
+						StatusCode.OK, false },
 				new Object[] {
-						new OrderedRuleMock(DecisionType.PERMIT,
-								StatusCode.OK, null), new PolicySetType(),
-								DecisionType.INDETERMINATE,
-						StatusCode.SYNTAX_ERROR, false },
-				new Object[] {
-						new UnorderedRuleMock(DecisionType.PERMIT,
-								StatusCode.OK, null), new PolicyTypeMock(),
-								DecisionType.PERMIT, StatusCode.OK, false },
-				new Object[] {
-						new UnorderedRuleMock(DecisionType.DENY,
-								StatusCode.OK, null), new PolicyTypeMock(),
-								DecisionType.DENY, StatusCode.OK, false },
+						new OrderedRuleMock(DecisionType.PERMIT, StatusCode.OK,
+								null), new PolicySetType(),
+						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						false },
 				new Object[] {
 						new UnorderedRuleMock(DecisionType.PERMIT,
+								StatusCode.OK, null), new PolicyTypeMock(),
+						DecisionType.PERMIT, StatusCode.OK, false },
+				new Object[] {
+						new UnorderedRuleMock(DecisionType.DENY, StatusCode.OK,
+								null), new PolicyTypeMock(), DecisionType.DENY,
+						StatusCode.OK, false },
+				new Object[] {
+						new UnorderedRuleMock(DecisionType.PERMIT,
 								StatusCode.OK, null), new PolicySetType(),
-								DecisionType.INDETERMINATE,
-						StatusCode.SYNTAX_ERROR, false },
-		};
+						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						false }, };
 	}
 
 	/**
 	 * Tests the target evaluation of the {@link RuleType}.
 	 * 
-	 * @param alg The combining algorithm to use.
-	 * @param eval The {@link Evaluatable} that contains the {@link RuleType}.
-	 * @param expectedDecision The expected {@link DecisionType}.
-	 * @param expectedStatusCode The expected {@link StatusCode}.
-	 * @param missingAttributeExpected True if the {@link DecisionType} contains missing attributes.
+	 * @param alg
+	 *            The combining algorithm to use.
+	 * @param eval
+	 *            The {@link Evaluatable} that contains the {@link RuleType}.
+	 * @param expectedDecision
+	 *            The expected {@link DecisionType}.
+	 * @param expectedStatusCode
+	 *            The expected {@link StatusCode}.
+	 * @param missingAttributeExpected
+	 *            True if the {@link DecisionType} contains missing attributes.
 	 */
 	@Test(dataProvider = "TargetEvaluationInput")
-	public void testOrderedRuleTargetEvaluation(AbstractRuleCombiningAlgorithm alg,
-			Evaluatable eval, DecisionType expectedDecision,
-			StatusCode expectedStatusCode, boolean missingAttributeExpected) {
+	public void testOrderedRuleTargetEvaluation(
+			AbstractRuleCombiningAlgorithm alg, Evaluatable eval,
+			DecisionType expectedDecision, StatusCode expectedStatusCode,
+			boolean missingAttributeExpected) {
 
-		EvaluationContext infos = new EvaluationContext();
+		EvaluationContext infos = new EvaluationContext(new TargetMatcherMock());
 		DecisionType decision = alg.evaluate(null, eval, infos);
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

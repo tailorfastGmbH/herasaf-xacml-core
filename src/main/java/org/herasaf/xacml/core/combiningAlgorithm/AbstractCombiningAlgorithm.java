@@ -26,7 +26,6 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
-import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,18 +40,7 @@ import org.slf4j.LoggerFactory;
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
     private static final long serialVersionUID = 1L;
     private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
-	private TargetMatcher targetMatcher;
 
-	/**
-	 * Sets the {@link TargetMatcher}.
-	 * 
-	 * @param targetMatcher
-	 *            The {@link TargetMatcher} to set into this combining
-	 *            algorithm.
-	 */
-	public void setTargetMatcher(final TargetMatcher targetMatcher) {
-		this.targetMatcher = targetMatcher;
-	}
 
 	/**
 	 * Matches the target of the request.
@@ -72,7 +60,7 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 		DecisionType decision = DecisionType.INDETERMINATE;
 		try {
 			logger.debug("Starting target match.");
-			targetMatchDecision = targetMatcher.match(request, target, evaluationContext);
+			targetMatchDecision = evaluationContext.getTargetMatcher().match(request, target, evaluationContext);
 
 			/*
 			 * The target match can't return "not Applicable". If the

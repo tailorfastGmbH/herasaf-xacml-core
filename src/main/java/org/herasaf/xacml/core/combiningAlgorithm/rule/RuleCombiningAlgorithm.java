@@ -52,7 +52,8 @@ public interface RuleCombiningAlgorithm {
 	 *            The evaluation context.
 	 * @return The decision of the evaluation.
 	 */
-	DecisionType evaluateRule(RequestType request, RuleType rule, EvaluationContext evaluationContext);
+	DecisionType evaluateRule(RequestType request, RuleType rule,
+			EvaluationContext evaluationContext);
 
 	/**
 	 * Evaluates all rules given in the rule list and returns the combined
@@ -66,5 +67,6 @@ public interface RuleCombiningAlgorithm {
 	 *            t The evaluation context.
 	 * @return The decision of the evaluation.
 	 */
-	DecisionType evaluateRuleList(RequestType request, List<RuleType> possibleRules, EvaluationContext evaluationContexts);
+	DecisionType evaluateRuleList(RequestType request,
+			List<RuleType> possibleRules, EvaluationContext evaluationContexts);
 }

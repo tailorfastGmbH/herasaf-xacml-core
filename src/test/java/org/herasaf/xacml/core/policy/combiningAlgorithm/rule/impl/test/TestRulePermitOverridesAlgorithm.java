@@ -41,45 +41,41 @@ import org.testng.annotations.Test;
 
 /**
  * Tests the {@link RulePermitOverridesAlgorithm}.
- *
+ * 
  * @author Florian Huonder.
  */
 public class TestRulePermitOverridesAlgorithm {
 	private AbstractRuleCombiningAlgorithm combAlg;
-	private TargetMatcherMock targetMatcher;
-	private RulePermitOverridesAlgorithm[] rulePermitOverridesAlgorithmWithTRUEDecisionsArray;
-	private RulePermitOverridesAlgorithm rulePermitOverridesAlgorithmWithTRUEFALSEDecisions;
+	private TargetMatcherMock[] targetMatcherMockWithTRUEDecisionsArray;
+	private TargetMatcherMock targetMatcherMockWithTRUEFALSEDecisions;
 
 	/**
-	 * Initializes the {@link RulePermitOverridesAlgorithm}s.
+	 * Initializes the {@link TargetMatcherMock}s.
 	 */
 	@BeforeTest
 	public void init() {
-		rulePermitOverridesAlgorithmWithTRUEDecisionsArray = new RulePermitOverridesAlgorithm[12];
-		for (int i = 0; i < rulePermitOverridesAlgorithmWithTRUEDecisionsArray.length; i++) {
-			rulePermitOverridesAlgorithmWithTRUEDecisionsArray[i] = new RulePermitOverridesAlgorithm();
-			rulePermitOverridesAlgorithmWithTRUEDecisionsArray[i]
-					.setTargetMatcher(new TargetMatcherMock(
-							new TargetMatcherMock.Decisions[] {
-									TargetMatcherMock.Decisions.TRUE,
-									TargetMatcherMock.Decisions.TRUE,
-									TargetMatcherMock.Decisions.TRUE }));
+		targetMatcherMockWithTRUEDecisionsArray = new TargetMatcherMock[12];
+		for (int i = 0; i < targetMatcherMockWithTRUEDecisionsArray.length; i++) {
+			targetMatcherMockWithTRUEDecisionsArray[i] = new TargetMatcherMock(
+					new TargetMatcherMock.Decisions[] {
+							TargetMatcherMock.Decisions.TRUE,
+							TargetMatcherMock.Decisions.TRUE,
+							TargetMatcherMock.Decisions.TRUE });
 		}
 
-		rulePermitOverridesAlgorithmWithTRUEFALSEDecisions = new RulePermitOverridesAlgorithm();
-		rulePermitOverridesAlgorithmWithTRUEFALSEDecisions
-				.setTargetMatcher(new TargetMatcherMock(
-						new TargetMatcherMock.Decisions[] {
-								TargetMatcherMock.Decisions.TRUE,
-								TargetMatcherMock.Decisions.FALSE,
-								TargetMatcherMock.Decisions.FALSE }));
+		targetMatcherMockWithTRUEFALSEDecisions = new TargetMatcherMock(
+				new TargetMatcherMock.Decisions[] {
+						TargetMatcherMock.Decisions.TRUE,
+						TargetMatcherMock.Decisions.FALSE,
+						TargetMatcherMock.Decisions.FALSE });
 	}
 
 	/**
 	 * Creates the test cases.
 	 * 
 	 * @return The test cases.
-	 * @throws Exception If an error occurs.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@DataProvider(name = "testData")
 	public Object[][] evaluationData() throws Exception {
@@ -91,7 +87,7 @@ public class TestRulePermitOverridesAlgorithm {
 										new ConditionMock(true, null)),
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true, null)), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[0],
+						targetMatcherMockWithTRUEDecisionsArray[0],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit false null",
@@ -100,7 +96,7 @@ public class TestRulePermitOverridesAlgorithm {
 										new ConditionMock(false, null)),
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true, null)), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[1],
+						targetMatcherMockWithTRUEDecisionsArray[1],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true prcocessingException",
@@ -113,7 +109,7 @@ public class TestRulePermitOverridesAlgorithm {
 												true,
 												new FunctionProcessingException(
 														"test"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[2],
+						targetMatcherMockWithTRUEDecisionsArray[2],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true SyntaxException",
@@ -123,7 +119,7 @@ public class TestRulePermitOverridesAlgorithm {
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true,
 												new SyntaxException("test"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[3],
+						targetMatcherMockWithTRUEDecisionsArray[3],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true missingAttributeException",
@@ -138,7 +134,7 @@ public class TestRulePermitOverridesAlgorithm {
 														"ID",
 														new StringDataTypeAttribute(),
 														"Issuer"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[4],
+						targetMatcherMockWithTRUEDecisionsArray[4],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true SyntaxException, permit true FunctionProcessingException",
@@ -152,7 +148,7 @@ public class TestRulePermitOverridesAlgorithm {
 												true,
 												new FunctionProcessingException(
 														"Test"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[5],
+						targetMatcherMockWithTRUEDecisionsArray[5],
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						false, },
 				new Object[] {
@@ -167,7 +163,7 @@ public class TestRulePermitOverridesAlgorithm {
 												true,
 												new FunctionProcessingException(
 														"Test"))), },
-						rulePermitOverridesAlgorithmWithTRUEFALSEDecisions,
+						targetMatcherMockWithTRUEFALSEDecisions,
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true null",
@@ -176,7 +172,7 @@ public class TestRulePermitOverridesAlgorithm {
 										new ConditionMock(true, null)),
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true, null)), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[6],
+						targetMatcherMockWithTRUEDecisionsArray[6],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny false null",
@@ -185,7 +181,7 @@ public class TestRulePermitOverridesAlgorithm {
 										new ConditionMock(false, null)),
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true, null)), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[7],
+						targetMatcherMockWithTRUEDecisionsArray[7],
 						DecisionType.DENY, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true processingException",
@@ -198,7 +194,7 @@ public class TestRulePermitOverridesAlgorithm {
 												true,
 												new FunctionProcessingException(
 														"test"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[8],
+						targetMatcherMockWithTRUEDecisionsArray[8],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true syntaxException",
@@ -208,7 +204,7 @@ public class TestRulePermitOverridesAlgorithm {
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true,
 												new SyntaxException("test"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[9],
+						targetMatcherMockWithTRUEDecisionsArray[9],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true missingAttribueException",
@@ -223,7 +219,7 @@ public class TestRulePermitOverridesAlgorithm {
 														"ID",
 														new StringDataTypeAttribute(),
 														"Issuer"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[10],
+						targetMatcherMockWithTRUEDecisionsArray[10],
 						DecisionType.PERMIT, StatusCode.OK, false, },
 				new Object[] {
 						"Not applicable true null, indeterminate true missing attribute Exception",
@@ -238,17 +234,20 @@ public class TestRulePermitOverridesAlgorithm {
 														"ID",
 														new StringDataTypeAttribute(),
 														"Issuer"))), },
-						rulePermitOverridesAlgorithmWithTRUEDecisionsArray[11],
+						targetMatcherMockWithTRUEDecisionsArray[11],
 						DecisionType.INDETERMINATE,
 						StatusCode.MISSING_ATTRIBUTE, true, }, };
 
 	}
-	
+
 	/**
 	 * Creates a {@link RuleType}.
 	 * 
-	 * @param effect The {@link EffectType} that the created rule shall return.
-	 * @param condition The {@link ConditionMock} that the {@link RuleType} shall contain.
+	 * @param effect
+	 *            The {@link EffectType} that the created rule shall return.
+	 * @param condition
+	 *            The {@link ConditionMock} that the {@link RuleType} shall
+	 *            contain.
 	 * @return The created {@link RuleType}.
 	 */
 	private RuleType initializeRule(EffectType effect, ConditionMock condition) {
@@ -259,18 +258,18 @@ public class TestRulePermitOverridesAlgorithm {
 	}
 
 	/**
-	 * Initializes the {@link RulePermitOverridesAlgorithm} and sets {@link TargetMatcherMock} into it.
+	 * Initializes the {@link RulePermitOverridesAlgorithm}.
 	 */
 	@BeforeMethod
 	public void beforeTest() {
-		targetMatcher = new TargetMatcherMock();
 		combAlg = new RulePermitOverridesAlgorithm();
-		combAlg.setTargetMatcher(targetMatcher);
 	}
 
 	/**
 	 * Tests if the {@link RulePermitOverridesAlgorithm} returns a proper ID:
-	 * @throws Exception If an error occurs.
+	 * 
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(enabled = true)
 	public void testID() throws Exception {
@@ -281,23 +280,29 @@ public class TestRulePermitOverridesAlgorithm {
 	/**
 	 * Tests if the {@link RulePermitOverridesAlgorithm} works properly.
 	 * 
-	 * @param testID An ID for the test case.
-	 * @param rulesArray An array containing all {@link RuleType}s.
-	 * @param alg The combining algorithm to test.
-	 * @param expectedDecision The expected {@link DecisionType}.
-	 * @param expectedStatusCode The expected {@link StatusCode}.
-	 * @param expectMissingAttribute True if missing attributes are expected, false otherwise.
+	 * @param testID
+	 *            An ID for the test case.
+	 * @param rulesArray
+	 *            An array containing all {@link RuleType}s.
+	 * @param tmm
+	 *            The {@link TargetMatcherMock} to use.
+	 * @param expectedDecision
+	 *            The expected {@link DecisionType}.
+	 * @param expectedStatusCode
+	 *            The expected {@link StatusCode}.
+	 * @param expectMissingAttribute
+	 *            True if missing attributes are expected, false otherwise.
 	 * @throws Exception
 	 */
 	@Test(dataProvider = "testData")
 	public void testCombiningAlg(String testID, RuleType[] rulesArray,
-			AbstractRuleCombiningAlgorithm alg, DecisionType expectedDecision,
+			TargetMatcherMock tmm, DecisionType expectedDecision,
 			StatusCode expectedStatusCode, boolean expectMissingAttribute)
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		EvaluationContext infos = new EvaluationContext();
-		DecisionType decision = alg.evaluate(null, policy, infos);
+		EvaluationContext infos = new EvaluationContext(tmm);
+		DecisionType decision = combAlg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

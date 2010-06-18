@@ -34,6 +34,7 @@ import org.herasaf.xacml.core.policy.impl.Variable;
 import org.herasaf.xacml.core.policy.impl.VariableDefinitionType;
 import org.herasaf.xacml.core.policy.impl.VariableReferenceType;
 import org.herasaf.xacml.core.policy.impl.VariableValue;
+import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -54,33 +55,43 @@ public class TestVariableReference {
 	}
 
 	/**
-	 * Tests if the {@link VariableReferenceType#handle(RequestType, EvaluationContext)} method behaves properly.
+	 * Tests if the
+	 * {@link VariableReferenceType#handle(RequestType, EvaluationContext)}
+	 * method behaves properly.
 	 * 
-	 *@throws Exception If an error occurs.
+	 *@throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
-		Object[] values = new Object[]{"test1", "test2", "test3"};
-		EvaluationContext evaluationContext = new EvaluationContext();
-		evaluationContext.setVariableDefinitions(initVariableDefinitions(values));
+		Object[] values = new Object[] { "test1", "test2", "test3" };
+		EvaluationContext evaluationContext = new EvaluationContext(
+				new TargetMatcherImpl());
+		evaluationContext
+				.setVariableDefinitions(initVariableDefinitions(values));
 
 		VariableReferenceType varRef1 = new VariableReferenceType();
 		varRef1.setVariableId("1");
-		assertEquals(varRef1.handle(new RequestType(), evaluationContext), values[0]);
+		assertEquals(varRef1.handle(new RequestType(), evaluationContext),
+				values[0]);
 
 		VariableReferenceType varRef2 = new VariableReferenceType();
 		varRef2.setVariableId("2");
-		assertEquals(varRef2.handle(new RequestType(), evaluationContext), values[1]);
+		assertEquals(varRef2.handle(new RequestType(), evaluationContext),
+				values[1]);
 
 		VariableReferenceType varRef3 = new VariableReferenceType();
 		varRef3.setVariableId("3");
-		assertEquals(varRef3.handle(new RequestType(), evaluationContext), values[2]);
+		assertEquals(varRef3.handle(new RequestType(), evaluationContext),
+				values[2]);
 	}
 
 	/**
 	 * Initializes some {@link VariableDefinitionType}s.
 	 * 
-	 * @param values The {@link AttributeValueType}s to place into the expressions of the {@link VariableDefinitionType}.
+	 * @param values
+	 *            The {@link AttributeValueType}s to place into the expressions
+	 *            of the {@link VariableDefinitionType}.
 	 * @return A map containing the {@link VariableDefinitionType}s.
 	 */
 	private Map<String, Variable> initVariableDefinitions(Object[] values) {
@@ -107,9 +118,13 @@ public class TestVariableReference {
 
 	/**
 	 * Initializes an {@link AttributeValueType}.
-	 * @param object The content of the {@link AttributeValueType}.
-	 * @param dataType The data type of the {@link AttributeValueType}.
-	 * @return The created {@link AttributeValueType} contained within a {@link JAXBElement}.
+	 * 
+	 * @param object
+	 *            The content of the {@link AttributeValueType}.
+	 * @param dataType
+	 *            The data type of the {@link AttributeValueType}.
+	 * @return The created {@link AttributeValueType} contained within a
+	 *         {@link JAXBElement}.
 	 */
 	private JAXBElement<AttributeValueType> initAttributeValue(Object object,
 			DataTypeAttribute<?> dataType) {

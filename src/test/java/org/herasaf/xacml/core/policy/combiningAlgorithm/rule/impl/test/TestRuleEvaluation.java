@@ -35,21 +35,23 @@ import org.herasaf.xacml.core.policy.impl.ConditionType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
  * Tests if the rule evaluation works properly.
-
+ * 
  * @author Florian Huonder.
  */
 public class TestRuleEvaluation {
-	
+
 	/**
 	 * Creates the test cases.
 	 * 
 	 * @return The test cases.
-	 * @throws Exception If an error occurs.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@DataProvider(name = "evaluationData")
 	public Object[][] evaluationData() throws Exception {
@@ -62,7 +64,9 @@ public class TestRuleEvaluation {
 												"attribute ID",
 												new StringDataTypeAttribute(),
 												"issuer"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
 						StatusCode.MISSING_ATTRIBUTE,
 						new MissingAttributeDetailType() },
@@ -70,52 +74,68 @@ public class TestRuleEvaluation {
 						"Permit, true, null, true",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								true, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.PERMIT, StatusCode.OK, null },
 				new Object[] {
 						"Permit, true, null, false",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								true, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"Permit, true, null, processing exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								true, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, true, null, syntax exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								true, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, false, null, true",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"Permit, false, null, false",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"Permit, false, null, processing exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, false, null, syntax exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
@@ -124,7 +144,9 @@ public class TestRuleEvaluation {
 								new ConditionMock(true,
 										new ExpressionProcessingException(
 												"test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
@@ -133,7 +155,9 @@ public class TestRuleEvaluation {
 								new ConditionMock(true,
 										new ExpressionProcessingException(
 												"test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"Permit, true, processingException, processing exception",
@@ -141,7 +165,9 @@ public class TestRuleEvaluation {
 								new ConditionMock(true,
 										new ExpressionProcessingException(
 												"test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
@@ -150,147 +176,191 @@ public class TestRuleEvaluation {
 								new ConditionMock(true,
 										new ExpressionProcessingException(
 												"test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, true, syntaxException, true",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, true, syntaxException, false",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"Permit, true, syntaxException, processing exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, true, syntaxException, syntax exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, null, true",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.DENY, StatusCode.OK, null },
 				new Object[] {
 						"DENY, true, null, false",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"DENY, true, null, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, null, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, false, null, true",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"DENY, false, null, false",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"DENY, false, null, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, false, null, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, processingException, true",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								new ExpressionProcessingException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, processingException, false",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								new ExpressionProcessingException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"DENY, true, processingException, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								new ExpressionProcessingException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, processingException, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
 								new ExpressionProcessingException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, syntaxException, true",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, syntaxException, false",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.FALSE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
 						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
 				new Object[] {
 						"DENY, true, syntaxException, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.PROCESSINGEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, syntaxException, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								false, new SyntaxException("test"))),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.SYNTAXEXCEPTION),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
 						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"true, wrong type, null, true",
 						initializeRule(EffectType.DENY, new ConditionMock(
 								"Hallo", null)),
-						initializeRuleCombiningAlg(TargetMatcherMock.Decisions.TRUE),
+						initializeRuleCombiningAlg(),
+						new TargetMatcherMock(
+								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
 						StatusCode.PROCESSING_ERROR, null }, };
 	}
@@ -298,8 +368,11 @@ public class TestRuleEvaluation {
 	/**
 	 * Creates a {@link RuleType}.
 	 * 
-	 * @param effect The {@link EffectType} that the created rule shall return.
-	 * @param condition The {@link ConditionMock} that the {@link RuleType} shall contain.
+	 * @param effect
+	 *            The {@link EffectType} that the created rule shall return.
+	 * @param condition
+	 *            The {@link ConditionMock} that the {@link RuleType} shall
+	 *            contain.
 	 * @return The created {@link RuleType}.
 	 */
 	private RuleType initializeRule(EffectType effect, ConditionType condition) {
@@ -311,33 +384,38 @@ public class TestRuleEvaluation {
 	}
 
 	/**
-	 * Initializes the {@link RuleDenyOverridesAlgorithm} and sets {@link TargetMatcherMock} into it.
+	 * Initializes the {@link RuleDenyOverridesAlgorithm}.
 	 */
-	private RuleCombiningAlgorithm initializeRuleCombiningAlg(
-			TargetMatcherMock.Decisions decision) {
-		TargetMatcherMock targetMatcher = new TargetMatcherMock(
-				new TargetMatcherMock.Decisions[] { decision });
-		return new RuleCombiningAlgMock(targetMatcher);
+	private RuleCombiningAlgorithm initializeRuleCombiningAlg() {
+		return new RuleCombiningAlgMock();
 	}
 
 	/**
 	 * Tests if the rule evaluation works properly.
 	 * 
-	 * @param testID An ID for the test case.
-	 * @param rule The {@link RuleType}.
-	 * @param combAlg The combining algorithm to test.
-	 * @param expectedDecision The expected {@link DecisionType}.
-	 * @param expectedStatusCode The expected {@link StatusCode}.
-	 * @param expectedMissingAttribute True if missing attributes are expected, false otherwise.
+	 * @param testID
+	 *            An ID for the test case.
+	 * @param rule
+	 *            The {@link RuleType}.
+	 * @param combAlg
+	 *            The combining algorithm to test.
+	 * @param targetMatcher
+	 *            The {@link TargetMatcher} to use.
+	 * @param expectedDecision
+	 *            The expected {@link DecisionType}.
+	 * @param expectedStatusCode
+	 *            The expected {@link StatusCode}.
+	 * @param expectedMissingAttribute
+	 *            True if missing attributes are expected, false otherwise.
 	 * @throws Exception
 	 */
 	@Test(dataProvider = "evaluationData")
 	public void testEvaluateRule(String testID, RuleType rule,
-			RuleCombiningAlgMock combAlg, DecisionType expectedDecision,
-			StatusCode expectedStatusCode,
+			RuleCombiningAlgMock combAlg, TargetMatcher targetMatcher,
+			DecisionType expectedDecision, StatusCode expectedStatusCode,
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
-		EvaluationContext info = new EvaluationContext();
+		EvaluationContext info = new EvaluationContext(targetMatcher);
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule, info);
 		assertEquals(madeDecision, expectedDecision);
 		assertEquals(info.getStatusCode(), expectedStatusCode);

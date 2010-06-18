@@ -18,13 +18,10 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
-import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
-import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,26 +32,13 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<AbstractRuleCombiningAlgorithm> {
-	private static Logger logger = LoggerFactory.getLogger(RuleCombiningAlgorithmsInitializer.class);
+public class RuleCombiningAlgorithmsInitializer extends
+		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
+	private static Logger logger = LoggerFactory
+			.getLogger(RuleCombiningAlgorithmsInitializer.class);
 	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
 	private static final Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
-	private final TargetMatcher targetMatcher = new TargetMatcherImpl();
-
-	/**
-	 * This method sets the default {@link TargetMatcher} into the combining
-	 * algorithms.
-	 * 
-	 * @param instances
-	 *            The instances of type T.
-	 */
-	@Override
-	protected void furtherInitializations(Set<AbstractRuleCombiningAlgorithm> instances) {
-		for (AbstractRuleCombiningAlgorithm algorithm : instances) {
-			algorithm.setTargetMatcher(targetMatcher);
-		}
-	}
 
 	/**
 	 * {@inheritDoc}
@@ -84,11 +68,13 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected void setInstancesIntoConverter(Map<String, AbstractRuleCombiningAlgorithm> instancesMap) {
+	protected void setInstancesIntoConverter(
+			Map<String, AbstractRuleCombiningAlgorithm> instancesMap) {
 		Map<String, RuleCombiningAlgorithm> instances = new HashMap<String, RuleCombiningAlgorithm>();
 		instances.putAll(instancesMap);
 		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(instances);
-		logger.info("{} rule combining algorithms are initialized.", instances.size());
+		logger.info("{} rule combining algorithms are initialized.", instances
+				.size());
 	}
 
 	/**
@@ -98,22 +84,22 @@ public class RuleCombiningAlgorithmsInitializer extends AbstractInitializer<Abst
 	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {
 		return TARGET_CLASS;
 	}
-	
+
 	/** {@inheritDoc} */
 	public int hashCode() {
 		return getClass().getName().hashCode();
 	}
-	
+
 	/** {@inheritDoc} */
 	public boolean equals(Object obj) {
-		if(obj == null){
+		if (obj == null) {
 			return false;
 		}
-		
-		if(!(obj instanceof RuleCombiningAlgorithmsInitializer)){
+
+		if (!(obj instanceof RuleCombiningAlgorithmsInitializer)) {
 			return false;
 		}
-		
+
 		return hashCode() == obj.hashCode();
 	}
 }

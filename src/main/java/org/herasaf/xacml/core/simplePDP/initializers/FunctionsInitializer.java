@@ -31,7 +31,8 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class FunctionsInitializer extends AbstractInitializer<Function> {
-	private final Logger logger = LoggerFactory.getLogger(FunctionsInitializer.class);
+	private final Logger logger = LoggerFactory
+			.getLogger(FunctionsInitializer.class);
 	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.function.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
 	private static final Class<Function> TARGET_CLASS = Function.class;
@@ -76,22 +77,22 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 	protected Class<Function> getTargetClass() {
 		return TARGET_CLASS;
 	}
-	
+
 	/** {@inheritDoc} */
 	public int hashCode() {
 		return getClass().getName().hashCode();
 	}
-	
+
 	/** {@inheritDoc} */
 	public boolean equals(Object obj) {
-		if(obj == null){
+		if (obj == null) {
 			return false;
 		}
-		
-		if(!(obj instanceof FunctionsInitializer)){
+
+		if (!(obj instanceof FunctionsInitializer)) {
 			return false;
 		}
-		
+
 		return hashCode() == obj.hashCode();
 	}
 }

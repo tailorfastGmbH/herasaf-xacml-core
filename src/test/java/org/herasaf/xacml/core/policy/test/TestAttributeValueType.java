@@ -24,6 +24,8 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.AttributeValueType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -34,6 +36,7 @@ import org.testng.annotations.Test;
  */
 public class TestAttributeValueType {
 	AttributeValueType attrVal;
+	TargetMatcher targetMatcher = new TargetMatcherImpl();
 
 	/**
 	 * Initializes an {@link AttributeValueType}.
@@ -44,8 +47,11 @@ public class TestAttributeValueType {
 	}
 
 	/**
-	 * Tests the {@link AttributeValueType#handle(RequestType, EvaluationContext)} method.
-	 * @throws Exception If an error occurs.
+	 * Tests the
+	 * {@link AttributeValueType#handle(RequestType, EvaluationContext)} method.
+	 * 
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(enabled = true)
 	public void testHandle() throws Exception {
@@ -53,14 +59,16 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 
 		assertEquals("test", (String) attrVal.handle(new RequestType(),
-				new EvaluationContext()));
+				new EvaluationContext(targetMatcher)));
 	}
 
 	/**
-	 * Tests cases where the {@link AttributeValueType#handle(RequestType, EvaluationContext)} throws an exception.
-	 * Expects a {@link ExpressionProcessingException}.
+	 * Tests cases where the
+	 * {@link AttributeValueType#handle(RequestType, EvaluationContext)} throws
+	 * an exception. Expects a {@link ExpressionProcessingException}.
 	 * 
-	 * @throws Exception If an error occurs.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleException() throws Exception {
@@ -68,19 +76,21 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 		attrVal.getContent().add("test2");
 
-		attrVal.handle(new RequestType(), new EvaluationContext());
+		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher));
 	}
 
 	/**
-	 * Tests cases where the {@link AttributeValueType#handle(RequestType, EvaluationContext)} throws an exception.
-	 * Expects a {@link ExpressionProcessingException}.
+	 * Tests cases where the
+	 * {@link AttributeValueType#handle(RequestType, EvaluationContext)} throws
+	 * an exception. Expects a {@link ExpressionProcessingException}.
 	 * 
-	 * @throws Exception If an error occurs.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add(new Integer("1"));
-		attrVal.handle(new RequestType(), new EvaluationContext());
+		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher));
 	}
 }

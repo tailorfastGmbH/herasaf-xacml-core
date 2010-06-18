@@ -46,17 +46,22 @@ public class ContextAndPolicyInitializer implements Initializer {
 	private static final boolean FORMATTED_OUTPUT = true;
 	private static final String POLICY_PACKAGE = "org.herasaf.xacml.core.policy.impl";
 	private static final String CONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
-	private final Logger logger = LoggerFactory.getLogger(ContextAndPolicyInitializer.class);
+	private final Logger logger = LoggerFactory
+			.getLogger(ContextAndPolicyInitializer.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public void run() {
-		ContextAndPolicy.setRequestCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
-		ContextAndPolicy.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
-		ContextAndPolicy.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
+		ContextAndPolicy
+				.setRequestCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
+		ContextAndPolicy
+				.setResponseCtxProfile(createContextAndPolicyConfiguration(CONTEXT_PACKAGE));
+		ContextAndPolicy
+				.setPolicyProfile(createContextAndPolicyConfiguration(POLICY_PACKAGE));
 
-		logger.info("JAXB settings for context (request, response) and policy are initialized.");
+		logger
+				.info("JAXB settings for context (request, response) and policy are initialized.");
 	}
 
 	/**
@@ -68,14 +73,16 @@ public class ContextAndPolicyInitializer implements Initializer {
 	 *            {@link ContextAndPolicyConfiguration} shall be created.
 	 * @return The created {@link ContextAndPolicyConfiguration}.
 	 */
-	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(String contextPath) {
+	private ContextAndPolicyConfiguration createContextAndPolicyConfiguration(
+			String contextPath) {
 		ContextAndPolicyConfiguration config = new ContextAndPolicyConfiguration();
 
 		try {
 			config.setContext(JAXBContext.newInstance(contextPath));
 		} catch (JAXBException e) {
-			InitializationException ie = new InitializationException("Unable to initialize JAXB. Verify Context-Path settings.");
-		    logger.error(ie.getMessage());
+			InitializationException ie = new InitializationException(
+					"Unable to initialize JAXB. Verify Context-Path settings.");
+			logger.error(ie.getMessage());
 			throw ie;
 		}
 		config.setFormattedOutput(FORMATTED_OUTPUT);
@@ -95,22 +102,22 @@ public class ContextAndPolicyInitializer implements Initializer {
 		logger.error(e.getMessage());
 		throw e;
 	}
-	
+
 	/** {@inheritDoc} */
 	public int hashCode() {
 		return getClass().getName().hashCode();
 	}
-	
+
 	/** {@inheritDoc} */
 	public boolean equals(Object obj) {
-		if(obj == null){
+		if (obj == null) {
 			return false;
 		}
-		
-		if(!(obj instanceof ContextAndPolicyInitializer)){
+
+		if (!(obj instanceof ContextAndPolicyInitializer)) {
 			return false;
 		}
-		
+
 		return hashCode() == obj.hashCode();
 	}
 }

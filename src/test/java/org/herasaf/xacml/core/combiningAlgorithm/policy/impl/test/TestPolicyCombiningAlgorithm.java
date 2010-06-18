@@ -30,6 +30,7 @@ import org.herasaf.xacml.core.context.impl.StatusCodeType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
+import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.testng.annotations.DataProvider;
 
 /**
@@ -52,8 +53,10 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 * regarding the {@link PolicyCombiningAlgorithm} the test case is for (in
 	 * sub class).
 	 * 
-	 * @param eval1 The first {@link Evaluatable}.
-	 * @param eval2 The second {@link Evaluatable}.
+	 * @param eval1
+	 *            The first {@link Evaluatable}.
+	 * @param eval2
+	 *            The second {@link Evaluatable}.
 	 * @return The {@link DecisionType} of the evaluation.
 	 */
 	protected abstract DecisionType evaluateDecision(EvaluatableMock eval1,
@@ -86,11 +89,11 @@ public abstract class TestPolicyCombiningAlgorithm {
 						dataSet[4] = evaluationContext2;
 						dataSet[5] = evaluateDecision(eval1, eval2);
 						dataSet[6] = determineObligations(
-								(DecisionType) dataSet[5], evaluationContext1, eval1,
-								evaluationContext2, eval2);
+								(DecisionType) dataSet[5], evaluationContext1,
+								eval1, evaluationContext2, eval2);
 						dataSet[7] = determineStatusCode(
-								(DecisionType) dataSet[5], evaluationContext1, eval1,
-								evaluationContext2, eval2);
+								(DecisionType) dataSet[5], evaluationContext1,
+								eval1, evaluationContext2, eval2);
 						dataSet[8] = true;
 						data.add(dataSet);
 
@@ -144,10 +147,10 @@ public abstract class TestPolicyCombiningAlgorithm {
 					StatusCode.MISSING_ATTRIBUTE, true));
 			break;
 		case NOT_APPLICABLE:
-			evaluationContexts.add(buildEvaluationContext(false, true, StatusCode.OK,
-					false));
-			evaluationContexts.add(buildEvaluationContext(false, false, StatusCode.OK,
-					false));
+			evaluationContexts.add(buildEvaluationContext(false, true,
+					StatusCode.OK, false));
+			evaluationContexts.add(buildEvaluationContext(false, false,
+					StatusCode.OK, false));
 			break;
 		case PERMIT: // Same as Deny
 		case DENY:
@@ -155,7 +158,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 				for (boolean evaluationContextReturnesDenyObligation : trueFalse) {
 					evaluationContexts.add(buildEvaluationContext(
 							evaluationContextReturnesPermitObligation,
-							evaluationContextReturnesDenyObligation, StatusCode.OK, true));
+							evaluationContextReturnesDenyObligation,
+							StatusCode.OK, true));
 				}
 			}
 		}
@@ -181,9 +185,11 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 */
 	protected static EvaluationContext buildEvaluationContext(
 			boolean evaluationContextReturnesPermitObligation,
-			boolean evaluationContextReturnesDenyObligation, StatusCode evaluationContextStatusCode,
+			boolean evaluationContextReturnesDenyObligation,
+			StatusCode evaluationContextStatusCode,
 			boolean evaluationContextTargetMatched) {
-		EvaluationContext evaluationContext = new EvaluationContext(true);
+		EvaluationContext evaluationContext = new EvaluationContext(
+				new TargetMatcherImpl(), true);
 		evaluationContext.setTargetMatched(evaluationContextTargetMatched);
 		evaluationContext.updateStatusCode(evaluationContextStatusCode);
 		if (evaluationContextReturnesPermitObligation) {
@@ -237,14 +243,15 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 *            The {@link List} where the {@link ObligationType} shall be
 	 *            added.
 	 * @param evaluationContext
-	 *            The {@link EvaluationContext} where the
-	 *            {@link ObligationType}s are taken from.
+	 *            The {@link EvaluationContext} where the {@link ObligationType}
+	 *            s are taken from.
 	 * @param algDecision
 	 *            The {@link DecisionType} of the combining algorithm.
 	 */
 	protected void addObligations(List<ObligationType> obligations,
 			EvaluationContext evaluationContext, DecisionType algDecision) {
-		for (ObligationType obl : evaluationContext.getObligations().getObligations()) {
+		for (ObligationType obl : evaluationContext.getObligations()
+				.getObligations()) {
 			if (obl.getFulfillOn().equals(EffectType.PERMIT)
 					&& algDecision.equals(DecisionType.PERMIT)) {
 				obligations.add(obl);
@@ -263,8 +270,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 * @param algDecision
 	 *            The decision of the combining algorithm.
 	 * @param evaluationContext1
-	 *            The {@link EvaluationContext} of the first
-	 *            {@link Evaluatable}.
+	 *            The {@link EvaluationContext} of the first {@link Evaluatable}
+	 *            .
 	 * @param eval1
 	 *            The first {@link Evaluatable}.
 	 * @param evaluationContext2
@@ -311,8 +318,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 * @param algDecision
 	 *            The decision of the combining algorithm.
 	 * @param evaluationContext1
-	 *            The {@link EvaluationContext} of the first
-	 *            {@link Evaluatable}.
+	 *            The {@link EvaluationContext} of the first {@link Evaluatable}
+	 *            .
 	 * @param eval1
 	 *            The first {@link Evaluatable}.
 	 * @param evaluationContext2
@@ -353,10 +360,9 @@ public abstract class TestPolicyCombiningAlgorithm {
 	}
 
 	/**
-	 * Tests a {@link PolicyCombiningAlgorithm} with various combinations (always 2 {@link Evaluatable}s).
-	 * E.g. Eval1 = Permit, Eval2 = Deny;
-	 *      Eval1 = Deny, Eval2 = Indeterminate;
-	 *      ...
+	 * Tests a {@link PolicyCombiningAlgorithm} with various combinations
+	 * (always 2 {@link Evaluatable}s). E.g. Eval1 = Permit, Eval2 = Deny; Eval1
+	 * = Deny, Eval2 = Indeterminate; ...
 	 * 
 	 * 
 	 * @param alg
@@ -385,11 +391,13 @@ public abstract class TestPolicyCombiningAlgorithm {
 	protected void testPolicySetMatchAndOneEvaluatable(
 			PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
 			EvaluationContext evaluationContext1, EvaluatableMock eval2,
-			EvaluationContext evaluationContext2, DecisionType expectedDecision,
+			EvaluationContext evaluationContext2,
+			DecisionType expectedDecision,
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		EvaluationContext evaluationContext = new EvaluationContext(true);
+		EvaluationContext evaluationContext = new EvaluationContext(
+				new TargetMatcherImpl(), true);
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);
@@ -404,8 +412,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 		if (evaluationContext.getObligations() == null) {
 			assertEquals(0, expectedObligations.size());
 		} else {
-			assertEquals(evaluationContext.getObligations().getObligations().size(),
-					expectedObligations.size());
+			assertEquals(evaluationContext.getObligations().getObligations()
+					.size(), expectedObligations.size());
 		}
 	}
 }
