@@ -36,17 +36,8 @@ public class PolicyCombiningAlgorithmsInitializer extends
 		AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory
 			.getLogger(PolicyCombiningAlgorithmsInitializer.class);
-	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.policy.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
 	private static final Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getSearchContext() {
-		return SEARCH_CONTEXT;
-	}
 
 	/**
 	 * {@inheritDoc}

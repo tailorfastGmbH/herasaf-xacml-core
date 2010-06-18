@@ -36,17 +36,8 @@ public class RuleCombiningAlgorithmsInitializer extends
 		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory
 			.getLogger(RuleCombiningAlgorithmsInitializer.class);
-	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.combiningAlgorithm.rule.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
 	private static final Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getSearchContext() {
-		return SEARCH_CONTEXT;
-	}
 
 	/**
 	 * {@inheritDoc}

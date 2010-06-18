@@ -62,14 +62,6 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 	/**
 	 * This method returns the search context within the classpath (the search
-	 * context's delimiter is a &quot;.&quot;).
-	 * 
-	 * @return The String containing the search context.
-	 */
-	protected abstract String getSearchContext();
-
-	/**
-	 * This method returns the search context within the classpath (the search
 	 * context's delimiter is a &quot;/&quot;).
 	 * 
 	 * @return The String containing the search context.

@@ -37,7 +37,6 @@ public class DataTypesInitializer extends
 	private static final String CLASS_TYPE_NAME = "org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute";
 	private static Logger logger = LoggerFactory
 			.getLogger(DataTypesInitializer.class);
-	private static final String SEARCH_CONTEXT = "org.herasaf.xacml.core.dataTypeAttribute.impl";
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/dataTypeAttribute/impl";
 	private static final Class<DataTypeAttribute<?>> TARGET_CLASS;
 
@@ -58,14 +57,6 @@ public class DataTypesInitializer extends
 			throw ie;
 		}
 		TARGET_CLASS = (Class<DataTypeAttribute<?>>) clazz;
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	protected String getSearchContext() {
-		return SEARCH_CONTEXT;
 	}
 
 	/**
