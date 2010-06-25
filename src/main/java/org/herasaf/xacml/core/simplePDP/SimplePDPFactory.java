@@ -22,7 +22,7 @@ import java.util.Set;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
-import org.herasaf.xacml.core.api.PolicyRepository;
+import org.herasaf.xacml.core.api.PolicyRepositoryEvaluation;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
 import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
@@ -100,7 +100,7 @@ import org.slf4j.LoggerFactory;
  * about abandoned obligations</a> in the HERAS-AF Forum</li>
  * </ul>
  * 
- * @see {@link PDP}, {@link SimplePDP}, {@link PolicyRepository},
+ * @see {@link PDP}, {@link SimplePDP}, {@link PolicyRepositoryEvaluation},
  *      {@link MapBasedSimplePolicyRepository}, {@link Initializer}
  * 
  * @author Florian Huonder
@@ -111,7 +111,7 @@ public final class SimplePDPFactory {
 			.getLogger(SimplePDPFactory.class);
 	private static Set<Initializer> initializers;
 	private static Class<? extends PolicyCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
-	private static Class<? extends PolicyRepository> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
+	private static Class<? extends PolicyRepositoryEvaluation> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
 	private static Class<? extends TargetMatcher> defaultTargetMatcher = TargetMatcherImpl.class;
 	private static boolean defaultBehaviorOfRespectAbandonedEvaluatables = false;
 
@@ -173,14 +173,16 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRepository}, a
-	 * custom {@link PIP} and a custom {@link TargetMatcher}.
+	 * {@link PolicyCombiningAlgorithm}, a custom
+	 * {@link PolicyRepositoryEvaluation}, a custom {@link PIP} and a custom
+	 * {@link TargetMatcher}.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code>) to use in the
 	 *            {@link PDP}.
@@ -194,7 +196,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository, PIP pip,
+			PolicyRepositoryEvaluation policyRepository, PIP pip,
 			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher) {
 		if (rootCombiningAlgorithm == null || policyRepository == null) {
 			InitializationException e = new InitializationException(
@@ -211,14 +213,15 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRepository} and a
-	 * custom {@link PIP}.
+	 * {@link PolicyCombiningAlgorithm}, a custom
+	 * {@link PolicyRepositoryEvaluation} and a custom {@link PIP}.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code>) to use in the
 	 *            {@link PDP}.
@@ -230,7 +233,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository, PIP pip,
+			PolicyRepositoryEvaluation policyRepository, PIP pip,
 			boolean respectAbandonedEvaluatables) {
 		TargetMatcher targetMatcher;
 
@@ -275,7 +278,7 @@ public final class SimplePDPFactory {
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
 	 * {@link PolicyCombiningAlgorithm} and a custom {@link PIP}. <br />
 	 * <br />
-	 * <b>Important:</b> The default {@link PolicyRepository} (
+	 * <b>Important:</b> The default {@link PolicyRepositoryEvaluation} (
 	 * {@link MapBasedSimplePolicyRepository}) is used.
 	 * 
 	 * @param rootCombiningAlgorithm
@@ -294,7 +297,7 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm, PIP pip,
 			boolean respectAbandonedEvaluatables) {
-		PolicyRepository policyRepository;
+		PolicyRepositoryEvaluation policyRepository;
 
 		try {
 			policyRepository = defaultPolicyRepository.newInstance();
@@ -333,14 +336,15 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom a custom
-	 * {@link PolicyRepository} and a custom {@link PIP} (may be
+	 * {@link PolicyRepositoryEvaluation} and a custom {@link PIP} (may be
 	 * <code>null</code>). <br />
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}) is used.
 	 * 
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code>) to use in the
 	 *            {@link PDP} .
@@ -351,8 +355,8 @@ public final class SimplePDPFactory {
 	 * 
 	 * @return The created {@link PDP}.
 	 */
-	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables) {
+	public static PDP getSimplePDP(PolicyRepositoryEvaluation policyRepository,
+			PIP pip, boolean respectAbandonedEvaluatables) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 
 		try {
@@ -386,8 +390,8 @@ public final class SimplePDPFactory {
 	 * {@link PolicyCombiningAlgorithm}. <br />
 	 * <br />
 	 * <b>Important:</b> The default {@link PIP} ( <code>null</code>) and the
-	 * default {@link PolicyRepository} ( {@link MapBasedSimplePolicyRepository}
-	 * ) is used.
+	 * default {@link PolicyRepositoryEvaluation} (
+	 * {@link MapBasedSimplePolicyRepository} ) is used.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
@@ -402,7 +406,7 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			boolean respectAbandonedEvaluatables) {
-		PolicyRepository policyRepository;
+		PolicyRepositoryEvaluation policyRepository;
 
 		try {
 			policyRepository = defaultPolicyRepository.newInstance();
@@ -442,14 +446,15 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyRepository}. <br />
+	 * {@link PolicyRepositoryEvaluation}. <br />
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default {@link PIP} (
 	 * <code>null</code>) is used.
 	 * 
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * 
 	 * @param respectAbandonedEvaluatables
 	 *            If true then the combining algorithms of this PDP respect
@@ -457,7 +462,7 @@ public final class SimplePDPFactory {
 	 * 
 	 * @return The created {@link PDP}.
 	 */
-	public static PDP getSimplePDP(PolicyRepository policyRepository,
+	public static PDP getSimplePDP(PolicyRepositoryEvaluation policyRepository,
 			boolean respectAbandonedEvaluatables) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
 		try {
@@ -493,8 +498,8 @@ public final class SimplePDPFactory {
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default
-	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}) is
-	 * used.
+	 * {@link PolicyRepositoryEvaluation} (
+	 * {@link MapBasedSimplePolicyRepository}) is used.
 	 * 
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code) to use in the
@@ -508,7 +513,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(PIP pip, boolean respectAbandonedEvaluatables) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
-		PolicyRepository policyRepository;
+		PolicyRepositoryEvaluation policyRepository;
 
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm
@@ -569,7 +574,8 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm} and a custom {@link PolicyRepository}. <br />
+	 * {@link PolicyCombiningAlgorithm} and a custom
+	 * {@link PolicyRepositoryEvaluation}. <br />
 	 * <br />
 	 * <b>Important:</b> The default {@link PIP} (<code>null</code>) is used.
 	 * 
@@ -577,7 +583,8 @@ public final class SimplePDPFactory {
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * @param respectAbandonedEvaluatables
 	 *            If true then the combining algorithms of this PDP respect
 	 *            abandoned Evaluatables.
@@ -586,7 +593,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository,
+			PolicyRepositoryEvaluation policyRepository,
 			boolean respectAbandonedEvaluatables) {
 
 		LOGGER.info("There is no Policy Information Point (PIP) in use.");
@@ -600,8 +607,9 @@ public final class SimplePDPFactory {
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}), the default
-	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}) and the
-	 * default {@link PIP} ( <code>null</code>) is used.
+	 * {@link PolicyRepositoryEvaluation} (
+	 * {@link MapBasedSimplePolicyRepository}) and the default {@link PIP} (
+	 * <code>null</code>) is used.
 	 * 
 	 * @param respectAbandonedEvaluatables
 	 *            If true then the combining algorithms of this PDP respect
@@ -611,7 +619,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(boolean respectAbandonedEvaluatables) {
 		PolicyCombiningAlgorithm rootCombiningAlgorithm;
-		PolicyRepository policyRepository;
+		PolicyRepositoryEvaluation policyRepository;
 
 		try {
 			rootCombiningAlgorithm = defaultRootCombiningAlgorithm
@@ -673,14 +681,15 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRepository} and a
-	 * custom {@link PIP}.
+	 * {@link PolicyCombiningAlgorithm}, a custom
+	 * {@link PolicyRepositoryEvaluation} and a custom {@link PIP}.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code>) to use in the
 	 *            {@link PDP}.
@@ -694,7 +703,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository, PIP pip) {
+			PolicyRepositoryEvaluation policyRepository, PIP pip) {
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
 				defaultBehaviorOfRespectAbandonedEvaluatables);
 	}
@@ -703,7 +712,7 @@ public final class SimplePDPFactory {
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
 	 * {@link PolicyCombiningAlgorithm} and a custom {@link PIP}. <br />
 	 * <br />
-	 * <b>Important:</b> The default {@link PolicyRepository} (
+	 * <b>Important:</b> The default {@link PolicyRepositoryEvaluation} (
 	 * {@link MapBasedSimplePolicyRepository}) is used.
 	 * 
 	 * @param rootCombiningAlgorithm
@@ -728,14 +737,15 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom a custom
-	 * {@link PolicyRepository} and a custom {@link PIP} (may be
+	 * {@link PolicyRepositoryEvaluation} and a custom {@link PIP} (may be
 	 * <code>null</code>). <br />
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}) is used.
 	 * 
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code>) to use in the
 	 *            {@link PDP}.
@@ -747,7 +757,8 @@ public final class SimplePDPFactory {
 	 * 
 	 * @return The created {@link PDP}.
 	 */
-	public static PDP getSimplePDP(PolicyRepository policyRepository, PIP pip) {
+	public static PDP getSimplePDP(PolicyRepositoryEvaluation policyRepository,
+			PIP pip) {
 		return getSimplePDP(policyRepository, pip,
 				defaultBehaviorOfRespectAbandonedEvaluatables);
 	}
@@ -757,8 +768,8 @@ public final class SimplePDPFactory {
 	 * {@link PolicyCombiningAlgorithm}. <br />
 	 * <br />
 	 * <b>Important:</b> The default {@link PIP} ( <code>null</code>) and the
-	 * default {@link PolicyRepository} ( {@link MapBasedSimplePolicyRepository}
-	 * ) is used.
+	 * default {@link PolicyRepositoryEvaluation} (
+	 * {@link MapBasedSimplePolicyRepository} ) is used.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
@@ -779,14 +790,15 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyRepository}. <br />
+	 * {@link PolicyRepositoryEvaluation}. <br />
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default {@link PIP} (
 	 * <code>null</code>) is used.
 	 * 
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * 
 	 * <br />
 	 * <br />
@@ -795,7 +807,7 @@ public final class SimplePDPFactory {
 	 * 
 	 * @return The created {@link PDP}.
 	 */
-	public static PDP getSimplePDP(PolicyRepository policyRepository) {
+	public static PDP getSimplePDP(PolicyRepositoryEvaluation policyRepository) {
 		return getSimplePDP(policyRepository,
 				defaultBehaviorOfRespectAbandonedEvaluatables);
 	}
@@ -806,8 +818,8 @@ public final class SimplePDPFactory {
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default
-	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}) is
-	 * used.
+	 * {@link PolicyRepositoryEvaluation} (
+	 * {@link MapBasedSimplePolicyRepository}) is used.
 	 * 
 	 * @param pip
 	 *            The {@link PIP} (may be <code>null</code) to use in the
@@ -826,7 +838,8 @@ public final class SimplePDPFactory {
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm} and a custom {@link PolicyRepository}. <br />
+	 * {@link PolicyCombiningAlgorithm} and a custom
+	 * {@link PolicyRepositoryEvaluation}. <br />
 	 * <br />
 	 * <b>Important:</b> The default {@link PIP} (<code>null</code>) is used.
 	 * 
@@ -834,7 +847,8 @@ public final class SimplePDPFactory {
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
 	 * @param policyRepository
-	 *            The {@link PolicyRepository} to use in the {@link PDP}.
+	 *            The {@link PolicyRepositoryEvaluation} to use in the
+	 *            {@link PDP}.
 	 * 
 	 * <br />
 	 * <br />
@@ -845,7 +859,7 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepository policyRepository) {
+			PolicyRepositoryEvaluation policyRepository) {
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository,
 				defaultBehaviorOfRespectAbandonedEvaluatables);
 	}
@@ -855,9 +869,9 @@ public final class SimplePDPFactory {
 	 * <br />
 	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
 	 * {@link PolicyOnlyOneApplicableAlgorithm}), the default
-	 * {@link PolicyRepository} ({@link MapBasedSimplePolicyRepository}), the
-	 * default {@link PIP} (<code>null</code>) and the default
-	 * {@link TargetMatcher} is used. <br />
+	 * {@link PolicyRepositoryEvaluation} (
+	 * {@link MapBasedSimplePolicyRepository}), the default {@link PIP} (
+	 * <code>null</code>) and the default {@link TargetMatcher} is used. <br />
 	 * <br />
 	 * <b>Note:</b><br />
 	 * Abandoned Evaluatables are not collected.

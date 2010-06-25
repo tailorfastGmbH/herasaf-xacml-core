@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.herasaf.xacml.core.api.PDP;
-import org.herasaf.xacml.core.api.PolicyRepository;
+import org.herasaf.xacml.core.api.PolicyRepositoryUnorderedDeployment;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
@@ -22,13 +22,13 @@ import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class TestMissingAttributes{
+public class TestMissingAttributes {
 	private PDP pdp;
 	private Evaluatable eval;
-	private PolicyRepository repo;
-	
+	private PolicyRepositoryUnorderedDeployment repo;
+
 	@BeforeClass
-	public void init(){
+	public void init() {
 		pdp = SimplePDPFactory.getSimplePDP();
 	}
 
@@ -63,7 +63,7 @@ public class TestMissingAttributes{
 	public void testit(String id, Evaluatable eval, RequestCtx request,
 			ResponseCtx expectedResponse) throws Exception {
 		this.eval = eval;
-		repo = pdp.getPolicyRepository();
+		repo = (PolicyRepositoryUnorderedDeployment) pdp.getPolicyRepository();
 		repo.deploy(eval);
 
 		ResponseCtx response = pdp.evaluate(request);
@@ -79,9 +79,11 @@ public class TestMissingAttributes{
 		Diff diff = new Diff(expectedResponseOS.toString(), actualResponseOS
 				.toString());
 
-		assertTrue(diff.identical()); //identical test also values. needed because it may differ here within the attribute values
+		assertTrue(diff.identical()); // identical test also values. needed
+		// because it may differ here within the
+		// attribute values
 	}
-	
+
 	@AfterMethod
 	public void cleanup() throws Exception {
 		repo.undeploy(eval.getId());
