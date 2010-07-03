@@ -18,6 +18,7 @@
 package org.herasaf.xacml.core.context;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -56,6 +57,7 @@ public class EvaluationContext {
 	private static ObjectFactory objectFactory;
 	private boolean respectAbandonedEvaluatables;
 	private TargetMatcher targetMatcher;
+	private Map<Object,Object> customValues;
 
 	/**
 	 * Initializes the JAXB object factory.
@@ -136,7 +138,28 @@ public class EvaluationContext {
 		missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		targetMatched = true;
 		obligations = objectFactory.createObligationsType();
+		customValues = new HashMap<Object, Object>();
 	}
+	
+	/**
+	 * Associates the specified value with the specified key for a later retrieval.
+	 * 
+	 * @param key with which the specified value is to be associated.
+	 * @param value to be associated with the specified key.
+	 */
+	public void put(Object key, Object value){
+	    customValues.put(key, value);
+	}
+	
+	/**
+	 * Returns the value to which the specified key is mapped to.
+	 * 
+	 * @param key whose associated value is to be returned.
+	 * @return the value to which this specified key is mapped to, or null if no such key is specified.
+	 */
+    public Object get(Object key){
+        return customValues.get(key);
+    }
 
 	/**
 	 * Returns the {@link StatusCode} set in this {@link EvaluationContext}.
