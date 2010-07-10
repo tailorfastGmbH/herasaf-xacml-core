@@ -18,7 +18,7 @@
 package org.herasaf.xacml.core.combiningAlgorithm.policy;
 
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -63,7 +63,7 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends AbstractPolicyCo
 			 * June 2006</a> page 86, chapter "Syntax and type errors" for
 			 * further information.
 			 */
-			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 	}

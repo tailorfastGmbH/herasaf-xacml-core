@@ -23,6 +23,7 @@ import java.util.List;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -72,7 +73,7 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 			// It is an illegal state if the list containing the rules is
 			// null.
 			logger.error("the rules list was null. This is an illegal state.");
-			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -98,7 +99,7 @@ public class RulePermitOverridesAlgorithm extends RuleUnorderedCombiningAlgorith
 				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of rules must not contain any null values.");
-				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 

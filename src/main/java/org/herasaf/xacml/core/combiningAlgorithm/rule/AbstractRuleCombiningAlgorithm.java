@@ -21,7 +21,7 @@ import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
@@ -72,14 +72,14 @@ public abstract class AbstractRuleCombiningAlgorithm extends
 			decision = (Boolean) ((ExpressionType) condition.getExpression()
 					.getValue()).handle(request, evaluationContext);
 		} catch (ProcessingException e) {
-			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;
 		} catch (MissingAttributeException e) {
-			evaluationContext.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 			evaluationContext.addMissingAttributes(e.getMissingAttribute());
 			return DecisionType.INDETERMINATE;
 		} catch (SyntaxException e) {
-			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		} catch (Exception e) {
 			/*
@@ -89,7 +89,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends
 			 * (XACML) 2.0, Errata 29 June 2006</a> page 85, for further
 			 * information.
 			 */
-			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 		if (decision) {

@@ -134,7 +134,7 @@ public class EvaluationContext {
 		this.pip = pip;
 		this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
 		this.targetMatcher = targetMatcher;
-		statusCode = StatusCode.OK;
+		statusCode = XACMLDefaultStatusCode.OK;
 		missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		targetMatched = true;
 		obligations = objectFactory.createObligationsType();
@@ -186,23 +186,23 @@ public class EvaluationContext {
 	 */
 	public void updateStatusCode(StatusCode code) {
 
-		if (statusCode == StatusCode.SYNTAX_ERROR) {
+		if (statusCode == XACMLDefaultStatusCode.SYNTAX_ERROR) {
 			return;
 		}
-		if (code == StatusCode.OK) {
+		if (code == XACMLDefaultStatusCode.OK) {
 			return;
 		}
-		if (statusCode == StatusCode.OK
-				&& (code == StatusCode.MISSING_ATTRIBUTE || code == StatusCode.PROCESSING_ERROR)) {
+		if (statusCode == XACMLDefaultStatusCode.OK
+				&& (code == XACMLDefaultStatusCode.MISSING_ATTRIBUTE || code == XACMLDefaultStatusCode.PROCESSING_ERROR)) {
 			this.statusCode = code;
 			return;
 		}
-		if (statusCode == StatusCode.PROCESSING_ERROR
-				&& code == StatusCode.MISSING_ATTRIBUTE) {
+		if (statusCode == XACMLDefaultStatusCode.PROCESSING_ERROR
+				&& code == XACMLDefaultStatusCode.MISSING_ATTRIBUTE) {
 			this.statusCode = code;
 			return;
 		}
-		if (code == StatusCode.SYNTAX_ERROR) {
+		if (code == XACMLDefaultStatusCode.SYNTAX_ERROR) {
 			this.statusCode = code;
 			return;
 		}
@@ -225,7 +225,7 @@ public class EvaluationContext {
 	 * Resets the {@link StatusCode}.
 	 */
 	public void resetStatus() {
-		this.statusCode = StatusCode.OK;
+		this.statusCode = XACMLDefaultStatusCode.OK;
 		missingAttributes.clear();
 		targetMatched = true;
 	}

@@ -24,6 +24,7 @@ import static org.testng.Assert.assertTrue;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
@@ -51,30 +52,30 @@ public class TestRuleTargetEvaluation {
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		return new Object[][] {
 				new Object[] {
-						new OrderedRuleMock(DecisionType.PERMIT, StatusCode.OK,
+						new OrderedRuleMock(DecisionType.PERMIT, XACMLDefaultStatusCode.OK,
 								null), new PolicyTypeMock(),
-						DecisionType.PERMIT, StatusCode.OK, false },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false },
 				new Object[] {
-						new OrderedRuleMock(DecisionType.DENY, StatusCode.OK,
+						new OrderedRuleMock(DecisionType.DENY, XACMLDefaultStatusCode.OK,
 								null), new PolicyTypeMock(), DecisionType.DENY,
-						StatusCode.OK, false },
+						XACMLDefaultStatusCode.OK, false },
 				new Object[] {
-						new OrderedRuleMock(DecisionType.PERMIT, StatusCode.OK,
+						new OrderedRuleMock(DecisionType.PERMIT, XACMLDefaultStatusCode.OK,
 								null), new PolicySetType(),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						false },
 				new Object[] {
 						new UnorderedRuleMock(DecisionType.PERMIT,
-								StatusCode.OK, null), new PolicyTypeMock(),
-						DecisionType.PERMIT, StatusCode.OK, false },
+								XACMLDefaultStatusCode.OK, null), new PolicyTypeMock(),
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false },
 				new Object[] {
-						new UnorderedRuleMock(DecisionType.DENY, StatusCode.OK,
+						new UnorderedRuleMock(DecisionType.DENY, XACMLDefaultStatusCode.OK,
 								null), new PolicyTypeMock(), DecisionType.DENY,
-						StatusCode.OK, false },
+						XACMLDefaultStatusCode.OK, false },
 				new Object[] {
 						new UnorderedRuleMock(DecisionType.PERMIT,
-								StatusCode.OK, null), new PolicySetType(),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+								XACMLDefaultStatusCode.OK, null), new PolicySetType(),
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						false }, };
 	}
 

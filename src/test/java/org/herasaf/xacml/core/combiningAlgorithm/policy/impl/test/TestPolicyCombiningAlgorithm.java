@@ -24,6 +24,7 @@ import java.util.List;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.StatusCodeType;
@@ -136,21 +137,21 @@ public abstract class TestPolicyCombiningAlgorithm {
 		switch (eval.getDecision()) {
 		case INDETERMINATE:
 			evaluationContexts.add(buildEvaluationContext(false, false,
-					StatusCode.MISSING_ATTRIBUTE, true));
+					XACMLDefaultStatusCode.MISSING_ATTRIBUTE, true));
 			evaluationContexts.add(buildEvaluationContext(false, false,
-					StatusCode.PROCESSING_ERROR, true));
+					XACMLDefaultStatusCode.PROCESSING_ERROR, true));
 			evaluationContexts.add(buildEvaluationContext(false, false,
-					StatusCode.SYNTAX_ERROR, true));
+					XACMLDefaultStatusCode.SYNTAX_ERROR, true));
 			evaluationContexts.add(buildEvaluationContext(false, true,
-					StatusCode.SYNTAX_ERROR, false));
+					XACMLDefaultStatusCode.SYNTAX_ERROR, false));
 			evaluationContexts.add(buildEvaluationContext(false, false,
-					StatusCode.MISSING_ATTRIBUTE, true));
+					XACMLDefaultStatusCode.MISSING_ATTRIBUTE, true));
 			break;
 		case NOT_APPLICABLE:
 			evaluationContexts.add(buildEvaluationContext(false, true,
-					StatusCode.OK, false));
+					XACMLDefaultStatusCode.OK, false));
 			evaluationContexts.add(buildEvaluationContext(false, false,
-					StatusCode.OK, false));
+					XACMLDefaultStatusCode.OK, false));
 			break;
 		case PERMIT: // Same as Deny
 		case DENY:
@@ -159,7 +160,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 					evaluationContexts.add(buildEvaluationContext(
 							evaluationContextReturnesPermitObligation,
 							evaluationContextReturnesDenyObligation,
-							StatusCode.OK, true));
+							XACMLDefaultStatusCode.OK, true));
 				}
 			}
 		}
@@ -334,28 +335,28 @@ public abstract class TestPolicyCombiningAlgorithm {
 			EvaluationContext evaluationContext1, EvaluatableMock eval1,
 			EvaluationContext evaluationContext2, EvaluatableMock eval2) {
 		if (algDecision == DecisionType.PERMIT) {
-			return StatusCode.OK;
+			return XACMLDefaultStatusCode.OK;
 		}
 		if (algDecision == DecisionType.DENY) {
-			return StatusCode.OK;
+			return XACMLDefaultStatusCode.OK;
 		}
 		if (algDecision == DecisionType.INDETERMINATE) {
-			if (evaluationContext1.getStatusCode() == StatusCode.SYNTAX_ERROR
-					|| evaluationContext2.getStatusCode() == StatusCode.SYNTAX_ERROR) {
-				return StatusCode.SYNTAX_ERROR;
+			if (evaluationContext1.getStatusCode() == XACMLDefaultStatusCode.SYNTAX_ERROR
+					|| evaluationContext2.getStatusCode() == XACMLDefaultStatusCode.SYNTAX_ERROR) {
+				return XACMLDefaultStatusCode.SYNTAX_ERROR;
 			}
-			if (evaluationContext1.getStatusCode() == StatusCode.MISSING_ATTRIBUTE
-					|| evaluationContext2.getStatusCode() == StatusCode.MISSING_ATTRIBUTE) {
-				return StatusCode.MISSING_ATTRIBUTE;
+			if (evaluationContext1.getStatusCode() == XACMLDefaultStatusCode.MISSING_ATTRIBUTE
+					|| evaluationContext2.getStatusCode() == XACMLDefaultStatusCode.MISSING_ATTRIBUTE) {
+				return XACMLDefaultStatusCode.MISSING_ATTRIBUTE;
 			}
 
-			return StatusCode.PROCESSING_ERROR; // In case of one context
+			return XACMLDefaultStatusCode.PROCESSING_ERROR; // In case of one context
 			// information contains status
 			// code
 			// Processing_error
 
 		}
-		return StatusCode.OK;
+		return XACMLDefaultStatusCode.OK;
 
 	}
 

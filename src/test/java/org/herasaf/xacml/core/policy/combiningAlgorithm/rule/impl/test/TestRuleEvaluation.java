@@ -24,6 +24,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -68,7 +69,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
-						StatusCode.MISSING_ATTRIBUTE,
+						XACMLDefaultStatusCode.MISSING_ATTRIBUTE,
 						new MissingAttributeDetailType() },
 				new Object[] {
 						"Permit, true, null, true",
@@ -77,7 +78,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
-						DecisionType.PERMIT, StatusCode.OK, null },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"Permit, true, null, false",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -85,7 +86,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"Permit, true, null, processing exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -94,7 +95,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, true, null, syntax exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -102,7 +103,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, false, null, true",
@@ -111,7 +112,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"Permit, false, null, false",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -119,7 +120,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"Permit, false, null, processing exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -128,7 +129,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, false, null, syntax exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -136,7 +137,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, true, processingException, true",
@@ -148,7 +149,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, true, processingException, false",
 						initializeRule(EffectType.PERMIT,
@@ -158,7 +159,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"Permit, true, processingException, processing exception",
 						initializeRule(EffectType.PERMIT,
@@ -169,7 +170,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, true, processingException, syntax exception",
 						initializeRule(EffectType.PERMIT,
@@ -179,7 +180,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, true, syntaxException, true",
@@ -188,7 +189,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"Permit, true, syntaxException, false",
@@ -197,7 +198,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"Permit, true, syntaxException, processing exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -206,7 +207,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"Permit, true, syntaxException, syntax exception",
 						initializeRule(EffectType.PERMIT, new ConditionMock(
@@ -214,7 +215,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, null, true",
@@ -223,7 +224,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
-						DecisionType.DENY, StatusCode.OK, null },
+						DecisionType.DENY, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"DENY, true, null, false",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
@@ -231,7 +232,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"DENY, true, null, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
@@ -240,7 +241,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, null, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
@@ -248,7 +249,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, false, null, true",
@@ -257,7 +258,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"DENY, false, null, false",
 						initializeRule(EffectType.DENY, new ConditionMock(
@@ -265,7 +266,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"DENY, false, null, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
@@ -274,7 +275,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, false, null, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
@@ -282,7 +283,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, processingException, true",
@@ -292,7 +293,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, processingException, false",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
@@ -300,7 +301,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"DENY, true, processingException, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
@@ -309,7 +310,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, processingException, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(true,
@@ -317,7 +318,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, syntaxException, true",
@@ -326,7 +327,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"DENY, true, syntaxException, false",
@@ -335,7 +336,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.FALSE }),
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, null },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, null },
 				new Object[] {
 						"DENY, true, syntaxException, processing exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
@@ -344,7 +345,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.PROCESSINGEXCEPTION }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null },
 				new Object[] {
 						"DENY, true, syntaxException, syntax exception",
 						initializeRule(EffectType.DENY, new ConditionMock(
@@ -352,7 +353,7 @@ public class TestRuleEvaluation {
 						initializeRuleCombiningAlg(),
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.SYNTAXEXCEPTION }),
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						null },
 				new Object[] {
 						"true, wrong type, null, true",
@@ -362,7 +363,7 @@ public class TestRuleEvaluation {
 						new TargetMatcherMock(
 								new TargetMatcherMock.Decisions[] { TargetMatcherMock.Decisions.TRUE }),
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, null }, };
+						XACMLDefaultStatusCode.PROCESSING_ERROR, null }, };
 	}
 
 	/**

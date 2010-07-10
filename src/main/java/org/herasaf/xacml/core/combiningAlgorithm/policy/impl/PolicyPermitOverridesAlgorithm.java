@@ -24,6 +24,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -65,7 +66,7 @@ public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgo
 			// It is an illegal state if the list containing the policies is
 			// null.
 			logger.error("The possiblePolicies list was null. This is an illegal state.");
-			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -91,7 +92,7 @@ public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgo
 				// It is an illegal state if the list contains any 
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
-				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 
@@ -119,7 +120,7 @@ public class PolicyPermitOverridesAlgorithm extends PolicyUnorderedCombiningAlgo
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
 			if (combiningAlg == null) {
 				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			} else {
 				decision = combiningAlg.evaluate(request, eval, evaluationContext);

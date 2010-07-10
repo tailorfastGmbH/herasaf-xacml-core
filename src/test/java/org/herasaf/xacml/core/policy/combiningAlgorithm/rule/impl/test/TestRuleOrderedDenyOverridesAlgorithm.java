@@ -26,6 +26,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgor
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
@@ -88,7 +89,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true, null)), },
 						targetMatcherMockWithTRUEDecisionsArray[0],
-						DecisionType.PERMIT, StatusCode.OK, false, },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit false null",
 						new RuleType[] {
@@ -97,7 +98,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 								initializeRule(EffectType.PERMIT,
 										new ConditionMock(true, null)), },
 						targetMatcherMockWithTRUEDecisionsArray[1],
-						DecisionType.PERMIT, StatusCode.OK, false, },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true prcocessingException",
 						new RuleType[] {
@@ -110,7 +111,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 												new FunctionProcessingException(
 														"test"))), },
 						targetMatcherMockWithTRUEDecisionsArray[2],
-						DecisionType.PERMIT, StatusCode.OK, false, },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true SyntaxException",
 						new RuleType[] {
@@ -120,7 +121,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 										new ConditionMock(true,
 												new SyntaxException("test"))), },
 						targetMatcherMockWithTRUEDecisionsArray[3],
-						DecisionType.PERMIT, StatusCode.OK, false, },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit true missingAttributeException",
 						new RuleType[] {
@@ -135,7 +136,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 														new StringDataTypeAttribute(),
 														"Issuer"))), },
 						targetMatcherMockWithTRUEDecisionsArray[4],
-						DecisionType.PERMIT, StatusCode.OK, false, },
+						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true SyntaxException, permit true FunctionProcessingException",
 						new RuleType[] {
@@ -149,7 +150,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 												new FunctionProcessingException(
 														"Test"))), },
 						targetMatcherMockWithTRUEDecisionsArray[5],
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						false, },
 				new Object[] {
 						"permit true SyntaxException, permit true FunctionProcessingException",
@@ -164,7 +165,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 												new FunctionProcessingException(
 														"Test"))), },
 						targetMatcherMockWithTRUEFALSEDecisions,
-						DecisionType.NOT_APPLICABLE, StatusCode.OK, false, },
+						DecisionType.NOT_APPLICABLE, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true null",
 						new RuleType[] {
@@ -173,7 +174,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true, null)), },
 						targetMatcherMockWithTRUEDecisionsArray[6],
-						DecisionType.DENY, StatusCode.OK, false, },
+						DecisionType.DENY, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, permit false null",
 						new RuleType[] {
@@ -182,7 +183,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 								initializeRule(EffectType.DENY,
 										new ConditionMock(true, null)), },
 						targetMatcherMockWithTRUEDecisionsArray[7],
-						DecisionType.DENY, StatusCode.OK, false, },
+						DecisionType.DENY, XACMLDefaultStatusCode.OK, false, },
 				new Object[] {
 						"permit true null, deny true processingException",
 						new RuleType[] {
@@ -196,7 +197,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 														"test"))), },
 						targetMatcherMockWithTRUEDecisionsArray[8],
 						DecisionType.INDETERMINATE,
-						StatusCode.PROCESSING_ERROR, false, },
+						XACMLDefaultStatusCode.PROCESSING_ERROR, false, },
 				new Object[] {
 						"permit true null, deny true syntaxException",
 						new RuleType[] {
@@ -206,7 +207,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 										new ConditionMock(true,
 												new SyntaxException("test"))), },
 						targetMatcherMockWithTRUEDecisionsArray[9],
-						DecisionType.INDETERMINATE, StatusCode.SYNTAX_ERROR,
+						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						false, },
 				new Object[] {
 						"permit true null, permit true missingAttribueException",
@@ -223,7 +224,7 @@ public class TestRuleOrderedDenyOverridesAlgorithm {
 														"Issuer"))), },
 						targetMatcherMockWithTRUEDecisionsArray[10],
 						DecisionType.INDETERMINATE,
-						StatusCode.MISSING_ATTRIBUTE, true, }, };
+						XACMLDefaultStatusCode.MISSING_ATTRIBUTE, true, }, };
 	}
 
 	/**

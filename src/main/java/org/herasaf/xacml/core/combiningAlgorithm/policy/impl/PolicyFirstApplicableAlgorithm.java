@@ -23,7 +23,7 @@ import java.util.List;
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
@@ -64,7 +64,7 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 			// It is an illegal state if the list containing the policies is
 			// null.
 			logger.error("The possiblePolicies list was null. This is an illegal state.");
-			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -81,7 +81,7 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 				// It is an illegal state if the list contains any
 				// null.
 				logger.error("The list of possible policies must not contain any null values.");
-				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
 
@@ -98,7 +98,7 @@ public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgori
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
 			if (combiningAlg == null) {
 				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-				evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				decision = DecisionType.INDETERMINATE;
 			} else {
 				decision = combiningAlg.evaluate(request, eval, evaluationContext);

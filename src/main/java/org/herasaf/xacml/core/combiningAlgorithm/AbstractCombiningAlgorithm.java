@@ -21,7 +21,7 @@ import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
@@ -79,15 +79,15 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			logger.error("TargetMatcher not initialized.", e);
 			throw new NotInitializedException(e);
 		} catch (SyntaxException e) {
-			evaluationContext.updateStatusCode(StatusCode.SYNTAX_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Syntax error occurred.");
 		} catch (ProcessingException e) {
-			evaluationContext.updateStatusCode(StatusCode.PROCESSING_ERROR);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Processing error occurred.");
 		} catch (MissingAttributeException e) {
-			evaluationContext.updateStatusCode(StatusCode.MISSING_ATTRIBUTE);
+			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 			evaluationContext.addMissingAttributes(e.getMissingAttribute());
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Missing attribute error occurred.");

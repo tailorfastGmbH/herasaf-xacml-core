@@ -21,7 +21,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedDenyOverri
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedPermitOverridesAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RulePermitOverridesAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -66,7 +66,7 @@ public class TestMissingAttributes {
 
 		assertEquals(decision, DecisionType.INDETERMINATE);
 		assertEquals(evaluationContext.getStatusCode(),
-				StatusCode.MISSING_ATTRIBUTE);
+		        XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 		assertEquals(evaluationContext.getMissingAttributes().size(), 1); // A
 		// missing
 		// attribute
@@ -97,7 +97,7 @@ public class TestMissingAttributes {
 
 		assertEquals(decision, DecisionType.INDETERMINATE);
 		assertEquals(evaluationContext.getStatusCode(),
-				StatusCode.MISSING_ATTRIBUTE);
+		        XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 		assertEquals(evaluationContext.getMissingAttributes().size(), 1); // A
 		// missing
 		// attribute
@@ -128,7 +128,7 @@ public class TestMissingAttributes {
 
 		assertEquals(decision, DecisionType.INDETERMINATE);
 		assertEquals(evaluationContext.getStatusCode(),
-				StatusCode.MISSING_ATTRIBUTE);
+		        XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 		assertEquals(evaluationContext.getMissingAttributes().size(), 1); // A
 		// missing
 		// attribute
