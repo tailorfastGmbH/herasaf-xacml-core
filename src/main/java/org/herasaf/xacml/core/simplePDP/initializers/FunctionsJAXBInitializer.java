@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class FunctionsInitializer extends AbstractInitializer<Function> {
+public class FunctionsJAXBInitializer extends AbstractInitializer<Function> {
 	private final Logger logger = LoggerFactory
-			.getLogger(FunctionsInitializer.class);
+			.getLogger(FunctionsJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
 	private static final Class<Function> TARGET_CLASS = Function.class;
 
@@ -80,7 +80,7 @@ public class FunctionsInitializer extends AbstractInitializer<Function> {
 			return false;
 		}
 
-		if (!(obj instanceof FunctionsInitializer)) {
+		if (!(obj instanceof FunctionsJAXBInitializer)) {
 			return false;
 		}
 

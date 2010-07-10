@@ -32,11 +32,11 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 @SuppressWarnings("unchecked")
-public class DataTypesInitializer extends
+public class DataTypesJAXBInitializer extends
 		AbstractInitializer<DataTypeAttribute<?>> {
 	private static final String CLASS_TYPE_NAME = "org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute";
 	private static Logger logger = LoggerFactory
-			.getLogger(DataTypesInitializer.class);
+			.getLogger(DataTypesJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/dataTypeAttribute/impl";
 	private static final Class<DataTypeAttribute<?>> TARGET_CLASS;
 
@@ -105,7 +105,7 @@ public class DataTypesInitializer extends
 			return false;
 		}
 
-		if (!(obj instanceof DataTypesInitializer)) {
+		if (!(obj instanceof DataTypesJAXBInitializer)) {
 			return false;
 		}
 

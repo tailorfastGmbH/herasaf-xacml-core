@@ -26,11 +26,11 @@ import org.herasaf.xacml.core.api.PolicyRepositoryEvaluation;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
 import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.DataTypesInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.FunctionsInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
-import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.slf4j.Logger;
@@ -55,12 +55,12 @@ import org.slf4j.LoggerFactory;
  * <li>Policy repository: {@link MapBasedSimplePolicyRepository}</li>
  * <li>Root combining algorithm: {@link PolicyOnlyOneApplicableAlgorithm}</li>
  * <li>PIP: <code>null</code> (No Policy Information Point used)</li>
- * <li>Data types used: see {@link DataTypesInitializer}</li>
- * <li>Functions used: see {@link DataTypesInitializer}</li>
+ * <li>Data types used: see {@link DataTypesJAXBInitializer}</li>
+ * <li>Functions used: see {@link DataTypesJAXBInitializer}</li>
  * <li>Policy Combining Algorithms used: see
- * {@link PolicyCombiningAlgorithmsInitializer}</li>
+ * {@link PolicyCombiningAlgorithmsJAXBInitializer}</li>
  * <li>Rule Combining Algorithms used: see
- * {@link RuleCombiningAlgorithmsInitializer}</li>
+ * {@link RuleCombiningAlgorithmsJAXBInitializer}</li>
  * <li>JAXB Marshaller/Unmarshaller used: see
  * {@link ContextAndPolicyInitializer}
  * </ul>
@@ -125,19 +125,19 @@ public final class SimplePDPFactory {
 	/**
 	 * Gets the default list of initializers.
 	 * 
-	 * This list includes the {@link FunctionsInitializer},
-	 * {@link DataTypesInitializer}, {@link RuleCombiningAlgorithmsInitializer},
-	 * {@link PolicyCombiningAlgorithmsInitializer}, and
+	 * This list includes the {@link FunctionsJAXBInitializer},
+	 * {@link DataTypesJAXBInitializer}, {@link RuleCombiningAlgorithmsJAXBInitializer},
+	 * {@link PolicyCombiningAlgorithmsJAXBInitializer}, and
 	 * {@link ContextAndPolicyInitializer}.
 	 * 
 	 * @return the default list of initializers
 	 */
 	public static Set<Initializer> getDefaultInitializers() {
 		Set<Initializer> initializers = new HashSet<Initializer>();
-		initializers.add(new FunctionsInitializer());
-		initializers.add(new DataTypesInitializer());
-		initializers.add(new RuleCombiningAlgorithmsInitializer());
-		initializers.add(new PolicyCombiningAlgorithmsInitializer());
+		initializers.add(new FunctionsJAXBInitializer());
+		initializers.add(new DataTypesJAXBInitializer());
+		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
+		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
 		initializers.add(new ContextAndPolicyInitializer());
 
 		return initializers;

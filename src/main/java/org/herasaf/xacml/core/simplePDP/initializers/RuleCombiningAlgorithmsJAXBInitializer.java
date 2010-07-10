@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class RuleCombiningAlgorithmsInitializer extends
+public class RuleCombiningAlgorithmsJAXBInitializer extends
 		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
 	private static Logger logger = LoggerFactory
-			.getLogger(RuleCombiningAlgorithmsInitializer.class);
+			.getLogger(RuleCombiningAlgorithmsJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
 	private static final Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;
 
@@ -87,7 +87,7 @@ public class RuleCombiningAlgorithmsInitializer extends
 			return false;
 		}
 
-		if (!(obj instanceof RuleCombiningAlgorithmsInitializer)) {
+		if (!(obj instanceof RuleCombiningAlgorithmsJAXBInitializer)) {
 			return false;
 		}
 
