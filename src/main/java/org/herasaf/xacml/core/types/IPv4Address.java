@@ -21,6 +21,9 @@ import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Represents an IP-V4 address.
  * 
@@ -28,7 +31,12 @@ import java.net.UnknownHostException;
  * @see IPAddress
  */
 public class IPv4Address extends IPAddress {
-	private static final String REGEX = "^[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?(/[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?.[0-2](\\d\\d)?)?(:[^\\*\\.:]+)??$";
+    private final Logger logger = LoggerFactory.getLogger(IPv4Address.class);
+    private static String hostPart = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    private static String networkPart = "/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+    private static String possiblePortNumber = "6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0";
+    private static String portPart = ":((" + possiblePortNumber + ")?[-]?(" + possiblePortNumber + ")?)";
+    private static final String REGEX = "^" + hostPart + "(" + networkPart + ")?" + "(" + portPart + ")?" + "$";
 	private InetAddress ip;
 	private InetAddress mask;
 	private PortRange portRange;
@@ -41,7 +49,9 @@ public class IPv4Address extends IPAddress {
 	 */
 	public IPv4Address(String value) {
 		if (!value.matches(REGEX)) {
-			throw new IllegalArgumentException(value + " is not a valid IP Address");
+		    IllegalArgumentException e = new IllegalArgumentException(value + " is not a valid IP Address.");
+		    logger.error(e.getMessage());
+		    throw e;
 		}
 		try {
 			int slashPosition = value.indexOf("/");

@@ -18,6 +18,8 @@
 package org.herasaf.xacml.core.types.test;
 
 import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 import org.herasaf.xacml.core.types.IPv4Address;
 import org.testng.annotations.DataProvider;
@@ -62,6 +64,8 @@ public class TestIPv4Address {
 				new Object[]{ "192.168.0.1/255.256.0.0"},
 				new Object[]{ "193.168.0.1:0"},
 				new Object[]{ "193.168.0.1:65536"},
+				new Object[]{ "256.0.0.1"},
+				new Object[]{ "198.0.0.256"},
 		};
 	}
 	
@@ -84,8 +88,20 @@ public class TestIPv4Address {
 	 * @param input The illegal ipv4 strings.
 	 * @throws Exception If an error occurs.
 	 */
-	@Test(dataProvider="negativeCases", expectedExceptions={IllegalArgumentException.class}, enabled = true)
+	@Test(dataProvider="negativeCases", enabled = true)
 	public void testNotAllowed(String input) throws Exception {
-			new IPv4Address(input);
+		try {
+		    new IPv4Address(input);
+		}
+		catch(IllegalArgumentException e){
+		    if(e.getMessage().endsWith("is not a valid IP Address.") || e.getMessage().startsWith("No port range:") ){
+		        assertTrue(true);
+		    } else {
+		        fail("Invalid IP-Address not recognized.");
+		    }
+		}
+		catch (Exception e){
+		    fail("Invalid IP-Address not recognized.");
+		}
 	}
 }
