@@ -28,6 +28,7 @@ import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
@@ -52,6 +53,7 @@ public class SimplePDP implements PDP {
 	private final boolean respectAbandonedEvaluatables;
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
+	private final StatusCodeComparator statusCodeComparator;
 
 	/**
 	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
@@ -72,7 +74,7 @@ public class SimplePDP implements PDP {
 	 */
 	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRepositoryEvaluation policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher) {
+			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
 		/*
 		 * Checks if the policy repository and the root combining algorithm are
 		 * both of the same type. The type is either ordered or unordered
@@ -112,7 +114,14 @@ public class SimplePDP implements PDP {
 			logger.error(ie.getMessage());
 			throw ie;
 		}
-
+		
+		if(statusCodeComparator == null){
+			logger.info("Using default status code comparator.");
+			this.statusCodeComparator = new StatusCodeComparator();
+		} else {
+			logger.info("Using custom status code comparator.");
+			this.statusCodeComparator = statusCodeComparator;
+		}
 	}
 
 	/**
@@ -161,7 +170,7 @@ public class SimplePDP implements PDP {
 		logger.debug("Evaluating Request: {}", request.toString());
 		
 		EvaluationContext evaluationContext = new EvaluationContext(
-                targetMatcher, pip, respectAbandonedEvaluatables);
+                targetMatcher, pip, respectAbandonedEvaluatables, statusCodeComparator);
 		
 		if(!containsOnlyOneResource(request)){
 		    logger.error("The request must not contain multiple resources.");
@@ -198,25 +207,25 @@ public class SimplePDP implements PDP {
                        return true;
                    } else if("Children".equals(attr.getAttributeValues().get(0))){
                        logger.error("The request must not request a decision for multiple resources.");
-                       // The set of resources consists of a single node described by the “resource-id” resource attribute 
+                       // The set of resources consists of a single node described by the â€œresource-idâ€� resource attribute 
                        // and of all that node's immediate children in the hierarchy.
                        // See Section 4.1.
                        return false;
                    } else if("Descendants".equals(attr.getAttributeValues().get(0))){
                        logger.error("The request must not request a decision for multiple resources.");
-                       // The set of resources consists of a single node described by the “resource-id” resource attribute
+                       // The set of resources consists of a single node described by the â€œresource-idâ€� resource attribute
                        // and of all that node's descendants in the hierarchy.
                        // See Section 4.1.
                        return false;
                    } else if("XPath-expression".equals(attr.getAttributeValues().get(0))){
                        logger.error("The request must not request a decision for multiple resources.");
-                       // The set of resources consists of the nodes in a nodeset described by the “resource-id” resource attribute.
+                       // The set of resources consists of the nodes in a nodeset described by the â€œresource-idâ€� resource attribute.
                        // See Section 2.2.
                        // See Section 4.1.
                        return false;
                    } else if("EntireHierarchy".equals(attr.getAttributeValues().get(0))){
                        logger.error("The request must not request a decision for multiple resources.");
-                       // The resource consists of a node described by the “resource-id” resource attribute
+                       // The resource consists of a node described by the â€œresource-idâ€� resource attribute
                        // along with all that node's descendants.
                        // See Section 3.1.
                        // See Section 4.1.

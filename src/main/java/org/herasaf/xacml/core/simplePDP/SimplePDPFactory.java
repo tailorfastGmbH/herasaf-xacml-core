@@ -25,6 +25,7 @@ import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRepositoryEvaluation;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
@@ -197,7 +198,7 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRepositoryEvaluation policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher) {
+			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
 		if (rootCombiningAlgorithm == null || policyRepository == null) {
 			InitializationException e = new InitializationException(
 					"The root combining algorithm and the policy repository must not be null.");
@@ -208,7 +209,7 @@ public final class SimplePDPFactory {
 		runInitializers();
 
 		return new SimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables, targetMatcher);
+				respectAbandonedEvaluatables, targetMatcher, statusCodeComparator);
 	}
 
 	/**
@@ -271,7 +272,7 @@ public final class SimplePDPFactory {
 				defaultTargetMatcher.getCanonicalName());
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null,
-				respectAbandonedEvaluatables, targetMatcher);
+				respectAbandonedEvaluatables, targetMatcher, null);
 	}
 
 	/**

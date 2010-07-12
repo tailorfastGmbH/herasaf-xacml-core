@@ -18,6 +18,7 @@
 package org.herasaf.xacml.core.context;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,8 @@ public class EvaluationContext {
 	private static ObjectFactory objectFactory;
 	private boolean respectAbandonedEvaluatables;
 	private TargetMatcher targetMatcher;
-	private Map<Object,Object> customValues;
+	private Map<Object, Object> customValues;
+	private Comparator<StatusCode> statusCodeComparator;
 
 	/**
 	 * Initializes the JAXB object factory.
@@ -78,8 +80,8 @@ public class EvaluationContext {
 	 * @param targetMatcher
 	 *            The {@link TargetMatcher} to use during evaluation.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher) {
-		this(targetMatcher, null, false);
+	public EvaluationContext(TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
+		this(targetMatcher, null, false, statusCodeComparator);
 	}
 
 	/**
@@ -95,8 +97,8 @@ public class EvaluationContext {
 	 * @param pip
 	 *            The {@link PIP} to use during evaluation.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, PIP pip) {
-		this(targetMatcher, pip, false);
+	public EvaluationContext(TargetMatcher targetMatcher, PIP pip, StatusCodeComparator statusCodeComparator) {
+		this(targetMatcher, pip, false, statusCodeComparator);
 	}
 
 	/**
@@ -112,9 +114,25 @@ public class EvaluationContext {
 	 * @param respectAbandonedEvaluatables
 	 *            If true then abandoned evaluatables are respected.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher,
-			boolean respectAbandonedEvaluatables) {
-		this(targetMatcher, null, respectAbandonedEvaluatables);
+	public EvaluationContext(TargetMatcher targetMatcher, boolean respectAbandonedEvaluatables, StatusCodeComparator statusCodeComparator) {
+		this(targetMatcher, null, respectAbandonedEvaluatables, statusCodeComparator);
+	}
+	
+	/**
+	 * Initializes the EvaluationContext. The following default settings are
+	 * applied:
+	 * <ul>
+	 * <li>{@link PIP} = null</li>
+	 * <li>Status Code = OK</li>
+	 * </ul>
+	 * 
+	 * @param targetMatcher
+	 *            The {@link TargetMatcher} to use during evaluation.
+	 * @param respectAbandonedEvaluatables
+	 *            If true then abandoned evaluatables are respected.
+	 */
+	public EvaluationContext(TargetMatcher targetMatcher, Comparator<StatusCode> statusCodeComparator) {
+		this(targetMatcher, null, false, statusCodeComparator);
 	}
 
 	/**
@@ -129,8 +147,7 @@ public class EvaluationContext {
 	 * @param respectAbandonedEvaluatables
 	 *            If true then abandoned evaluatables are respected.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, PIP pip,
-			boolean respectAbandonedEvaluatables) {
+	public EvaluationContext(TargetMatcher targetMatcher, PIP pip, boolean respectAbandonedEvaluatables, Comparator<StatusCode> statusCodeComparator) {
 		this.pip = pip;
 		this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
 		this.targetMatcher = targetMatcher;
@@ -139,27 +156,33 @@ public class EvaluationContext {
 		targetMatched = true;
 		obligations = objectFactory.createObligationsType();
 		customValues = new HashMap<Object, Object>();
+		this.statusCodeComparator = statusCodeComparator;
 	}
-	
+
 	/**
-	 * Associates the specified value with the specified key for a later retrieval.
+	 * Associates the specified value with the specified key for a later
+	 * retrieval.
 	 * 
-	 * @param key with which the specified value is to be associated.
-	 * @param value to be associated with the specified key.
+	 * @param key
+	 *            with which the specified value is to be associated.
+	 * @param value
+	 *            to be associated with the specified key.
 	 */
-	public void put(Object key, Object value){
-	    customValues.put(key, value);
+	public void put(Object key, Object value) {
+		customValues.put(key, value);
 	}
-	
+
 	/**
 	 * Returns the value to which the specified key is mapped to.
 	 * 
-	 * @param key whose associated value is to be returned.
-	 * @return the value to which this specified key is mapped to, or null if no such key is specified.
+	 * @param key
+	 *            whose associated value is to be returned.
+	 * @return the value to which this specified key is mapped to, or null if no
+	 *         such key is specified.
 	 */
-    public Object get(Object key){
-        return customValues.get(key);
-    }
+	public Object get(Object key) {
+		return customValues.get(key);
+	}
 
 	/**
 	 * Returns the {@link StatusCode} set in this {@link EvaluationContext}.
@@ -185,27 +208,9 @@ public class EvaluationContext {
 	 *            The potential new {@link StatusCode}.
 	 */
 	public void updateStatusCode(StatusCode code) {
-
-		if (statusCode == XACMLDefaultStatusCode.SYNTAX_ERROR) {
-			return;
-		}
-		if (code == XACMLDefaultStatusCode.OK) {
-			return;
-		}
-		if (statusCode == XACMLDefaultStatusCode.OK
-				&& (code == XACMLDefaultStatusCode.MISSING_ATTRIBUTE || code == XACMLDefaultStatusCode.PROCESSING_ERROR)) {
-			this.statusCode = code;
-			return;
-		}
-		if (statusCode == XACMLDefaultStatusCode.PROCESSING_ERROR
-				&& code == XACMLDefaultStatusCode.MISSING_ATTRIBUTE) {
-			this.statusCode = code;
-			return;
-		}
-		if (code == XACMLDefaultStatusCode.SYNTAX_ERROR) {
-			this.statusCode = code;
-			return;
-		}
+    	if(statusCodeComparator.compare(code, this.getStatusCode()) > 0){
+    		this.statusCode = code;
+    	}
 	}
 
 	/**
@@ -246,8 +251,7 @@ public class EvaluationContext {
 	 * @param missingAttributes
 	 *            The {@link List} of {@link MissingAttributeDetailType}s.
 	 */
-	public void setMissingAttributes(
-			List<MissingAttributeDetailType> missingAttributes) {
+	public void setMissingAttributes(List<MissingAttributeDetailType> missingAttributes) {
 		this.missingAttributes = missingAttributes;
 	}
 
@@ -331,8 +335,7 @@ public class EvaluationContext {
 	 *            The Obligation's {@link EffectType} that should be kept.
 	 */
 
-	public void addObligations(final List<ObligationType> obligations,
-			final EffectType effect) {
+	public void addObligations(final List<ObligationType> obligations, final EffectType effect) {
 		List<ObligationType> obls = new ArrayList<ObligationType>();
 
 		for (int i = 0; i < obligations.size(); i++) {

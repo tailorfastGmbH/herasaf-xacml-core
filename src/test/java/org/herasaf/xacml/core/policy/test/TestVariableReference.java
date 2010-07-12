@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+§ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,6 +25,7 @@ import java.util.Map;
 import javax.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -66,7 +67,7 @@ public class TestVariableReference {
 	public void testHandle() throws Exception {
 		Object[] values = new Object[] { "test1", "test2", "test3" };
 		EvaluationContext evaluationContext = new EvaluationContext(
-				new TargetMatcherImpl());
+				new TargetMatcherImpl(), new StatusCodeComparator());
 		evaluationContext
 				.setVariableDefinitions(initVariableDefinitions(values));
 

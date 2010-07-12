@@ -25,6 +25,7 @@ import javax.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResourceType;
@@ -162,7 +163,7 @@ public class TestApplyType {
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
 		assertEquals(apply
-				.handle(request, new EvaluationContext(targetMatcher)), result);
+				.handle(request, new EvaluationContext(targetMatcher, new StatusCodeComparator())), result);
 	}
 
 	/**
@@ -183,7 +184,7 @@ public class TestApplyType {
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
 		assertEquals(apply
-				.handle(request, new EvaluationContext(targetMatcher)), result);
+				.handle(request, new EvaluationContext(targetMatcher, new StatusCodeComparator())), result);
 	}
 
 	/**
@@ -201,7 +202,7 @@ public class TestApplyType {
 			Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
 		assertEquals(apply.handle(new RequestType(), new EvaluationContext(
-				targetMatcher)), result);
+				targetMatcher, new StatusCodeComparator())), result);
 
 	}
 

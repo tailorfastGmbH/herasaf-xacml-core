@@ -26,6 +26,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgor
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedPermitOverridesAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
@@ -304,7 +305,7 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		EvaluationContext infos = new EvaluationContext(tmm);
+		EvaluationContext infos = new EvaluationContext(tmm, new StatusCodeComparator());
 		DecisionType decision = combAlg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

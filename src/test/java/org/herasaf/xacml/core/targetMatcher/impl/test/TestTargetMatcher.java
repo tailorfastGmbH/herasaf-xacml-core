@@ -24,6 +24,7 @@ import java.util.Arrays;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
@@ -67,7 +68,7 @@ public class TestTargetMatcher {
 	 */
 	@BeforeTest
 	public void init() {
-		evaluationContext = new EvaluationContext(new TargetMatcherImpl());
+		evaluationContext = new EvaluationContext(new TargetMatcherImpl(), new StatusCodeComparator());
 	}
 
 	/**

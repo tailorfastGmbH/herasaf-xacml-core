@@ -24,6 +24,7 @@ import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
@@ -416,7 +417,7 @@ public class TestRuleEvaluation {
 			DecisionType expectedDecision, StatusCode expectedStatusCode,
 			MissingAttributeDetailType expectedMissingAttribute)
 			throws Exception {
-		EvaluationContext info = new EvaluationContext(targetMatcher);
+		EvaluationContext info = new EvaluationContext(targetMatcher, new StatusCodeComparator());
 		DecisionType madeDecision = combAlg.evaluateRule(null, rule, info);
 		assertEquals(madeDecision, expectedDecision);
 		assertEquals(info.getStatusCode(), expectedStatusCode);

@@ -26,6 +26,7 @@ import java.util.List;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.ActionType;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
@@ -55,7 +56,7 @@ public class TestActionAttributeDesignator {
 	 */
 	@BeforeTest
 	public void init() {
-		evaluationContext = new EvaluationContext(new TargetMatcherImpl());
+		evaluationContext = new EvaluationContext(new TargetMatcherImpl(), new StatusCodeComparator());
 	}
 
 	/**

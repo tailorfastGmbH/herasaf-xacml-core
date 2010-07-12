@@ -24,6 +24,7 @@ import java.util.List;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.StatusCode;
+import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
@@ -189,8 +190,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			boolean evaluationContextReturnesDenyObligation,
 			StatusCode evaluationContextStatusCode,
 			boolean evaluationContextTargetMatched) {
-		EvaluationContext evaluationContext = new EvaluationContext(
-				new TargetMatcherImpl(), true);
+		EvaluationContext evaluationContext = new EvaluationContext(new TargetMatcherImpl(), null, true, new StatusCodeComparator());
 		evaluationContext.setTargetMatched(evaluationContextTargetMatched);
 		evaluationContext.updateStatusCode(evaluationContextStatusCode);
 		if (evaluationContextReturnesPermitObligation) {
@@ -397,8 +397,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		EvaluationContext evaluationContext = new EvaluationContext(
-				new TargetMatcherImpl(), true);
+		EvaluationContext evaluationContext = new EvaluationContext(new TargetMatcherImpl(), null, true, new StatusCodeComparator());
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);
