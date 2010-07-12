@@ -27,6 +27,7 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 
 /**
  * This is a mock of the {@link RuleUnorderedCombiningAlgorithm}.
@@ -35,7 +36,7 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  */
 public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 	private static final long serialVersionUID = 1L;
-	public DecisionType targetDecision;
+	public TargetMatchingResult targetDecision;
 	public StatusCode targetStatusCode;
 	public MissingAttributeDetailType targetMissingAttribute;
 
@@ -56,7 +57,7 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 	 *            The {@link MissingAttributeDetailType} of the combining
 	 *            algorithm.
 	 */
-	public UnorderedRuleMock(DecisionType targetDecision,
+	public UnorderedRuleMock(TargetMatchingResult targetDecision,
 			StatusCode targetStatusCode,
 			MissingAttributeDetailType targetMissingAttribute) {
 		this();
@@ -82,7 +83,7 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 	 * Returns the predefined {@link DecisionType}.
 	 */
 	@Override
-	protected DecisionType matchTarget(RequestType request, TargetType target,
+	protected TargetMatchingResult matchTarget(RequestType request, TargetType target,
 			EvaluationContext evaluationContext) {
 		evaluationContext.resetStatus();
 		if (targetMissingAttribute != null) {

@@ -33,6 +33,7 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
  * applicable for the current request.
  * 
  * @author Sacha Dolski
+ * @author Florian Huonder
  */
 public interface TargetMatcher extends Serializable {
 	/**
@@ -54,6 +55,6 @@ public interface TargetMatcher extends Serializable {
 	 *             If a must-be-present attribute cannot be resolved (neither
 	 *             from the request nor from a PIP).
 	 */
-	boolean match(RequestType request, TargetType target, EvaluationContext evaluationContext)
+	TargetMatchingResult match(RequestType request, TargetType target, EvaluationContext evaluationContext)
 			throws SyntaxException, ProcessingException, MissingAttributeException;
 }

@@ -24,12 +24,12 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 
 /**
  * This is a mock of a {@link TargetMatcher}.
  * 
  * @author Sacha Dolski
- * @version 1.0
  */
 public class TargetMatcherMock implements TargetMatcher {
 	private static final long serialVersionUID = 7237566385772657474L;
@@ -65,7 +65,7 @@ public class TargetMatcherMock implements TargetMatcher {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean match(RequestType req, TargetType target,
+	public TargetMatchingResult match(RequestType req, TargetType target,
 			EvaluationContext evaluationContext) throws SyntaxException,
 			ProcessingException {
 		Decisions dec = decisions[counter];
@@ -73,7 +73,7 @@ public class TargetMatcherMock implements TargetMatcher {
 		counter++;
 		switch (dec) {
 		case FALSE:
-			return false;
+			return TargetMatchingResult.NO_MATCH;
 		case PROCESSINGEXCEPTION:
 			throw new ExpressionProcessingException();
 		case SYNTAXEXCEPTION:
@@ -81,9 +81,9 @@ public class TargetMatcherMock implements TargetMatcher {
 		case NULLPOINTEREXCEPTION:
 			throw new NullPointerException();
 		case TRUE:
-			return true;
+			return TargetMatchingResult.MATCH;
 		}
-		return false;
+		return TargetMatchingResult.NO_MATCH;
 	}
 
 	/**

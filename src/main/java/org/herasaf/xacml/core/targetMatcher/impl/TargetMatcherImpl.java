@@ -38,6 +38,7 @@ import org.herasaf.xacml.core.policy.impl.SubjectType;
 import org.herasaf.xacml.core.policy.impl.SubjectsType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -55,35 +56,35 @@ public class TargetMatcherImpl implements TargetMatcher {
 	/**
 	 * {@inheritDoc}
 	 */
-	public boolean match(RequestType request, TargetType target, EvaluationContext evaluationContext) throws SyntaxException,
+	public TargetMatchingResult match(RequestType request, TargetType target, EvaluationContext evaluationContext) throws SyntaxException,
 			ProcessingException, MissingAttributeException {
 		if (target != null) {
 			logger.debug("Starting subjects match.");
 			boolean subjectsMatches = subjectsMatch(target.getSubjects(), request, evaluationContext);
 			logger.debug("Subjects match resulted in: {}", subjectsMatches);
 			if (!subjectsMatches) {
-				return false;
+				return TargetMatchingResult.NO_MATCH;
 			}
 
 			logger.debug("Starting recources match.");
 			boolean resourcesMatches = resourcesMatch(target.getResources(), request, evaluationContext);
 			logger.debug("Resources match resulted in: {}", resourcesMatches);
 			if (!resourcesMatches) {
-				return false;
+				return TargetMatchingResult.NO_MATCH;
 			}
 
 			logger.debug("Starting actions match.");
 			boolean actionsMatches = actionMatch(target.getActions(), request, evaluationContext);
 			logger.debug("Actions match resulted in: {}", actionsMatches);
 			if (!actionsMatches) {
-				return false;
+				return TargetMatchingResult.NO_MATCH;
 			}
 
 			logger.debug("Starting environments match.");
 			boolean environmentsMatches = environmentMatch(target.getEnvironments(), request, evaluationContext);
 			logger.debug("Environments match resulted in: {}", environmentsMatches);
 			if (!environmentsMatches) {
-				return false;
+				return TargetMatchingResult.NO_MATCH;
 			}
 		}
 		// If there was no target, or all the subjects, resources, actions, and
@@ -94,7 +95,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 		// (XACML) 2.0, Errata 29 June 2006
 		// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 		// on page 45 (5.5).
-		return true;
+		return TargetMatchingResult.MATCH;
 	}
 
 	/**

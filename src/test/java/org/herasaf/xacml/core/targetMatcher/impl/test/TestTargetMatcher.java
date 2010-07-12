@@ -44,6 +44,7 @@ import org.herasaf.xacml.core.policy.impl.SubjectType;
 import org.herasaf.xacml.core.policy.impl.SubjectsType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.herasaf.xacml.core.targetMatcher.impl.test.mock.ActionAttributeDesignatorMock;
 import org.herasaf.xacml.core.targetMatcher.impl.test.mock.EnvironmentAttributeDesignatorMock;
@@ -95,106 +96,106 @@ public class TestTargetMatcher {
 		return new Object[][] {
 				// 1 2 3 4 5 6 96 97 98 99
 				new Object[] { new int[][] { { 1, 0 } }, 0, 0, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 1, 0, true, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 0, 1, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 1, 1, true, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 1, 5, true, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 0, 5, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 5, 0, true, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 1, 0, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 0, 1, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 1, 1, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 1, 5, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 0, 5, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 5, 0, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 1, 0, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 0, 1, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 1, 1, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 1, 5, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 0, 5, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 5, 0, true, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				// 1 2 3 4 5 6 96 97 98 99
 				new Object[] { new int[][] { { 1, 0 } }, 1, 0, false, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 0, 1, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 1, 1, false, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 1, 5, false, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 0, 5, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 0 } }, 5, 0, false, false,
-						false, false, true },
+						false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 1, 0, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 0, 1, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 1, 1, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 1, 5, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 0, 5, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 0, 1 } }, 5, 0, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 1, 0, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 0, 1, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 1, 1, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 1, 5, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 0, 5, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 } }, 5, 0, false, false,
-						false, false, false },
+						false, false, TargetMatchingResult.NO_MATCH },
 				// 1 2 3 4 5 6 7 8 9 10
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 1,
-						0, true, false, false, false, true },
+						0, true, false, false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 0,
-						1, true, false, false, false, false },
+						1, true, false, false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 1,
-						1, true, false, false, false, true },
+						1, true, false, false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 1,
-						5, true, false, false, false, true },
+						5, true, false, false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 0,
-						5, true, false, false, false, false },
+						5, true, false, false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 5,
-						0, true, false, false, false, true },
+						0, true, false, false, false, TargetMatchingResult.MATCH },
 				// 1 2 3 4 5 6 7 8 9 10
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 1,
-						0, false, false, false, false, true },
+						0, false, false, false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 0,
-						1, false, false, false, false, false },
+						1, false, false, false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 1,
-						1, false, false, false, false, true },
+						1, false, false, false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 1,
-						5, false, false, false, false, true },
+						5, false, false, false, false, TargetMatchingResult.MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 0,
-						5, false, false, false, false, false },
+						5, false, false, false, false, TargetMatchingResult.NO_MATCH },
 				new Object[] { new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 5,
-						0, false, false, false, false, true }, };
+						0, false, false, false, false, TargetMatchingResult.MATCH }, };
 	}
 
 	/**
@@ -212,16 +213,16 @@ public class TestTargetMatcher {
 				// 5 = expected result
 
 				// 1 2 3 4 5
-				new Object[] { false, false, false, false, false },
-				new Object[] { true, false, false, false, false },
-				new Object[] { false, true, false, false, false },
-				new Object[] { false, false, true, false, false },
-				new Object[] { false, false, false, true, false },
-				new Object[] { true, true, false, false, false },
-				new Object[] { false, false, true, true, false },
-				new Object[] { false, true, false, true, false },
-				new Object[] { true, false, true, false, false },
-				new Object[] { true, true, true, true, true }, };
+				new Object[] { false, false, false, false, TargetMatchingResult.NO_MATCH },
+				new Object[] { true, false, false, false, TargetMatchingResult.NO_MATCH },
+				new Object[] { false, true, false, false, TargetMatchingResult.NO_MATCH },
+				new Object[] { false, false, true, false, TargetMatchingResult.NO_MATCH },
+				new Object[] { false, false, false, true, TargetMatchingResult.NO_MATCH },
+				new Object[] { true, true, false, false, TargetMatchingResult.NO_MATCH },
+				new Object[] { false, false, true, true, TargetMatchingResult.NO_MATCH },
+				new Object[] { false, true, false, true, TargetMatchingResult.NO_MATCH },
+				new Object[] { true, false, true, false, TargetMatchingResult.NO_MATCH },
+				new Object[] { true, true, true, true, TargetMatchingResult.MATCH }, };
 	}
 
 	/**
@@ -257,7 +258,7 @@ public class TestTargetMatcher {
 	public void testMatch(int[][] subjects, int matchingAttributeValues,
 			int nonMatchingAttributeValues, boolean firstIsMatch,
 			boolean funcProcessException, boolean expressProcessException,
-			boolean syntaxException, boolean result) throws Exception {
+			boolean syntaxException, TargetMatchingResult result) throws Exception {
 		final String MATCH = "Match";
 		final String NOMATCH = "NoMatch";
 
@@ -366,7 +367,7 @@ public class TestTargetMatcher {
 	@Test(expectedExceptions = { FunctionProcessingException.class })
 	public void testFunctionProcessingException() throws Exception {
 		testMatch(new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 5, 0, true,
-				true, false, false, true); // All parameters except of the 5th
+				true, false, false, TargetMatchingResult.MATCH); // All parameters except of the 5th
 		// have no impact
 	}
 
@@ -380,7 +381,7 @@ public class TestTargetMatcher {
 	@Test(expectedExceptions = { ExpressionProcessingException.class })
 	public void testExceptionProcessingException() throws Exception {
 		testMatch(new int[][] { { 1, 1 }, { 1, 0 }, { 0, 1 } }, 5, 0, true,
-				false, true, false, true); // All parameters except of the 6th
+				false, true, false, TargetMatchingResult.MATCH); // All parameters except of the 6th
 		// have no impact
 	}
 
@@ -407,7 +408,7 @@ public class TestTargetMatcher {
 	 */
 	@Test(dataProvider = "overAllData", description = "Tests the combinations of all four elements")
 	public void testOverAll(boolean subjectMatches, boolean resourceMatches,
-			boolean actionMatches, boolean environmentMatches, boolean result)
+			boolean actionMatches, boolean environmentMatches, TargetMatchingResult result)
 			throws Exception {
 		final String MATCH = "Match";
 		final String NOMATCH = "NoMatch";
@@ -527,7 +528,7 @@ public class TestTargetMatcher {
 		TargetType target = new TargetType();
 
 		TargetMatcher matcher = new TargetMatcherImpl();
-		assertEquals(matcher.match(null, target, evaluationContext), true); // Request
+		assertEquals(matcher.match(null, target, evaluationContext), TargetMatchingResult.MATCH); // Request
 																			// can
 		// be null
 		// because

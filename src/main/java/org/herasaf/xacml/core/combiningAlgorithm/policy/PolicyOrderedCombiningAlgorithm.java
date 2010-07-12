@@ -23,6 +23,7 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 
 /**
  * This class may be extended when implementing an ordered policy combining
@@ -41,11 +42,14 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
 	 */
 	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
 			final EvaluationContext evaluationContext) {
-		final DecisionType decision = matchTarget(request, evals.getTarget(), evaluationContext);
+		final TargetMatchingResult decision = matchTarget(request, evals.getTarget(), evaluationContext);
 
-		if (decision != DecisionType.PERMIT) {
-			return decision;
+		if (decision == TargetMatchingResult.NO_MATCH){
+			return DecisionType.NOT_APPLICABLE;
+		}else if (decision == TargetMatchingResult.INDETERMINATE){
+			return DecisionType.INDETERMINATE;
 		}
+		
 		try {
 			final DecisionType dec = this.evaluateEvaluatableList(request, ((PolicySetType) evals)
 					.getOrderedEvaluatables(evaluationContext), evaluationContext);

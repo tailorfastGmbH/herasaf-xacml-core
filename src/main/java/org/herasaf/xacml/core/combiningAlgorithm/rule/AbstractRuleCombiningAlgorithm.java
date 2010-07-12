@@ -29,6 +29,7 @@ import org.herasaf.xacml.core.policy.impl.ConditionType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ExpressionType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 
 /**
  * This class handles all commonality of the rule combining algorithms. This is
@@ -36,23 +37,25 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
  * 
  * @author Sacha Dolski
  */
-public abstract class AbstractRuleCombiningAlgorithm extends
-		AbstractCombiningAlgorithm implements RuleCombiningAlgorithm {
+public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
+		RuleCombiningAlgorithm {
 	private static final long serialVersionUID = 1L;
 	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluateRule(final RequestType request,
-			final RuleType rule, final EvaluationContext evaluationContext) {
+	public DecisionType evaluateRule(final RequestType request, final RuleType rule,
+			final EvaluationContext evaluationContext) {
 		/*
 		 * Matches the target of the rule
 		 */
-		final DecisionType targetDecision = matchTarget(request, rule
-				.getTarget(), evaluationContext);
-		if (targetDecision != DecisionType.PERMIT) {
-			return targetDecision;
+		final TargetMatchingResult targetDecision = matchTarget(request, rule.getTarget(), evaluationContext);
+
+		if (targetDecision == TargetMatchingResult.NO_MATCH) {
+			return DecisionType.NOT_APPLICABLE;
+		} else if (targetDecision == TargetMatchingResult.INDETERMINATE) {
+			return DecisionType.INDETERMINATE;
 		}
 
 		final ConditionType condition = rule.getCondition();
@@ -69,8 +72,8 @@ public abstract class AbstractRuleCombiningAlgorithm extends
 
 		}
 		try {
-			decision = (Boolean) ((ExpressionType) condition.getExpression()
-					.getValue()).handle(request, evaluationContext);
+			decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request,
+					evaluationContext);
 		} catch (ProcessingException e) {
 			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			return DecisionType.INDETERMINATE;

@@ -22,10 +22,10 @@ import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.XACMLDefaultStatusCode;
-import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 import org.herasaf.xacml.core.policy.impl.TargetType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -54,26 +54,27 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 *            process.
 	 * @return The decision of matching the target.
 	 */
-	protected DecisionType matchTarget(final RequestType request, final TargetType target,
+	protected TargetMatchingResult matchTarget(final RequestType request, final TargetType target,
 			final EvaluationContext evaluationContext) {
-		boolean targetMatchDecision = false;
-		DecisionType decision = DecisionType.INDETERMINATE;
+		TargetMatchingResult targetMatchDecision = TargetMatchingResult.NO_MATCH;
 		try {
 			logger.debug("Starting target match.");
 			targetMatchDecision = evaluationContext.getTargetMatcher().match(request, target, evaluationContext);
 
 			/*
-			 * The target match can't return "not Applicable". If the
-			 * targetMatchDecision is deny, the policy has to return not
-			 * applicable. See: OASIS eXtensible Access Control Markup Langugage
+			 * See: OASIS eXtensible Access Control Markup Langugage
 			 * (XACML) 2.0, Errata 29 June 2006</a> page 83, chapter Policy
 			 * evaluation for further information.
 			 */
-			if (targetMatchDecision) {
-				decision = DecisionType.PERMIT;
-			} else {
+			switch(targetMatchDecision){
+			case MATCH:
+				//do nothing. Everything ok.
+			case INDETERMINATE:
+				//This case will never be reached. Those are exceptions.
+				break;
+			case NO_MATCH:
 				evaluationContext.setTargetMatched(false);
-				decision = DecisionType.NOT_APPLICABLE;
+				break;
 			}
 		} catch (NullPointerException e) {
 			logger.error("TargetMatcher not initialized.", e);
@@ -82,19 +83,22 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Syntax error occurred.");
+			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		} catch (ProcessingException e) {
 			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Processing error occurred.");
+			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		} catch (MissingAttributeException e) {
 			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 			evaluationContext.addMissingAttributes(e.getMissingAttribute());
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Missing attribute error occurred.");
+			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		}
 
-		logger.debug("Target match resulted in: {}", decision);
-		return decision;
+		logger.debug("Target match resulted in: {}", targetMatchDecision);
+		return targetMatchDecision;
 	}
 
 	/**

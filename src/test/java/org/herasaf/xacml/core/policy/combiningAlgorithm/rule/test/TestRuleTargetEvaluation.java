@@ -32,6 +32,7 @@ import org.herasaf.xacml.core.policy.combiningAlgorithm.mock.TargetMatcherMock;
 import org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test.PolicyTypeMock;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
+import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -53,28 +54,20 @@ public class TestRuleTargetEvaluation {
 	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
 		return new Object[][] {
 				new Object[] {
-						new OrderedRuleMock(DecisionType.PERMIT, XACMLDefaultStatusCode.OK,
+						new OrderedRuleMock(TargetMatchingResult.MATCH, XACMLDefaultStatusCode.OK,
 								null), new PolicyTypeMock(),
 						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false },
 				new Object[] {
-						new OrderedRuleMock(DecisionType.DENY, XACMLDefaultStatusCode.OK,
-								null), new PolicyTypeMock(), DecisionType.DENY,
-						XACMLDefaultStatusCode.OK, false },
-				new Object[] {
-						new OrderedRuleMock(DecisionType.PERMIT, XACMLDefaultStatusCode.OK,
+						new OrderedRuleMock(TargetMatchingResult.MATCH, XACMLDefaultStatusCode.OK,
 								null), new PolicySetType(),
 						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						false },
 				new Object[] {
-						new UnorderedRuleMock(DecisionType.PERMIT,
+						new UnorderedRuleMock(TargetMatchingResult.MATCH,
 								XACMLDefaultStatusCode.OK, null), new PolicyTypeMock(),
 						DecisionType.PERMIT, XACMLDefaultStatusCode.OK, false },
 				new Object[] {
-						new UnorderedRuleMock(DecisionType.DENY, XACMLDefaultStatusCode.OK,
-								null), new PolicyTypeMock(), DecisionType.DENY,
-						XACMLDefaultStatusCode.OK, false },
-				new Object[] {
-						new UnorderedRuleMock(DecisionType.PERMIT,
+						new UnorderedRuleMock(TargetMatchingResult.MATCH,
 								XACMLDefaultStatusCode.OK, null), new PolicySetType(),
 						DecisionType.INDETERMINATE, XACMLDefaultStatusCode.SYNTAX_ERROR,
 						false }, };
