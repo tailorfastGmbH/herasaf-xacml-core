@@ -47,6 +47,7 @@ public class TestIPv4Address {
 				new Object[]{"192.168.0.1:65535", "192.168.0.1:65535"},
 				new Object[]{"192.168.0.1:-65535", "192.168.0.1:1-65535"},
 				new Object[]{"192.168.0.1:-3", "192.168.0.1:1-3"},
+				new Object[]{"192.168.0.1/255.255.255.0:-3", "192.168.0.1/255.255.255.0:1-3"},
 		};
 	}
 
@@ -66,6 +67,8 @@ public class TestIPv4Address {
 				new Object[]{ "193.168.0.1:65536"},
 				new Object[]{ "256.0.0.1"},
 				new Object[]{ "198.0.0.256"},
+				new Object[]{ "1.1.256.1"},
+				new Object[]{ "1.256.1.1"},
 		};
 	}
 	
@@ -97,11 +100,11 @@ public class TestIPv4Address {
 		    if(e.getMessage().endsWith("is not a valid IP Address.") || e.getMessage().startsWith("No port range:") ){
 		        assertTrue(true);
 		    } else {
-		        fail("Invalid IP-Address not recognized.");
+		        throw e;
 		    }
 		}
 		catch (Exception e){
-		    fail("Invalid IP-Address not recognized.");
+		    throw e;
 		}
 	}
 }
