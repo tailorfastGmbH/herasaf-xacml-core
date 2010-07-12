@@ -19,7 +19,6 @@ package org.herasaf.xacml.core.types.test;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
 
 import org.herasaf.xacml.core.types.IPv4Address;
 import org.testng.annotations.DataProvider;
