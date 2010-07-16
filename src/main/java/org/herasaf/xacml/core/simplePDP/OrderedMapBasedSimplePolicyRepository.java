@@ -19,7 +19,7 @@ package org.herasaf.xacml.core.simplePDP;
 import java.util.List;
 import java.util.Map;
 
-import org.herasaf.xacml.core.api.PolicyRepositoryOrderedDeployment;
+import org.herasaf.xacml.core.api.OrderedPolicyRepository;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
@@ -40,7 +40,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  */
 public class OrderedMapBasedSimplePolicyRepository extends
 		MapBasedSimplePolicyRepository implements
-		PolicyRepositoryOrderedDeployment {
+		OrderedPolicyRepository {
 
 	/**
 	 * {@inheritDoc}

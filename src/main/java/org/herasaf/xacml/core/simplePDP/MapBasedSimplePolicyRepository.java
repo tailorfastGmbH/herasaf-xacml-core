@@ -25,8 +25,8 @@ import java.util.Map;
 
 import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.api.DeploymentModification;
-import org.herasaf.xacml.core.api.PolicyRepositoryEvaluation;
-import org.herasaf.xacml.core.api.PolicyRepositoryUnorderedDeployment;
+import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
+import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class MapBasedSimplePolicyRepository implements
-		PolicyRepositoryUnorderedDeployment, PolicyRepositoryEvaluation {
+		UnorderedPolicyRepository, PolicyRetrievalPoint {
 	// The reason that a List is put as value here is: A map can only store on
 	// value per key. But if a local reference shall be in the list, it has at
 	// least two values for that specific key. The key shall be a tupel of two

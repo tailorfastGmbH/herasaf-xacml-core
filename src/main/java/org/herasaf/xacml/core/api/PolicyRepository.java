@@ -30,12 +30,9 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * are general. Methods for the deployment of {@link Evaluatable}s are provided
  * in the sub-interfaces as they can be <u>ordered</u> or <u>unordered</u>.<br />
  * 
- * <br />
- * The policy repository may store and/or index the {@link Evaluatable}s. <br />
- * 
  * @author Ylli Sylejmani
  */
-public interface PolicyRepositoryDeployment {
+public interface PolicyRepository {
 
 	/**
 	 * Removes the {@link Evaluatable} with the given {@link EvaluatableID} from

@@ -9,7 +9,7 @@ import java.io.OutputStream;
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.herasaf.xacml.core.api.PDP;
-import org.herasaf.xacml.core.api.PolicyRepositoryUnorderedDeployment;
+import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
@@ -25,7 +25,7 @@ import org.testng.annotations.Test;
 public class TestMissingAttributes {
 	private PDP pdp;
 	private Evaluatable eval;
-	private PolicyRepositoryUnorderedDeployment repo;
+	private UnorderedPolicyRepository repo;
 
 	@BeforeClass
 	public void init() {
@@ -63,7 +63,7 @@ public class TestMissingAttributes {
 	public void testit(String id, Evaluatable eval, RequestCtx request,
 			ResponseCtx expectedResponse) throws Exception {
 		this.eval = eval;
-		repo = (PolicyRepositoryUnorderedDeployment) pdp.getPolicyRepository();
+		repo = (UnorderedPolicyRepository) pdp.getPolicyRepository();
 		repo.deploy(eval);
 
 		ResponseCtx response = pdp.evaluate(request);

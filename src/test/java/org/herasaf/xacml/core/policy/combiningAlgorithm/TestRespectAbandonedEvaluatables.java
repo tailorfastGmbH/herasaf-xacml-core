@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.herasaf.xacml.core.api.PDP;
-import org.herasaf.xacml.core.api.PolicyRepositoryUnorderedDeployment;
+import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
@@ -43,7 +43,7 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestRespectAbandonedEvaluatables {
-	private PolicyRepositoryUnorderedDeployment repo;
+	private UnorderedPolicyRepository repo;
 
 	/**
 	 * Initializes the test data.
@@ -109,7 +109,7 @@ public class TestRespectAbandonedEvaluatables {
 		RequestCtx request = RequestCtxFactory
 				.unmarshal(new File(
 						"src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
-		repo = (PolicyRepositoryUnorderedDeployment) pdp.getPolicyRepository();
+		repo = (UnorderedPolicyRepository) pdp.getPolicyRepository();
 
 		repo.deploy(eval);
 

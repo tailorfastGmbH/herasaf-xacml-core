@@ -19,8 +19,8 @@ package org.herasaf.xacml.core.simplePDP;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
-import org.herasaf.xacml.core.api.PolicyRepositoryEvaluation;
-import org.herasaf.xacml.core.api.PolicyRepositoryOrderedDeployment;
+import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
+import org.herasaf.xacml.core.api.OrderedPolicyRepository;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
@@ -46,7 +46,7 @@ import org.slf4j.MDC;
  * @author René Eggenschwiler
  */
 public class SimplePDP implements PDP {
-	private final PolicyRepositoryEvaluation policyRepository;
+	private final PolicyRetrievalPoint policyRepository;
 	private final PIP pip;
 	private final PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final TargetMatcher targetMatcher;
@@ -57,14 +57,14 @@ public class SimplePDP implements PDP {
 
 	/**
 	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
-	 * {@link PolicyRepositoryEvaluation}, {@link PIP} and {@link TargetMatcher}
+	 * {@link PolicyRetrievalPoint}, {@link PIP} and {@link TargetMatcher}
 	 * .<br />
 	 * The {@link PIP} may be <code>null</code>.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use.
 	 * @param policyRepository
-	 *            The {@link PolicyRepositoryEvaluation} to use.
+	 *            The {@link PolicyRetrievalPoint} to use.
 	 * @param pip
 	 *            The {@link PIP} to use (may be <code>null</code>).
 	 * @param respectAbandonedEvaluatables
@@ -73,7 +73,7 @@ public class SimplePDP implements PDP {
 	 *            The {@link TargetMatcher} to use during evaluation.
 	 */
 	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRepositoryEvaluation policyRepository, PIP pip,
+			PolicyRetrievalPoint policyRepository, PIP pip,
 			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
 		/*
 		 * Checks if the policy repository and the root combining algorithm are
@@ -81,7 +81,7 @@ public class SimplePDP implements PDP {
 		 * (exclusive OR).
 		 */
 		if ((PolicyOrderedCombiningAlgorithm.class
-				.isInstance(rootCombiningAlgorithm) && PolicyRepositoryOrderedDeployment.class
+				.isInstance(rootCombiningAlgorithm) && OrderedPolicyRepository.class
 				.isInstance(policyRepository))
 				^ PolicyUnorderedCombiningAlgorithm.class
 						.isInstance(rootCombiningAlgorithm)) {
@@ -127,7 +127,7 @@ public class SimplePDP implements PDP {
 	/**
 	 * {@inheritDoc}
 	 */
-	public PolicyRepositoryEvaluation getPolicyRepository() {
+	public PolicyRetrievalPoint getPolicyRepository() {
 		return policyRepository;
 	}
 

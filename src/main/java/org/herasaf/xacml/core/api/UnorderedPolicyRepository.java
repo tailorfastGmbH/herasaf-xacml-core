@@ -16,39 +16,38 @@
  */
 package org.herasaf.xacml.core.api;
 
-import java.util.Map;
+import java.util.Collection;
 
 import org.herasaf.xacml.core.policy.Evaluatable;
 
 /**
- * This policy enhances to capability of the {@link PolicyRepositoryDeployment}
- * with <u>ordered</u> deployment of {@link Evaluatable}s (see
- * {@link #deploy(Evaluatable, int)}).
+ * This policy enhances to capability of the {@link PolicyRepository} with
+ * <u>unordered</u> deployment of {@link Evaluatable}s.
  * 
  * @author Ylli Sylejmani
  */
-public interface PolicyRepositoryOrderedDeployment extends
-		PolicyRepositoryDeployment {
+public interface UnorderedPolicyRepository extends PolicyRepository {
 
 	/**
-	 * Inserts a new {@link Evaluatable} into the policy repository at the given
-	 * position. It requires an ordered root combining algorithm to work.
+	 * Inserts a new {@link Evaluatable} into the policy repository. It is put
+	 * at the end of the list. It does not require a specific (ordered or
+	 * unordered) combining algorithm.
 	 * 
 	 * @param evaluatable
 	 *            The {@link Evaluatable} to add to the policy repository.
-	 * @param position
-	 *            The position where the {@link Evaluatable} shall be added to
-	 *            the list.
 	 */
-	void deploy(Evaluatable evaluatable, int position);
+	void deploy(Evaluatable evaluatable);
 
 	/**
-	 * Inserts a map of {@link Evaluatable}s into the policy repository at the
-	 * given positions. It requires an ordered root combining algorithm to work.
+	 * Inserts a collection of new {@link Evaluatable}s into the policy
+	 * repository. The {@link Evaluatable} are added randomly to the deployed
+	 * collections. It does not require a specific (ordered or unordered)
+	 * combining algorithm.
 	 * 
 	 * @param evaluatables
-	 *            The map containing the {@link Evaluatable}s and the positions
-	 *            to add to the policy repository.
+	 *            The collection of {@link Evaluatable}s to add to the policy
+	 *            repository.
 	 */
-	void deploy(Map<Integer, Evaluatable> evaluatables);
+	void deploy(Collection<Evaluatable> evaluatables);
+
 }

@@ -67,15 +67,15 @@ public interface PDP {
 	ResponseCtx evaluate(RequestCtx request);
 
 	/**
-	 * Returns the {@link PolicyRepositoryEvaluation} that this PDP uses for
+	 * Returns the {@link PolicyRetrievalPoint} that this PDP uses for
 	 * evaluation. <br />
 	 * If the used implementation is an OrderedPolicyRepository a cast must be
 	 * done manually.
 	 * 
-	 * @return The {@link PolicyRepositoryEvaluation} contained in this
+	 * @return The {@link PolicyRetrievalPoint} contained in this
 	 *         {@link PDP}.
 	 */
-	PolicyRepositoryEvaluation getPolicyRepository();
+	PolicyRetrievalPoint getPolicyRepository();
 
 	/**
 	 * Returns the {@link PIP} that this PDP during evaluation for retrieving

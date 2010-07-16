@@ -32,8 +32,8 @@ import org.custommonkey.xmlunit.XMLUnit;
 import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PDP;
-import org.herasaf.xacml.core.api.PolicyRepositoryEvaluation;
-import org.herasaf.xacml.core.api.PolicyRepositoryUnorderedDeployment;
+import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
+import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
@@ -105,7 +105,7 @@ public class SimplePDPTest {
 	@Test(dataProvider = "policy-request-response-combinations")
 	public void testSimplePDP(Evaluatable policy, RequestCtx request,
 			ResponseCtx expectedResponse) throws Exception {
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) simplePDP
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
 				.getPolicyRepository();
 
 		deploymentRepo.deploy(policy);
@@ -139,7 +139,7 @@ public class SimplePDPTest {
 	 */
 	@Test
 	public void testMultiDeploy() throws Exception {
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) simplePDP
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
 				.getPolicyRepository();
 		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
 		EvaluatableID evalId1 = eval1.getId();
@@ -170,9 +170,9 @@ public class SimplePDPTest {
 	 */
 	@Test
 	public void testGetByIdPositive() throws Exception {
-		PolicyRepositoryEvaluation evaluationRepo = simplePDP
+		PolicyRetrievalPoint evaluationRepo = simplePDP
 				.getPolicyRepository();
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) evaluationRepo;
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) evaluationRepo;
 		Evaluatable eval = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml");
 
 		deploymentRepo.deploy(eval);
@@ -200,7 +200,7 @@ public class SimplePDPTest {
 	 */
 	@Test(expectedExceptions = { PolicyRepositoryException.class })
 	public void testGetByIdNegative() throws Exception {
-		PolicyRepositoryEvaluation repo = simplePDP.getPolicyRepository();
+		PolicyRetrievalPoint repo = simplePDP.getPolicyRepository();
 
 		repo.getEvaluatable(new EvaluatableIDImpl("does not exist"));
 	}
@@ -214,9 +214,9 @@ public class SimplePDPTest {
 	 */
 	@Test
 	public void testGetByRequest() throws Exception {
-		PolicyRepositoryEvaluation evaluationRepo = simplePDP
+		PolicyRetrievalPoint evaluationRepo = simplePDP
 				.getPolicyRepository();
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) evaluationRepo;
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) evaluationRepo;
 		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
 		EvaluatableID evalId1 = eval1.getId();
 		Evaluatable eval2 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml");
@@ -247,9 +247,9 @@ public class SimplePDPTest {
 	 */
 	@Test
 	public void testPSInternalReference() throws Exception {
-		PolicyRepositoryEvaluation evaluationRepo = simplePDP
+		PolicyRetrievalPoint evaluationRepo = simplePDP
 				.getPolicyRepository();
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) evaluationRepo;
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) evaluationRepo;
 		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy03.xml");
 		deploymentRepo.deploy(eval1);
 
@@ -279,7 +279,7 @@ public class SimplePDPTest {
 	 */
 	@Test(expectedExceptions = { PolicyRepositoryException.class })
 	public void testPSRemoteReference() throws Exception {
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) simplePDP
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
 				.getPolicyRepository();
 		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy04.xml");
 		deploymentRepo.deploy(eval1);
@@ -294,7 +294,7 @@ public class SimplePDPTest {
 	 */
 	@Test(expectedExceptions = { PolicyRepositoryException.class })
 	public void testPSLocalReferenceToOtherPS() throws Exception {
-		PolicyRepositoryUnorderedDeployment deploymentRepo = (PolicyRepositoryUnorderedDeployment) simplePDP
+		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
 				.getPolicyRepository();
 		Evaluatable eval1 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy04.xml");
 		Evaluatable eval2 = loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy05.xml");

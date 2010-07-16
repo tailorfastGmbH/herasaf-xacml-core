@@ -29,12 +29,10 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * {@link Evaluatable}s<br />
  * Further the policy repository is responsible for resolving
  * {@link Evaluatable}s from "remote" repositories. <br />
- * <br />
- * The policy repository may store and/or index the {@link Evaluatable}s. <br />
  * 
  * @author Ylli Sylejmani
  */
-public interface PolicyRepositoryEvaluation {
+public interface PolicyRetrievalPoint {
 
 	/**
 	 * Returns the {@link Evaluatable} with the given {@link EvaluatableID} from
@@ -47,10 +45,10 @@ public interface PolicyRepositoryEvaluation {
 	Evaluatable getEvaluatable(EvaluatableID evaluatableID);
 
 	/**
-	 * Returns all {@link Evaluatable}s that match the given request. It may be
-	 * possible that {@link Evaluatable}s are returned that do not match the
-	 * request. <br />
-	 * <br />
+	 * Returns at least all {@link Evaluatable}s that may match the given
+	 * request. At least means that all matchings are returned but it is
+	 * possible that more than the matching {@link Evaluatable}s are returned.
+	 * 
 	 * An advanced PolicyRepository implementation could e.g. use an index to
 	 * reduce the amount of returned policies, so that the PDP can evaluate less
 	 * polices. That could speed up overall performance. It is very important
