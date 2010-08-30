@@ -23,24 +23,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * TODO JAVADOC!!
+ * This comparator implementation compares two Status Codes.
+ * 
+ * The "bigger" Status Code has the higher priority and shall override the
+ * "smaller" one.
  * 
  * @author Florian Huonder
- *  
  */
 public class StatusCodeComparator implements Comparator<StatusCode> {
+	private final Logger logger = LoggerFactory
+			.getLogger(StatusCodeComparator.class);
 
-	private final Logger logger = LoggerFactory.getLogger(StatusCodeComparator.class);
 	/**
 	 * {@inheritDoc}
 	 */
-	
-	//sc1 grösser dann positiv
 	public int compare(StatusCode sc1, StatusCode sc2) {
-		if(sc1 instanceof XACMLDefaultStatusCode && sc2 instanceof XACMLDefaultStatusCode){
-			switch((XACMLDefaultStatusCode)sc1){
+		if (sc1 instanceof XACMLDefaultStatusCode
+				&& sc2 instanceof XACMLDefaultStatusCode) {
+			switch ((XACMLDefaultStatusCode) sc1) {
 			case OK:
-				switch((XACMLDefaultStatusCode)sc2){
+				switch ((XACMLDefaultStatusCode) sc2) {
 				case OK:
 					return 0;
 				case MISSING_ATTRIBUTE:
@@ -52,7 +54,7 @@ public class StatusCodeComparator implements Comparator<StatusCode> {
 				}
 				break;
 			case MISSING_ATTRIBUTE:
-				switch((XACMLDefaultStatusCode)sc2){
+				switch ((XACMLDefaultStatusCode) sc2) {
 				case OK:
 					return 1;
 				case MISSING_ATTRIBUTE:
@@ -64,7 +66,7 @@ public class StatusCodeComparator implements Comparator<StatusCode> {
 				}
 				break;
 			case PROCESSING_ERROR:
-				switch((XACMLDefaultStatusCode)sc2){
+				switch ((XACMLDefaultStatusCode) sc2) {
 				case OK:
 					return 1;
 				case MISSING_ATTRIBUTE:
@@ -76,7 +78,7 @@ public class StatusCodeComparator implements Comparator<StatusCode> {
 				}
 				break;
 			case SYNTAX_ERROR:
-				switch((XACMLDefaultStatusCode)sc2){
+				switch ((XACMLDefaultStatusCode) sc2) {
 				case OK:
 					return 1;
 				case MISSING_ATTRIBUTE:
@@ -86,13 +88,15 @@ public class StatusCodeComparator implements Comparator<StatusCode> {
 				case SYNTAX_ERROR:
 					return 0;
 				}
-				break; 
+				break;
 			}
-			InitializationException ie = new InitializationException("Illegal state of status codes.");
+			InitializationException ie = new InitializationException(
+					"Illegal state of status codes.");
 			logger.error(ie.getMessage());
 			throw ie;
 		} else {
-			InitializationException ie = new InitializationException("Non-default status codes in use. Use a custom status code comparator.");
+			InitializationException ie = new InitializationException(
+					"Non-default status codes in use. Use a custom status code comparator.");
 			logger.error(ie.getMessage());
 			throw ie;
 		}

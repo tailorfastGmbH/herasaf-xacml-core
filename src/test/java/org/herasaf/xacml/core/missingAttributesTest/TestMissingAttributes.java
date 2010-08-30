@@ -10,10 +10,10 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
+import org.herasaf.xacml.core.context.DefaultResponseCtxFactory;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyConverter;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
@@ -43,7 +43,7 @@ public class TestMissingAttributes {
 						RequestCtxFactory
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Request01.xml")),
-						ResponseCtxFactory
+						new DefaultResponseCtxFactory()
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Response01.xml")) },
 				{
@@ -54,7 +54,7 @@ public class TestMissingAttributes {
 						RequestCtxFactory
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Request02.xml")),
-						ResponseCtxFactory
+										new DefaultResponseCtxFactory()
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Response02.xml")) }, };
 	}
