@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  * {@link URNToFunctionConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class FunctionsJAXBInitializer extends AbstractInitializer<Function> {
 	private final Logger logger = LoggerFactory
@@ -40,7 +40,7 @@ public class FunctionsJAXBInitializer extends AbstractInitializer<Function> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getSearchContextPath() {
+	protected String getDefaultSearchContextPath() {
 		return SEARCH_CONTEXT_PATH;
 	}
 

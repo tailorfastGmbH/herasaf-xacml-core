@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * the {@link URNToPolicyCombiningAlgorithmConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class PolicyCombiningAlgorithmsJAXBInitializer extends
 		AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
@@ -43,7 +43,7 @@ public class PolicyCombiningAlgorithmsJAXBInitializer extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getSearchContextPath() {
+	protected String getDefaultSearchContextPath() {
 		return SEARCH_CONTEXT_PATH;
 	}
 

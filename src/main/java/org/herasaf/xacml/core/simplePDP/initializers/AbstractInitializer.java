@@ -24,9 +24,12 @@ import java.net.MalformedURLException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.jar.JarEntry;
@@ -44,7 +47,7 @@ import org.slf4j.LoggerFactory;
  *            The type this initializer is made for.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 public abstract class AbstractInitializer<T> implements Initializer {
 	private static final Logger LOGGER = LoggerFactory
@@ -66,7 +69,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * 
 	 * @return The String containing the search context.
 	 */
-	protected abstract String getSearchContextPath();
+	protected abstract String getDefaultSearchContextPath();
 
 	/**
 	 * Returns the {@link Class} of the type T. This is needed for a proper
@@ -101,13 +104,47 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * {@inheritDoc}
 	 */
 	public void run() {
+		Set<String> classNames = getClassNames(getDefaultSearchContextPath());
+		for (String customSearchContext : getCustomSearchContexts()) {
+			classNames.addAll(getClassNames(customSearchContext));
+		}
+		Set<T> instances = createInstancesFromClassNames(classNames,
+				getTargetClass());
+		Map<String, T> instancesMap = convertSetToMap(instances);
+		setInstancesIntoConverter(instancesMap);
+		furtherInitializations(instancesMap);
+	}
+
+	/**
+	 * This method allows to add further (custom) search context paths to the
+	 * initializer. It may be overridden by an implementing subclass.
+	 * 
+	 * @return A collection containing the additional search context paths.
+	 */
+	protected Collection<String> getCustomSearchContexts() {
+		return new ArrayList<String>();
+	}
+
+	/**
+	 * Collects all classes in the given search context within the classpath.
+	 * 
+	 * @param searchContext
+	 *            The search context where the classes shall be searched in the
+	 *            classpath
+	 * @return A {@link Set} containing the class names of the collected
+	 *         classes.
+	 */
+	private Set<String> getClassNames(String searchContext) {
 		Set<String> classNames = new HashSet<String>();
+		if (searchContext == null) {
+			return classNames;
+		}
 		ClassLoader cl = Thread.currentThread().getContextClassLoader();
 		// Get all resources that are at the location given by the
 		// searchContext.
 		Enumeration<URL> resourceURLs;
 		try {
-			resourceURLs = cl.getResources(getSearchContextPath());
+			resourceURLs = cl.getResources(searchContext);
 		} catch (IOException e1) {
 			InitializationException ie = new InitializationException(
 					"Unable to get resources from classpath.");
@@ -119,10 +156,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			URL url = resourceURLs.nextElement();
 			if (isJarURL(url)) {
 				/* JAR handling */
-				classNames.addAll(collectClassNamesFromJar(url));
+				classNames.addAll(collectClassNamesFromJar(url, searchContext));
 			} else if (URL_PROTOCOL_FILE.equals(url.getProtocol())) {
 				/* Directory handling */
-				classNames.addAll(collectClassNamesFromFile(url));
+				classNames.addAll(collectClassNamesFromFile(url, searchContext));
 			} else {
 				InitializationException e = new InitializationException(
 						"The search context path must either point to a JAR (.jar, .zip (BEA WebLogic, WebSphere), .wsjar (BEA WebLogic, WebSphere), code-source (Oracle OC4J)) file or to a directory");
@@ -131,11 +168,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			}
 		}
 
-		Set<T> instances = createInstancesFromClassNames(classNames,
-				getTargetClass());
-		Map<String, T> instancesMap = convertSetToMap(instances);
-		setInstancesIntoConverter(instancesMap);
-		furtherInitializations(instances);
+		return classNames;
 	}
 
 	/**
@@ -146,7 +179,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * @param instances
 	 *            The instances of type T.
 	 */
-	protected void furtherInitializations(Set<T> instances) {
+	protected void furtherInitializations(Map<String, T> instancesMap) {
 		// to be overridden in concrete subclass if needed.
 	}
 
@@ -250,14 +283,15 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * 
 	 * @return A {@link Set} containing all class names.
 	 */
-	private Set<String> collectClassNamesFromJar(URL url) {
+	private Set<String> collectClassNamesFromJar(final URL url, final String searchContext) {
 		JarFile jarFile = getJarFileFromURL(url);
 		Set<String> classNames = new HashSet<String>();
 		for (Enumeration<JarEntry> entries = jarFile.entries(); entries
 				.hasMoreElements();) {
 			JarEntry entry = entries.nextElement();
 			if (isJarEntryValid(entry)
-					&& entry.getName().startsWith(getSearchContextPath())) {
+					&& entry.getName()
+							.startsWith(searchContext)) {
 				String name = entry.getName();
 				// Cut off the .class ending.
 				name = name.substring(0, name.indexOf(".class"));
@@ -281,7 +315,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * @return A list containing all valid files contained within the search
 	 *         context.
 	 */
-	private Set<String> collectClassNamesFromFile(final URL url) {
+	private Set<String> collectClassNamesFromFile(final URL url, final String searchContext) {
 		Set<String> classNames = new HashSet<String>();
 
 		File directory;
@@ -300,7 +334,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 					try {
 						classNames.addAll(collectClassNamesFromFile(new URL(
 								URL_PROTOCOL_FILE, url.getHost(), url.getPath()
-										+ "/" + allFiles[i].getName())));
+										+ "/" + allFiles[i].getName()), searchContext + "/" + allFiles[i].getName()));
 					} catch (MalformedURLException e) {
 						InitializationException ie = new InitializationException(
 								"Unable to load classes from file system.", e);
@@ -319,13 +353,13 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 						String path = url.getPath();
 						path = path.substring(path
-								.indexOf(getSearchContextPath()));
+								.indexOf(searchContext));
 
 						path = path.replaceAll("/", ".");
 
 						String name = path + "." + allFiles[i].getName();
-						classNames.add(name.substring(0, name
-								.indexOf(CLASS_ENDING)));
+						classNames.add(name.substring(0,
+								name.indexOf(CLASS_ENDING)));
 					}
 				}
 			}
@@ -379,10 +413,9 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 			int modifier = clazz.getModifiers();
 			if (Modifier.isAbstract(modifier) || Modifier.isInterface(modifier)) {
-				LOGGER
-						.warn("The class "
-								+ clazz.getName()
-								+ " cannot be instatiated because it is either abstract or an interface.");
+				LOGGER.warn("The class "
+						+ clazz.getName()
+						+ " cannot be instatiated because it is either abstract or an interface.");
 				continue; // The clazz is skipped if it is not instantiable.
 			}
 

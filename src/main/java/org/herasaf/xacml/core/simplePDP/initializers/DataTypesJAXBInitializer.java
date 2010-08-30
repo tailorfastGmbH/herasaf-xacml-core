@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * {@link URNToDataTypeConverter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 @SuppressWarnings("unchecked")
 public class DataTypesJAXBInitializer extends
@@ -63,7 +63,7 @@ public class DataTypesJAXBInitializer extends
 	 * {@inheritDoc}
 	 */
 	@Override
-	protected String getSearchContextPath() {
+	protected String getDefaultSearchContextPath() {
 		return SEARCH_CONTEXT_PATH;
 	}
 
