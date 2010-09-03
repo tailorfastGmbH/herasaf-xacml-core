@@ -43,7 +43,7 @@ import org.slf4j.MDC;
  * plugged in.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class SimplePDP implements PDP {
 	private final PolicyRetrievalPoint policyRepository;
@@ -56,40 +56,32 @@ public class SimplePDP implements PDP {
 	private final StatusCodeComparator statusCodeComparator;
 
 	/**
-	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
-	 * {@link PolicyRetrievalPoint}, {@link PIP} and {@link TargetMatcher} .<br />
-	 * The {@link PIP} may be <code>null</code>.
+	 * Initializes the PDP with the given {@link SimplePDPConfiguration},
 	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use.
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use.
-	 * @param pip
-	 *            The {@link PIP} to use (may be <code>null</code>).
-	 * @param respectAbandonedEvaluatables
-	 *            If true then abandoned evaluatables are respected.
-	 * @param targetMatcher
-	 *            The {@link TargetMatcher} to use during evaluation.
+	 * @param simplePDPConfiguration
+	 *            The {@link SimplePDPConfiguration} to use.
+	 * 
 	 */
-	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRetrievalPoint policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher,
-			StatusCodeComparator statusCodeComparator) {
+	public SimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
 		/*
 		 * Checks if the policy repository and the root combining algorithm are
 		 * both of the same type. The type is either ordered or unordered
 		 * (exclusive OR).
 		 */
 		if ((PolicyOrderedCombiningAlgorithm.class
-				.isInstance(rootCombiningAlgorithm) && OrderedPolicyRepository.class
-				.isInstance(policyRepository))
+				.isInstance(simplePDPConfiguration.getRootCombiningAlgorithm()) && OrderedPolicyRepository.class
+				.isInstance(simplePDPConfiguration.getPolicyRetrievalPoint()))
 				^ PolicyUnorderedCombiningAlgorithm.class
-						.isInstance(rootCombiningAlgorithm)) {
-			this.rootPolicyCombiningAlgorithm = rootCombiningAlgorithm;
-			this.policyRepository = policyRepository;
-			this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
-			this.pip = pip;
-			this.targetMatcher = targetMatcher;
+						.isInstance(simplePDPConfiguration
+								.getRootCombiningAlgorithm())) {
+			this.rootPolicyCombiningAlgorithm = simplePDPConfiguration
+					.getRootCombiningAlgorithm();
+			this.policyRepository = simplePDPConfiguration
+					.getPolicyRetrievalPoint();
+			this.respectAbandonedEvaluatables = simplePDPConfiguration
+					.isRespectAbandonedEvaluatables();
+			this.pip = simplePDPConfiguration.getPip();
+			this.targetMatcher = simplePDPConfiguration.getTargetMatcher();
 
 			if (pip == null) {
 				logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
@@ -113,12 +105,13 @@ public class SimplePDP implements PDP {
 			throw ie;
 		}
 
-		if (statusCodeComparator == null) {
+		if (simplePDPConfiguration.getStatusCodeComparator() == null) {
 			logger.info("Using default status code comparator.");
 			this.statusCodeComparator = new StatusCodeComparator();
 		} else {
 			logger.info("Using custom status code comparator.");
-			this.statusCodeComparator = statusCodeComparator;
+			this.statusCodeComparator = simplePDPConfiguration
+					.getStatusCodeComparator();
 		}
 	}
 

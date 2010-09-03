@@ -31,6 +31,7 @@ import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
@@ -77,8 +78,10 @@ public class TestRespectAbandonedEvaluatables {
 		for (int i = 1; i < evalFiles.size() + 1; i++) {
 			SimplePDPFactory.getSimplePDP(); // this is needed that jaxb is
 			// initialized.
-			Evaluatable eval1 = PolicyMarshaller.unmarshal(evalFiles.get(i - 1));
-			Evaluatable eval2 = PolicyMarshaller.unmarshal(evalFiles.get(i - 1));
+			Evaluatable eval1 = PolicyMarshaller
+					.unmarshal(evalFiles.get(i - 1));
+			Evaluatable eval2 = PolicyMarshaller
+					.unmarshal(evalFiles.get(i - 1));
 
 			testcases[2 * i - 1 - 1] = new Object[] { false, eval1 };
 			testcases[2 * i - 1] = new Object[] { true, eval2 };
@@ -105,7 +108,10 @@ public class TestRespectAbandonedEvaluatables {
 			throws Exception {
 		// These factory settings are needed to properly set the root combining
 		// algorithm.
-		PDP pdp = SimplePDPFactory.getSimplePDP(respectAbandonedEvaluatables);
+		SimplePDPConfiguration simplePDPConfiguration = new SimplePDPConfiguration();
+		simplePDPConfiguration
+				.setRespectAbandonedEvaluatables(respectAbandonedEvaluatables);
+		PDP pdp = SimplePDPFactory.getSimplePDP(simplePDPConfiguration);
 		RequestCtx request = RequestCtxFactory
 				.unmarshal(new File(
 						"src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));

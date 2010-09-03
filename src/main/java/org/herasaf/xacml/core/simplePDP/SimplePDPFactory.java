@@ -21,20 +21,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.herasaf.xacml.core.api.PDP;
-import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
-import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.herasaf.xacml.core.simplePDP.initializers.JAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
-import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
-import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -72,9 +67,9 @@ import org.slf4j.LoggerFactory;
  * </pre></code></blockquote>
  * 
  * <b>Note:</b><br />
- * All getSimplePDP(...) methods exist in two ways. On with a flag {@code
- * respectAbandonedEvaluatables } and one without this flag. If this flag is set
- * to true the returning {@link PDP} respectes abandoned Evaluatables. <br />
+ * All getSimplePDP(...) methods exist in two ways. On with a flag
+ * {@code respectAbandonedEvaluatables } and one without this flag. If this flag
+ * is set to true the returning {@link PDP} respectes abandoned Evaluatables. <br />
  * <br />
  * <b>Abandoned Evaluatables</b><br />
  * When rule combining algorithms, which can optimize the evaluation process,
@@ -111,12 +106,8 @@ import org.slf4j.LoggerFactory;
 public final class SimplePDPFactory {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(SimplePDPFactory.class);
+
 	private static Set<Initializer> initializers;
-	private static Class<? extends PolicyCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
-	private static Class<? extends PolicyRetrievalPoint> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
-	private static Class<? extends TargetMatcher> defaultTargetMatcher = TargetMatcherImpl.class;
-	private static Class<? extends ResponseCtxFactory> defaultResponseCtxFactory = ResponseCtxFactory.class;
-	private static boolean defaultBehaviorOfRespectAbandonedEvaluatables = false;
 
 	/**
 	 * The constructor is private to avoid instantiation of the factory. It is
@@ -176,707 +167,109 @@ public final class SimplePDPFactory {
 	}
 
 	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRetrievalPoint},
-	 * a custom {@link PIP} and a custom {@link TargetMatcher}.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP}.
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * @param targetMatcher
-	 *            The {@link TargetMatcher} to use during evaluation.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRetrievalPoint policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher,
-			StatusCodeComparator statusCodeComparator) {
-		if (rootCombiningAlgorithm == null || policyRepository == null
-				|| targetMatcher == null) {
-			InitializationException e = new InitializationException(
-					"The root combining algorithm, policy repository and the target matcher must not be null.");
-			LOGGER.error(e.getMessage());
-			throw e;
-		}
-
-		runInitializers();
-
-		return new SimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables, targetMatcher,
-				statusCodeComparator);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRetrievalPoint}
-	 * and a custom {@link PIP}.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP}.
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRetrievalPoint policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables) {
-		TargetMatcher targetMatcher;
-
-		try {
-			targetMatcher = defaultTargetMatcher.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default target matcher: "
-							+ defaultTargetMatcher.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default target matcher: "
-							+ defaultTargetMatcher.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default target matcher: "
-							+ defaultTargetMatcher.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default target matcher: "
-							+ defaultTargetMatcher.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-		
-		LOGGER.info("Using the default target matcher: {}",
-				defaultTargetMatcher.getCanonicalName());
-		
-		LOGGER.info("Using the default response context factory: {}",
-				defaultResponseCtxFactory.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables, targetMatcher, null);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm} and a custom {@link PIP}. <br />
-	 * <br />
-	 * <b>Important:</b> The default {@link PolicyRetrievalPoint} (
-	 * {@link MapBasedSimplePolicyRepository}) is used.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP}.
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm, PIP pip,
-			boolean respectAbandonedEvaluatables) {
-		PolicyRetrievalPoint policyRepository;
-
-		try {
-			policyRepository = defaultPolicyRepository.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the policy repository: "
-							+ defaultPolicyRepository.getCanonicalName());
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the policy repository: "
-							+ defaultPolicyRepository.getCanonicalName());
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the policy repository: "
-							+ defaultPolicyRepository.getCanonicalName());
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the policy repository: "
-							+ defaultPolicyRepository.getCanonicalName());
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		LOGGER.info("Using the default policy repository: {}",
-				defaultPolicyRepository.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom a custom
-	 * {@link PolicyRetrievalPoint} and a custom {@link PIP} (may be
-	 * <code>null</code>). <br />
-	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}) is used.
-	 * 
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP} .
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(PolicyRetrievalPoint policyRepository,
-			PIP pip, boolean respectAbandonedEvaluatables) {
-		PolicyCombiningAlgorithm rootCombiningAlgorithm;
-
-		try {
-			rootCombiningAlgorithm = defaultRootCombiningAlgorithm
-					.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		LOGGER.info("Using the default root combining algorithm : {}",
-				defaultRootCombiningAlgorithm.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}. <br />
-	 * <br />
-	 * <b>Important:</b> The default {@link PIP} ( <code>null</code>) and the
-	 * default {@link PolicyRetrievalPoint} (
-	 * {@link MapBasedSimplePolicyRepository} ) is used.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			boolean respectAbandonedEvaluatables) {
-		PolicyRetrievalPoint policyRepository;
-
-		try {
-			policyRepository = defaultPolicyRepository.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		LOGGER.info("There is no Policy Information Point (PIP) in use.");
-		LOGGER.info("Using the default policy repository: {}",
-				defaultPolicyRepository.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyRetrievalPoint}. <br />
-	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default {@link PIP} (
-	 * <code>null</code>) is used.
-	 * 
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(PolicyRetrievalPoint policyRepository,
-			boolean respectAbandonedEvaluatables) {
-		PolicyCombiningAlgorithm rootCombiningAlgorithm;
-		try {
-			rootCombiningAlgorithm = defaultRootCombiningAlgorithm
-					.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		LOGGER.info("There is no Policy Information Point (PIP) in use.");
-		LOGGER.info("Using the default root combining algorithm : {}",
-				defaultRootCombiningAlgorithm.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom
-	 * {@link PIP}. <br />
-	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default
-	 * {@link PolicyRetrievalPoint} ( {@link MapBasedSimplePolicyRepository}) is
-	 * used.
+	 * {@link SimplePDPConfiguration}.
 	 * 
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code) to use in the
+	 * @param simplePDPConfiguration
+	 *            The root {@link SimplePDPConfiguration} to use in the
 	 *            {@link PDP}.
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
 	 * 
 	 * @return The created {@link PDP}.
 	 */
-	public static PDP getSimplePDP(PIP pip, boolean respectAbandonedEvaluatables) {
-		PolicyCombiningAlgorithm rootCombiningAlgorithm;
-		PolicyRetrievalPoint policyRepository;
-
-		try {
-			rootCombiningAlgorithm = defaultRootCombiningAlgorithm
-					.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		try {
-			policyRepository = defaultPolicyRepository.newInstance();
-
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		LOGGER.info("Using the default root combining algorithm : {}",
-				defaultRootCombiningAlgorithm.getCanonicalName());
-		LOGGER.info("Using the default policy repository: {}",
-				defaultPolicyRepository.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm} and a custom
-	 * {@link PolicyRetrievalPoint}. <br />
-	 * <br />
-	 * <b>Important:</b> The default {@link PIP} (<code>null</code>) is used.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRetrievalPoint policyRepository,
-			boolean respectAbandonedEvaluatables) {
-
-		LOGGER.info("There is no Policy Information Point (PIP) in use.");
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance. <br />
-	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}), the default
-	 * {@link PolicyRetrievalPoint} ( {@link MapBasedSimplePolicyRepository})
-	 * and the default {@link PIP} ( <code>null</code>) is used.
-	 * 
-	 * @param respectAbandonedEvaluatables
-	 *            If true then the combining algorithms of this PDP respect
-	 *            abandoned Evaluatables.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(boolean respectAbandonedEvaluatables) {
-		PolicyCombiningAlgorithm rootCombiningAlgorithm;
-		PolicyRetrievalPoint policyRepository;
-
-		try {
-			rootCombiningAlgorithm = defaultRootCombiningAlgorithm
-					.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default root combining algorithm: "
-							+ defaultRootCombiningAlgorithm.getCanonicalName(),
-					e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		try {
-			policyRepository = defaultPolicyRepository.newInstance();
-
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default policy repository: "
-							+ defaultPolicyRepository.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-
-		LOGGER.info("There is no Policy Information Point (PIP) in use.");
-		LOGGER.info("Using the default root combining algorithm : {}",
-				defaultRootCombiningAlgorithm.getCanonicalName());
-		LOGGER.info("Using the default policy repository: {}",
-				defaultPolicyRepository.getCanonicalName());
-
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, null,
-				respectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm}, a custom {@link PolicyRetrievalPoint}
-	 * and a custom {@link PIP}.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP}.
-	 * 
-	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRetrievalPoint policyRepository, PIP pip) {
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				defaultBehaviorOfRespectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm} and a custom {@link PIP}. <br />
-	 * <br />
-	 * <b>Important:</b> The default {@link PolicyRetrievalPoint} (
-	 * {@link MapBasedSimplePolicyRepository}) is used.
-	 * 
-	 * @param rootCombiningAlgorithm
-	 *            The root {@link PolicyCombiningAlgorithm} to use in the
-	 *            {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP}.
-	 * 
-	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(
-			PolicyCombiningAlgorithm rootCombiningAlgorithm, PIP pip) {
-		return getSimplePDP(rootCombiningAlgorithm, pip,
-				defaultBehaviorOfRespectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom a custom
-	 * {@link PolicyRetrievalPoint} and a custom {@link PIP} (may be
-	 * <code>null</code>). <br />
-	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}) is used.
-	 * 
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code>) to use in the
-	 *            {@link PDP}.
-	 * 
-	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(PolicyRetrievalPoint policyRepository,
-			PIP pip) {
-		return getSimplePDP(policyRepository, pip,
-				defaultBehaviorOfRespectAbandonedEvaluatables);
+	public static PDP getSimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
+		runInitializers();
+		return new SimplePDP(simplePDPConfiguration);
 	}
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
 	 * {@link PolicyCombiningAlgorithm}. <br />
 	 * <br />
-	 * <b>Important:</b> The default {@link PIP} ( <code>null</code>) and the
-	 * default {@link PolicyRetrievalPoint} (
-	 * {@link MapBasedSimplePolicyRepository} ) is used.
+	 * <b>Important:</b> The default {@link SimplePDPConfiguration} with default
+	 * values in all other configuration fields (except
+	 * {@link PolicyCombiningAlgorithm} is used.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
 	 * 
 	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
+	 * @see {@link SimplePDPConfiguration}
 	 * 
 	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm) {
-		return getSimplePDP(rootCombiningAlgorithm,
-				defaultBehaviorOfRespectAbandonedEvaluatables);
-	}
-
-	/**
-	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyRetrievalPoint}. <br />
-	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default {@link PIP} (
-	 * <code>null</code>) is used.
-	 * 
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
-	 * 
-	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
-	 * 
-	 * @return The created {@link PDP}.
-	 */
-	public static PDP getSimplePDP(PolicyRetrievalPoint policyRepository) {
-		return getSimplePDP(policyRepository,
-				defaultBehaviorOfRespectAbandonedEvaluatables);
+		SimplePDPConfiguration simplePDPConfiguration = new SimplePDPConfiguration();
+		simplePDPConfiguration
+				.setRootCombiningAlgorithm(rootCombiningAlgorithm);
+		return getSimplePDP(simplePDPConfiguration);
 	}
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom
-	 * {@link PIP}. <br />
+	 * {@link PolicyRetrievalPoint}. <br />
 	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}) and the default
-	 * {@link PolicyRetrievalPoint} ( {@link MapBasedSimplePolicyRepository}) is
-	 * used.
+	 * <b>Important:</b> The default {@link SimplePDPConfiguration} with default
+	 * values in all other configuration fields (except
+	 * {@link PolicyRetrievalPoint} is used.
 	 * 
-	 * @param pip
-	 *            The {@link PIP} (may be <code>null</code) to use in the
+	 * @param policyRetrievalPoint
+	 *            The root {@link PolicyRetrievalPoint} to use in the
 	 *            {@link PDP}.
 	 * 
 	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
+	 * @see {@link SimplePDPConfiguration}
 	 * 
 	 * @return The created {@link PDP}.
 	 */
-	public static PDP getSimplePDP(PIP pip) {
-		return getSimplePDP(pip, defaultBehaviorOfRespectAbandonedEvaluatables);
+	public static PDP getSimplePDP(PolicyRetrievalPoint policyRetrievalPoint) {
+		SimplePDPConfiguration simplePDPConfiguration = new SimplePDPConfiguration();
+		simplePDPConfiguration.setPolicyRetrievalPoint(policyRetrievalPoint);
+		return getSimplePDP(simplePDPConfiguration);
 	}
 
 	/**
 	 * Returns a new {@link SimplePDP} instance that has set a custom root
-	 * {@link PolicyCombiningAlgorithm} and a custom
-	 * {@link PolicyRetrievalPoint}. <br />
+	 * {@link PolicyCombiningAlgorithm}. <br />
+	 * and a custom {@link PolicyRetrievalPoint}. <br />
 	 * <br />
-	 * <b>Important:</b> The default {@link PIP} (<code>null</code>) is used.
+	 * <b>Important:</b> The default {@link SimplePDPConfiguration} with default
+	 * values in all other configuration fields (except
+	 * {@link PolicyRetrievalPoint} is used.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
 	 *            {@link PDP}.
-	 * @param policyRepository
-	 *            The {@link PolicyRetrievalPoint} to use in the {@link PDP}.
+	 * @param policyRetrievalPoint
+	 *            The root {@link PolicyRetrievalPoint} to use in the
+	 *            {@link PDP}.
 	 * 
 	 * <br />
-	 * <br />
-	 *            <b>Note:</b><br />
-	 *            Abandoned Evaluatables are not collected.
+	 * @see {@link SimplePDPConfiguration}
 	 * 
 	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
-			PolicyRetrievalPoint policyRepository) {
-		return getSimplePDP(rootCombiningAlgorithm, policyRepository,
-				defaultBehaviorOfRespectAbandonedEvaluatables);
+			PolicyRetrievalPoint policyRetrievalPoint) {
+		SimplePDPConfiguration simplePDPConfiguration = new SimplePDPConfiguration();
+		simplePDPConfiguration
+				.setRootCombiningAlgorithm(rootCombiningAlgorithm);
+		simplePDPConfiguration.setPolicyRetrievalPoint(policyRetrievalPoint);
+		return getSimplePDP(simplePDPConfiguration);
 	}
 
 	/**
 	 * Returns a new {@link SimplePDP} instance. <br />
 	 * <br />
-	 * <b>Important:</b> The default root {@link PolicyCombiningAlgorithm} (
-	 * {@link PolicyOnlyOneApplicableAlgorithm}), the default
-	 * {@link PolicyRetrievalPoint} ( {@link MapBasedSimplePolicyRepository}),
-	 * the default {@link PIP} ( <code>null</code>) and the default
-	 * {@link TargetMatcher} is used. <br />
-	 * <br />
-	 * <b>Note:</b><br />
-	 * Abandoned Evaluatables are not collected.
+	 * <b>Important:</b> All default values defined in
+	 * {@link SimplePDPConfiguration} will be used in the resulting PDP.
 	 * 
 	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP() {
-		return getSimplePDP(defaultBehaviorOfRespectAbandonedEvaluatables);
+		return getSimplePDP(new SimplePDPConfiguration());
 	}
 
 	/**
