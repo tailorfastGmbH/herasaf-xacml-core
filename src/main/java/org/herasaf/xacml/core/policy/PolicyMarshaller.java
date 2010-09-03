@@ -1,3 +1,19 @@
+/*
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Holistic Enterprise-Ready Application Security Architecture Framework
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.herasaf.xacml.core.policy;
 
 import java.io.File;
@@ -34,6 +50,15 @@ import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 import org.xml.sax.InputSource;
 
+/**
+ * This utility class can be used to marshal and unmarshal {@link Evaluatable}s.
+ * Provides various unmarshal methods to create a ResponseCtx. Because the
+ * {@link Unmarshaller} from JAXB <b>is not</b> thread safe it must be created
+ * in each unmarshal-method. This class fully relies on the underlying JAXB
+ * implementation.
+ * 
+ * @author Florian Huonder
+ */
 public final class PolicyMarshaller {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(PolicyMarshaller.class);
@@ -56,14 +81,22 @@ public final class PolicyMarshaller {
 			JAXBMarshallerConfiguration jmc) {
 		CONFIGURATION = jmc;
 	}
-	
+
 	/**
-     * A utility class must not be instantiated.
-     */
-	private PolicyMarshaller(){
-		
+	 * A utility class must not be instantiated.
+	 */
+	private PolicyMarshaller() {
+
 	}
 
+	/**
+	 * This method creates a new JAXB marshaller. For each request a new
+	 * marshaller is created due to the fact that JAXB is not thread-safe.
+	 * 
+	 * @return The newly created JAXB marshaller.
+	 * @throws JAXBException
+	 * @throws PropertyException
+	 */
 	private static Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
 		Marshaller marshaller = CONTEXT.createMarshaller();
@@ -97,10 +130,18 @@ public final class PolicyMarshaller {
 		return marshaller;
 	}
 
+	/**
+	 * This method creates a new JAXB unmarshaller. For each request a new
+	 * unmarshaller is created due to the fact that JAXB is not thread-safe.
+	 * 
+	 * @return The newly created JAXB unmarshaller.
+	 * @throws JAXBException
+	 * @throws PropertyException
+	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
-		
+
 		if (CONFIGURATION.isValidateParsing()) {
 			if (CONFIGURATION.getSchema() == null) {
 				LOGGER.error("Schema not initialized.");
@@ -557,7 +598,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(file))
 					.getValue();
@@ -601,7 +642,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller
 					.unmarshal(inputStream)).getValue();
@@ -643,8 +684,8 @@ public final class PolicyMarshaller {
 					"Unable to create a JAXB Unmarshaller.", e);
 			LOGGER.error(se.getMessage());
 			throw se;
-		}		
-		
+		}
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(reader))
 					.getValue();
@@ -686,7 +727,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-				
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(url))
 					.getValue();
@@ -730,7 +771,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller
 					.unmarshal(inputSource)).getValue();
@@ -773,7 +814,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(node))
 					.getValue();
@@ -816,7 +857,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller.unmarshal(source))
 					.getValue();
@@ -860,7 +901,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller
 					.unmarshal(xmlStreamReader)).getValue();
@@ -904,7 +945,7 @@ public final class PolicyMarshaller {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
 			return ((JAXBElement<Evaluatable>) unmarshaller
 					.unmarshal(xmlEventReader)).getValue();

@@ -84,6 +84,14 @@ public class ResponseCtx implements Serializable {
 		this.response = response;
 	}
 
+	/**
+	 * This method creates a new JAXB marshaller. For each request a new
+	 * marshaller is created due to the fact that JAXB is not thread-safe.
+	 * 
+	 * @return The newly created JAXB marshaller.
+	 * @throws JAXBException
+	 * @throws PropertyException
+	 */
 	private Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
 		Marshaller marshaller = CONTEXT.createMarshaller();

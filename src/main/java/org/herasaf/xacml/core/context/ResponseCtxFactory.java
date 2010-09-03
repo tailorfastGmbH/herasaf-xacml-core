@@ -183,6 +183,14 @@ public final class ResponseCtxFactory {
 		return new ResponseCtx(res);
 	}
 
+	/**
+	 * This method creates a new JAXB unmarshaller. For each request a new
+	 * unmarshaller is created due to the fact that JAXB is not thread-safe.
+	 * 
+	 * @return The newly created JAXB unmarshaller.
+	 * @throws JAXBException
+	 * @throws PropertyException
+	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();

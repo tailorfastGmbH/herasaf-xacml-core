@@ -164,6 +164,13 @@ public class SimplePDP implements PDP {
 				targetMatcher, pip, respectAbandonedEvaluatables,
 				statusCodeComparator);
 
+		/*
+		 * Checks whether the request is a valid XACML request concering the
+		 * number of resources within the request. Standard XACML only allows a
+		 * single resource per request. For multiple resource the context
+		 * handler is in charge. See the XACML multiple resources profile for
+		 * further information.
+		 */
 		if (!containsOnlyOneResource(request)) {
 			logger.error("The request must not contain multiple resources.");
 			return createResponse(request, DecisionType.INDETERMINATE,
@@ -197,6 +204,16 @@ public class SimplePDP implements PDP {
 				evaluationContext);
 	}
 
+	/**
+	 * Checks whether the request is a valid XACML request concering the number
+	 * of resources within the request. Standard XACML only allows a single
+	 * resource per request. For multiple resource the context handler is in
+	 * charge. See the XACML multiple resources profile for further information.
+	 * 
+	 * @param request
+	 *            The request to be checked.
+	 * @return True if the request contains multiple resources, false otherwise.
+	 */
 	private boolean containsOnlyOneResource(RequestCtx request) {
 		// All mentioned sections in this method are related to:
 		// Multiple resource profile of XACML v2.0 (OASIS Standard, 1 February

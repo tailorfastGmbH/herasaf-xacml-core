@@ -87,6 +87,14 @@ public class RequestCtx implements Serializable {
 		this.request = request;
 	}
 
+	/**
+	 * This method creates a new JAXB marshaller. For each request a new
+	 * marshaller is created due to the fact that JAXB is not thread-safe.
+	 * 
+	 * @return The newly created JAXB marshaller.
+	 * @throws JAXBException
+	 * @throws PropertyException
+	 */
 	private Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
 		Marshaller marshaller = CONTEXT.createMarshaller();
@@ -171,7 +179,6 @@ public class RequestCtx implements Serializable {
 
 	/**
 	 * Marshals this {@link RequestCtx} to the given result.
-	 * 
 	 * <p>
 	 * <b>Note:</b><br />
 	 * At least DOMResult, SAXResult and StreamResult are supported. If more
