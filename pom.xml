@@ -11,7 +11,7 @@
 	<groupId>org.herasaf.xacml.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
 	<artifactId>herasaf-xacml-core</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
 	<packaging>jar</packaging>
-	<version>1.0.0-M2</version>
+	<version>1.0.0-M3-SNAPSHOT</version>
 	<!--
 		[major].[minor].[revision] major version = HERAS-AF release -> (API
 		changes on the main Interfaces (PDP,PIP,REPO etc.) or XACML Version
@@ -57,13 +57,13 @@
 	</ciManagement>
 	<scm>
 		<connection>
-			scm:svn:http://svn.herasaf.org/herasaf-xacml/tags/herasaf-xacml-core-1.0.0-M2
+			scm:svn:http://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml-core
 		</connection>
 		<developerConnection>
-			scm:svn:https://svn.herasaf.org/herasaf-xacml/tags/herasaf-xacml-core-1.0.0-M2
+			scm:svn:https://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml-core
 		</developerConnection>
 		<url>
-			http://svn.herasaf.org/herasaf-xacml/tags/herasaf-xacml-core-1.0.0-M2
+			http://svn.herasaf.org/herasaf-xacml/trunk/herasaf-xacml-core
 		</url>
 	</scm>
 	<distributionManagement>
