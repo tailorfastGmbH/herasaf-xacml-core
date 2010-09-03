@@ -57,8 +57,7 @@ public class SimplePDP implements PDP {
 
 	/**
 	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
-	 * {@link PolicyRetrievalPoint}, {@link PIP} and {@link TargetMatcher}
-	 * .<br />
+	 * {@link PolicyRetrievalPoint}, {@link PIP} and {@link TargetMatcher} .<br />
 	 * The {@link PIP} may be <code>null</code>.
 	 * 
 	 * @param rootCombiningAlgorithm
@@ -74,7 +73,8 @@ public class SimplePDP implements PDP {
 	 */
 	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRetrievalPoint policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
+			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher,
+			StatusCodeComparator statusCodeComparator) {
 		/*
 		 * Checks if the policy repository and the root combining algorithm are
 		 * both of the same type. The type is either ordered or unordered
@@ -92,8 +92,7 @@ public class SimplePDP implements PDP {
 			this.targetMatcher = targetMatcher;
 
 			if (pip == null) {
-				logger
-						.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
+				logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
 			}
 
 			/*
@@ -103,9 +102,8 @@ public class SimplePDP implements PDP {
 			if (javaVersion != null
 					&& (javaVersion.startsWith("1.6.0") || javaVersion
 							.startsWith("1.7.0"))) {
-				logger
-						.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
-								+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
+				logger.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
+						+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
 			}
 		} else {
 			InitializationException ie = new InitializationException(
@@ -114,8 +112,8 @@ public class SimplePDP implements PDP {
 			logger.error(ie.getMessage());
 			throw ie;
 		}
-		
-		if(statusCodeComparator == null){
+
+		if (statusCodeComparator == null) {
 			logger.info("Using default status code comparator.");
 			this.statusCodeComparator = new StatusCodeComparator();
 		} else {
@@ -168,76 +166,112 @@ public class SimplePDP implements PDP {
 	public ResponseCtx evaluate(RequestCtx request) {
 		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
 		logger.debug("Evaluating Request: {}", request.toString());
-		
+
 		EvaluationContext evaluationContext = new EvaluationContext(
-                targetMatcher, pip, respectAbandonedEvaluatables, statusCodeComparator);
-		
-		if(!containsOnlyOneResource(request)){
-		    logger.error("The request must not contain multiple resources.");
-		    return ResponseCtxFactory.create(request.getRequest(), DecisionType.INDETERMINATE,
-	                evaluationContext);
+				targetMatcher, pip, respectAbandonedEvaluatables,
+				statusCodeComparator);
+
+		if (!containsOnlyOneResource(request)) {
+			logger.error("The request must not contain multiple resources.");
+			return createResponse(request, DecisionType.INDETERMINATE,
+					evaluationContext);
 		}
-		
+
 		DecisionType decision = rootPolicyCombiningAlgorithm
-				.evaluateEvaluatableList(request.getRequest(), policyRepository
-						.getEvaluatables(request), evaluationContext);
+				.evaluateEvaluatableList(request.getRequest(),
+						policyRepository.getEvaluatables(request),
+						evaluationContext);
 
 		MDC.remove(MDC_REQUEST_TIME);
+		return createResponse(request, decision, evaluationContext);
+	}
+
+	/**
+	 * This method uses the default HERAS-AF {@link ResponseCtxFactory}. This
+	 * method may be overriden in an extending subclass.
+	 * 
+	 * @param request
+	 *            The requests corresponding to the response to create.
+	 * @param decision
+	 *            The decision of the response.
+	 * @param evaluationContext
+	 *            The evaluation context of this evaluation.
+	 * @return
+	 */
+	protected ResponseCtx createResponse(RequestCtx request,
+			DecisionType decision, EvaluationContext evaluationContext) {
 		return ResponseCtxFactory.create(request.getRequest(), decision,
 				evaluationContext);
 	}
 
-    private boolean containsOnlyOneResource(RequestCtx request) {
-        // All mentioned sections in this method are related to:
-        // Multiple resource profile of XACML v2.0 (OASIS Standard, 1 February 2005).
-        if(request.getRequest().getResources().size() > 1){
-           logger.error("The request must not contain more than one <Resource> elements.");
-           // See Section 2.3. 
-           return false;
-       } else if(request.getRequest().getResources().size() == 1) {
-           for(AttributeType attr : request.getRequest().getResources().get(0).getAttributes()){
-               if("urn:oasis:names:tc:xacml:2.0:resource:scope".startsWith(attr.getAttributeId())){
-                   // Is true in case the resource contains either an
-                   // urn:oasis:names:tc:xacml:2.0:profile:multiple:scope:xml
-                   // or an urn:oasis:names:tc:xacml:2.0:profile:multiple:scope:non-xml
-                   // attribute.
-                   if("Immediate".equals(attr.getAttributeValues().get(0))){
-                       // This attribute value is present if only one resource is in the request.
-                       // See Section 4.1.
-                       return true;
-                   } else if("Children".equals(attr.getAttributeValues().get(0))){
-                       logger.error("The request must not request a decision for multiple resources.");
-                       // The set of resources consists of a single node described by the â€œresource-idâ€� resource attribute 
-                       // and of all that node's immediate children in the hierarchy.
-                       // See Section 4.1.
-                       return false;
-                   } else if("Descendants".equals(attr.getAttributeValues().get(0))){
-                       logger.error("The request must not request a decision for multiple resources.");
-                       // The set of resources consists of a single node described by the â€œresource-idâ€� resource attribute
-                       // and of all that node's descendants in the hierarchy.
-                       // See Section 4.1.
-                       return false;
-                   } else if("XPath-expression".equals(attr.getAttributeValues().get(0))){
-                       logger.error("The request must not request a decision for multiple resources.");
-                       // The set of resources consists of the nodes in a nodeset described by the â€œresource-idâ€� resource attribute.
-                       // See Section 2.2.
-                       // See Section 4.1.
-                       return false;
-                   } else if("EntireHierarchy".equals(attr.getAttributeValues().get(0))){
-                       logger.error("The request must not request a decision for multiple resources.");
-                       // The resource consists of a node described by the â€œresource-idâ€� resource attribute
-                       // along with all that node's descendants.
-                       // See Section 3.1.
-                       // See Section 4.1.
-                       return false;
-                   }
-               } 
-           }
-           // Only one resource is in the request.
-           return true;
-       } else {
-           //No resource element is present. This is equal to "any resource".
-           return true;
-       }
-    }
+	private boolean containsOnlyOneResource(RequestCtx request) {
+		// All mentioned sections in this method are related to:
+		// Multiple resource profile of XACML v2.0 (OASIS Standard, 1 February
+		// 2005).
+		if (request.getRequest().getResources().size() > 1) {
+			logger.error("The request must not contain more than one <Resource> elements.");
+			// See Section 2.3.
+			return false;
+		} else if (request.getRequest().getResources().size() == 1) {
+			for (AttributeType attr : request.getRequest().getResources()
+					.get(0).getAttributes()) {
+				if ("urn:oasis:names:tc:xacml:2.0:resource:scope"
+						.startsWith(attr.getAttributeId())) {
+					// Is true in case the resource contains either an
+					// urn:oasis:names:tc:xacml:2.0:profile:multiple:scope:xml
+					// or an
+					// urn:oasis:names:tc:xacml:2.0:profile:multiple:scope:non-xml
+					// attribute.
+					if ("Immediate".equals(attr.getAttributeValues().get(0))) {
+						// This attribute value is present if only one resource
+						// is in the request.
+						// See Section 4.1.
+						return true;
+					} else if ("Children".equals(attr.getAttributeValues().get(
+							0))) {
+						logger.error("The request must not request a decision for multiple resources.");
+						// The set of resources consists of a single node
+						// described by the â€œresource-idâ€� resource
+						// attribute
+						// and of all that node's immediate children in the
+						// hierarchy.
+						// See Section 4.1.
+						return false;
+					} else if ("Descendants".equals(attr.getAttributeValues()
+							.get(0))) {
+						logger.error("The request must not request a decision for multiple resources.");
+						// The set of resources consists of a single node
+						// described by the â€œresource-idâ€� resource
+						// attribute
+						// and of all that node's descendants in the hierarchy.
+						// See Section 4.1.
+						return false;
+					} else if ("XPath-expression".equals(attr
+							.getAttributeValues().get(0))) {
+						logger.error("The request must not request a decision for multiple resources.");
+						// The set of resources consists of the nodes in a
+						// nodeset described by the â€œresource-idâ€�
+						// resource attribute.
+						// See Section 2.2.
+						// See Section 4.1.
+						return false;
+					} else if ("EntireHierarchy".equals(attr
+							.getAttributeValues().get(0))) {
+						logger.error("The request must not request a decision for multiple resources.");
+						// The resource consists of a node described by the
+						// â€œresource-idâ€� resource attribute
+						// along with all that node's descendants.
+						// See Section 3.1.
+						// See Section 4.1.
+						return false;
+					}
+				}
+			}
+			// Only one resource is in the request.
+			return true;
+		} else {
+			// No resource element is present. This is equal to "any resource".
+			return true;
+		}
+	}
 }
