@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -179,6 +181,68 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
 		runInitializers();
 		return new SimplePDP(simplePDPConfiguration);
+	}
+
+	/**
+	 * Returns a new {@link SimplePDP} instance that has set a custom
+	 * {@link SimplePDPConfiguration} that will be handed over to the given
+	 * custom PDP instance.
+	 * 
+	 * @param simplePDPConfiguration
+	 *            The root {@link SimplePDPConfiguration} to use in the
+	 *            {@link PDP}.
+	 * @param customPDP
+	 *            The {@link Class} of the custom PDP to use. This PDP must
+	 *            extend {@link SimplePDP}.
+	 * 
+	 * @return The created {@link PDP}.
+	 */
+	public static PDP getSimplePDP(
+			SimplePDPConfiguration simplePDPConfiguration,
+			Class<? extends SimplePDP> customPDP) {
+		runInitializers();
+		try {
+			Constructor<? extends SimplePDP> constructor = customPDP
+					.getConstructor(SimplePDPConfiguration.class);
+			SimplePDP pdp = constructor.newInstance(simplePDPConfiguration);
+			return pdp;
+		} catch (SecurityException e) {
+			InitializationException ie = new InitializationException(
+					"Cannot create custom PDP: " + customPDP.getCanonicalName(),
+					e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		} catch (NoSuchMethodException e) {
+			InitializationException ie = new InitializationException(
+					"Cannot create custom PDP: " + customPDP.getCanonicalName(),
+					e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		} catch (IllegalArgumentException e) {
+			InitializationException ie = new InitializationException(
+					"Cannot create custom PDP: " + customPDP.getCanonicalName(),
+					e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		} catch (InstantiationException e) {
+			InitializationException ie = new InitializationException(
+					"Cannot create custom PDP: " + customPDP.getCanonicalName(),
+					e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		} catch (IllegalAccessException e) {
+			InitializationException ie = new InitializationException(
+					"Cannot create custom PDP: " + customPDP.getCanonicalName(),
+					e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		} catch (InvocationTargetException e) {
+			InitializationException ie = new InitializationException(
+					"Cannot create custom PDP: " + customPDP.getCanonicalName(),
+					e);
+			LOGGER.error(ie.getMessage());
+			throw ie;
+		}
 	}
 
 	/**

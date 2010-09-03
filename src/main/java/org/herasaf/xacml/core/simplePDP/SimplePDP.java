@@ -43,7 +43,7 @@ import org.slf4j.MDC;
  * plugged in.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class SimplePDP implements PDP {
 	private final PolicyRetrievalPoint policyRepository;

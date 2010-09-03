@@ -21,7 +21,6 @@ import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
@@ -53,15 +52,6 @@ public class SimplePDPConfiguration {
 	 * {@link MapBasedSimplePolicyRepository}
 	 */
 	private PolicyRetrievalPoint policyRetrievalPoint = new MapBasedSimplePolicyRepository();
-
-	/**
-	 * The {@link ResponseCtxFactory} {@code class} to be used in the
-	 * {@link SimplePDP} on which this {@link SimplePDPConfiguration} will be
-	 * applied. <br>
-	 * <b>Default value is:</b> {@code} Class<{@link ResponseCtxFactory}>
-	 * {@code}
-	 */
-	private Class<? extends ResponseCtxFactory> responseCtxFactory = ResponseCtxFactory.class;
 
 	/**
 	 * The {@link PIP} to be used in the {@link SimplePDP} on which this
@@ -126,25 +116,6 @@ public class SimplePDPConfiguration {
 	public void setPolicyRetrievalPoint(
 			PolicyRetrievalPoint policyRetrievalPoint) {
 		this.policyRetrievalPoint = policyRetrievalPoint;
-	}
-
-	/**
-	 * @return the configured {@code}Class for {@link ResponseCtxFactory}
-	 *         {@code}
-	 */
-	public Class<? extends ResponseCtxFactory> getResponseCtxFactory() {
-		return responseCtxFactory;
-	}
-
-	/**
-	 * @param responseCtxFactory
-	 *            the responseCtxFactory to be applied in the configuration. If
-	 *            the setter is not called explicitly the default configuration
-	 *            will be used.
-	 */
-	public void setResponseCtxFactory(
-			Class<? extends ResponseCtxFactory> responseCtxFactory) {
-		this.responseCtxFactory = responseCtxFactory;
 	}
 
 	/**
