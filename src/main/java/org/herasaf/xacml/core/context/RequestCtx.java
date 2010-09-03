@@ -23,42 +23,57 @@ import java.io.OutputStream;
 import java.io.Serializable;
 import java.io.Writer;
 
+import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.PropertyException;
 import javax.xml.stream.XMLEventWriter;
 import javax.xml.stream.XMLStreamWriter;
 import javax.xml.transform.Result;
 
+import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.WritingException;
 import org.herasaf.xacml.core.context.impl.ObjectFactory;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.utils.ContextAndPolicy;
+import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
+import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.xml.sax.ContentHandler;
 
 /**
- * This request context represents a XACML request.
- * <br />
- * This request context provides various marshalling methods. Because the {@link Marshaller} of JAXB <b>is
- * not</b> thread safe it must be created in each marshal-method. This
- * class fully relies on the underlying JAXB implementation.
+ * This request context represents a XACML request. <br />
+ * This request context provides various marshalling methods. Because the
+ * {@link Marshaller} of JAXB <b>is not</b> thread safe it must be created in
+ * each marshal-method. This class fully relies on the underlying JAXB
+ * implementation.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class RequestCtx implements Serializable {
-    private static final long serialVersionUID = 1L;
-    private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
-	private static final ContextAndPolicy.JAXBProfile REQUESTCTX = ContextAndPolicy.JAXBProfile.REQUEST_CTX;
-	private static ObjectFactory objectFactory;
+	private static final long serialVersionUID = 1L;
+	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
 	private RequestType request;
+	private static JAXBContext CONTEXT;
+	private static JAXBMarshallerConfiguration CONFIGURATION;
+	private static final ObjectFactory OBJECT_FACTORY;
 
 	/**
-	 * Initializes the Object factory.
+	 * Initializes the object factory.
 	 */
 	static {
-		objectFactory = new ObjectFactory();
+		OBJECT_FACTORY = new ObjectFactory();
+	}
+
+	public static void setJAXBContext(JAXBContext context) {
+		RequestCtx.CONTEXT = context;
+	}
+
+	public static void setJAXBMarshallerConfiguration(
+			JAXBMarshallerConfiguration configuration) {
+		RequestCtx.CONFIGURATION = configuration;
 	}
 
 	/**
@@ -70,6 +85,39 @@ public class RequestCtx implements Serializable {
 	 */
 	public RequestCtx(RequestType request) {
 		this.request = request;
+	}
+
+	private Marshaller createMarshaller() throws JAXBException,
+			PropertyException {
+		Marshaller marshaller = CONTEXT.createMarshaller();
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
+				CONFIGURATION.isFormattedOutput());
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
+				CONFIGURATION.isFragment());
+
+		if (CONFIGURATION.isWriteSchemaLocation()) {
+			if ("".equals(CONFIGURATION)) {
+				logger.error("SchemaLocation not initialized.");
+				throw new NotInitializedException(
+						"SchemaLocation not initialized.");
+			}
+			marshaller.setProperty(Marshaller.JAXB_SCHEMA_LOCATION,
+					CONFIGURATION.getSchemaLocationAsString());
+		}
+		if (CONFIGURATION.isValidateWriting()) {
+			if (CONFIGURATION.getSchema() == null) {
+				logger.error("Schema not initialized.");
+				throw new NotInitializedException("Schema not initialized");
+			}
+			marshaller.setSchema(CONFIGURATION.getSchema());
+		}
+		if (CONFIGURATION.getValidationEventHandler() == null) {
+			marshaller.setEventHandler(new DefaultValidationEventHandler());
+		} else {
+			marshaller.setEventHandler(CONFIGURATION
+					.getValidationEventHandler());
+		}
+		return marshaller;
 	}
 
 	/**
@@ -91,9 +139,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(ContentHandler ch) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), ch);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					ch);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the content handler.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the content handler.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -109,9 +159,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(File file) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), file);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					file);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the file.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the file.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -134,9 +186,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(Result result) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), result);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					result);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the result.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the result.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -152,9 +206,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(OutputStream out) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), out);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					out);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the output stream.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the output stream.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -170,9 +226,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(Writer writer) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), writer);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					writer);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the writer.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the writer.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -188,9 +246,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(Node node) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), node);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					node);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the node.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the node.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -204,11 +264,14 @@ public class RequestCtx implements Serializable {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(XMLStreamWriter xmlStreamWriter) throws WritingException {
+	public void marshal(XMLStreamWriter xmlStreamWriter)
+			throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlStreamWriter);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					xmlStreamWriter);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the xml stream writer.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the xml stream writer.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}
@@ -224,9 +287,11 @@ public class RequestCtx implements Serializable {
 	 */
 	public void marshal(XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
-			ContextAndPolicy.getMarshaller(REQUESTCTX).marshal(objectFactory.createRequest(request), xmlEventWriter);
+			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
+					xmlEventWriter);
 		} catch (JAXBException e) {
-			WritingException we = new WritingException("Unable to write to the xml event writer.", e);
+			WritingException we = new WritingException(
+					"Unable to write to the xml event writer.", e);
 			logger.error(we.getMessage());
 			throw we;
 		}

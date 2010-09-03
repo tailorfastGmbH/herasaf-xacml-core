@@ -1,191 +1,97 @@
+/*
+ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Holistic Enterprise-Ready Application Security Architecture Framework
+ * 
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * 
+ * http://www.apache.org/licenses/LICENSE-2.0
+
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.herasaf.xacml.core.context;
 
 import java.io.File;
 import java.io.InputStream;
 import java.io.Reader;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.PropertyException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLStreamReader;
 import javax.xml.transform.Source;
 
+import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
+import org.herasaf.xacml.core.context.impl.ObjectFactory;
 import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResponseType;
+import org.herasaf.xacml.core.context.impl.ResultType;
+import org.herasaf.xacml.core.context.impl.StatusCodeType;
+import org.herasaf.xacml.core.context.impl.StatusDetailType;
+import org.herasaf.xacml.core.context.impl.StatusType;
+import org.herasaf.xacml.core.policy.impl.ObligationsType;
+import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
+import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.w3c.dom.Node;
 import org.xml.sax.InputSource;
 
 /**
  * Factory to create a {@link ResponseCtx}. Provides various unmarshal methods
- * to create a {@link ResponseCtx}.
+ * to create a ResponseCtx. Because the {@link Unmarshaller} from JAXB <b>is
+ * not</b> thread safe it must be created in each unmarshal-method. This class
+ * fully relies on the underlying JAXB implementation.
  * 
- * <b>Note:</b><br />
- * Because the {@link Unmarshaller} from JAXB <b>is not</b> thread safe it must
- * be created in each unmarshal-method. This class fully relies on the
- * underlying JAXB implementation.
+ * This {@link ResponseCtxFactory} does only support XACML default behavior.
  * 
  * @author Florian Huonder
  */
-public interface ResponseCtxFactory {
+public final class ResponseCtxFactory {
+	private static final Logger LOGGER = LoggerFactory
+			.getLogger(ResponseCtxFactory.class);
+	private static JAXBContext CONTEXT;
+	private static JAXBMarshallerConfiguration CONFIGURATION;
+	private static final ObjectFactory OBJECT_FACTORY;
 
 	/**
-	 * Creates a {@link ResponseCtx} from the given {@link File}.
-	 * 
-	 * @param file
-	 *            The {@link File} from which the {@link ResponseCtx} is
-	 *            created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
+	 * Initializes the object factory.
 	 */
-	public ResponseCtx unmarshal(File file) throws SyntaxException;
+	static {
+		OBJECT_FACTORY = new ObjectFactory();
+	}
+
+	public static void setJAXBContext(JAXBContext policyContext) {
+		CONTEXT = policyContext;
+	}
+
+	public static void setJAXBMarshallerConfiguration(
+			JAXBMarshallerConfiguration jmc) {
+		CONFIGURATION = jmc;
+	}
 
 	/**
-	 * Creates a {@link ResponseCtx} from the given {@link InputStream}.
-	 * 
-	 * @param inputStream
-	 *            The {@link InputStream} from which the {@link ResponseCtx} is
-	 *            created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
+	 * This is a utility class and must not be instantiated.
 	 */
-	public ResponseCtx unmarshal(InputStream inputStream)
-			throws SyntaxException;
+	private ResponseCtxFactory() {
 
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link Reader}.
-	 * 
-	 * @param reader
-	 *            The {@link Reader} from which the {@link ResponseCtx} is
-	 *            created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 */
-	public ResponseCtx unmarshal(Reader reader) throws SyntaxException;
-
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link URL}.
-	 * 
-	 * @param url
-	 *            The {@link URL} from which the {@link ResponseCtx} is created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 */
-	public ResponseCtx unmarshal(URL url) throws SyntaxException;
-
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link InputSource}.
-	 * 
-	 * @param inputSource
-	 *            The {@link InputSource} from which the {@link ResponseCtx} is
-	 *            created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 */
-	public ResponseCtx unmarshal(InputSource inputSource)
-			throws SyntaxException;
-
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link Node}.
-	 * 
-	 * @param node
-	 *            The {@link Node} from which the {@link ResponseCtx} is
-	 *            created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 */
-	public ResponseCtx unmarshal(Node node) throws SyntaxException;
-
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link Source}.
-	 * 
-	 * *
-	 * <p>
-	 * <b>SAX 2.0 Parser Pluggability</b> <br />
-	 * A client application can choose not to use the default parser mechanism.
-	 * Any SAX 2.0 compliant parser can be substituted for the default
-	 * mechanism. To do so, the client application must properly configure a
-	 * SAXSource containing an XMLReader implemented by the SAX 2.0 parser
-	 * provider. If the XMLReader has an org.xml.sax.ErrorHandler registered on
-	 * it, it will be replaced. If the SAXSource does not contain an XMLReader,
-	 * then the default parser mechanism will be used.
-	 * </p>
-	 * <p>
-	 * This parser replacement mechanism can also be used to replace the
-	 * unmarshal-time validation engine. The client application must properly
-	 * configure their SAX 2.0 compliant parser to perform validation (as shown
-	 * in the example above). Any SAXParserExceptions encountered by the parser
-	 * during the unmarshal operation will be processed and reported as
-	 * SyntaxError. Note: specifying a substitute validating SAX 2.0 parser for
-	 * unmarshalling does not necessarily replace the validation engine used for
-	 * performing on-demand validation.
-	 * </p>
-	 * <p>
-	 * The only way for a client application to specify an alternate parser
-	 * mechanism to be used during unmarshal is via the unmarshal(SAXSource)
-	 * API. All other forms of the unmarshal method (File, URL, Node, etc) will
-	 * use the default parser and validator mechanisms.
-	 * </p>
-	 * 
-	 * @param source
-	 *            The {@link Source} from which the {@link ResponseCtx} is
-	 *            created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 * 
-	 */
-	public ResponseCtx unmarshal(Source source) throws SyntaxException;
-
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link XMLStreamReader}.
-	 * 
-	 * <p>
-	 * <b>Note:</b><br />
-	 * This method assumes that the parser is on a START_DOCUMENT or
-	 * START_ELEMENT event. Unmarshalling will be done from this start event to
-	 * the corresponding end event. If this method returns successfully, the
-	 * reader will be pointing at the token right after the end event.
-	 * </p>
-	 * 
-	 * @param xmlStreamReader
-	 *            The {@link XMLStreamReader} from which the {@link ResponseCtx}
-	 *            is created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 */
-	public ResponseCtx unmarshal(XMLStreamReader xmlStreamReader)
-			throws SyntaxException;
-
-	/**
-	 * Creates a {@link ResponseCtx} from the given {@link XMLEventReader}.
-	 * 
-	 * <p>
-	 * <b>Note:</b><br />
-	 * This method assumes that the parser is on a START_DOCUMENT or
-	 * START_ELEMENT event. Unmarshalling will be done from this start event to
-	 * the corresponding end event. If this method returns successfully, the
-	 * reader will be pointing at the token right after the end event.
-	 * </p>
-	 * 
-	 * @param xmlEventReader
-	 *            The {@link XMLEventReader} from which the {@link ResponseCtx}
-	 *            is created.
-	 * @return The created {@link ResponseCtx}.
-	 * @throws SyntaxException
-	 *             In case the XML representation contains a syntax error.
-	 */
-	public ResponseCtx unmarshal(XMLEventReader xmlEventReader)
-			throws SyntaxException;
-
+	}
+	
 	/**
 	 * Creates a {@link ResponseCtx} with the given {@link DecisionType} and
 	 * adds the {@link MissingAttributeDetailType} s and {@link ObligationsType}
@@ -200,8 +106,39 @@ public interface ResponseCtxFactory {
 	 *            status and missing attributes.
 	 * @return The created {@link ResponseCtx}.
 	 */
-	public ResponseCtx create(RequestType req, DecisionType decision,
-			EvaluationContext evaluationContext);
+	public static ResponseCtx create(RequestType req, DecisionType decision,
+			EvaluationContext evaluationContext) {
+		ResponseCtx resCtx = create(req, decision,
+				evaluationContext.getStatusCode());
+		// This check is here because only MissingAttributeDetails are
+		// supported in the the StatusDetail
+		if (evaluationContext.getMissingAttributes().size() > 0) {
+			StatusDetailType statusDetail = OBJECT_FACTORY.createStatusDetailType();
+			/*
+			 * If the request contains any MissingAttributeDetails those must be
+			 * added to the List in the StatusDetailType contained in a
+			 * JAXBElement object. This because the List in the StatusDetailType
+			 * takes a type of ##any (in Java this is Object). Therefore without
+			 * the JAXBElement containing the MissingAttributeDetailType JAXB is
+			 * unable to marshal the MissingAttributeDetail correctly.
+			 */
+			List<JAXBElement<MissingAttributeDetailType>> missingAttributesJaxb = new ArrayList<JAXBElement<MissingAttributeDetailType>>();
+			for (MissingAttributeDetailType madt : evaluationContext
+					.getMissingAttributes()) {
+				missingAttributesJaxb.add(OBJECT_FACTORY
+						.createMissingAttributeDetail(madt));
+			}
+			statusDetail.getContent().addAll(missingAttributesJaxb);
+			resCtx.getResponse().getResults().get(0).getStatus()
+					.setStatusDetail(statusDetail);
+		}
+		// Add the Obligations to the response
+		if (evaluationContext.getObligations().getObligations().size() > 0) {
+			resCtx.getResponse().getResults().get(0)
+					.setObligations(evaluationContext.getObligations());
+		}
+		return resCtx;
+	}
 
 	/**
 	 * Creates a {@link ResponseCtx} with the given {@link DecisionType} and
@@ -216,7 +153,447 @@ public interface ResponseCtxFactory {
 	 *            The {@link StatusCode} of the decision.
 	 * @return The created {@link ResponseCtx}.
 	 */
-	public ResponseCtx create(RequestType req, DecisionType decision,
-			StatusCode code);
+	public static ResponseCtx create(RequestType req, DecisionType decision,
+			StatusCode code) {
+		ResponseType res = OBJECT_FACTORY.createResponseType();
+		ResultType result = OBJECT_FACTORY.createResultType();
 
+		if (req.getResources().size() == 1) {
+			// The ResourceId could be set here as well. This is explicitly not
+			// done because of performance reasons.
+			// For setting the ResourceId in the response, all attributes in the
+			// request-resource must be walked through
+			// to find the id. Then this id must be planted into the response.
+			// This is an absolute overhead because each response is
+			// automatically assigned to its request by the caller.
+
+			result.setDecision(decision);
+		} else {
+			result.setDecision(DecisionType.INDETERMINATE);
+		}
+
+		StatusCodeType statusCode = OBJECT_FACTORY.createStatusCodeType();
+		statusCode.setValue(code.getValue());
+		StatusType status = OBJECT_FACTORY.createStatusType();
+		status.setStatusCode(statusCode);
+		result.setStatus(status);
+
+		res.getResults().add(result);
+
+		return new ResponseCtx(res);
+	}
+
+	private static Unmarshaller createUnmarshaller() throws JAXBException,
+			PropertyException {
+		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
+
+		if (CONFIGURATION.isValidateParsing()) {
+			if (CONFIGURATION.getSchema() == null) {
+				LOGGER.error("Schema not initialized.");
+				throw new NotInitializedException("Schema not initialized");
+			}
+			unmarshaller.setSchema(CONFIGURATION.getSchema());
+		}
+		if (CONFIGURATION.getValidationEventHandler() == null) {
+			unmarshaller.setEventHandler(new DefaultValidationEventHandler());
+		} else {
+			unmarshaller.setEventHandler(CONFIGURATION
+					.getValidationEventHandler());
+		}
+		return unmarshaller;
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link File}.
+	 * 
+	 * @param file
+	 *            The {@link File} from which the {@link ResponseCtx} is
+	 *            created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(File file) throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(file)).getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the file.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the file.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link InputStream}.
+	 * 
+	 * @param inputStream
+	 *            The {@link InputStream} from which the {@link ResponseCtx} is
+	 *            created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(InputStream inputStream)
+			throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(inputStream)).getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the input stream.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the input stream.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link Reader}.
+	 * 
+	 * @param reader
+	 *            The {@link Reader} from which the {@link ResponseCtx} is
+	 *            created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(Reader reader) throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}		
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(reader))
+					.getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the reader.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the reader.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link URL}.
+	 * 
+	 * @param url
+	 *            The {@link URL} from which the {@link ResponseCtx} is created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(URL url) throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+				
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(url))
+					.getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the url.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the url.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link InputSource}.
+	 * 
+	 * @param inputSource
+	 *            The {@link InputSource} from which the {@link ResponseCtx} is
+	 *            created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(InputSource inputSource)
+			throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(inputSource)).getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the input source.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the input source.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link Node}.
+	 * 
+	 * @param node
+	 *            The {@link Node} from which the {@link ResponseCtx} is
+	 *            created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(Node node) throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(node))
+					.getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the node.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the node.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link Source}.
+	 * 
+	 * @param source
+	 *            The {@link Node} from which the {@link ResponseCtx} is
+	 *            created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(Source source) throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(source))
+					.getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the source.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the source.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link XMLStreamReader}.
+	 * 
+	 * @param xmlStreamReader
+	 *            The {@link XMLStreamReader} from which the {@link ResponseCtx}
+	 *            is created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(XMLStreamReader xmlStreamReader)
+			throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(xmlStreamReader)).getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the xml stream reader.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the xml stream reader.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
+
+	/**
+	 * Creates an {@link ResponseCtx} from the given {@link XMLEventReader}.
+	 * 
+	 * @param xmlEventReader
+	 *            The {@link XMLEventReader} from which the {@link ResponseCtx}
+	 *            is created.
+	 * @return The created {@link ResponseCtx}.
+	 * @throws SyntaxException
+	 *             In case the XML representation contains a syntax error.
+	 */
+	@SuppressWarnings("unchecked")
+	public static ResponseCtx unmarshal(XMLEventReader xmlEventReader)
+			throws SyntaxException {
+		Unmarshaller unmarshaller;
+		try {
+			unmarshaller = createUnmarshaller();
+		} catch (PropertyException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to create a JAXB Unmarshaller.", e);
+			LOGGER.error(se.getMessage());
+			throw se;
+		}
+		
+		try {
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(xmlEventReader)).getValue();
+			return new ResponseCtx(rt);
+		} catch (JAXBException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the xml event reader.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		} catch (ClassCastException e) {
+			SyntaxException se = new SyntaxException(
+					"Unable to unmarshal the xml event reader.");
+			LOGGER.error(se.getMessage(), e);
+			throw se;
+		}
+	}
 }

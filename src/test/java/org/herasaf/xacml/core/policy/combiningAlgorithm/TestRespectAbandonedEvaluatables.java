@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.policy.Evaluatable;
-import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.DataProvider;
@@ -77,8 +77,8 @@ public class TestRespectAbandonedEvaluatables {
 		for (int i = 1; i < evalFiles.size() + 1; i++) {
 			SimplePDPFactory.getSimplePDP(); // this is needed that jaxb is
 			// initialized.
-			Evaluatable eval1 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
-			Evaluatable eval2 = PolicyConverter.unmarshal(evalFiles.get(i - 1));
+			Evaluatable eval1 = PolicyMarshaller.unmarshal(evalFiles.get(i - 1));
+			Evaluatable eval2 = PolicyMarshaller.unmarshal(evalFiles.get(i - 1));
 
 			testcases[2 * i - 1 - 1] = new Object[] { false, eval1 };
 			testcases[2 * i - 1] = new Object[] { true, eval2 };

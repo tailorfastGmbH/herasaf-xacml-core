@@ -10,12 +10,12 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
-import org.herasaf.xacml.core.context.DefaultResponseCtxFactory;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
+import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.policy.Evaluatable;
-import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -37,24 +37,24 @@ public class TestMissingAttributes {
 		return new Object[][] {
 				{
 						"Policy01",
-						PolicyConverter
+						PolicyMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Policy01.xml")),
 						RequestCtxFactory
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Request01.xml")),
-						new DefaultResponseCtxFactory()
+						ResponseCtxFactory
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Response01.xml")) },
 				{
 						"Policy02",
-						PolicyConverter
+						PolicyMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Policy02.xml")),
 						RequestCtxFactory
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Request02.xml")),
-										new DefaultResponseCtxFactory()
+						ResponseCtxFactory
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Response02.xml")) }, };
 	}
@@ -76,8 +76,8 @@ public class TestMissingAttributes {
 
 		XMLUnit.setIgnoreWhitespace(true);
 
-		Diff diff = new Diff(expectedResponseOS.toString(), actualResponseOS
-				.toString());
+		Diff diff = new Diff(expectedResponseOS.toString(),
+				actualResponseOS.toString());
 
 		assertTrue(diff.identical()); // identical test also values. needed
 		// because it may differ here within the

@@ -54,7 +54,6 @@ public class SimplePDP implements PDP {
 	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 	private final StatusCodeComparator statusCodeComparator;
-	private final ResponseCtxFactory responseCtxFactory;
 
 	/**
 	 * Initializes the PDP with the given root {@link PolicyCombiningAlgorithm},
@@ -75,7 +74,7 @@ public class SimplePDP implements PDP {
 	 */
 	public SimplePDP(PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRetrievalPoint policyRepository, PIP pip,
-			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator, ResponseCtxFactory responseCtxFactory) {
+			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
 		/*
 		 * Checks if the policy repository and the root combining algorithm are
 		 * both of the same type. The type is either ordered or unordered
@@ -91,7 +90,6 @@ public class SimplePDP implements PDP {
 			this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
 			this.pip = pip;
 			this.targetMatcher = targetMatcher;
-			this.responseCtxFactory = responseCtxFactory;
 
 			if (pip == null) {
 				logger
@@ -176,7 +174,7 @@ public class SimplePDP implements PDP {
 		
 		if(!containsOnlyOneResource(request)){
 		    logger.error("The request must not contain multiple resources.");
-		    return responseCtxFactory.create(request.getRequest(), DecisionType.INDETERMINATE,
+		    return ResponseCtxFactory.create(request.getRequest(), DecisionType.INDETERMINATE,
 	                evaluationContext);
 		}
 		
@@ -185,7 +183,7 @@ public class SimplePDP implements PDP {
 						.getEvaluatables(request), evaluationContext);
 
 		MDC.remove(MDC_REQUEST_TIME);
-		return responseCtxFactory.create(request.getRequest(), decision,
+		return ResponseCtxFactory.create(request.getRequest(), decision,
 				evaluationContext);
 	}
 

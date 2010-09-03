@@ -34,13 +34,13 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
-import org.herasaf.xacml.core.context.DefaultResponseCtxFactory;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.RequestCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtx;
+import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
-import org.herasaf.xacml.core.policy.PolicyConverter;
+import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.testng.annotations.BeforeClass;
@@ -326,7 +326,7 @@ public class SimplePDPTest {
 	 */
 	private Evaluatable loadPolicy(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
-		return PolicyConverter.unmarshal(is);
+		return PolicyMarshaller.unmarshal(is);
 	}
 
 	/**
@@ -352,6 +352,6 @@ public class SimplePDPTest {
 	 */
 	private ResponseCtx loadResponse(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
-		return new DefaultResponseCtxFactory().unmarshal(is);
+		return ResponseCtxFactory.unmarshal(is);
 	}
 }

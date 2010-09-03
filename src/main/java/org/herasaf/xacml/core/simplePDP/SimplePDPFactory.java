@@ -25,13 +25,12 @@ import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
-import org.herasaf.xacml.core.context.DefaultResponseCtxFactory;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.context.StatusCodeComparator;
-import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.JAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
@@ -116,7 +115,7 @@ public final class SimplePDPFactory {
 	private static Class<? extends PolicyCombiningAlgorithm> defaultRootCombiningAlgorithm = PolicyOnlyOneApplicableAlgorithm.class;
 	private static Class<? extends PolicyRetrievalPoint> defaultPolicyRepository = MapBasedSimplePolicyRepository.class;
 	private static Class<? extends TargetMatcher> defaultTargetMatcher = TargetMatcherImpl.class;
-	private static Class<? extends ResponseCtxFactory> defaultResponseCtxFactory = DefaultResponseCtxFactory.class;
+	private static Class<? extends ResponseCtxFactory> defaultResponseCtxFactory = ResponseCtxFactory.class;
 	private static boolean defaultBehaviorOfRespectAbandonedEvaluatables = false;
 
 	/**
@@ -143,7 +142,7 @@ public final class SimplePDPFactory {
 		initializers.add(new DataTypesJAXBInitializer());
 		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
 		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new ContextAndPolicyInitializer());
+		initializers.add(new JAXBInitializer());
 
 		return initializers;
 	}
@@ -201,7 +200,7 @@ public final class SimplePDPFactory {
 			PolicyCombiningAlgorithm rootCombiningAlgorithm,
 			PolicyRetrievalPoint policyRepository, PIP pip,
 			boolean respectAbandonedEvaluatables, TargetMatcher targetMatcher,
-			StatusCodeComparator statusCodeComparator, ResponseCtxFactory responseCtxFactory) {
+			StatusCodeComparator statusCodeComparator) {
 		if (rootCombiningAlgorithm == null || policyRepository == null
 				|| targetMatcher == null) {
 			InitializationException e = new InitializationException(
@@ -214,7 +213,7 @@ public final class SimplePDPFactory {
 
 		return new SimplePDP(rootCombiningAlgorithm, policyRepository, pip,
 				respectAbandonedEvaluatables, targetMatcher,
-				statusCodeComparator, responseCtxFactory);
+				statusCodeComparator);
 	}
 
 	/**
@@ -241,7 +240,6 @@ public final class SimplePDPFactory {
 			PolicyRetrievalPoint policyRepository, PIP pip,
 			boolean respectAbandonedEvaluatables) {
 		TargetMatcher targetMatcher;
-		ResponseCtxFactory responseCtxFactory;
 
 		try {
 			targetMatcher = defaultTargetMatcher.newInstance();
@@ -271,35 +269,6 @@ public final class SimplePDPFactory {
 			throw ie;
 		}
 		
-		try {
-			responseCtxFactory = defaultResponseCtxFactory.newInstance();
-		} catch (InstantiationException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default response context factory: "
-							+ defaultResponseCtxFactory.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalAccessException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default response context factory: "
-							+ defaultResponseCtxFactory.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (IllegalArgumentException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default response context factory: "
-							+ defaultResponseCtxFactory.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		} catch (SecurityException e) {
-			InitializationException ie = new InitializationException(
-					"Unable to instantiate the default response context factory: "
-							+ defaultResponseCtxFactory.getCanonicalName(), e);
-			LOGGER.error(ie.getMessage());
-			throw ie;
-		}
-		
-
 		LOGGER.info("Using the default target matcher: {}",
 				defaultTargetMatcher.getCanonicalName());
 		
@@ -307,7 +276,7 @@ public final class SimplePDPFactory {
 				defaultResponseCtxFactory.getCanonicalName());
 
 		return getSimplePDP(rootCombiningAlgorithm, policyRepository, pip,
-				respectAbandonedEvaluatables, targetMatcher, null, responseCtxFactory);
+				respectAbandonedEvaluatables, targetMatcher, null);
 	}
 
 	/**

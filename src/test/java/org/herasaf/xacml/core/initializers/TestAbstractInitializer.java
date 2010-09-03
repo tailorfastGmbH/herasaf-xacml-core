@@ -8,9 +8,9 @@ import java.util.Set;
 import org.herasaf.xacml.core.converter.URNToFunctionConverter;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
-import org.herasaf.xacml.core.simplePDP.initializers.ContextAndPolicyInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.JAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
 import org.testng.Assert;
@@ -26,7 +26,7 @@ public class TestAbstractInitializer {
 		initializers.add(new DataTypesJAXBInitializer());
 		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
 		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new ContextAndPolicyInitializer());
+		initializers.add(new JAXBInitializer());
 		
 		SimplePDPFactory.setInitalizers(initializers);
 		
