@@ -56,7 +56,7 @@ public class SimplePDP implements PDP {
 	private final StatusCodeComparator statusCodeComparator;
 
 	/**
-	 * Initializes the PDP with the given {@link SimplePDPConfiguration},
+	 * Initializes the PDP with the given {@link SimplePDPConfiguration}.
 	 * 
 	 * @param simplePDPConfiguration
 	 *            The {@link SimplePDPConfiguration} to use.

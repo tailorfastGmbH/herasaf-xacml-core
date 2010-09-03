@@ -300,7 +300,7 @@ public final class SimplePDPFactory {
 	 * <br />
 	 * <b>Important:</b> The default {@link SimplePDPConfiguration} with default
 	 * values in all other configuration fields (except
-	 * {@link PolicyRetrievalPoint} is used.
+	 * {@link PolicyRetrievalPoint} and {@link PolicyCombiningAlgorithm} is used.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the

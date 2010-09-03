@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
  * Please read field level javadoc for explanation of default values.
  * 
  * @author Florian Huonder
- * @author RenÃ© Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class SimplePDPConfiguration {
 
@@ -61,9 +61,9 @@ public class SimplePDPConfiguration {
 	private PIP pip = null;
 
 	/**
-	 * The flag indicating if the {@link SimplePDP}, on which this
-	 * {@link SimplePDPConfiguration} will be applied, should respect abandoned
-	 * obligations<br>
+	 * The flag indicating if the {@link SimplePDP} on which this
+	 * {@link SimplePDPConfiguration} will be applied should respect abandoned
+	 * evaluatables.<br>
 	 * <b>Default value is:</b> {@code}false{@code}
 	 */
 	private boolean respectAbandonedEvaluatables = false;
@@ -84,14 +84,14 @@ public class SimplePDPConfiguration {
 	private StatusCodeComparator statusCodeComparator = new StatusCodeComparator();
 
 	/**
-	 * @return the configured root {@link PolicyCombiningAlgorithm}
+	 * @return The configured root {@link PolicyCombiningAlgorithm}
 	 */
 	public PolicyCombiningAlgorithm getRootCombiningAlgorithm() {
 		return rootCombiningAlgorithm;
 	}
 
 	/**
-	 * @param rootCombiningAlgorithm
+	 * @param RootCombiningAlgorithm
 	 *            the rootCombiningAlgorithm to be applied in the configuration.
 	 *            If the setter is not called explicitly the default
 	 *            configuration will be used.
@@ -102,14 +102,14 @@ public class SimplePDPConfiguration {
 	}
 
 	/**
-	 * @return the configured {@link PolicyRetrievalPoint}
+	 * @return The configured {@link PolicyRetrievalPoint}
 	 */
 	public PolicyRetrievalPoint getPolicyRetrievalPoint() {
 		return policyRetrievalPoint;
 	}
 
 	/**
-	 * @param policyRetrievalPoint
+	 * @param PolicyRetrievalPoint
 	 *            to be applied in the configuration. If the setter is not
 	 *            called explicitly the default configuration will be used.
 	 */
@@ -119,7 +119,7 @@ public class SimplePDPConfiguration {
 	}
 
 	/**
-	 * @return the configured {@link PIP}
+	 * @return The configured {@link PIP}
 	 */
 	public PIP getPip() {
 		return pip;
@@ -127,14 +127,14 @@ public class SimplePDPConfiguration {
 
 	/**
 	 * @param pip
-	 *            the pip to set
+	 *            The {@link PIP} to set. 
 	 */
 	public void setPip(PIP pip) {
 		this.pip = pip;
 	}
 
 	/**
-	 * @return the configured boolean for respectAbandonedObligations behaviour
+	 * @return The configured boolean for respectAbandonedObligations behavior.
 	 */
 	public boolean isRespectAbandonedEvaluatables() {
 		return respectAbandonedEvaluatables;
@@ -142,7 +142,7 @@ public class SimplePDPConfiguration {
 
 	/**
 	 * @param respectAbandonedEvaluatables
-	 *            the respectAbandonedEvaluatables to be applied in the
+	 *            The respectAbandonedEvaluatables to be applied in the
 	 *            configuration. If the setter is not called explicitly the
 	 *            default configuration will be used.
 	 */
@@ -152,7 +152,7 @@ public class SimplePDPConfiguration {
 	}
 
 	/**
-	 * @return the configured {@link TargetMatcher}
+	 * @return The configured {@link TargetMatcher}
 	 */
 	public TargetMatcher getTargetMatcher() {
 		return targetMatcher;
@@ -160,7 +160,7 @@ public class SimplePDPConfiguration {
 
 	/**
 	 * @param targetMatcher
-	 *            the targetMatcher to be applied in the configuration. If the
+	 *            The targetMatcher to be applied in the configuration. If the
 	 *            setter is not called explicitly the default configuration will
 	 *            be used.
 	 */
@@ -169,7 +169,7 @@ public class SimplePDPConfiguration {
 	}
 
 	/**
-	 * @return the configured {@link StatusCodeComparator}
+	 * @return The configured {@link StatusCodeComparator}
 	 */
 	public StatusCodeComparator getStatusCodeComparator() {
 		return statusCodeComparator;
@@ -177,7 +177,7 @@ public class SimplePDPConfiguration {
 
 	/**
 	 * @param statusCodeComparator
-	 *            the statusCodeComparator to be applied in the configuration.
+	 *            The statusCodeComparator to be applied in the configuration.
 	 *            If the setter is not called explicitly the default
 	 *            configuration will be used.
 	 */
