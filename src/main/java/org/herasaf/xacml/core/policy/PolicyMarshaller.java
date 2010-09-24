@@ -99,6 +99,13 @@ public final class PolicyMarshaller {
 	 */
 	private static Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
+		
+		if(CONTEXT == null || CONFIGURATION == null) {
+			LOGGER.error("JAXB context and/or configuration not initialized.");
+			throw new NotInitializedException(
+					"JAXB context and/or configuration not initialized.");			
+		}
+		
 		Marshaller marshaller = CONTEXT.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
 				CONFIGURATION.isFormattedOutput());
@@ -140,6 +147,13 @@ public final class PolicyMarshaller {
 	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
+		
+		if(CONTEXT == null || CONFIGURATION == null) {
+			LOGGER.error("JAXB context and/or configuration not initialized.");
+			throw new NotInitializedException(
+					"JAXB context and/or configuration not initialized.");			
+		}
+		
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
 
 		if (CONFIGURATION.isValidateParsing()) {

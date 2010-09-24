@@ -94,6 +94,13 @@ public class ResponseCtx implements Serializable {
 	 */
 	private Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
+		
+		if(CONTEXT == null || CONFIGURATION == null) {
+			logger.error("JAXB context and/or configuration not initialized.");
+			throw new NotInitializedException(
+					"JAXB context and/or configuration not initialized.");			
+		}
+		
 		Marshaller marshaller = CONTEXT.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
 				CONFIGURATION.isFormattedOutput());

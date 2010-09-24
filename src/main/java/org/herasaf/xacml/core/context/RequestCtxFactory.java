@@ -122,6 +122,13 @@ public final class RequestCtxFactory {
 	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
+		
+		if(CONTEXT == null || CONFIGURATION == null) {
+			LOGGER.error("JAXB context and/or configuration not initialized.");
+			throw new NotInitializedException(
+					"JAXB context and/or configuration not initialized.");			
+		}
+		
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
 
 		if (CONFIGURATION.isValidateParsing()) {
