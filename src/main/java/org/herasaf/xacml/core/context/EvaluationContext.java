@@ -80,7 +80,8 @@ public class EvaluationContext {
 	 * @param targetMatcher
 	 *            The {@link TargetMatcher} to use during evaluation.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, StatusCodeComparator statusCodeComparator) {
+	public EvaluationContext(TargetMatcher targetMatcher,
+			StatusCodeComparator statusCodeComparator) {
 		this(targetMatcher, null, false, statusCodeComparator);
 	}
 
@@ -97,7 +98,8 @@ public class EvaluationContext {
 	 * @param pip
 	 *            The {@link PIP} to use during evaluation.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, PIP pip, StatusCodeComparator statusCodeComparator) {
+	public EvaluationContext(TargetMatcher targetMatcher, PIP pip,
+			StatusCodeComparator statusCodeComparator) {
 		this(targetMatcher, pip, false, statusCodeComparator);
 	}
 
@@ -114,10 +116,13 @@ public class EvaluationContext {
 	 * @param respectAbandonedEvaluatables
 	 *            If true then abandoned evaluatables are respected.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, boolean respectAbandonedEvaluatables, StatusCodeComparator statusCodeComparator) {
-		this(targetMatcher, null, respectAbandonedEvaluatables, statusCodeComparator);
+	public EvaluationContext(TargetMatcher targetMatcher,
+			boolean respectAbandonedEvaluatables,
+			StatusCodeComparator statusCodeComparator) {
+		this(targetMatcher, null, respectAbandonedEvaluatables,
+				statusCodeComparator);
 	}
-	
+
 	/**
 	 * Initializes the EvaluationContext. The following default settings are
 	 * applied:
@@ -131,7 +136,8 @@ public class EvaluationContext {
 	 * @param respectAbandonedEvaluatables
 	 *            If true then abandoned evaluatables are respected.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, Comparator<StatusCode> statusCodeComparator) {
+	public EvaluationContext(TargetMatcher targetMatcher,
+			Comparator<StatusCode> statusCodeComparator) {
 		this(targetMatcher, null, false, statusCodeComparator);
 	}
 
@@ -147,7 +153,9 @@ public class EvaluationContext {
 	 * @param respectAbandonedEvaluatables
 	 *            If true then abandoned evaluatables are respected.
 	 */
-	public EvaluationContext(TargetMatcher targetMatcher, PIP pip, boolean respectAbandonedEvaluatables, Comparator<StatusCode> statusCodeComparator) {
+	public EvaluationContext(TargetMatcher targetMatcher, PIP pip,
+			boolean respectAbandonedEvaluatables,
+			Comparator<StatusCode> statusCodeComparator) {
 		this.pip = pip;
 		this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
 		this.targetMatcher = targetMatcher;
@@ -208,9 +216,9 @@ public class EvaluationContext {
 	 *            The potential new {@link StatusCode}.
 	 */
 	public void updateStatusCode(StatusCode code) {
-    	if(statusCodeComparator.compare(code, this.getStatusCode()) > 0){
-    		this.statusCode = code;
-    	}
+		if (statusCodeComparator.compare(code, this.getStatusCode()) > 0) {
+			this.statusCode = code;
+		}
 	}
 
 	/**
@@ -251,7 +259,8 @@ public class EvaluationContext {
 	 * @param missingAttributes
 	 *            The {@link List} of {@link MissingAttributeDetailType}s.
 	 */
-	public void setMissingAttributes(List<MissingAttributeDetailType> missingAttributes) {
+	public void setMissingAttributes(
+			List<MissingAttributeDetailType> missingAttributes) {
 		this.missingAttributes = missingAttributes;
 	}
 
@@ -335,7 +344,8 @@ public class EvaluationContext {
 	 *            The Obligation's {@link EffectType} that should be kept.
 	 */
 
-	public void addObligations(final List<ObligationType> obligations, final EffectType effect) {
+	public void addObligations(final List<ObligationType> obligations,
+			final EffectType effect) {
 		List<ObligationType> obls = new ArrayList<ObligationType>();
 
 		for (int i = 0; i < obligations.size(); i++) {

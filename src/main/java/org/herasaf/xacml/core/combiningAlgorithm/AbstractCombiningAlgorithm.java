@@ -38,9 +38,9 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
-    private static final long serialVersionUID = 1L;
-    private final Logger logger = LoggerFactory.getLogger(AbstractCombiningAlgorithm.class);
-
+	private static final long serialVersionUID = 1L;
+	private final Logger logger = LoggerFactory
+			.getLogger(AbstractCombiningAlgorithm.class);
 
 	/**
 	 * Matches the target of the request.
@@ -54,23 +54,24 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 *            process.
 	 * @return The decision of matching the target.
 	 */
-	protected TargetMatchingResult matchTarget(final RequestType request, final TargetType target,
-			final EvaluationContext evaluationContext) {
+	protected TargetMatchingResult matchTarget(final RequestType request,
+			final TargetType target, final EvaluationContext evaluationContext) {
 		TargetMatchingResult targetMatchDecision = TargetMatchingResult.NO_MATCH;
 		try {
 			logger.debug("Starting target match.");
-			targetMatchDecision = evaluationContext.getTargetMatcher().match(request, target, evaluationContext);
+			targetMatchDecision = evaluationContext.getTargetMatcher().match(
+					request, target, evaluationContext);
 
 			/*
-			 * See: OASIS eXtensible Access Control Markup Langugage
-			 * (XACML) 2.0, Errata 29 June 2006</a> page 83, chapter Policy
-			 * evaluation for further information.
+			 * See: OASIS eXtensible Access Control Markup Langugage (XACML)
+			 * 2.0, Errata 29 June 2006</a> page 83, chapter Policy evaluation
+			 * for further information.
 			 */
-			switch(targetMatchDecision){
+			switch (targetMatchDecision) {
 			case MATCH:
-				//do nothing. Everything ok.
+				// do nothing. Everything ok.
 			case INDETERMINATE:
-				//This case will never be reached. Those are exceptions.
+				// This case will never be reached. Those are exceptions.
 				break;
 			case NO_MATCH:
 				evaluationContext.setTargetMatched(false);
@@ -80,17 +81,20 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			logger.error("TargetMatcher not initialized.", e);
 			throw new NotInitializedException(e);
 		} catch (SyntaxException e) {
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Syntax error occurred.");
 			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		} catch (ProcessingException e) {
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Processing error occurred.");
 			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		} catch (MissingAttributeException e) {
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 			evaluationContext.addMissingAttributes(e.getMissingAttribute());
 			evaluationContext.setTargetMatched(false);
 			logger.debug("Missing attribute error occurred.");

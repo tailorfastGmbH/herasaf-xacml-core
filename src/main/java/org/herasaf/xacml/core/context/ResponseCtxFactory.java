@@ -44,7 +44,6 @@ import org.herasaf.xacml.core.context.impl.ResultType;
 import org.herasaf.xacml.core.context.impl.StatusCodeType;
 import org.herasaf.xacml.core.context.impl.StatusDetailType;
 import org.herasaf.xacml.core.context.impl.StatusType;
-import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
@@ -243,12 +242,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the file.");
+					"Unable to unmarshal the file.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the file.");
+					"Unable to unmarshal the file.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -287,12 +286,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the input stream.");
+					"Unable to unmarshal the input stream.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the input stream.");
+					"Unable to unmarshal the input stream.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -331,12 +330,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the reader.");
+					"Unable to unmarshal the reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the reader.");
+					"Unable to unmarshal the reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -374,12 +373,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the url.");
+					"Unable to unmarshal the url.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the url.");
+					"Unable to unmarshal the url.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -418,12 +417,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the input source.");
+					"Unable to unmarshal the input source.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the input source.");
+					"Unable to unmarshal the input source.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -462,12 +461,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the node.");
+					"Unable to unmarshal the node.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the node.");
+					"Unable to unmarshal the node.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -506,12 +505,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the source.");
+					"Unable to unmarshal the source.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the source.");
+					"Unable to unmarshal the source.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -550,12 +549,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the xml stream reader.");
+					"Unable to unmarshal the xml stream reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the xml stream reader.");
+					"Unable to unmarshal the xml stream reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}
@@ -594,12 +593,12 @@ public final class ResponseCtxFactory {
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the xml event reader.");
+					"Unable to unmarshal the xml event reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		} catch (ClassCastException e) {
 			SyntaxException se = new SyntaxException(
-					"Unable to unmarshal the xml event reader.");
+					"Unable to unmarshal the xml event reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
 		}

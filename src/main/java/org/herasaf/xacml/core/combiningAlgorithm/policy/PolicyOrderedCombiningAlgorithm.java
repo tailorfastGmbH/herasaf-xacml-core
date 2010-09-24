@@ -34,25 +34,29 @@ import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyCombiningAlgorithm {
-    private static final long serialVersionUID = 1L;
+public abstract class PolicyOrderedCombiningAlgorithm extends
+		AbstractPolicyCombiningAlgorithm {
+	private static final long serialVersionUID = 1L;
 
-    /**
+	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
-			final EvaluationContext evaluationContext) {
-		final TargetMatchingResult decision = matchTarget(request, evals.getTarget(), evaluationContext);
+	public DecisionType evaluate(final RequestType request,
+			final Evaluatable evals, final EvaluationContext evaluationContext) {
+		final TargetMatchingResult decision = matchTarget(request, evals
+				.getTarget(), evaluationContext);
 
-		if (decision == TargetMatchingResult.NO_MATCH){
+		if (decision == TargetMatchingResult.NO_MATCH) {
 			return DecisionType.NOT_APPLICABLE;
-		}else if (decision == TargetMatchingResult.INDETERMINATE){
+		} else if (decision == TargetMatchingResult.INDETERMINATE) {
 			return DecisionType.INDETERMINATE;
 		}
-		
+
 		try {
-			final DecisionType dec = this.evaluateEvaluatableList(request, ((PolicySetType) evals)
-					.getOrderedEvaluatables(evaluationContext), evaluationContext);
+			final DecisionType dec = this.evaluateEvaluatableList(request,
+					((PolicySetType) evals)
+							.getOrderedEvaluatables(evaluationContext),
+					evaluationContext);
 			/*
 			 * The evaluateEvaluatableList method may set the targetMatched
 			 * value to false. So it has to be set to true to go sure that it is
@@ -67,7 +71,8 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
 			 * June 2006</a> page 86, chapter "Syntax and type errors" for
 			 * further information.
 			 */
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 	}

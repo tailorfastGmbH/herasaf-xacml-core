@@ -25,7 +25,6 @@ import java.util.Set;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
