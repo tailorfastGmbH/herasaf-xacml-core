@@ -36,7 +36,7 @@ import javax.xml.namespace.QName;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
+import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 
@@ -78,7 +78,7 @@ public class AttributeValueType extends ExpressionType {
 	@XmlAnyElement(lax = true)
 	private List<Object> content;
 	@XmlAttribute(name = "DataType", required = true)
-	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
+	@XmlJavaTypeAdapter(DataTypeJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private DataTypeAttribute<?> dataType;
 	@XmlAnyAttribute

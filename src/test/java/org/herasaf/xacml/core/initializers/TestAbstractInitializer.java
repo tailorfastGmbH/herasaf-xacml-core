@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
@@ -32,7 +32,7 @@ public class TestAbstractInitializer {
 		
 		SimplePDPFactory.getSimplePDP();
 		
-		Field f = URNToFunctionConverter.class.getDeclaredField("functions");
+		Field f = FunctionsJAXBTypeAdapter.class.getDeclaredField("functions");
 		f.setAccessible(true);
 		
 		Object fieldValue = f.get(null);

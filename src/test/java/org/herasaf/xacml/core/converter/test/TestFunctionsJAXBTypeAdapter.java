@@ -22,8 +22,8 @@ import static org.testng.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
-import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
+import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.function.impl.equalityPredicates.StringEqualFunction;
@@ -31,33 +31,33 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- * Tests the {@link URNToFunctionConverter} JAXB converter.
+ * Tests the {@link FunctionsJAXBTypeAdapter} JAXB converter.
  * 
  * @author Sacha Dolski
  */
-public class TestURNToFunctionConverter {
+public class TestFunctionsJAXBTypeAdapter {
 
 	static final String FUNCTION_ID = "urn:oasis:names:tc:xacml:1.0:function:string-equal";
-	private URNToFunctionConverter converter;
+	private FunctionsJAXBTypeAdapter converter;
 	private Function function;
 	private Map<String, Function> map;
 
 	/**
-	 * Initializes {@link URNToFunctionConverter} with a {@link Function}.
+	 * Initializes {@link FunctionsJAXBTypeAdapter} with a {@link Function}.
 	 */
 	@BeforeTest
 	public void beforeTest() {
-		converter = new URNToFunctionConverter();
+		converter = new FunctionsJAXBTypeAdapter();
 		function = new StringEqualFunction();
 		map = new HashMap<String, Function>();
 		map.put(FUNCTION_ID, function);
 
-		URNToFunctionConverter.setFunctions(map);
+		FunctionsJAXBTypeAdapter.setFunctions(map);
 	}
 
 	/**
 	 * Tests if the unmarshalling works correctly. That means that the
-	 * {@link URNToFunctionConverter#unmarshal(String)} returns the proper
+	 * {@link FunctionsJAXBTypeAdapter#unmarshal(String)} returns the proper
 	 * object.
 	 * 
 	 * @throws IllegalArgumentException
@@ -71,7 +71,7 @@ public class TestURNToFunctionConverter {
 
 	/**
 	 * Expects an {@link IllegalArgumentException} because an improper argument
-	 * is given to the {@link URNToDataTypeConverter#unmarshal(String)} method.
+	 * is given to the {@link DataTypeJAXBTypeAdapter#unmarshal(String)} method.
 	 * 
 	 * @throws IllegalArgumentException
 	 */
@@ -82,7 +82,7 @@ public class TestURNToFunctionConverter {
 
 	/**
 	 * Tests if the marshalling works correctly. That means that the
-	 * {@link URNToFunctionConverter#marshal(Function)} returns the proper
+	 * {@link FunctionsJAXBTypeAdapter#marshal(Function)} returns the proper
 	 * {@link String}.
 	 * 
 	 * @throws IllegalArgumentException

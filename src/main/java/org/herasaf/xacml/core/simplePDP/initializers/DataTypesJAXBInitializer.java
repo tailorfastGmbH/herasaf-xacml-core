@@ -18,7 +18,7 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.Map;
 
-import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
+import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.simplePDP.InitializationException;
 import org.slf4j.Logger;
@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This initializer initializes all data types and puts them in the
- * {@link URNToDataTypeConverter} JAXB type adapter.
+ * {@link DataTypeJAXBTypeAdapter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -81,7 +81,7 @@ public class DataTypesJAXBInitializer extends
 	@Override
 	protected void setInstancesIntoConverter(
 			Map<String, DataTypeAttribute<?>> instancesMap) {
-		URNToDataTypeConverter.setDataTypeAttributes(instancesMap);
+		DataTypeJAXBTypeAdapter.setDataTypeAttributes(instancesMap);
 		logger.info("{} DataTypeAttributes are initialized.", instancesMap
 				.size());
 	}

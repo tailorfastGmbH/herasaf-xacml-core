@@ -22,67 +22,67 @@ import java.util.Map;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.NotInitializedException;
-import org.herasaf.xacml.core.function.Function;
+import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a function. The default functions are defined in the <a
+ * Converts an URN to a data type. The default data types are defined in the <a
  * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix A.3, page 105. <br>
+ * 2006</a> appendix A.2, page 103. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class URNToFunctionConverter extends XmlAdapter<String, Function> {
-	private final Logger logger = LoggerFactory.getLogger(URNToFunctionConverter.class);
-	private static Map<String, Function> functions;
+public class DataTypeJAXBTypeAdapter extends XmlAdapter<String, DataTypeAttribute<?>> {
+	private final Logger logger = LoggerFactory.getLogger(DataTypeJAXBTypeAdapter.class);
+	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
 	/**
-	 * This method sets the {@link Map} containing the mapping between functions
-	 * and their ID's into the converter.
+	 * This method sets the {@link Map} containing the mapping between data types and their ID's into the
+	 * converter.
 	 * 
-	 * @param functions
-	 *            The {@link Map} containing the mapping between ID's and
-	 *            functions
+	 * @param dataTypes
+	 *            The {@link Map} containing the mapping between ID's and data
+	 *            types.
 	 */
-	public static void setFunctions(final Map<String, Function> functions) {
-		URNToFunctionConverter.functions = functions;
+	public static void setDataTypeAttributes(final Map<String, DataTypeAttribute<?>> dataTypes) {
+		DataTypeJAXBTypeAdapter.dataTypeAttributes = dataTypes;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public String marshal(final Function function) {
-		String functionString;
+	public String marshal(final DataTypeAttribute<?> dataTypeAttr) {
+		String dataTypeAttrString;
 		try {
-			functionString = function.toString();
+			dataTypeAttrString = dataTypeAttr.toString();
 		} catch (NullPointerException e) {
-			logger.error("Argument function must not be null: ", e);
+			logger.error("Argument dataTypeAttr must not be null: ", e);
 			throw new IllegalArgumentException(e);
 		}
-		return functionString;
+		return dataTypeAttrString;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Function unmarshal(final String functionId) {
-		Function func;
+	public DataTypeAttribute<?> unmarshal(final String dataTypeId) {
+		DataTypeAttribute<?> dta;
 		try {
-			func = functions.get(functionId);
+			dta = dataTypeAttributes.get(dataTypeId);
 		} catch (NullPointerException e) {
-			logger.error("URNToFunctionConverter not properly initialized.");
+			logger.error("DataTypeJAXBTypeAdapter not properly initialized.");
 			throw new NotInitializedException(e);
 		}
-		if (func != null) {
-			return func;
+		if (dta != null) {
+			return dta;
 		}
-		throw new IllegalArgumentException("Function " + functionId + " unknown.");
+		throw new IllegalArgumentException("DataTypeAttribute " + dataTypeId + " unknown.");
 	}
 }

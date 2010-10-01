@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.function.Function;
 
 /**
@@ -72,7 +72,7 @@ public class SubjectMatchType implements Serializable, Match {
 	@XmlElement(name = "AttributeSelector")
 	private AttributeSelectorType attributeSelector;
 	@XmlAttribute(name = "MatchId", required = true)
-	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
+	@XmlJavaTypeAdapter(FunctionsJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private Function matchFunction;
 

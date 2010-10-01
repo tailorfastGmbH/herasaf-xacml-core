@@ -22,40 +22,40 @@ import static org.testng.Assert.assertEquals;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
+import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- * Tests the {@link URNToDataTypeConverter} JAXB converter.
+ * Tests the {@link DataTypeJAXBTypeAdapter} JAXB converter.
  * 
  * @author Sacha Dolski
  */
-public class TestURNToDataTypeAttributeConverter {
+public class TestDataTypeJAXBTypeAdapter {
 	static final String DATATYPE_ID = "http://www.w3.org/2001/XMLSchema#string";
-	private URNToDataTypeConverter converter;
+	private DataTypeJAXBTypeAdapter converter;
 	private DataTypeAttribute<String> dataTypeAttr;
 	private Map<String, DataTypeAttribute<?>> map;
 
 	/**
-	 * Initializes {@link URNToDataTypeConverter} with a
+	 * Initializes {@link DataTypeJAXBTypeAdapter} with a
 	 * {@link StringDataTypeAttribute}.
 	 */
 	@BeforeTest
 	public void beforeTest() {
-		converter = new URNToDataTypeConverter();
+		converter = new DataTypeJAXBTypeAdapter();
 		dataTypeAttr = new StringDataTypeAttribute();
 		map = new HashMap<String, DataTypeAttribute<?>>();
 		map.put(DATATYPE_ID, dataTypeAttr);
 
-		URNToDataTypeConverter.setDataTypeAttributes(map);
+		DataTypeJAXBTypeAdapter.setDataTypeAttributes(map);
 	}
 
 	/**
 	 * Tests if the unmarshalling works correctly. That means that the
-	 * {@link URNToDataTypeConverter#unmarshal(String)} returns the proper
+	 * {@link DataTypeJAXBTypeAdapter#unmarshal(String)} returns the proper
 	 * object.
 	 * 
 	 * @throws IllegalArgumentException
@@ -70,7 +70,7 @@ public class TestURNToDataTypeAttributeConverter {
 
 	/**
 	 * Tests if the marshalling works correctly. That means that the
-	 * {@link URNToDataTypeConverter#marshal(DataTypeAttribute)} returns the
+	 * {@link DataTypeJAXBTypeAdapter#marshal(DataTypeAttribute)} returns the
 	 * proper {@link String}.
 	 * 
 	 * @throws IllegalArgumentException
@@ -84,7 +84,7 @@ public class TestURNToDataTypeAttributeConverter {
 
 	/**
 	 * Expects an {@link IllegalArgumentException} because an improper argument
-	 * is given to the {@link URNToDataTypeConverter#unmarshal(String)} method.
+	 * is given to the {@link DataTypeJAXBTypeAdapter#unmarshal(String)} method.
 	 * 
 	 * @throws IllegalArgumentException
 	 */

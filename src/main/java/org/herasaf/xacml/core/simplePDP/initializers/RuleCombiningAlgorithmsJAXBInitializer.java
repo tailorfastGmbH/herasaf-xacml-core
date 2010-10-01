@@ -21,13 +21,13 @@ import java.util.Map;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
-import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
+import org.herasaf.xacml.core.converter.RuleCombiningAlgorithmJAXBTypeAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * This initializer initializes all rule combining algorithms and puts them in
- * the {@link URNToRuleCombiningAlgorithmConverter} JAXB type adapter.
+ * the {@link RuleCombiningAlgorithmJAXBTypeAdapter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -63,7 +63,7 @@ public class RuleCombiningAlgorithmsJAXBInitializer extends
 			Map<String, AbstractRuleCombiningAlgorithm> instancesMap) {
 		Map<String, RuleCombiningAlgorithm> instances = new HashMap<String, RuleCombiningAlgorithm>();
 		instances.putAll(instancesMap);
-		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(instances);
+		RuleCombiningAlgorithmJAXBTypeAdapter.setCombiningAlgorithms(instances);
 		logger.info("{} rule combining algorithms are initialized.", instances
 				.size());
 	}

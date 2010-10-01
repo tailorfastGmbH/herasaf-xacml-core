@@ -34,7 +34,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
+import org.herasaf.xacml.core.converter.PolicyCombiningAlgorithmJAXBTypeAdapter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
@@ -114,7 +114,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	// This field is transient because it is only marshal-/unamrshal-able
 	// together with JAXB.
 	@XmlAttribute(name = "PolicyCombiningAlgId", required = true)
-	@XmlJavaTypeAdapter(URNToPolicyCombiningAlgorithmConverter.class)
+	@XmlJavaTypeAdapter(PolicyCombiningAlgorithmJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private PolicyCombiningAlgorithm policyCombiningAlg;
 

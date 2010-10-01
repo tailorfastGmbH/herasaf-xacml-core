@@ -25,7 +25,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.function.Function;
 
 /**
@@ -59,7 +59,7 @@ import org.herasaf.xacml.core.function.Function;
 public class FunctionType extends ExpressionType {
 	private static final long serialVersionUID = 1L;
 	@XmlAttribute(name = "FunctionId", required = true)
-	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
+	@XmlJavaTypeAdapter(FunctionsJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private Function function;
 

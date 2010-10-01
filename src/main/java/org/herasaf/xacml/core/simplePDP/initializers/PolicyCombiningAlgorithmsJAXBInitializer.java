@@ -21,13 +21,13 @@ import java.util.Map;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.AbstractPolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
+import org.herasaf.xacml.core.converter.PolicyCombiningAlgorithmJAXBTypeAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * This initializer initializes all policy combining algorithms and puts them in
- * the {@link URNToPolicyCombiningAlgorithmConverter} JAXB type adapter.
+ * the {@link PolicyCombiningAlgorithmJAXBTypeAdapter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -63,7 +63,7 @@ public class PolicyCombiningAlgorithmsJAXBInitializer extends
 			Map<String, AbstractPolicyCombiningAlgorithm> instancesMap) {
 		Map<String, PolicyCombiningAlgorithm> instances = new HashMap<String, PolicyCombiningAlgorithm>();
 		instances.putAll(instancesMap);
-		URNToPolicyCombiningAlgorithmConverter
+		PolicyCombiningAlgorithmJAXBTypeAdapter
 				.setCombiningAlgorithms(instances);
 		logger.info("{} policy combining algorithms are initialized.",
 				instances.size());

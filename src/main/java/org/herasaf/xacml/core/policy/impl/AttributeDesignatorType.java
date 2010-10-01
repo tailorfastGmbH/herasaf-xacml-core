@@ -30,7 +30,7 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
+import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
@@ -74,7 +74,7 @@ public abstract class AttributeDesignatorType extends ExpressionType {
 	@XmlSchemaType(name = "anyURI")
 	private String attributeId;
 	@XmlAttribute(name = "DataType", required = true)
-	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
+	@XmlJavaTypeAdapter(DataTypeJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private DataTypeAttribute<?> dataType;
 	@XmlAttribute(name = "Issuer")

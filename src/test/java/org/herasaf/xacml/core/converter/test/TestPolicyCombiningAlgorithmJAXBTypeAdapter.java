@@ -23,42 +23,42 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.rule.RuleCombiningAlgorithm;
-import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm;
-import org.herasaf.xacml.core.converter.URNToPolicyCombiningAlgorithmConverter;
-import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyDenyOverridesAlgorithm;
+import org.herasaf.xacml.core.converter.PolicyCombiningAlgorithmJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
 /**
- * Tests the {@link URNToRuleCombiningAlgorithmConverter} JAXB converter.
+ * Tests the {@link PolicyCombiningAlgorithmJAXBTypeAdapter} JAXB converter.
  * 
  * @author Sacha Dolski
+ * @author Florian Huonder
  */
-public class TestURNToRuleCombiningAlgorithmConverter {
-	static final String DENY_OVERRIDES_ID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides";
-	private URNToRuleCombiningAlgorithmConverter converter;
-	private AbstractRuleCombiningAlgorithm comAlg;
-	private Map<String, RuleCombiningAlgorithm> map;
+public class TestPolicyCombiningAlgorithmJAXBTypeAdapter {
+
+	static final String DENY_OVERRIDES_ID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides";
+	private PolicyCombiningAlgorithmJAXBTypeAdapter converter;
+	private PolicyCombiningAlgorithm comAlg;
+	private Map<String, PolicyCombiningAlgorithm> map;
 
 	/**
-	 * Initializes {@link URNToPolicyCombiningAlgorithmConverter} with a
+	 * Initializes {@link PolicyCombiningAlgorithmJAXBTypeAdapter} with a
 	 * {@link PolicyCombiningAlgorithm}.
 	 */
 	@BeforeTest
 	public void beforeTest() {
-		converter = new URNToRuleCombiningAlgorithmConverter();
-		comAlg = new RuleDenyOverridesAlgorithm();
-		map = new HashMap<String, RuleCombiningAlgorithm>();
+		converter = new PolicyCombiningAlgorithmJAXBTypeAdapter();
+		comAlg = new PolicyDenyOverridesAlgorithm();
+		map = new HashMap<String, PolicyCombiningAlgorithm>();
 		map.put(DENY_OVERRIDES_ID, comAlg);
-		URNToRuleCombiningAlgorithmConverter.setCombiningAlgorithms(map);
+
+		PolicyCombiningAlgorithmJAXBTypeAdapter.setCombiningAlgorithms(map);
 	}
 
 	/**
 	 * Tests if the unmarshalling works correctly. That means that the
-	 * {@link URNToRuleCombiningAlgorithmConverter#unmarshal(String)} returns
+	 * {@link PolicyCombiningAlgorithmJAXBTypeAdapter#unmarshal(String)} returns
 	 * the proper object.
 	 * 
 	 * @throws IllegalArgumentException
@@ -67,12 +67,13 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 	@Test
 	public void testConvertToDenyOverridesAlgo()
 			throws IllegalArgumentException {
+
 		assertEquals(converter.unmarshal(DENY_OVERRIDES_ID), comAlg);
 	}
 
 	/**
 	 * Tests if the marshalling works correctly. That means that the
-	 * {@link URNToRuleCombiningAlgorithmConverter#marshal(RuleCombiningAlgorithm)}
+	 * {@link PolicyCombiningAlgorithmJAXBTypeAdapter#marshal(PolicyCombiningAlgorithm)}
 	 * returns the proper {@link String}.
 	 * 
 	 * @throws IllegalArgumentException
@@ -80,18 +81,20 @@ public class TestURNToRuleCombiningAlgorithmConverter {
 	 */
 	@Test
 	public void testConvertToCombingAlgoId() throws IllegalArgumentException {
+
 		assertEquals(converter.marshal(comAlg), DENY_OVERRIDES_ID);
 	}
 
 	/**
 	 * Expects an {@link IllegalArgumentException} because an improper argument
 	 * is given to the
-	 * {@link URNToPolicyCombiningAlgorithmConverter#unmarshal(String)} method.
+	 * {@link PolicyCombiningAlgorithmJAXBTypeAdapter#unmarshal(String)} method.
 	 * 
 	 * @throws IllegalArgumentException
 	 */
 	@Test(enabled = true, expectedExceptions = { IllegalArgumentException.class })
 	public void testConvertException() throws IllegalArgumentException {
-		comAlg = (AbstractRuleCombiningAlgorithm) converter.unmarshal("test");
+
+		comAlg = converter.unmarshal("test");
 	}
 }

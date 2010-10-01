@@ -37,8 +37,8 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  * @author Florian Huonder
  */
-public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, RuleCombiningAlgorithm> {
-	private final Logger logger = LoggerFactory.getLogger(URNToRuleCombiningAlgorithmConverter.class);
+public class RuleCombiningAlgorithmJAXBTypeAdapter extends XmlAdapter<String, RuleCombiningAlgorithm> {
+	private final Logger logger = LoggerFactory.getLogger(RuleCombiningAlgorithmJAXBTypeAdapter.class);
 	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
 	/**
@@ -77,7 +77,7 @@ public class URNToRuleCombiningAlgorithmConverter extends XmlAdapter<String, Rul
 		try {
 			combAlg = combiningAlgorithms.get(combAlgId);
 		} catch (NullPointerException e) {
-			logger.error("URNToRuleCombiningAlgorithmConverter not properly initialized.");
+			logger.error("RuleCombiningAlgorithmJAXBTypeAdapter not properly initialized.");
 			throw new NotInitializedException(e);
 		}
 		if (combAlg != null) {

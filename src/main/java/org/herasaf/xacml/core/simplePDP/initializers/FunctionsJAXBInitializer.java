@@ -18,14 +18,14 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.Map;
 
-import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.function.Function;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * This initializer initializes all functions and puts them in the
- * {@link URNToFunctionConverter} JAXB type adapter.
+ * {@link FunctionsJAXBTypeAdapter} JAXB type adapter.
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
@@ -57,7 +57,7 @@ public class FunctionsJAXBInitializer extends AbstractInitializer<Function> {
 	 */
 	@Override
 	protected void setInstancesIntoConverter(Map<String, Function> instancesMap) {
-		URNToFunctionConverter.setFunctions(instancesMap);
+		FunctionsJAXBTypeAdapter.setFunctions(instancesMap);
 		logger.info("{} functions are initialized.", instancesMap.size());
 	}
 

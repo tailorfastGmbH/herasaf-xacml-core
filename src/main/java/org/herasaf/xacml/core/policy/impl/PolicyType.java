@@ -32,7 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
-import org.herasaf.xacml.core.converter.URNToRuleCombiningAlgorithmConverter;
+import org.herasaf.xacml.core.converter.RuleCombiningAlgorithmJAXBTypeAdapter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 
@@ -100,7 +100,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	@XmlAttribute(name = "Version")
 	private String version;
 	@XmlAttribute(name = "RuleCombiningAlgId", required = true)
-	@XmlJavaTypeAdapter(URNToRuleCombiningAlgorithmConverter.class)
+	@XmlJavaTypeAdapter(RuleCombiningAlgorithmJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private AbstractRuleCombiningAlgorithm ruleCombiningAlg;
 

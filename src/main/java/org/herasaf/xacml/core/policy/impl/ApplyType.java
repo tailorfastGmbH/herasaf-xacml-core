@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.ProcessingException;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.converter.URNToFunctionConverter;
+import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.function.Function;
 import org.herasaf.xacml.core.policy.MissingAttributeException;
 
@@ -72,7 +72,7 @@ public class ApplyType extends ExpressionType {
 	@XmlElementRef(name = "Expression", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os", type = JAXBElement.class)
 	private List<JAXBElement<?>> expressions;
 	@XmlAttribute(name = "FunctionId", required = true)
-	@XmlJavaTypeAdapter(URNToFunctionConverter.class)
+	@XmlJavaTypeAdapter(FunctionsJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private Function function;
 

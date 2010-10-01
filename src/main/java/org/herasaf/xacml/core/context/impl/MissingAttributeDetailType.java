@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
-import org.herasaf.xacml.core.converter.URNToDataTypeConverter;
+import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 
 /**
@@ -80,7 +80,7 @@ public class MissingAttributeDetailType implements Serializable {
 	@XmlSchemaType(name = "anyURI")
 	private String attributeId;
 	@XmlAttribute(name = "DataType", required = true)
-	@XmlJavaTypeAdapter(URNToDataTypeConverter.class)
+	@XmlJavaTypeAdapter(DataTypeJAXBTypeAdapter.class)
 	@XmlSchemaType(name = "anyURI")
 	private DataTypeAttribute<?> dataType;
 	@XmlAttribute(name = "Issuer")
