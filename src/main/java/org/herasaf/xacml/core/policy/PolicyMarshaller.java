@@ -22,8 +22,6 @@ import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.net.URL;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -44,12 +42,6 @@ import org.herasaf.xacml.core.WritingException;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
-import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
-import org.herasaf.xacml.core.simplePDP.initializers.JAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
@@ -91,28 +83,6 @@ public final class PolicyMarshaller {
 	}
 
 	/**
-	 * Gets the default list of initializers.
-	 * 
-	 * This list includes the {@link FunctionsJAXBInitializer},
-	 * {@link DataTypesJAXBInitializer},
-	 * {@link RuleCombiningAlgorithmsJAXBInitializer},
-	 * {@link PolicyCombiningAlgorithmsJAXBInitializer}, and
-	 * {@link ContextAndPolicyInitializer}.
-	 * 
-	 * @return the default list of initializers
-	 */
-	private static Set<Initializer> getDefaultInitializers() {
-		Set<Initializer> initializers = new HashSet<Initializer>();
-		initializers.add(new FunctionsJAXBInitializer());
-		initializers.add(new DataTypesJAXBInitializer());
-		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new JAXBInitializer());
-
-		return initializers;
-	}
-
-	/**
 	 * A utility class must not be instantiated.
 	 */
 	private PolicyMarshaller() {
@@ -130,7 +100,10 @@ public final class PolicyMarshaller {
 	private static Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
 
-		runDefaultInitializers();
+		if (CONTEXT == null || CONFIGURATION == null) {
+			throw new NotInitializedException(
+					"JAXB Context and/or Configuration not initialized.");
+		}
 
 		Marshaller marshaller = CONTEXT.createMarshaller();
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, CONFIGURATION
@@ -174,7 +147,10 @@ public final class PolicyMarshaller {
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
 
-		runDefaultInitializers();
+		if (CONTEXT == null || CONFIGURATION == null) {
+			throw new NotInitializedException(
+					"JAXB Context and/or Configuration not initialized.");
+		}
 
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
 
@@ -990,24 +966,6 @@ public final class PolicyMarshaller {
 					"Unable to unmarshal the xml event reader.", e);
 			LOGGER.error(se.getMessage(), e);
 			throw se;
-		}
-	}
-
-	/**
-	 * Runs the default {@link Initializer}s if no initializers were set then as
-	 * retrieved by {@link #getDefaultInitializers()}.
-	 */
-	private static void runDefaultInitializers() {
-		Set<Initializer> inits = getDefaultInitializers();
-
-		if (CONTEXT == null || CONFIGURATION == null) {
-			LOGGER
-					.info("JAXB context and/or configuration not initialized. Run default initializers.");
-			if (inits != null) {
-				for (Initializer initializer : inits) {
-					initializer.run();
-				}
-			}
 		}
 	}
 }

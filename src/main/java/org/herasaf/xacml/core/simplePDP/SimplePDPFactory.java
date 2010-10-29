@@ -19,16 +19,15 @@ package org.herasaf.xacml.core.simplePDP;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashSet;
 import java.util.Set;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
+import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
 import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.FunctionsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
-import org.herasaf.xacml.core.simplePDP.initializers.JAXBInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
 import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
 import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
 import org.slf4j.Logger;
@@ -68,9 +67,9 @@ import org.slf4j.LoggerFactory;
  * </pre></code></blockquote>
  * 
  * <b>Note:</b><br />
- * All getSimplePDP(...) methods exist in two ways. On with a flag
- * {@code respectAbandonedEvaluatables } and one without this flag. If this flag
- * is set to true the returning {@link PDP} respectes abandoned Evaluatables. <br />
+ * All getSimplePDP(...) methods exist in two ways. On with a flag {@code
+ * respectAbandonedEvaluatables } and one without this flag. If this flag is set
+ * to true the returning {@link PDP} respectes abandoned Evaluatables. <br />
  * <br />
  * <b>Abandoned Evaluatables</b><br />
  * When rule combining algorithms, which can optimize the evaluation process,
@@ -108,35 +107,11 @@ public final class SimplePDPFactory {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(SimplePDPFactory.class);
 
-	private static Set<Initializer> initializers;
-
 	/**
 	 * The constructor is private to avoid instantiation of the factory. It is
 	 * intended to be used in a static way.
 	 */
 	private SimplePDPFactory() {
-	}
-
-	/**
-	 * Gets the default list of initializers.
-	 * 
-	 * This list includes the {@link FunctionsJAXBInitializer},
-	 * {@link DataTypesJAXBInitializer},
-	 * {@link RuleCombiningAlgorithmsJAXBInitializer},
-	 * {@link PolicyCombiningAlgorithmsJAXBInitializer}, and
-	 * {@link ContextAndPolicyInitializer}.
-	 * 
-	 * @return the default list of initializers
-	 */
-	public static Set<Initializer> getDefaultInitializers() {
-		Set<Initializer> initializers = new HashSet<Initializer>();
-		initializers.add(new FunctionsJAXBInitializer());
-		initializers.add(new DataTypesJAXBInitializer());
-		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new JAXBInitializer());
-
-		return initializers;
 	}
 
 	/**
@@ -157,14 +132,14 @@ public final class SimplePDPFactory {
 	 */
 	public static void setInitalizers(Set<Initializer> initalizers) {
 		LOGGER.info("Custom initializers are in use.");
-		SimplePDPFactory.initializers = initalizers;
+		InitializerExecutor.setInitalizers(initalizers);
 	}
 
 	/**
 	 * Resets the factory to only use the default initializers.
 	 */
 	public static void resetInitializers() {
-		SimplePDPFactory.initializers = getDefaultInitializers();
+		InitializerExecutor.resetInitializers();
 	}
 
 	/**
@@ -178,7 +153,7 @@ public final class SimplePDPFactory {
 	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
-		runInitializers();
+		InitializerExecutor.runInitializers();
 		return new SimplePDP(simplePDPConfiguration);
 	}
 
@@ -199,7 +174,7 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(
 			SimplePDPConfiguration simplePDPConfiguration,
 			Class<? extends SimplePDP> customPDP) {
-		runInitializers();
+		InitializerExecutor.runInitializers();
 		try {
 			Constructor<? extends SimplePDP> constructor = customPDP
 					.getConstructor(SimplePDPConfiguration.class);
@@ -299,7 +274,8 @@ public final class SimplePDPFactory {
 	 * <br />
 	 * <b>Important:</b> The default {@link SimplePDPConfiguration} with default
 	 * values in all other configuration fields (except
-	 * {@link PolicyRetrievalPoint} and {@link PolicyCombiningAlgorithm} is used.
+	 * {@link PolicyRetrievalPoint} and {@link PolicyCombiningAlgorithm} is
+	 * used.
 	 * 
 	 * @param rootCombiningAlgorithm
 	 *            The root {@link PolicyCombiningAlgorithm} to use in the
@@ -333,26 +309,5 @@ public final class SimplePDPFactory {
 	 */
 	public static PDP getSimplePDP() {
 		return getSimplePDP(new SimplePDPConfiguration());
-	}
-
-	/**
-	 * Runs all {@link Initializer}s. If no custom initializers were set then
-	 * use the default initializers as retrieved by
-	 * {@link #getDefaultInitializers()}.
-	 */
-	private static void runInitializers() {
-		Set<Initializer> inits;
-
-		if (initializers == null) {
-			inits = getDefaultInitializers();
-		} else {
-			inits = initializers;
-		}
-
-		if (inits != null) {
-			for (Initializer initializer : inits) {
-				initializer.run();
-			}
-		}
 	}
 }
