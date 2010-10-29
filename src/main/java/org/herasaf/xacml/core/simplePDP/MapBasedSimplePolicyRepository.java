@@ -25,9 +25,11 @@ import java.util.Map;
 
 import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.api.DeploymentModification;
+import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestCtx;
+import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.impl.IdReferenceType;
@@ -231,8 +233,21 @@ public class MapBasedSimplePolicyRepository implements
 	 * 
 	 * Due to the fact that this implementation does not implement any index.
 	 * All root {@link Evaluatable}s are returned by default.
+	 * 
+	 * @deprecated Use {@link #getEvaluatables(RequestType)} instead. 
 	 */
+	@Deprecated
 	public List<Evaluatable> getEvaluatables(RequestCtx requestCtx) {
+		return rootEvaluatables;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * 
+	 * Due to the fact that this implementation does not implement any index.
+	 * All root {@link Evaluatable}s are returned by default.
+	 */
+	public List<Evaluatable> getEvaluatables(RequestType request) {
 		return rootEvaluatables;
 	}
 

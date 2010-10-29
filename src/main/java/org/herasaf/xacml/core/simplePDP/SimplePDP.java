@@ -17,10 +17,10 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
+import org.herasaf.xacml.core.api.OrderedPolicyRepository;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
-import org.herasaf.xacml.core.api.OrderedPolicyRepository;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
@@ -28,9 +28,12 @@ import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.ResponseCtxFactory;
+import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.DecisionType;
+import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -155,8 +158,35 @@ public class SimplePDP implements PDP {
 	 * >http://logback.qos.ch/manual/mdc.html</a>.<br />
 	 * See the description in the Getting Started Guide on the
 	 * HERAS<sup>AF</sup> Wiki of how to configure MDC.
+	 * 
+	 * @deprecated Use {@link #evaluate(RequestType)} instead.
 	 */
+	@Deprecated
 	public ResponseCtx evaluate(RequestCtx request) {
+		return new ResponseCtx(evaluate(request.getRequest()));
+	}
+
+	/**
+	 * {@inheritDoc} <br />
+	 * <br />
+	 * <b>Logging:</b><br />
+	 * This section is relevant for all users of the {@link SimplePDP} in a
+	 * multi-threaded environment. All logging messages during the evaluation
+	 * should be connected with a correlation ID to be able to distinguish the
+	 * different requesters. Due to the fact that this connection lays with the
+	 * requester here is a hint how this could be realized with the SLF4J
+	 * Logging Framework (<a
+	 * href="http://www.slf4j.org">http://www.slf4j.org</a>) used here if the
+	 * underlying logging framework (such as logback) supports MDC (Mapped
+	 * Diagnostic Context).<br />
+	 * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
+	 * different requesters as described here: <a
+	 * href="http://logback.qos.ch/manual/mdc.html"
+	 * >http://logback.qos.ch/manual/mdc.html</a>.<br />
+	 * See the description in the Getting Started Guide on the
+	 * HERAS<sup>AF</sup> Wiki of how to configure MDC.
+	 */
+	public ResponseType evaluate(RequestType request) {
 		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
 		logger.debug("Evaluating Request: {}", request.toString());
 
@@ -178,7 +208,7 @@ public class SimplePDP implements PDP {
 		}
 
 		DecisionType decision = rootPolicyCombiningAlgorithm
-				.evaluateEvaluatableList(request.getRequest(),
+				.evaluateEvaluatableList(request,
 						policyRepository.getEvaluatables(request),
 						evaluationContext);
 
@@ -196,12 +226,34 @@ public class SimplePDP implements PDP {
 	 *            The decision of the response.
 	 * @param evaluationContext
 	 *            The evaluation context of this evaluation.
-	 * @return
+	 * @return The created {@link ResponseCtx}.
+	 * 
+	 * @deprecated Use
+	 *             {@link #createResponse(RequestType, DecisionType, EvaluationContext)}
+	 *             instead.
 	 */
+	@Deprecated
 	protected ResponseCtx createResponse(RequestCtx request,
 			DecisionType decision, EvaluationContext evaluationContext) {
 		return ResponseCtxFactory.create(request.getRequest(), decision,
 				evaluationContext);
+	}
+
+	/**
+	 * This method uses the default HERAS-AF {@link ResponseCtxFactory}. This
+	 * method may be overriden in an extending subclass.
+	 * 
+	 * @param request
+	 *            The requests corresponding to the response to create.
+	 * @param decision
+	 *            The decision of the response.
+	 * @param evaluationContext
+	 *            The evaluation context of this evaluation.
+	 * @return The created {@link ResponseType}.
+	 */
+	protected ResponseType createResponse(RequestType request,
+			DecisionType decision, EvaluationContext evaluationContext) {
+		return ResponseMarshaller.create(request, decision, evaluationContext);
 	}
 
 	/**
@@ -214,17 +266,17 @@ public class SimplePDP implements PDP {
 	 *            The request to be checked.
 	 * @return True if the request contains multiple resources, false otherwise.
 	 */
-	private boolean containsOnlyOneResource(RequestCtx request) {
+	private boolean containsOnlyOneResource(RequestType request) {
 		// All mentioned sections in this method are related to:
 		// Multiple resource profile of XACML v2.0 (OASIS Standard, 1 February
 		// 2005).
-		if (request.getRequest().getResources().size() > 1) {
+		if (request.getResources().size() > 1) {
 			logger.error("The request must not contain more than one <Resource> elements.");
 			// See Section 2.3.
 			return false;
-		} else if (request.getRequest().getResources().size() == 1) {
-			for (AttributeType attr : request.getRequest().getResources()
-					.get(0).getAttributes()) {
+		} else if (request.getResources().size() == 1) {
+			for (AttributeType attr : request.getResources().get(0)
+					.getAttributes()) {
 				if ("urn:oasis:names:tc:xacml:2.0:resource:scope"
 						.startsWith(attr.getAttributeId())) {
 					// Is true in case the resource contains either an

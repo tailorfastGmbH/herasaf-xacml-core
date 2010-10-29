@@ -20,10 +20,8 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
-import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.RequestCtxFactory;
-import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
+import org.herasaf.xacml.core.context.RequestMarshaller;
+import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.simplePDP.InitializationException;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
@@ -94,8 +92,7 @@ public class JAXBInitializer implements Initializer {
 			throw ie;
 		}
 
-		RequestCtxFactory.setJAXBContext(requestContext);
-		RequestCtx.setJAXBContext(requestContext);
+		RequestMarshaller.setJAXBContext(requestContext);
 	}
 
 	/**
@@ -115,8 +112,7 @@ public class JAXBInitializer implements Initializer {
 			throw ie;
 		}
 
-		ResponseCtxFactory.setJAXBContext(responseContext);
-		ResponseCtx.setJAXBContext(responseContext);
+		ResponseMarshaller.setJAXBContext(responseContext);
 	}
 
 	/**
@@ -131,9 +127,7 @@ public class JAXBInitializer implements Initializer {
 		jmc.setValidateWriting(JAXB_VALIDATE_WRITING);
 
 		PolicyMarshaller.setJAXBMarshallerConfiguration(jmc);
-		ResponseCtxFactory.setJAXBMarshallerConfiguration(jmc);
-		ResponseCtx.setJAXBMarshallerConfiguration(jmc);
-		RequestCtxFactory.setJAXBMarshallerConfiguration(jmc);
-		RequestCtx.setJAXBMarshallerConfiguration(jmc);
+		ResponseMarshaller.setJAXBMarshallerConfiguration(jmc);
+		RequestMarshaller.setJAXBMarshallerConfiguration(jmc);
 	}
 }

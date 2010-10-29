@@ -60,7 +60,10 @@ import org.xml.sax.InputSource;
  * This {@link ResponseCtxFactory} does only support XACML default behavior.
  * 
  * @author Florian Huonder
+ * 
+ * @deprecated For unmarshalling use {@link ResponseMarshaller}.unmarshal(...).
  */
+@Deprecated
 public final class ResponseCtxFactory {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(ResponseCtxFactory.class);

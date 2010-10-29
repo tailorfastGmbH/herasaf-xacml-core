@@ -51,7 +51,10 @@ import org.xml.sax.ContentHandler;
  * 
  * @author Florian Huonder
  * @author René Eggenschwiler
+ * 
+ * @deprecated Use {@link RequestType} directly. For marshalling use {@link RequestMarshaller}.marshal(...).
  */
+@Deprecated
 public class RequestCtx implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);

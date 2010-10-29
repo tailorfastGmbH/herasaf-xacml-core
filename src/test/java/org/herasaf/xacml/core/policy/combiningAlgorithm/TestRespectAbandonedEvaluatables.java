@@ -26,9 +26,9 @@ import java.util.List;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
-import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.RequestCtxFactory;
-import org.herasaf.xacml.core.context.ResponseCtx;
+import org.herasaf.xacml.core.context.RequestMarshaller;
+import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
@@ -112,25 +112,25 @@ public class TestRespectAbandonedEvaluatables {
 		simplePDPConfiguration
 				.setRespectAbandonedEvaluatables(respectAbandonedEvaluatables);
 		PDP pdp = SimplePDPFactory.getSimplePDP(simplePDPConfiguration);
-		RequestCtx request = RequestCtxFactory
+		RequestType request = RequestMarshaller
 				.unmarshal(new File(
 						"src/test/resources/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"));
 		repo = (UnorderedPolicyRepository) pdp.getPolicyRepository();
 
 		repo.deploy(eval);
 
-		ResponseCtx response = pdp.evaluate(request);
+		ResponseType response = pdp.evaluate(request);
 
 		if (respectAbandonedEvaluatables) {
-			if (response.getResponse().getResults().get(0).getObligations() != null) {
-				assertEquals(response.getResponse().getResults().get(0)
+			if (response.getResults().get(0).getObligations() != null) {
+				assertEquals(response.getResults().get(0)
 						.getObligations().getObligations().get(0)
 						.getObligationId(), "expectedObligation");
 			} else {
 				fail("No obligations.");
 			}
 		} else {
-			assertTrue(response.getResponse().getResults().get(0)
+			assertTrue(response.getResults().get(0)
 					.getObligations() == null);
 		}
 	}

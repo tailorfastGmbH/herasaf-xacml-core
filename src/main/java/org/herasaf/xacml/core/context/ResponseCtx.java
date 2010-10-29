@@ -49,7 +49,10 @@ import org.xml.sax.ContentHandler;
  * implementation.
  * 
  * @author Florian Huonder
+ * 
+ * @deprecated Use {@link ResponseType} directly. For marshalling use {@link ResponseMarshaller}.marshal(...).
  */
+@Deprecated
 public class ResponseCtx implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final Logger logger = LoggerFactory

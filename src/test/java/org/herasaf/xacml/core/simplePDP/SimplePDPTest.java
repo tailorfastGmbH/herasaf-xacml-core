@@ -34,10 +34,10 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
-import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.RequestCtxFactory;
-import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
+import org.herasaf.xacml.core.context.RequestMarshaller;
+import org.herasaf.xacml.core.context.ResponseMarshaller;
+import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
@@ -96,35 +96,35 @@ public class SimplePDPTest {
 	 * @param policy
 	 *            The policy tree to deploy and test against.
 	 * @param request
-	 *            The {@link RequestCtx} that shall be evaluated.
+	 *            The {@link RequestType} that shall be evaluated.
 	 * @param expectedResponse
-	 *            The expected {@link ResponseCtx}.
+	 *            The expected {@link ResponseType}.
 	 * @throws Exception
 	 *             If an error occurs.
 	 */
 	@Test(dataProvider = "policy-request-response-combinations")
-	public void testSimplePDP(Evaluatable policy, RequestCtx request,
-			ResponseCtx expectedResponse) throws Exception {
+	public void testSimplePDP(Evaluatable policy, RequestType request,
+			ResponseType expectedResponse) throws Exception {
 		UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
 				.getPolicyRepository();
 
 		deploymentRepo.deploy(policy);
 
-		ResponseCtx response = simplePDP.evaluate(request);
+		ResponseType response = simplePDP.evaluate(request);
 
 		OutputStream responseOS = new ByteArrayOutputStream();
-		response.marshal(responseOS);
+		ResponseMarshaller.marshal(response, responseOS);
 
 		OutputStream expectedOS = new ByteArrayOutputStream();
-		expectedResponse.marshal(expectedOS);
+		ResponseMarshaller.marshal(expectedResponse, expectedOS);
 
 		XMLUnit.setIgnoreWhitespace(true);
 		XMLUnit.setIgnoreAttributeOrder(true);
 		Diff diff = new Diff(expectedOS.toString(), responseOS.toString());
 		assertTrue(diff.similar(), "The expected response was: "
-				+ expectedResponse.getResponse().getResults().get(0)
+				+ expectedResponse.getResults().get(0)
 						.getDecision() + ", but the response was: "
-				+ response.getResponse().getResults().get(0).getDecision());
+				+ response.getResults().get(0).getDecision());
 
 		deploymentRepo.undeploy(policy.getId());
 		System.out.println();
@@ -230,7 +230,7 @@ public class SimplePDPTest {
 
 		deploymentRepo.deploy(evals);
 
-		RequestCtx request = loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml");
+		RequestType request = loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml");
 
 		assertEquals(evaluationRepo.getEvaluatables(request), evals);
 
@@ -330,28 +330,28 @@ public class SimplePDPTest {
 	}
 
 	/**
-	 * Loads an {@link RequestCtx} from the class path.
+	 * Loads an {@link RequestType} from the class path.
 	 * 
 	 * @param file
 	 *            The path to the resource.
-	 * @return The created {@link RequestCtx}.
+	 * @return The created {@link RequestType}.
 	 * @throws SyntaxException
 	 */
-	private RequestCtx loadRequest(String file) throws SyntaxException {
+	private RequestType loadRequest(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
-		return RequestCtxFactory.unmarshal(is);
+		return RequestMarshaller.unmarshal(is);
 	}
 
 	/**
-	 * Loads an {@link ResponseCtx} from the class path.
+	 * Loads an {@link ResponseType} from the class path.
 	 * 
 	 * @param file
 	 *            The path to the resource.
-	 * @return The created {@link ResponseCtx}.
+	 * @return The created {@link ResponseType}.
 	 * @throws SyntaxException
 	 */
-	private ResponseCtx loadResponse(String file) throws SyntaxException {
+	private ResponseType loadResponse(String file) throws SyntaxException {
 		InputStream is = SimplePDPTest.class.getResourceAsStream(file);
-		return ResponseCtxFactory.unmarshal(is);
+		return ResponseMarshaller.unmarshal(is);
 	}
 }

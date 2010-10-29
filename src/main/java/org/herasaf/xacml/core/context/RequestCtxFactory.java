@@ -53,7 +53,10 @@ import org.xml.sax.InputSource;
  * fully relies on the underlying JAXB implementation.
  * 
  * @author Florian Huonder
+ * 
+ * @deprecated For unmarshalling use {@link RequestMarshaller}.unmarshal(...).
  */
+@Deprecated
 public final class RequestCtxFactory {
 	private static final Logger LOGGER = LoggerFactory
 			.getLogger(RequestCtxFactory.class);

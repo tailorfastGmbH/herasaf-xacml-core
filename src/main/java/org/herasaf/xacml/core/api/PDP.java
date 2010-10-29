@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.api;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.ResponseCtx;
+import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResponseType;
 
 /**
  * The PDP interface represents a core component in XACML - The Policy Decision
@@ -63,8 +65,27 @@ public interface PDP {
 	 * @param request
 	 *            The {@link RequestCtx} that shall be evaluated.
 	 * @return The {@link ResponseCtx} containing the result of the evaluation.
+	 * 
+	 * @deprecated Use {@link #evaluate(RequestType)} instead.
 	 */
+	@Deprecated
 	ResponseCtx evaluate(RequestCtx request);
+
+	/**
+	 * This method evaluates an XACML access control request. After the
+	 * evaluation the result is returned in a {@link ResponseType} object.
+	 * 
+	 * @see The chapter about funtional requirements in the <a href=
+	 *      "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
+	 *      > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
+	 *      Errata 29 June 2006</a> page 77, specifies in detail the evaluation
+	 *      process.
+	 * 
+	 * @param request
+	 *            The {@link RequestType} that shall be evaluated.
+	 * @return The {@link ResponseType} containing the result of the evaluation.
+	 */
+	ResponseType evaluate(RequestType request);
 
 	/**
 	 * Returns the {@link PolicyRetrievalPoint} that this PDP uses for
@@ -72,8 +93,7 @@ public interface PDP {
 	 * If the used implementation is an OrderedPolicyRepository a cast must be
 	 * done manually.
 	 * 
-	 * @return The {@link PolicyRetrievalPoint} contained in this
-	 *         {@link PDP}.
+	 * @return The {@link PolicyRetrievalPoint} contained in this {@link PDP}.
 	 */
 	PolicyRetrievalPoint getPolicyRepository();
 

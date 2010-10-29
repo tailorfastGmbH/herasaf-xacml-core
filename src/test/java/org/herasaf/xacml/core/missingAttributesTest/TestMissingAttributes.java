@@ -10,10 +10,10 @@ import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
-import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.RequestCtxFactory;
-import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
+import org.herasaf.xacml.core.context.RequestMarshaller;
+import org.herasaf.xacml.core.context.ResponseMarshaller;
+import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
@@ -40,10 +40,10 @@ public class TestMissingAttributes {
 						PolicyMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Policy01.xml")),
-						RequestCtxFactory
+						RequestMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Request01.xml")),
-						ResponseCtxFactory
+						ResponseMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Response01.xml")) },
 				{
@@ -51,28 +51,28 @@ public class TestMissingAttributes {
 						PolicyMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Policy02.xml")),
-						RequestCtxFactory
+						RequestMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Request02.xml")),
-						ResponseCtxFactory
+						ResponseMarshaller
 								.unmarshal(new File(
 										"src/test/resources/missingAttributes/Response02.xml")) }, };
 	}
 
 	@Test(dataProvider = "TestData")
-	public void testit(String id, Evaluatable eval, RequestCtx request,
-			ResponseCtx expectedResponse) throws Exception {
+	public void testit(String id, Evaluatable eval, RequestType request,
+			ResponseType expectedResponse) throws Exception {
 		this.eval = eval;
 		repo = (UnorderedPolicyRepository) pdp.getPolicyRepository();
 		repo.deploy(eval);
 
-		ResponseCtx response = pdp.evaluate(request);
+		ResponseType response = pdp.evaluate(request);
 
 		OutputStream actualResponseOS = new ByteArrayOutputStream();
-		response.marshal(actualResponseOS);
+		ResponseMarshaller.marshal(response, actualResponseOS);
 
 		OutputStream expectedResponseOS = new ByteArrayOutputStream();
-		expectedResponse.marshal(expectedResponseOS);
+		ResponseMarshaller.marshal(expectedResponse, expectedResponseOS);
 
 		XMLUnit.setIgnoreWhitespace(true);
 
