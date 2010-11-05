@@ -57,6 +57,7 @@ import org.xml.sax.InputSource;
  * implementation.
  * 
  * @author Florian Huonder
+ * @author René Eggenschwiler
  */
 public class RequestMarshaller {
 	private static final Logger LOGGER = LoggerFactory.getLogger(RequestMarshaller.class);
@@ -173,7 +174,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, ContentHandler ch) throws WritingException {
+	public static void marshal(RequestType request, ContentHandler ch) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					ch);
@@ -195,7 +196,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, File file) throws WritingException {
+	public static void marshal(RequestType request, File file) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					file);
@@ -223,7 +224,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, Result result) throws WritingException {
+	public static void marshal(RequestType request, Result result) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					result);
@@ -245,7 +246,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, OutputStream out) throws WritingException {
+	public static void marshal(RequestType request, OutputStream out) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					out);
@@ -267,7 +268,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, Writer writer) throws WritingException {
+	public static void marshal(RequestType request, Writer writer) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					writer);
@@ -289,7 +290,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, Node node) throws WritingException {
+	public static void marshal(RequestType request, Node node) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					node);
@@ -311,7 +312,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, XMLStreamWriter xmlStreamWriter)
+	public static void marshal(RequestType request, XMLStreamWriter xmlStreamWriter)
 			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
@@ -334,7 +335,7 @@ public class RequestMarshaller {
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public void marshal(RequestType request, XMLEventWriter xmlEventWriter) throws WritingException {
+	public static void marshal(RequestType request, XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					xmlEventWriter);

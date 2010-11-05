@@ -18,6 +18,7 @@
 package org.herasaf.xacml.core.utils;
 
 import java.io.File;
+import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -40,11 +41,16 @@ import org.xml.sax.SAXException;
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
+ * @author René Eggenschwiler
  */
 public class JAXBMarshallerConfiguration {
+	private final Logger logger = LoggerFactory
+			.getLogger(JAXBMarshallerConfiguration.class);
+
 	private static final String CLASSPATH_PREFIX = "classpath:";
 	private static final String FILE_PREFIX = "file:";
 	private static final String URL_PREFIX = "url:";
+
 	/** Tells if the output should be formatted. */
 	private boolean formattedOutput;
 	/** Tells if the output should be fragmented. */
@@ -53,14 +59,24 @@ public class JAXBMarshallerConfiguration {
 	private boolean writeSchemaLocation;
 	/** The list with the schema locations. */
 	private List<String> schemaLocation;
+	/** The given schemaPath for creating the schema used at validation. */
+	private String schemaPath;
 	/** The used Schema. */
 	private Schema schema;
 	/** Tells if the input should be validated before parsing. */
 	private boolean validateParsing;
 	/** Tells if the output should be validated before writing. */
 	private boolean validateWriting;
+
 	/** The used validation event handler (null if default should be used). */
-	ValidationEventHandler validationEventHandler;
+	private ValidationEventHandler validationEventHandler;
+
+	/**
+	 * Default Constructor
+	 */
+	public JAXBMarshallerConfiguration() {
+		schemaLocation = new ArrayList<String>();
+	}
 
 	/**
 	 * Returns the {@link ValidationEventHandler} to be used. Null if the
@@ -82,10 +98,6 @@ public class JAXBMarshallerConfiguration {
 			ValidationEventHandler validationEventHandler) {
 		this.validationEventHandler = validationEventHandler;
 	}
-
-	/** Class logger. */
-	private final Logger logger = LoggerFactory
-			.getLogger(JAXBMarshallerConfiguration.class);
 
 	/**
 	 * Returns if the output should be formatted.
@@ -154,6 +166,8 @@ public class JAXBMarshallerConfiguration {
 	 */
 	public void setSchemaByPath(String schemaPath) throws SAXException,
 			MalformedURLException {
+		this.schemaPath = schemaPath;
+
 		SchemaFactory sf = SchemaFactory
 				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 		String schema = schemaPath.trim();
@@ -170,21 +184,24 @@ public class JAXBMarshallerConfiguration {
 		} else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0,
 				CLASSPATH_PREFIX.length())) { // if
 			// the schemaPath has the classpath: prefix
-			URL url = getClass().getClassLoader().getResource(
-					leadingSlash(schema.substring(CLASSPATH_PREFIX.length())));
-			if (url == null) {
+			InputStream schemaInput = JAXBMarshallerConfiguration.class
+					.getResourceAsStream(leadingSlash(schema
+							.substring(CLASSPATH_PREFIX.length())));
+			if (schemaInput == null) {
 				throw new IllegalArgumentException(schema);
 			}
-			this.schema = createSchema(sf,
-					new StreamSource(url.toExternalForm()));
+			this.schema = createSchema(sf, new StreamSource(schemaInput));
 		} else { // if no prefix is provided, the default is classpath:
-			URL url = getClass().getClassLoader().getResource(
+			logger.warn(
+					"No prefix (file: || url: || classpath:) given for schema for JAXB validation. Falling back to classpath:{}",
 					leadingSlash(schema));
-			if (url == null) {
+
+			InputStream schemaInput = JAXBMarshallerConfiguration.class
+					.getResourceAsStream(leadingSlash(schema));
+			if (schemaInput == null) {
 				throw new IllegalArgumentException(schema);
 			}
-			this.schema = createSchema(sf,
-					new StreamSource(url.toExternalForm()));
+			this.schema = createSchema(sf, new StreamSource(schemaInput));
 		}
 	}
 
@@ -310,5 +327,36 @@ public class JAXBMarshallerConfiguration {
 	 */
 	public void setWriteSchemaLocation(boolean writeSchemaLocation) {
 		this.writeSchemaLocation = writeSchemaLocation;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("{");
+		builder.append("formattedOutput = ");
+		builder.append(isFormattedOutput());
+		builder.append(", ");
+		builder.append("fragment = ");
+		builder.append(isFormattedOutput());
+		builder.append(", ");
+		builder.append("validateParsing = ");
+		builder.append(isValidateParsing());
+		builder.append(", ");
+		builder.append("validateWriting = ");
+		builder.append(isValidateWriting());
+		builder.append(", ");
+		builder.append("schema = ");
+		builder.append(schemaPath);
+		builder.append(", ");
+		builder.append("writeSchemaLocation = ");
+		builder.append(isWriteSchemaLocation());
+		builder.append(", ");
+		builder.append("schemaLocation = ");
+		builder.append(getSchemaLocationAsString());
+		builder.append("}");
+		return builder.toString();
 	}
 }

@@ -107,7 +107,7 @@
 		<xs:sequence>
 			<xs:element ref="xacml:Description" minOccurs="0"/>
 			<xs:element ref="xacml:PolicyDefaults" minOccurs="0"/>
-			<!--<xs:element ref="xacml:CombinerParameters" minOccurs="0"/>-->
+			<xs:element ref="xacml:CombinerParameters" minOccurs="0"/>
 			<xs:element ref="xacml:Target"/>
 			<xs:choice maxOccurs="unbounded">
 				<xs:element ref="xacml:CombinerParameters" minOccurs="0"/>
@@ -288,27 +288,10 @@
 	</xs:complexType>
 	<!-- -->
 	<xs:element name="ResourceAttributeDesignator" type="xacml:AttributeDesignatorType" substitutionGroup="xacml:Expression"/>
-	<xs:complexType name="ResourceAttributeDesignatorType">
-		<xs:complexContent>
-			<xs:extension base="xacml:AttributeDesignatorType" />
-		</xs:complexContent>
-	</xs:complexType>
-	<!--  -->
 	<xs:element name="ActionAttributeDesignator" type="xacml:AttributeDesignatorType" substitutionGroup="xacml:Expression"/>
-	<xs:complexType name="ActionAttributeDesignatorType">
-		<xs:complexContent>
-			<xs:extension base="xacml:AttributeDesignatorType" />
-		</xs:complexContent>
-	</xs:complexType>
-	<!--  -->
 	<xs:element name="EnvironmentAttributeDesignator" type="xacml:AttributeDesignatorType" substitutionGroup="xacml:Expression"/>
-	<xs:complexType name="EnvironmentAttributeDesignatorType">
-		<xs:complexContent>
-			<xs:extension base="xacml:AttributeDesignatorType" />
-		</xs:complexContent>
-	</xs:complexType>
 	<!-- -->
-	<xs:complexType name="AttributeDesignatorType" abstract="true">
+	<xs:complexType name="AttributeDesignatorType">
 		<xs:complexContent>
 			<xs:extension base="xacml:ExpressionType">
 				<xs:attribute name="AttributeId" type="xs:anyURI" use="required"/>

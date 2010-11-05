@@ -45,7 +45,6 @@ import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.ResourceAttributeDesignatorType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
-import org.relaxng.datatype.Datatype;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -54,6 +53,7 @@ import org.testng.annotations.Test;
  * Tests the {@link ApplyType}.
  * 
  * @author Florian Huonder
+ * @author René Eggenschwiler
  */
 public class TestApplyType {
 	ObjectFactory factory;
