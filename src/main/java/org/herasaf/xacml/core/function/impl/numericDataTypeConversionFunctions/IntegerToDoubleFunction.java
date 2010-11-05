@@ -51,11 +51,13 @@ public class IntegerToDoubleFunction extends AbstractFunction {
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {
-				throw new FunctionProcessingException("Invalid number of parameters");
+				throw new FunctionProcessingException(
+						"Invalid number of parameters");
 			}
 			return Double.valueOf((((BigInteger) args[0]).longValue()));
 		} catch (ClassCastException e) {
-			throw new FunctionProcessingException("The arguments were of the wrong datatype.");
+			throw new FunctionProcessingException(
+					"The arguments were of the wrong datatype.", e);
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {

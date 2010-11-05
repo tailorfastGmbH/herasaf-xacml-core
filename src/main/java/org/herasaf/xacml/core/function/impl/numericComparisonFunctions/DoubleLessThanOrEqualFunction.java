@@ -59,7 +59,7 @@ public class DoubleLessThanOrEqualFunction extends AbstractFunction {
 			return false;
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {

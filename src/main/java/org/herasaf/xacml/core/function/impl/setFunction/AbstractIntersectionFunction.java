@@ -67,7 +67,7 @@ public abstract class AbstractIntersectionFunction<T> extends AbstractFunction {
 			return values;
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {

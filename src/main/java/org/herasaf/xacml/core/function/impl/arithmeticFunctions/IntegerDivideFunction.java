@@ -59,7 +59,7 @@ public class IntegerDivideFunction extends AbstractFunction {
 			return ((BigInteger) args[0]).divide((BigInteger) args[1]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

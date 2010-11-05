@@ -61,7 +61,7 @@ public class RFC822NameMatchFunction extends AbstractFunction {
 			return ((RFC822Name) args[1]).match((String) args[0]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {

@@ -36,7 +36,7 @@ public class HexBinaryEqualFunction extends AbstractFunction {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:hexBinary-equal";
-	
+
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -54,7 +54,7 @@ public class HexBinaryEqualFunction extends AbstractFunction {
 			return ((HexBinary) args[0]).equals(args[1]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

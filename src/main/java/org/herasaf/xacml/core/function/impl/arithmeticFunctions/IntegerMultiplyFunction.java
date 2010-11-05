@@ -28,13 +28,13 @@ import org.herasaf.xacml.core.function.FunctionProcessingException;
  * urn:oasis:names:tc:xacml:1.0:function:integer-multiply function.
  * </p>
  * <p>
- * See: Apendix A.3 of the <a
- * href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * See: Apendix A.3 of the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
  * 2006</a> page 108, for further information.
  * </p>
- *
- * @author Stefan Oberholzer 
+ * 
+ * @author Stefan Oberholzer
  * @version 1.0
  */
 public class IntegerMultiplyFunction extends AbstractFunction {
@@ -58,7 +58,7 @@ public class IntegerMultiplyFunction extends AbstractFunction {
 			return ((BigInteger) args[0]).multiply((BigInteger) args[1]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

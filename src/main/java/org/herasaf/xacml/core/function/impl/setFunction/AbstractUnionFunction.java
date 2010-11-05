@@ -59,7 +59,7 @@ public abstract class AbstractUnionFunction<T> extends AbstractFunction {
 			return new ArrayList<T>(arg0);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (FunctionProcessingException e) {
 			throw e;
 		} catch (Exception e) {

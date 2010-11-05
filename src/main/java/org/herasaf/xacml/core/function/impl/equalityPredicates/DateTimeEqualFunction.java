@@ -53,7 +53,7 @@ public class DateTimeEqualFunction extends AbstractFunction {
 			return ((DateTime) args[0]).equals(args[1]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

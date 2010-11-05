@@ -58,7 +58,7 @@ public class IntegerAbsFunction extends AbstractFunction {
 			return ((BigInteger) args[0]).abs();
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

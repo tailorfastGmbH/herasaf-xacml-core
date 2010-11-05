@@ -146,7 +146,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 			resourceURLs = cl.getResources(searchContext);
 		} catch (IOException e1) {
 			InitializationException ie = new InitializationException(
-					"Unable to get resources from classpath.");
+					"Unable to get resources from classpath.", e1);
 			LOGGER.error(ie.getMessage());
 			throw ie;
 		}
@@ -405,7 +405,7 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				// Must not occur. This would mean an illegal state.
 				InitializationException ie = new InitializationException(
 						"Illegal state. Cannot load class " + name
-								+ " from JAR.");
+								+ " from JAR.", e);
 				LOGGER.error(ie.getMessage(), e);
 				throw ie;
 			}

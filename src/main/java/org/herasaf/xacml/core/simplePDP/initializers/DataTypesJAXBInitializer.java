@@ -52,7 +52,7 @@ public class DataTypesJAXBInitializer extends
 		} catch (ClassNotFoundException e) {
 			// Must not occur. This would mean an illegal state.
 			InitializationException ie = new InitializationException(
-					"Unable to load the class " + CLASS_TYPE_NAME + ".");
+					"Unable to load the class " + CLASS_TYPE_NAME + ".", e);
 			logger.error(ie.getMessage(), e);
 			throw ie;
 		}

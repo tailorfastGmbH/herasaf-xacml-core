@@ -56,7 +56,7 @@ public class DoubleAbsFunction extends AbstractFunction {
 			return Math.abs((Double) args[0]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}

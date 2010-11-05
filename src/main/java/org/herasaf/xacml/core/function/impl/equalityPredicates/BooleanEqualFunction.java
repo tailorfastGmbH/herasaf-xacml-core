@@ -36,7 +36,7 @@ public class BooleanEqualFunction extends AbstractFunction {
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:boolean-equal";
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 
@@ -52,7 +52,7 @@ public class BooleanEqualFunction extends AbstractFunction {
 			return ((Boolean) args[0]).equals(args[1]);
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(
-					"The arguments were of the wrong datatype.");
+					"The arguments were of the wrong datatype.", e);
 		} catch (Exception e) {
 			throw new FunctionProcessingException(e);
 		}
