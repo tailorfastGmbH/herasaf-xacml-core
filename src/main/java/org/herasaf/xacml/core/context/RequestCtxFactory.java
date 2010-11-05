@@ -33,12 +33,7 @@ import javax.xml.transform.Source;
 
 import org.herasaf.xacml.core.NotInitializedException;
 import org.herasaf.xacml.core.SyntaxException;
-import org.herasaf.xacml.core.context.impl.ObjectFactory;
 import org.herasaf.xacml.core.context.impl.RequestType;
-import org.herasaf.xacml.core.context.transformable.ActionTransformable;
-import org.herasaf.xacml.core.context.transformable.EnvironmentTransformable;
-import org.herasaf.xacml.core.context.transformable.ResourceTransformable;
-import org.herasaf.xacml.core.context.transformable.SubjectTransformable;
 import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
@@ -62,14 +57,6 @@ public final class RequestCtxFactory {
 			.getLogger(RequestCtxFactory.class);
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;
-	private static final ObjectFactory OBJECT_FACTORY;
-
-	/**
-	 * Initializes the object factory.
-	 */
-	static {
-		OBJECT_FACTORY = new ObjectFactory();
-	}
 
 	public static void setJAXBContext(JAXBContext policyContext) {
 		CONTEXT = policyContext;
@@ -88,34 +75,6 @@ public final class RequestCtxFactory {
 	}
 
 	/**
-	 * To simply create a {@link RequestCtx} without having the request
-	 * attributes in any kind of XML format (file, input stream). This method is
-	 * intended to be used by a PEP to simply create {@link RequestCtx}s that
-	 * then can be evaluated.
-	 * 
-	 * @param subjectTransformable
-	 *            Contains the subject attributes.
-	 * @param resourceTransformable
-	 *            Contains the resource attributes.
-	 * @param actionTransformable
-	 *            Contains the action attributes.
-	 * @param environmentTransformable
-	 *            Contains the environment attributes
-	 * @return The created {@link RequestCtx}.
-	 */
-	public static RequestCtx create(SubjectTransformable subjectTransformable,
-			ResourceTransformable resourceTransformable,
-			ActionTransformable actionTransformable,
-			EnvironmentTransformable environmentTransformable) {
-		RequestType req = OBJECT_FACTORY.createRequestType();
-		req.getSubjects().addAll(subjectTransformable.transform());
-		req.getResources().addAll(resourceTransformable.transform());
-		req.setAction(actionTransformable.transform());
-		req.setEnvironment(environmentTransformable.transform());
-		return new RequestCtx(req);
-	}
-
-	/**
 	 * This method creates a new JAXB unmarshaller. For each request a new
 	 * unmarshaller is created due to the fact that JAXB is not thread-safe.
 	 * 
@@ -125,13 +84,13 @@ public final class RequestCtxFactory {
 	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
-		
-		if(CONTEXT == null || CONFIGURATION == null) {
+
+		if (CONTEXT == null || CONFIGURATION == null) {
 			LOGGER.error("JAXB context and/or configuration not initialized.");
 			throw new NotInitializedException(
-					"JAXB context and/or configuration not initialized.");			
+					"JAXB context and/or configuration not initialized.");
 		}
-		
+
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
 
 		if (CONFIGURATION.isValidateParsing()) {
