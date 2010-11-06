@@ -51,6 +51,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  *       &lt;sequence&gt;
  *         &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}Description&quot; minOccurs=&quot;0&quot;/&gt;
  *         &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}PolicyDefaults&quot; minOccurs=&quot;0&quot;/&gt;
+ *         &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}CombinerParameters&quot; minOccurs=&quot;0&quot;/&gt;
  *         &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}Target&quot;/&gt;
  *         &lt;choice maxOccurs=&quot;unbounded&quot;&gt;
  *           &lt;element ref=&quot;{urn:oasis:names:tc:xacml:2.0:policy:schema:os}CombinerParameters&quot; minOccurs=&quot;0&quot;/&gt;
@@ -67,7 +68,11 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  *   &lt;/complexContent&gt;
  * &lt;/complexType&gt;
  * </pre>
- * 
+ * <b>Note:</b><br />
+ * The CombinerParameters element before the Target element is mapped to the additionalInformation list (choice block).
+ * This means alle CombinerParameters, does not matter if before or from the choice, are mapped to the choice block.
+ * This is due to a lack of JAXB to handle this correctly.
+ * <br /><br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
@@ -75,6 +80,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * 
  * @version 1.0
  * @author <i>generated</i>
+ * @author Florian Huonder
  */
 @XmlRootElement
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
