@@ -27,62 +27,58 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a function. The default functions are defined in the <a
- * href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix A.3, page 105. <br>
+ * Converts an URN to a function. The default functions are defined in the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access Control Markup
+ * Langugage (XACML) 2.0, Errata 29 June 2006</a> appendix A.3, page 117. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public class FunctionsJAXBTypeAdapter extends XmlAdapter<String, Function> {
-	private final Logger logger = LoggerFactory.getLogger(FunctionsJAXBTypeAdapter.class);
-	private static Map<String, Function> functions;
+    private final Logger logger = LoggerFactory.getLogger(FunctionsJAXBTypeAdapter.class);
+    private static Map<String, Function> functions;
 
-	/**
-	 * This method sets the {@link Map} containing the mapping between functions
-	 * and their ID's into the converter.
-	 * 
-	 * @param functions
-	 *            The {@link Map} containing the mapping between ID's and
-	 *            functions
-	 */
-	public static void setFunctions(final Map<String, Function> functions) {
-		FunctionsJAXBTypeAdapter.functions = functions;
-	}
+    /**
+     * This method sets the {@link Map} containing the mapping between functions and their ID's into the converter.
+     * 
+     * @param functions
+     *            The {@link Map} containing the mapping between ID's and functions
+     */
+    public static void setFunctions(final Map<String, Function> functions) {
+        FunctionsJAXBTypeAdapter.functions = functions;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String marshal(final Function function) {
-		String functionString;
-		try {
-			functionString = function.toString();
-		} catch (NullPointerException e) {
-			logger.error("Argument function must not be null: ", e);
-			throw new IllegalArgumentException(e);
-		}
-		return functionString;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String marshal(final Function function) {
+        String functionString;
+        try {
+            functionString = function.toString();
+        } catch (NullPointerException e) {
+            logger.error("Argument function must not be null: ", e);
+            throw new IllegalArgumentException(e);
+        }
+        return functionString;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public Function unmarshal(final String functionId) {
-		Function func;
-		try {
-			func = functions.get(functionId);
-		} catch (NullPointerException e) {
-			logger.error("FunctionsJAXBTypeAdapter not properly initialized.");
-			throw new NotInitializedException(e);
-		}
-		if (func != null) {
-			return func;
-		}
-		throw new IllegalArgumentException("Function " + functionId + " unknown.");
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public Function unmarshal(final String functionId) {
+        Function func;
+        try {
+            func = functions.get(functionId);
+        } catch (NullPointerException e) {
+            logger.error("FunctionsJAXBTypeAdapter not properly initialized.");
+            throw new NotInitializedException(e);
+        }
+        if (func != null) {
+            return func;
+        }
+        throw new IllegalArgumentException("Function " + functionId + " unknown.");
+    }
 }

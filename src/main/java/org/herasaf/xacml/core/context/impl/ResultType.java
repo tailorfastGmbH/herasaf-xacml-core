@@ -38,8 +38,7 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
  * Java class for ResultType complex type.
  * 
  * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="ResultType">
@@ -56,10 +55,8 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
  * &lt;/complexType>
  * </pre>
  * 
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 72, for further information.
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 77 for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
@@ -67,98 +64,98 @@ import org.herasaf.xacml.core.policy.impl.ObligationsType;
 @XmlRootElement
 @XmlType(name = "ResultType", propOrder = { "decision", "status", "obligations" })
 public class ResultType implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@XmlElement(name = "Decision", required = true)
-	private DecisionType decision;
-	@XmlElement(name = "Status")
-	private StatusType status;
-	@XmlElement(name = "Obligations", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os")
-	private ObligationsType obligations;
-	@XmlAttribute(name = "ResourceId")
-	private String resourceId;
+    private static final long serialVersionUID = 1L;
+    @XmlElement(name = "Decision", required = true)
+    private DecisionType decision;
+    @XmlElement(name = "Status")
+    private StatusType status;
+    @XmlElement(name = "Obligations", namespace = "urn:oasis:names:tc:xacml:2.0:policy:schema:os")
+    private ObligationsType obligations;
+    @XmlAttribute(name = "ResourceId")
+    private String resourceId;
 
-	/**
-	 * Gets the value of the decision property.
-	 * 
-	 * @return possible object is {@link DecisionType }
-	 * 
-	 */
-	public DecisionType getDecision() {
-		return decision;
-	}
+    /**
+     * Gets the value of the decision property.
+     * 
+     * @return possible object is {@link DecisionType }
+     * 
+     */
+    public DecisionType getDecision() {
+        return decision;
+    }
 
-	/**
-	 * Sets the value of the decision property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link DecisionType }
-	 * 
-	 */
-	public void setDecision(DecisionType value) {
-		this.decision = value;
-	}
+    /**
+     * Sets the value of the decision property.
+     * 
+     * @param value
+     *            allowed object is {@link DecisionType }
+     * 
+     */
+    public void setDecision(DecisionType value) {
+        this.decision = value;
+    }
 
-	/**
-	 * Gets the value of the status property.
-	 * 
-	 * @return possible object is {@link StatusType }
-	 * 
-	 */
-	public StatusType getStatus() {
-		return status;
-	}
+    /**
+     * Gets the value of the status property.
+     * 
+     * @return possible object is {@link StatusType }
+     * 
+     */
+    public StatusType getStatus() {
+        return status;
+    }
 
-	/**
-	 * Sets the value of the status property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link StatusType }
-	 * 
-	 */
-	public void setStatus(StatusType value) {
-		this.status = value;
-	}
+    /**
+     * Sets the value of the status property.
+     * 
+     * @param value
+     *            allowed object is {@link StatusType }
+     * 
+     */
+    public void setStatus(StatusType value) {
+        this.status = value;
+    }
 
-	/**
-	 * Gets the value of the obligations property.
-	 * 
-	 * @return possible object is {@link ObligationsType }
-	 * 
-	 */
-	public ObligationsType getObligations() {
-		return obligations;
-	}
+    /**
+     * Gets the value of the obligations property.
+     * 
+     * @return possible object is {@link ObligationsType }
+     * 
+     */
+    public ObligationsType getObligations() {
+        return obligations;
+    }
 
-	/**
-	 * Sets the value of the obligations property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link ObligationsType }
-	 * 
-	 */
-	public void setObligations(ObligationsType value) {
-		this.obligations = value;
-	}
+    /**
+     * Sets the value of the obligations property.
+     * 
+     * @param value
+     *            allowed object is {@link ObligationsType }
+     * 
+     */
+    public void setObligations(ObligationsType value) {
+        this.obligations = value;
+    }
 
-	/**
-	 * Gets the value of the resourceId property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getResourceId() {
-		return resourceId;
-	}
+    /**
+     * Gets the value of the resourceId property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public String getResourceId() {
+        return resourceId;
+    }
 
-	/**
-	 * Sets the value of the resourceId property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setResourceId(String value) {
-		this.resourceId = value;
-	}
+    /**
+     * Sets the value of the resourceId property.
+     * 
+     * @param value
+     *            allowed object is {@link String }
+     * 
+     */
+    public void setResourceId(String value) {
+        this.resourceId = value;
+    }
 
 }

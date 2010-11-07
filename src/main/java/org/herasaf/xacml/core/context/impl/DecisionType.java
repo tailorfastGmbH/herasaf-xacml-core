@@ -34,8 +34,7 @@ import javax.xml.bind.annotation.XmlType;
  * Java class for DecisionType.
  * 
  * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * The following schema fragment specifies the expected content contained within this class.
  * <p>
  * 
  * <pre>
@@ -49,10 +48,8 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/simpleType>
  * </pre>
  * 
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 728, for further information.
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> pages 82-83 for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
@@ -62,48 +59,47 @@ import javax.xml.bind.annotation.XmlType;
 @XmlEnum
 public enum DecisionType {
 
-	@XmlEnumValue("Permit")
-	PERMIT("Permit"), @XmlEnumValue("Deny")
-	DENY("Deny"), @XmlEnumValue("Indeterminate")
-	INDETERMINATE("Indeterminate"), @XmlEnumValue("NotApplicable")
-	NOT_APPLICABLE("NotApplicable");
-	private final String value;
+    @XmlEnumValue("Permit")
+    PERMIT("Permit"), @XmlEnumValue("Deny")
+    DENY("Deny"), @XmlEnumValue("Indeterminate")
+    INDETERMINATE("Indeterminate"), @XmlEnumValue("NotApplicable")
+    NOT_APPLICABLE("NotApplicable");
+    private final String value;
 
-	/**
-	 * Sole constructor. Programmers cannot invoke this constructor. It is for
-	 * use by code emitted by the compiler in response to enum type
-	 * declarations.
-	 * 
-	 * @param v
-	 *            The value to set.
-	 */
-	DecisionType(String v) {
-		value = v;
-	}
+    /**
+     * Sole constructor. Programmers cannot invoke this constructor. It is for use by code emitted by the compiler in
+     * response to enum type declarations.
+     * 
+     * @param v
+     *            The value to set.
+     */
+    DecisionType(String v) {
+        value = v;
+    }
 
-	/**
-	 * Returns the current value.
-	 * 
-	 * @return The current {@link DecisionType}.
-	 */
-	public String value() {
-		return value;
-	}
+    /**
+     * Returns the current value.
+     * 
+     * @return The current {@link DecisionType}.
+     */
+    public String value() {
+        return value;
+    }
 
-	/**
-	 * Returns the enum-type from the given {@link String} value.
-	 * 
-	 * @param v
-	 *            The {@link String} value.
-	 * @return The {@link DecisionType} matching the {@link String} value.
-	 */
-	public static DecisionType fromValue(String v) {
-		for (int i = 0; i < DecisionType.values().length; i++) {
-			DecisionType c = DecisionType.values()[i];
-			if (c.value.equals(v)) {
-				return c;
-			}
-		}
-		throw new IllegalArgumentException(v);
-	}
+    /**
+     * Returns the enum-type from the given {@link String} value.
+     * 
+     * @param v
+     *            The {@link String} value.
+     * @return The {@link DecisionType} matching the {@link String} value.
+     */
+    public static DecisionType fromValue(String v) {
+        for (int i = 0; i < DecisionType.values().length; i++) {
+            DecisionType c = DecisionType.values()[i];
+            if (c.value.equals(v)) {
+                return c;
+            }
+        }
+        throw new IllegalArgumentException(v);
+    }
 }

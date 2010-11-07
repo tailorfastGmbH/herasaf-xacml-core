@@ -34,114 +34,110 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The implementation of the default XACML 2.0 <i>policy first applicable
- * algorithm</i>.<br />
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 137-139, for further information.
+ * The implementation of the default XACML 2.0 <i>policy first applicable algorithm</i>.<br />
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 151-152, for further information.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public class PolicyFirstApplicableAlgorithm extends PolicyOrderedCombiningAlgorithm {
-	
+
     /** XACMLcombining algorithm ID. */
-	public static final String ID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable";
-	
+    public static final String ID = "urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:first-applicable";
+
     private static final long serialVersionUID = 1L;
-    
-	private final Logger logger = LoggerFactory.getLogger(PolicyFirstApplicableAlgorithm.class);
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
-			final EvaluationContext evaluationContext) {
+    private final Logger logger = LoggerFactory.getLogger(PolicyFirstApplicableAlgorithm.class);
 
-		if (possiblePolicies == null) {
-			// It is an illegal state if the list containing the policies is
-			// null.
-			logger.error("The possiblePolicies list was null. This is an illegal state.");
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-			return DecisionType.INDETERMINATE;
-		}
+    /**
+     * {@inheritDoc}
+     */
+    public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
+            final EvaluationContext evaluationContext) {
 
-		List<ObligationType> obligations = new ArrayList<ObligationType>();
+        if (possiblePolicies == null) {
+            // It is an illegal state if the list containing the policies is
+            // null.
+            logger.error("The possiblePolicies list was null. This is an illegal state.");
+            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+            return DecisionType.INDETERMINATE;
+        }
 
-		/*
-		 * If the list of evaluatables contains no values, the for-loop is
-		 * skipped and a NOT_APPLICABLE is returned.
-		 */
-		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+        List<ObligationType> obligations = new ArrayList<ObligationType>();
 
-			if (eval == null) {
-				// It is an illegal state if the list contains any
-				// null.
-				logger.error("The list of possible policies must not contain any null values.");
-				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-				return DecisionType.INDETERMINATE;
-			}
+        /*
+         * If the list of evaluatables contains no values, the for-loop is skipped and a NOT_APPLICABLE is returned.
+         */
+        for (int i = 0; i < possiblePolicies.size(); i++) {
+            Evaluatable eval = possiblePolicies.get(i);
 
-			DecisionType decision;
-			// Resets the status to go sure, that the returned statuscode is
-			// the one of the evaluation.
-			evaluationContext.resetStatus();
+            if (eval == null) {
+                // It is an illegal state if the list contains any
+                // null.
+                logger.error("The list of possible policies must not contain any null values.");
+                evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+                return DecisionType.INDETERMINATE;
+            }
 
-			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger.debug("Starting evaluation of: {}", eval.getId().getId());
-			}
+            DecisionType decision;
+            // Resets the status to go sure, that the returned statuscode is
+            // the one of the evaluation.
+            evaluationContext.resetStatus();
 
-			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
-			if (combiningAlg == null) {
-				logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-				evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-				decision = DecisionType.INDETERMINATE;
-			} else {
-				decision = combiningAlg.evaluate(request, eval, evaluationContext);
-			}
+            if (logger.isDebugEnabled()) {
+                MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+                logger.debug("Starting evaluation of: {}", eval.getId().getId());
+            }
 
-			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
-				MDC.remove(MDC_EVALUATABLE_ID);
-			}
+            CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
+            if (combiningAlg == null) {
+                logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
+                evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+                decision = DecisionType.INDETERMINATE;
+            } else {
+                decision = combiningAlg.evaluate(request, eval, evaluationContext);
+            }
 
-			if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
-				obligations.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
-				obligations.addAll(evaluationContext.getObligations().getObligations());
-			}
-			evaluationContext.clearObligations();
-			switch (decision) {
-			case PERMIT:
-				/*
-				 * If the result is permit, the statuscode is always ok.
-				 */
-				evaluationContext.resetStatus();
-				evaluationContext.addObligations(obligations, EffectType.PERMIT);
-				return DecisionType.PERMIT;
-			case DENY:
-				evaluationContext.addObligations(obligations, EffectType.DENY);
-				return decision;
-			case INDETERMINATE:
-				return decision;
-			}
-		}
-		/*
-		 * If no evaluation leaded to a result, the status has to be ok.
-		 */
-		evaluationContext.resetStatus();
-		return DecisionType.NOT_APPLICABLE;
-	}
+            if (logger.isDebugEnabled()) {
+                MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+                logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
+                MDC.remove(MDC_EVALUATABLE_ID);
+            }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String getCombiningAlgorithmId() {
-		return ID;
-	}
+            if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
+                obligations.addAll(eval.getContainedObligations(EffectType.fromValue(decision.toString())));
+                obligations.addAll(evaluationContext.getObligations().getObligations());
+            }
+            evaluationContext.clearObligations();
+            switch (decision) {
+            case PERMIT:
+                /*
+                 * If the result is permit, the statuscode is always ok.
+                 */
+                evaluationContext.resetStatus();
+                evaluationContext.addObligations(obligations, EffectType.PERMIT);
+                return DecisionType.PERMIT;
+            case DENY:
+                evaluationContext.addObligations(obligations, EffectType.DENY);
+                return decision;
+            case INDETERMINATE:
+                return decision;
+            }
+        }
+        /*
+         * If no evaluation leaded to a result, the status has to be ok.
+         */
+        evaluationContext.resetStatus();
+        return DecisionType.NOT_APPLICABLE;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String getCombiningAlgorithmId() {
+        return ID;
+    }
 }

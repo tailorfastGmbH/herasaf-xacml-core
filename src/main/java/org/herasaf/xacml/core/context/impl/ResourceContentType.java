@@ -42,8 +42,7 @@ import javax.xml.namespace.QName;
  * Java class for ResourceContentType complex type.
  * 
  * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="ResourceContentType">
@@ -57,10 +56,8 @@ import javax.xml.namespace.QName;
  * &lt;/complexType>
  * </pre>
  * 
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 69, for further information.
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 74, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
@@ -69,66 +66,62 @@ import javax.xml.namespace.QName;
 @XmlType(name = "ResourceContentType", propOrder = { "content" })
 public class ResourceContentType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@XmlMixed
-	@XmlAnyElement(lax = true)
-	private List<Object> content;
-	@XmlAnyAttribute
-	private Map<QName, String> otherAttributes;
+    private static final long serialVersionUID = 1L;
+    @XmlMixed
+    @XmlAnyElement(lax = true)
+    private List<Object> content;
+    @XmlAnyAttribute
+    private Map<QName, String> otherAttributes;
 
-	/**
-	 * Initializes a new {@link Map} that may containing any element.
-	 */
-	public ResourceContentType() {
-		otherAttributes = new HashMap<QName, String>();
-	}
+    /**
+     * Initializes a new {@link Map} that may containing any element.
+     */
+    public ResourceContentType() {
+        otherAttributes = new HashMap<QName, String>();
+    }
 
-	/**
-	 * Gets the value of the content property.
-	 * 
-	 * <p>
-	 * This accessor method returns a reference to the live list, not a
-	 * snapshot. Therefore any modification you make to the returned list will
-	 * be present inside the JAXB object. This is why there is not a
-	 * <CODE>set</CODE> method for the content property.
-	 * 
-	 * <p>
-	 * For example, to add a new item, do as follows:
-	 * 
-	 * <pre>
-	 * getContent().add(newItem);
-	 * </pre>
-	 * 
-	 * 
-	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * org.w3c.dom.Element, {@link String } {@link Object }
-	 * 
-	 * 
-	 */
-	public List<Object> getContent() {
-		if (content == null) {
-			content = new ArrayList<Object>();
-		}
-		return this.content;
-	}
+    /**
+     * Gets the value of the content property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the content property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * 
+     * <pre>
+     * getContent().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list org.w3c.dom.Element, {@link String } {@link Object }
+     * 
+     * 
+     */
+    public List<Object> getContent() {
+        if (content == null) {
+            content = new ArrayList<Object>();
+        }
+        return this.content;
+    }
 
-	/**
-	 * Gets a map that contains attributes that aren't bound to any typed
-	 * property on this class.
-	 * 
-	 * <p>
-	 * the map is keyed by the name of the attribute and the value is the string
-	 * value of the attribute.
-	 * 
-	 * the map returned by this method is live, and you can add new attribute by
-	 * updating the map directly. Because of this design, there's no setter.
-	 * 
-	 * 
-	 * @return always non-null
-	 */
-	public Map<QName, String> getOtherAttributes() {
-		return otherAttributes;
-	}
+    /**
+     * Gets a map that contains attributes that aren't bound to any typed property on this class.
+     * 
+     * <p>
+     * the map is keyed by the name of the attribute and the value is the string value of the attribute.
+     * 
+     * the map returned by this method is live, and you can add new attribute by updating the map directly. Because of
+     * this design, there's no setter.
+     * 
+     * 
+     * @return always non-null
+     */
+    public Map<QName, String> getOtherAttributes() {
+        return otherAttributes;
+    }
 
 }

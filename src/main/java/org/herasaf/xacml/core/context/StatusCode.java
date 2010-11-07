@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.context;
  * The StatusCode contains the status of the evaluation.
  * 
  * @see <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
- *      Control Markup Language (XACML) 2.0, Errata 29 June 2006</a> appendix B.9 page 131, for further information.
+ *      Control Markup Language (XACML) 2.0, Errata 29. January 2008</a> appendix B.9 pages 143-144 for further information.
  * 
  * @author Florian Huonder
  */

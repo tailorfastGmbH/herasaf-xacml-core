@@ -36,12 +36,9 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The implementation of the default XACML 2.0 <i>policy unordered permit
- * overrides algorithm</i>.<br />
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 135-137, for further information.
+ * The implementation of the default XACML 2.0 <i>policy unordered permit overrides algorithm</i>.<br />
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 148-150, for further information.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder

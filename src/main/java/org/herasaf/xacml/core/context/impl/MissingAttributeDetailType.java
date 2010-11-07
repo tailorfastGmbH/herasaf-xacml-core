@@ -43,8 +43,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * Java class for MissingAttributeDetailType complex type.
  * 
  * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="MissingAttributeDetailType">
@@ -61,10 +60,8 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * &lt;/complexType>
  * </pre>
  * 
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 75, for further information.
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 81, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
@@ -73,111 +70,109 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
 @XmlType(name = "MissingAttributeDetailType", propOrder = { "attributeValues" })
 public class MissingAttributeDetailType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@XmlElement(name = "AttributeValue")
-	private List<AttributeValueType> attributeValues;
-	@XmlAttribute(name = "AttributeId", required = true)
-	@XmlSchemaType(name = "anyURI")
-	private String attributeId;
-	@XmlAttribute(name = "DataType", required = true)
-	@XmlJavaTypeAdapter(DataTypeJAXBTypeAdapter.class)
-	@XmlSchemaType(name = "anyURI")
-	private DataTypeAttribute<?> dataType;
-	@XmlAttribute(name = "Issuer")
-	private String issuer;
+    private static final long serialVersionUID = 1L;
+    @XmlElement(name = "AttributeValue")
+    private List<AttributeValueType> attributeValues;
+    @XmlAttribute(name = "AttributeId", required = true)
+    @XmlSchemaType(name = "anyURI")
+    private String attributeId;
+    @XmlAttribute(name = "DataType", required = true)
+    @XmlJavaTypeAdapter(DataTypeJAXBTypeAdapter.class)
+    @XmlSchemaType(name = "anyURI")
+    private DataTypeAttribute<?> dataType;
+    @XmlAttribute(name = "Issuer")
+    private String issuer;
 
-	/**
-	 * Gets the value of the attributeValues property.
-	 * 
-	 * <p>
-	 * This accessor method returns a reference to the live list, not a
-	 * snapshot. Therefore any modification you make to the returned list will
-	 * be present inside the JAXB object. This is why there is not a
-	 * <CODE>set</CODE> method for the attributeValues property.
-	 * 
-	 * <p>
-	 * For example, to add a new item, do as follows:
-	 * 
-	 * <pre>
-	 * getAttributeValues().add(newItem);
-	 * </pre>
-	 * 
-	 * 
-	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link AttributeValueType }
-	 * 
-	 * @return The list of {@link AttributeValueType}s
-	 * 
-	 */
-	public List<AttributeValueType> getAttributeValues() {
-		if (attributeValues == null) {
-			attributeValues = new ArrayList<AttributeValueType>();
-		}
-		return this.attributeValues;
-	}
+    /**
+     * Gets the value of the attributeValues property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the attributeValues property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * 
+     * <pre>
+     * getAttributeValues().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list {@link AttributeValueType }
+     * 
+     * @return The list of {@link AttributeValueType}s
+     * 
+     */
+    public List<AttributeValueType> getAttributeValues() {
+        if (attributeValues == null) {
+            attributeValues = new ArrayList<AttributeValueType>();
+        }
+        return this.attributeValues;
+    }
 
-	/**
-	 * Gets the value of the attributeId property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getAttributeId() {
-		return attributeId;
-	}
+    /**
+     * Gets the value of the attributeId property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public String getAttributeId() {
+        return attributeId;
+    }
 
-	/**
-	 * Sets the value of the attributeId property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setAttributeId(String value) {
-		this.attributeId = value;
-	}
+    /**
+     * Sets the value of the attributeId property.
+     * 
+     * @param value
+     *            allowed object is {@link String }
+     * 
+     */
+    public void setAttributeId(String value) {
+        this.attributeId = value;
+    }
 
-	/**
-	 * Gets the value of the dataType property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public DataTypeAttribute<?> getDataType() {
-		return dataType;
-	}
+    /**
+     * Gets the value of the dataType property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public DataTypeAttribute<?> getDataType() {
+        return dataType;
+    }
 
-	/**
-	 * Sets the value of the dataType property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setDataType(DataTypeAttribute<?> value) {
-		this.dataType = value;
-	}
+    /**
+     * Sets the value of the dataType property.
+     * 
+     * @param value
+     *            allowed object is {@link String }
+     * 
+     */
+    public void setDataType(DataTypeAttribute<?> value) {
+        this.dataType = value;
+    }
 
-	/**
-	 * Gets the value of the issuer property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getIssuer() {
-		return issuer;
-	}
+    /**
+     * Gets the value of the issuer property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public String getIssuer() {
+        return issuer;
+    }
 
-	/**
-	 * Sets the value of the issuer property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setIssuer(String value) {
-		this.issuer = value;
-	}
+    /**
+     * Sets the value of the issuer property.
+     * 
+     * @param value
+     *            allowed object is {@link String }
+     * 
+     */
+    public void setIssuer(String value) {
+        this.issuer = value;
+    }
 
 }

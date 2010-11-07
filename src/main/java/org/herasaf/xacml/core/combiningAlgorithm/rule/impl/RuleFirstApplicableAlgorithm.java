@@ -30,12 +30,9 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The implementation of the default XACML 2.0 <i>rule first applicable
- * algorithm</i>.<br />
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 137, for further information.
+ * The implementation of the default XACML 2.0 <i>rule first applicable algorithm</i>.<br />
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> pages 151-152, for further information.
  * 
  * @author Sacha Dolski
  * @author Stefan Oberholzer

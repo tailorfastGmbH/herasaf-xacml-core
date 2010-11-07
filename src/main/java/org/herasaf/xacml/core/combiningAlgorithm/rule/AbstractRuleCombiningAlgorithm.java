@@ -32,88 +32,82 @@ import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 
 /**
- * This class handles all commonality of the rule combining algorithms. This is
- * the evaluation of a single rule.
+ * This class handles all commonality of the rule combining algorithms. This is the evaluation of a single rule.
  * 
  * @author Sacha Dolski
  */
 public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAlgorithm implements
-		RuleCombiningAlgorithm {
-	private static final long serialVersionUID = 1L;
-	protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
+        RuleCombiningAlgorithm {
+    private static final long serialVersionUID = 1L;
+    protected static final String MDC_RULE_ID = "org:herasaf:xacml:evaluation:ruleid";
 
-	/**
-	 * {@inheritDoc}
-	 */
-	public DecisionType evaluateRule(final RequestType request, final RuleType rule,
-			final EvaluationContext evaluationContext) {
-		/*
-		 * Matches the target of the rule
-		 */
-		final TargetMatchingResult targetDecision = matchTarget(request, rule.getTarget(), evaluationContext);
+    /**
+     * {@inheritDoc}
+     */
+    public DecisionType evaluateRule(final RequestType request, final RuleType rule,
+            final EvaluationContext evaluationContext) {
+        /*
+         * Matches the target of the rule
+         */
+        final TargetMatchingResult targetDecision = matchTarget(request, rule.getTarget(), evaluationContext);
 
-		if (targetDecision == TargetMatchingResult.NO_MATCH) {
-			return DecisionType.NOT_APPLICABLE;
-		} else if (targetDecision == TargetMatchingResult.INDETERMINATE) {
-			return DecisionType.INDETERMINATE;
-		}
+        if (targetDecision == TargetMatchingResult.NO_MATCH) {
+            return DecisionType.NOT_APPLICABLE;
+        } else if (targetDecision == TargetMatchingResult.INDETERMINATE) {
+            return DecisionType.INDETERMINATE;
+        }
 
-		final ConditionType condition = rule.getCondition();
-		Boolean decision = null;
-		/*
-		 * If the rule doesn't contain a condition, the result of the condition
-		 * is the result of the rule.
-		 */
-		if (condition == null) {
-			if (rule.getEffect() == EffectType.PERMIT) {
-				return DecisionType.PERMIT;
-			}
-			return DecisionType.DENY;
+        final ConditionType condition = rule.getCondition();
+        Boolean decision = null;
+        /*
+         * If the rule doesn't contain a condition, the result of the condition is the result of the rule.
+         */
+        if (condition == null) {
+            if (rule.getEffect() == EffectType.PERMIT) {
+                return DecisionType.PERMIT;
+            }
+            return DecisionType.DENY;
 
-		}
-		try {
-			decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request,
-					evaluationContext);
-		} catch (ProcessingException e) {
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
-			return DecisionType.INDETERMINATE;
-		} catch (MissingAttributeException e) {
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
-			evaluationContext.addMissingAttributes(e.getMissingAttribute());
-			return DecisionType.INDETERMINATE;
-		} catch (SyntaxException e) {
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-			return DecisionType.INDETERMINATE;
-		} catch (Exception e) {
-			/*
-			 * If an exception occures. There is something wrong with the
-			 * Elements in the Data and because of this a Syntax Error has
-			 * happened. See: OASIS eXtensible Access Control Markup Langugage
-			 * (XACML) 2.0, Errata 29 June 2006</a> page 85, for further
-			 * information.
-			 */
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
-			return DecisionType.INDETERMINATE;
-		}
-		if (decision) {
-			/*
-			 * If the Evaluation of the Condition returns true, the Effect of
-			 * the rule applies. See: OASIS eXtensible Access Control Markup
-			 * Langugage (XACML) 2.0, Errata 29 June 2006</a> page 82, chapter
-			 * "Rule evaluation" for further information.
-			 */
-			if (rule.getEffect() == EffectType.PERMIT) {
-				return DecisionType.PERMIT;
-			}
-			return DecisionType.DENY;
-		}
-		/*
-		 * If the Evaluation of the Condition returns false, the rule is not
-		 * applicable. See: OASIS eXtensible Access Control Markup Langugage
-		 * (XACML) 2.0, Errata 29 June 2006</a> page 82, chapter "Rule
-		 * evaluation" for further information.
-		 */
-		return DecisionType.NOT_APPLICABLE;
+        }
+        try {
+            decision = (Boolean) ((ExpressionType) condition.getExpression().getValue()).handle(request,
+                    evaluationContext);
+        } catch (ProcessingException e) {
+            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
+            return DecisionType.INDETERMINATE;
+        } catch (MissingAttributeException e) {
+            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
+            evaluationContext.addMissingAttributes(e.getMissingAttribute());
+            return DecisionType.INDETERMINATE;
+        } catch (SyntaxException e) {
+            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+            return DecisionType.INDETERMINATE;
+        } catch (Exception e) {
+            /*
+             * If an exception occures. There is something wrong with the elements in the data and because of this a
+             * Syntax Error has happened. See: OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29.
+             * January 2008</a> page 96 for further information.
+             */
+            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
+            return DecisionType.INDETERMINATE;
+        }
+        if (decision) {
+            /*
+             * If the evaluation of the Condition returns true, the Effect of the rule applies. See: OASIS eXtensible
+             * Access Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 93, chapter "Rule evaluation"
+             * for further information.
+             */
+            if (rule.getEffect() == EffectType.PERMIT) {
+                return DecisionType.PERMIT;
+            }
+            return DecisionType.DENY;
+        }
+        /*
+         * If the Evaluation of the Condition returns false, the rule is not applicable. See: OASIS eXtensible Access
+         * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 93, chapter "Rule evaluation" for further
+         * information.
+         */
+        return DecisionType.NOT_APPLICABLE;
 
-	}
+    }
 }

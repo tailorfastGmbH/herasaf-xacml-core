@@ -39,8 +39,7 @@ import javax.xml.bind.annotation.XmlType;
  * Java class for SubjectType complex type.
  * 
  * <p>
- * The following schema fragment specifies the expected content contained within
- * this class.
+ * The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
  * &lt;complexType name="SubjectType">
@@ -55,10 +54,8 @@ import javax.xml.bind.annotation.XmlType;
  * &lt;/complexType>
  * </pre>
  * 
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 68, for further information.
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 73, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
@@ -67,65 +64,63 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "SubjectType", propOrder = { "attributes" })
 public class SubjectType implements Serializable {
 
-	private static final long serialVersionUID = 1L;
-	@XmlElement(name = "Attribute")
-	private List<AttributeType> attributes;
-	@XmlAttribute(name = "SubjectCategory")
-	@XmlSchemaType(name = "anyURI")
-	private String subjectCategory;
+    private static final long serialVersionUID = 1L;
+    @XmlElement(name = "Attribute")
+    private List<AttributeType> attributes;
+    @XmlAttribute(name = "SubjectCategory")
+    @XmlSchemaType(name = "anyURI")
+    private String subjectCategory;
 
-	/**
-	 * Gets the value of the attributes property.
-	 * 
-	 * <p>
-	 * This accessor method returns a reference to the live list, not a
-	 * snapshot. Therefore any modification you make to the returned list will
-	 * be present inside the JAXB object. This is why there is not a
-	 * <CODE>set</CODE> method for the attributes property.
-	 * 
-	 * <p>
-	 * For example, to add a new item, do as follows:
-	 * 
-	 * <pre>
-	 * getAttributes().add(newItem);
-	 * </pre>
-	 * 
-	 * 
-	 * <p>
-	 * Objects of the following type(s) are allowed in the list
-	 * {@link AttributeType }
-	 * 
-	 * 
-	 */
-	public List<AttributeType> getAttributes() {
-		if (attributes == null) {
-			attributes = new ArrayList<AttributeType>();
-		}
-		return this.attributes;
-	}
+    /**
+     * Gets the value of the attributes property.
+     * 
+     * <p>
+     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+     * the attributes property.
+     * 
+     * <p>
+     * For example, to add a new item, do as follows:
+     * 
+     * <pre>
+     * getAttributes().add(newItem);
+     * </pre>
+     * 
+     * 
+     * <p>
+     * Objects of the following type(s) are allowed in the list {@link AttributeType }
+     * 
+     * 
+     */
+    public List<AttributeType> getAttributes() {
+        if (attributes == null) {
+            attributes = new ArrayList<AttributeType>();
+        }
+        return this.attributes;
+    }
 
-	/**
-	 * Gets the value of the subjectCategory property.
-	 * 
-	 * @return possible object is {@link String }
-	 * 
-	 */
-	public String getSubjectCategory() {
-		if (subjectCategory == null) {
-			return "urn:oasis:names:tc:xacml:1.0:subject-category:access-subject";
-		}
-		return subjectCategory;
-	}
+    /**
+     * Gets the value of the subjectCategory property.
+     * 
+     * @return possible object is {@link String }
+     * 
+     */
+    public String getSubjectCategory() {
+        if (subjectCategory == null) {
+            return "urn:oasis:names:tc:xacml:1.0:subject-category:access-subject";
+        }
+        return subjectCategory;
+    }
 
-	/**
-	 * Sets the value of the subjectCategory property.
-	 * 
-	 * @param value
-	 *            allowed object is {@link String }
-	 * 
-	 */
-	public void setSubjectCategory(String value) {
-		this.subjectCategory = value;
-	}
+    /**
+     * Sets the value of the subjectCategory property.
+     * 
+     * @param value
+     *            allowed object is {@link String }
+     * 
+     */
+    public void setSubjectCategory(String value) {
+        this.subjectCategory = value;
+    }
 
 }

@@ -26,9 +26,8 @@ import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.targetMatcher.TargetMatchingResult;
 
 /**
- * This class may be extended when implementing an unordered rule combining
- * algorithm. It contains some common code all ordered combining algorithms must
- * implement.
+ * This class may be extended when implementing an unordered rule combining algorithm. It contains some common code all
+ * ordered combining algorithms must implement.
  * 
  * @author Stefan Oberholzer
  */
@@ -36,38 +35,36 @@ public abstract class RuleUnorderedCombiningAlgorithm extends AbstractRuleCombin
     private static final long serialVersionUID = 1L;
 
     /**
-	 * {@inheritDoc}
-	 */
-	public DecisionType evaluate(final RequestType request, final Evaluatable evals,
-			final EvaluationContext evaluationContext) {
-		final TargetMatchingResult decision = matchTarget(request, evals.getTarget(), evaluationContext);
+     * {@inheritDoc}
+     */
+    public DecisionType evaluate(final RequestType request, final Evaluatable evals,
+            final EvaluationContext evaluationContext) {
+        final TargetMatchingResult decision = matchTarget(request, evals.getTarget(), evaluationContext);
 
-		if (decision == TargetMatchingResult.NO_MATCH) {
-			return DecisionType.NOT_APPLICABLE;
-		} else if (decision == TargetMatchingResult.INDETERMINATE) {
-			return DecisionType.INDETERMINATE;
-		}
+        if (decision == TargetMatchingResult.NO_MATCH) {
+            return DecisionType.NOT_APPLICABLE;
+        } else if (decision == TargetMatchingResult.INDETERMINATE) {
+            return DecisionType.INDETERMINATE;
+        }
 
-		try {
-			evaluationContext.setVariableDefinitions(((PolicyType) evals).getVariables());
-			final DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getUnorderedRules(),
-					evaluationContext);
-			/*
-			 * If the decision was made, the evaluation process might have set
-			 * the targetMatched variable to false. so it has to be sure that
-			 * true is returned in this variable.
-			 */
-			evaluationContext.setTargetMatched(true);
-			return dec;
-		} catch (ClassCastException e) {
-			/*
-			 * If an error occures, indeterminate has to be returned. See: OASIS
-			 * eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29
-			 * June 2006</a> page 86, chapter "Syntax and type errors" for
-			 * further information.
-			 */
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-			return DecisionType.INDETERMINATE;
-		}
-	}
+        try {
+            evaluationContext.setVariableDefinitions(((PolicyType) evals).getVariables());
+            final DecisionType dec = this.evaluateRuleList(request, ((PolicyType) evals).getUnorderedRules(),
+                    evaluationContext);
+            /*
+             * If the decision was made, the evaluation process might have set the targetMatched variable to false. so
+             * it has to be sure that true is returned in this variable.
+             */
+            evaluationContext.setTargetMatched(true);
+            return dec;
+        } catch (ClassCastException e) {
+            /*
+             * If an error occures, indeterminate has to be returned. See: OASIS eXtensible Access Control Markup
+             * Langugage (XACML) 2.0, Errata 29. January 2008</a> page 96, chapter "Syntax and type errors" for further
+             * information.
+             */
+            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+            return DecisionType.INDETERMINATE;
+        }
+    }
 }

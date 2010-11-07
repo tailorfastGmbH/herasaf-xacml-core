@@ -27,62 +27,59 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a {@link PolicyCombiningAlgorithm}. The default
- * {@link PolicyCombiningAlgorithm}s are defined in the <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix C, page 133. <br>
+ * Converts an URN to a {@link PolicyCombiningAlgorithm}. The default {@link PolicyCombiningAlgorithm}s are defined in
+ * the <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> appendix C page 146. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
 public class PolicyCombiningAlgorithmJAXBTypeAdapter extends XmlAdapter<String, PolicyCombiningAlgorithm> {
-	private final Logger logger = LoggerFactory.getLogger(PolicyCombiningAlgorithmJAXBTypeAdapter.class);
-	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
+    private final Logger logger = LoggerFactory.getLogger(PolicyCombiningAlgorithmJAXBTypeAdapter.class);
+    private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
 
-	/**
-	 * This method sets the {@link Map} containing the mapping between policy
-	 * combining algorithms and their ID's into the converter.
-	 * 
-	 * @param algorithms
-	 *            The {@link Map} containing the mapping between ID's and policy
-	 *            combining algorithms.
-	 */
-	public static void setCombiningAlgorithms(final Map<String, PolicyCombiningAlgorithm> algorithms) {
-		combiningAlgorithms = algorithms;
-	}
+    /**
+     * This method sets the {@link Map} containing the mapping between policy combining algorithms and their ID's into
+     * the converter.
+     * 
+     * @param algorithms
+     *            The {@link Map} containing the mapping between ID's and policy combining algorithms.
+     */
+    public static void setCombiningAlgorithms(final Map<String, PolicyCombiningAlgorithm> algorithms) {
+        combiningAlgorithms = algorithms;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public String marshal(final PolicyCombiningAlgorithm combAlg) {
-		String combAlgString;
-		try {
-			combAlgString = combAlg.toString();
-		} catch (NullPointerException e) {
-			logger.error("Argument combAlg must not be null: ", e);
-			throw new IllegalArgumentException(e);
-		}
-		return combAlgString;
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public String marshal(final PolicyCombiningAlgorithm combAlg) {
+        String combAlgString;
+        try {
+            combAlgString = combAlg.toString();
+        } catch (NullPointerException e) {
+            logger.error("Argument combAlg must not be null: ", e);
+            throw new IllegalArgumentException(e);
+        }
+        return combAlgString;
+    }
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public PolicyCombiningAlgorithm unmarshal(final String combAlgId) {
-		PolicyCombiningAlgorithm combAlg;
-		try {
-			combAlg = combiningAlgorithms.get(combAlgId);
-		} catch (NullPointerException e) {
-			logger.error("PolicyCombiningAlgorithmJAXBTypeAdapter not properly initialized.");
-			throw new NotInitializedException(e);
-		}
-		if (combAlg != null) {
-			return combAlg;
-		}
-		throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
-	}
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public PolicyCombiningAlgorithm unmarshal(final String combAlgId) {
+        PolicyCombiningAlgorithm combAlg;
+        try {
+            combAlg = combiningAlgorithms.get(combAlgId);
+        } catch (NullPointerException e) {
+            logger.error("PolicyCombiningAlgorithmJAXBTypeAdapter not properly initialized.");
+            throw new NotInitializedException(e);
+        }
+        if (combAlg != null) {
+            return combAlg;
+        }
+        throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
+    }
 }
