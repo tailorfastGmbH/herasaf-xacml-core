@@ -18,7 +18,7 @@ package org.herasaf.xacml.core.context;
 
 import java.util.Comparator;
 
-import org.herasaf.xacml.core.simplePDP.InitializationException;
+import org.herasaf.xacml.core.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

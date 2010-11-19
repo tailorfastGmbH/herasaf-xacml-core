@@ -18,9 +18,9 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.Map;
 
+import org.herasaf.xacml.core.InitializationException;
 import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
-import org.herasaf.xacml.core.simplePDP.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

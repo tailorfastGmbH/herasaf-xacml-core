@@ -34,7 +34,7 @@ import java.util.Set;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-import org.herasaf.xacml.core.simplePDP.InitializationException;
+import org.herasaf.xacml.core.InitializationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

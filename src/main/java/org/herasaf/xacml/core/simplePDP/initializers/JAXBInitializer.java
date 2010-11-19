@@ -22,10 +22,10 @@ import java.net.MalformedURLException;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 
+import org.herasaf.xacml.core.InitializationException;
 import org.herasaf.xacml.core.context.RequestMarshaller;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
-import org.herasaf.xacml.core.simplePDP.InitializationException;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
