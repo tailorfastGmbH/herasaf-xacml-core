@@ -52,12 +52,14 @@ import org.xml.sax.ContentHandler;
  * @author Florian Huonder
  * @author René Eggenschwiler
  * 
- * @deprecated Use {@link RequestType} directly. For marshalling use {@link RequestMarshaller}.marshal(...).
+ * @deprecated Use {@link RequestType} directly. For marshalling use
+ *             {@link RequestMarshaller}.marshal(...).
  */
 @Deprecated
 public class RequestCtx implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private final Logger logger = LoggerFactory.getLogger(RequestCtx.class);
+	private transient final Logger logger = LoggerFactory
+			.getLogger(RequestCtx.class);
 	private RequestType request;
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;
@@ -100,18 +102,18 @@ public class RequestCtx implements Serializable {
 	 */
 	private Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
-		
-		if(CONTEXT == null || CONFIGURATION == null) {
+
+		if (CONTEXT == null || CONFIGURATION == null) {
 			logger.error("JAXB context and/or configuration not initialized.");
 			throw new NotInitializedException(
-					"JAXB context and/or configuration not initialized.");			
+					"JAXB context and/or configuration not initialized.");
 		}
-		
+
 		Marshaller marshaller = CONTEXT.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-				CONFIGURATION.isFormattedOutput());
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
-				CONFIGURATION.isFragment());
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, CONFIGURATION
+				.isFormattedOutput());
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, CONFIGURATION
+				.isFragment());
 
 		if (CONFIGURATION.isWriteSchemaLocation()) {
 			if ("".equals(CONFIGURATION)) {

@@ -30,23 +30,28 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The implementation of the default XACML 2.0 <i>rule first applicable algorithm</i>.<br />
- * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
- * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> pages 151-152, for further information.
+ * The implementation of the default XACML 2.0 <i>rule first applicable
+ * algorithm</i>.<br />
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29.
+ * January 2008</a> pages 151-152, for further information.
  * 
  * @author Sacha Dolski
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorithm {
-	
+public class RuleFirstApplicableAlgorithm extends
+		RuleUnorderedCombiningAlgorithm {
+
 	/** XACMLcombining algorithm ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable";
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final Logger logger = LoggerFactory.getLogger(RuleFirstApplicableAlgorithm.class);
+	private transient final Logger logger = LoggerFactory
+			.getLogger(RuleFirstApplicableAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
@@ -59,14 +64,16 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 	/**
 	 * {@inheritDoc}
 	 */
-	public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
+	public DecisionType evaluateRuleList(final RequestType request,
+			final List<RuleType> rules,
 			final EvaluationContext evaluationContext) {
 
 		if (rules == null) {
 			// It is an illegal state if the list containing the rules is
 			// null.
 			logger.error("the rules list was null. This is an illegal state.");
-			evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
 		}
 
@@ -87,11 +94,13 @@ public class RuleFirstApplicableAlgorithm extends RuleUnorderedCombiningAlgorith
 				logger.debug("Starting evaluation of: {}", rule.getRuleId());
 			}
 
-			DecisionType decision = this.evaluateRule(request, rule, evaluationContext);
+			DecisionType decision = this.evaluateRule(request, rule,
+					evaluationContext);
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_RULE_ID, rule.getRuleId());
-				logger.debug("Evaluation of {} was: {}", rule.getRuleId(), decision.toString());
+				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
+						decision.toString());
 				MDC.remove(MDC_RULE_ID);
 			}
 

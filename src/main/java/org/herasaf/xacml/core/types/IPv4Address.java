@@ -31,12 +31,15 @@ import org.slf4j.LoggerFactory;
  * @see IPAddress
  */
 public class IPv4Address extends IPAddress {
-    private final Logger logger = LoggerFactory.getLogger(IPv4Address.class);
-    private static String hostPart = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-    private static String networkPart = "/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
-    private static String possiblePortNumber = "6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0";
-    private static String portPart = ":((" + possiblePortNumber + ")?[-]?(" + possiblePortNumber + ")?)";
-    private static final String REGEX = "^" + hostPart + "(" + networkPart + ")?" + "(" + portPart + ")?" + "$";
+	private transient final Logger logger = LoggerFactory
+			.getLogger(IPv4Address.class);
+	private static String hostPart = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+	private static String networkPart = "/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+	private static String possiblePortNumber = "6553[0-5]|655[0-2]\\d|65[0-4]\\d\\d|6[0-4]\\d{3}|[1-5]\\d{4}|[1-9]\\d{0,3}|0";
+	private static String portPart = ":((" + possiblePortNumber + ")?[-]?("
+			+ possiblePortNumber + ")?)";
+	private static final String REGEX = "^" + hostPart + "(" + networkPart
+			+ ")?" + "(" + portPart + ")?" + "$";
 	private InetAddress ip;
 	private InetAddress mask;
 	private PortRange portRange;
@@ -49,9 +52,10 @@ public class IPv4Address extends IPAddress {
 	 */
 	public IPv4Address(String value) {
 		if (!value.matches(REGEX)) {
-		    IllegalArgumentException e = new IllegalArgumentException(value + " is not a valid IP Address.");
-		    logger.error(e.getMessage());
-		    throw e;
+			IllegalArgumentException e = new IllegalArgumentException(value
+					+ " is not a valid IP Address.");
+			logger.error(e.getMessage());
+			throw e;
 		}
 		try {
 			int slashPosition = value.indexOf("/");
@@ -59,14 +63,18 @@ public class IPv4Address extends IPAddress {
 
 			if (slashPosition != -1 && colonPosition != -1) {
 				ip = Inet4Address.getByName(value.substring(0, slashPosition));
-				mask = Inet4Address.getByName(value.substring(slashPosition + 1, colonPosition));
-				portRange = new PortRange(value.substring(colonPosition + 1, value.length()));
+				mask = Inet4Address.getByName(value.substring(
+						slashPosition + 1, colonPosition));
+				portRange = new PortRange(value.substring(colonPosition + 1,
+						value.length()));
 			} else if (slashPosition != -1) {
 				ip = Inet4Address.getByName(value.substring(0, slashPosition));
-				mask = Inet4Address.getByName(value.substring(slashPosition + 1, value.length()));
+				mask = Inet4Address.getByName(value.substring(
+						slashPosition + 1, value.length()));
 			} else if (colonPosition != -1) {
 				ip = Inet4Address.getByName(value.substring(0, colonPosition));
-				portRange = new PortRange(value.substring(colonPosition + 1, value.length()));
+				portRange = new PortRange(value.substring(colonPosition + 1,
+						value.length()));
 			} else {
 				ip = Inet4Address.getByName(value.substring(0, value.length()));
 			}

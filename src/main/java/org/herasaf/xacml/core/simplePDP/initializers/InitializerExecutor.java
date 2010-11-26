@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class InitializerExecutor {
 
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(InitializerExecutor.class);
 
 	private static Set<Initializer> initializers;

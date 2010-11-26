@@ -27,58 +27,66 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a data type. The default data types are defined in the <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access Control Markup
- * Langugage (XACML) 2.0, Errata 29. January 2008</a> appendix A.2, page 114. <br>
+ * Converts an URN to a data type. The default data types are defined in the <a
+ * href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29.
+ * January 2008</a> appendix A.2, page 114. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class DataTypeJAXBTypeAdapter extends XmlAdapter<String, DataTypeAttribute<?>> {
-    private final Logger logger = LoggerFactory.getLogger(DataTypeJAXBTypeAdapter.class);
-    private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
+public class DataTypeJAXBTypeAdapter extends
+		XmlAdapter<String, DataTypeAttribute<?>> {
+	private transient final Logger logger = LoggerFactory
+			.getLogger(DataTypeJAXBTypeAdapter.class);
+	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
 
-    /**
-     * This method sets the {@link Map} containing the mapping between data types and their ID's into the converter.
-     * 
-     * @param dataTypes
-     *            The {@link Map} containing the mapping between ID's and data types.
-     */
-    public static void setDataTypeAttributes(final Map<String, DataTypeAttribute<?>> dataTypes) {
-        DataTypeJAXBTypeAdapter.dataTypeAttributes = dataTypes;
-    }
+	/**
+	 * This method sets the {@link Map} containing the mapping between data
+	 * types and their ID's into the converter.
+	 * 
+	 * @param dataTypes
+	 *            The {@link Map} containing the mapping between ID's and data
+	 *            types.
+	 */
+	public static void setDataTypeAttributes(
+			final Map<String, DataTypeAttribute<?>> dataTypes) {
+		DataTypeJAXBTypeAdapter.dataTypeAttributes = dataTypes;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String marshal(final DataTypeAttribute<?> dataTypeAttr) {
-        String dataTypeAttrString;
-        try {
-            dataTypeAttrString = dataTypeAttr.toString();
-        } catch (NullPointerException e) {
-            logger.error("Argument dataTypeAttr must not be null: ", e);
-            throw new IllegalArgumentException(e);
-        }
-        return dataTypeAttrString;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String marshal(final DataTypeAttribute<?> dataTypeAttr) {
+		String dataTypeAttrString;
+		try {
+			dataTypeAttrString = dataTypeAttr.toString();
+		} catch (NullPointerException e) {
+			logger.error("Argument dataTypeAttr must not be null: ", e);
+			throw new IllegalArgumentException(e);
+		}
+		return dataTypeAttrString;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public DataTypeAttribute<?> unmarshal(final String dataTypeId) {
-        DataTypeAttribute<?> dta;
-        try {
-            dta = dataTypeAttributes.get(dataTypeId);
-        } catch (NullPointerException e) {
-            logger.error("DataTypeJAXBTypeAdapter not properly initialized.");
-            throw new NotInitializedException(e);
-        }
-        if (dta != null) {
-            return dta;
-        }
-        throw new IllegalArgumentException("DataTypeAttribute " + dataTypeId + " unknown.");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public DataTypeAttribute<?> unmarshal(final String dataTypeId) {
+		DataTypeAttribute<?> dta;
+		try {
+			dta = dataTypeAttributes.get(dataTypeId);
+		} catch (NullPointerException e) {
+			logger.error("DataTypeJAXBTypeAdapter not properly initialized.");
+			throw new NotInitializedException(e);
+		}
+		if (dta != null) {
+			return dta;
+		}
+		throw new IllegalArgumentException("DataTypeAttribute " + dataTypeId
+				+ " unknown.");
+	}
 }

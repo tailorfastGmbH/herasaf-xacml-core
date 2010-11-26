@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class FunctionsJAXBInitializer extends AbstractInitializer<Function> {
-	private final Logger logger = LoggerFactory
+	private transient final Logger logger = LoggerFactory
 			.getLogger(FunctionsJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/function/impl";
 	private static final Class<Function> TARGET_CLASS = Function.class;

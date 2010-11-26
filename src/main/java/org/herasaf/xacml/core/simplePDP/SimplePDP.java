@@ -55,7 +55,8 @@ public class SimplePDP implements PDP {
 	private final PolicyCombiningAlgorithm rootPolicyCombiningAlgorithm;
 	private final TargetMatcher targetMatcher;
 	private final boolean respectAbandonedEvaluatables;
-	private final Logger logger = LoggerFactory.getLogger(SimplePDP.class);
+	private transient final Logger logger = LoggerFactory
+			.getLogger(SimplePDP.class);
 	private static final String MDC_REQUEST_TIME = "org:herasaf:request:xacml:evaluation:requesttime";
 	private final StatusCodeComparator statusCodeComparator;
 

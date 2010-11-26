@@ -49,7 +49,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public abstract class AbstractInitializer<T> implements Initializer {
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(AbstractInitializer.class);
 	private static final String CLASS_ENDING = ".class";
 	private static final String DOLLAR_SIGN = "$";
@@ -158,7 +158,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 				classNames.addAll(collectClassNamesFromJar(url, searchContext));
 			} else if (URL_PROTOCOL_FILE.equals(url.getProtocol())) {
 				/* Directory handling */
-				classNames.addAll(collectClassNamesFromFile(url, searchContext));
+				classNames
+						.addAll(collectClassNamesFromFile(url, searchContext));
 			} else {
 				InitializationException e = new InitializationException(
 						"The search context path must either point to a JAR (.jar, .zip (BEA WebLogic, WebSphere), .wsjar (BEA WebLogic, WebSphere), code-source (Oracle OC4J)) file or to a directory");
@@ -282,15 +283,15 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * 
 	 * @return A {@link Set} containing all class names.
 	 */
-	private Set<String> collectClassNamesFromJar(final URL url, final String searchContext) {
+	private Set<String> collectClassNamesFromJar(final URL url,
+			final String searchContext) {
 		JarFile jarFile = getJarFileFromURL(url);
 		Set<String> classNames = new HashSet<String>();
 		for (Enumeration<JarEntry> entries = jarFile.entries(); entries
 				.hasMoreElements();) {
 			JarEntry entry = entries.nextElement();
 			if (isJarEntryValid(entry)
-					&& entry.getName()
-							.startsWith(searchContext)) {
+					&& entry.getName().startsWith(searchContext)) {
 				String name = entry.getName();
 				// Cut off the .class ending.
 				name = name.substring(0, name.indexOf(".class"));
@@ -314,7 +315,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 	 * @return A list containing all valid files contained within the search
 	 *         context.
 	 */
-	private Set<String> collectClassNamesFromFile(final URL url, final String searchContext) {
+	private Set<String> collectClassNamesFromFile(final URL url,
+			final String searchContext) {
 		Set<String> classNames = new HashSet<String>();
 
 		File directory;
@@ -333,7 +335,8 @@ public abstract class AbstractInitializer<T> implements Initializer {
 					try {
 						classNames.addAll(collectClassNamesFromFile(new URL(
 								URL_PROTOCOL_FILE, url.getHost(), url.getPath()
-										+ "/" + allFiles[i].getName()), searchContext + "/" + allFiles[i].getName()));
+										+ "/" + allFiles[i].getName()),
+								searchContext + "/" + allFiles[i].getName()));
 					} catch (MalformedURLException e) {
 						InitializationException ie = new InitializationException(
 								"Unable to load classes from file system.", e);
@@ -351,14 +354,13 @@ public abstract class AbstractInitializer<T> implements Initializer {
 							&& !allFiles[i].getName().contains(DOLLAR_SIGN)) {
 
 						String path = url.getPath();
-						path = path.substring(path
-								.indexOf(searchContext));
+						path = path.substring(path.indexOf(searchContext));
 
 						path = path.replaceAll("/", ".");
 
 						String name = path + "." + allFiles[i].getName();
-						classNames.add(name.substring(0,
-								name.indexOf(CLASS_ENDING)));
+						classNames.add(name.substring(0, name
+								.indexOf(CLASS_ENDING)));
 					}
 				}
 			}
@@ -412,9 +414,10 @@ public abstract class AbstractInitializer<T> implements Initializer {
 
 			int modifier = clazz.getModifiers();
 			if (Modifier.isAbstract(modifier) || Modifier.isInterface(modifier)) {
-				LOGGER.warn("The class "
-						+ clazz.getName()
-						+ " cannot be instatiated because it is either abstract or an interface.");
+				LOGGER
+						.warn("The class "
+								+ clazz.getName()
+								+ " cannot be instatiated because it is either abstract or an interface.");
 				continue; // The clazz is skipped if it is not instantiable.
 			}
 

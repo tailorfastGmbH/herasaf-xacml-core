@@ -50,12 +50,13 @@ import org.xml.sax.ContentHandler;
  * 
  * @author Florian Huonder
  * 
- * @deprecated Use {@link ResponseType} directly. For marshalling use {@link ResponseMarshaller}.marshal(...).
+ * @deprecated Use {@link ResponseType} directly. For marshalling use
+ *             {@link ResponseMarshaller}.marshal(...).
  */
 @Deprecated
 public class ResponseCtx implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private final Logger logger = LoggerFactory
+	private transient final Logger logger = LoggerFactory
 			.getLogger(ResponseCtx.class);
 	private ResponseType response;
 	private static JAXBContext CONTEXT;
@@ -68,12 +69,13 @@ public class ResponseCtx implements Serializable {
 	static {
 		OBJECT_FACTORY = new ObjectFactory();
 	}
-	
+
 	public static void setJAXBContext(JAXBContext context) {
 		CONTEXT = context;
 	}
 
-	public static void setJAXBMarshallerConfiguration(JAXBMarshallerConfiguration configuration) {
+	public static void setJAXBMarshallerConfiguration(
+			JAXBMarshallerConfiguration configuration) {
 		CONFIGURATION = configuration;
 	}
 
@@ -97,18 +99,18 @@ public class ResponseCtx implements Serializable {
 	 */
 	private Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
-		
-		if(CONTEXT == null || CONFIGURATION == null) {
+
+		if (CONTEXT == null || CONFIGURATION == null) {
 			logger.error("JAXB context and/or configuration not initialized.");
 			throw new NotInitializedException(
-					"JAXB context and/or configuration not initialized.");			
+					"JAXB context and/or configuration not initialized.");
 		}
-		
+
 		Marshaller marshaller = CONTEXT.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-				CONFIGURATION.isFormattedOutput());
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
-				CONFIGURATION.isFragment());
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, CONFIGURATION
+				.isFormattedOutput());
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, CONFIGURATION
+				.isFragment());
 
 		if (CONFIGURATION.isWriteSchemaLocation()) {
 			if ("".equals(CONFIGURATION)) {
@@ -154,8 +156,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(ContentHandler ch) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), ch);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					ch);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the content handler.", e);
@@ -174,8 +176,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(File file) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), file);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					file);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the file.", e);
@@ -201,8 +203,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(Result result) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), result);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					result);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the result.", e);
@@ -221,8 +223,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(OutputStream out) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), out);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					out);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the output stream.", e);
@@ -241,8 +243,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(Writer writer) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), writer);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					writer);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the writer.", e);
@@ -261,8 +263,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(Node node) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), node);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					node);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the node.", e);
@@ -282,8 +284,8 @@ public class ResponseCtx implements Serializable {
 	public void marshal(XMLStreamWriter xmlStreamWriter)
 			throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), xmlStreamWriter);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					xmlStreamWriter);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the xml stream writer.", e);
@@ -302,8 +304,8 @@ public class ResponseCtx implements Serializable {
 	 */
 	public void marshal(XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
-			createMarshaller().marshal(
-					OBJECT_FACTORY.createResponse(response), xmlEventWriter);
+			createMarshaller().marshal(OBJECT_FACTORY.createResponse(response),
+					xmlEventWriter);
 		} catch (JAXBException e) {
 			WritingException we = new WritingException(
 					"Unable to write to the xml event writer.", e);

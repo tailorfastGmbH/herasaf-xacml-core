@@ -71,7 +71,7 @@ public class MapBasedSimplePolicyRepository implements
 	// Mapping that tells which policies are under which root.
 	protected Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping;
 	protected List<Evaluatable> rootEvaluatables; // The root evaluatables
-	private final Logger logger = LoggerFactory
+	private transient final Logger logger = LoggerFactory
 			.getLogger(MapBasedSimplePolicyRepository.class);
 
 	/**
@@ -234,13 +234,13 @@ public class MapBasedSimplePolicyRepository implements
 	 * Due to the fact that this implementation does not implement any index.
 	 * All root {@link Evaluatable}s are returned by default.
 	 * 
-	 * @deprecated Use {@link #getEvaluatables(RequestType)} instead. 
+	 * @deprecated Use {@link #getEvaluatables(RequestType)} instead.
 	 */
 	@Deprecated
 	public List<Evaluatable> getEvaluatables(RequestCtx requestCtx) {
 		return rootEvaluatables;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 * 

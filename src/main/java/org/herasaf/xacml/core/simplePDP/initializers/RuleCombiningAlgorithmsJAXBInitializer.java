@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RuleCombiningAlgorithmsJAXBInitializer extends
 		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
-	private static Logger logger = LoggerFactory
+	private transient static Logger logger = LoggerFactory
 			.getLogger(RuleCombiningAlgorithmsJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/rule/impl";
 	private static final Class<AbstractRuleCombiningAlgorithm> TARGET_CLASS = AbstractRuleCombiningAlgorithm.class;

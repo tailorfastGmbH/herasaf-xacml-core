@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PolicyCombiningAlgorithmsJAXBInitializer extends
 		AbstractInitializer<AbstractPolicyCombiningAlgorithm> {
-	private static Logger logger = LoggerFactory
+	private transient static Logger logger = LoggerFactory
 			.getLogger(PolicyCombiningAlgorithmsJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/combiningAlgorithm/policy/impl";
 	private static final Class<AbstractPolicyCombiningAlgorithm> TARGET_CLASS = AbstractPolicyCombiningAlgorithm.class;

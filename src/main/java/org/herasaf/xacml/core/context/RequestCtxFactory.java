@@ -53,7 +53,7 @@ import org.xml.sax.InputSource;
  */
 @Deprecated
 public final class RequestCtxFactory {
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(RequestCtxFactory.class);
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;

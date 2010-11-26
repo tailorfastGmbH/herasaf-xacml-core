@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class StatusCodeComparator implements Comparator<StatusCode> {
-	private final Logger logger = LoggerFactory
+	private transient final Logger logger = LoggerFactory
 			.getLogger(StatusCodeComparator.class);
 
 	/**

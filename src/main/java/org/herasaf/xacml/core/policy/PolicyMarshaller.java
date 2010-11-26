@@ -60,7 +60,7 @@ import org.xml.sax.InputSource;
  * @author Florian Huonder
  */
 public final class PolicyMarshaller {
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(PolicyMarshaller.class);
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;

@@ -50,39 +50,46 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class TargetMatcherImpl implements TargetMatcher {
-    private static final long serialVersionUID = 1L;
-    private final Logger logger = LoggerFactory.getLogger(TargetMatcherImpl.class);
+	private static final long serialVersionUID = 1L;
+	private transient final Logger logger = LoggerFactory
+			.getLogger(TargetMatcherImpl.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public TargetMatchingResult match(RequestType request, TargetType target, EvaluationContext evaluationContext) throws SyntaxException,
+	public TargetMatchingResult match(RequestType request, TargetType target,
+			EvaluationContext evaluationContext) throws SyntaxException,
 			ProcessingException, MissingAttributeException {
 		if (target != null) {
 			logger.debug("Starting subjects match.");
-			boolean subjectsMatches = subjectsMatch(target.getSubjects(), request, evaluationContext);
+			boolean subjectsMatches = subjectsMatch(target.getSubjects(),
+					request, evaluationContext);
 			logger.debug("Subjects match resulted in: {}", subjectsMatches);
 			if (!subjectsMatches) {
 				return TargetMatchingResult.NO_MATCH;
 			}
 
 			logger.debug("Starting recources match.");
-			boolean resourcesMatches = resourcesMatch(target.getResources(), request, evaluationContext);
+			boolean resourcesMatches = resourcesMatch(target.getResources(),
+					request, evaluationContext);
 			logger.debug("Resources match resulted in: {}", resourcesMatches);
 			if (!resourcesMatches) {
 				return TargetMatchingResult.NO_MATCH;
 			}
 
 			logger.debug("Starting actions match.");
-			boolean actionsMatches = actionMatch(target.getActions(), request, evaluationContext);
+			boolean actionsMatches = actionMatch(target.getActions(), request,
+					evaluationContext);
 			logger.debug("Actions match resulted in: {}", actionsMatches);
 			if (!actionsMatches) {
 				return TargetMatchingResult.NO_MATCH;
 			}
 
 			logger.debug("Starting environments match.");
-			boolean environmentsMatches = environmentMatch(target.getEnvironments(), request, evaluationContext);
-			logger.debug("Environments match resulted in: {}", environmentsMatches);
+			boolean environmentsMatches = environmentMatch(target
+					.getEnvironments(), request, evaluationContext);
+			logger.debug("Environments match resulted in: {}",
+					environmentsMatches);
 			if (!environmentsMatches) {
 				return TargetMatchingResult.NO_MATCH;
 			}
@@ -99,26 +106,39 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * Checks if the <code>&lt;Subjects&gt;</code> element matches the given request.
+	 * Checks if the <code>&lt;Subjects&gt;</code> element matches the given
+	 * request.
 	 * 
-	 * @param subjects The <code>&lt;Subjects&gt;</code> element to be matched.
-	 * @param request The requests containing the attributes to be matched against the <code>&lt;Subjects&gt;</code>.
-	 * @param evaluationContext The {@link EvaluationContext} containing additional information.
+	 * @param subjects
+	 *            The <code>&lt;Subjects&gt;</code> element to be matched.
+	 * @param request
+	 *            The requests containing the attributes to be matched against
+	 *            the <code>&lt;Subjects&gt;</code>.
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} containing additional
+	 *            information.
 	 * @return
-	 * @throws ProcessingException If an exception occurred while processing the matching functions.
-	 * @throws SyntaxException If the request or the policy contained a syntax error.
-	 * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+	 * @throws ProcessingException
+	 *             If an exception occurred while processing the matching
+	 *             functions.
+	 * @throws SyntaxException
+	 *             If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException
+	 *             If a <i>must-be-present</i> attribute is missing.
 	 */
-	private boolean subjectsMatch(SubjectsType subjects, RequestType request, EvaluationContext evaluationContext)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	private boolean subjectsMatch(SubjectsType subjects, RequestType request,
+			EvaluationContext evaluationContext) throws ProcessingException,
+			SyntaxException, MissingAttributeException {
 		if (subjects == null) {
 			logger.debug("No subjects present.");
 			return true;
 		}
 		for (int i = 0; i < subjects.getSubjects().size(); i++) {
 			SubjectType targetSubject = subjects.getSubjects().get(i);
-			logger.debug("Starting subject match. (id:{})", targetSubject.toString());
-			boolean matches = match(targetSubject.getSubjectMatches(), request, evaluationContext);
+			logger.debug("Starting subject match. (id:{})", targetSubject
+					.toString());
+			boolean matches = match(targetSubject.getSubjectMatches(), request,
+					evaluationContext);
 			if (matches) {
 				// If one subject matches the subjects matches and returns true.
 				//
@@ -134,26 +154,40 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-     * Checks if the <code>&lt;Resources&gt;</code> element matches the given request.
-     * 
-     * @param resources The <code>&lt;Resources&gt;</code> element to be matched.
-     * @param request The requests containing the attributes to be matched against the <code>&lt;Resources&gt;</code>.
-     * @param evaluationContext The {@link EvaluationContext} containing additional information.
-     * @return
-     * @throws ProcessingException If an exception occurred while processing the matching functions.
-     * @throws SyntaxException If the request or the policy contained a syntax error.
-     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
-     */
-	private boolean resourcesMatch(ResourcesType resources, RequestType request, EvaluationContext evaluationContext)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	 * Checks if the <code>&lt;Resources&gt;</code> element matches the given
+	 * request.
+	 * 
+	 * @param resources
+	 *            The <code>&lt;Resources&gt;</code> element to be matched.
+	 * @param request
+	 *            The requests containing the attributes to be matched against
+	 *            the <code>&lt;Resources&gt;</code>.
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} containing additional
+	 *            information.
+	 * @return
+	 * @throws ProcessingException
+	 *             If an exception occurred while processing the matching
+	 *             functions.
+	 * @throws SyntaxException
+	 *             If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException
+	 *             If a <i>must-be-present</i> attribute is missing.
+	 */
+	private boolean resourcesMatch(ResourcesType resources,
+			RequestType request, EvaluationContext evaluationContext)
+			throws ProcessingException, SyntaxException,
+			MissingAttributeException {
 		if (resources == null) {
 			logger.debug("No resources present.");
 			return true;
 		}
 		for (int i = 0; i < resources.getResources().size(); i++) {
 			ResourceType targetResource = resources.getResources().get(i);
-			logger.debug("Starting resource match. (id:{})", targetResource.toString());
-			boolean matches = match(targetResource.getResourceMatches(), request, evaluationContext);
+			logger.debug("Starting resource match. (id:{})", targetResource
+					.toString());
+			boolean matches = match(targetResource.getResourceMatches(),
+					request, evaluationContext);
 			if (matches) {
 				// If one resource matches the resources matches and returns
 				// true.
@@ -170,26 +204,39 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-     * Checks if the <code>&lt;Actions&gt;</code> element matches the given request.
-     * 
-     * @param actions The <code>&lt;Actions&gt;</code> element to be matched.
-     * @param request The requests containing the attributes to be matched against the <code>&lt;Actions&gt;</code>.
-     * @param evaluationContext The {@link EvaluationContext} containing additional information.
-     * @return
-     * @throws ProcessingException If an exception occurred while processing the matching functions.
-     * @throws SyntaxException If the request or the policy contained a syntax error.
-     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
-     */
-	private boolean actionMatch(ActionsType actions, RequestType request, EvaluationContext evaluationContext)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	 * Checks if the <code>&lt;Actions&gt;</code> element matches the given
+	 * request.
+	 * 
+	 * @param actions
+	 *            The <code>&lt;Actions&gt;</code> element to be matched.
+	 * @param request
+	 *            The requests containing the attributes to be matched against
+	 *            the <code>&lt;Actions&gt;</code>.
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} containing additional
+	 *            information.
+	 * @return
+	 * @throws ProcessingException
+	 *             If an exception occurred while processing the matching
+	 *             functions.
+	 * @throws SyntaxException
+	 *             If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException
+	 *             If a <i>must-be-present</i> attribute is missing.
+	 */
+	private boolean actionMatch(ActionsType actions, RequestType request,
+			EvaluationContext evaluationContext) throws ProcessingException,
+			SyntaxException, MissingAttributeException {
 		if (actions == null) {
 			logger.debug("No actions present.");
 			return true;
 		}
 		for (int i = 0; i < actions.getActions().size(); i++) {
 			ActionType targetAction = actions.getActions().get(i);
-			logger.debug("Starting action match. (id:{})", targetAction.toString());
-			boolean matches = match(targetAction.getActionMatches(), request, evaluationContext);
+			logger.debug("Starting action match. (id:{})", targetAction
+					.toString());
+			boolean matches = match(targetAction.getActionMatches(), request,
+					evaluationContext);
 			if (matches) {
 				// If one action matches the actions matches and returns true.
 				//
@@ -205,26 +252,41 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-     * Checks if the <code>&lt;Environments&gt;</code> element matches the given request.
-     * 
-     * @param environments The <code>&lt;Environments&gt;</code> element to be matched.
-     * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
-     * @param evaluationContext The {@link EvaluationContext} containing additional information.
-     * @return
-     * @throws ProcessingException If an exception occurred while processing the matching functions.
-     * @throws SyntaxException If the request or the policy contained a syntax error.
-     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
-     */
-	private boolean environmentMatch(EnvironmentsType environments, RequestType request, EvaluationContext evaluationContext)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	 * Checks if the <code>&lt;Environments&gt;</code> element matches the given
+	 * request.
+	 * 
+	 * @param environments
+	 *            The <code>&lt;Environments&gt;</code> element to be matched.
+	 * @param request
+	 *            The requests containing the attributes to be matched against
+	 *            the <code>&lt;Environments&gt;</code>.
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} containing additional
+	 *            information.
+	 * @return
+	 * @throws ProcessingException
+	 *             If an exception occurred while processing the matching
+	 *             functions.
+	 * @throws SyntaxException
+	 *             If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException
+	 *             If a <i>must-be-present</i> attribute is missing.
+	 */
+	private boolean environmentMatch(EnvironmentsType environments,
+			RequestType request, EvaluationContext evaluationContext)
+			throws ProcessingException, SyntaxException,
+			MissingAttributeException {
 		if (environments == null) {
 			logger.debug("No environments present.");
 			return true;
 		}
 		for (int i = 0; i < environments.getEnvironments().size(); i++) {
-			EnvironmentType targetEnvironment = environments.getEnvironments().get(i);
-			logger.debug("Starting environment match. (id:{})", targetEnvironment.toString());
-			boolean matches = match(targetEnvironment.getEnvironmentMatches(), request, evaluationContext);
+			EnvironmentType targetEnvironment = environments.getEnvironments()
+					.get(i);
+			logger.debug("Starting environment match. (id:{})",
+					targetEnvironment.toString());
+			boolean matches = match(targetEnvironment.getEnvironmentMatches(),
+					request, evaluationContext);
 			if (matches) {
 				// If one environment matches the environments matches and
 				// returns true.
@@ -241,22 +303,39 @@ public class TargetMatcherImpl implements TargetMatcher {
 	}
 
 	/**
-	 * @param matches The matching element (either <code>&lt;SubjectMatch&gt;</code>, <code>&lt;ResourceMatch&gt;</code>, <code>&lt;ActionMatch&gt;</code> or <code>&lt;EnvironmentMatch&gt;</code>) to be matched against the request.
-	 * @param request The requests containing the attributes to be matched against the <code>&lt;Environments&gt;</code>.
-     * @param evaluationContext The {@link EvaluationContext} containing additional information.
-     * @return
-     * @throws ProcessingException If an exception occurred while processing the matching functions.
-     * @throws SyntaxException If the request or the policy contained a syntax error.
-     * @throws MissingAttributeException If a <i>must-be-present</i> attribute is missing.
+	 * @param matches
+	 *            The matching element (either <code>&lt;SubjectMatch&gt;</code>
+	 *            , <code>&lt;ResourceMatch&gt;</code>,
+	 *            <code>&lt;ActionMatch&gt;</code> or
+	 *            <code>&lt;EnvironmentMatch&gt;</code>) to be matched against
+	 *            the request.
+	 * @param request
+	 *            The requests containing the attributes to be matched against
+	 *            the <code>&lt;Environments&gt;</code>.
+	 * @param evaluationContext
+	 *            The {@link EvaluationContext} containing additional
+	 *            information.
+	 * @return
+	 * @throws ProcessingException
+	 *             If an exception occurred while processing the matching
+	 *             functions.
+	 * @throws SyntaxException
+	 *             If the request or the policy contained a syntax error.
+	 * @throws MissingAttributeException
+	 *             If a <i>must-be-present</i> attribute is missing.
 	 */
-	private boolean match(List<? extends Match> matches, RequestType request, EvaluationContext evaluationContext)
-			throws ProcessingException, SyntaxException, MissingAttributeException {
+	private boolean match(List<? extends Match> matches, RequestType request,
+			EvaluationContext evaluationContext) throws ProcessingException,
+			SyntaxException, MissingAttributeException {
 		for (int i = 0; i < matches.size(); i++) {
 			Match match = matches.get(i);
 			Function matchFunction = match.getMatchFunction();
-			logger.debug("Matching with function: {}", matchFunction.toString());
+			logger
+					.debug("Matching with function: {}", matchFunction
+							.toString());
 			AttributeDesignatorType designator = match.getAttributeDesignator();
-			List<?> requestAttributeValues = (List<?>) designator.handle(request, evaluationContext); // Fetches
+			List<?> requestAttributeValues = (List<?>) designator.handle(
+					request, evaluationContext); // Fetches
 			// all
 			// AttributeValue-contents
 			// from the element (element = subject,
@@ -273,7 +352,8 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 			// on page 79 (Match evaluation, line 3394).
 			if (requestAttributeValues.size() == 0) {
-				logger.debug("Request did not contain the required attributes.");
+				logger
+						.debug("Request did not contain the required attributes.");
 				return false;
 			}
 
@@ -290,14 +370,20 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// Langugage (XACML) 2.0, Errata 29 June 2006
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 				// on page 79 (Match evaluation, line 3371).
-				AttributeValueType policyAttributeValue = match.getAttributeValue();
-				matchMatches = (Boolean) matchFunction.handle(policyAttributeValue.getDataType().convertTo(
-						(String) policyAttributeValue.getContent().get(0)), requestAttributeValue);
+				AttributeValueType policyAttributeValue = match
+						.getAttributeValue();
+				matchMatches = (Boolean) matchFunction.handle(
+						policyAttributeValue.getDataType().convertTo(
+								(String) policyAttributeValue.getContent().get(
+										0)), requestAttributeValue);
 				logger
 						.debug(
 								"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
-								new Object[] { matchMatches, policyAttributeValue.getDataType(),
-										policyAttributeValue.getContent().get(0), requestAttributeValue });
+								new Object[] {
+										matchMatches,
+										policyAttributeValue.getDataType(),
+										policyAttributeValue.getContent()
+												.get(0), requestAttributeValue });
 
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request

@@ -44,6 +44,7 @@ import org.herasaf.xacml.core.context.impl.ResultType;
 import org.herasaf.xacml.core.context.impl.StatusCodeType;
 import org.herasaf.xacml.core.context.impl.StatusDetailType;
 import org.herasaf.xacml.core.context.impl.StatusType;
+import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
@@ -65,7 +66,7 @@ import org.xml.sax.InputSource;
  */
 @Deprecated
 public final class ResponseCtxFactory {
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(ResponseCtxFactory.class);
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;
@@ -93,7 +94,7 @@ public final class ResponseCtxFactory {
 	private ResponseCtxFactory() {
 
 	}
-	
+
 	/**
 	 * Creates a {@link ResponseCtx} with the given {@link DecisionType} and
 	 * adds the {@link MissingAttributeDetailType} s and {@link ObligationsType}
@@ -110,12 +111,13 @@ public final class ResponseCtxFactory {
 	 */
 	public static ResponseCtx create(RequestType req, DecisionType decision,
 			EvaluationContext evaluationContext) {
-		ResponseCtx resCtx = create(req, decision,
-				evaluationContext.getStatusCode());
+		ResponseCtx resCtx = create(req, decision, evaluationContext
+				.getStatusCode());
 		// This check is here because only MissingAttributeDetails are
 		// supported in the the StatusDetail
 		if (evaluationContext.getMissingAttributes().size() > 0) {
-			StatusDetailType statusDetail = OBJECT_FACTORY.createStatusDetailType();
+			StatusDetailType statusDetail = OBJECT_FACTORY
+					.createStatusDetailType();
 			/*
 			 * If the request contains any MissingAttributeDetails those must be
 			 * added to the List in the StatusDetailType contained in a
@@ -136,8 +138,8 @@ public final class ResponseCtxFactory {
 		}
 		// Add the Obligations to the response
 		if (evaluationContext.getObligations().getObligations().size() > 0) {
-			resCtx.getResponse().getResults().get(0)
-					.setObligations(evaluationContext.getObligations());
+			resCtx.getResponse().getResults().get(0).setObligations(
+					evaluationContext.getObligations());
 		}
 		return resCtx;
 	}
@@ -195,13 +197,13 @@ public final class ResponseCtxFactory {
 	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
-		
-		if(CONTEXT == null || CONFIGURATION == null) {
+
+		if (CONTEXT == null || CONFIGURATION == null) {
 			LOGGER.error("JAXB context and/or configuration not initialized.");
 			throw new NotInitializedException(
-					"JAXB context and/or configuration not initialized.");			
+					"JAXB context and/or configuration not initialized.");
 		}
-		
+
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
 
 		if (CONFIGURATION.isValidateParsing()) {
@@ -246,9 +248,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(file)).getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(file)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -290,9 +293,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(inputStream)).getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(inputStream)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -332,11 +336,11 @@ public final class ResponseCtxFactory {
 					"Unable to create a JAXB Unmarshaller.", e);
 			LOGGER.error(se.getMessage());
 			throw se;
-		}		
-		
+		}
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(reader))
-					.getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(reader)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -376,10 +380,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-				
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(url))
-					.getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(url)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -421,9 +425,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(inputSource)).getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(inputSource)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -464,10 +469,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(node))
-					.getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(node)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -508,10 +513,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(source))
-					.getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(source)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -553,9 +558,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(xmlStreamReader)).getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(xmlStreamReader)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(
@@ -597,9 +603,10 @@ public final class ResponseCtxFactory {
 			LOGGER.error(se.getMessage());
 			throw se;
 		}
-		
+
 		try {
-			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller.unmarshal(xmlEventReader)).getValue();
+			ResponseType rt = ((JAXBElement<ResponseType>) unmarshaller
+					.unmarshal(xmlEventReader)).getValue();
 			return new ResponseCtx(rt);
 		} catch (JAXBException e) {
 			SyntaxException se = new SyntaxException(

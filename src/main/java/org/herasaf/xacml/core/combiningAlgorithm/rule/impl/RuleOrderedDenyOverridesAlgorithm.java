@@ -34,119 +34,131 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The implementation of the default XACML 2.0 <i>rule ordered deny overrides algorithm</i>.<br />
- * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
- * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 148, for further information.
+ * The implementation of the default XACML 2.0 <i>rule ordered deny overrides
+ * algorithm</i>.<br />
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29.
+ * January 2008</a> page 148, for further information.
  * 
  * @author Sacha Dolski
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class RuleOrderedDenyOverridesAlgorithm extends RuleOrderedCombiningAlgorithm {
+public class RuleOrderedDenyOverridesAlgorithm extends
+		RuleOrderedCombiningAlgorithm {
 
-    /** XACMLcombining algorithm ID. */
-    public static final String ID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides";
+	/** XACMLcombining algorithm ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.1:rule-combining-algorithm:ordered-deny-overrides";
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final Logger logger = LoggerFactory.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
+	private transient final Logger logger = LoggerFactory
+			.getLogger(RuleOrderedDenyOverridesAlgorithm.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getCombiningAlgorithmId() {
-        return ID;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCombiningAlgorithmId() {
+		return ID;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    public DecisionType evaluateRuleList(final RequestType request, final List<RuleType> rules,
-            final EvaluationContext evaluationContext) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public DecisionType evaluateRuleList(final RequestType request,
+			final List<RuleType> rules,
+			final EvaluationContext evaluationContext) {
 
-        if (rules == null) {
-            // It is an illegal state if the list containing the rules is
-            // null.
-            logger.error("the rules list was null. This is an illegal state.");
-            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-            return DecisionType.INDETERMINATE;
-        }
+		if (rules == null) {
+			// It is an illegal state if the list containing the rules is
+			// null.
+			logger.error("the rules list was null. This is an illegal state.");
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+			return DecisionType.INDETERMINATE;
+		}
 
-        /*
-         * keeps the actual state and missing attributes of this combining process.
-         */
-        List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-        List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		/*
+		 * keeps the actual state and missing attributes of this combining
+		 * process.
+		 */
+		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
 
-        boolean atLeastOnePermit = false;
-        boolean potentialDeny = false;
-        boolean atLeastOneError = false;
+		boolean atLeastOnePermit = false;
+		boolean potentialDeny = false;
+		boolean atLeastOneError = false;
 
-        /*
-         * If the list of rules contains no values, the for-loop is skipped and a NOT_APPLICABLE is returned.
-         */
-        for (int i = 0; i < rules.size(); i++) {
-            RuleType rule = rules.get(i);
-            // Resets the status to go sure, that the returned statuscode is
-            // the one of the evaluation.
-            evaluationContext.resetStatus();
+		/*
+		 * If the list of rules contains no values, the for-loop is skipped and
+		 * a NOT_APPLICABLE is returned.
+		 */
+		for (int i = 0; i < rules.size(); i++) {
+			RuleType rule = rules.get(i);
+			// Resets the status to go sure, that the returned statuscode is
+			// the one of the evaluation.
+			evaluationContext.resetStatus();
 
-            if (logger.isDebugEnabled()) {
-                MDC.put(MDC_RULE_ID, rule.getRuleId());
-                logger.debug("Starting evaluation of: {}", rule.getRuleId());
-            }
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
+				logger.debug("Starting evaluation of: {}", rule.getRuleId());
+			}
 
-            DecisionType decision = this.evaluateRule(request, rule, evaluationContext);
+			DecisionType decision = this.evaluateRule(request, rule,
+					evaluationContext);
 
-            if (logger.isDebugEnabled()) {
-                MDC.put(MDC_RULE_ID, rule.getRuleId());
-                logger.debug("Evaluation of {} was: {}", rule.getRuleId(), decision.toString());
-                MDC.remove(MDC_RULE_ID);
-            }
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_RULE_ID, rule.getRuleId());
+				logger.debug("Evaluation of {} was: {}", rule.getRuleId(),
+						decision.toString());
+				MDC.remove(MDC_RULE_ID);
+			}
 
-            switch (decision) {
-            // default case is not required here.
-            case DENY:
-                return DecisionType.DENY;
-            case INDETERMINATE:
-                /*
-                 * Adds the missing attributes and of the rule evaluation.
-                 */
-                missingAttributes.addAll(evaluationContext.getMissingAttributes());
-                statusCodes.add(evaluationContext.getStatusCode());
-                atLeastOneError = true;
-                /*
-                 * If the effect is deny if the evaluation results in true, the result is potentialy deny if an error
-                 * occures.
-                 */
-                if (rule.getEffect() == EffectType.DENY) {
-                    potentialDeny = true;
-                }
-                break;
-            case PERMIT:
-                atLeastOnePermit = true;
-                break;
-            }
-        }
-        if (potentialDeny) {
-            evaluationContext.resetStatus();
-            evaluationContext.setMissingAttributes(missingAttributes);
-            evaluationContext.updateStatusCode(statusCodes);
-            return DecisionType.INDETERMINATE;
-        }
-        if (atLeastOnePermit) {
-            evaluationContext.resetStatus();
-            return DecisionType.PERMIT;
-        }
-        if (atLeastOneError) {
-            evaluationContext.resetStatus();
-            evaluationContext.setMissingAttributes(missingAttributes);
-            evaluationContext.updateStatusCode(statusCodes);
-            return DecisionType.INDETERMINATE;
-        }
-        return DecisionType.NOT_APPLICABLE;
+			switch (decision) {
+			// default case is not required here.
+			case DENY:
+				return DecisionType.DENY;
+			case INDETERMINATE:
+				/*
+				 * Adds the missing attributes and of the rule evaluation.
+				 */
+				missingAttributes.addAll(evaluationContext
+						.getMissingAttributes());
+				statusCodes.add(evaluationContext.getStatusCode());
+				atLeastOneError = true;
+				/*
+				 * If the effect is deny if the evaluation results in true, the
+				 * result is potentialy deny if an error occures.
+				 */
+				if (rule.getEffect() == EffectType.DENY) {
+					potentialDeny = true;
+				}
+				break;
+			case PERMIT:
+				atLeastOnePermit = true;
+				break;
+			}
+		}
+		if (potentialDeny) {
+			evaluationContext.resetStatus();
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
+			return DecisionType.INDETERMINATE;
+		}
+		if (atLeastOnePermit) {
+			evaluationContext.resetStatus();
+			return DecisionType.PERMIT;
+		}
+		if (atLeastOneError) {
+			evaluationContext.resetStatus();
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
+			return DecisionType.INDETERMINATE;
+		}
+		return DecisionType.NOT_APPLICABLE;
 
-    }
+	}
 }

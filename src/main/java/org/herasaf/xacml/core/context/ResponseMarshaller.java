@@ -50,6 +50,7 @@ import org.herasaf.xacml.core.context.impl.ResultType;
 import org.herasaf.xacml.core.context.impl.StatusCodeType;
 import org.herasaf.xacml.core.context.impl.StatusDetailType;
 import org.herasaf.xacml.core.context.impl.StatusType;
+import org.herasaf.xacml.core.policy.impl.ObligationsType;
 import org.herasaf.xacml.core.utils.DefaultValidationEventHandler;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
@@ -68,7 +69,7 @@ import org.xml.sax.InputSource;
  * @author Florian Huonder
  */
 public class ResponseMarshaller {
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(ResponseMarshaller.class);
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;
@@ -108,10 +109,10 @@ public class ResponseMarshaller {
 		}
 
 		Marshaller marshaller = CONTEXT.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-				CONFIGURATION.isFormattedOutput());
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
-				CONFIGURATION.isFragment());
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, CONFIGURATION
+				.isFormattedOutput());
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, CONFIGURATION
+				.isFragment());
 
 		if (CONFIGURATION.isWriteSchemaLocation()) {
 			if ("".equals(CONFIGURATION)) {
@@ -154,8 +155,8 @@ public class ResponseMarshaller {
 	 */
 	public static ResponseType create(RequestType req, DecisionType decision,
 			EvaluationContext evaluationContext) {
-		ResponseType response = create(req, decision,
-				evaluationContext.getStatusCode());
+		ResponseType response = create(req, decision, evaluationContext
+				.getStatusCode());
 		// This check is here because only MissingAttributeDetails are
 		// supported in the the StatusDetail
 		if (evaluationContext.getMissingAttributes().size() > 0) {
@@ -176,13 +177,13 @@ public class ResponseMarshaller {
 						.createMissingAttributeDetail(madt));
 			}
 			statusDetail.getContent().addAll(missingAttributesJaxb);
-			response.getResults().get(0).getStatus()
-					.setStatusDetail(statusDetail);
+			response.getResults().get(0).getStatus().setStatusDetail(
+					statusDetail);
 		}
 		// Add the Obligations to the response
 		if (evaluationContext.getObligations().getObligations().size() > 0) {
-			response.getResults().get(0)
-					.setObligations(evaluationContext.getObligations());
+			response.getResults().get(0).setObligations(
+					evaluationContext.getObligations());
 		}
 		return response;
 	}

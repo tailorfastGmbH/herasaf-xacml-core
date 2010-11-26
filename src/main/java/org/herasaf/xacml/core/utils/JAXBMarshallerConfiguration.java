@@ -44,7 +44,7 @@ import org.xml.sax.SAXException;
  * @author René Eggenschwiler
  */
 public class JAXBMarshallerConfiguration {
-	private final Logger logger = LoggerFactory
+	private transient final Logger logger = LoggerFactory
 			.getLogger(JAXBMarshallerConfiguration.class);
 
 	private static final String CLASSPATH_PREFIX = "classpath:";
@@ -174,10 +174,10 @@ public class JAXBMarshallerConfiguration {
 		if (schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())) { // if
 			// the schemaPath has the url: prefix
 			URL url = new URL(schema.substring(URL_PREFIX.length()));
-			this.schema = createSchema(sf,
-					new StreamSource(url.toExternalForm()));
-		} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0,
-				FILE_PREFIX.length())) { // if
+			this.schema = createSchema(sf, new StreamSource(url
+					.toExternalForm()));
+		} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX
+				.length())) { // if
 			// the schemaPath has the file: prefix
 			File file = new File(schema.substring(FILE_PREFIX.length()));
 			this.schema = createSchema(sf, new StreamSource(file));
@@ -192,9 +192,10 @@ public class JAXBMarshallerConfiguration {
 			}
 			this.schema = createSchema(sf, new StreamSource(schemaInput));
 		} else { // if no prefix is provided, the default is classpath:
-			logger.warn(
-					"No prefix (file: || url: || classpath:) given for schema for JAXB validation. Falling back to classpath:{}",
-					leadingSlash(schema));
+			logger
+					.warn(
+							"No prefix (file: || url: || classpath:) given for schema for JAXB validation. Falling back to classpath:{}",
+							leadingSlash(schema));
 
 			InputStream schemaInput = JAXBMarshallerConfiguration.class
 					.getResourceAsStream(leadingSlash(schema));
@@ -222,7 +223,8 @@ public class JAXBMarshallerConfiguration {
 		} catch (SAXException e) {
 			setValidateParsing(false);
 			setValidateWriting(false);
-			logger.warn("Validating turned off because schema could not be initialized.");
+			logger
+					.warn("Validating turned off because schema could not be initialized.");
 		}
 		return null;
 	}

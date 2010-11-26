@@ -60,18 +60,19 @@ import org.xml.sax.InputSource;
  * @author René Eggenschwiler
  */
 public class RequestMarshaller {
-	private static final Logger LOGGER = LoggerFactory.getLogger(RequestMarshaller.class);
+	private transient static final Logger LOGGER = LoggerFactory
+			.getLogger(RequestMarshaller.class);
 	private static JAXBContext CONTEXT;
 	private static JAXBMarshallerConfiguration CONFIGURATION;
 	private static final ObjectFactory OBJECT_FACTORY;
-	
+
 	/**
 	 * Initializes the object factory.
 	 */
 	static {
 		OBJECT_FACTORY = new ObjectFactory();
 	}
-	
+
 	public static void setJAXBContext(JAXBContext context) {
 		RequestMarshaller.CONTEXT = context;
 	}
@@ -91,18 +92,18 @@ public class RequestMarshaller {
 	 */
 	private static Marshaller createMarshaller() throws JAXBException,
 			PropertyException {
-		
-		if(CONTEXT == null || CONFIGURATION == null) {
+
+		if (CONTEXT == null || CONFIGURATION == null) {
 			LOGGER.error("JAXB context and/or configuration not initialized.");
 			throw new NotInitializedException(
-					"JAXB context and/or configuration not initialized.");			
+					"JAXB context and/or configuration not initialized.");
 		}
-		
+
 		Marshaller marshaller = CONTEXT.createMarshaller();
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,
-				CONFIGURATION.isFormattedOutput());
-		marshaller.setProperty(Marshaller.JAXB_FRAGMENT,
-				CONFIGURATION.isFragment());
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, CONFIGURATION
+				.isFormattedOutput());
+		marshaller.setProperty(Marshaller.JAXB_FRAGMENT, CONFIGURATION
+				.isFragment());
 
 		if (CONFIGURATION.isWriteSchemaLocation()) {
 			if ("".equals(CONFIGURATION)) {
@@ -128,7 +129,7 @@ public class RequestMarshaller {
 		}
 		return marshaller;
 	}
-	
+
 	/**
 	 * This method creates a new JAXB unmarshaller. For each request a new
 	 * unmarshaller is created due to the fact that JAXB is not thread-safe.
@@ -139,13 +140,13 @@ public class RequestMarshaller {
 	 */
 	private static Unmarshaller createUnmarshaller() throws JAXBException,
 			PropertyException {
-		
-		if(CONTEXT == null || CONFIGURATION == null) {
+
+		if (CONTEXT == null || CONFIGURATION == null) {
 			LOGGER.error("JAXB context and/or configuration not initialized.");
 			throw new NotInitializedException(
-					"JAXB context and/or configuration not initialized.");			
+					"JAXB context and/or configuration not initialized.");
 		}
-		
+
 		Unmarshaller unmarshaller = CONTEXT.createUnmarshaller();
 
 		if (CONFIGURATION.isValidateParsing()) {
@@ -163,18 +164,20 @@ public class RequestMarshaller {
 		}
 		return unmarshaller;
 	}
-	
+
 	/**
 	 * Marshals this {@link RequestType} to the given content handler.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param ch
 	 *            The {@link ContentHandler} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, ContentHandler ch) throws WritingException {
+	public static void marshal(RequestType request, ContentHandler ch)
+			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					ch);
@@ -189,14 +192,16 @@ public class RequestMarshaller {
 	/**
 	 * Marshals this {@link RequestType} to the given file.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param file
 	 *            The {@link File} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, File file) throws WritingException {
+	public static void marshal(RequestType request, File file)
+			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					file);
@@ -217,14 +222,16 @@ public class RequestMarshaller {
 	 * Module.
 	 * </p>
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param result
 	 *            The {@link Result} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, Result result) throws WritingException {
+	public static void marshal(RequestType request, Result result)
+			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					result);
@@ -239,14 +246,16 @@ public class RequestMarshaller {
 	/**
 	 * Marshals this {@link RequestType} to the given output stream.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param out
 	 *            The {@link OutputStream} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, OutputStream out) throws WritingException {
+	public static void marshal(RequestType request, OutputStream out)
+			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					out);
@@ -261,14 +270,16 @@ public class RequestMarshaller {
 	/**
 	 * Marshals this {@link RequestType} to the given writer.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param writer
 	 *            The {@link Writer} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, Writer writer) throws WritingException {
+	public static void marshal(RequestType request, Writer writer)
+			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					writer);
@@ -283,14 +294,16 @@ public class RequestMarshaller {
 	/**
 	 * Marshals this {@link RequestType} to the given node.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param node
 	 *            The {@link Node} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, Node node) throws WritingException {
+	public static void marshal(RequestType request, Node node)
+			throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					node);
@@ -305,15 +318,16 @@ public class RequestMarshaller {
 	/**
 	 * Marshals this {@link RequestType} to the given xml stream writer.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param xmlStreamWriter
 	 *            The {@link XMLStreamWriter} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, XMLStreamWriter xmlStreamWriter)
-			throws WritingException {
+	public static void marshal(RequestType request,
+			XMLStreamWriter xmlStreamWriter) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					xmlStreamWriter);
@@ -328,14 +342,16 @@ public class RequestMarshaller {
 	/**
 	 * Marshals this {@link RequestType} to the given xml event writer.
 	 * 
-	 * @param response The {@link RequestType} to marshal.
+	 * @param response
+	 *            The {@link RequestType} to marshal.
 	 * 
 	 * @param xmlEventWriter
 	 *            The {@link XMLEventWriter} to use.
 	 * @throws WritingException
 	 *             In case an error occurs.
 	 */
-	public static void marshal(RequestType request, XMLEventWriter xmlEventWriter) throws WritingException {
+	public static void marshal(RequestType request,
+			XMLEventWriter xmlEventWriter) throws WritingException {
 		try {
 			createMarshaller().marshal(OBJECT_FACTORY.createRequest(request),
 					xmlEventWriter);
@@ -351,7 +367,8 @@ public class RequestMarshaller {
 	 * Creates an {@link RequestType} from the given {@link File}.
 	 * 
 	 * @param file
-	 *            The {@link File} from which the {@link RequestType} is created.
+	 *            The {@link File} from which the {@link RequestType} is
+	 *            created.
 	 * @return The created {@link RequestType}.
 	 * @throws SyntaxException
 	 *             In case the XML representation contains a syntax error.
@@ -571,7 +588,8 @@ public class RequestMarshaller {
 	 * Creates an {@link RequestType} from the given {@link Node}.
 	 * 
 	 * @param node
-	 *            The {@link Node} from which the {@link RequestType} is created.
+	 *            The {@link Node} from which the {@link RequestType} is
+	 *            created.
 	 * @return The created {@link RequestType}.
 	 * @throws SyntaxException
 	 *             In case the XML representation contains a syntax error.
@@ -614,7 +632,8 @@ public class RequestMarshaller {
 	 * Creates an {@link RequestType} from the given {@link Source}.
 	 * 
 	 * @param source
-	 *            The {@link Node} from which the {@link RequestType} is created.
+	 *            The {@link Node} from which the {@link RequestType} is
+	 *            created.
 	 * @return The created {@link RequestType}.
 	 * @throws SyntaxException
 	 *             In case the XML representation contains a syntax error.

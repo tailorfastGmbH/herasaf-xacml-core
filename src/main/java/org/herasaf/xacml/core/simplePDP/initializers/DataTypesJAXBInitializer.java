@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 public class DataTypesJAXBInitializer extends
 		AbstractInitializer<DataTypeAttribute<?>> {
 	private static final String CLASS_TYPE_NAME = "org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute";
-	private static Logger logger = LoggerFactory
+	private transient static Logger logger = LoggerFactory
 			.getLogger(DataTypesJAXBInitializer.class);
 	private static final String SEARCH_CONTEXT_PATH = "org/herasaf/xacml/core/dataTypeAttribute/impl";
 	private static final Class<DataTypeAttribute<?>> TARGET_CLASS;

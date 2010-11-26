@@ -27,59 +27,67 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Converts an URN to a {@link RuleCombiningAlgorithm}. The default {@link RuleCombiningAlgorithm}s are defined in the
- * <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access Control
- * Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> appendix C, page 146. <br>
+ * Converts an URN to a {@link RuleCombiningAlgorithm}. The default
+ * {@link RuleCombiningAlgorithm}s are defined in the <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
+ * 2006</a> appendix C, page 146. <br>
  * 
  * @author Sacha Dolski
  * @author René Eggenschwiler
  * @author Florian Huonder
  */
-public class RuleCombiningAlgorithmJAXBTypeAdapter extends XmlAdapter<String, RuleCombiningAlgorithm> {
-    private final Logger logger = LoggerFactory.getLogger(RuleCombiningAlgorithmJAXBTypeAdapter.class);
-    private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
+public class RuleCombiningAlgorithmJAXBTypeAdapter extends
+		XmlAdapter<String, RuleCombiningAlgorithm> {
+	private transient final Logger logger = LoggerFactory
+			.getLogger(RuleCombiningAlgorithmJAXBTypeAdapter.class);
+	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
 
-    /**
-     * This method sets the {@link Map} containing the mapping between rule combining algorithms and their ID's into the
-     * converter.
-     * 
-     * @param algorithms
-     *            The {@link Map} containing the mapping between ID's and rule combining algorithms.
-     */
-    public static void setCombiningAlgorithms(final Map<String, RuleCombiningAlgorithm> algorithms) {
-        combiningAlgorithms = algorithms;
-    }
+	/**
+	 * This method sets the {@link Map} containing the mapping between rule
+	 * combining algorithms and their ID's into the converter.
+	 * 
+	 * @param algorithms
+	 *            The {@link Map} containing the mapping between ID's and rule
+	 *            combining algorithms.
+	 */
+	public static void setCombiningAlgorithms(
+			final Map<String, RuleCombiningAlgorithm> algorithms) {
+		combiningAlgorithms = algorithms;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String marshal(final RuleCombiningAlgorithm combAlg) {
-        String combAlgString;
-        try {
-            combAlgString = combAlg.toString();
-        } catch (NullPointerException e) {
-            logger.error("Argument combAlg must not be null: ", e);
-            throw new IllegalArgumentException(e);
-        }
-        return combAlgString;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String marshal(final RuleCombiningAlgorithm combAlg) {
+		String combAlgString;
+		try {
+			combAlgString = combAlg.toString();
+		} catch (NullPointerException e) {
+			logger.error("Argument combAlg must not be null: ", e);
+			throw new IllegalArgumentException(e);
+		}
+		return combAlgString;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public RuleCombiningAlgorithm unmarshal(final String combAlgId) {
-        RuleCombiningAlgorithm combAlg;
-        try {
-            combAlg = combiningAlgorithms.get(combAlgId);
-        } catch (NullPointerException e) {
-            logger.error("RuleCombiningAlgorithmJAXBTypeAdapter not properly initialized.");
-            throw new NotInitializedException(e);
-        }
-        if (combAlg != null) {
-            return combAlg;
-        }
-        throw new IllegalArgumentException("Combining Algorithm " + combAlgId + " unknown.");
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public RuleCombiningAlgorithm unmarshal(final String combAlgId) {
+		RuleCombiningAlgorithm combAlg;
+		try {
+			combAlg = combiningAlgorithms.get(combAlgId);
+		} catch (NullPointerException e) {
+			logger
+					.error("RuleCombiningAlgorithmJAXBTypeAdapter not properly initialized.");
+			throw new NotInitializedException(e);
+		}
+		if (combAlg != null) {
+			return combAlg;
+		}
+		throw new IllegalArgumentException("Combining Algorithm " + combAlgId
+				+ " unknown.");
+	}
 }

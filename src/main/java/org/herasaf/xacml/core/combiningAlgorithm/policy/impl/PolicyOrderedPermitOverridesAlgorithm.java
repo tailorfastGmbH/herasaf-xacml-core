@@ -36,165 +36,198 @@ import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
 /**
- * The implementation of the default XACML 2.0 <i>policy ordered permit overrides algorithm</i>.<br />
- * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
- * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 150 for further information.
+ * The implementation of the default XACML 2.0 <i>policy ordered permit
+ * overrides algorithm</i>.<br />
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29.
+ * January 2008</a> page 150 for further information.
  * 
  * @author Stefan Oberholzer
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class PolicyOrderedPermitOverridesAlgorithm extends PolicyOrderedCombiningAlgorithm {
+public class PolicyOrderedPermitOverridesAlgorithm extends
+		PolicyOrderedCombiningAlgorithm {
 
-    /** XACMLcombining algorithm ID. */
-    public static final String ID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides";
+	/** XACMLcombining algorithm ID. */
+	public static final String ID = "urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides";
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    private final Logger logger = LoggerFactory.getLogger(PolicyOrderedPermitOverridesAlgorithm.class);
+	private transient final Logger logger = LoggerFactory
+			.getLogger(PolicyOrderedPermitOverridesAlgorithm.class);
 
-    /**
-     * {@inheritDoc}
-     */
-    public DecisionType evaluateEvaluatableList(final RequestType request, final List<Evaluatable> possiblePolicies,
-            final EvaluationContext evaluationContext) {
+	/**
+	 * {@inheritDoc}
+	 */
+	public DecisionType evaluateEvaluatableList(final RequestType request,
+			final List<Evaluatable> possiblePolicies,
+			final EvaluationContext evaluationContext) {
 
-        if (possiblePolicies == null) {
-            // It is an illegal state if the list containing the policies is
-            // null.
-            logger.error("The possiblePolicies list was null. This is an illegal state.");
-            evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-            return DecisionType.INDETERMINATE;
-        }
+		if (possiblePolicies == null) {
+			// It is an illegal state if the list containing the policies is
+			// null.
+			logger
+					.error("The possiblePolicies list was null. This is an illegal state.");
+			evaluationContext
+					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+			return DecisionType.INDETERMINATE;
+		}
 
-        boolean atLeastOneError = false;
-        boolean atLeastOneDeny = false;
-        boolean atLeastOnePermit = false;
-        /*
-         * keeps the actual state and missing attributes of this combining process.
-         */
-        List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
-        List<StatusCode> statusCodes = new ArrayList<StatusCode>();
-        List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
+		boolean atLeastOneError = false;
+		boolean atLeastOneDeny = false;
+		boolean atLeastOnePermit = false;
+		/*
+		 * keeps the actual state and missing attributes of this combining
+		 * process.
+		 */
+		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
+		List<StatusCode> statusCodes = new ArrayList<StatusCode>();
+		List<ObligationType> obligationsOfApplicableEvals = new ArrayList<ObligationType>();
 
-        /*
-         * If the list of evaluatables contains no values, the for-loop is skipped and a NOT_APPLICABLE is returned.
-         */
-        for (int i = 0; i < possiblePolicies.size(); i++) {
-            final Evaluatable eval = possiblePolicies.get(i);
+		/*
+		 * If the list of evaluatables contains no values, the for-loop is
+		 * skipped and a NOT_APPLICABLE is returned.
+		 */
+		for (int i = 0; i < possiblePolicies.size(); i++) {
+			final Evaluatable eval = possiblePolicies.get(i);
 
-            if (eval == null) {
-                // It is an illegal state if the list contains any
-                // null.
-                logger.error("The list of possible policies must not contain any null values.");
-                evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-                return DecisionType.INDETERMINATE;
-            }
+			if (eval == null) {
+				// It is an illegal state if the list contains any
+				// null.
+				logger
+						.error("The list of possible policies must not contain any null values.");
+				evaluationContext
+						.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+				return DecisionType.INDETERMINATE;
+			}
 
-            if (atLeastOnePermit && evaluationContext.isRespectAbandonedEvaluatables() && !eval.hasObligations()) {
-                /*
-                 * If a decision is already made (decisionPermit == true) and the abandoned Obligations must be taken
-                 * into account (respectAbandonedEvaluatables == true) and the evaluatable to evaluate (and its sub
-                 * evaluatables) do not have Obligations, then this iteration can be skipped.
-                 */
-                break;
-            }
+			if (atLeastOnePermit
+					&& evaluationContext.isRespectAbandonedEvaluatables()
+					&& !eval.hasObligations()) {
+				/*
+				 * If a decision is already made (decisionPermit == true) and
+				 * the abandoned Obligations must be taken into account
+				 * (respectAbandonedEvaluatables == true) and the evaluatable to
+				 * evaluate (and its sub evaluatables) do not have Obligations,
+				 * then this iteration can be skipped.
+				 */
+				break;
+			}
 
-            DecisionType decision;
-            // Resets the status to go sure, that the returned statuscode is
-            // the one of the evaluation.
-            evaluationContext.resetStatus();
+			DecisionType decision;
+			// Resets the status to go sure, that the returned statuscode is
+			// the one of the evaluation.
+			evaluationContext.resetStatus();
 
-            if (logger.isDebugEnabled()) {
-                MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-                logger.debug("Starting evaluation of: {}", eval.getId().getId());
-            }
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				logger
+						.debug("Starting evaluation of: {}", eval.getId()
+								.getId());
+			}
 
-            CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
-            if (combiningAlg == null) {
-                logger.error("Unable to locate combining algorithm for policy {}", eval.getId());
-                evaluationContext.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
-                decision = DecisionType.INDETERMINATE;
-            } else {
-                decision = combiningAlg.evaluate(request, eval, evaluationContext);
-            }
+			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
+			if (combiningAlg == null) {
+				logger.error(
+						"Unable to locate combining algorithm for policy {}",
+						eval.getId());
+				evaluationContext
+						.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
+				decision = DecisionType.INDETERMINATE;
+			} else {
+				decision = combiningAlg.evaluate(request, eval,
+						evaluationContext);
+			}
 
-            if (logger.isDebugEnabled()) {
-                MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-                logger.debug("Evaluation of {} was: {}", eval.getId().getId(), decision.toString());
-                MDC.remove(MDC_EVALUATABLE_ID);
-            }
+			if (logger.isDebugEnabled()) {
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				logger.debug("Evaluation of {} was: {}", eval.getId().getId(),
+						decision.toString());
+				MDC.remove(MDC_EVALUATABLE_ID);
+			}
 
-            if (decision == DecisionType.PERMIT || decision == DecisionType.DENY) {
-                obligationsOfApplicableEvals.addAll(eval.getContainedObligations(EffectType.fromValue(decision
-                        .toString())));
-                obligationsOfApplicableEvals.addAll(evaluationContext.getObligations().getObligations());
-            }
+			if (decision == DecisionType.PERMIT
+					|| decision == DecisionType.DENY) {
+				obligationsOfApplicableEvals.addAll(eval
+						.getContainedObligations(EffectType.fromValue(decision
+								.toString())));
+				obligationsOfApplicableEvals.addAll(evaluationContext
+						.getObligations().getObligations());
+			}
 
-            switch (decision) {
-            case PERMIT:
-                if (!evaluationContext.isRespectAbandonedEvaluatables()) {
-                    evaluationContext.clearObligations();
-                    evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
-                    /*
-                     * If the result is permit, the statuscode is always ok.
-                     */
-                    evaluationContext.resetStatus();
-                    return DecisionType.PERMIT;
-                } else {
-                    atLeastOnePermit = true;
-                }
-                break;
-            case DENY:
-                /*
-                 * If the decision of the evaluatable is deny, the status has to be saved.
-                 */
-                missingAttributes.addAll(evaluationContext.getMissingAttributes());
-                statusCodes.add(evaluationContext.getStatusCode());
-                atLeastOneDeny = true;
-                break;
-            case INDETERMINATE:
-                /*
-                 * If the decision of the evaluatable is Indeterminate, the status has to be saved.
-                 */
-                missingAttributes.addAll(evaluationContext.getMissingAttributes());
-                statusCodes.add(evaluationContext.getStatusCode());
-                atLeastOneError = true;
-                break;
-            case NOT_APPLICABLE:
-                break;
-            }
-            evaluationContext.clearObligations();
-        }
-        if (atLeastOnePermit) {
-            /*
-             * If the result is permit, the statuscode is always ok.
-             */
-            evaluationContext.resetStatus();
-            evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.PERMIT);
-            return DecisionType.PERMIT;
-        } else if (atLeastOneDeny) {
-            // The obligationsOfApplicableEvals may not be revised because it
-            // can only contain DENY-Obligations.
-            evaluationContext.addObligations(obligationsOfApplicableEvals, EffectType.DENY);
-            evaluationContext.setMissingAttributes(missingAttributes);
-            // evaluationContext.updateStatusCode(statusCodes);
-            evaluationContext.resetStatus();
-            return DecisionType.DENY;
-        } else if (atLeastOneError) {
-            evaluationContext.setMissingAttributes(missingAttributes);
-            evaluationContext.updateStatusCode(statusCodes);
-            return DecisionType.INDETERMINATE;
-        }
-        evaluationContext.clearObligations();
-        return DecisionType.NOT_APPLICABLE;
-    }
+			switch (decision) {
+			case PERMIT:
+				if (!evaluationContext.isRespectAbandonedEvaluatables()) {
+					evaluationContext.clearObligations();
+					evaluationContext.addObligations(
+							obligationsOfApplicableEvals, EffectType.PERMIT);
+					/*
+					 * If the result is permit, the statuscode is always ok.
+					 */
+					evaluationContext.resetStatus();
+					return DecisionType.PERMIT;
+				} else {
+					atLeastOnePermit = true;
+				}
+				break;
+			case DENY:
+				/*
+				 * If the decision of the evaluatable is deny, the status has to
+				 * be saved.
+				 */
+				missingAttributes.addAll(evaluationContext
+						.getMissingAttributes());
+				statusCodes.add(evaluationContext.getStatusCode());
+				atLeastOneDeny = true;
+				break;
+			case INDETERMINATE:
+				/*
+				 * If the decision of the evaluatable is Indeterminate, the
+				 * status has to be saved.
+				 */
+				missingAttributes.addAll(evaluationContext
+						.getMissingAttributes());
+				statusCodes.add(evaluationContext.getStatusCode());
+				atLeastOneError = true;
+				break;
+			case NOT_APPLICABLE:
+				break;
+			}
+			evaluationContext.clearObligations();
+		}
+		if (atLeastOnePermit) {
+			/*
+			 * If the result is permit, the statuscode is always ok.
+			 */
+			evaluationContext.resetStatus();
+			evaluationContext.addObligations(obligationsOfApplicableEvals,
+					EffectType.PERMIT);
+			return DecisionType.PERMIT;
+		} else if (atLeastOneDeny) {
+			// The obligationsOfApplicableEvals may not be revised because it
+			// can only contain DENY-Obligations.
+			evaluationContext.addObligations(obligationsOfApplicableEvals,
+					EffectType.DENY);
+			evaluationContext.setMissingAttributes(missingAttributes);
+			// evaluationContext.updateStatusCode(statusCodes);
+			evaluationContext.resetStatus();
+			return DecisionType.DENY;
+		} else if (atLeastOneError) {
+			evaluationContext.setMissingAttributes(missingAttributes);
+			evaluationContext.updateStatusCode(statusCodes);
+			return DecisionType.INDETERMINATE;
+		}
+		evaluationContext.clearObligations();
+		return DecisionType.NOT_APPLICABLE;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String getCombiningAlgorithmId() {
-        return ID;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String getCombiningAlgorithmId() {
+		return ID;
+	}
 }

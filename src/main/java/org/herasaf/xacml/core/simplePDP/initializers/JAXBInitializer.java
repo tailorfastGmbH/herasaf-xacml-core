@@ -51,7 +51,7 @@ import org.xml.sax.SAXException;
  */
 public class JAXBInitializer implements Initializer {
 
-	private final Logger logger = LoggerFactory
+	private transient final Logger logger = LoggerFactory
 			.getLogger(JAXBInitializer.class);
 
 	private static final String CONTEXT_JAXBCONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
@@ -112,9 +112,10 @@ public class JAXBInitializer implements Initializer {
 			throw ie;
 		}
 		PolicyMarshaller.setJAXBMarshallerConfiguration(jmc);
-		logger.info(
-				"PolicyMarshaller is configured with JAXB Marshaller Configuration {}",
-				jmc.toString());
+		logger
+				.info(
+						"PolicyMarshaller is configured with JAXB Marshaller Configuration {}",
+						jmc.toString());
 	}
 
 	/**
@@ -156,9 +157,10 @@ public class JAXBInitializer implements Initializer {
 			throw ie;
 		}
 		RequestMarshaller.setJAXBMarshallerConfiguration(jmc);
-		logger.info(
-				"RequestMarshaller is configured with JAXB Marshaller Configuration {}",
-				jmc.toString());
+		logger
+				.info(
+						"RequestMarshaller is configured with JAXB Marshaller Configuration {}",
+						jmc.toString());
 	}
 
 	/**
@@ -199,9 +201,10 @@ public class JAXBInitializer implements Initializer {
 			throw ie;
 		}
 		ResponseMarshaller.setJAXBMarshallerConfiguration(jmc);
-		logger.info(
-				"ResponseMarshaller is configured with JAXB Marshaller Configuration {}",
-				jmc.toString());
+		logger
+				.info(
+						"ResponseMarshaller is configured with JAXB Marshaller Configuration {}",
+						jmc.toString());
 	}
 
 	/**

@@ -105,7 +105,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public final class SimplePDPFactory {
-	private static final Logger LOGGER = LoggerFactory
+	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(SimplePDPFactory.class);
 
 	/**
