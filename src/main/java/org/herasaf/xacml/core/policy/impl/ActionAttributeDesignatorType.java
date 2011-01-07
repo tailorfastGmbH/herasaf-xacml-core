@@ -61,31 +61,13 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
 public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 	private static final long serialVersionUID = 1L;
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf
-	 * .core.context.impl.RequestType, java.util.Map)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
-		List<Object> returnValues = new ArrayList<Object>();
-
-		// A RequestType is not thread safe, because of this you can iterate
-		// over it.
-		for (AttributeType attr : request.getAction().getAttributes()) {
-			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
-				if (getIssuer() != null) {
-					if (getIssuer().equals(attr.getIssuer())) {
-						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-					}
-				} else {
-					addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-				}
-			}
-		}
+		List<Object> returnValues = (List<Object> ) handle(request);
 
 		/*
 		 * If no Attribute could be found, the attribute has to be requested
@@ -105,4 +87,28 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 		}
 		return returnValues;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object handle(RequestType request) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
+		List<Object> returnValues = new ArrayList<Object>();
+
+		// A RequestType is not thread safe, because of this you can iterate
+		// over it.
+		for (AttributeType attr : request.getAction().getAttributes()) {
+			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
+				if (getIssuer() != null) {
+					if (getIssuer().equals(attr.getIssuer())) {
+						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+					}
+				} else {
+					addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+				}
+			}
+		}
+		return returnValues;
+	}	
 }

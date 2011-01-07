@@ -180,6 +180,10 @@ public abstract class AttributeDesignatorType extends ExpressionType {
 	public abstract Object handle(RequestType request, EvaluationContext evaluationContext)
 			throws ExpressionProcessingException, MissingAttributeException, SyntaxException;
 
+	public abstract Object handle(RequestType request)
+			throws ExpressionProcessingException, MissingAttributeException, SyntaxException;
+
+	
 	/**
 	 * Receives an AttributeType and a list. Converts containing
 	 * AttributeValueTypes of the AttributeType in the specified dataType and

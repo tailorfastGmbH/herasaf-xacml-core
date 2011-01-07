@@ -91,15 +91,38 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 		this.subjectCategory = value;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * org.herasaf.core.policy.impl.AttributeDesignatorType#handle(org.herasaf
-	 * .core.context.impl.RequestType, java.util.Map)
+	/**
+	 * {@inheritDoc}
 	 */
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
+		List<Object> returnValues = (List<Object> ) handle(request);
+
+		/*
+		 * If no Attribute could be found, the attribute has to be requested
+		 * from a Policy Information Point.
+		 * 
+		 * See: the OASIS eXtensible Access Control Markup Langugage (XACML)
+		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
+		 * further information.
+		 */
+		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
+			List<AttributeValueType> attrValues = evaluationContext.getPIP().addSubjectAttributesToRequest(request, getAttributeId(),
+					getDataType().toString(), getIssuer(), getSubjectCategory());
+			addAndConvertAttrValue(returnValues, attrValues);
+		}
+		if (returnValues.size() == 0 && isMustBePresent()) {
+			throw new MissingAttributeException(getAttributeId(), getDataType(), getIssuer());
+		}
+		return returnValues;
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object handle(RequestType request) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
@@ -122,22 +145,6 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 					}
 				}
 			}
-		}
-		/*
-		 * If no Attribute could be found, the attribute has to be requested
-		 * from a Policy Information Point.
-		 * 
-		 * See: the OASIS eXtensible Access Control Markup Langugage (XACML)
-		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
-		 * further information.
-		 */
-		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
-			List<AttributeValueType> attrValues = evaluationContext.getPIP().addSubjectAttributesToRequest(request, getAttributeId(),
-					getDataType().toString(), getIssuer(), getSubjectCategory());
-			addAndConvertAttrValue(returnValues, attrValues);
-		}
-		if (returnValues.size() == 0 && isMustBePresent()) {
-			throw new MissingAttributeException(getAttributeId(), getDataType(), getIssuer());
 		}
 		return returnValues;
 	}

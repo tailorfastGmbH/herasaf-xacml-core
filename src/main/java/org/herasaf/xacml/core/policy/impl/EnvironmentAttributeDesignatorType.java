@@ -67,21 +67,8 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType 
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
-		List<Object> returnValues = new ArrayList<Object>();
+		List<Object> returnValues = (List<Object> ) handle(request);
 
-		// A RequestType is not thread safe, because of this you can iterate
-		// over it.
-		for (AttributeType attr : request.getEnvironment().getAttributes()) {
-			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
-				if (getIssuer() != null) {
-					if (getIssuer().equals(attr.getIssuer())) {
-						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-					}
-				} else {
-					addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-				}
-			}
-		}
 		/*
 		 * If no Attribute could be found, the attribute has to be requested
 		 * from a Policy Information Point.
@@ -101,4 +88,27 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType 
 		return returnValues;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Object handle(RequestType request) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
+		List<Object> returnValues = new ArrayList<Object>();
+
+		// A RequestType is not thread safe, because of this you can iterate
+		// over it.
+		for (AttributeType attr : request.getEnvironment().getAttributes()) {
+			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
+				if (getIssuer() != null) {
+					if (getIssuer().equals(attr.getIssuer())) {
+						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+					}
+				} else {
+					addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+				}
+			}
+		}
+		return returnValues;
+	}
 }
