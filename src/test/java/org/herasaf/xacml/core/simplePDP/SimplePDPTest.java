@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -52,7 +52,7 @@ import org.testng.annotations.Test;
  * expected.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author Renï¿½ Eggenschwiler
  */
 public class SimplePDPTest {
 	private PDP simplePDP;

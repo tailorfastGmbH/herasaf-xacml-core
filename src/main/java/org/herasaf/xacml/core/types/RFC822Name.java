@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -72,24 +72,24 @@ public class RFC822Name {
 	 * <p>
 	 * In order to match a particular address in the second argument, the first
 	 * argument must specify the complete mail address to be matched. For
-	 * example, if the first argument is “Anderson@sun.com”, this matches a
-	 * value in the second argument of “Anderson@sun.com” and
-	 * “Anderson@SUN.COM”, but not “Anne.Anderson@sun.com”, “anderson@sun.com”
-	 * or “Anderson@east.sun.com”.
+	 * example, if the first argument is ï¿½Anderson@sun.comï¿½, this matches a
+	 * value in the second argument of ï¿½Anderson@sun.comï¿½ and
+	 * ï¿½Anderson@SUN.COMï¿½, but not ï¿½Anne.Anderson@sun.comï¿½, ï¿½anderson@sun.comï¿½
+	 * or ï¿½Anderson@east.sun.comï¿½.
 	 * </p>
 	 * 
 	 * <p>
 	 * In order to match any address at a particular domain in the second
 	 * argument, the first argument must specify only a domain name (usually a
-	 * DNS name). For example, if the first argument is “sun.com”, this matches
-	 * a value in the first argument of “Anderson@sun.com” or “Baxter@SUN.COM”,
-	 * but not “Anderson@east.sun.com”.
+	 * DNS name). For example, if the first argument is ï¿½sun.comï¿½, this matches
+	 * a value in the first argument of ï¿½Anderson@sun.comï¿½ or ï¿½Baxter@SUN.COMï¿½,
+	 * but not ï¿½Anderson@east.sun.comï¿½.
 	 * </p>
 	 * 
 	 * <p>
 	 * In order to match any address in a particular domain in the second
 	 * argument, the first argument must specify the desired domain-part with a
-	 * leading ".". For example, if the first argument is “.east.sun.com”, this
+	 * leading ".". For example, if the first argument is ï¿½.east.sun.comï¿½, this
 	 * matches a value in the second argument of "Anderson@east.sun.com" and
 	 * "anne.anderson@ISRG.EAST.SUN.COM" but not "Anderson@sun.com".
 	 * </p>
