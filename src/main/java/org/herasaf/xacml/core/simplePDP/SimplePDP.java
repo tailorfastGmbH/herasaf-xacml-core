@@ -47,7 +47,7 @@ import org.slf4j.MDC;
  * plugged in.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class SimplePDP implements PDP {
 	private final PolicyRetrievalPoint policyRepository;
@@ -87,6 +87,7 @@ public class SimplePDP implements PDP {
 					.isRespectAbandonedEvaluatables();
 			this.pip = simplePDPConfiguration.getPip();
 			this.targetMatcher = simplePDPConfiguration.getTargetMatcher();
+			this.statusCodeComparator = simplePDPConfiguration.getStatusCodeComparator();
 
 			if (pip == null) {
 				logger
@@ -110,15 +111,6 @@ public class SimplePDP implements PDP {
 							+ "(type is either ordered or unordered).");
 			logger.error(ie.getMessage());
 			throw ie;
-		}
-
-		if (simplePDPConfiguration.getStatusCodeComparator() == null) {
-			logger.info("Using default status code comparator.");
-			this.statusCodeComparator = new StatusCodeComparator();
-		} else {
-			logger.info("Using custom status code comparator.");
-			this.statusCodeComparator = simplePDPConfiguration
-					.getStatusCodeComparator();
 		}
 	}
 
