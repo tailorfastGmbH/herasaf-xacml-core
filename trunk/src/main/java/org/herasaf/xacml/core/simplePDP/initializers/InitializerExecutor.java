@@ -18,6 +18,7 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
@@ -38,6 +39,8 @@ public class InitializerExecutor {
 			.getLogger(InitializerExecutor.class);
 
 	private static Set<Initializer> initializers;
+
+	private static AtomicBoolean initializersRan = new AtomicBoolean(false);
 
 	/**
 	 * The constructor is private to avoid instantiation. It is intended to be
@@ -102,18 +105,21 @@ public class InitializerExecutor {
 	 * {@link #getDefaultInitializers()}.
 	 */
 	public static void runInitializers() {
-		Set<Initializer> inits;
+		if (!initializersRan.get()) { //if the initializers were not executed earlier.
+			Set<Initializer> inits;
 
-		if (initializers == null) {
-			inits = getDefaultInitializers();
-		} else {
-			inits = initializers;
-		}
-
-		if (inits != null) {
-			for (Initializer initializer : inits) {
-				initializer.run();
+			if (initializers == null) {
+				inits = getDefaultInitializers();
+			} else {
+				inits = initializers;
 			}
-		}
+
+			if (inits != null) {
+				for (Initializer initializer : inits) {
+					initializer.run();
+				}
+			}
+			initializersRan.set(true);
+		} 
 	}
 }

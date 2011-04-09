@@ -24,6 +24,8 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplic
 import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class represents a configuration container for configuring a
@@ -32,10 +34,11 @@ import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
  * Please read field level javadoc for explanation of default values.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class SimplePDPConfiguration {
-
+	private Logger logger = LoggerFactory.getLogger(SimplePDPConfiguration.class);
+	
 	/**
 	 * The root {@link PolicyCombiningAlgorithm} to be used in the
 	 * {@link SimplePDP} on which this {@link SimplePDPConfiguration} will be
@@ -43,7 +46,8 @@ public class SimplePDPConfiguration {
 	 * <b>Default value is:</b> a new instance of
 	 * {@link PolicyOnlyOneApplicableAlgorithm}
 	 */
-	private PolicyCombiningAlgorithm rootCombiningAlgorithm = new PolicyOnlyOneApplicableAlgorithm();
+	//default value is set in the getter, if needed.
+	private PolicyCombiningAlgorithm rootCombiningAlgorithm;
 
 	/**
 	 * The {@link PolicyRetrievalPoint} to be used in the {@link SimplePDP} on
@@ -51,7 +55,8 @@ public class SimplePDPConfiguration {
 	 * <b>Default value is:</b> a new instance of
 	 * {@link MapBasedSimplePolicyRepository}
 	 */
-	private PolicyRetrievalPoint policyRetrievalPoint = new MapBasedSimplePolicyRepository();
+	//default value is set in the getter, if needed.
+	private PolicyRetrievalPoint policyRetrievalPoint;
 
 	/**
 	 * The {@link PIP} to be used in the {@link SimplePDP} on which this
@@ -74,20 +79,27 @@ public class SimplePDPConfiguration {
 	 * applied. <br>
 	 * <b>Default value is:</b> {@link TargetMatcherImpl}
 	 */
-	private TargetMatcher targetMatcher = new TargetMatcherImpl();
+	//default value is set in the getter, if needed.
+	private TargetMatcher targetMatcher;
 
 	/**
 	 * The {@link StatusCodeComparator} to be used in the {@link SimplePDP} on
 	 * which this {@link SimplePDPConfiguration} will be applied. <br>
 	 * <b>Default value is:</b> {@link StatusCodeComparator}
 	 */
-	private StatusCodeComparator statusCodeComparator = new StatusCodeComparator();
+	//default value is set in the getter, if needed.
+	private StatusCodeComparator statusCodeComparator;
 
 	/**
 	 * @return The configured root {@link PolicyCombiningAlgorithm}
 	 */
 	public PolicyCombiningAlgorithm getRootCombiningAlgorithm() {
-		return rootCombiningAlgorithm;
+		if (rootCombiningAlgorithm != null) {
+			logger.info("Using custom root combining algorithm: {}", rootCombiningAlgorithm.getClass().getCanonicalName());
+			return rootCombiningAlgorithm;
+		}
+		logger.info("Using default root combining algorithm: {}", PolicyOnlyOneApplicableAlgorithm.class.getCanonicalName());
+		return new PolicyOnlyOneApplicableAlgorithm(); // default
 	}
 
 	/**
@@ -105,7 +117,12 @@ public class SimplePDPConfiguration {
 	 * @return The configured {@link PolicyRetrievalPoint}
 	 */
 	public PolicyRetrievalPoint getPolicyRetrievalPoint() {
-		return policyRetrievalPoint;
+		if (policyRetrievalPoint != null) {
+			logger.info("Using custom policy retrieval point: {}", policyRetrievalPoint.getClass().getCanonicalName());
+			return policyRetrievalPoint;
+		}
+		logger.info("Using default policy retrieval point: {}", MapBasedSimplePolicyRepository.class.getCanonicalName());
+		return new MapBasedSimplePolicyRepository(); // default
 	}
 
 	/**
@@ -127,7 +144,7 @@ public class SimplePDPConfiguration {
 
 	/**
 	 * @param pip
-	 *            The {@link PIP} to set. 
+	 *            The {@link PIP} to set.
 	 */
 	public void setPip(PIP pip) {
 		this.pip = pip;
@@ -155,7 +172,12 @@ public class SimplePDPConfiguration {
 	 * @return The configured {@link TargetMatcher}
 	 */
 	public TargetMatcher getTargetMatcher() {
-		return targetMatcher;
+		if (targetMatcher != null) {
+			logger.info("Using custom target matcher: {}", targetMatcher.getClass().getCanonicalName());
+			return targetMatcher;
+		}
+		logger.info("Using default target matcher: {}", TargetMatcherImpl.class.getCanonicalName());
+		return new TargetMatcherImpl(); // default
 	}
 
 	/**
@@ -172,7 +194,12 @@ public class SimplePDPConfiguration {
 	 * @return The configured {@link StatusCodeComparator}
 	 */
 	public StatusCodeComparator getStatusCodeComparator() {
-		return statusCodeComparator;
+		if(statusCodeComparator != null){
+			logger.info("Using custom status code comparator: {}", statusCodeComparator.getClass().getCanonicalName());
+			return statusCodeComparator;
+		}
+		logger.info("Using default status code comparator: {}", StatusCodeComparator.class.getCanonicalName());
+		return new StatusCodeComparator(); //default
 	}
 
 	/**
@@ -185,5 +212,4 @@ public class SimplePDPConfiguration {
 			StatusCodeComparator statusCodeComparator) {
 		this.statusCodeComparator = statusCodeComparator;
 	}
-
 }
