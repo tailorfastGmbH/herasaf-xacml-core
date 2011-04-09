@@ -68,49 +68,46 @@ public class SimplePDP implements PDP {
 	 * 
 	 */
 	public SimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
+		this.rootPolicyCombiningAlgorithm = simplePDPConfiguration
+				.getRootCombiningAlgorithm();
+		this.policyRepository = simplePDPConfiguration
+				.getPolicyRetrievalPoint();
+
 		/*
 		 * Checks if the policy repository and the root combining algorithm are
-		 * both of the same type. The type is either ordered or unordered
-		 * (exclusive OR).
+		 * both of the same type. The type is either ordered or unordered (XOR).
 		 */
-		if ((PolicyOrderedCombiningAlgorithm.class
-				.isInstance(simplePDPConfiguration.getRootCombiningAlgorithm()) && OrderedPolicyRepository.class
-				.isInstance(simplePDPConfiguration.getPolicyRetrievalPoint()))
-				^ PolicyUnorderedCombiningAlgorithm.class
-						.isInstance(simplePDPConfiguration
-								.getRootCombiningAlgorithm())) {
-			this.rootPolicyCombiningAlgorithm = simplePDPConfiguration
-					.getRootCombiningAlgorithm();
-			this.policyRepository = simplePDPConfiguration
-					.getPolicyRetrievalPoint();
-			this.respectAbandonedEvaluatables = simplePDPConfiguration
-					.isRespectAbandonedEvaluatables();
-			this.pip = simplePDPConfiguration.getPip();
-			this.targetMatcher = simplePDPConfiguration.getTargetMatcher();
-			this.statusCodeComparator = simplePDPConfiguration.getStatusCodeComparator();
-
-			if (pip == null) {
-				logger
-						.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
-			}
-
-			/*
-			 * This check is due to the issue HERASAFXACMLCORE-45.
-			 */
-			String javaVersion = System.getProperty("java.version");
-			if (javaVersion != null
-					&& (javaVersion.startsWith("1.6.0") || javaVersion
-							.startsWith("1.7.0"))) {
-				logger
-						.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
-								+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
-			}
-		} else {
+		if (!((PolicyOrderedCombiningAlgorithm.class
+				.isInstance(this.rootPolicyCombiningAlgorithm) && OrderedPolicyRepository.class
+				.isInstance(this.policyRepository)) ^ PolicyUnorderedCombiningAlgorithm.class
+				.isInstance(this.rootPolicyCombiningAlgorithm))) {
 			InitializationException ie = new InitializationException(
 					"Root combining algorithm and policy repository are not of the same type "
 							+ "(type is either ordered or unordered).");
 			logger.error(ie.getMessage());
 			throw ie;
+		}
+
+		this.respectAbandonedEvaluatables = simplePDPConfiguration
+				.isRespectAbandonedEvaluatables();
+		this.pip = simplePDPConfiguration.getPip();
+		this.targetMatcher = simplePDPConfiguration.getTargetMatcher();
+		this.statusCodeComparator = simplePDPConfiguration
+				.getStatusCodeComparator();
+
+		if (pip == null) {
+			logger.warn("No PIP is set. Attributes that are not present in the request cannot be resolved.");
+		}
+
+		/*
+		 * This check is due to the issue HERASAFXACMLCORE-45.
+		 */
+		String javaVersion = System.getProperty("java.version");
+		if (javaVersion != null
+				&& (javaVersion.startsWith("1.6.0") || javaVersion
+						.startsWith("1.7.0"))) {
+			logger.warn("This PDP runs with a Java version > 1.5.0. This may lead to an unspecific "
+					+ "behavior when using the data type http://www.w3.org/2001/XMLSchema#time.");
 		}
 	}
 
@@ -204,8 +201,9 @@ public class SimplePDP implements PDP {
 		}
 
 		DecisionType decision = rootPolicyCombiningAlgorithm
-				.evaluateEvaluatableList(request, policyRepository
-						.getEvaluatables(request), evaluationContext);
+				.evaluateEvaluatableList(request,
+						policyRepository.getEvaluatables(request),
+						evaluationContext);
 
 		MDC.remove(MDC_REQUEST_TIME);
 		return createResponse(request, decision, evaluationContext);
@@ -266,8 +264,7 @@ public class SimplePDP implements PDP {
 		// Multiple resource profile of XACML v2.0 (OASIS Standard, 1 February
 		// 2005).
 		if (request.getResources().size() > 1) {
-			logger
-					.error("The request must not contain more than one <Resource> elements.");
+			logger.error("The request must not contain more than one <Resource> elements.");
 			// See Section 2.3.
 			return false;
 		} else if (request.getResources().size() == 1) {
@@ -287,8 +284,7 @@ public class SimplePDP implements PDP {
 						return true;
 					} else if ("Children".equals(attr.getAttributeValues().get(
 							0))) {
-						logger
-								.error("The request must not request a decision for multiple resources.");
+						logger.error("The request must not request a decision for multiple resources.");
 						// The set of resources consists of a single node
 						// described by the â€œresource-idâ€� resource
 						// attribute
@@ -298,8 +294,7 @@ public class SimplePDP implements PDP {
 						return false;
 					} else if ("Descendants".equals(attr.getAttributeValues()
 							.get(0))) {
-						logger
-								.error("The request must not request a decision for multiple resources.");
+						logger.error("The request must not request a decision for multiple resources.");
 						// The set of resources consists of a single node
 						// described by the â€œresource-idâ€� resource
 						// attribute
@@ -308,8 +303,7 @@ public class SimplePDP implements PDP {
 						return false;
 					} else if ("XPath-expression".equals(attr
 							.getAttributeValues().get(0))) {
-						logger
-								.error("The request must not request a decision for multiple resources.");
+						logger.error("The request must not request a decision for multiple resources.");
 						// The set of resources consists of the nodes in a
 						// nodeset described by the â€œresource-idâ€�
 						// resource attribute.
@@ -318,8 +312,7 @@ public class SimplePDP implements PDP {
 						return false;
 					} else if ("EntireHierarchy".equals(attr
 							.getAttributeValues().get(0))) {
-						logger
-								.error("The request must not request a decision for multiple resources.");
+						logger.error("The request must not request a decision for multiple resources.");
 						// The resource consists of a node described by the
 						// â€œresource-idâ€� resource attribute
 						// along with all that node's descendants.
