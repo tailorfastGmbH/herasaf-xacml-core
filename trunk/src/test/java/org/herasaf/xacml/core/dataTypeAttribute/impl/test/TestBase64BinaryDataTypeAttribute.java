@@ -19,9 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.Base64BinaryDataTypeAttribute;
 import org.herasaf.xacml.core.types.Base64Binary;
-import org.herasaf.xacml.core.types.test.Base64Encoder;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -39,14 +39,29 @@ public class TestBase64BinaryDataTypeAttribute {
 	 * 
 	 * @return The test cases.
 	 */
-	@DataProvider (name="data")
-	public Object[][] createData(){
+	@DataProvider (name="positiveData")
+	public Object[][] createPositiveData(){
+		return new Object[][]{
+				new Object[] {"TXkgdGVzdCBzdHJpbmcu"}, //My test string.
+				new Object[] {"AA=="}, //""
+				new Object[] {"MTIzNDU2Nzg5MA=="}, //1234567890
+				new Object[] {"VGhpcyBpcyBhIHNlbnRlbmNlIHdpdGhvdXQgYSBwdW5jdHVhdGlvbiBtYXJr"}, //This is a sentence without a punctuation mark
+		};
+	}
+	
+	/**
+	 * Creates the test cases for the test.
+	 * 
+	 * @return The test cases.
+	 */
+	@DataProvider (name="negativeData")
+	public Object[][] createNegativeData(){
 		return new Object[][]{
 				new Object[] {"My test string."},
 				new Object[] {""},
 				new Object[] {"1234567890"},
-				new Object[] {"#sfdlkj@"},
 				new Object[] {"This is a sentence without a punctuation mark"},
+				new Object[] {"==MTIzNDU2Nzg5MA"},
 		};
 	}
 	
@@ -65,10 +80,14 @@ public class TestBase64BinaryDataTypeAttribute {
 	 * @param input A {@link String} to convert
 	 * @throws Exception In case of an error.
 	 */
-	@Test (dataProvider="data")
-	public void testInput(String input) throws Exception{
-		String base64Data =  Base64Encoder.encodeString(input);
-		assertEquals(dataType.convertTo(base64Data).getValue(), new Base64Binary(base64Data).getValue());
+	@Test (dataProvider="positiveData")
+	public void testPoitiveInput(String input) throws Exception{
+		assertEquals(dataType.convertTo(input).getValue(), new Base64Binary(input).getValue());
+	}
+	
+	@Test (dataProvider="negativeData", expectedExceptions={SyntaxException.class})
+	public void testNegativeInput(String input) throws Exception{
+		assertEquals(dataType.convertTo(input).getValue(), new Base64Binary(input).getValue());
 	}
 	
 	/**

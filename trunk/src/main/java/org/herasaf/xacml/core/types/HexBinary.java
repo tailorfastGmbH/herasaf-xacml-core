@@ -27,7 +27,7 @@ package org.herasaf.xacml.core.types;
  * @author Florian Huonder
  */
 public class HexBinary {
-	private byte[] value;
+	private char[] value;
 
 	/**
 	 * Creates a new {@link HexBinary} from the given {@link String}
@@ -36,37 +36,26 @@ public class HexBinary {
 	 * @param value
 	 *            The {@link String} to create the {@link HexBinary} from.
 	 */
-	public HexBinary(String value) {
-		if ((value.length() % 2) != 0) {
-			throw new IllegalArgumentException("A HexBinary string must have even length.");
+	public HexBinary(String stringRepresentation) {
+		if ((stringRepresentation.length() % 2) != 0) {
+			throw new IllegalArgumentException(
+					"A HexBinary string must have even length.");
 		}
-		byte[] result = new byte[value.length() / 2];
-		int j = 0;
-		for (int i = 0; i < value.length();) {
-			byte b;
-			char c = value.charAt(i++);
-			char d = value.charAt(i++);
-			if (c >= '0' && c <= '9') {
-				b = (byte) ((c - '0') << 4);
-			} else if (c >= 'A' && c <= 'F') {
-				b = (byte) ((c - 'A' + 10) << 4);
-			} else if (c >= 'a' && c <= 'f') {
-				b = (byte) ((c - 'a' + 10) << 4);
-			} else {
-				throw new IllegalArgumentException("Invalid hex digit: " + c);
+		value = new char[stringRepresentation.length()];
+		// TODO check to lower case with the issue because of the to lower case
+		// and locale dependency.
+		stringRepresentation = stringRepresentation.toLowerCase();
+		stringRepresentation.getChars(0, stringRepresentation.length(), value,
+				0);
+		// Added the characters to the char array value and check now if it
+		// contains valid hex characters. If not, throw an exception and abort
+		// the object creation
+		for (char c : value) {
+			if (!(('0' <= c && c <= '9') || ('a' <= c && c <= 'f'))) {
+				throw new IllegalArgumentException("The String "
+						+ stringRepresentation + " is not a hex string");
 			}
-			if (d >= '0' && d <= '9') {
-				b += (byte) (d - '0');
-			} else if (d >= 'A' && d <= 'F') {
-				b += (byte) (d - 'A' + 10);
-			} else if (d >= 'a' && d <= 'f') {
-				b += (byte) (d - 'a' + 10);
-			} else {
-				throw new IllegalArgumentException("Invalid hex digit: " + d);
-			}
-			result[j++] = b;
 		}
-		this.value = result;
 	}
 
 	/**
@@ -74,8 +63,8 @@ public class HexBinary {
 	 * 
 	 * @return The {@code byte[]} of the {@link HexBinary}.
 	 */
-	public byte[] getValue() {
-		return value.clone();
+	public char[] getValue() {
+		return value;
 	}
 
 	/**
@@ -83,17 +72,12 @@ public class HexBinary {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof HexBinary) {
-			if (this.value.length != ((HexBinary) obj).getValue().length) {
-				return false;
-			}
-			for (int i = 0; i < this.value.length; i++) {
-				if (this.value[i] != ((HexBinary) obj).getValue()[i]) {
-					return false;
-				}
+		if (obj != null) {
+			if (obj.getClass().isAssignableFrom(HexBinary.class)) {
+				return ((HexBinary) obj).getValue().equals(value);
 			}
 		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -101,10 +85,11 @@ public class HexBinary {
 	 */
 	@Override
 	public int hashCode() {
-		int hashValue = 0;
-		for (int i = 0; i < value.length; i++) {
-			hashValue += value[i] * (value.length ^ (value.length - i - 1));
-		}
-		return hashValue;
+		return value.hashCode();
+	}
+
+	@Override
+	public String toString() {
+		return String.valueOf(value);
 	}
 }
