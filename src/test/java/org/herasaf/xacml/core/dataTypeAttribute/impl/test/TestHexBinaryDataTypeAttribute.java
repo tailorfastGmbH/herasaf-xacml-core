@@ -40,7 +40,7 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@DataProvider(name = "negativeData")
 	public Object[][] initNegativeData() {
-		return new Object[][] { new Object[] { "12 34" }, };
+		return new Object[][] { new Object[] { "12 34" }, new Object[] { "r3" }, new Object[]{ "12h32"}};
 	}
 
 	/**
@@ -50,8 +50,10 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@DataProvider(name = "positiveData")
 	public Object[][] initPositiveData() {
-		return new Object[][] { new Object[] { "12", 18 },
-				new Object[] { "1F", 31 }, };
+		return new Object[][] { new Object[] { "12", new char[]{'1','2'} },
+				new Object[] { "1F", new char[]{'1', 'f'}}, 
+				new Object[] { "1f", new char[]{'1', 'f'}},
+				new Object[] { "FFFF", new char[]{'f', 'f', 'f', 'f'}},};
 	}
 
 	/**
@@ -72,9 +74,8 @@ public class TestHexBinaryDataTypeAttribute {
 	 * @throws Exception In case of an error.
 	 */
 	@Test(dataProvider = "positiveData")
-	public void testInput2(String hex, int integer) throws Exception {
-		assertEquals(dataType.convertTo(hex).getValue()[0],
-				(byte)integer);
+	public void testInput2(String hex, char[] result) throws Exception {
+		assertEquals(String.valueOf(dataType.convertTo(hex).getValue()), String.valueOf(result));
 	}
 
 	/**
