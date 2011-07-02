@@ -29,8 +29,7 @@ import org.herasaf.xacml.core.types.DateTime;
  * <p>
  * See: Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 105, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 118, for further information.
  * </p>
  * 
  * @author Stefan Oberholzer
@@ -50,17 +49,17 @@ public class DateTimeLessThanOrEqualFunction extends AbstractFunction {
 	 * second argument.<br>
 	 * * <br>
 	 * <code style="color:red"> <b>Important Hint:</b><br>The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	 * Errata 29 June
+	 * Errata 29 January 2008
 	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20</a>
-	 * page 114 function urn:oasis:names:tc:xacml:1.0:function:date-greater-than-or-equal
+	 * page 121 function urn:oasis:names:tc:xacml:1.0:function:date-greater-than-or-equal
 	 * must provide an implicit time zone if no one is set.
 	 * This MUST is not considered in this implementation of the function.</code>
 	 */
-	// FIXME Time zone awareness (see HERASAFXACMLCORE-28).
+	// FIXME Time zone awareness (see http://dev.herasaf.org/browse/XACMLCORE-28).
 	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	// Errata 29 June
+	// Errata 29 January 2008
 	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-	// page 114 function
+	// page 121 function
 	// urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than-or-equal
 	// must provide an implicit time zone if no one is set.
 	// This MUST is not considered in this implementation of the function and

@@ -57,8 +57,7 @@ import org.slf4j.LoggerFactory;
  * 
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 51 (PolicySetIdReferenceType) and page 52
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 54 (PolicySetIdReferenceType) and page 55
  * (PolicyIdReferenceType), for further information.
  * 
  * @author <i>generated</i>

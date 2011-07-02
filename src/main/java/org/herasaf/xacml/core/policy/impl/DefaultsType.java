@@ -48,8 +48,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> pages 44 (PolicySetDefaults) and page 54 (PolicyDefaults), for
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> pages 47 (PolicySetDefaults) and page 58 (PolicyDefaults), for
  * further information.
  * 
  * @author <i>generated</i>

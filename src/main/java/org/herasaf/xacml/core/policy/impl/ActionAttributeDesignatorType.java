@@ -50,8 +50,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * 
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 63, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 67, for further information.
  * 
  * @author <i>generated</i>
  * @author Sacha Dolski
@@ -67,14 +66,14 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
-		List<Object> returnValues = (List<Object> ) handle(request);
+		List<Object> returnValues = handle(request);
 
 		/*
 		 * If no Attribute could be found, the attribute has to be requested
 		 * from a Policy Information Point.
 		 * 
 		 * See: the OASIS eXtensible Access Control Markup Langugage (XACML)
-		 * 2.0, Errata 29 June 2006 page 78, chapter Attribute Retrieval, for
+		 * 2.0, Errata 29 January 2008 page 83, chapter Attribute Retrieval, for
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
@@ -92,7 +91,7 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object handle(RequestType request) throws ExpressionProcessingException,
+	public List<Object> handle(RequestType request) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
