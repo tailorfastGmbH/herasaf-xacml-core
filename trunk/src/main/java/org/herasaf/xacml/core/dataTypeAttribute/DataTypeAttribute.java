@@ -23,8 +23,7 @@ import org.herasaf.xacml.core.SyntaxException;
  * A data type represents the type of an attribute value in JAXB. The XACML 2.0
  * default data types are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix A.2, page 103.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> appendix A.2, page 109.
  * 
  * @author Florian Huonder
  * @param <E>

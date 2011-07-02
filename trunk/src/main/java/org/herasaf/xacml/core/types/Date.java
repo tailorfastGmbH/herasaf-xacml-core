@@ -32,7 +32,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  * specified for the DatatypeFactory. To specify a special calendar see the
  * documentation of the {@link DatatypeFactory} class. <br />
  * <br />
- * The default {@link XMLGregorianCalendar} brings an unlovely drawback:<br />
+ * The default {@link XMLGregorianCalendar} brings drawback:<br />
  * It accepts values that are not valid. E.g. every month may have 31 days.<br />
  * Example: The date <i>2004-04-31</i> is valid even though April has only 30 days.
  * </p>

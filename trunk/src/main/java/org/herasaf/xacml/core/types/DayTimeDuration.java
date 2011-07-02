@@ -23,7 +23,7 @@ import javax.xml.datatype.Duration;
 
 /**
  * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see
- * Page 105 of the XACML 2.0 specification). The specification contains an
+ * Page 111 of the XACML 2.0 specification, Errata, 29 January 2008). The specification contains an
  * error. Therefore the implementation has the following except for the
  * following discrepancy to the specification:
  * <ul>
@@ -45,8 +45,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	// According to the XACML specification match algorithm a dayTimeDuration
 	// can only have a one digit for a day. Because this does not make sense and
 	// the XACML conformance tests are designed to allow multiple digits for a
-	// day,
-	// we adjusted the match pattern.
+	// day, the match pattern is adjusted .
 	private static final String PATTERNSTRING = "(\\-)?P(\\d+D)?(T(\\d+H)?(\\d+M)?(\\d+(\\.\\d+)?S)?)?";
 	private Duration duration;
 

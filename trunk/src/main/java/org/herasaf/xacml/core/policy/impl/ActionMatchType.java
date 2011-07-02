@@ -56,8 +56,7 @@ import org.herasaf.xacml.core.function.Function;
  * 
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 49, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 52, for further information.
  * 
  * @author <i>generated</i>
  */

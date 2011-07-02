@@ -25,8 +25,7 @@ import org.herasaf.xacml.core.types.Time;
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:time-equal
  * function. See: Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 106, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 112, for further information.
  * 
  * @author Stefan Oberholzer
  */

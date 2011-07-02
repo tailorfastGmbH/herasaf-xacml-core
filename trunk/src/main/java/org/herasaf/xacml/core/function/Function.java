@@ -24,8 +24,7 @@ import java.io.Serializable;
  * All XACML 2.0 default functions can be found here: Appendix A.3 of the <a
  * href
  * ="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a>.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a>, page 113.
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
