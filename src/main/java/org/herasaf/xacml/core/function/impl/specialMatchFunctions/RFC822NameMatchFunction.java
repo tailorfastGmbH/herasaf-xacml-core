@@ -48,8 +48,7 @@ public class RFC822NameMatchFunction extends AbstractFunction {
 	 * the specification on page 131 (A.3.14, special match functions) in <a
 	 * href=
 	 * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
-	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29
-	 * June 2006</a>
+	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 January 2008</a>
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

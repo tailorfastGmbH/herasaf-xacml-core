@@ -49,17 +49,16 @@ public class DateTimeLessThanFunction extends AbstractFunction {
 	 * argument.<br>
 	 * <br>
 	 * <code style="color:red"> <b>Important Hint:</b><br>The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	 * Errata 29 June
+	 * Errata 29 January 2008
 	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20</a>
-	 * page 114 function urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than
+	 * function urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than
 	 * must provide an implicit time zone if no one is set.
 	 * This MUST is not considered in this implementation of the function.</code>
 	 */
 	// FIXME Time zone awareness (see HERASAFXACMLCORE-28).
 	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	// Errata 29 June
+	// Errata 29 January 2008
 	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-	// page 114 function
 	// urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than
 	// must provide an implicit time zone if no one is set.
 	// This MUST is not considered in this implementation of the function and
