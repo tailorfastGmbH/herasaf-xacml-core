@@ -98,7 +98,7 @@ public class RequestType implements Serializable {
      * </ul>
      * This behavior is required by the XACML 2.0 specification. See: <a href=
      * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20" > OASIS eXtensible Access Control
-     * Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> appendix B.8. Environment attributes, for further
+     * Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> appendix B.8. Environment attributes, for further
      * information.
      * 
      * @param marshaller

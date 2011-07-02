@@ -30,8 +30,7 @@ import org.slf4j.LoggerFactory;
  * Converts an URN to a {@link PolicyCombiningAlgorithm}. The default
  * {@link PolicyCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix C page 146. <br>
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> appendix C page 140. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder

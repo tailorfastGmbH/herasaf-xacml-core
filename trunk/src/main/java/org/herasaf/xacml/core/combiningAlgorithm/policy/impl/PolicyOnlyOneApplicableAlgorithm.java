@@ -68,8 +68,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 		if (possiblePolicies == null) {
 			// It is an illegal state if the list containing the policies is
 			// null.
-			logger
-					.error("The possiblePolicies list was null. This is an illegal state.");
+			logger.error("The possiblePolicies list was null. This is an illegal state.");
 			evaluationContext
 					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
@@ -93,8 +92,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 			if (eval == null) {
 				// It is an illegal state if the list contains any
 				// null.
-				logger
-						.error("The list of possible policies must not contain any null values.");
+				logger.error("The list of possible policies must not contain any null values.");
 				evaluationContext
 						.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
@@ -107,8 +105,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
-				logger
-						.debug("Starting evaluation of: {}", eval.getId().toString());
+				logger.debug("Starting evaluation of: {}", eval.getId()
+						.toString());
 			}
 
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
@@ -126,8 +124,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 
 			if (logger.isDebugEnabled()) {
 				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
-				logger.debug("Evaluation of {} was: {}", eval.getId().toString(),
-						decision.toString());
+				logger.debug("Evaluation of {} was: {}", eval.getId()
+						.toString(), decision.toString());
 				MDC.remove(MDC_EVALUATABLE_ID);
 			}
 
@@ -194,8 +192,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 					 * the returned error is a processing exception. because of
 					 * this, the evaluation context have to be reset and set to
 					 * Processing-exception. See: OASIS eXtensible Access
-					 * Control Markup Langugage (XACML) 2.0, Errata 29 June
-					 * 2006</a> page 86 and page 139 and the specification of
+					 * Control Markup Langugage (XACML) 2.0, Errata 29. January
+					 * 2008</a> page 91 and page 146 and the specification of
 					 * the only-one-applicable algorithm for further
 					 * information.
 					 */
