@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * {@link DataTypeJAXBTypeAdapter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author Ren� Eggenschwiler
+ * @author René Eggenschwiler
  */
 @SuppressWarnings("unchecked")
 public class DataTypesJAXBInitializer extends

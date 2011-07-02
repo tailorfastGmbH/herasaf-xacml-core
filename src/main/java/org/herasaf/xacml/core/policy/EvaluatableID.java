@@ -23,10 +23,5 @@ package org.herasaf.xacml.core.policy;
  * @author Stefan Oberholzer
  */
 public interface EvaluatableID {
-    /**
-     * Returns the id of the {@link Evaluatable} as {@link String}.
-     * 
-     * @return The id of the {@link Evaluatable}.
-     */
-    String getId();
+	
 }
