@@ -28,6 +28,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.StringDataTypeAttribute;
 import org.herasaf.xacml.core.function.impl.equalityPredicates.StringEqualFunction;
 import org.herasaf.xacml.core.policy.Evaluatable;
+import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
 import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.RuleType;
 import org.herasaf.xacml.core.policy.impl.SubjectAttributeDesignatorType;
@@ -314,7 +315,7 @@ public class TestMissingAttributes {
 		subjects.getSubjects().add(subject);
 		target.setSubjects(subjects);
 		policy.setTarget(target);
-		policy.setPolicySetId("TestEvaluatable");
+		policy.setPolicySetId(new EvaluatableIDImpl("TestEvaluatable"));
 		AbstractCombiningAlgorithm combAlg = (AbstractCombiningAlgorithm) combiningAlgorithmType
 				.newInstance();
 		policy.setCombiningAlg((PolicyCombiningAlgorithm) combAlg);

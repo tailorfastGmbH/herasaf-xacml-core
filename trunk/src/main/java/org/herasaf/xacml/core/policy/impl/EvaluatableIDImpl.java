@@ -36,14 +36,7 @@ public class EvaluatableIDImpl implements EvaluatableID {
     public EvaluatableIDImpl(String id) {
         this.id = id;
     }
-
-    /**
-     * {@inheritDoc}
-     */
-    public String getId() {
-        return id;
-    }
-
+    
     /**
      * {@inheritDoc}
      */
@@ -61,7 +54,7 @@ public class EvaluatableIDImpl implements EvaluatableID {
             return false;
         }
         if (obj instanceof EvaluatableID) {
-            return ((EvaluatableID) obj).getId().equals(id);
+            return ((EvaluatableID) obj).toString().equals(id);
         }
         return false;
     }

@@ -43,6 +43,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
 import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -52,7 +53,7 @@ import org.testng.annotations.Test;
  * expected.
  * 
  * @author Florian Huonder
- * @author Ren� Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class SimplePDPTest {
 	private PDP simplePDP;
@@ -66,7 +67,7 @@ public class SimplePDPTest {
 	 */
 	@DataProvider(name = "policy-request-response-combinations")
 	public Object[][] initializeTestCases() throws Exception {
-		SimplePDPFactory.getSimplePDP(); // This line is needed that the JAXB
+		InitializerExecutor.runInitializers();
 		// stuff is initialized.
 
 		return new Object[][] {

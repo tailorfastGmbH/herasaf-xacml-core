@@ -34,6 +34,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.converter.EvaluatableIdJAXBTypeAdapter;
 import org.herasaf.xacml.core.converter.PolicyCombiningAlgorithmJAXBTypeAdapter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -106,7 +107,8 @@ public class PolicySetType implements Evaluatable, Serializable {
 	private ObligationsType obligations;
 	@XmlAttribute(name = "PolicySetId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	private String policySetId;
+	@XmlJavaTypeAdapter(EvaluatableIdJAXBTypeAdapter.class)
+	private EvaluatableID policySetId;
 	@XmlAttribute(name = "Version")
 	private String version;
 
@@ -260,7 +262,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
-	public String getPolicySetId() {
+	public EvaluatableID getPolicySetId() {
 		return policySetId;
 	}
 
@@ -271,7 +273,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 *            allowed object is {@link String }
 	 * 
 	 */
-	public void setPolicySetId(String value) {
+	public void setPolicySetId(EvaluatableID value) {
 		this.policySetId = value;
 	}
 
@@ -360,7 +362,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
 	public EvaluatableID getId() {
-		return new EvaluatableIDImpl(getPolicySetId());
+		return getPolicySetId();
 	}
 
 	/*

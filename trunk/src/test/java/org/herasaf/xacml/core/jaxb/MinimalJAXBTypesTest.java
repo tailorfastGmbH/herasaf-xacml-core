@@ -27,6 +27,7 @@ import org.herasaf.xacml.core.context.impl.EnvironmentType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
+import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
@@ -78,7 +79,7 @@ public class MinimalJAXBTypesTest {
 			IOException {
 		PolicyType policy = new PolicyType();
 		policy.setCombiningAlg(new RulePermitOverridesAlgorithm());
-		policy.setPolicyId("urn:org:herasaf:xacml:test:dummyPolicy");
+		policy.setPolicyId(new EvaluatableIDImpl("urn:org:herasaf:xacml:test:dummyPolicy"));
 		policy.setTarget(new TargetType());
 		PolicyMarshaller.marshal(policy, file);
 

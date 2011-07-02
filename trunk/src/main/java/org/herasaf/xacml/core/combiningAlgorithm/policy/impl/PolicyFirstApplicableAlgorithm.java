@@ -98,10 +98,9 @@ public class PolicyFirstApplicableAlgorithm extends
 			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
 				logger
-						.debug("Starting evaluation of: {}", eval.getId()
-								.getId());
+						.debug("Starting evaluation of: {}", eval.getId().toString());
 			}
 
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
@@ -118,8 +117,8 @@ public class PolicyFirstApplicableAlgorithm extends
 			}
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger.debug("Evaluation of {} was: {}", eval.getId().getId(),
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
+				logger.debug("Evaluation of {} was: {}", eval.getId().toString(),
 						decision.toString());
 				MDC.remove(MDC_EVALUATABLE_ID);
 			}
