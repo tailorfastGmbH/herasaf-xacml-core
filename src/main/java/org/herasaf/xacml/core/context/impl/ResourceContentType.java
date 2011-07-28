@@ -62,7 +62,7 @@ import javax.xml.namespace.QName;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "ResourceContent", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "ResourceContentType", propOrder = { "content" })
 public class ResourceContentType implements Serializable {
 

@@ -59,7 +59,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "VariableDefinition", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "VariableDefinitionType", propOrder = { "expression" })
 public class VariableDefinitionType implements Serializable, Variable {
 

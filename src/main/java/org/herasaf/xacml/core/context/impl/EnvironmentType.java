@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Environment", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "EnvironmentType", propOrder = { "attributes" })
 public class EnvironmentType implements Serializable {
 

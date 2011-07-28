@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Resource", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "ResourceType", propOrder = { "resourceContent", "attributes" })
 public class ResourceType implements Serializable {
 

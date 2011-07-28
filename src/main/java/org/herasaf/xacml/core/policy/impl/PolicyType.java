@@ -82,7 +82,7 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * @author <i>generated</i>
  * @author Florian Huonder
  */
-@XmlRootElement
+@XmlRootElement(name = "Policy", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
 		"obligations" })
 public class PolicyType implements Evaluatable, Serializable {

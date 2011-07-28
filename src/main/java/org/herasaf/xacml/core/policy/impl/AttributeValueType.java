@@ -68,7 +68,7 @@ import org.herasaf.xacml.core.policy.ExpressionProcessingException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "AttributeValue", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
 @XmlSeeAlso({ AttributeAssignmentType.class })
 public class AttributeValueType extends ExpressionType {

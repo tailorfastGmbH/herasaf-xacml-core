@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "StatusDetail", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "StatusDetailType", propOrder = { "content" })
 public class StatusDetailType implements Serializable {
     private static final ObjectFactory OBJECT_FACTORY;

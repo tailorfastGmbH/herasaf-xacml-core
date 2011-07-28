@@ -54,7 +54,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Decision", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "DecisionType")
 @XmlEnum
 public enum DecisionType {

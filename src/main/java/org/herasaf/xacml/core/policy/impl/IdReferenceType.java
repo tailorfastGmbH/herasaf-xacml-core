@@ -64,7 +64,7 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-@XmlRootElement
+@XmlRootElement(name = "IdReference", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "IdReferenceType", propOrder = { "value" })
 public class IdReferenceType implements Serializable, Evaluatable {
 	@XmlTransient

@@ -48,7 +48,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author <i>generated</i>
  * @author Florian Huonder
  */
-@XmlRootElement
+@XmlRootElement(name = "Effect", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "EffectType")
 @XmlEnum
 public enum EffectType {

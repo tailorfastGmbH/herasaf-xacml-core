@@ -68,7 +68,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Attribute", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "AttributeType", propOrder = { "attributeValues" })
 public class AttributeType implements Serializable {
 

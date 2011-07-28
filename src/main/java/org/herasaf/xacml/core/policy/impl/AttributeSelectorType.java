@@ -52,7 +52,7 @@ import org.herasaf.xacml.core.context.impl.RequestType;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "AttributeSelector", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "AttributeSelectorType")
 public class AttributeSelectorType extends ExpressionType {
 

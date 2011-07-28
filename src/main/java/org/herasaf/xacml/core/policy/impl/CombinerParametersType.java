@@ -52,7 +52,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "CombinerParameters", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "CombinerParametersType", propOrder = { "combinerParameters" })
 @XmlSeeAlso({ RuleCombinerParametersType.class, PolicySetCombinerParametersType.class,
 		PolicyCombinerParametersType.class })

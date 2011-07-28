@@ -63,7 +63,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "AttributeDesignator", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "AttributeDesignatorType")
 @XmlSeeAlso({ SubjectAttributeDesignatorType.class, ResourceAttributeDesignatorType.class,
 		EnvironmentAttributeDesignatorType.class, ActionAttributeDesignatorType.class })
