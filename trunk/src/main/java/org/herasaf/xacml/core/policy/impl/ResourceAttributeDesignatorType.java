@@ -57,7 +57,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "ResourceAttributeDesignator", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "ResourceAttributeDesignatorType")
 public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 	private static final long serialVersionUID = 1L;

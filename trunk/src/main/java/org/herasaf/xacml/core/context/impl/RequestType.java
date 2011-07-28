@@ -69,7 +69,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Request", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "RequestType", propOrder = { "subjects", "resources", "action",
 		"environment" })
 public class RequestType implements Serializable {

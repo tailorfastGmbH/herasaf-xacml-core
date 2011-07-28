@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Action", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "ActionType", propOrder = { "attributes" })
 public class ActionType implements Serializable {
 

@@ -45,7 +45,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "RuleCombinerParameters", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "RuleCombinerParametersType")
 public class RuleCombinerParametersType extends CombinerParametersType {
 	private static final long serialVersionUID = 1L;

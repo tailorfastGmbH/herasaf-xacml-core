@@ -52,7 +52,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Target", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "TargetType", propOrder = { "subjects", "resources", "actions", "environments" })
 public class TargetType implements Serializable {
 	private static final long serialVersionUID = 1L;

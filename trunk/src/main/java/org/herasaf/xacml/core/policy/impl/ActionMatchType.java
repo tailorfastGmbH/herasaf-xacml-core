@@ -60,7 +60,7 @@ import org.herasaf.xacml.core.function.Function;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "ActionMatch", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "ActionMatchType", propOrder = { "attributeValue", "actionAttributeDesignator", "attributeSelector" })
 public class ActionMatchType implements Serializable, Match {
 

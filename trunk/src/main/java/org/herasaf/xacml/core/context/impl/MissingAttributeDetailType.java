@@ -66,7 +66,7 @@ import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "MissingAttributeDetail", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "MissingAttributeDetailType", propOrder = { "attributeValues" })
 public class MissingAttributeDetailType implements Serializable {
 

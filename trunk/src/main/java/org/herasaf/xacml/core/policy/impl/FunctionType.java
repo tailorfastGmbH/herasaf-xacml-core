@@ -53,7 +53,7 @@ import org.herasaf.xacml.core.function.Function;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "Function", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "FunctionType")
 public class FunctionType extends ExpressionType {
 	private static final long serialVersionUID = 1L;

@@ -58,7 +58,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "StatusCode", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "StatusCodeType", propOrder = { "statusCode" })
 public class StatusCodeType implements Serializable {
 

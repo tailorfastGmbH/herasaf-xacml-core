@@ -62,7 +62,7 @@ import javax.xml.namespace.QName;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "AttributeValue", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
 public class AttributeValueType implements Serializable {
     private static final long serialVersionUID = 1L;

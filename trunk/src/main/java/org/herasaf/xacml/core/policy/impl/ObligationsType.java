@@ -51,7 +51,7 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Obligations", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "ObligationsType", propOrder = { "obligations" })
 public class ObligationsType implements Serializable {
 

@@ -60,7 +60,7 @@ import org.herasaf.xacml.core.function.Function;
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "ResourceMatch", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "ResourceMatchType", propOrder = { "attributeValue", "resourceAttributeDesignator", "attributeSelector" })
 public class ResourceMatchType implements Serializable, Match {
 	private static final long serialVersionUID = 1L;

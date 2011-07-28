@@ -64,7 +64,7 @@ import org.herasaf.xacml.core.policy.MissingAttributeException;
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "Apply", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "ApplyType", propOrder = { "expressions" })
 public class ApplyType extends ExpressionType {
 	private static final long serialVersionUID = 1L;
