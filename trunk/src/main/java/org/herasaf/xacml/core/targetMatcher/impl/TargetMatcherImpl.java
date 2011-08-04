@@ -135,8 +135,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 		}
 		for (int i = 0; i < subjects.getSubjects().size(); i++) {
 			SubjectType targetSubject = subjects.getSubjects().get(i);
-			logger.debug("Starting subject match. (id:{})", targetSubject
-					.toString());
+			logger.debug("Starting subject match. (id:{})", targetSubject);
 			boolean matches = match(targetSubject.getSubjectMatches(), request,
 					evaluationContext);
 			if (matches) {
@@ -184,8 +183,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 		}
 		for (int i = 0; i < resources.getResources().size(); i++) {
 			ResourceType targetResource = resources.getResources().get(i);
-			logger.debug("Starting resource match. (id:{})", targetResource
-					.toString());
+			logger.debug("Starting resource match. (id:{})", targetResource);
 			boolean matches = match(targetResource.getResourceMatches(),
 					request, evaluationContext);
 			if (matches) {
@@ -233,8 +231,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 		}
 		for (int i = 0; i < actions.getActions().size(); i++) {
 			ActionType targetAction = actions.getActions().get(i);
-			logger.debug("Starting action match. (id:{})", targetAction
-					.toString());
+			logger.debug("Starting action match. (id:{})", targetAction);
 			boolean matches = match(targetAction.getActionMatches(), request,
 					evaluationContext);
 			if (matches) {
@@ -284,7 +281,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 			EnvironmentType targetEnvironment = environments.getEnvironments()
 					.get(i);
 			logger.debug("Starting environment match. (id:{})",
-					targetEnvironment.toString());
+					targetEnvironment);
 			boolean matches = match(targetEnvironment.getEnvironmentMatches(),
 					request, evaluationContext);
 			if (matches) {
@@ -331,8 +328,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 			Match match = matches.get(i);
 			Function matchFunction = match.getMatchFunction();
 			logger
-					.debug("Matching with function: {}", matchFunction
-							.toString());
+					.debug("Matching with function: {}", matchFunction);
 			AttributeDesignatorType designator = match.getAttributeDesignator();
 			List<?> requestAttributeValues = (List<?>) designator.handle(
 					request, evaluationContext); // Fetches
