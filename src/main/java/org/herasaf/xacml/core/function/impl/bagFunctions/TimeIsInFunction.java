@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.bagFunctions;
 
-import org.herasaf.xacml.core.types.Time;
+import org.joda.time.DateTime;
 
 /**
  * <p>
@@ -31,9 +31,9 @@ import org.herasaf.xacml.core.types.Time;
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
+ * @author Florian Huonder
  */
-public class TimeIsInFunction extends AbstractIsInFunction<Time> {
+public class TimeIsInFunction extends AbstractIsInFunction<DateTime> {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-is-in";

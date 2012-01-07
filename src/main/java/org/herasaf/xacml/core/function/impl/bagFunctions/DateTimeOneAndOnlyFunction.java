@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.bagFunctions;
 
-import org.herasaf.xacml.core.types.DateTime;
+import org.joda.time.DateTime;
 
 /**
  * <p>
@@ -31,7 +31,7 @@ import org.herasaf.xacml.core.types.DateTime;
  * <p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
+ * @author Florian Huonder
  */
 public class DateTimeOneAndOnlyFunction extends AbstractOneAndOnlyFunction<DateTime> {
 

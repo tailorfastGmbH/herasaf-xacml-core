@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,40 +17,50 @@
 
 package org.herasaf.xacml.core.types;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.Duration;
+import org.herasaf.xacml.core.SyntaxException;
+import org.joda.time.DateTime;
+import org.joda.time.Duration;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration".<br>
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 111, for further information.
+ * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
+ * Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 111, for further information.
  * 
- * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class YearMonthDuration implements Comparable<YearMonthDuration> {
-	private static final String PATTERNSTRING = "(\\-)?P\\d+(Y(\\d+M)?|M)";
-	private Duration duration;
+	private Period duration;
+	private boolean negative = false;
+	private static final PeriodFormatter PERIOD_FORMATTER;
+
+	static {
+		// This formatter only accepts positive periods. The reason is that Joda Time Period can be negative on each
+		// place. Means this would be valid "P-123Y-34M"
+		// The urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration allows only something like "-P123Y34M". Due to
+		// this fact here only positive values are saved
+		// and the negative case is tracked separately.
+		PERIOD_FORMATTER = new PeriodFormatterBuilder().rejectSignedValues(true).appendLiteral("P").appendYears().appendSuffix("Y")
+				.appendMonths().appendSuffix("M").toFormatter();
+	}
 
 	/**
 	 * Creates a new {@link YearMonthDuration} with the given duration.
 	 * 
-	 * @param duration
+	 * @param durationString
 	 *            The duration to convert into a {@link YearMonthDuration}.
-	 * @throws ConvertException
+	 * @throws SyntaxException 
 	 */
-	public YearMonthDuration(String duration) {
-		if (!duration.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException("The format of the argument is not correct");
+	public YearMonthDuration(String durationString) throws SyntaxException {
+		durationString = durationString.trim();
+		if(durationString.startsWith("-")){
+			negative = true;
+			durationString = durationString.substring(1);
 		}
-
-		try {
-			DatatypeFactory factory = DatatypeFactory.newInstance();
-			this.duration = factory.newDuration(duration);
-		} catch (DatatypeConfigurationException e) {
-			throw new IllegalArgumentException(e);
-		}
+		
+		this.duration = PERIOD_FORMATTER.parsePeriod(durationString);
 	}
 
 	/**
@@ -58,14 +68,18 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 	 */
 	@Override
 	public String toString() {
-		return duration.toString();
+		return (negative) ? "-" + PERIOD_FORMATTER.print(duration) : PERIOD_FORMATTER.print(duration);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	public int compareTo(YearMonthDuration o) {
-		return duration.compare(o.duration);
+		DateTime startInstant = new DateTime(0L);
+		Duration thisDuration = duration.toDurationFrom(startInstant);
+		Duration compareDuration = o.getDuration().toDurationFrom(startInstant);
+		
+		return thisDuration.compareTo(compareDuration);
 	}
 
 	/**
@@ -73,22 +87,19 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof YearMonthDuration) {
-			YearMonthDuration object = (YearMonthDuration) obj;
-			return this.duration.equals(object.duration);
+		if(obj == null || !obj.getClass().isAssignableFrom(YearMonthDuration.class)){
+			//Check if types are the same
+			return false;
 		}
+		if(this.compareTo((YearMonthDuration) obj) == 0){
+			//If types are the same check if they are equal
+			return true;
+		}
+		//If they are not equal return false
 		return false;
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		return duration.hashCode();
-	}
-
-	protected Duration getDuration() {
+	
+	public Period getDuration(){
 		return duration;
 	}
 }
