@@ -75,7 +75,7 @@
 		<logback.version>0.9.26</logback.version>
 		<testng.version>6.1.1</testng.version>
 		<xmlunit.version>1.3</xmlunit.version>
-		<jodatime.version>1.6.2</jodatime.version>
+		<jodatime.version>2.0</jodatime.version>
 	</properties>
 
 
