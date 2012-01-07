@@ -41,9 +41,9 @@ public class TestDateDataTypeAttribute {
 	 */
 	@DataProvider(name = "negativeData")
 	public Object[][] initNegativeData() {
-		return new Object[][] { new Object[] { "2006-02-29" },
-				new Object[] { "12:00:00" },
-				new Object[] { "2005-10-10T12:00:00" },
+		return new Object[][] { new Object[] { "2006-02-29+00:00" },
+				new Object[] { "12:00:00-01:00" },
+				new Object[] { "2005-10-10T12:00:00+09:00" },
 		// new Object[]{ "2006-04-31") }
 		};
 	}
@@ -55,8 +55,8 @@ public class TestDateDataTypeAttribute {
 	 */
 	@DataProvider(name = "positiveData")
 	public Object[][] initPositiveData() {
-		return new Object[][] { new Object[] { "2006-03-31" },
-				new Object[] { "2004-02-29" } };
+		return new Object[][] { new Object[] { "2006-03-31+02:00" },
+				new Object[] { "2004-02-29-10:00" } };
 	}
 
 	/**

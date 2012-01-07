@@ -42,8 +42,8 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 		// The urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration allows only something like "-P123Y34M". Due to
 		// this fact here only positive values are saved
 		// and the negative case is tracked separately.
-		PERIOD_FORMATTER = new PeriodFormatterBuilder().rejectSignedValues(true).appendLiteral("P").appendYears().appendSuffix("Y")
-				.appendMonths().appendSuffix("M").toFormatter();
+		PERIOD_FORMATTER = new PeriodFormatterBuilder().rejectSignedValues(true).appendLiteral("P").appendYears()
+				.appendSuffix("Y").appendMonths().appendSuffix("M").toFormatter();
 	}
 
 	/**
@@ -51,15 +51,15 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 	 * 
 	 * @param durationString
 	 *            The duration to convert into a {@link YearMonthDuration}.
-	 * @throws SyntaxException 
+	 * @throws SyntaxException
 	 */
 	public YearMonthDuration(String durationString) throws SyntaxException {
 		durationString = durationString.trim();
-		if(durationString.startsWith("-")){
+		if (durationString.startsWith("-")) {
 			negative = true;
 			durationString = durationString.substring(1);
 		}
-		
+
 		this.duration = PERIOD_FORMATTER.parsePeriod(durationString);
 	}
 
@@ -78,28 +78,39 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 		DateTime startInstant = new DateTime(0L);
 		Duration thisDuration = duration.toDurationFrom(startInstant);
 		Duration compareDuration = o.getDuration().toDurationFrom(startInstant);
-		
+
 		return thisDuration.compareTo(compareDuration);
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
+		result = prime * result + (negative ? 1231 : 1237);
+		return result;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
-		if(obj == null || !obj.getClass().isAssignableFrom(YearMonthDuration.class)){
-			//Check if types are the same
-			return false;
-		}
-		if(this.compareTo((YearMonthDuration) obj) == 0){
-			//If types are the same check if they are equal
+		if (this == obj)
 			return true;
-		}
-		//If they are not equal return false
-		return false;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		YearMonthDuration other = (YearMonthDuration) obj;
+		if (duration == null) {
+			if (other.duration != null)
+				return false;
+		} else if (!duration.equals(other.duration))
+			return false;
+		if (negative != other.negative)
+			return false;
+		return true;
 	}
-	
-	public Period getDuration(){
+
+	public Period getDuration() {
 		return duration;
 	}
 }
