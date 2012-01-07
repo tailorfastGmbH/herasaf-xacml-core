@@ -38,9 +38,10 @@ import org.joda.time.format.PeriodFormatterBuilder;
  * accepts a shortened range of values.</li>
  * </ul>
  * 
- * <b>Note:</b><br /> According to the XACML specification match algorithm a dayTimeDuration can only have a one digit for
- * a day. Because this does not make sense and the XACML conformance tests are designed to allow multiple digits for
- * a day, the match pattern is adjusted.
+ * <b>Note:</b><br />
+ * According to the XACML specification match algorithm a dayTimeDuration can only have a one digit for a day. Because
+ * this does not make sense and the XACML conformance tests are designed to allow multiple digits for a day, the match
+ * pattern is adjusted.
  * 
  * @author Florian Huonder
  */
@@ -48,7 +49,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	private Period duration;
 	private boolean negative = false;
 	private static final PeriodFormatter PERIOD_FORMATTER;
-	
+
 	static {
 		// This formatter only accepts positive periods. The reason is that Joda Time Period can be negative on each
 		// place. Means this would be valid "P-3DT-34M"
@@ -56,10 +57,10 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		// this fact here only positive values are saved
 		// and the negative case is tracked separately.
 		PERIOD_FORMATTER = new PeriodFormatterBuilder().rejectSignedValues(true).appendLiteral("P").appendDays()
-		.appendSuffix("D").appendSeparatorIfFieldsAfter("T").appendHours().appendSuffix("H").appendMinutes()
-		.appendSuffix("M").appendSecondsWithOptionalMillis().appendSuffix("S").toFormatter();
+				.appendSuffix("D").appendSeparatorIfFieldsAfter("T").appendHours().appendSuffix("H").appendMinutes()
+				.appendSuffix("M").appendSecondsWithOptionalMillis().appendSuffix("S").toFormatter();
 	}
-	
+
 	/**
 	 * Creates a new {@link DayTimeDuration} with the given duration.
 	 * 
@@ -69,11 +70,11 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	 */
 	public DayTimeDuration(String durationString) {
 		durationString = durationString.trim();
-		if(durationString.startsWith("-")){
+		if (durationString.startsWith("-")) {
 			negative = true;
 			durationString = durationString.substring(1);
 		}
-		
+
 		this.duration = PERIOD_FORMATTER.parsePeriod(durationString);
 	}
 
@@ -92,7 +93,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		DateTime startInstant = new DateTime(0L);
 		Duration thisDuration = duration.toDurationFrom(startInstant);
 		Duration compareDuration = o.getDuration().toDurationFrom(startInstant);
-		
+
 		return thisDuration.compareTo(compareDuration);
 	}
 
@@ -100,17 +101,34 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	 * {@inheritDoc}
 	 */
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
+		result = prime * result + (negative ? 1231 : 1237);
+		return result;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public boolean equals(Object obj) {
-		if(obj == null || !obj.getClass().isAssignableFrom(DayTimeDuration.class)){
-			//Check if types are the same
-			return false;
-		}
-		if(this.compareTo((DayTimeDuration) obj) == 0){
-			//If types are the same check if they are equal
+		if (this == obj)
 			return true;
-		}
-		//If they are not equal return false
-		return false;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DayTimeDuration other = (DayTimeDuration) obj;
+		if (duration == null) {
+			if (other.duration != null)
+				return false;
+		} else if (!duration.equals(other.duration))
+			return false;
+		if (negative != other.negative)
+			return false;
+		return true;
 	}
 
 	/**
