@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,65 +14,75 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.types;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import org.herasaf.xacml.core.SyntaxException;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+import org.joda.time.format.ISODateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * <p>
- * Represents a http://www.w3.org/2001/XMLSchema#date. The specification can be
- * found at <A HREF="http://www.w3.org/2001/XMLSchema#date"
- * TARGET="_blank">http://www.w3.org/2001/XMLSchema#date</A>.
- * </p>
- * <p>
- * <b>NOTE:</b> The default {@link XMLGregorianCalendar} used if none is
- * specified for the DatatypeFactory. To specify a special calendar see the
- * documentation of the {@link DatatypeFactory} class. <br />
- * <br />
- * The default {@link XMLGregorianCalendar} brings drawback:<br />
- * It accepts values that are not valid. E.g. every month may have 31 days.<br />
- * Example: The date <i>2004-04-31</i> is valid even though April has only 30 days.
- * </p>
+ * This class can parse and print a date of type http://www.w3.org/2001/XMLSchema#date with the pattern
  * 
- * @author Stefan Oberholzer
+ * yyyy '-' MM '-' dd ZZ?"
+ * 
+ * The timezone part is optional on creation. The {@link #toString()} method will always print the timezone.
+ * 
+ * <b>Note</b> Having set a standard timezone means that for all calculations the offset is set to the offset to UTC.
+ * This means if the timezone is e.g. GMT+1 (for Zurich) the date is printed as yyyy-mm-dd-01:00. This is the timezone calculated
+ * back to UTC. So a comparison is possible.
+ * 
  * @author Florian Huonder
  */
 public class Date implements Comparable<Date> {
-	private XMLGregorianCalendar xmlCalendar;
-	private static final String PATTERNSTRING = "\\d\\d\\d(\\d)+-\\d\\d-\\d\\d((\\+|-)\\d\\d:\\d\\d)?";
+	private final Logger logger = LoggerFactory.getLogger(Date.class);
+	private static final DateTimeFormatter DATE_TIME_PARSER;
+	private static final DateTimeFormatter DATE_TIME_PRINTER;
+	private static final DateTimeComparator COMPARATOR;
+	private DateTime date;
 
 	/**
-	 * Initializes a new {@link Date} object.
-	 * 
-	 * @param lexicalRepresentation
-	 *            The {@link String} representation of the time to created with
-	 *            this class.
-	 * @throws ConvertException
+	 * Initializes the comparator, the parser and the printer for this DateTime.
 	 */
-	public Date(String lexicalRepresentation) {
-		if (!lexicalRepresentation.matches(PATTERNSTRING)) {
-			throw new IllegalArgumentException("The format of the argument: \"" + lexicalRepresentation
-					+ "\" isn't correct");
-		}
-		try {
-			DatatypeFactory factory = DatatypeFactory.newInstance();
-			this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
-		} catch (DatatypeConfigurationException e) {
-			throw new IllegalArgumentException(e);
-		}
+	static {
+		COMPARATOR = DateTimeComparator.getDateOnlyInstance();
+
+		// The formatter for the timezone
+		DateTimeFormatter timezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2, 2)
+				.toFormatter();
+
+		// This formatter equals: yyyy-MM-dd
+		DateTimeFormatter dhmsFormatter = ISODateTimeFormat.date();
+
+		// Here a parser is created that parses a string of the form yyyy-MM-dd. Further the string may have
+		// a timezone. withOffsetParsed makes the parser to respect the set timezone (if one is set)
+		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
+				.appendOptional(timezoneFormatter.getParser()).toFormatter().withOffsetParsed();
+
+		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd ZZ
+		DATE_TIME_PRINTER = new DateTimeFormatterBuilder().append(dhmsFormatter).append(timezoneFormatter.getPrinter()).toFormatter();
 	}
 
 	/**
-	 * Returns the instance of the {@link XMLGregorianCalendar} of this
-	 * {@link Date} class.
+	 * TODO Javadoc
 	 * 
-	 * @return The {@link XMLGregorianCalendar} instance.
+	 * @param dateString
+	 * @throws SyntaxException
 	 */
-	public XMLGregorianCalendar getCalendar() {
-		return xmlCalendar;
+	public Date(String dateString) throws SyntaxException {
+		dateString = dateString.trim();
+		try {
+			date = DATE_TIME_PARSER.parseDateTime(dateString);
+		} catch (IllegalArgumentException e) {
+			SyntaxException se = new SyntaxException("The date '" + dateString
+					+ "' is not a valid date according to http://www.w3.org/2001/XMLSchema#date", e);
+			logger.error(se.getMessage());
+			throw se;
+		}
 	}
 
 	/**
@@ -80,14 +90,14 @@ public class Date implements Comparable<Date> {
 	 */
 	@Override
 	public String toString() {
-		return xmlCalendar.toXMLFormat();
+		return DATE_TIME_PRINTER.print(date);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int compareTo(Date date) {
-		return xmlCalendar.compare(date.getCalendar());
+	public int compareTo(Date o) {
+		return COMPARATOR.compare(date, o.getDate());
 	}
 
 	/**
@@ -95,43 +105,42 @@ public class Date implements Comparable<Date> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Date) {
-			if (this.compareTo((Date) obj) == 0) {
-				return true;
-			}
+		if (obj == null || !obj.getClass().isAssignableFrom(Date.class)) {
+			// Check if types are the same
+			return false;
 		}
+		if (COMPARATOR.compare(this, obj) == 0) {
+			// If types are the same check if they are equal
+			return true;
+		}
+		// If they are not equal return false
 		return false;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns the internal representation of this date.
+	 * 
+	 * @return internal representation of this date.
 	 */
-	@Override
-	public int hashCode() {
-		return xmlCalendar.hashCode();
+	public DateTime getDate() {
+		return date;
 	}
 
 	/**
-	 * Adds the given {@link YearMonthDuration} to this {@link Date}.
+	 * TODO Javadoc
 	 * 
-	 * @param duration
-	 *            The {@link YearMonthDuration} to add.
+	 * @param yearMonthDuration
 	 */
-	public void add(YearMonthDuration duration) {
-		this.xmlCalendar.add(duration.getDuration());
+	public void add(YearMonthDuration yearMonthDuration) {
+		date = date.plus(yearMonthDuration.getDuration());
 	}
 
 	/**
-	 * Subtracts the given {@link YearMonthDuration} from this {@link Date}.
+	 * TODO Javadoc
 	 * 
-	 * @param duration
-	 *            The {@link YearMonthDuration} to subtract.
+	 * @param yearMonthDuration
 	 */
-	public void subtract(YearMonthDuration duration) {
-		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration().toString().substring(1)).getDuration());
-		} else {
-			this.xmlCalendar.add(new YearMonthDuration("-" + duration.getDuration().toString()).getDuration());
-		}
+	public void subtract(YearMonthDuration yearMonthDuration) {
+		date = date.minus(yearMonthDuration.getDuration());
 	}
 }

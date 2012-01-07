@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,17 +53,11 @@ public class DateTimeLessThanOrEqualFunction extends AbstractFunction {
 	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20</a>
 	 * page 121 function urn:oasis:names:tc:xacml:1.0:function:date-greater-than-or-equal
 	 * must provide an implicit time zone if no one is set.
-	 * This MUST is not considered in this implementation of the function.</code>
+	 * 
+	 * <b>If no time zone is provided an implicit default time zone must be used. The default time zone is derived from
+	 * the system property {@code user.timezone}. If that is {@code null} or is not a valid identifier, then the value
+	 * of the JDK {@code TimeZone} default is converted. If that fails, {@code UTC} is used.</b>
 	 */
-	// FIXME Time zone awareness (see http://dev.herasaf.org/browse/XACMLCORE-28).
-	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	// Errata 29 January 2008
-	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-	// page 121 function
-	// urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than-or-equal
-	// must provide an implicit time zone if no one is set.
-	// This MUST is not considered in this implementation of the function and
-	// must be fixed.
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

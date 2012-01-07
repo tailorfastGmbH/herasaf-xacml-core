@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,9 +25,7 @@
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -37,6 +35,7 @@ import javax.xml.bind.annotation.XmlType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateTimeDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
+import org.joda.time.DateTime;
 
 /**
  * <p>
@@ -69,14 +68,14 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement(name = "Request", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
+@XmlRootElement
 @XmlType(name = "RequestType", propOrder = { "subjects", "resources", "action",
 		"environment" })
 public class RequestType implements Serializable {
 
 	private static final String DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
 	private static final String DATE_PATTERN = "yyyy-MM-ddZ";
-	private static final String TIME_PATTERN = "HH:mm:ss.SSSZ";
+	private static final String TIME_PATTERN = "HH:mm:ss.SSSZ"; //HH is the hour 0-23 (k would be 1-24)
 	private static final String CURRENT_DATETIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-dateTime";
 	private static final String CURRENT_DATE_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-date";
 	private static final String CURRENT_TIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-time";
@@ -107,7 +106,7 @@ public class RequestType implements Serializable {
 	 * 
 	 * @param creationTime The creationTime to set to this request.
 	 */
-	public void setCreationTime(Calendar creationTime) {
+	public void setCreationTime(DateTime creationTime) {
 		environment.getAttributes().add(createCurrentTime(creationTime));
 		environment.getAttributes().add(createCurrentDate(creationTime));
 		environment.getAttributes().add(createCurrentDateTime(creationTime));
@@ -127,8 +126,8 @@ public class RequestType implements Serializable {
 	 * With this method a caller is able to add the current date, time and datetime.
 	 */
 	public void setCreationTime(){
-		Calendar cal = Calendar.getInstance();
-		setCreationTime(cal);
+		DateTime dateTime = new DateTime();
+		setCreationTime(dateTime);
 	}
 
 	/**
@@ -136,11 +135,11 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The {@link AttributeType} containing the current time.
 	 */
-	private AttributeType createCurrentTime(Calendar calendar) {
+	private AttributeType createCurrentTime(DateTime dateTime) {
 		AttributeType currentTimeAttr = new AttributeType();
 		currentTimeAttr.setAttributeId(CURRENT_TIME_DATATYPEID);
 		currentTimeAttr.setDataType(new TimeDataTypeAttribute());
-		currentTimeAttr.getAttributeValues().add(createDateTime(calendar, TIME_PATTERN));
+		currentTimeAttr.getAttributeValues().add(createDateTime(dateTime, TIME_PATTERN));
 
 		return currentTimeAttr;
 	}
@@ -150,11 +149,11 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The {@link AttributeType} containing the current date.
 	 */
-	private AttributeType createCurrentDate(Calendar calendar) {
+	private AttributeType createCurrentDate(DateTime dateTime) {
 		AttributeType currentDateAttr = new AttributeType();
 		currentDateAttr.setAttributeId(CURRENT_DATE_DATATYPEID);
 		currentDateAttr.setDataType(new DateDataTypeAttribute());
-		currentDateAttr.getAttributeValues().add(createDateTime(calendar, DATE_PATTERN));
+		currentDateAttr.getAttributeValues().add(createDateTime(dateTime, DATE_PATTERN));
 
 		return currentDateAttr;
 	}
@@ -164,30 +163,27 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The {@link AttributeType} containing the current dateTime.
 	 */
-	private AttributeType createCurrentDateTime(Calendar calendar) {
+	private AttributeType createCurrentDateTime(DateTime dateTime) {
 		AttributeType currentDateTimeAttr = new AttributeType();
 		currentDateTimeAttr.setAttributeId(CURRENT_DATETIME_DATATYPEID);
 		currentDateTimeAttr.setDataType(new DateTimeDataTypeAttribute());
 		currentDateTimeAttr.getAttributeValues().add(
-				createDateTime(calendar, DATE_TIME_PATTERN));
+				createDateTime(dateTime, DATE_TIME_PATTERN));
 
 		return currentDateTimeAttr;
 	}
 
 	/**
-	 * FIXME Timezone awareness (see HERASAFXACMLCORE-28).
-	 * 
 	 * Creates a new {@link AttributeValueType} containing the current dateTime
 	 * with the given pattern.
 	 * 
 	 * @return The current dateTime.
 	 */
-	private AttributeValueType createDateTime(Calendar cal, String pattern) {
-		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+	private AttributeValueType createDateTime(DateTime dateTime, String pattern) {
+		
+		String value = dateTime.toString(pattern);
+		
 		AttributeValueType attrValue = new AttributeValueType();
-		String value = sdf.format(cal.getTime());
-		value = value.substring(0, value.length() - 2) + ":"
-				+ value.substring(value.length() - 2, value.length());
 		attrValue.getContent().add(value);
 
 		return attrValue;

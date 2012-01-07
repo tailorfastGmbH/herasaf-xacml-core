@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +14,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This data type represents a http://www.w3.org/2001/XMLSchema#date. See: <A
@@ -26,17 +27,19 @@ import org.herasaf.xacml.core.types.Date;
  * target="_blank">http://www.w3.org/TR/xmlschema-2/#date</A> for further
  * information.
  * 
- * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#date";
 	private static final long serialVersionUID = 1L;
+	private final Logger logger = LoggerFactory.getLogger(DateDataTypeAttribute.class);
 
 	/** {@inheritDoc} */
 	public Date convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
 			return new Date(jaxbRepresentation.trim());
-		} catch (IllegalArgumentException e) {
+		} catch (Exception e){
+			logger.error("An unexpected error occured.", e);
 			throw new SyntaxException(e);
 		}
 	}

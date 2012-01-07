@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,17 +19,39 @@ package org.herasaf.xacml.core.types.test;
 
 import static org.testng.Assert.assertEquals;
 
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Time;
-import org.testng.annotations.AfterMethod;
+import org.joda.time.DateTimeZone;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
+ * TODO More tests.
+ * 
  *  Tests the {@link Time} basic data type.
  * 
  * @author Florian Huonder
  */
 public class TestTime {
+	
+	private DateTimeZone defaultZone;
+	
+	/**
+	 * Sets the default timezone to +00:00 for testing.
+	 */
+	@BeforeTest
+	public void init(){
+		defaultZone = DateTimeZone.getDefault();
+		
+		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
+	}
+	
+	@AfterTest
+	public void cleanUp(){
+		DateTimeZone.setDefault(defaultZone);
+	}
 	
 	/**
 	 * Creates positive test cases. 
@@ -38,11 +60,27 @@ public class TestTime {
 	 */
 	@DataProvider(name = "positiveCases")
 	public Object[][] createPositiveCases() {
-		return new Object[][] { new Object[] { "12:00:01.239" },
-				new Object[] { "12:00:01.2" },
-				new Object[] { "12:00:01.35" },
-				new Object[] { "12:00:01" },
-				new Object[] { "12:00:01-05:00" }
+		return new Object[][] { 
+				new Object[] { "12:00:01.2", "12:00:01.2+00:00" },
+				new Object[] { "12:00:01.35", "12:00:01.35+00:00" },
+				new Object[] { "12:00:01.239", "12:00:01.239+00:00" },
+				new Object[] { "12:00:01", "12:00:01+00:00" },
+				new Object[] { "12:00:01-05:00", "12:00:01-05:00" },
+				new Object[] { "24:00:00", "00:00:00+00:00" }
+		};
+	}
+	
+	/**
+	 * Creates positive test cases. 
+	 * 
+	 * @return The test cases.
+	 */
+	@DataProvider(name = "timezoneCases")
+	public Object[][] createTimezoneCases() {
+		return new Object[][] { new Object[] { "12:00:01.239+01:00", "12:00:01.239+01:00" },
+				new Object[] { "12:00:01-09:00", "12:00:01-09:00" },
+				new Object[] { "12:00:01+00:00", "12:00:01+00:00" },
+				new Object[] { "12:00:01-00:00", "12:00:01+00:00" },
 		};
 	}
 
@@ -58,7 +96,8 @@ public class TestTime {
 				new Object[] { "13:00:00", "13:00:00", 0 },
 				new Object[] { "12:00:01", "12:00:01.001", -1 },
 				new Object[] { "15:03:00", "13:00:00.234", 1 },
-				new Object[] { "13:00:00.978", "13:00:00.978", 0 }, };
+				new Object[] { "13:00:00.978", "13:00:00.978", 0 },
+				new Object[] { "24:00:00", "00:00:00", 0 },};
 	}
 
 	/**
@@ -73,24 +112,21 @@ public class TestTime {
 	}
 
 	/**
-	 * Clears the property javax.xml.datatype.DatatypeFactory.
-	 * This is only relevant for the {@link #testNoDataFactoryFound()} method.
-	 */
-	@AfterMethod
-	public void afterMethod() {
-		System.clearProperty("javax.xml.datatype.DatatypeFactory");
-	}
-
-	/**
 	 * Test if the {@link Time} objects are properly created.
 	 * 
 	 * @param input The time in its String representation.
 	 * @throws Exception If an error occurs.
 	 */
 	@Test(dataProvider = "positiveCases")
-	public void testInput1(String input) throws Exception {
+	public void testInput(String input, String expected) throws Exception {
 		Time time = new Time(input);
-		assertEquals(time.toString(), input);
+		assertEquals(time.toString(), expected);
+	}
+	
+	@Test(dataProvider = "timezoneCases")
+	public void testTimezoneInput(String input, String expected) throws Exception {
+		Time time = new Time(input);
+		assertEquals(time.toString(), expected);
 	}
 
 	/**
@@ -98,20 +134,9 @@ public class TestTime {
 	 * @param input The illegal time strings.
 	 * @throws Exception If an error occurs.
 	 */
-	@Test(dataProvider = "negativeCases", expectedExceptions = { IllegalArgumentException.class })
+	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
 	public void testInputFail(String input) throws Exception {
 		new Time(input);
-	}
-
-	/**
-	 * Tests if an exception is thrown when a non-existing DatatypeFactory is set.
-	 * 
-	 * @throws Exception If an error occurs.
-	 */
-	@Test(expectedExceptions = { IllegalArgumentException.class })
-	public void testNoDataFactoryFound() throws Exception {
-		System.setProperty("javax.xml.datatype.DatatypeFactory", "bla");
-		new Time("12:00:01");
 	}
 
 	/**

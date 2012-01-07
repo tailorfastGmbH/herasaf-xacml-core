@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,58 +14,101 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.types;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import org.herasaf.xacml.core.SyntaxException;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeComparator;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Represents a http://www.w3.org/2001/XMLSchema#time data type. The
- * specification can be found at <a
- * href="http://www.w3.org/2001/XMLSchema#time">
- * http://www.w3.org/2001/XMLSchema#time</a>.
+ * This class can parse and print a time of type http://www.w3.org/2001/XMLSchema#time with the pattern
  * 
- * @author Stefan Oberholzer
+ * HH ':' mm ':' ss ('.' SSS)? ZZ?"
+ * 
+ * The fractional seconds and timezone parts are optional on creation. The {@link #toString()} method will always print
+ * the fractional seconds and the timezone. <b>note</b>24:00:00 will be converted into 00:00:00 (the following day)
+ * 
  * @author Florian Huonder
  */
 public class Time implements Comparable<Time> {
-	private XMLGregorianCalendar xmlCalendar;
+	private final Logger logger = LoggerFactory.getLogger(Time.class);
+	private static final DateTimeFormatter DATE_TIME_PARSER;
+	private static final DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
+	private static final DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
+	private static final DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
+	private static final DateTimeFormatter MILLIS_PARSER;
+	private static final DateTimeComparator COMPARATOR;
+	private DateTime time;
+	private boolean noFractionalSeconds;
 
 	/**
-	 * Initializes a new {@link Time} object.
-	 * 
-	 * @param lexicalRepresentation
-	 *            The {@link String} representation of the time to created with
-	 *            this class.
-	 * @throws ConvertException
-	 *             In case the {@link String} cannot be converted into <a
-	 *             href="http://www.w3.org/2001/XMLSchema#time">
-	 *             http://www.w3.org/2001/XMLSchema#time</a>.
+	 * Initializes the comparator, the parser and the printer for this Time.
 	 */
-	public Time(String lexicalRepresentation) {
-		try {
-			DatatypeFactory factory = DatatypeFactory.newInstance();
+	static {
+		COMPARATOR = DateTimeComparator.getTimeOnlyInstance();
 
-			if (lexicalRepresentation.matches("\\d\\d:\\d\\d:\\d\\d(\\.\\d(\\d)?(\\d)?)?([-+]\\d\\d:\\d\\d)?")) {
-				this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
-			} else {
-				throw new IllegalArgumentException();
-			}
-		} catch (DatatypeConfigurationException e) {
-			throw new IllegalArgumentException(e);
-		}
+		// The formatter for the timezone
+		DateTimeFormatter timezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2, 2)
+				.toFormatter();
+		// The formatter for the fractional (3 digit) seconds
+		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
+				.appendFractionOfSecond(0, 3).toFormatter();
+
+		// Here a parser is created that parses a string of the form HH:mm:ss. Further the string may have
+		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
+		DATE_TIME_PARSER = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':').appendMinuteOfHour(2)
+				.appendLiteral(':').appendSecondOfMinute(2).appendOptional(fractionalSecondsFormatter.getParser())
+				.appendOptional(timezoneFormatter.getParser()).toFormatter();
+
+		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().appendLiteral("24:00:00")
+				.appendOptional(timezoneFormatter.getParser()).toFormatter();
+
+		// Here a printer is created that prints this dateTime in the form HH:mm:ss.SSS ZZ (.SSS is not printed when its .000)
+		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
+				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2)
+				.appendTimeZoneOffset(null, true, 2, 2).toFormatter();
+
+		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
+				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2).append(fractionalSecondsFormatter)
+				.appendTimeZoneOffset(null, true, 2, 2).toFormatter();
+
+		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}
 
 	/**
-	 * Returns the {@link XMLGregorianCalendar} instance of this {@link Time}
-	 * object.
+	 * TODO Javadoc
 	 * 
-	 * @return The {@link XMLGregorianCalendar} instance.
+	 * @throws SyntaxException
 	 */
-	public XMLGregorianCalendar getCalendar() {
-		return xmlCalendar;
+	public Time(String timeString) throws SyntaxException {
+		timeString = timeString.trim();
+		try {
+			time = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(timeString);
+		} catch (IllegalArgumentException e) {
+			try {
+				// If parsing failed check if the time is midnight as clockhour.
+				time = DATE_TIME_PARSER_CLOCKHOUR.parseDateTime(timeString);
+				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
+				// shifted plus one
+				time = time.plus(Period.days(1));
+			} catch (IllegalArgumentException e2) {
+				SyntaxException se = new SyntaxException("The time '" + timeString
+						+ "' is not a valid time according to http://www.w3.org/2001/XMLSchema#time", e);
+				logger.error(se.getMessage());
+				throw se;
+			}
+		} finally {
+			if (time != null) {
+				// Check if the time has fractional seconds
+				String millis = MILLIS_PARSER.print(time);
+				noFractionalSeconds = millis.length() == 0;
+			}
+		}
 	}
 
 	/**
@@ -73,14 +116,18 @@ public class Time implements Comparable<Time> {
 	 */
 	@Override
 	public String toString() {
-		return xmlCalendar.toXMLFormat();
+		if (noFractionalSeconds) {
+			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(time);
+		} else {
+			return DATE_TIME_PRINTER_WITH_MILLIS.print(time);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int compareTo(Time time) {
-		return xmlCalendar.compare(time.getCalendar());
+	public int compareTo(Time o) {
+		return COMPARATOR.compare(time, o.getTime());
 	}
 
 	/**
@@ -88,19 +135,24 @@ public class Time implements Comparable<Time> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Time) {
-			if (this.compareTo((Time) obj) == 0) {
-				return true;
-			}
+		if (obj == null || !obj.getClass().isAssignableFrom(Time.class)) {
+			// Check if types are the same
+			return false;
 		}
+		if (COMPARATOR.compare(this, obj) == 0) {
+			// If types are the same check if they are equal
+			return true;
+		}
+		// If they are not equal return false
 		return false;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns the internal representation of this dateTime.
+	 * 
+	 * @return internal representation of this dateTime.
 	 */
-	@Override
-	public int hashCode() {
-		return xmlCalendar.hashCode();
+	public DateTime getTime() {
+		return time;
 	}
 }

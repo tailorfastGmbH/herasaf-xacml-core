@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 - 2011 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.function.impl.nonNumericComparisonFunctions;
 import org.herasaf.xacml.core.function.AbstractFunction;
 import org.herasaf.xacml.core.function.FunctionProcessingException;
 import org.herasaf.xacml.core.types.Date;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -32,13 +34,13 @@ import org.herasaf.xacml.core.types.Date;
  * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 118, for further information.
  * </p>
  * 
- * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class DateLessThanOrEqualFunction extends AbstractFunction {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal";
-
+	private final Logger logger = LoggerFactory.getLogger(DateLessThanFunction.class);
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -48,27 +50,25 @@ public class DateLessThanOrEqualFunction extends AbstractFunction {
 	 * http://www.w3.org/2001/XMLSchema#date is lesser than or equal the second
 	 * argument.<br>
 	 * * <br>
-	 * <code style="color:red"> <b>Important Hint:</b><br>The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
+	 * <br>OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
 	 * Errata 29 January 2008
 	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20</a>
-	 * function urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal
-	 * must provide an implicit time zone if no one is set.
-	 * This MUST is not considered in this implementation of the function.</code>
+	 * function urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal page 121.
+	 * 
+	 * <b>If no time zone is provided an implicit default time zone must be used.
+	 * The default time zone is derived from the system property {@code user.timezone}.
+     * If that is {@code null} or is not a valid identifier, then the value of the
+     * JDK {@code TimeZone} default is converted. If that fails, {@code UTC} is used.</b>
 	 */
-	// FIXME Time zone awareness (see HERASAFXACMLCORE-28).
-	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	// Errata 29 January 2008
-	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-	// urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal
-	// must provide an implicit time zone if no one is set.
-	// This MUST is not considered in this implementation of the function and
-	// must be fixed.
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {
+				logger.error("Function {} requires two arguments but {} arguments were passed.", ID, args.length);
 				throw new FunctionProcessingException("Invalid number of parameters");
 			}
+			
 			int result = ((Date) args[0]).compareTo((Date) args[1]);
+			
 			if (result < 0) {
 				return true;
 			} else if (result > 0) {
@@ -76,11 +76,11 @@ public class DateLessThanOrEqualFunction extends AbstractFunction {
 			}
 			return true;
 
-		} catch (ClassCastException e) {
+		} catch (IllegalArgumentException e) {
+			logger.error("Either argument is not supported by this function.");
 			throw new FunctionProcessingException(e);
-		} catch (FunctionProcessingException e) {
-			throw e;
 		} catch (Exception e) {
+			logger.error("An unexpected error occured.");
 			throw new FunctionProcessingException(e);
 		}
 	}
