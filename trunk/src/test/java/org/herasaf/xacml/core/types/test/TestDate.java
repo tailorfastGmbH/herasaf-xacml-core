@@ -21,6 +21,8 @@ import static org.testng.Assert.assertEquals;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
 import org.joda.time.DateTimeZone;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -30,6 +32,23 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestDate {
+private DateTimeZone defaultZone;
+	
+	/**
+	 * Sets the default timezone to +00:00 for testing.
+	 */
+	@BeforeTest
+	public void init(){
+		defaultZone = DateTimeZone.getDefault();
+		
+		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
+	}
+	
+	@AfterTest
+	public void cleanUp(){
+		DateTimeZone.setDefault(defaultZone);
+	}
+	
 	/**
 	 * Creates positive test cases.
 	 * 
@@ -37,8 +56,8 @@ public class TestDate {
 	 */
 	@DataProvider(name = "positiveCasesDefaultTimeZone")
 	public Object[][] createPositiveCases() {
-		return new Object[][] { new Object[] { "2006-11-11", "2006-11-11+01:00" },
-				new Object[] { "2004-12-01", "2004-12-01+01:00" }, new Object[] { "2004-12-01", "2004-12-01+01:00" },
+		return new Object[][] { new Object[] { "2006-11-11", "2006-11-11+00:00" },
+				new Object[] { "2004-12-01", "2004-12-01+00:00" }, new Object[] { "2004-12-01", "2004-12-01+00:00" },
 				new Object[] { "2004-12-01+01:00", "2004-12-01+01:00" }, };
 	}
 
