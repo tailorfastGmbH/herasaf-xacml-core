@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * the {@link RuleCombiningAlgorithmJAXBTypeAdapter} JAXB type adapter.
  * 
  * @author Florian Huonder
- * @author Ren� Eggenschwiler
+ * @author René Eggenschwiler
  */
 public class RuleCombiningAlgorithmsJAXBInitializer extends
 		AbstractInitializer<AbstractRuleCombiningAlgorithm> {
@@ -74,23 +74,5 @@ public class RuleCombiningAlgorithmsJAXBInitializer extends
 	@Override
 	protected Class<AbstractRuleCombiningAlgorithm> getTargetClass() {
 		return TARGET_CLASS;
-	}
-
-	/** {@inheritDoc} */
-	public int hashCode() {
-		return getClass().getName().hashCode();
-	}
-
-	/** {@inheritDoc} */
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (!(obj instanceof RuleCombiningAlgorithmsJAXBInitializer)) {
-			return false;
-		}
-
-		return hashCode() == obj.hashCode();
 	}
 }
