@@ -22,7 +22,6 @@ import static org.testng.Assert.assertEquals;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DateTime;
 import org.joda.time.DateTimeZone;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -85,15 +84,6 @@ public class TestDateTime {
 				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01.001", -1 },
 				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:00.999", 1 },
 				new Object[] { "2005-02-02T12:00:01.645", "2005-02-02T12:00:01.645", 0 }, };
-	}
-
-	/**
-	 * Clears the property javax.xml.datatype.DatatypeFactory. This is only relevant for the
-	 * {@link #testNoDataFactoryFound()} method.
-	 */
-	@AfterMethod
-	public void afterMethod() {
-		System.clearProperty("javax.xml.datatype.DatatypeFactory");
 	}
 
 	/**

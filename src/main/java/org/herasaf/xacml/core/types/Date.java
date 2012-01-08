@@ -76,7 +76,7 @@ public class Date implements Comparable<Date> {
 	public Date(String dateString) throws SyntaxException {
 		dateString = dateString.trim();
 		try {
-			date = DATE_TIME_PARSER.parseDateTime(dateString);
+			date = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateString);
 		} catch (IllegalArgumentException e) {
 			SyntaxException se = new SyntaxException("The date '" + dateString
 					+ "' is not a valid date according to http://www.w3.org/2001/XMLSchema#date", e);
