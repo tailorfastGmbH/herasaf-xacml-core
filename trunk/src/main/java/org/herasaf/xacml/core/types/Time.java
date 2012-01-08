@@ -92,7 +92,7 @@ public class Time implements Comparable<Time> {
 		} catch (IllegalArgumentException e) {
 			try {
 				// If parsing failed check if the time is midnight as clockhour.
-				time = DATE_TIME_PARSER_CLOCKHOUR.parseDateTime(timeString);
+				time = DATE_TIME_PARSER_CLOCKHOUR.withOffsetParsed().parseDateTime(timeString);
 				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
 				// shifted plus one
 				time = time.plus(Period.days(1));

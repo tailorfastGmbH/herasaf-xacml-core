@@ -61,27 +61,28 @@ public class DateTime implements Comparable<DateTime> {
 		// This formatter equals: yyyy-MM-dd'T'HH:mm:ss
 		DateTimeFormatter dhmsFormatter = ISODateTimeFormat.dateHourMinuteSecond();
 
-		// T his formatter equals: yyyy-MM-dd
+		// This formatter equals: yyyy-MM-dd
 		DateTimeFormatter dateFormatter = ISODateTimeFormat.date();
 
 		// Accepts yyyy-MM-dd'T'24:00:00
 		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().append(dateFormatter).appendLiteral("T24:00:00")
 				.appendOptional(timezoneFormatter.getParser()).toFormatter();
 
-		// Here a parser is created that parses a string of the form yyyy-MM-dd'T'HH:mm:ss. Further the string may have
-		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
-		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.appendOptional(fractionalSecondsFormatter.getParser()).appendOptional(timezoneFormatter.getParser())
-				.toFormatter();
+		// // Here a parser is created that parses a string of the form yyyy-MM-dd'T'HH:mm:ss. Further the string may
+		// have
+		// // 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
+		 DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
+		 .appendOptional(fractionalSecondsFormatter.getParser()).appendOptional(timezoneFormatter.getParser())
+		 .toFormatter();
 
 		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd'T'HH:mm:ss.SSS ZZ (.SSS is not
 		// printed when its
 		// .000)
 		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.append(timezoneFormatter.getPrinter()).toFormatter();
+				.appendTimeZoneOffset(null, true, 2, 2).toFormatter();
 
 		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.append(fractionalSecondsFormatter).append(timezoneFormatter.getPrinter()).toFormatter();
+				.append(fractionalSecondsFormatter).appendTimeZoneOffset(null, true, 2, 2).toFormatter();
 
 		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}
@@ -94,11 +95,11 @@ public class DateTime implements Comparable<DateTime> {
 	public DateTime(String dateTimeString) throws SyntaxException {
 		dateTimeString = dateTimeString.trim();
 		try {
-			dateTime = DATE_TIME_PARSER.parseDateTime(dateTimeString);
+			dateTime = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateTimeString);
 		} catch (IllegalArgumentException e) {
 			try {
 				// If parsing failed check if the time part is midnight as clockhour.
-				dateTime = DATE_TIME_PARSER_CLOCKHOUR.parseDateTime(dateTimeString);
+				dateTime = DATE_TIME_PARSER_CLOCKHOUR.withOffsetParsed().parseDateTime(dateTimeString);
 				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
 				// shifted plus one.
 				dateTime = dateTime.plus(Period.days(1));
@@ -123,9 +124,9 @@ public class DateTime implements Comparable<DateTime> {
 	@Override
 	public String toString() {
 		if (noFractionalSeconds) {
-			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(dateTime);
+			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(dateTime.withZoneRetainFields(dateTime.getZone()));
 		} else {
-			return DATE_TIME_PRINTER_WITH_MILLIS.print(dateTime);
+			return DATE_TIME_PRINTER_WITH_MILLIS.print(dateTime.withZoneRetainFields(dateTime.getZone()));
 		}
 	}
 
