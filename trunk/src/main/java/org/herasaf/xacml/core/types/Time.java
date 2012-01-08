@@ -80,11 +80,6 @@ public class Time implements Comparable<Time> {
 		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}
 
-	/**
-	 * TODO Javadoc
-	 * 
-	 * @throws SyntaxException
-	 */
 	public Time(String timeString) throws SyntaxException {
 		timeString = timeString.trim();
 		try {
