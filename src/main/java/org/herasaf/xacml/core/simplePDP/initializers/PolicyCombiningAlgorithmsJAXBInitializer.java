@@ -76,22 +76,4 @@ public class PolicyCombiningAlgorithmsJAXBInitializer extends
 	protected Class<AbstractPolicyCombiningAlgorithm> getTargetClass() {
 		return TARGET_CLASS;
 	}
-
-	/** {@inheritDoc} */
-	public int hashCode() {
-		return getClass().getName().hashCode();
-	}
-
-	/** {@inheritDoc} */
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (!(obj instanceof PolicyCombiningAlgorithm)) {
-			return false;
-		}
-
-		return hashCode() == obj.hashCode();
-	}
 }

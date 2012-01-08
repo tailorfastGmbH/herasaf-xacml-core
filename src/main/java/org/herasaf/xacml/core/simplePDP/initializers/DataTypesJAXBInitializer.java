@@ -93,22 +93,4 @@ public class DataTypesJAXBInitializer extends
 	protected Class<DataTypeAttribute<?>> getTargetClass() {
 		return TARGET_CLASS;
 	}
-
-	/** {@inheritDoc} */
-	public int hashCode() {
-		return getClass().getName().hashCode();
-	}
-
-	/** {@inheritDoc} */
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-
-		if (!(obj instanceof DataTypesJAXBInitializer)) {
-			return false;
-		}
-
-		return hashCode() == obj.hashCode();
-	}
 }
