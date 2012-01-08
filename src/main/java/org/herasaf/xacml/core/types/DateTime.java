@@ -87,11 +87,6 @@ public class DateTime implements Comparable<DateTime> {
 		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}
 
-	/**
-	 * TODO Javadoc
-	 * 
-	 * @throws SyntaxException
-	 */
 	public DateTime(String dateTimeString) throws SyntaxException {
 		dateTimeString = dateTimeString.trim();
 		try {

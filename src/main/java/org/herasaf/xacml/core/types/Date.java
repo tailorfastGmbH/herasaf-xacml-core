@@ -67,12 +67,6 @@ public class Date implements Comparable<Date> {
 		DATE_TIME_PRINTER = new DateTimeFormatterBuilder().append(dhmsFormatter).append(timezoneFormatter.getPrinter()).toFormatter();
 	}
 
-	/**
-	 * TODO Javadoc
-	 * 
-	 * @param dateString
-	 * @throws SyntaxException
-	 */
 	public Date(String dateString) throws SyntaxException {
 		dateString = dateString.trim();
 		try {
