@@ -225,10 +225,10 @@ public class SimplePDPConfiguration {
 	 */
 	public DateTimeZone getTimeZone() {
 		if (timeZone != null) {
-			logger.info("Using custom timezone: {}", timeZone.getID());
+			logger.info("Using custom timezone: {}", timeZone);
 			return timeZone;
 		}
-		logger.info("Using default timezone: {}", timeZone.getID());
+		logger.info("Using default timezone: {}", timeZone);
 		return DateTimeZone.forID("GMT");
 	}
 }
