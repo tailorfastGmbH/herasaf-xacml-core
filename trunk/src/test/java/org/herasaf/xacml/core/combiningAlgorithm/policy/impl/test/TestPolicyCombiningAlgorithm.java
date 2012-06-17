@@ -19,6 +19,7 @@ package org.herasaf.xacml.core.combiningAlgorithm.policy.impl.test;
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -72,7 +73,7 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 *             In case something goes wrong.
 	 */
 	@DataProvider(name = "evaluatableCombinations")
-	public Object[][] testTargetMatchAndOneEvaluatable() throws Exception {
+	public Iterator<Object[]> createTargetMatchAndOneEvaluatableTestData() throws Exception {
 		List<Object[]> data = new ArrayList<Object[]>();
 
 		for (EvaluatableMock templEval1 : createEvalCombinations()) {
@@ -98,27 +99,10 @@ public abstract class TestPolicyCombiningAlgorithm {
 								eval1, evaluationContext2, eval2);
 						dataSet[8] = true;
 						data.add(dataSet);
-
-						// for debugging
-						// int point = 1280;
-						// if (data.size() == point){
-						// Object[][] retVal = new Object[data.size()][9];
-						// for (int i = 0; i < data.size(); i++) {
-						// retVal[i] = data.get(i);
-						// }
-
-						// Object[][] retVal = new Object[1][9];
-						// retVal[0] = data.get(point - 1);
-						// return retVal;
-						// }
 					}
 				}
 		}
-		Object[][] retVal = new Object[data.size()][9];
-		for (int i = 0; i < data.size(); i++) {
-			retVal[i] = data.get(i);
-		}
-		return retVal;
+		return data.iterator();
 	}
 
 	/**
