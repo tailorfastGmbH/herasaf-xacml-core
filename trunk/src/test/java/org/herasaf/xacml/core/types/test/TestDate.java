@@ -32,32 +32,46 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestDate {
-private DateTimeZone defaultZone;
-	
+	private DateTimeZone defaultZone;
+
 	/**
 	 * Sets the default timezone to +00:00 for testing.
 	 */
 	@BeforeTest
-	public void init(){
+	public void init() {
 		defaultZone = DateTimeZone.getDefault();
-		
+
 		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
 	}
-	
+
 	@AfterTest
-	public void cleanUp(){
+	public void cleanUp() {
 		DateTimeZone.setDefault(defaultZone);
 	}
-	
+
 	/**
 	 * Creates positive test cases.
 	 * 
 	 * @return The test cases.
 	 */
-	@DataProvider(name = "positiveCasesDefaultTimeZone")
-	public Object[][] createPositiveCases() {
+	@DataProvider(name = "positiveCasesDefaultTimeZoneWithZulu")
+	public Object[][] createPositiveCasesWithZulu() {
+		return new Object[][] { new Object[] { "2006-11-11", "2006-11-11Z" },
+				new Object[] { "2004-12-01", "2004-12-01Z" }, new Object[] { "2004-12-01", "2004-12-01Z" },
+				new Object[] { "2004-12-01Z", "2004-12-01Z" }, new Object[] { "2004-12-01+01:00", "2004-12-01+01:00" }, };
+	}
+
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
+	@DataProvider(name = "positiveCasesDefaultTimeZoneWithNonZulu")
+	public Object[][] createPositiveCasesWithNonZulu() {
 		return new Object[][] { new Object[] { "2006-11-11", "2006-11-11+00:00" },
 				new Object[] { "2004-12-01", "2004-12-01+00:00" }, new Object[] { "2004-12-01", "2004-12-01+00:00" },
+				new Object[] { "2004-12-01", "2004-12-01+00:00" }, new Object[] { "2004-12-01", "2004-12-01+00:00" },
+				new Object[] { "2004-12-01Z", "2004-12-01+00:00" },
 				new Object[] { "2004-12-01+01:00", "2004-12-01+01:00" }, };
 	}
 
@@ -133,8 +147,18 @@ private DateTimeZone defaultZone;
 	 * @throws Exception
 	 *             If an error occurs.
 	 */
-	@Test(dataProvider = "positiveCasesDefaultTimeZone")
-	public void testInput(String input, String expected) throws Exception {
+	@Test(dataProvider = "positiveCasesDefaultTimeZoneWithNonZulu")
+	public void testWithoutZulu(String input, String expected) throws Exception {
+		Date.useZuluUtcRepresentation = false;
+		Date.reInitializeFormatter();
+		Date date = new Date(input);
+		assertEquals(date.toString(), expected);
+	}
+
+	@Test(dataProvider = "positiveCasesDefaultTimeZoneWithZulu")
+	public void testWithZulu(String input, String expected) throws Exception {
+		Date.useZuluUtcRepresentation = true;
+		Date.reInitializeFormatter();
 		Date date = new Date(input);
 		assertEquals(date.toString(), expected);
 	}

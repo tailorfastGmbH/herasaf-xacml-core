@@ -33,38 +33,61 @@ import org.slf4j.LoggerFactory;
  * The timezone part is optional on creation. The {@link #toString()} method will always print the timezone.
  * 
  * <b>Note</b> Having set a standard timezone means that for all calculations the offset is set to the offset to UTC.
- * This means if the timezone is e.g. GMT+1 (for Zurich) the date is printed as yyyy-mm-dd-01:00. This is the timezone calculated
- * back to UTC. So a comparison is possible.
+ * This means if the timezone is e.g. GMT+1 (for Zurich) the date is printed as yyyy-mm-dd-01:00. This is the timezone
+ * calculated back to UTC. So a comparison is possible.
  * 
  * @author Florian Huonder
  */
 public class Date implements Comparable<Date> {
+	public static boolean useZuluUtcRepresentation = false;
 	private final Logger logger = LoggerFactory.getLogger(Date.class);
-	private static final DateTimeFormatter DATE_TIME_PARSER;
-	private static final DateTimeFormatter DATE_TIME_PRINTER;
-	private static final DateTimeComparator COMPARATOR;
+	private static DateTimeFormatter DATE_TIME_PARSER;
+	private static DateTimeFormatter DATE_TIME_PRINTER;
+	private static DateTimeComparator COMPARATOR;
 	private DateTime date;
 
 	/**
-	 * Initializes the comparator, the parser and the printer for this DateTime.
+	 * Initializes the formatters when the type is initialized.
 	 */
 	static {
+		reInitializeFormatter();
+	}
+
+	/**
+	 * Initializes the comparator, the parser and the printer for this DateTime.
+	 * <p />
+	 * This method must be called when the {@value #useZuluUtcRepresentation} has changed.
+	 */
+	public static void reInitializeFormatter() {
 		COMPARATOR = DateTimeComparator.getDateOnlyInstance();
 
-		// The formatter for the timezone
-		DateTimeFormatter timezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2, 2)
+		// The default formatter for the timezone that can handle only +-00:00 for UTC.
+		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
+				2).toFormatter();
+		// The formatter for the timezone that can handle Zulu value 'Z'.
+		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
 				.toFormatter();
 
 		// This formatter equals: yyyy-MM-dd
 		DateTimeFormatter dhmsFormatter = ISODateTimeFormat.date();
 
+		// Determine timezone formatter to be used.
+		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
+		if (useZuluUtcRepresentation) {
+			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+		} else {
+			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+		}
+
 		// Here a parser is created that parses a string of the form yyyy-MM-dd. Further the string may have
 		// a timezone. withOffsetParsed makes the parser to respect the set timezone (if one is set)
+		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
 		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.appendOptional(timezoneFormatter.getParser()).toFormatter().withOffsetParsed();
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter().withOffsetParsed();
 
 		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd ZZ
-		DATE_TIME_PRINTER = new DateTimeFormatterBuilder().append(dhmsFormatter).append(timezoneFormatter.getPrinter()).toFormatter();
+		DATE_TIME_PRINTER = new DateTimeFormatterBuilder().append(dhmsFormatter)
+				.append(dateTimeFormatterToBeUsedInPrinter.getPrinter()).toFormatter();
 	}
 
 	public Date(String dateString) throws SyntaxException {

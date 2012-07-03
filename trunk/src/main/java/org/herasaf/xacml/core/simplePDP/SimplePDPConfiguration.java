@@ -37,7 +37,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class SimplePDPConfiguration {
-	private Logger logger = LoggerFactory.getLogger(SimplePDPConfiguration.class);
+	private final Logger logger = LoggerFactory.getLogger(SimplePDPConfiguration.class);
 
 	/**
 	 * The root {@link PolicyCombiningAlgorithm} to be used in the {@link SimplePDP} on which this
@@ -86,10 +86,16 @@ public class SimplePDPConfiguration {
 
 	/**
 	 * The {@link DateTimeZone} to be used in the {@link SimplePDP} on which this {@link SimplePDPConfiguration} will be
-	 * abblied. <b>Default value is GMT</b>.
+	 * applied. <b>Default value is GMT</b>.
 	 */
 	// default value is set in the getter, if needed.
 	private DateTimeZone timeZone;
+
+	/**
+	 * The flag indicating if the UTC timezone representation shall be +00:00 or 'Z' (for Zulu). <b>Default value
+	 * is:</b> {@code}false{@code}, means the UTC representation is +00:00.
+	 */
+	private boolean zuluUtcRepresentation = false;
 
 	/**
 	 * @return The configured root {@link PolicyCombiningAlgorithm}
@@ -230,5 +236,22 @@ public class SimplePDPConfiguration {
 		}
 		logger.info("Using default timezone: {}", timeZone);
 		return DateTimeZone.forID("GMT");
+	}
+
+	/**
+	 * True when the UTC timezone representation is 'Z' (Zulu), false if it is +00:00.
+	 * <p />
+	 * The default value is false.
+	 */
+	public boolean isZuluUtcRepresentation() {
+		return zuluUtcRepresentation;
+	}
+
+	/**
+	 * Sets the timezone representation. True when the UTC timezone representation shall be 'Z' (Zulu), or false when it
+	 * shall be +00:00.
+	 */
+	public void setUseZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
+		this.zuluUtcRepresentation = useZuluUtcRepresentation;
 	}
 }
