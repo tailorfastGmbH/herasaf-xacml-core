@@ -36,24 +36,37 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class DateTime implements Comparable<DateTime> {
+	public static boolean useZuluUtcRepresentation = false;
 	private final Logger logger = LoggerFactory.getLogger(DateTime.class);
-	private static final DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
-	private static final DateTimeFormatter DATE_TIME_PARSER;
-	private static final DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
-	private static final DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
-	private static final DateTimeComparator COMPARATOR;
-	private static final DateTimeFormatter MILLIS_PARSER;
+	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
+	private static DateTimeFormatter DATE_TIME_PARSER;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
+	private static DateTimeComparator COMPARATOR;
+	private static DateTimeFormatter MILLIS_PARSER;
 	private org.joda.time.DateTime dateTime;
 	private boolean noFractionalSeconds;
 
 	/**
-	 * Initializes the comparator, the parser and the printer for this DateTime.
+	 * Initializes the formatters when the type is initialized.
 	 */
 	static {
+		reInitializeFormatter();
+	}
+
+	/**
+	 * Initializes the comparator, the parser and the printer for this DateTime.
+	 * <p />
+	 * This method must be called when the {@value #useZuluUtcRepresentation} has changed.
+	 */
+	public static void reInitializeFormatter() {
 		COMPARATOR = DateTimeComparator.getInstance();
 
-		// The formatter for the timezone
-		DateTimeFormatter timezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2, 2)
+		// The default formatter for the timezone that can handle only +-00:00 for UTC.
+		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
+				2).toFormatter();
+		// The formatter for the timezone that can handle Zulu value 'Z'.
+		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
 				.toFormatter();
 		// The formatter for the fractional (3 digit) seconds
 		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
@@ -64,25 +77,33 @@ public class DateTime implements Comparable<DateTime> {
 		// This formatter equals: yyyy-MM-dd
 		DateTimeFormatter dateFormatter = ISODateTimeFormat.date();
 
-		// Accepts yyyy-MM-dd'T'24:00:00
+		// Accepts yyyy-MM-dd'T'24:00:00, Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
 		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().append(dateFormatter).appendLiteral("T24:00:00")
-				.appendOptional(timezoneFormatter.getParser()).toFormatter();
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
 
-		// // Here a parser is created that parses a string of the form yyyy-MM-dd'T'HH:mm:ss. Further the string may
-		// have
-		// // 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
-		 DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
-		 .appendOptional(fractionalSecondsFormatter.getParser()).appendOptional(timezoneFormatter.getParser())
-		 .toFormatter();
+		// Here a parser is created that parses a string of the form yyyy-MM-dd'T'HH:mm:ss. Further the string may have
+		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
+		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
+		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
+				.appendOptional(fractionalSecondsFormatter.getParser())
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
 
 		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd'T'HH:mm:ss.SSS ZZ (.SSS is not
-		// printed when its
-		// .000)
+		// printed when its .000)
+
+		// Determine timezone formatter to be used.
+		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
+		if (useZuluUtcRepresentation) {
+			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+		} else {
+			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+		}
+
 		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.appendTimeZoneOffset(null, true, 2, 2).toFormatter();
+				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
 
 		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.append(fractionalSecondsFormatter).appendTimeZoneOffset(null, true, 2, 2).toFormatter();
+				.append(fractionalSecondsFormatter).append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
 
 		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}

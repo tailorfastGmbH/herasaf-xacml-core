@@ -20,6 +20,7 @@ package org.herasaf.xacml.core.types.test;
 import static org.testng.Assert.assertEquals;
 
 import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.types.Date;
 import org.herasaf.xacml.core.types.DateTime;
 import org.joda.time.DateTimeZone;
 import org.testng.annotations.AfterTest;
@@ -55,10 +56,22 @@ public class TestDateTime {
 	 * 
 	 * @return The test cases.
 	 */
-	@DataProvider(name = "positiveCases")
-	public Object[][] createPositiveCases() {
+	@DataProvider(name = "positiveCasesWithNonZuluUtc")
+	public Object[][] createPositiveNonZuluCases() {
 		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239", "2005-02-02T12:00:01.239+00:00" },
-				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01+00:00" }, { "2007-02-01T24:00:00", "2007-02-02T00:00:00+00:00" } };
+				new Object[] { "2005-02-02T12:00:01.239+00:00", "2005-02-02T12:00:01.239+00:00" },
+				new Object[] { "2005-02-02T12:00:01.239Z", "2005-02-02T12:00:01.239+00:00" },
+				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01+00:00" },
+				{ "2007-02-01T24:00:00", "2007-02-02T00:00:00+00:00" } };
+	}
+
+	@DataProvider(name = "positiveCasesWithZuluUtc")
+	public Object[][] createPositiveCases() {
+		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239", "2005-02-02T12:00:01.239Z" },
+				new Object[] { "2005-02-02T12:00:01.239+00:00", "2005-02-02T12:00:01.239Z" },
+				new Object[] { "2005-02-02T12:00:01.239Z", "2005-02-02T12:00:01.239Z" },
+				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01Z" },
+				{ "2007-02-01T24:00:00", "2007-02-02T00:00:00Z" } };
 	}
 
 	/**
@@ -68,7 +81,8 @@ public class TestDateTime {
 	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
-		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239.9304" }, new Object[] { "12:00:00" }, new Object[] { "2006-04-31" }, };
+		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239.9304" }, new Object[] { "12:00:00" },
+				new Object[] { "2006-04-31" }, };
 	}
 
 	/**
@@ -96,8 +110,18 @@ public class TestDateTime {
 	 * @throws Exception
 	 *             If an error occurs.
 	 */
-	@Test(dataProvider = "positiveCases")
-	public void testInput(String input, String expected) throws Exception {
+	@Test(dataProvider = "positiveCasesWithNonZuluUtc")
+	public void testNonZulu(String input, String expected) throws Exception {
+		Date.useZuluUtcRepresentation = false;
+		Date.reInitializeFormatter();
+		DateTime dateTime = new DateTime(input);
+		assertEquals(dateTime.toString(), expected);
+	}
+
+	@Test(dataProvider = "positiveCasesWithZuluUtc")
+	public void testZulu(String input, String expected) throws Exception {
+		DateTime.useZuluUtcRepresentation = true;
+		DateTime.reInitializeFormatter();
 		DateTime dateTime = new DateTime(input);
 		assertEquals(dateTime.toString(), expected);
 	}

@@ -36,24 +36,37 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class Time implements Comparable<Time> {
+	public static boolean useZuluUtcRepresentation = false;
 	private final Logger logger = LoggerFactory.getLogger(Time.class);
-	private static final DateTimeFormatter DATE_TIME_PARSER;
-	private static final DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
-	private static final DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
-	private static final DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
-	private static final DateTimeFormatter MILLIS_PARSER;
-	private static final DateTimeComparator COMPARATOR;
+	private static DateTimeFormatter DATE_TIME_PARSER;
+	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
+	private static DateTimeFormatter MILLIS_PARSER;
+	private static DateTimeComparator COMPARATOR;
 	private DateTime time;
 	private boolean noFractionalSeconds;
 
 	/**
-	 * Initializes the comparator, the parser and the printer for this Time.
+	 * Initializes the formatters when the type is initialized.
 	 */
 	static {
+		reInitializeFormatter();
+	}
+
+	/**
+	 * Initializes the comparator, the parser and the printer for this DateTime.
+	 * <p />
+	 * This method must be called when the {@value #useZuluUtcRepresentation} has changed.
+	 */
+	public static void reInitializeFormatter() {
 		COMPARATOR = DateTimeComparator.getTimeOnlyInstance();
 
-		// The formatter for the timezone
-		DateTimeFormatter timezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2, 2)
+		// The default formatter for the timezone that can handle only +-00:00 for UTC.
+		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
+				2).toFormatter();
+		// The formatter for the timezone that can handle Zulu value 'Z'.
+		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
 				.toFormatter();
 		// The formatter for the fractional (3 digit) seconds
 		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
@@ -61,21 +74,31 @@ public class Time implements Comparable<Time> {
 
 		// Here a parser is created that parses a string of the form HH:mm:ss. Further the string may have
 		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
+		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
 		DATE_TIME_PARSER = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':').appendMinuteOfHour(2)
 				.appendLiteral(':').appendSecondOfMinute(2).appendOptional(fractionalSecondsFormatter.getParser())
-				.appendOptional(timezoneFormatter.getParser()).toFormatter();
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
 
 		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().appendLiteral("24:00:00")
-				.appendOptional(timezoneFormatter.getParser()).toFormatter();
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
 
-		// Here a printer is created that prints this dateTime in the form HH:mm:ss.SSS ZZ (.SSS is not printed when its .000)
+		// Determine timezone formatter to be used.
+		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
+		if (useZuluUtcRepresentation) {
+			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+		} else {
+			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+		}
+
+		// Here a printer is created that prints this dateTime in the form HH:mm:ss.SSS ZZ (.SSS is not printed when its
+		// .000)
 		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
 				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2)
-				.appendTimeZoneOffset(null, true, 2, 2).toFormatter();
+				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
 
 		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
 				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2).append(fractionalSecondsFormatter)
-				.appendTimeZoneOffset(null, true, 2, 2).toFormatter();
+				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
 
 		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}
