@@ -71,13 +71,12 @@
 
 		<!-- Dependencies versions -->
 		<jaxb.version>2.2.1</jaxb.version>
-		<slf4j.version>1.6.1</slf4j.version>
-		<logback.version>0.9.26</logback.version>
+		<slf4j.version>1.6.6</slf4j.version>
+		<logback.version>1.0.6</logback.version>
 		<testng.version>6.1.1</testng.version>
 		<xmlunit.version>1.3</xmlunit.version>
 		<jodatime.version>2.1</jodatime.version>
 	</properties>
-
 
 	<dependencies>
 		<dependency>

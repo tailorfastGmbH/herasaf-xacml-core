@@ -12,12 +12,13 @@ public class Testfunction implements Function {
 
 	public Object handle(Object... args) throws FunctionProcessingException {
 		return null;
-		//Can be null because the function will never be called.
+		// Can be null because the function will never be called.
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String toString() {
 		return getFunctionId();
 	}
