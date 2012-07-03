@@ -112,16 +112,14 @@ public class TestDateTime {
 	 */
 	@Test(dataProvider = "positiveCasesWithNonZuluUtc")
 	public void testNonZulu(String input, String expected) throws Exception {
-		Date.useZuluUtcRepresentation = false;
-		Date.reInitializeFormatter();
+		Date.useZuluUtcRepresentation(false);
 		DateTime dateTime = new DateTime(input);
 		assertEquals(dateTime.toString(), expected);
 	}
 
 	@Test(dataProvider = "positiveCasesWithZuluUtc")
 	public void testZulu(String input, String expected) throws Exception {
-		DateTime.useZuluUtcRepresentation = true;
-		DateTime.reInitializeFormatter();
+		DateTime.useZuluUtcRepresentation(true);
 		DateTime dateTime = new DateTime(input);
 		assertEquals(dateTime.toString(), expected);
 	}
