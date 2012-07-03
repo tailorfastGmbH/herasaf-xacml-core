@@ -27,25 +27,34 @@ public class TestAbstractInitializer {
 		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
 		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
 		initializers.add(new JAXBInitializer());
-		
+
 		SimplePDPFactory.setInitalizers(initializers);
-		
+
 		SimplePDPFactory.getSimplePDP();
-		
+
 		Field f = FunctionsJAXBTypeAdapter.class.getDeclaredField("functions");
 		f.setAccessible(true);
-		
+
 		Object fieldValue = f.get(null);
 		@SuppressWarnings("unchecked")
 		Map<String, Function> functions = (Map<String, Function>) fieldValue;
-		
-		Assert.assertTrue(functions.containsKey("urn:oasis:names:tc:xacml:1.0:function:date-greater-than")); //tests whether the default functions are still present
-		Assert.assertTrue(functions.containsKey("org:herasaf:testFunctionID:1")); //tests whether the new functions is present
-		Assert.assertEquals(functions.size(), 210); //tests whether the number of functions is correct (209 default XACML functions)
+
+		Assert.assertTrue(functions.containsKey("urn:oasis:names:tc:xacml:1.0:function:date-greater-than")); // tests
+																												// whether
+																												// the
+																												// default
+																												// functions
+																												// are
+																												// still
+																												// present
+		Assert.assertTrue(functions.containsKey("org:herasaf:testFunctionID:1")); // tests whether the new functions is
+																					// present
+		Assert.assertEquals(functions.size(), 210); // tests whether the number of functions is correct (209 default
+													// XACML functions)
 	}
-	
+
 	@AfterTest
-	public void cleanUp(){
+	public void cleanUp() {
 		SimplePDPFactory.resetInitializers();
 	}
 }
