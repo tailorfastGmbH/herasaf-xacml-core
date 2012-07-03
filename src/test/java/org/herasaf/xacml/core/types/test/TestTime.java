@@ -115,16 +115,14 @@ public class TestTime {
 
 	@Test(dataProvider = "positiveCasesWithNonZulu")
 	public void testWithNonZulu(String input, String expected) throws Exception {
-		Time.useZuluUtcRepresentation = false;
-		Time.reInitializeFormatter();
+		Time.useZuluUtcRepresentation(false);
 		Time time = new Time(input);
 		assertEquals(time.toString(), expected);
 	}
 
 	@Test(dataProvider = "positiveCasesWithZulu")
 	public void testTimezoneInput(String input, String expected) throws Exception {
-		Time.useZuluUtcRepresentation = true;
-		Time.reInitializeFormatter();
+		Time.useZuluUtcRepresentation(true);
 		Time time = new Time(input);
 		assertEquals(time.toString(), expected);
 	}

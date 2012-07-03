@@ -149,16 +149,14 @@ public class TestDate {
 	 */
 	@Test(dataProvider = "positiveCasesDefaultTimeZoneWithNonZulu")
 	public void testWithoutZulu(String input, String expected) throws Exception {
-		Date.useZuluUtcRepresentation = false;
-		Date.reInitializeFormatter();
+		Date.useZuluUtcRepresentation(false);
 		Date date = new Date(input);
 		assertEquals(date.toString(), expected);
 	}
 
 	@Test(dataProvider = "positiveCasesDefaultTimeZoneWithZulu")
 	public void testWithZulu(String input, String expected) throws Exception {
-		Date.useZuluUtcRepresentation = true;
-		Date.reInitializeFormatter();
+		Date.useZuluUtcRepresentation(true);
 		Date date = new Date(input);
 		assertEquals(date.toString(), expected);
 	}

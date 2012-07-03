@@ -101,12 +101,9 @@ public class SimplePDP implements PDP {
 
 		// Set whether Zulu representation ('Z') or +00:00 shall be used as UTC timezone representation.
 		boolean useZuluUtcRepresentation = simplePDPConfiguration.isZuluUtcRepresentation();
-		DateTime.useZuluUtcRepresentation = useZuluUtcRepresentation;
-		DateTime.reInitializeFormatter();
-		Date.useZuluUtcRepresentation = useZuluUtcRepresentation;
-		Date.reInitializeFormatter();
-		Time.useZuluUtcRepresentation = useZuluUtcRepresentation;
-		Date.reInitializeFormatter();
+		DateTime.useZuluUtcRepresentation(useZuluUtcRepresentation);
+		Date.useZuluUtcRepresentation(useZuluUtcRepresentation);
+		Time.useZuluUtcRepresentation(useZuluUtcRepresentation);
 	}
 
 	/**

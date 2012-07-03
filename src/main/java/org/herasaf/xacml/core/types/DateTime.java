@@ -36,7 +36,6 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class DateTime implements Comparable<DateTime> {
-	public static boolean useZuluUtcRepresentation = false;
 	private final Logger logger = LoggerFactory.getLogger(DateTime.class);
 	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
 	private static DateTimeFormatter DATE_TIME_PARSER;
@@ -51,15 +50,13 @@ public class DateTime implements Comparable<DateTime> {
 	 * Initializes the formatters when the type is initialized.
 	 */
 	static {
-		reInitializeFormatter();
+		useZuluUtcRepresentation(false);
 	}
 
 	/**
-	 * Initializes the comparator, the parser and the printer for this DateTime.
-	 * <p />
-	 * This method must be called when the {@value #useZuluUtcRepresentation} has changed.
+	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
 	 */
-	public static void reInitializeFormatter() {
+	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
 		COMPARATOR = DateTimeComparator.getInstance();
 
 		// The default formatter for the timezone that can handle only +-00:00 for UTC.
