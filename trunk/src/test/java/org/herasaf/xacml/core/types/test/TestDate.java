@@ -193,4 +193,19 @@ public class TestDate {
 
 		assertEquals(one.compareTo(two), expected);
 	}
+
+	@Test(dataProvider = "comparison")
+	public void testEquals(String input1, String input2, int expected) throws Exception {
+		Date one = new Date(input1);
+		Date two = new Date(input2);
+
+		boolean expectedEqualsResult;
+		if (expected == 0) {
+			expectedEqualsResult = true;
+		} else {
+			expectedEqualsResult = false;
+		}
+
+		assertEquals(one.equals(two), expectedEqualsResult);
+	}
 }

@@ -17,7 +17,6 @@
 package org.herasaf.xacml.core.types;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.joda.time.DateTimeComparator;
 import org.joda.time.Period;
 import org.joda.time.format.DateTimeFormatter;
 import org.joda.time.format.DateTimeFormatterBuilder;
@@ -41,7 +40,6 @@ public class DateTime implements Comparable<DateTime> {
 	private static DateTimeFormatter DATE_TIME_PARSER;
 	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
 	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
-	private static DateTimeComparator COMPARATOR;
 	private static DateTimeFormatter MILLIS_PARSER;
 	private org.joda.time.DateTime dateTime;
 	private boolean noFractionalSeconds;
@@ -57,8 +55,6 @@ public class DateTime implements Comparable<DateTime> {
 	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
 	 */
 	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
-		COMPARATOR = DateTimeComparator.getInstance();
-
 		// The default formatter for the timezone that can handle only +-00:00 for UTC.
 		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
 				2).toFormatter();
@@ -147,7 +143,10 @@ public class DateTime implements Comparable<DateTime> {
 	 * {@inheritDoc}
 	 */
 	public int compareTo(DateTime o) {
-		return COMPARATOR.compare(dateTime, o.getDateTime());
+		org.joda.time.DateTime jodaThisDateTime = this.getDateTime();
+		org.joda.time.DateTime jodaThatDateTime = o.getDateTime();
+		int comparisonResult = jodaThisDateTime.compareTo(jodaThatDateTime);
+		return comparisonResult;
 	}
 
 	/**
@@ -159,12 +158,10 @@ public class DateTime implements Comparable<DateTime> {
 			// Check if types are the same
 			return false;
 		}
-		if (COMPARATOR.compare(this, obj) == 0) {
-			// If types are the same check if they are equal
-			return true;
-		}
-		// If they are not equal return false
-		return false;
+		org.joda.time.DateTime jodaThisDateTime = getDateTime();
+		org.joda.time.DateTime jodaThatDateTime = ((DateTime) obj).getDateTime();
+		boolean isEqual = jodaThisDateTime.isEqual(jodaThatDateTime);
+		return isEqual;
 	}
 
 	/**
