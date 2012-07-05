@@ -100,7 +100,22 @@ public class TestTime {
 		return new Object[][] { new Object[] { "12:00:00", "13:00:00", -1 },
 				new Object[] { "15:00:00", "13:00:00", 1 }, new Object[] { "13:00:00", "13:00:00", 0 },
 				new Object[] { "12:00:01", "12:00:01.001", -1 }, new Object[] { "15:03:00", "13:00:00.234", 1 },
-				new Object[] { "13:00:00.978", "13:00:00.978", 0 }, new Object[] { "24:00:00", "00:00:00", 0 }, };
+				new Object[] { "13:00:00.978", "13:00:00.978", 0 }, new Object[] { "12:00:00Z", "12:00:00+00:00", 0 },
+				new Object[] { "12:00:00+00:00", "12:00:00+00:00", 0 },
+				new Object[] { "12:00:00", "12:00:00+00:00", 0 }, new Object[] { "12:00:00", "12:00:00Z", 0 },
+				new Object[] { "12:00:00Z", "14:00:00+02:00", 0 },
+				new Object[] { "12:00:00+00:00", "14:00:00+02:00", 0 },
+				new Object[] { "12:00:00", "14:00:00+02:00", 0 }, new Object[] { "12:00:00", "09:00:00-03:00", 0 }, };
+	}
+
+	@DataProvider(name = "equals")
+	public Object[][] createEqualsData() {
+		return new Object[][] { new Object[] { "12:00:00", "12:00:00", true },
+				new Object[] { "12:00:00", "13:00:00", false }, new Object[] { "14:00:00", "13:00:00", false },
+				new Object[] { "12:00:00+00:00", "13:00:00+01:00", true },
+				new Object[] { "12:00:00", "13:00:00+01:00", true },
+				new Object[] { "12:00:00Z", "13:00:00+01:00", true },
+				new Object[] { "09:00:00-03:00", "16:00:00+04:00", true }, };
 	}
 
 	/**
@@ -158,5 +173,13 @@ public class TestTime {
 		Time two = new Time(input2);
 
 		assertEquals(one.compareTo(two), expected);
+	}
+
+	@Test(dataProvider = "equals")
+	public void testEquals(String input1, String input2, boolean expected) throws Exception {
+		Time one = new Time(input1);
+		Time two = new Time(input2);
+
+		assertEquals(one.equals(two), expected);
 	}
 }

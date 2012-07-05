@@ -97,7 +97,14 @@ public class TestDateTime {
 				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01", 0 },
 				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01.001", -1 },
 				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:00.999", 1 },
-				new Object[] { "2005-02-02T12:00:01.645", "2005-02-02T12:00:01.645", 0 }, };
+				new Object[] { "2005-02-02T12:00:01.645", "2005-02-02T12:00:01.645", 0 },
+				new Object[] { "2005-02-03T12:00:01Z", "2005-02-03T12:00:01", 0 },
+				new Object[] { "2005-02-03T12:00:01Z", "2005-02-03T12:00:01+00:00", 0 },
+				new Object[] { "2005-02-03T12:00:01+00:00", "2005-02-03T12:00:01+00:00", 0 },
+				new Object[] { "2005-02-03T12:00:01+00:00", "2005-02-03T12:00:01Z", 0 },
+				new Object[] { "2005-02-03T12:00:01+00:00", "2005-02-03T12:00:01", 0 },
+				new Object[] { "2005-02-03T11:00:01-01:00", "2005-02-03T12:00:01Z", 0 },
+				new Object[] { "2005-02-03T17:00:01+05:00", "2005-02-03T08:00:01-04:00", 0 }, };
 	}
 
 	/**
@@ -155,5 +162,20 @@ public class TestDateTime {
 		DateTime two = new DateTime(input2);
 
 		assertEquals(one.compareTo(two), expected);
+	}
+
+	@Test(dataProvider = "comparison")
+	public void testEquals(String input1, String input2, int expected) throws Exception {
+		DateTime one = new DateTime(input1);
+		DateTime two = new DateTime(input2);
+
+		boolean expectedEqualsResult;
+		if (expected == 0) {
+			expectedEqualsResult = true;
+		} else {
+			expectedEqualsResult = false;
+		}
+
+		assertEquals(one.equals(two), expectedEqualsResult);
 	}
 }
