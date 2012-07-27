@@ -5,7 +5,7 @@
 	<parent>
 		<groupId>org.herasaf.xacml</groupId>
 		<artifactId>herasaf-xacml</artifactId>
-		<version>1.0.0.M3-SNAPSHOT</version> <!-- use most recent, final RootRoot-POM -->
+		<version>1.0.0.M3</version> <!-- use most recent, final RootRoot-POM -->
 	</parent>
 
 	<!-- Project -->
