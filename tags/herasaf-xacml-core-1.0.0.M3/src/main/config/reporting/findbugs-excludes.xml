@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FindBugsFilter>
+	<Match>
+		<!--
+			Due to the fact that it is a policy combining algorithm, the logic
+			allows here only a PolicySetType as parameter. Therefore the
+			classcast warning can be ignored.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm" />
+		<Method name="evaluate" returns="org.herasaf.xacml.core.context.impl.DecisionType"
+			params="org.herasaf.xacml.core.context.impl.RequestType,org.herasaf.xacml.core.policy.Evaluatable,org.herasaf.xacml.core.context.EvaluationContext" />
+		<Bug pattern="BC_UNCONFIRMED_CAST" />
+	</Match>
+	<Match>
+		<!--
+			Due to the fact that it is a policy combining algorithm, the logic
+			allows here only a PolicySetType as parameter. Therefore the
+			classcast warning can be ignored.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm" />
+		<Method name="evaluate" returns="org.herasaf.xacml.core.context.impl.DecisionType"
+			params="org.herasaf.xacml.core.context.impl.RequestType,org.herasaf.xacml.core.policy.Evaluatable,org.herasaf.xacml.core.context.EvaluationContext" />
+		<Bug pattern="BC_UNCONFIRMED_CAST" />
+	</Match>
+	<Match>
+		<!--
+			Due to the fact that it is a rule combining algorithm, the logic
+			allows here only a PolicyType as parameter. Therefore the classcast
+			warning can be ignored.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.rule.RuleOrderedCombiningAlgorithm" />
+		<Method name="evaluate" returns="org.herasaf.xacml.core.context.impl.DecisionType"
+			params="org.herasaf.xacml.core.context.impl.RequestType,org.herasaf.xacml.core.policy.Evaluatable,org.herasaf.xacml.core.context.EvaluationContext" />
+		<Bug pattern="BC_UNCONFIRMED_CAST" />
+	</Match>
+	<Match>
+		<!--
+			Due to the fact that it is a rule combining algorithm, the logic
+			allows here only a PolicyType as parameter. Therefore the classcast
+			warning can be ignored.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.rule.RuleUnorderedCombiningAlgorithm" />
+		<Method name="evaluate" returns="org.herasaf.xacml.core.context.impl.DecisionType"
+			params="org.herasaf.xacml.core.context.impl.RequestType,org.herasaf.xacml.core.policy.Evaluatable,org.herasaf.xacml.core.context.EvaluationContext" />
+		<Bug pattern="BC_UNCONFIRMED_CAST" />
+	</Match>
+	<Match>
+		<!--
+			Here the decision can only be one of PERMIT, DENY, NOT_APPLICABLE or
+			INDETERMINATE. An action has only to be taken if it is one of PERMIT,
+			DENY or INDETERMINATE, the case NOT_APPLICABLE is handled later.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleDenyOverridesAlgorithm" />
+		<Method name="evaluateRuleList" returns="org.herasaf.xacml.core.context.impl.DecisionType"
+			params="org.herasaf.xacml.core.context.impl.RequestType,java.util.List,org.herasaf.xacml.core.context.EvaluationContext" />
+		<Bug pattern="SF_SWITCH_NO_DEFAULT" />
+	</Match>
+	<Match>
+		<!--
+			Here the decision can only be one of PERMIT, DENY, NOT_APPLICABLE or
+			INDETERMINATE. An action has only to be taken if it is one of PERMIT,
+			DENY or INDETERMINATE, the case NOT_APPLICABLE is handled later.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RuleOrderedDenyOverridesAlgorithm" />
+		<Method name="evaluateRuleList" returns="org.herasaf.xacml.core.context.impl.DecisionType"
+			params="org.herasaf.xacml.core.context.impl.RequestType,java.util.List,org.herasaf.xacml.core.context.EvaluationContext" />
+		<Bug pattern="SF_SWITCH_NO_DEFAULT" />
+	</Match>
+	<Match>
+		<!--
+			This Map field can be serialized with JAXB (but not with Java object
+			serialization). Therefore this error can be ignored, we only marshall
+			such objects with JAXB.
+		-->
+		<Class name="org.herasaf.xacml.core.context.impl.AttributeValueType" />
+		<Field name="otherAttributes" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			This Map field can be serialized with JAXB (but not with Java object
+			serialization). Therefore this error can be ignored, we only marshall
+			such objects with JAXB.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.AttributeValueType" />
+		<Field name="otherAttributes" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			This Map field can be serialized with JAXB (but not with Java object
+			serialization). Therefore this error can be ignored, we only marshall
+			such objects with JAXB.
+		-->
+		<Class name="org.herasaf.xacml.core.context.impl.ResourceContentType" />
+		<Field name="otherAttributes" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			This implementation of the equals method is correct in our opinion.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.dataTypeAttribute.impl.AbstractDataTypeAttribute" />
+		<Method name="equals" returns="boolean" params="java.lang.Object" />
+		<Bug pattern="EQ_UNUSUAL" />
+	</Match>
+	<Match>
+		<!--
+			This implementation of the equals method is correct in our opinion.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.function.AbstractFunction" />
+		<Method name="equals" returns="boolean" params="java.lang.Object" />
+		<Bug pattern="EQ_UNUSUAL" />
+	</Match>
+	<Match>
+		<!--
+			This implementation of the equals method is correct in our opinion.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.combiningAlgorithm.AbstractCombiningAlgorithm" />
+		<Method name="equals" returns="boolean" params="java.lang.Object" />
+		<Bug pattern="EQ_UNUSUAL" />
+	</Match>
+	<Match>
+		<!--
+			The logger is excluded from marshalling with @XmlTransient. Findbugs
+			does not know this annotation and says therefore that it cannot be
+			serialized correctly. Due to the fact that this class is only
+			marshalled by JAXB it is ok.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.IdReferenceType" />
+		<Field name="logger" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			The logger is excluded from marshalling with @XmlTransient. Findbugs
+			does not know this annotation and says therefore that it cannot be
+			serialized correctly. Due to the fact that this class is only
+			marshalled by JAXB it is ok.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.PolicySetType" />
+		<Field name="hasObligations" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			The logger is excluded from marshalling with @XmlTransient. Findbugs
+			does not know this annotation and says therefore that it cannot be
+			serialized correctly. Due to the fact that this class is only
+			marshalled by JAXB it is ok.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.PolicySetType" />
+		<Field name="policyCombiningAlg" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			The logger is excluded from marshalling with @XmlTransient. Findbugs
+			does not know this annotation and says therefore that it cannot be
+			serialized correctly. Due to the fact that this class is only
+			marshalled by JAXB it is ok.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.PolicyType" />
+		<Field name="ruleCombiningAlg" />
+		<Bug pattern="SE_BAD_FIELD" />
+	</Match>
+	<Match>
+		<!--
+			This static field must be set due to configuration of the
+			initializer.
+		-->
+		<Class
+			name="org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsInitializer" />
+		<Bug pattern="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD" />
+	</Match>
+	<Match>
+		<!--
+			This field need not to be initialized because it must be set from the
+			XML.
+		-->
+		<Class name="org.herasaf.xacml.core.policy.impl.AttributeDesignatorType" />
+		<Field name="dataType" />
+		<Bug pattern="UWF_FIELD_NOT_INITIALIZED_IN_CONSTRUCTOR" />
+	</Match>
+</FindBugsFilter>
