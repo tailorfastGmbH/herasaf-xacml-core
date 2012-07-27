@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings jaxb:version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<jaxb:bindings
+		schemaLocation="access_control-xacml-2.0-policy-schema-os.xsd">
+		<jaxb:bindings node="/xs:schema">
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.herasaf.xacml.core.policy" />
+			</jaxb:schemaBindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='EnvironmentType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:EnvironmentMatch']">
+				<jaxb:property name="environmentMatches" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ActionType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:ActionMatch']">
+				<jaxb:property name="actionMatches" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='SubjectType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:SubjectMatch']">
+				<jaxb:property name="subjectMatches" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ResourceType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:ResourceMatch']">
+				<jaxb:property name="resourceMatches" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ActionsType']">
+			<jaxb:bindings node=".//xs:element[@ref='xacml:Action']">
+				<jaxb:property name="actions" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='SubjectsType']">
+			<jaxb:bindings node=".//xs:element[@ref='xacml:Subject']">
+				<jaxb:property name="subjects" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ResourcesType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:Resource']">
+				<jaxb:property name="resources" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='EnvironmentsType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:Environment']">
+				<jaxb:property name="environments" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ApplyType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:Expression']">
+				<jaxb:property name="expressions" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='CombinerParametersType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:CombinerParameter']">
+				<jaxb:property name="combinerParameters" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='ObligationsType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:Obligation']">
+				<jaxb:property name="obligations" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='ObligationType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml:AttributeAssignment']">
+				<jaxb:property name="attributeAssignments" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='PolicyType']">
+			<jaxb:bindings node=".//xs:choice">
+				<jaxb:property name="additionalInformation" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='PolicySetType']">
+			<jaxb:bindings node=".//xs:choice">
+				<jaxb:property name="additionalInformation" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+
+</jaxb:bindings>
