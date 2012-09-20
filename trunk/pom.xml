@@ -4,13 +4,13 @@
 	<parent>
 		<groupId>org.herasaf.xacml</groupId>
 		<artifactId>herasaf-xacml</artifactId>
-		<version>1.0.0.M3</version> <!-- use most recent, final RootRoot-POM -->
+		<version>1.0.0.M4-SNAPSHOT</version> <!-- use most recent, final RootRoot-POM -->
 	</parent>
 
 	<!-- Project -->
 	<groupId>org.herasaf.xacml.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
 	<artifactId>herasaf-xacml-core</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
-	<packaging>jar</packaging>
+	<packaging>bundle</packaging>
 	<version>1.0.0.M4-SNAPSHOT</version>
 	<!-- [major].[minor].[revision] major version = HERAS-AF release -> (API 
 		changes on the main Interfaces (PDP,PIP,REPO etc.) or XACML Version change) 
@@ -114,6 +114,19 @@
 	</dependencies>
 
 	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Export-Package>org.herasaf.xacml.core.*</Export-Package>
+						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
 		<pluginManagement>
 			<plugins>
 				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
