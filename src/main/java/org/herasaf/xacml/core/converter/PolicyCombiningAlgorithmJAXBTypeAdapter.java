@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -40,7 +41,7 @@ public class PolicyCombiningAlgorithmJAXBTypeAdapter extends
 		XmlAdapter<String, PolicyCombiningAlgorithm> {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(PolicyCombiningAlgorithmJAXBTypeAdapter.class);
-	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
+	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms = new HashMap<String, PolicyCombiningAlgorithm>();
 
 	/**
 	 * This method sets the {@link Map} containing the mapping between policy
@@ -50,9 +51,9 @@ public class PolicyCombiningAlgorithmJAXBTypeAdapter extends
 	 *            The {@link Map} containing the mapping between ID's and policy
 	 *            combining algorithms.
 	 */
-	public static void setCombiningAlgorithms(
+	public static void addCombiningAlgorithms(
 			final Map<String, PolicyCombiningAlgorithm> algorithms) {
-		combiningAlgorithms = algorithms;
+		combiningAlgorithms.putAll(algorithms);
 	}
 
 	/**

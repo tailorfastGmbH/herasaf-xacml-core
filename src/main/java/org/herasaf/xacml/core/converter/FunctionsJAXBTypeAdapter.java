@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -39,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionsJAXBTypeAdapter extends XmlAdapter<String, Function> {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(FunctionsJAXBTypeAdapter.class);
-	private static Map<String, Function> functions;
+	private static Map<String, Function> functions = new HashMap<String, Function>();
 
 	/**
 	 * This method sets the {@link Map} containing the mapping between functions
@@ -49,8 +50,8 @@ public class FunctionsJAXBTypeAdapter extends XmlAdapter<String, Function> {
 	 *            The {@link Map} containing the mapping between ID's and
 	 *            functions
 	 */
-	public static void setFunctions(final Map<String, Function> functions) {
-		FunctionsJAXBTypeAdapter.functions = functions;
+	public static void addFunctions(final Map<String, Function> functions) {
+		FunctionsJAXBTypeAdapter.functions.putAll(functions);
 	}
 
 	/**

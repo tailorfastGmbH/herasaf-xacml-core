@@ -53,7 +53,7 @@ public class TestRuleCombiningAlgorithmJAXBTypeAdapter {
 		comAlg = new RuleDenyOverridesAlgorithm();
 		map = new HashMap<String, RuleCombiningAlgorithm>();
 		map.put(DENY_OVERRIDES_ID, comAlg);
-		RuleCombiningAlgorithmJAXBTypeAdapter.setCombiningAlgorithms(map);
+		RuleCombiningAlgorithmJAXBTypeAdapter.addCombiningAlgorithms(map);
 	}
 
 	/**

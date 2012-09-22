@@ -26,11 +26,12 @@ import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
-import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
-import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.datatypes.Xacml20DefaultDataTypesJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.functions.Xacml20DefaultFunctionsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.policycombiningalgorithms.Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.rulecombiningalgorithms.Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +54,12 @@ import org.slf4j.LoggerFactory;
  * <li>Policy repository: {@link MapBasedSimplePolicyRepository}</li>
  * <li>Root combining algorithm: {@link PolicyOnlyOneApplicableAlgorithm}</li>
  * <li>PIP: <code>null</code> (No Policy Information Point used)</li>
- * <li>Data types used: see {@link DataTypesJAXBInitializer}</li>
- * <li>Functions used: see {@link DataTypesJAXBInitializer}</li>
+ * <li>Data types used: see {@link Xacml20DefaultDataTypesJaxbInitializer}</li>
+ * <li>Functions used: see {@link Xacml20DefaultFunctionsJaxbInitializer}</li>
  * <li>Policy Combining Algorithms used: see
- * {@link PolicyCombiningAlgorithmsJAXBInitializer}</li>
+ * {@link Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer}</li>
  * <li>Rule Combining Algorithms used: see
- * {@link RuleCombiningAlgorithmsJAXBInitializer}</li>
+ * {@link Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer}</li>
  * <li>JAXB Marshaller/Unmarshaller used: see
  * {@link ContextAndPolicyInitializer}
  * </ul>
@@ -113,6 +114,23 @@ public final class SimplePDPFactory {
 	 */
 	private SimplePDPFactory() {
 	}
+	
+	/**
+	 * Gets the default list of initializers.
+	 * This method directly calls the {@link InitializerExecutor#getDefaultInitializers()}.
+	 * 
+	 * This list includes the {@link Xacml20DefaultFunctionsJaxbInitializer},
+	 * {@link Xacml20DefaultDataTypesJaxbInitializer},
+	 * {@link Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer},
+	 * {@link Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer}, and
+	 * {@link ContextAndPolicyInitializer}.
+	 * 
+	 * @see InitializerExecutor#getDefaultInitializers()
+	 * @return the default list of initializers
+	 */
+	public static Set<Initializer> getDefaultInitializers() {
+		return InitializerExecutor.getDefaultInitializers();
+	}
 
 	/**
 	 * Extension point for usage of custom initializers to instantiate
@@ -134,7 +152,7 @@ public final class SimplePDPFactory {
 		LOGGER.info("Custom initializers are in use.");
 		InitializerExecutor.setInitalizers(initalizers);
 	}
-
+	
 	/**
 	 * Resets the factory to only use the default initializers.
 	 */

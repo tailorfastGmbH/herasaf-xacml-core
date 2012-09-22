@@ -52,7 +52,7 @@ public class TestFunctionsJAXBTypeAdapter {
 		map = new HashMap<String, Function>();
 		map.put(FUNCTION_ID, function);
 
-		FunctionsJAXBTypeAdapter.setFunctions(map);
+		FunctionsJAXBTypeAdapter.addFunctions(map);
 	}
 
 	/**
