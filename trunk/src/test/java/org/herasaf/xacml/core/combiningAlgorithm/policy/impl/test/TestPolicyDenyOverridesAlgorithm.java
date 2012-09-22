@@ -16,7 +16,6 @@
  */
 package org.herasaf.xacml.core.combiningAlgorithm.policy.impl.test;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -27,7 +26,6 @@ import org.herasaf.xacml.core.context.StatusCode;
 import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**

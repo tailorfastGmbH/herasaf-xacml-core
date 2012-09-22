@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -40,7 +41,7 @@ public class RuleCombiningAlgorithmJAXBTypeAdapter extends
 		XmlAdapter<String, RuleCombiningAlgorithm> {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(RuleCombiningAlgorithmJAXBTypeAdapter.class);
-	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms;
+	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms = new HashMap<String, RuleCombiningAlgorithm>();
 
 	/**
 	 * This method sets the {@link Map} containing the mapping between rule
@@ -50,9 +51,9 @@ public class RuleCombiningAlgorithmJAXBTypeAdapter extends
 	 *            The {@link Map} containing the mapping between ID's and rule
 	 *            combining algorithms.
 	 */
-	public static void setCombiningAlgorithms(
+	public static void addCombiningAlgorithms(
 			final Map<String, RuleCombiningAlgorithm> algorithms) {
-		combiningAlgorithms = algorithms;
+		combiningAlgorithms.putAll(algorithms);
 	}
 
 	/**

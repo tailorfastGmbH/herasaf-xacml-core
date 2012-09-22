@@ -50,7 +50,7 @@ public class TestDataTypeJAXBTypeAdapter {
 		map = new HashMap<String, DataTypeAttribute<?>>();
 		map.put(DATATYPE_ID, dataTypeAttr);
 
-		DataTypeJAXBTypeAdapter.setDataTypeAttributes(map);
+		DataTypeJAXBTypeAdapter.addDataTypeAttributes(map);
 	}
 
 	/**

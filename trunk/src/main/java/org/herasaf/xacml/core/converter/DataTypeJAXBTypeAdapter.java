@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -41,7 +42,7 @@ public class DataTypeJAXBTypeAdapter extends
 		XmlAdapter<String, DataTypeAttribute<?>> {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(DataTypeJAXBTypeAdapter.class);
-	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes;
+	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes = new HashMap<String, DataTypeAttribute<?>>();
 
 	/**
 	 * This method sets the {@link Map} containing the mapping between data
@@ -51,9 +52,9 @@ public class DataTypeJAXBTypeAdapter extends
 	 *            The {@link Map} containing the mapping between ID's and data
 	 *            types.
 	 */
-	public static void setDataTypeAttributes(
-			final Map<String, DataTypeAttribute<?>> dataTypes) {
-		DataTypeJAXBTypeAdapter.dataTypeAttributes = dataTypes;
+	public static void addDataTypeAttributes(
+			final Map<String, ? extends DataTypeAttribute<?>> dataTypes) {
+		DataTypeJAXBTypeAdapter.dataTypeAttributes.putAll(dataTypes);
 	}
 
 	/**

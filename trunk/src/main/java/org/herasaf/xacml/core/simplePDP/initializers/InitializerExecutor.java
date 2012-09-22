@@ -22,6 +22,12 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
+import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.JaxbContextInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.datatypes.Xacml20DefaultDataTypesJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.functions.Xacml20DefaultFunctionsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.policycombiningalgorithms.Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.rulecombiningalgorithms.Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,21 +58,22 @@ public class InitializerExecutor {
 	/**
 	 * Gets the default list of initializers.
 	 * 
-	 * This list includes the {@link FunctionsJAXBInitializer},
-	 * {@link DataTypesJAXBInitializer},
-	 * {@link RuleCombiningAlgorithmsJAXBInitializer},
-	 * {@link PolicyCombiningAlgorithmsJAXBInitializer}, and
-	 * {@link ContextAndPolicyInitializer}.
+	 * This list includes the 
+	 * 		{@link Xacml20DefaultFunctionsJaxbInitializer},
+	 * 		{@link Xacml20DefaultDataTypesJaxbInitializer},
+	 * 		{@link Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer},
+	 * 		{@link Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer}, and
+	 * 		{@link JaxbContextInitializer}.
 	 * 
 	 * @return the default list of initializers
 	 */
 	public static Set<Initializer> getDefaultInitializers() {
 		Set<Initializer> initializers = new HashSet<Initializer>();
-		initializers.add(new FunctionsJAXBInitializer());
-		initializers.add(new DataTypesJAXBInitializer());
-		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new JAXBInitializer());
+		initializers.add(new Xacml20DefaultFunctionsJaxbInitializer());
+		initializers.add(new Xacml20DefaultDataTypesJaxbInitializer());
+		initializers.add(new Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer());
+		initializers.add(new Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer());
+		initializers.add(new JaxbContextInitializer());
 
 		return initializers;
 	}

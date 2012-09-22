@@ -53,7 +53,7 @@ public class TestPolicyCombiningAlgorithmJAXBTypeAdapter {
 		map = new HashMap<String, PolicyCombiningAlgorithm>();
 		map.put(DENY_OVERRIDES_ID, comAlg);
 
-		PolicyCombiningAlgorithmJAXBTypeAdapter.setCombiningAlgorithms(map);
+		PolicyCombiningAlgorithmJAXBTypeAdapter.addCombiningAlgorithms(map);
 	}
 
 	/**
