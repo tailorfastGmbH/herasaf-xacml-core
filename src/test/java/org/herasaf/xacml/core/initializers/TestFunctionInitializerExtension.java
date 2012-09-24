@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.herasaf.xacml.core.function.Function;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.functions.AbstractFunctionsJaxbTypeAdapterInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.functions.AbstractFunctionsJaxbTypeAdapterInitializer;
 
 public class TestFunctionInitializerExtension extends AbstractFunctionsJaxbTypeAdapterInitializer {
 

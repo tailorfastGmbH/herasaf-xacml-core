@@ -1,4 +1,4 @@
-package org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.policycombiningalgorithms;
+package org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.policycombiningalgorithms;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.Map;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.AbstractPolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.converter.PolicyCombiningAlgorithmJAXBTypeAdapter;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.AbstractJaxbTypeAdapterInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.AbstractJaxbTypeAdapterInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

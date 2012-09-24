@@ -1,10 +1,10 @@
-package org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.datatypes;
+package org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.datatypes;
 
 import java.util.Map;
 
 import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
 import org.herasaf.xacml.core.dataTypeAttribute.DataTypeAttribute;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.AbstractJaxbTypeAdapterInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.AbstractJaxbTypeAdapterInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
