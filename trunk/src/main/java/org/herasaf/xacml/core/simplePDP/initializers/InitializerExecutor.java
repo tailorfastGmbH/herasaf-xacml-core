@@ -24,10 +24,10 @@ import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.herasaf.xacml.core.simplePDP.initializers.jaxb.JaxbContextInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.datatypes.Xacml20DefaultDataTypesJaxbInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.functions.Xacml20DefaultFunctionsJaxbInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.policycombiningalgorithms.Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.rulecombiningalgorithms.Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.datatypes.Xacml20DefaultDataTypesJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.functions.Xacml20DefaultFunctionsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.policycombiningalgorithms.Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.rulecombiningalgorithms.Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

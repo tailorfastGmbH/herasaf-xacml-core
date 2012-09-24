@@ -1,10 +1,10 @@
-package org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.functions;
+package org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.functions;
 
 import java.util.Map;
 
 import org.herasaf.xacml.core.converter.FunctionsJAXBTypeAdapter;
 import org.herasaf.xacml.core.function.Function;
-import org.herasaf.xacml.core.simplePDP.initializers.jaxb.AbstractJaxbTypeAdapterInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.AbstractJaxbTypeAdapterInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

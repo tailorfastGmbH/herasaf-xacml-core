@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.herasaf.xacml.core.simplePDP.initializers.jaxb.xacml20.functions;
+package org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.functions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
