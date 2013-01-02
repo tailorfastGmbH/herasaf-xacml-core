@@ -36,12 +36,14 @@ import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestMarshaller;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
+import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
+import org.herasaf.xacml.core.policy.impl.SubjectType;
 import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
 import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.testng.annotations.BeforeClass;
@@ -129,6 +131,25 @@ public class SimplePDPTest {
 
 		deploymentRepo.undeploy(policy.getId());
 		System.out.println();
+	}
+
+	@Test
+	public void testUnknownFunctionID() throws Exception {
+	        UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
+	                        .getPolicyRepository();
+
+	        Evaluatable policy = 
+	                        loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
+	        // Modify the policy
+	        SubjectType subject = policy.getTarget().getSubjects().getSubjects().get(0);
+	        subject.getSubjectMatches().get(0).setMatchFunction(null);
+	        deploymentRepo.deploy(policy);
+
+	        RequestType request = 
+	                        loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml");
+	        ResponseType response = simplePDP.evaluate(request);
+
+	        assertTrue(response.getResults().get(0).getDecision() == DecisionType.INDETERMINATE);
 	}
 
 	/**

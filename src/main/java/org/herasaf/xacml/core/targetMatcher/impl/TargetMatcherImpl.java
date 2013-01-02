@@ -86,8 +86,8 @@ public class TargetMatcherImpl implements TargetMatcher {
 			}
 
 			logger.debug("Starting environments match.");
-			boolean environmentsMatches = environmentMatch(target
-					.getEnvironments(), request, evaluationContext);
+			boolean environmentsMatches = environmentMatch(
+					target.getEnvironments(), request, evaluationContext);
 			logger.debug("Environments match resulted in: {}",
 					environmentsMatches);
 			if (!environmentsMatches) {
@@ -327,8 +327,12 @@ public class TargetMatcherImpl implements TargetMatcher {
 		for (int i = 0; i < matches.size(); i++) {
 			Match match = matches.get(i);
 			Function matchFunction = match.getMatchFunction();
-			logger
-					.debug("Matching with function: {}", matchFunction);
+			logger.debug("Matching with function: {}", matchFunction);
+			if (matchFunction == null) {
+				String message = "Match function cannot be retrieved.";
+				logger.error(message);
+				throw new SyntaxException(message);
+			}
 			AttributeDesignatorType designator = match.getAttributeDesignator();
 			List<?> requestAttributeValues = (List<?>) designator.handle(
 					request, evaluationContext); // Fetches
@@ -348,8 +352,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
 			// on page 84 (Match evaluation).
 			if (requestAttributeValues.size() == 0) {
-				logger
-						.debug("Request did not contain the required attributes.");
+				logger.debug("Request did not contain the required attributes.");
 				return false;
 			}
 
@@ -372,14 +375,12 @@ public class TargetMatcherImpl implements TargetMatcher {
 						policyAttributeValue.getDataType().convertTo(
 								(String) policyAttributeValue.getContent().get(
 										0)), requestAttributeValue);
-				logger
-						.debug(
-								"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
-								new Object[] {
-										matchMatches,
-										policyAttributeValue.getDataType(),
-										policyAttributeValue.getContent()
-												.get(0), requestAttributeValue });
+				logger.debug(
+						"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
+						new Object[] { matchMatches,
+								policyAttributeValue.getDataType(),
+								policyAttributeValue.getContent().get(0),
+								requestAttributeValue });
 
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request
