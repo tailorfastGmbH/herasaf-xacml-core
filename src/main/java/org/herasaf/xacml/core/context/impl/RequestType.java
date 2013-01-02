@@ -92,7 +92,8 @@ public class RequestType implements Serializable {
 	private EnvironmentType environment;
 
 	/**
-	 * Sets the following attributes to the according value of the given creationTime
+	 * Sets the following attributes to the according value of the given creationTime,
+	 * if the request does not already contain values for these attributes
 	 * <ul>
 	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-dateTime</li>
 	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-date</li>
@@ -107,13 +108,35 @@ public class RequestType implements Serializable {
 	 * @param creationTime The creationTime to set to this request.
 	 */
 	public void setCreationTime(DateTime creationTime) {
-		environment.getAttributes().add(createCurrentTime(creationTime));
-		environment.getAttributes().add(createCurrentDate(creationTime));
-		environment.getAttributes().add(createCurrentDateTime(creationTime));
+	        boolean foundCurrentTime = false;
+	        boolean foundCurrentDate = false;
+	        boolean foundCurrentDateTime = false;
+	        for (AttributeType attribute : environment.getAttributes()) {
+	                if (CURRENT_TIME_DATATYPEID.equals(attribute.getAttributeId())
+                                && attribute.getAttributeValues() != null && !attribute.getAttributeValues().isEmpty()) {
+                                foundCurrentTime = true;   
+                        } else if (CURRENT_DATE_DATATYPEID.equals(attribute.getAttributeId())
+                                && attribute.getAttributeValues() != null && !attribute.getAttributeValues().isEmpty()) {
+                                foundCurrentDate = true;   
+                        } else if (CURRENT_DATETIME_DATATYPEID.equals(attribute.getAttributeId())
+                                && attribute.getAttributeValues() != null && !attribute.getAttributeValues().isEmpty()) {
+                                foundCurrentDateTime = true;   
+                        }
+	        }
+	        if (!foundCurrentTime) {
+	                environment.getAttributes().add(createCurrentTime(creationTime));
+	        }
+	        if (!foundCurrentDate) {
+	                environment.getAttributes().add(createCurrentDate(creationTime));
+	        }
+	        if (!foundCurrentDateTime) {
+	                environment.getAttributes().add(createCurrentDateTime(creationTime));
+	        }
 	}
 	
 	/**
-	 * Sets the following attributes to the current time.
+	 * Sets the following attributes to the current time, if the request does not 
+	 * already contain values for these attributes
 	 * <ul>
 	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-dateTime</li>
 	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-date</li>
@@ -125,7 +148,7 @@ public class RequestType implements Serializable {
 	 * 29. January 2008</a> appendix B.8. Environment attributes, requires these attributes to be set on each request.
 	 * With this method a caller is able to add the current date, time and datetime.
 	 */
-	public void setCreationTime(){
+	public void ensureThatCreationTimeIsSet() {
 		DateTime dateTime = new DateTime();
 		setCreationTime(dateTime);
 	}

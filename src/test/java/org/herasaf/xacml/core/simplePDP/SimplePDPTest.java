@@ -81,7 +81,11 @@ public class SimplePDPTest {
 				new Object[] {
 						loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml"),
 						loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
-						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") }, };
+						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") }, 
+				new Object[] {
+                                                loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/PolicyEnvironment.xml"),
+                                                loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
+                                                loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") }, };
 	}
 
 	/**
@@ -337,7 +341,7 @@ public class SimplePDPTest {
 		PDP secondSimplePDP = SimplePDPFactory.getSimplePDP();
 		assertNotSame(secondSimplePDP, simplePDP);
 	}
-
+	
 	/**
 	 * Loads an {@link Evaluatable} from the class path.
 	 * 

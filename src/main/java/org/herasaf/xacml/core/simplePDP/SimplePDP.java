@@ -163,6 +163,8 @@ public class SimplePDP implements PDP {
 	public ResponseType evaluate(RequestType request) {
 		MDC.put(MDC_REQUEST_TIME, String.valueOf(System.currentTimeMillis()));
 		logger.debug("Evaluating Request: {}", request);
+		
+		request.ensureThatCreationTimeIsSet();
 
 		EvaluationContext evaluationContext = new EvaluationContext(targetMatcher, pip, respectAbandonedEvaluatables,
 				statusCodeComparator);
@@ -293,4 +295,5 @@ public class SimplePDP implements PDP {
 			return true;
 		}
 	}
+	
 }
