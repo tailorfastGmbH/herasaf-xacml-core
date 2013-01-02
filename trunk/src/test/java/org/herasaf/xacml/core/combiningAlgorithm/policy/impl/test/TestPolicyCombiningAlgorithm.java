@@ -73,7 +73,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 	 *             In case something goes wrong.
 	 */
 	@DataProvider(name = "evaluatableCombinations")
-	public Iterator<Object[]> createTargetMatchAndOneEvaluatableTestData() throws Exception {
+	public Iterator<Object[]> createTargetMatchAndOneEvaluatableTestData()
+			throws Exception {
 		List<Object[]> data = new ArrayList<Object[]>();
 
 		for (EvaluatableMock templEval1 : createEvalCombinations()) {
@@ -174,7 +175,9 @@ public abstract class TestPolicyCombiningAlgorithm {
 			boolean evaluationContextReturnesDenyObligation,
 			StatusCode evaluationContextStatusCode,
 			boolean evaluationContextTargetMatched) {
-		EvaluationContext evaluationContext = new EvaluationContext(new TargetMatcherImpl(), null, true, new StatusCodeComparator());
+		EvaluationContext evaluationContext = new EvaluationContext(
+				new TargetMatcherImpl(), null, true,
+				new StatusCodeComparator(), null);
 		evaluationContext.setTargetMatched(evaluationContextTargetMatched);
 		evaluationContext.updateStatusCode(evaluationContextStatusCode);
 		if (evaluationContextReturnesPermitObligation) {
@@ -334,7 +337,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 				return XACMLDefaultStatusCode.MISSING_ATTRIBUTE;
 			}
 
-			return XACMLDefaultStatusCode.PROCESSING_ERROR; // In case of one context
+			return XACMLDefaultStatusCode.PROCESSING_ERROR; // In case of one
+															// context
 			// information contains status
 			// code
 			// Processing_error
@@ -381,7 +385,8 @@ public abstract class TestPolicyCombiningAlgorithm {
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		EvaluationContext evaluationContext = new EvaluationContext(new TargetMatcherImpl(), null, true, new StatusCodeComparator());
+		EvaluationContext evaluationContext = new EvaluationContext(
+				new TargetMatcherImpl(), null, true, new StatusCodeComparator(), null);
 		List<Evaluatable> evals = new ArrayList<Evaluatable>();
 		evals.add(eval1);
 		evals.add(eval2);

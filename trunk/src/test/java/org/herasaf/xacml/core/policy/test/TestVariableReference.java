@@ -67,7 +67,7 @@ public class TestVariableReference {
 	public void testHandle() throws Exception {
 		Object[] values = new Object[] { "test1", "test2", "test3" };
 		EvaluationContext evaluationContext = new EvaluationContext(
-				new TargetMatcherImpl(), new StatusCodeComparator());
+				new TargetMatcherImpl(), new StatusCodeComparator(), null);
 		evaluationContext
 				.setVariableDefinitions(initVariableDefinitions(values));
 

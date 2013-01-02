@@ -69,7 +69,7 @@ public class TestTargetMatcher {
 	 */
 	@BeforeTest
 	public void init() {
-		evaluationContext = new EvaluationContext(new TargetMatcherImpl(), new StatusCodeComparator());
+		evaluationContext = new EvaluationContext(new TargetMatcherImpl(), new StatusCodeComparator(), null);
 	}
 
 	/**

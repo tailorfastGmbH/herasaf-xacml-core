@@ -30,6 +30,7 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -87,7 +88,11 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 		 * skipped and a NOT_APPLICABLE is returned.
 		 */
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+		        Evaluatable eval = possiblePolicies.get(i);
+		        if (eval instanceof IdReferenceType) {
+		                eval = evaluationContext.getPolicyRetrievalPoint().getEvaluatable(
+		                                                                                  eval.getId());
+		        }
 
 			if (eval == null) {
 				// It is an illegal state if the list contains any
