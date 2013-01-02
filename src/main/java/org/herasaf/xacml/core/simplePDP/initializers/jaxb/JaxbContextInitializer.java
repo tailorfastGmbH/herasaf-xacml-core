@@ -143,7 +143,7 @@ public class JaxbContextInitializer implements Initializer {
 
 		JAXBMarshallerConfiguration jmc = getCommonMarshallerConfiguration();
 		try {
-			jmc.setSchemaByPath(CONTEXT_SCHEMA_PATH);
+			jmc.setSchemaByPath(POLICY_SCHEMA_PATH, CONTEXT_SCHEMA_PATH);
 		} catch (SAXException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load Schema " + CONTEXT_SCHEMA_PATH, e);
@@ -187,7 +187,7 @@ public class JaxbContextInitializer implements Initializer {
 
 		JAXBMarshallerConfiguration jmc = getCommonMarshallerConfiguration();
 		try {
-			jmc.setSchemaByPath(CONTEXT_SCHEMA_PATH);
+			jmc.setSchemaByPath(POLICY_SCHEMA_PATH, CONTEXT_SCHEMA_PATH);
 		} catch (SAXException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load Schema " + CONTEXT_SCHEMA_PATH, e);
