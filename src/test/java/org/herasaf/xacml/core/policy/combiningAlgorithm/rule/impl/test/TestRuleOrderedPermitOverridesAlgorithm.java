@@ -305,7 +305,7 @@ public class TestRuleOrderedPermitOverridesAlgorithm {
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		EvaluationContext infos = new EvaluationContext(tmm, new StatusCodeComparator());
+		EvaluationContext infos = new EvaluationContext(tmm, new StatusCodeComparator(), null);
 		DecisionType decision = combAlg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

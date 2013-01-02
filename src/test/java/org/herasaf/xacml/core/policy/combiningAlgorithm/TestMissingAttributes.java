@@ -144,17 +144,17 @@ public class TestMissingAttributes {
 	public Object[][] createdTestDataForHierarchyForPolicies() throws Exception {
 		return new Object[][] {
 				{ createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
-						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{ createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
-						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
-						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
-						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{ createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
-						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator()) }, };
+						createRuleList(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) }, };
 	}
 
 	@DataProvider(name = "testDataForHierarchyForPolicySets")
@@ -165,22 +165,22 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatableList(PolicySetType.class,
 								PolicyOnlyOneApplicableAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) }, };
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) }, };
 	}
 
 	private List<Evaluatable> createEvaluatableList(
@@ -232,57 +232,57 @@ public class TestMissingAttributes {
 						createCombiningAlgorihtm(PolicyPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(PolicyOnlyOneApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RulePermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedPermitOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RuleDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RuleOrderedDenyOverridesAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) },
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) },
 				{
 						createCombiningAlgorihtm(RuleFirstApplicableAlgorithm.class),
 						createEvaluatable(PolicySetType.class,
 								PolicyPermitOverridesAlgorithm.class),
-						new EvaluationContext(targetMatcher, new StatusCodeComparator()) } };
+						new EvaluationContext(targetMatcher, new StatusCodeComparator(), null) } };
 	}
 
 	private AbstractCombiningAlgorithm createCombiningAlgorihtm(
