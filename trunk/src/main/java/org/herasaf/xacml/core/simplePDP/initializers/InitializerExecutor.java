@@ -43,9 +43,7 @@ public class InitializerExecutor {
 
 	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(InitializerExecutor.class);
-
 	private static Set<Initializer> initializers;
-
 	private static AtomicBoolean initializersRan = new AtomicBoolean(false);
 
 	/**
@@ -96,14 +94,18 @@ public class InitializerExecutor {
 	 */
 	public static void setInitalizers(Set<Initializer> initalizers) {
 		LOGGER.info("Custom initializers are in use.");
-		InitializerExecutor.initializers = initalizers;
+		if (initalizers != InitializerExecutor.initializers) {
+		    InitializerExecutor.initializers = initalizers;
+		    initializersRan.set(false);
+		}
 	}
 
 	/**
 	 * Resets the executor to only use the default initializers.
 	 */
 	public static void resetInitializers() {
-		InitializerExecutor.initializers = getDefaultInitializers();
+		InitializerExecutor.initializers = null;
+		initializersRan.set(false);
 	}
 
 	/**

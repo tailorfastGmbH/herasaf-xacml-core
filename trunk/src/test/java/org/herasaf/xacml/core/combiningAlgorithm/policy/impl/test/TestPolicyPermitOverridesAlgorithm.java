@@ -16,7 +16,6 @@
  */
 package org.herasaf.xacml.core.combiningAlgorithm.policy.impl.test;
 
-import java.util.Iterator;
 import java.util.List;
 
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -38,7 +37,7 @@ import org.testng.annotations.Test;
  */
 public class TestPolicyPermitOverridesAlgorithm extends
 		TestPolicyCombiningAlgorithm {
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -53,49 +52,20 @@ public class TestPolicyPermitOverridesAlgorithm extends
 	 * {@link TestPolicyCombiningAlgorithm}). This is only done to avoid
 	 * duplicate code. This test method is equal for all combining algorithms.
 	 */
-	// @Test(dataProvider = "evaluatableCombinations")
-	// public void testDenyOverridesCase(
-	// PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
-	// EvaluationContext evaluationContext1, EvaluatableMock eval2,
-	// EvaluationContext evaluationContext2, DecisionType expectedDecision,
-	// List<ObligationType> expectedObligations,
-	// StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
-	// throws Exception {
-	// super.testPolicySetMatchAndOneEvaluatable(alg, eval1, evaluationContext1,
-	// eval2,
-	// evaluationContext2, expectedDecision, expectedObligations,
-	// expectedStatusCode, expectedHasTargetMatched);
-	// }
-
-	/*
-	 * FIXME: Surefire blocks when the test data is fed through JUnit's
-	 * DataProvider. If the test iterates manually over the data it works. This
-	 * issue has to be investigated more deeply.
-	 * Uncomment the test-case above to run the case with the DataProvider
-	 */
-
-	@Test
-	public void testDenyOverridesCase() throws Exception {
-		Iterator<Object[]> cases = createTargetMatchAndOneEvaluatableTestData();
-		while (cases.hasNext()) {
-			Object[] singleCase = cases.next();
-			PolicyCombiningAlgorithm alg = (PolicyCombiningAlgorithm) singleCase[0];
-			EvaluatableMock eval1 = (EvaluatableMock) singleCase[1];
-			EvaluationContext evaluationContext1 = (EvaluationContext) singleCase[2];
-			EvaluatableMock eval2 = (EvaluatableMock) singleCase[3];
-			EvaluationContext evaluationContext2 = (EvaluationContext) singleCase[4];
-			DecisionType expectedDecision = (DecisionType) singleCase[5];
-			@SuppressWarnings("unchecked")
-			List<ObligationType> expectedObligations = (List<ObligationType>) singleCase[6];
-			StatusCode expectedStatusCode = (StatusCode) singleCase[7];
-			Boolean expectedHasTargetMatched = (Boolean) singleCase[8];
-
-			super.testPolicySetMatchAndOneEvaluatable(alg, eval1,
-					evaluationContext1, eval2, evaluationContext2,
-					expectedDecision, expectedObligations, expectedStatusCode,
-					expectedHasTargetMatched);
-		}
+	@Test(dataProvider = "evaluatableCombinations")
+	public void testDenyOverridesCase(PolicyCombiningAlgorithm alg,
+			EvaluatableMock eval1, EvaluationContext evaluationContext1,
+			EvaluatableMock eval2, EvaluationContext evaluationContext2,
+			DecisionType expectedDecision,
+			List<ObligationType> expectedObligations,
+			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
+			throws Exception {
+		super.testPolicySetMatchAndOneEvaluatable(alg, eval1,
+				evaluationContext1, eval2, evaluationContext2,
+				expectedDecision, expectedObligations, expectedStatusCode,
+				expectedHasTargetMatched);
 	}
+
 	/**
 	 * {@inheritDoc}
 	 */
