@@ -23,8 +23,11 @@ import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.WritingException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RulePermitOverridesAlgorithm;
 import org.herasaf.xacml.core.context.RequestMarshaller;
+import org.herasaf.xacml.core.context.impl.ActionType;
 import org.herasaf.xacml.core.context.impl.EnvironmentType;
 import org.herasaf.xacml.core.context.impl.RequestType;
+import org.herasaf.xacml.core.context.impl.ResourceType;
+import org.herasaf.xacml.core.context.impl.SubjectType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
@@ -66,6 +69,9 @@ public class MinimalJAXBTypesTest {
 			IOException {
 
 		RequestType req = new RequestType();
+		req.getSubjects().add(new SubjectType());
+		req.getResources().add(new ResourceType());
+		req.setAction(new ActionType());
 		req.setEnvironment(new EnvironmentType());
 		RequestMarshaller.marshal(req, file);
 
