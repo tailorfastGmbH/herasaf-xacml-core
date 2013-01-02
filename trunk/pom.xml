@@ -54,15 +54,6 @@
 			http://dev.herasaf.org/svn/XACMLCORE/trunk/
 		</url>
 	</scm>
-	<!-- <distributionManagement>
-		<site> -->
-			<!-- The site section must be defined in every project (or root project, 
-				if it aggregates the site). -->
-			<!-- <id>heras-af_site</id>
-			<name>heras-af_site</name>
-			<url>${site.url}/${project.artifactId}/${project.version}</url>--> <!-- configure property ${site.url} in maven settings -->
-		<!-- </site>
-	</distributionManagement> -->
 
 	<properties>
 		<reporting.findbugs.excludeFile.location>src/main/config/reporting/findbugs-excludes.xml</reporting.findbugs.excludeFile.location>
@@ -118,11 +109,12 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
+				<version>2.3.7</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
 						<Export-Package>org.herasaf.xacml.core.*</Export-Package>
-						<Bundle-SymbolicName>${pom.artifactId}</Bundle-SymbolicName>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
 					</instructions>
 				</configuration>
 			</plugin>
