@@ -54,9 +54,7 @@ public class JaxbContextInitializer implements Initializer {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(JaxbContextInitializer.class);
 
-	private static final String CONTEXT_JAXBCONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
 	private static final String CONTEXT_SCHEMA_PATH = "classpath:/access_control-xacml-2.0-context-schema-os.xsd";
-	private static final String POLICY_JAXBCONTEXT_PACKAGE = "org.herasaf.xacml.core.policy.impl";
 	private static final String POLICY_SCHEMA_PATH = "classpath:/access_control-xacml-2.0-policy-schema-os.xsd";
 
 	// jaxb default settings (by HERAS-AF)
@@ -84,7 +82,8 @@ public class JaxbContextInitializer implements Initializer {
 
 		JAXBContext policyContext;
 		try {
-			policyContext = JAXBContext.newInstance(POLICY_JAXBCONTEXT_PACKAGE);
+			policyContext = 
+			                JAXBContext.newInstance(org.herasaf.xacml.core.policy.impl.ObjectFactory.class);
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.policy.impl.",
@@ -128,8 +127,8 @@ public class JaxbContextInitializer implements Initializer {
 
 		JAXBContext requestContext;
 		try {
-			requestContext = JAXBContext
-					.newInstance(CONTEXT_JAXBCONTEXT_PACKAGE);
+			requestContext = 
+			                JAXBContext.newInstance(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.context.impl.",
@@ -172,8 +171,8 @@ public class JaxbContextInitializer implements Initializer {
 		// Create and set JAXB Context for Response
 		JAXBContext responseContext;
 		try {
-			responseContext = JAXBContext
-					.newInstance(CONTEXT_JAXBCONTEXT_PACKAGE);
+			responseContext = 
+			                JAXBContext.newInstance(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.context.impl.",
