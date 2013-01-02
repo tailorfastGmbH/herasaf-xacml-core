@@ -8,6 +8,7 @@ import java.io.OutputStream;
 
 import org.custommonkey.xmlunit.Diff;
 import org.custommonkey.xmlunit.XMLUnit;
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestMarshaller;
@@ -17,14 +18,14 @@ import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
-import org.testng.annotations.AfterMethod;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 public class TestMissingAttributes {
+	private static final String EXPECTED_ERROR = "Function urn:oasis:names:tc:xacml:1.0:function:string-unknown-equal unknown";
 	private PDP pdp;
-	private Evaluatable eval;
 	private UnorderedPolicyRepository repo;
 
 	@BeforeClass
@@ -62,7 +63,6 @@ public class TestMissingAttributes {
 	@Test(dataProvider = "TestData")
 	public void testit(String id, Evaluatable eval, RequestType request,
 			ResponseType expectedResponse) throws Exception {
-		this.eval = eval;
 		repo = (UnorderedPolicyRepository) pdp.getPolicyRepository();
 		repo.deploy(eval);
 
@@ -82,10 +82,20 @@ public class TestMissingAttributes {
 		assertTrue(diff.identical()); // identical test also values. needed
 		// because it may differ here within the
 		// attribute values
+		
+		repo.undeploy(eval.getId());
 	}
 
-	@AfterMethod
-	public void cleanup() throws Exception {
-		repo.undeploy(eval.getId());
+	@Test
+	public void testMissingFunction() throws Exception {
+		try {
+			PolicyMarshaller.unmarshal(new File(
+					"src/test/resources/missingAttributes/Policy03.xml"));
+			Assert.fail("Failure expected on an unknown Function ID");
+		} catch (SyntaxException ex) {
+			Assert.assertNotNull(ex.getCause());
+			Assert.assertTrue(ex.getCause().getMessage()
+					.contains(EXPECTED_ERROR));
+		}
 	}
 }
