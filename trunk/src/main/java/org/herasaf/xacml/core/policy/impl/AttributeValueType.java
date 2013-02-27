@@ -174,7 +174,7 @@ public class AttributeValueType extends ExpressionType {
 			throw new ExpressionProcessingException("The content of the AttributeValueType can't be greater than 1");
 		}
 		try {
-			return dataType.convertTo((String) content.get(0));
+			return dataType.convertTo(content);
 		} catch (ClassCastException e) {
 			throw new ExpressionProcessingException(e);
 		}

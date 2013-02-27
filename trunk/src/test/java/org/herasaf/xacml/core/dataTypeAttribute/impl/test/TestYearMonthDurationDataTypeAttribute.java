@@ -19,6 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.YearMonthDurationDataTypeAttribute;
 import org.herasaf.xacml.core.types.YearMonthDuration;
@@ -50,7 +53,9 @@ public class TestYearMonthDurationDataTypeAttribute {
 	 */
 	@Test
 	public void testInput1() throws Exception {
-		assertEquals(dataType.convertTo("-P9Y3M"), new YearMonthDuration(
+		List<String> data = new ArrayList<String>();
+		data.add("-P9Y3M");
+		assertEquals(dataType.convertTo(data), new YearMonthDuration(
 				"-P9Y3M"));
 	}
 
@@ -61,7 +66,9 @@ public class TestYearMonthDurationDataTypeAttribute {
 	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
-		dataType.convertTo("+P9Y3M");
+		List<String> data = new ArrayList<String>();
+		data.add("+P9Y3M");
+		dataType.convertTo(data);
 	}
 
 	/**

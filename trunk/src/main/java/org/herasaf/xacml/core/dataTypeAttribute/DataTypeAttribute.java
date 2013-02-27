@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
@@ -42,9 +44,9 @@ public interface DataTypeAttribute<E> extends java.io.Serializable {
 	 * Converts a JAXB-representation string into the data type E.
 	 * 
 	 * @param jaxbRepresentation
-	 *            The string to convert
+	 *            The list of objects to convert
 	 * @return Returns the created object.
 	 * @throws SyntaxException
 	 */
-	E convertTo(String jaxbRepresentation) throws SyntaxException;
+	E convertTo(List<?> jaxbRepresentation) throws SyntaxException;
 }

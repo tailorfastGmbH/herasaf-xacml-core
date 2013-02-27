@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.YearMonthDuration;
 
@@ -33,9 +35,9 @@ public class YearMonthDurationDataTypeAttribute extends AbstractDataTypeAttribut
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public YearMonthDuration convertTo(String jaxbRepresentation) throws SyntaxException {
+	public YearMonthDuration convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new YearMonthDuration(jaxbRepresentation.trim());
+			return new YearMonthDuration(((String) jaxbRepresentation.get(0)).trim());
 		} catch (IllegalArgumentException e) {
 			throw new SyntaxException(e);
 		}

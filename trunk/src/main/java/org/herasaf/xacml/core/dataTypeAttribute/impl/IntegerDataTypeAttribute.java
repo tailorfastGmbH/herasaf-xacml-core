@@ -18,6 +18,7 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import java.math.BigInteger;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 
@@ -34,9 +35,9 @@ public class IntegerDataTypeAttribute extends AbstractDataTypeAttribute<BigInteg
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public BigInteger convertTo(String jaxbRepresentation) throws SyntaxException {
+	public BigInteger convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new BigInteger(jaxbRepresentation.trim());
+			return new BigInteger(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			throw new SyntaxException(e);
 		}

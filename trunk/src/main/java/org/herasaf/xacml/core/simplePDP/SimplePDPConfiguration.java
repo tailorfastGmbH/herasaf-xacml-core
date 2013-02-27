@@ -17,6 +17,9 @@
 
 package org.herasaf.xacml.core.simplePDP;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.api.PIP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
@@ -96,6 +99,8 @@ public class SimplePDPConfiguration {
 	 * is:</b> {@code}false{@code}, means the UTC representation is +00:00.
 	 */
 	private boolean zuluUtcRepresentation = false;
+
+	private List<Class<?>> m_contexts = new ArrayList<Class<?>>();
 
 	/**
 	 * @return The configured root {@link PolicyCombiningAlgorithm}
@@ -253,5 +258,15 @@ public class SimplePDPConfiguration {
 	 */
 	public void setUseZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
 		this.zuluUtcRepresentation = useZuluUtcRepresentation;
+	}
+	
+	public void addJaxbContext(Class<?>... contextClasses) {
+	        for (Class<?> clazz : contextClasses) {
+	                m_contexts.add(clazz);
+	        }
+	}
+	
+	public List<Class<?>> getJaxbContexts() {
+		return m_contexts;
 	}
 }

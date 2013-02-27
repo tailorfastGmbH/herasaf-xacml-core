@@ -19,6 +19,7 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 
@@ -35,9 +36,9 @@ public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public URI convertTo(String jaxbRepresentation) throws SyntaxException {
+	public URI convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new URI(jaxbRepresentation.trim());
+			return new URI(((String) jaxbRepresentation.get(0)).trim());
 		} catch (URISyntaxException e) {
 			throw new SyntaxException(e);
 		}

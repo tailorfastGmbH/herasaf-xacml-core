@@ -21,6 +21,9 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.BooleanDataTypeAttribute;
 import org.testng.annotations.BeforeTest;
@@ -86,7 +89,9 @@ public class TestBooleanDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveDataTrue")
 	public void testInputTrue(String input) throws Exception {
-		assertTrue(dataType.convertTo(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertTrue(dataType.convertTo(data));
 	}
 
 	/**
@@ -97,7 +102,9 @@ public class TestBooleanDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveDataFalse")
 	public void testInputFalse(String input) throws Exception {
-		assertFalse(dataType.convertTo(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertFalse(dataType.convertTo(data));
 	}
 
 	/**
@@ -108,7 +115,9 @@ public class TestBooleanDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 
 	/**

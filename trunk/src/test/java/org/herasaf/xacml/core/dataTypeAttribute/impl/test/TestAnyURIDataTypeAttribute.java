@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 import static org.testng.Assert.assertEquals;
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.AnyURIDataTypeAttribute;
@@ -51,7 +53,9 @@ public class TestAnyURIDataTypeAttribute {
 	 */
 	@Test
 	public void testInput1() throws Exception{
-		assertEquals(dataType.convertTo("www.hallo.ch"), new URI("www.hallo.ch"));
+		List<String> data = new ArrayList<String>();
+		data.add("www.hallo.ch");
+		assertEquals(dataType.convertTo(data), new URI("www.hallo.ch"));
 	}
 	
 	/**
@@ -61,7 +65,9 @@ public class TestAnyURIDataTypeAttribute {
 	 */
 	@Test
 	public void testInput0() throws Exception{
-		assertEquals(dataType.convertTo("hallo/du/.ch"), new URI("hallo/du/.ch"));
+		List<String> data = new ArrayList<String>();
+		data.add("hallo/du/.ch");
+		assertEquals(dataType.convertTo(data), new URI("hallo/du/.ch"));
 	}
 	
 	/**
@@ -71,7 +77,9 @@ public class TestAnyURIDataTypeAttribute {
 	 */
 	@Test(expectedExceptions={SyntaxException.class})
 	public void testInputtrueWrongSpelled() throws Exception{
-		dataType.convertTo("-\\1234");
+		List<String> data = new ArrayList<String>();
+		data.add("-\\1234");
+		dataType.convertTo(data);
 	}
 	
 	/**

@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import javax.security.auth.x500.X500Principal;
 
 import org.herasaf.xacml.core.SyntaxException;
@@ -34,9 +36,9 @@ public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Princip
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public X500Principal convertTo(String jaxbRepresentation) throws SyntaxException {
+	public X500Principal convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new X500Principal(jaxbRepresentation.trim());
+			return new X500Principal(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			throw new SyntaxException(e);
 		}

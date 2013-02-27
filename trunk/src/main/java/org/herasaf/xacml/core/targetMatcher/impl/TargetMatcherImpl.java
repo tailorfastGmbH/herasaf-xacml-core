@@ -373,8 +373,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 						.getAttributeValue();
 				matchMatches = (Boolean) matchFunction.handle(
 						policyAttributeValue.getDataType().convertTo(
-								(String) policyAttributeValue.getContent().get(
-										0)), requestAttributeValue);
+								policyAttributeValue.getContent()), requestAttributeValue);
 				logger.debug(
 						"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
 						new Object[] { matchMatches,

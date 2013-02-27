@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.herasaf.xacml.core.api.PDP;
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.herasaf.xacml.core.simplePDP.initializers.jaxb.JaxbContextInitializer;
@@ -109,11 +110,20 @@ public class InitializerExecutor {
 	}
 
 	/**
+         * Runs all {@link Initializer}s. If no custom initializers were set then
+         * use the default initializers as retrieved by
+         * {@link #getDefaultInitializers()}.
+         */
+        public static void runInitializers() {
+                runInitializers(null);
+        }
+        
+	/**
 	 * Runs all {@link Initializer}s. If no custom initializers were set then
 	 * use the default initializers as retrieved by
 	 * {@link #getDefaultInitializers()}.
 	 */
-	public static void runInitializers() {
+	public static void runInitializers(SimplePDPConfiguration configuration) {
 		if (!initializersRan.get()) { //if the initializers were not executed earlier.
 			Set<Initializer> inits;
 
@@ -125,7 +135,7 @@ public class InitializerExecutor {
 
 			if (inits != null) {
 				for (Initializer initializer : inits) {
-					initializer.run();
+					initializer.run(configuration);
 				}
 			}
 			initializersRan.set(true);

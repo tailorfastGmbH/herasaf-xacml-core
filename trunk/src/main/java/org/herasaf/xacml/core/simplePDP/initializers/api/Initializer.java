@@ -16,6 +16,8 @@
  */
 package org.herasaf.xacml.core.simplePDP.initializers.api;
 
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
+
 /**
  * An initializer that shall be executed by the SimplePDPFactory must implement this
  * interface.
@@ -26,6 +28,7 @@ package org.herasaf.xacml.core.simplePDP.initializers.api;
 public interface Initializer {
 	/**
 	 * Within this method the initialization must be done.
+	 * @param configuration The PDP configuration to use
 	 */
-	void run();
+	void run(SimplePDPConfiguration configuration);
 }

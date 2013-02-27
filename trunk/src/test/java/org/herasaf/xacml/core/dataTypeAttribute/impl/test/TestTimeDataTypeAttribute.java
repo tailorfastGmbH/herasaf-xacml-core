@@ -19,6 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
 import org.joda.time.DateTimeZone;
@@ -93,7 +96,9 @@ public class TestTimeDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveData")
 	public void testInput(String input, String expected) throws Exception {
-		assertEquals(dataType.convertTo(input).toString(), expected);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertEquals(dataType.convertTo(data).toString(), expected);
 	}
 
 	/**
@@ -115,6 +120,8 @@ public class TestTimeDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testWrongInput(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 }
