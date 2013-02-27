@@ -70,7 +70,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	@XmlTransient
 	private static final long serialVersionUID = 1L;
 	@XmlTransient
-	private final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(IdReferenceType.class);
 
 	@XmlJavaTypeAdapter(CollapsedStringAdapter.class)

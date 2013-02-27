@@ -25,45 +25,46 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * @author Florian Huonder
  */
 public class EvaluatableIDImpl implements EvaluatableID {
-    private String id;
+	private static final long serialVersionUID = 1L;
+	private String id;
 
-    /**
-     * Creates a new {@link EvaluatableID} with the given id.
-     * 
-     * @param id
-     *            The id of this {@link EvaluatableID}.
-     */
-    public EvaluatableIDImpl(String id) {
-        this.id = id;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public String toString() {
-        return id;
-    }
+	/**
+	 * Creates a new {@link EvaluatableID} with the given id.
+	 * 
+	 * @param id
+	 *            The id of this {@link EvaluatableID}.
+	 */
+	public EvaluatableIDImpl(String id) {
+		this.id = id;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        }
-        if (obj instanceof EvaluatableID) {
-            return ((EvaluatableID) obj).toString().equals(id);
-        }
-        return false;
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public String toString() {
+		return id;
+	}
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public int hashCode() {
-        return id.hashCode();
-    }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj instanceof EvaluatableID) {
+			return ((EvaluatableID) obj).toString().equals(id);
+		}
+		return false;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
 }
