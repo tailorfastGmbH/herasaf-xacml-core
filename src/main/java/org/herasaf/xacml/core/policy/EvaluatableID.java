@@ -17,11 +17,13 @@
 
 package org.herasaf.xacml.core.policy;
 
+import java.io.Serializable;
+
 /**
  * The {@link EvaluatableID} represents the id of an {@link Evaluatable}.
  * 
  * @author Stefan Oberholzer
  */
-public interface EvaluatableID {
+public interface EvaluatableID extends Serializable {
 	
 }
