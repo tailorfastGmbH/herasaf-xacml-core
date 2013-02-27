@@ -171,7 +171,7 @@ public final class SimplePDPFactory {
 	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
-		InitializerExecutor.runInitializers();
+		InitializerExecutor.runInitializers(simplePDPConfiguration);
 		return new SimplePDP(simplePDPConfiguration);
 	}
 
@@ -192,7 +192,7 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(
 			SimplePDPConfiguration simplePDPConfiguration,
 			Class<? extends SimplePDP> customPDP) {
-		InitializerExecutor.runInitializers();
+		InitializerExecutor.runInitializers(simplePDPConfiguration);
 		try {
 			Constructor<? extends SimplePDP> constructor = customPDP
 					.getConstructor(SimplePDPConfiguration.class);

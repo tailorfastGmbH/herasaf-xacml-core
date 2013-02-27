@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.IPAddress;
 
@@ -34,9 +36,9 @@ public class IpAddressDataTypeAttribute extends AbstractDataTypeAttribute<IPAddr
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public IPAddress convertTo(String jaxbRepresentation) throws SyntaxException {
+	public IPAddress convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return IPAddress.newInstance(jaxbRepresentation.trim());
+			return IPAddress.newInstance(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			throw new SyntaxException(e);
 		}

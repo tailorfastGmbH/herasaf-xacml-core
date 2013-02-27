@@ -19,6 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.HexBinaryDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.IpAddressDataTypeAttribute;
@@ -106,7 +109,9 @@ public class TestIPAddressDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveCases")
 	public void testInput(String input) throws Exception {
-		assertEquals(dataType.convertTo(input), IPAddress.newInstance(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertEquals(dataType.convertTo(data), IPAddress.newInstance(input));
 	}
 
 	/**
@@ -117,7 +122,9 @@ public class TestIPAddressDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
 	public void testWrongInput(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 
 	/**

@@ -200,7 +200,7 @@ public abstract class AttributeDesignatorType extends ExpressionType {
 				throw new ExpressionProcessingException("The content of the AttributeValueType can't be greater than 1");
 			}
 			try {
-				returnValues.add(dataType.convertTo((String) attrVal.getContent().get(0)));
+				returnValues.add(dataType.convertTo(attrVal.getContent()));
 			} catch (ClassCastException e) {
 				throw new SyntaxException(e);
 			}

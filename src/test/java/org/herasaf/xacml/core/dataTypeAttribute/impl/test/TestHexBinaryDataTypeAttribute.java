@@ -19,6 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.HexBinaryDataTypeAttribute;
 import org.testng.annotations.BeforeTest;
@@ -75,7 +78,9 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveData")
 	public void testInput2(String hex, char[] result) throws Exception {
-		assertEquals(String.valueOf(dataType.convertTo(hex).getValue()), String.valueOf(result));
+		List<String> data = new ArrayList<String>();
+		data.add(hex);
+		assertEquals(String.valueOf(dataType.convertTo(data).getValue()), String.valueOf(result));
 	}
 
 	/**
@@ -86,7 +91,9 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 
 	/**

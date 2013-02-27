@@ -19,6 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.RFC822NameDataTypeAttribute;
 import org.herasaf.xacml.core.types.RFC822Name;
@@ -50,7 +53,9 @@ public class TestRFC822NameDataTypeAttribute {
 	 */
 	@Test
 	public void testInput1() throws Exception {
-		assertEquals(dataType.convertTo("hallo@world.ch"), new RFC822Name(
+		List<String> data = new ArrayList<String>();
+		data.add("hallo@world.ch");
+		assertEquals(dataType.convertTo(data), new RFC822Name(
 				"hallo@world.ch"));
 	}
 
@@ -61,7 +66,9 @@ public class TestRFC822NameDataTypeAttribute {
 	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
-		dataType.convertTo("@hallo@world");
+		List<String> data = new ArrayList<String>();
+		data.add("@hallo@world");
+		dataType.convertTo(data);
 	}
 
 	/**

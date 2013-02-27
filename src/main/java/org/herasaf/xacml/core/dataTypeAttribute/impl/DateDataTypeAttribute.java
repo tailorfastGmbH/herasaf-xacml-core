@@ -16,6 +16,8 @@
  */
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
 import org.slf4j.Logger;
@@ -35,9 +37,9 @@ public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
 	private final Logger logger = LoggerFactory.getLogger(DateDataTypeAttribute.class);
 
 	/** {@inheritDoc} */
-	public Date convertTo(String jaxbRepresentation) throws SyntaxException {
+	public Date convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new Date(jaxbRepresentation.trim());
+			return new Date(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e){
 			logger.error("An unexpected error occured.", e);
 			throw new SyntaxException(e);

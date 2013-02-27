@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.herasaf.xacml.core.InitializationException;
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
 import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,7 +50,7 @@ public abstract class AbstractJaxbTypeAdapterInitializer<T> implements
 	 * instantiated objects. These objectes are then set into the corresponding
 	 * type adapter through {@link #setInstancesIntoTypeAdapter(Map)}.
 	 */
-	public final void run() {
+	public final void run(SimplePDPConfiguration configuration) {
 		Map<String, T> instancesMap = createTypeInstances();
 		setInstancesIntoTypeAdapter(instancesMap);
 	}

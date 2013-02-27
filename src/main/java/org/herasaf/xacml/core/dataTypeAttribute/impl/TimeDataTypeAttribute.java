@@ -16,6 +16,8 @@
  */
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Time;
 import org.slf4j.Logger;
@@ -36,9 +38,9 @@ public class TimeDataTypeAttribute extends AbstractDataTypeAttribute<Time> {
 	private final Logger logger = LoggerFactory.getLogger(TimeDataTypeAttribute.class);
 
 	/** {@inheritDoc} */
-	public Time convertTo(String jaxbRepresentation) throws SyntaxException {
+	public Time convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new Time(jaxbRepresentation.trim());
+			return new Time(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e){
 			logger.error("An unexpected error occured.", e);
 			throw new SyntaxException(e);

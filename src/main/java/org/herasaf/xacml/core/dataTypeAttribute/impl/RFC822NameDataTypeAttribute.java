@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.RFC822Name;
 
@@ -33,9 +35,9 @@ public class RFC822NameDataTypeAttribute extends AbstractDataTypeAttribute<RFC82
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public RFC822Name convertTo(String jaxbRepresentation) throws SyntaxException {
+	public RFC822Name convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new RFC822Name(jaxbRepresentation.trim());
+			return new RFC822Name(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			throw new SyntaxException(e);
 		}

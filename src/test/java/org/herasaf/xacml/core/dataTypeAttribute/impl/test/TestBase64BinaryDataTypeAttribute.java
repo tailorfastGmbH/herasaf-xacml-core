@@ -19,6 +19,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.Base64BinaryDataTypeAttribute;
 import org.herasaf.xacml.core.types.Base64Binary;
@@ -82,12 +85,16 @@ public class TestBase64BinaryDataTypeAttribute {
 	 */
 	@Test (dataProvider="positiveData")
 	public void testPoitiveInput(String input) throws Exception{
-		assertEquals(dataType.convertTo(input).getValue(), new Base64Binary(input).getValue());
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertEquals(dataType.convertTo(data).getValue(), new Base64Binary(input).getValue());
 	}
 	
 	@Test (dataProvider="negativeData", expectedExceptions={SyntaxException.class})
 	public void testNegativeInput(String input) throws Exception{
-		assertEquals(dataType.convertTo(input).getValue(), new Base64Binary(input).getValue());
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertEquals(dataType.convertTo(data).getValue(), new Base64Binary(input).getValue());
 	}
 	
 	/**

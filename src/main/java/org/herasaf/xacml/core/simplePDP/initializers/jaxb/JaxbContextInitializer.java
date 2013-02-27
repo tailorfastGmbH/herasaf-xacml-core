@@ -17,6 +17,8 @@
 package org.herasaf.xacml.core.simplePDP.initializers.jaxb;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -25,6 +27,7 @@ import org.herasaf.xacml.core.InitializationException;
 import org.herasaf.xacml.core.context.RequestMarshaller;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
 import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
@@ -66,24 +69,29 @@ public class JaxbContextInitializer implements Initializer {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void run() {
-		initializePolicyContext();
-		initializeRequestContext();
-		initializeResponseContext();
+	public void run(SimplePDPConfiguration configuration) {
+		initializePolicyContext(configuration);
+		initializeRequestContext(configuration);
+		initializeResponseContext(configuration);
 	}
 
 	/**
 	 * Initializes the default policy context that contains all standard XACML
 	 * policy types and sets the schema for validation.
 	 */
-	private void initializePolicyContext() {
+	private void initializePolicyContext(SimplePDPConfiguration configuration) {
 
 		// Create and set JAXB Context for Policy
 
 		JAXBContext policyContext;
 		try {
-			policyContext = 
-			                JAXBContext.newInstance(org.herasaf.xacml.core.policy.impl.ObjectFactory.class);
+		        List<Class<?>> contextClasses = new ArrayList<Class<?>>();
+		        contextClasses.add(org.herasaf.xacml.core.policy.impl.ObjectFactory.class);
+		        if (configuration != null) {
+		                contextClasses.addAll(configuration.getJaxbContexts());
+		        }
+		        
+		        policyContext = JAXBContext.newInstance(contextClasses.toArray(new Class[0]));
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.policy.impl.",
@@ -121,14 +129,19 @@ public class JaxbContextInitializer implements Initializer {
 	 * Initializes the default request context that contains all standard XACML
 	 * context types and sets the schema for validation.
 	 */
-	private void initializeRequestContext() {
+	private void initializeRequestContext(SimplePDPConfiguration configuration) {
 
 		// Create and set JAXB Context for Request
 
 		JAXBContext requestContext;
 		try {
-			requestContext = 
-			                JAXBContext.newInstance(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
+		        List<Class<?>> contextClasses = new ArrayList<Class<?>>();
+                        contextClasses.add(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
+                        if (configuration != null) {
+                                contextClasses.addAll(configuration.getJaxbContexts());
+                        }
+                        
+                        requestContext = JAXBContext.newInstance(contextClasses.toArray(new Class[0]));
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.context.impl.",
@@ -166,13 +179,18 @@ public class JaxbContextInitializer implements Initializer {
 	 * Initializes the default response context that contains all standard XACML
 	 * context types and sets the schema for validation.
 	 */
-	private void initializeResponseContext() {
+	private void initializeResponseContext(SimplePDPConfiguration configuration) {
 
 		// Create and set JAXB Context for Response
 		JAXBContext responseContext;
 		try {
-			responseContext = 
-			                JAXBContext.newInstance(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
+			List<Class<?>> contextClasses = new ArrayList<Class<?>>();
+	                contextClasses.add(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
+	                if (configuration != null) {
+	                        contextClasses.addAll(configuration.getJaxbContexts());
+	                }
+	                        
+	                responseContext = JAXBContext.newInstance(contextClasses.toArray(new Class[0]));
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.context.impl.",

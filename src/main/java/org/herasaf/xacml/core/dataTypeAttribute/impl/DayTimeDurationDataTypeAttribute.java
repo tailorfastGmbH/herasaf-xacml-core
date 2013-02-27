@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 
@@ -34,9 +36,9 @@ public class DayTimeDurationDataTypeAttribute extends AbstractDataTypeAttribute<
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public DayTimeDuration convertTo(String jaxbRepresentation) throws SyntaxException {
+	public DayTimeDuration convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new DayTimeDuration(jaxbRepresentation.trim());
+			return new DayTimeDuration(((String) jaxbRepresentation.get(0)).trim());
 		} catch (IllegalArgumentException e) {
 			throw new SyntaxException(e);
 		}

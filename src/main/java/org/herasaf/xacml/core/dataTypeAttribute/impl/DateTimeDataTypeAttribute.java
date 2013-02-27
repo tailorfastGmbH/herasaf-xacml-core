@@ -16,6 +16,8 @@
  */
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DateTime;
 import org.slf4j.Logger;
@@ -35,9 +37,9 @@ public class DateTimeDataTypeAttribute extends AbstractDataTypeAttribute<DateTim
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public DateTime convertTo(String jaxbRepresentation) throws SyntaxException {
+	public DateTime convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new DateTime(jaxbRepresentation.trim());
+			return new DateTime(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			logger.error("An unexpected error occured.", e);
 			throw new SyntaxException(e);
