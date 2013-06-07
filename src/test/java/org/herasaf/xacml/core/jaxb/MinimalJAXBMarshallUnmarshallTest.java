@@ -16,9 +16,14 @@
  */
 package org.herasaf.xacml.core.jaxb;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.custommonkey.xmlunit.XMLAssert;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.WritingException;
 import org.herasaf.xacml.core.combiningAlgorithm.rule.impl.RulePermitOverridesAlgorithm;
@@ -38,16 +43,22 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
+ * 
+ * Minimal test checking if marshalling and unmarshalling of Requests and
+ * Policies works.
  * 
  * @author René Eggenschwiler
  * @author Florian Huonder
  * 
  */
-public class MinimalJAXBTypesTest {
+public class MinimalJAXBMarshallUnmarshallTest {
 
 	private File file;
+	private ByteArrayOutputStream marshalToStreamResult;
 
 	@BeforeClass
 	public static void setup() {
@@ -57,6 +68,7 @@ public class MinimalJAXBTypesTest {
 	@BeforeTest
 	public void setupTest() throws IOException {
 		file = File.createTempFile("test-temp", ".xml");
+		marshalToStreamResult = new ByteArrayOutputStream();
 	}
 
 	@AfterTest
@@ -64,9 +76,19 @@ public class MinimalJAXBTypesTest {
 		file.delete();
 	}
 
+	/**
+	 * Tests if the marshalling result is the same if a {@link RequestType} is
+	 * first marshalled to a file, unmarshalled and then marshalled to a
+	 * outputStream again.
+	 * 
+	 * @throws WritingException
+	 * @throws SyntaxException
+	 * @throws IOException
+	 * @throws SAXException
+	 */
 	@Test
-	public void testTest() throws WritingException, SyntaxException,
-			IOException {
+	public void testMarshalUnmarshalRequestTypes() throws WritingException,
+			SyntaxException, IOException, SAXException {
 
 		RequestType req = new RequestType();
 		req.getSubjects().add(new SubjectType());
@@ -76,21 +98,47 @@ public class MinimalJAXBTypesTest {
 		RequestMarshaller.marshal(req, file);
 
 		RequestType req2 = RequestMarshaller.unmarshal(file);
-		RequestMarshaller.marshal(req2, System.out);
+
+		RequestMarshaller.marshal(req2, marshalToStreamResult);
+
+		assertByteOutputStreamEqualsFile();
 
 	}
 
+	/**
+	 * 
+	 * Tests if the marshalling result is the same if a {@link PolicyType} is
+	 * first marshalled to a file, unmarshalled and then marshalled to a
+	 * outputStream again.
+	 * 
+	 * @throws WritingException
+	 * @throws SyntaxException
+	 * @throws IOException
+	 * @throws SAXException
+	 */
 	@Test
-	public void testPolicyTest() throws WritingException, SyntaxException,
-			IOException {
+	public void testMarshalUnmarshalPolicyType() throws WritingException,
+			SyntaxException, IOException, SAXException {
 		PolicyType policy = new PolicyType();
 		policy.setCombiningAlg(new RulePermitOverridesAlgorithm());
-		policy.setPolicyId(new EvaluatableIDImpl("urn:org:herasaf:xacml:test:dummyPolicy"));
+		policy.setPolicyId(new EvaluatableIDImpl(
+				"urn:org:herasaf:xacml:test:dummyPolicy"));
 		policy.setTarget(new TargetType());
 		PolicyMarshaller.marshal(policy, file);
 
 		Evaluatable policy2 = PolicyMarshaller.unmarshal(file);
-		PolicyMarshaller.marshal(policy2, System.out);
+
+		PolicyMarshaller.marshal(policy2, marshalToStreamResult);
+
+		assertByteOutputStreamEqualsFile();
+	}
+
+	private void assertByteOutputStreamEqualsFile() throws SAXException,
+			IOException, FileNotFoundException {
+		XMLAssert.assertXMLEqual(
+				new InputSource(new FileInputStream(file)),
+				new InputSource(new ByteArrayInputStream(marshalToStreamResult
+						.toByteArray())));
 	}
 
 }
