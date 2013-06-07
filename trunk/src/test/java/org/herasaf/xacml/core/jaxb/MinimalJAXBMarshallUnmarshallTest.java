@@ -58,7 +58,6 @@ import org.xml.sax.SAXException;
 public class MinimalJAXBMarshallUnmarshallTest {
 
 	private File file;
-	private ByteArrayOutputStream marshalToStreamResult;
 
 	@BeforeClass
 	public static void setup() {
@@ -68,7 +67,6 @@ public class MinimalJAXBMarshallUnmarshallTest {
 	@BeforeTest
 	public void setupTest() throws IOException {
 		file = File.createTempFile("test-temp", ".xml");
-		marshalToStreamResult = new ByteArrayOutputStream();
 	}
 
 	@AfterTest
@@ -99,9 +97,11 @@ public class MinimalJAXBMarshallUnmarshallTest {
 
 		RequestType req2 = RequestMarshaller.unmarshal(file);
 
+		ByteArrayOutputStream marshalToStreamResult = new ByteArrayOutputStream();
+
 		RequestMarshaller.marshal(req2, marshalToStreamResult);
 
-		assertByteOutputStreamEqualsFile();
+		assertByteOutputStreamEqualsFile(marshalToStreamResult);
 
 	}
 
@@ -128,12 +128,13 @@ public class MinimalJAXBMarshallUnmarshallTest {
 
 		Evaluatable policy2 = PolicyMarshaller.unmarshal(file);
 
+		ByteArrayOutputStream marshalToStreamResult = new ByteArrayOutputStream();
 		PolicyMarshaller.marshal(policy2, marshalToStreamResult);
 
-		assertByteOutputStreamEqualsFile();
+		assertByteOutputStreamEqualsFile(marshalToStreamResult);
 	}
 
-	private void assertByteOutputStreamEqualsFile() throws SAXException,
+	private void assertByteOutputStreamEqualsFile(ByteArrayOutputStream marshalToStreamResult) throws SAXException,
 			IOException, FileNotFoundException {
 		XMLAssert.assertXMLEqual(
 				new InputSource(new FileInputStream(file)),
