@@ -67,9 +67,7 @@ import org.slf4j.LoggerFactory;
 @XmlRootElement(name = "IdReference", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "IdReferenceType", propOrder = { "value" })
 public class IdReferenceType implements Serializable, Evaluatable {
-	@XmlTransient
 	private static final long serialVersionUID = 1L;
-	@XmlTransient
 	private static final Logger logger = LoggerFactory
 			.getLogger(IdReferenceType.class);
 
