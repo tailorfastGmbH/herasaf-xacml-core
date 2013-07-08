@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet PolicySetId="org.herasaf.xacml.permissions.prescribe"
+    PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:permit-overrides"
+    xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" >
+          
+    <Target/>
+    
+    <Policy PolicyId="Permissions:for:prescribe"
+        RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:permit-overrides">
+        
+        <Target/>
+        <Rule RuleId="Execute:Permission:On:prescribe" Effect="Permit">
+            <Target>
+                <Resources>
+                    <Resource>
+                        <ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">{http://herasaf.org/examples/prescribe}prescribe</AttributeValue>
+                            <ResourceAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"/>
+                        </ResourceMatch>
+                    </Resource>
+                </Resources>
+                <Actions>
+                    <Action>
+                        <ActionMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+                            <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">read</AttributeValue>
+                            <ActionAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#string"
+                                         AttributeId="urn:oasis:names:tc:xacml:1.0:action:action-id"/>
+                        </ActionMatch>
+                    </Action>
+                </Actions>
+            </Target>
+        </Rule>
+    </Policy>
+     <!-- Include permissions associated with examine -->
+    <PolicySetIdReference>org.herasaf.xacml.permissions.examine</PolicySetIdReference>
+</PolicySet>
+

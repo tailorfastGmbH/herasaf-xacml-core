@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,40 +57,40 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Response", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "ResponseType", propOrder = { "results" })
 public class ResponseType implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @XmlElement(name = "Result", required = true)
-    private List<ResultType> results;
+	private static final long serialVersionUID = 1L;
+	@XmlElement(name = "Result", required = true)
+	private List<ResultType> results;
 
-    /**
-     * Gets the value of the results property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
-     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
-     * the results property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * 
-     * <pre>
-     * getResults().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list {@link ResultType }
-     * 
-     * 
-     */
-    public List<ResultType> getResults() {
-        if (results == null) {
-            results = new ArrayList<ResultType>();
-        }
-        return this.results;
-    }
+	/**
+	 * Gets the value of the results property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
+	 * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
+	 * the results property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getResults().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list {@link ResultType }
+	 * 
+	 * 
+	 */
+	public List<ResultType> getResults() {
+		if (results == null) {
+			results = new ArrayList<ResultType>();
+		}
+		return this.results;
+	}
 
 }

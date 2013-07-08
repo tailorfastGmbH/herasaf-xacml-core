@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,9 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.security.auth.x500.X500Principal;
 
@@ -52,8 +55,10 @@ public class TestX500NameDataTypeAttribute {
 	 */
 	@Test
 	public void testInput1() throws Exception {
+		List<String> data = new ArrayList<String>();
+		data.add("OU=Steve Kille,O=Isolde Limited, C=GB");
 		assertEquals(dataType
-				.convertTo("OU=Steve Kille,O=Isolde Limited, C=GB"),
+				.convertTo(data),
 				new X500Principal("OU=Steve Kille,O=Isolde Limited, C=GB"));
 	}
 
@@ -64,7 +69,9 @@ public class TestX500NameDataTypeAttribute {
 	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
-		dataType.convertTo("OU=Steve; Kille,O=Isolde Limited, C=GB");
+		List<String> data = new ArrayList<String>();
+		data.add("OU=Steve; Kille,O=Isolde Limited, C=GB");
+		dataType.convertTo(data);
 	}
 
 	/**

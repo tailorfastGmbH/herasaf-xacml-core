@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DnsName;
 
@@ -24,8 +26,7 @@ import org.herasaf.xacml.core.types.DnsName;
  * This data type represents a urn:oasis:names:tc:xacml:2.0:data-type:dnsName.
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 103, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 110, for further information.
  * 
  * @author Florian Huonder
  * @version 1.0
@@ -35,9 +36,9 @@ public class DnsNameDataTypeAttribute extends AbstractDataTypeAttribute<DnsName>
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public DnsName convertTo(String jaxbRepresentation) throws SyntaxException {
+	public DnsName convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new DnsName(jaxbRepresentation.trim());
+			return new DnsName(((String) jaxbRepresentation.get(0)).trim());
 		} catch (IllegalArgumentException e) {
 			throw new SyntaxException(e);
 		}

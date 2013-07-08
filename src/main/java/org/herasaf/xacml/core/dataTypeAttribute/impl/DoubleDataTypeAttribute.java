@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
@@ -32,9 +34,9 @@ public class DoubleDataTypeAttribute extends AbstractDataTypeAttribute<Double> {
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public Double convertTo(String jaxbRepresentation) throws SyntaxException {
+	public Double convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return Double.parseDouble(jaxbRepresentation.trim());
+			return Double.parseDouble(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			throw new SyntaxException(e);
 		}

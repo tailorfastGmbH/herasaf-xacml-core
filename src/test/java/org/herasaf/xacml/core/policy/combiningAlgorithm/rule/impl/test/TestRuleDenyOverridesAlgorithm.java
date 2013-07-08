@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -289,7 +289,7 @@ public class TestRuleDenyOverridesAlgorithm {
 			throws Exception {
 
 		PolicyType policy = new PolicyTypeMock(rulesArray);
-		EvaluationContext infos = new EvaluationContext(tmm, new StatusCodeComparator());
+		EvaluationContext infos = new EvaluationContext(tmm, new StatusCodeComparator(), null);
 		DecisionType decision = combAlg.evaluate(null, policy, infos);
 
 		assertEquals(decision, expectedDecision);

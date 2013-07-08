@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,16 +24,13 @@ import org.herasaf.xacml.core.types.Time;
 /**
  * <p>
  * The implementation of the
- * urn:oasis:names:tc:xacml:1.0:function:time-less-than function.
+ * urn:oasis:names:tc:xacml:2.0:function:time-less-than function.
  * </p>
  * <p>
  * See: Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 105, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 118, for further information.
  * </p>
- * 
- * @author Stefan Oberholzer
  */
 public class TimeInRangeFunction extends AbstractFunction {
 
@@ -53,21 +50,16 @@ public class TimeInRangeFunction extends AbstractFunction {
 	 * * <br>
 	 * <code style="color:red"> <b>Important Hint:</b><br>
 	 * The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	 * Errata 29 June
+	 * Errata 29 January 2008
 	 * <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">XACML 2.0</a>
-	 * page 114 function urn:oasis:names:tc:xacml:1.0:function:time-in-range
+	 * function urn:oasis:names:tc:xacml:1.0:function:time-in-range
 	 * must provide an implicit time zone if no one is set.
 	 * This MUST is not considered in this implementation of the function.</code>
+	 * 
+	 * <b>If no time zone is provided an implicit default time zone must be used. The default time zone is derived from
+	 * the system property {@code user.timezone}. If that is {@code null} or is not a valid identifier, then the value
+	 * of the JDK {@code TimeZone} default is converted. If that fails, {@code UTC} is used.</b>
 	 */
-	// FIXME Time zone awareness (see HERASAFXACMLCORE-28).
-	// The OASIS eXtensible Access Control Markup Langugage (XACML) 2.0,
-	// Errata 29 June
-	// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-	// page 113 function urn:oasis:names:tc:xacml:2.0:function:time-in-range is
-	// aware of the time zone and is able
-	// to set the default time zone of the context handler if no one is
-	// provided. This MUST is not considered in this
-	// implementation of the function and must be fixed.
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != VALID_LENGTH) {
@@ -77,7 +69,7 @@ public class TimeInRangeFunction extends AbstractFunction {
 			if (((Time) args[0]).compareTo((Time) args[1]) < 0) {
 				return false;
 			}
-			if (((Time) args[0]).compareTo((Time) args[1]) > 0) {
+			if (((Time) args[0]).compareTo((Time) args[2]) > 0) {
 				return false;
 			}
 			return true;

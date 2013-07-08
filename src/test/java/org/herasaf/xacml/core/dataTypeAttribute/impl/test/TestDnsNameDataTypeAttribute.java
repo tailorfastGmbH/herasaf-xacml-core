@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,9 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DnsNameDataTypeAttribute;
@@ -111,7 +114,9 @@ public class TestDnsNameDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveCases")
 	public void testInput(String input) throws Exception {
-		assertEquals(dataType.convertTo(input), new DnsName(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertEquals(dataType.convertTo(data), new DnsName(input));
 	}
 
 	/**
@@ -122,7 +127,9 @@ public class TestDnsNameDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 
 	/**

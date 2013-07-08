@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.function.impl.dateAndTimeArithmeticFunctions;
 
 import org.herasaf.xacml.core.function.AbstractFunction;
@@ -30,12 +29,11 @@ import org.herasaf.xacml.core.types.YearMonthDuration;
  * <p>
  * See Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 111, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 117, for further information.
  * </p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
+ * @author Florian Huonder
  */
 public class DateAddYearMonthDurationFunction extends AbstractFunction {
 
@@ -46,7 +44,7 @@ public class DateAddYearMonthDurationFunction extends AbstractFunction {
 
 	/**
 	 * {@inheritDoc} Takes a {@link Date} as first argument and a
-	 * {@link YearMonthDuration} as second argument. The returnes value is the
+	 * {@link YearMonthDuration} as second argument. The returned value is the
 	 * {@link Date} resulting of adding the {@link YearMonthDuration} month
 	 * duration to the {@link Date}
 	 */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -63,13 +63,12 @@ import org.herasaf.xacml.core.policy.ExpressionProcessingException;
  * 
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 65, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 69, for further information.
  * 
  * @author <i>generated</i>
  * @author Sacha Dolski
  */
-@XmlRootElement
+@XmlRootElement(name = "AttributeValue", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "AttributeValueType", propOrder = { "content" })
 @XmlSeeAlso({ AttributeAssignmentType.class })
 public class AttributeValueType extends ExpressionType {
@@ -175,7 +174,7 @@ public class AttributeValueType extends ExpressionType {
 			throw new ExpressionProcessingException("The content of the AttributeValueType can't be greater than 1");
 		}
 		try {
-			return dataType.convertTo((String) content.get(0));
+			return dataType.convertTo(content);
 		} catch (ClassCastException e) {
 			throw new ExpressionProcessingException(e);
 		}

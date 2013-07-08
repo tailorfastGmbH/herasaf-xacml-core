@@ -1,5 +1,5 @@
 /*
-§ * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+§ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,7 +67,7 @@ public class TestVariableReference {
 	public void testHandle() throws Exception {
 		Object[] values = new Object[] { "test1", "test2", "test3" };
 		EvaluationContext evaluationContext = new EvaluationContext(
-				new TargetMatcherImpl(), new StatusCodeComparator());
+				new TargetMatcherImpl(), new StatusCodeComparator(), null);
 		evaluationContext
 				.setVariableDefinitions(initVariableDefinitions(values));
 

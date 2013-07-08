@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+
 /**
  * This data type represents a http://www.w3.org/2001/XMLSchema#string. See: <A
  * HREF="http://www.w3.org/TR/xmlschema-2/#string"
@@ -25,13 +26,13 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
  * 
  * @author Stefan Oberholzer
  */
-public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
+public class StringDataTypeAttribute extends AbstractSimpleDataTypeAttribute<String> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
 	public String convertTo(String jaxbRepresentation) {
-		return jaxbRepresentation.trim();
+		return jaxbRepresentation;
 	}
 
 	/** {@inheritDoc} */

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.bagFunctions;
 
-import org.herasaf.xacml.core.types.Date;
+import org.joda.time.DateTime;
 
 /**
  * <p>
@@ -27,14 +27,13 @@ import org.herasaf.xacml.core.types.Date;
  * <p>
  * See: Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 115, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 121, for further information.
  * <p>
  * 
  * @author Stefan Oberholzer
- * @version 1.0
+ * @author Florian Huonder
  */
-public class DateOneAndOnlyFunction extends AbstractOneAndOnlyFunction<Date> {
+public class DateOneAndOnlyFunction extends AbstractOneAndOnlyFunction<DateTime> {
 
 	/** XACML function ID. */
 	public  static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-one-and-only";

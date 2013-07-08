@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -29,8 +29,7 @@ import org.herasaf.xacml.core.types.RFC822Name;
  * <p>
  * See: Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 105, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 131, for further information.
  * </p>
  * 
  * @author Sacha Dolski
@@ -46,11 +45,10 @@ public class RFC822NameMatchFunction extends AbstractFunction {
 	 * {@inheritDoc} <br>
 	 * <br>
 	 * Returns true if the first argument matches the second argument according
-	 * the specification on page 125 (A.3.14, special match functions) in <a
+	 * the specification on page 131 (A.3.14, special match functions) in <a
 	 * href=
 	 * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
-	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29
-	 * June 2006</a>
+	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 January 2008</a>
 	 */
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

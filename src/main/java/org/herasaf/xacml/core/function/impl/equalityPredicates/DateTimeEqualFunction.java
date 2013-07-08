@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,11 +25,9 @@ import org.herasaf.xacml.core.types.DateTime;
  * The implementation of the urn:oasis:names:tc:xacml:1.0:function:time-equal
  * function. See: Apendix A.3 of the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 106, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 112, for further information.
  * 
  * @author Stefan Oberholzer
- * @version 1.0
  */
 public class DateTimeEqualFunction extends AbstractFunction {
 

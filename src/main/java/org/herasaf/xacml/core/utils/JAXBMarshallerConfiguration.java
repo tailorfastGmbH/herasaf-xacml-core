@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,6 +22,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.XMLConstants;
@@ -59,8 +60,8 @@ public class JAXBMarshallerConfiguration {
 	private boolean writeSchemaLocation;
 	/** The list with the schema locations. */
 	private List<String> schemaLocation;
-	/** The given schemaPath for creating the schema used at validation. */
-	private String schemaPath;
+	/** The given schemaPaths for creating the schema used at validation. */
+	private List<String> schemaPaths;
 	/** The used Schema. */
 	private Schema schema;
 	/** Tells if the input should be validated before parsing. */
@@ -76,6 +77,7 @@ public class JAXBMarshallerConfiguration {
 	 */
 	public JAXBMarshallerConfiguration() {
 		schemaLocation = new ArrayList<String>();
+		schemaPaths = new ArrayList<String>();
 	}
 
 	/**
@@ -148,10 +150,10 @@ public class JAXBMarshallerConfiguration {
 	}
 
 	/**
-	 * Sets the Path to the schema file.
+	 * Sets the Path to the schema file(s).
 	 * 
-	 * The file can be loaded from three different resources. URL, Classpath and
-	 * File (no prefix results in classpath:)
+	 * The files can be loaded from three different resources. URL, Classpath
+	 * and File (no prefix results in classpath:)
 	 * 
 	 * Example strings: <br />
 	 * <code>url:http://schemas.herasaf.org/mySchema.xsd<br />
@@ -160,71 +162,94 @@ public class JAXBMarshallerConfiguration {
 	 * /org/herasaf/schemas/mySchema.xsd</code> (no prefix results in
 	 * classpath:)
 	 * 
-	 * @param schemaPath
-	 *            The path to the schema file.
+	 * @param schemaPaths
+	 *            The pathes to the schema files. At leat one path is mandatory.
 	 * @throws SAXException
+	 *             Error while parsing the schemas occured.
+	 * @throws IllegalArgumentException
+	 *             no schemaPath was given the referenced schema was invalid.
+	 * @throws MalformedURLException
+	 *             The path to the schema is invalid.
 	 */
-	public void setSchemaByPath(String schemaPath) throws SAXException,
+	public void setSchemaByPath(String... schemaPaths) throws SAXException,
 			MalformedURLException {
-		this.schemaPath = schemaPath;
+		if (isEmpty(schemaPaths)) {
+			throw new IllegalArgumentException(
+					"The parameter SchemaPaths must contain at least one path.");
+		}
+		this.schemaPaths = Arrays.asList(schemaPaths);
+
+		Source[] schemaSources = new StreamSource[schemaPaths.length];
+		for (int i = 0; i < schemaPaths.length; i++) {
+			String schema = schemaPaths[i].trim();
+			if (schema.regionMatches(true, 0, URL_PREFIX, 0,
+					URL_PREFIX.length())) { // if
+				// the schemaPath has the url: prefix
+				URL url = new URL(schema.substring(URL_PREFIX.length()));
+				schemaSources[i] = new StreamSource(url.toExternalForm());
+			} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0,
+					FILE_PREFIX.length())) { // if
+				// the schemaPath has the file: prefix
+				File file = new File(schema.substring(FILE_PREFIX.length()));
+				schemaSources[i] = new StreamSource(file);
+			} else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0,
+					CLASSPATH_PREFIX.length())) { // if
+				// the schemaPath has the classpath: prefix
+				InputStream schemaInput = JAXBMarshallerConfiguration.class
+						.getResourceAsStream(leadingSlash(schema
+								.substring(CLASSPATH_PREFIX.length())));
+				if (schemaInput == null) {
+					throw new IllegalArgumentException(schema);
+				}
+				schemaSources[i] = new StreamSource(schemaInput);
+			} else { // if no prefix is provided, the default is classpath:
+				logger.warn(
+						"No prefix (file: || url: || classpath:) given for schema for JAXB validation. Falling back to classpath:{}",
+						leadingSlash(schema));
+
+				InputStream schemaInput = JAXBMarshallerConfiguration.class
+						.getResourceAsStream(leadingSlash(schema));
+				if (schemaInput == null) {
+					throw new IllegalArgumentException(schema);
+				}
+				schemaSources[i] = new StreamSource(schemaInput);
+			}
+		}
 
 		SchemaFactory sf = SchemaFactory
 				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		String schema = schemaPath.trim();
-		if (schema.regionMatches(true, 0, URL_PREFIX, 0, URL_PREFIX.length())) { // if
-			// the schemaPath has the url: prefix
-			URL url = new URL(schema.substring(URL_PREFIX.length()));
-			this.schema = createSchema(sf, new StreamSource(url
-					.toExternalForm()));
-		} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0, FILE_PREFIX
-				.length())) { // if
-			// the schemaPath has the file: prefix
-			File file = new File(schema.substring(FILE_PREFIX.length()));
-			this.schema = createSchema(sf, new StreamSource(file));
-		} else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0,
-				CLASSPATH_PREFIX.length())) { // if
-			// the schemaPath has the classpath: prefix
-			InputStream schemaInput = JAXBMarshallerConfiguration.class
-					.getResourceAsStream(leadingSlash(schema
-							.substring(CLASSPATH_PREFIX.length())));
-			if (schemaInput == null) {
-				throw new IllegalArgumentException(schema);
-			}
-			this.schema = createSchema(sf, new StreamSource(schemaInput));
-		} else { // if no prefix is provided, the default is classpath:
-			logger
-					.warn(
-							"No prefix (file: || url: || classpath:) given for schema for JAXB validation. Falling back to classpath:{}",
-							leadingSlash(schema));
+		this.schema = createSchema(sf, schemaSources);
+	}
 
-			InputStream schemaInput = JAXBMarshallerConfiguration.class
-					.getResourceAsStream(leadingSlash(schema));
-			if (schemaInput == null) {
-				throw new IllegalArgumentException(schema);
-			}
-			this.schema = createSchema(sf, new StreamSource(schemaInput));
-		}
+	private <T> boolean isEmpty(T... values) {
+		return (values == null || values.length == 0);
 	}
 
 	/**
-	 * Creates a new schema for validating. If the schema given by the source
+	 * Creates a new schema for validating. If the schema given by the source(s)
 	 * cannot be loaded <code>null</code> is returned and validating is turned
 	 * off.
 	 * 
 	 * @param sf
 	 *            The factory to create the schema.
 	 * @param source
-	 *            The source where the schema is.
+	 *            The source(s) where the schema is(are). At least one source is
+	 *            mandatory.
+	 * @throw IllegalArgumentException If the parameter source is empty.
+	 * 
 	 * @return The created schema or <code>null</code> if it fails.
 	 */
-	private Schema createSchema(SchemaFactory sf, Source source) {
+	private Schema createSchema(SchemaFactory sf, Source... source) {
+		if (isEmpty(source)) {
+			throw new IllegalArgumentException(
+					"The parameter source must contain at least one value");
+		}
 		try {
 			return sf.newSchema(source);
 		} catch (SAXException e) {
 			setValidateParsing(false);
 			setValidateWriting(false);
-			logger
-					.warn("Validating turned off because schema could not be initialized.");
+			logger.warn("Validating turned off because schema could not be initialized.");
 		}
 		return null;
 	}
@@ -351,7 +376,7 @@ public class JAXBMarshallerConfiguration {
 		builder.append(isValidateWriting());
 		builder.append(", ");
 		builder.append("schema = ");
-		builder.append(schemaPath);
+		builder.append(this.schemaPaths.toString());
 		builder.append(", ");
 		builder.append("writeSchemaLocation = ");
 		builder.append(isWriteSchemaLocation());
@@ -361,4 +386,5 @@ public class JAXBMarshallerConfiguration {
 		builder.append("}");
 		return builder.toString();
 	}
+
 }

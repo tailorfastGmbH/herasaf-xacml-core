@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,58 +14,112 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.types;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import org.herasaf.xacml.core.SyntaxException;
+import org.joda.time.DateTime;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Represents a http://www.w3.org/2001/XMLSchema#time data type. The
- * specification can be found at <a
- * href="http://www.w3.org/2001/XMLSchema#time">
- * http://www.w3.org/2001/XMLSchema#time</a>.
+ * This class can parse and print a time of type http://www.w3.org/2001/XMLSchema#time with the pattern
  * 
- * @author Stefan Oberholzer
+ * HH ':' mm ':' ss ('.' SSS)? ZZ?"
+ * 
+ * The fractional seconds and timezone parts are optional on creation. The {@link #toString()} method will always print
+ * the fractional seconds and the timezone. <b>note</b>24:00:00 will be converted into 00:00:00 (the following day)
+ * 
  * @author Florian Huonder
  */
 public class Time implements Comparable<Time> {
-	private XMLGregorianCalendar xmlCalendar;
+	private final Logger logger = LoggerFactory.getLogger(Time.class);
+	private static DateTimeFormatter DATE_TIME_PARSER;
+	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
+	private static DateTimeFormatter MILLIS_PARSER;
+	private DateTime time;
+	private boolean noFractionalSeconds;
 
 	/**
-	 * Initializes a new {@link Time} object.
-	 * 
-	 * @param lexicalRepresentation
-	 *            The {@link String} representation of the time to created with
-	 *            this class.
-	 * @throws ConvertException
-	 *             In case the {@link String} cannot be converted into <a
-	 *             href="http://www.w3.org/2001/XMLSchema#time">
-	 *             http://www.w3.org/2001/XMLSchema#time</a>.
+	 * Initializes the formatters when the type is initialized.
 	 */
-	public Time(String lexicalRepresentation) {
-		try {
-			DatatypeFactory factory = DatatypeFactory.newInstance();
-
-			if (lexicalRepresentation.matches("\\d\\d:\\d\\d:\\d\\d(\\.\\d(\\d)?(\\d)?)?([-+]\\d\\d:\\d\\d)?")) {
-				this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
-			} else {
-				throw new IllegalArgumentException();
-			}
-		} catch (DatatypeConfigurationException e) {
-			throw new IllegalArgumentException(e);
-		}
+	static {
+		useZuluUtcRepresentation(false);
 	}
 
 	/**
-	 * Returns the {@link XMLGregorianCalendar} instance of this {@link Time}
-	 * object.
-	 * 
-	 * @return The {@link XMLGregorianCalendar} instance.
+	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
 	 */
-	public XMLGregorianCalendar getCalendar() {
-		return xmlCalendar;
+	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
+		// The default formatter for the timezone that can handle only +-00:00 for UTC.
+		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
+				2).toFormatter();
+		// The formatter for the timezone that can handle Zulu value 'Z'.
+		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
+				.toFormatter();
+		// The formatter for the fractional (3 digit) seconds
+		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
+				.appendFractionOfSecond(0, 3).toFormatter();
+
+		// Here a parser is created that parses a string of the form HH:mm:ss. Further the string may have
+		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
+		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
+		DATE_TIME_PARSER = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':').appendMinuteOfHour(2)
+				.appendLiteral(':').appendSecondOfMinute(2).appendOptional(fractionalSecondsFormatter.getParser())
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
+
+		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().appendLiteral("24:00:00")
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
+
+		// Determine timezone formatter to be used.
+		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
+		if (useZuluUtcRepresentation) {
+			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+		} else {
+			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+		}
+
+		// Here a printer is created that prints this dateTime in the form HH:mm:ss.SSS ZZ (.SSS is not printed when its
+		// .000)
+		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
+				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2)
+				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
+
+		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
+				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2).append(fractionalSecondsFormatter)
+				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
+
+		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
+	}
+
+	public Time(String timeString) throws SyntaxException {
+		timeString = timeString.trim();
+		try {
+			time = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(timeString);
+		} catch (IllegalArgumentException e) {
+			try {
+				// If parsing failed check if the time is midnight as clockhour.
+				time = DATE_TIME_PARSER_CLOCKHOUR.withOffsetParsed().parseDateTime(timeString);
+				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
+				// shifted plus one
+				time = time.plus(Period.days(1));
+			} catch (IllegalArgumentException e2) {
+				SyntaxException se = new SyntaxException("The time '" + timeString
+						+ "' is not a valid time according to http://www.w3.org/2001/XMLSchema#time", e);
+				logger.error(se.getMessage());
+				throw se;
+			}
+		} finally {
+			if (time != null) {
+				// Check if the time has fractional seconds
+				String millis = MILLIS_PARSER.print(time);
+				noFractionalSeconds = millis.length() == 0;
+			}
+		}
 	}
 
 	/**
@@ -73,14 +127,21 @@ public class Time implements Comparable<Time> {
 	 */
 	@Override
 	public String toString() {
-		return xmlCalendar.toXMLFormat();
+		if (noFractionalSeconds) {
+			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(time);
+		} else {
+			return DATE_TIME_PRINTER_WITH_MILLIS.print(time);
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int compareTo(Time time) {
-		return xmlCalendar.compare(time.getCalendar());
+	public int compareTo(Time o) {
+		DateTime jodaThisTime = this.getTime();
+		DateTime jodaThatTime = o.getTime();
+		int comparisonResult = jodaThisTime.compareTo(jodaThatTime);
+		return comparisonResult;
 	}
 
 	/**
@@ -88,19 +149,22 @@ public class Time implements Comparable<Time> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof Time) {
-			if (this.compareTo((Time) obj) == 0) {
-				return true;
-			}
+		if (obj == null || !Time.class.isAssignableFrom(obj.getClass())) {
+			// Check if types are the same
+			return false;
 		}
-		return false;
+		DateTime jodaThisTime = getTime();
+		DateTime jodaThatTime = ((Time) obj).getTime();
+		boolean isEqual = jodaThisTime.isEqual(jodaThatTime);
+		return isEqual;
 	}
 
 	/**
-	 * {@inheritDoc}
+	 * Returns the internal representation of this dateTime.
+	 * 
+	 * @return internal representation of this dateTime.
 	 */
-	@Override
-	public int hashCode() {
-		return xmlCalendar.hashCode();
+	public DateTime getTime() {
+		return time;
 	}
 }

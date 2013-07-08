@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -48,13 +48,12 @@ import javax.xml.bind.annotation.XmlType;
  * 
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> pages 44 (PolicySetDefaults) and page 54 (PolicyDefaults), for
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> pages 47 (PolicySetDefaults) and page 58 (PolicyDefaults), for
  * further information.
  * 
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Defaults", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "DefaultsType", propOrder = { "xPathVersion" })
 public class DefaultsType implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -16,6 +16,8 @@
  */
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
+
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.HexBinary;
@@ -35,9 +37,9 @@ public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBin
 	/**
 	 * {@inheritDoc}
 	 */
-	public HexBinary convertTo(String jaxbRepresentation) throws SyntaxException {
+	public HexBinary convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new HexBinary(jaxbRepresentation.trim());
+			return new HexBinary(((String) jaxbRepresentation.get(0)).trim());
 		} catch (IllegalArgumentException e) {
 			throw new SyntaxException(e);
 		}

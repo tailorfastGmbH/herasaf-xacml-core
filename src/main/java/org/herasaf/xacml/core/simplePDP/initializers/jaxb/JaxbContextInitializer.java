@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,10 +14,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.herasaf.xacml.core.simplePDP.initializers;
+package org.herasaf.xacml.core.simplePDP.initializers.jaxb;
 
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -26,6 +27,8 @@ import org.herasaf.xacml.core.InitializationException;
 import org.herasaf.xacml.core.context.RequestMarshaller;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
+import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.herasaf.xacml.core.utils.JAXBMarshallerConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,14 +52,12 @@ import org.xml.sax.SAXException;
  * @author Florian Huonder
  * @author René Eggenschwiler
  */
-public class JAXBInitializer implements Initializer {
+public class JaxbContextInitializer implements Initializer {
 
 	private transient final Logger logger = LoggerFactory
-			.getLogger(JAXBInitializer.class);
+			.getLogger(JaxbContextInitializer.class);
 
-	private static final String CONTEXT_JAXBCONTEXT_PACKAGE = "org.herasaf.xacml.core.context.impl";
 	private static final String CONTEXT_SCHEMA_PATH = "classpath:/access_control-xacml-2.0-context-schema-os.xsd";
-	private static final String POLICY_JAXBCONTEXT_PACKAGE = "org.herasaf.xacml.core.policy.impl";
 	private static final String POLICY_SCHEMA_PATH = "classpath:/access_control-xacml-2.0-policy-schema-os.xsd";
 
 	// jaxb default settings (by HERAS-AF)
@@ -68,23 +69,29 @@ public class JAXBInitializer implements Initializer {
 	/**
 	 * {@inheritDoc}
 	 */
-	public void run() {
-		initializePolicyContext();
-		initializeRequestContext();
-		initializeResponseContext();
+	public void run(SimplePDPConfiguration configuration) {
+		initializePolicyContext(configuration);
+		initializeRequestContext(configuration);
+		initializeResponseContext(configuration);
 	}
 
 	/**
 	 * Initializes the default policy context that contains all standard XACML
 	 * policy types and sets the schema for validation.
 	 */
-	private void initializePolicyContext() {
+	private void initializePolicyContext(SimplePDPConfiguration configuration) {
 
 		// Create and set JAXB Context for Policy
 
 		JAXBContext policyContext;
 		try {
-			policyContext = JAXBContext.newInstance(POLICY_JAXBCONTEXT_PACKAGE);
+		        List<Class<?>> contextClasses = new ArrayList<Class<?>>();
+		        contextClasses.add(org.herasaf.xacml.core.policy.impl.ObjectFactory.class);
+		        if (configuration != null) {
+		                contextClasses.addAll(configuration.getJaxbContexts());
+		        }
+		        
+		        policyContext = JAXBContext.newInstance(contextClasses.toArray(new Class[0]));
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.policy.impl.",
@@ -122,14 +129,19 @@ public class JAXBInitializer implements Initializer {
 	 * Initializes the default request context that contains all standard XACML
 	 * context types and sets the schema for validation.
 	 */
-	private void initializeRequestContext() {
+	private void initializeRequestContext(SimplePDPConfiguration configuration) {
 
 		// Create and set JAXB Context for Request
 
 		JAXBContext requestContext;
 		try {
-			requestContext = JAXBContext
-					.newInstance(CONTEXT_JAXBCONTEXT_PACKAGE);
+		        List<Class<?>> contextClasses = new ArrayList<Class<?>>();
+                        contextClasses.add(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
+                        if (configuration != null) {
+                                contextClasses.addAll(configuration.getJaxbContexts());
+                        }
+                        
+                        requestContext = JAXBContext.newInstance(contextClasses.toArray(new Class[0]));
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.context.impl.",
@@ -144,7 +156,7 @@ public class JAXBInitializer implements Initializer {
 
 		JAXBMarshallerConfiguration jmc = getCommonMarshallerConfiguration();
 		try {
-			jmc.setSchemaByPath(CONTEXT_SCHEMA_PATH);
+			jmc.setSchemaByPath(POLICY_SCHEMA_PATH, CONTEXT_SCHEMA_PATH);
 		} catch (SAXException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load Schema " + CONTEXT_SCHEMA_PATH, e);
@@ -167,13 +179,18 @@ public class JAXBInitializer implements Initializer {
 	 * Initializes the default response context that contains all standard XACML
 	 * context types and sets the schema for validation.
 	 */
-	private void initializeResponseContext() {
+	private void initializeResponseContext(SimplePDPConfiguration configuration) {
 
 		// Create and set JAXB Context for Response
 		JAXBContext responseContext;
 		try {
-			responseContext = JAXBContext
-					.newInstance(CONTEXT_JAXBCONTEXT_PACKAGE);
+			List<Class<?>> contextClasses = new ArrayList<Class<?>>();
+	                contextClasses.add(org.herasaf.xacml.core.context.impl.ObjectFactory.class);
+	                if (configuration != null) {
+	                        contextClasses.addAll(configuration.getJaxbContexts());
+	                }
+	                        
+	                responseContext = JAXBContext.newInstance(contextClasses.toArray(new Class[0]));
 		} catch (JAXBException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load JAXBContext for org.herasaf.xacml.core.context.impl.",
@@ -188,7 +205,7 @@ public class JAXBInitializer implements Initializer {
 
 		JAXBMarshallerConfiguration jmc = getCommonMarshallerConfiguration();
 		try {
-			jmc.setSchemaByPath(CONTEXT_SCHEMA_PATH);
+			jmc.setSchemaByPath(POLICY_SCHEMA_PATH, CONTEXT_SCHEMA_PATH);
 		} catch (SAXException e) {
 			InitializationException ie = new InitializationException(
 					"Unable to load Schema " + CONTEXT_SCHEMA_PATH, e);

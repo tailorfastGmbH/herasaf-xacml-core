@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,9 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.RFC822NameDataTypeAttribute;
@@ -50,7 +53,9 @@ public class TestRFC822NameDataTypeAttribute {
 	 */
 	@Test
 	public void testInput1() throws Exception {
-		assertEquals(dataType.convertTo("hallo@world.ch"), new RFC822Name(
+		List<String> data = new ArrayList<String>();
+		data.add("hallo@world.ch");
+		assertEquals(dataType.convertTo(data), new RFC822Name(
 				"hallo@world.ch"));
 	}
 
@@ -61,7 +66,9 @@ public class TestRFC822NameDataTypeAttribute {
 	 */
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
-		dataType.convertTo("@hallo@world");
+		List<String> data = new ArrayList<String>();
+		data.add("@hallo@world");
+		dataType.convertTo(data);
 	}
 
 	/**

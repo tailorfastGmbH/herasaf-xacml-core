@@ -1,5 +1,5 @@
 /*
- * Copyright 2009-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2009 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -164,7 +164,7 @@ public class MapBasedSimplePolicyRepository implements
 		}
 		if (!foundAtLeastOneMatchingEvaluatable) {
 			throw new PolicyRepositoryException("No root policy with id: "
-					+ id.getId());
+					+ id.toString());
 		}
 	}
 
@@ -225,7 +225,7 @@ public class MapBasedSimplePolicyRepository implements
 			}
 		}
 		throw new PolicyRepositoryException("No Evaluatable with ID "
-				+ id.getId() + " found.");
+				+ id.toString() + " found.");
 	}
 
 	/**

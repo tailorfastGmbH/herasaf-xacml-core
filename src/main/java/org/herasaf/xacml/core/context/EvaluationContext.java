@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.herasaf.xacml.core.api.PIP;
+import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.policy.impl.EffectType;
 import org.herasaf.xacml.core.policy.impl.ObjectFactory;
@@ -43,6 +44,10 @@ import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
  * <li>The result of the calculation of a variable definition</li>
  * <li>The Obligations if there were any collected.</li>
  * <li>The target matcher to use during the evaluation.</li>
+ * <li>A {@link Map} that can be used to store custom values.</li>
+ * <li>The {@link StatusCodeComparator} to be used.</li>
+ * <li>The {@link PolicyRetrievalPoint} to be used for resolving policy
+ * references during evaluation.</li>
  * </ul>
  * 
  * @author Florian Huonder
@@ -60,29 +65,13 @@ public class EvaluationContext {
 	private TargetMatcher targetMatcher;
 	private Map<Object, Object> customValues;
 	private Comparator<StatusCode> statusCodeComparator;
+	private PolicyRetrievalPoint policyRetrievalPoint;
 
 	/**
 	 * Initializes the JAXB object factory.
 	 */
 	static {
 		objectFactory = new ObjectFactory();
-	}
-
-	/**
-	 * Initializes the EvaluationContext. The following default settings are
-	 * applied:
-	 * <ul>
-	 * <li>{@link PIP} = null</li>
-	 * <li>respect abandoned evaluatables = false</li>
-	 * <li>Status Code = OK</li>
-	 * </ul>
-	 * 
-	 * @param targetMatcher
-	 *            The {@link TargetMatcher} to use during evaluation.
-	 */
-	public EvaluationContext(TargetMatcher targetMatcher,
-			StatusCodeComparator statusCodeComparator) {
-		this(targetMatcher, null, false, statusCodeComparator);
 	}
 
 	/**
@@ -99,8 +88,10 @@ public class EvaluationContext {
 	 *            The {@link PIP} to use during evaluation.
 	 */
 	public EvaluationContext(TargetMatcher targetMatcher, PIP pip,
-			StatusCodeComparator statusCodeComparator) {
-		this(targetMatcher, pip, false, statusCodeComparator);
+			StatusCodeComparator statusCodeComparator,
+			PolicyRetrievalPoint policyRetrievalPoint) {
+		this(targetMatcher, pip, false, statusCodeComparator,
+				policyRetrievalPoint);
 	}
 
 	/**
@@ -118,9 +109,10 @@ public class EvaluationContext {
 	 */
 	public EvaluationContext(TargetMatcher targetMatcher,
 			boolean respectAbandonedEvaluatables,
-			StatusCodeComparator statusCodeComparator) {
+			StatusCodeComparator statusCodeComparator,
+			PolicyRetrievalPoint policyRetrievalPoint) {
 		this(targetMatcher, null, respectAbandonedEvaluatables,
-				statusCodeComparator);
+				statusCodeComparator, policyRetrievalPoint);
 	}
 
 	/**
@@ -137,8 +129,10 @@ public class EvaluationContext {
 	 *            If true then abandoned evaluatables are respected.
 	 */
 	public EvaluationContext(TargetMatcher targetMatcher,
-			Comparator<StatusCode> statusCodeComparator) {
-		this(targetMatcher, null, false, statusCodeComparator);
+			Comparator<StatusCode> statusCodeComparator,
+			PolicyRetrievalPoint policyRetrievalPoint) {
+		this(targetMatcher, null, false, statusCodeComparator,
+				policyRetrievalPoint);
 	}
 
 	/**
@@ -155,7 +149,8 @@ public class EvaluationContext {
 	 */
 	public EvaluationContext(TargetMatcher targetMatcher, PIP pip,
 			boolean respectAbandonedEvaluatables,
-			Comparator<StatusCode> statusCodeComparator) {
+			Comparator<StatusCode> statusCodeComparator,
+			PolicyRetrievalPoint policyRetrievalPoint) {
 		this.pip = pip;
 		this.respectAbandonedEvaluatables = respectAbandonedEvaluatables;
 		this.targetMatcher = targetMatcher;
@@ -165,6 +160,7 @@ public class EvaluationContext {
 		obligations = objectFactory.createObligationsType();
 		customValues = new HashMap<Object, Object>();
 		this.statusCodeComparator = statusCodeComparator;
+		this.policyRetrievalPoint = policyRetrievalPoint;
 	}
 
 	/**
@@ -408,5 +404,12 @@ public class EvaluationContext {
 		stringValue.append("]");
 
 		return stringValue.toString();
+	}
+
+	/**
+	 * Returns the current configured {@link PolicyRetrievalPoint}.
+	 */
+	public PolicyRetrievalPoint getPolicyRetrievalPoint() {
+		return policyRetrievalPoint;
 	}
 }

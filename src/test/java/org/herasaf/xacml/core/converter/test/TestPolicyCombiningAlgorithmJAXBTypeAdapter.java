@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -53,7 +53,7 @@ public class TestPolicyCombiningAlgorithmJAXBTypeAdapter {
 		map = new HashMap<String, PolicyCombiningAlgorithm>();
 		map.put(DENY_OVERRIDES_ID, comAlg);
 
-		PolicyCombiningAlgorithmJAXBTypeAdapter.setCombiningAlgorithms(map);
+		PolicyCombiningAlgorithmJAXBTypeAdapter.addCombiningAlgorithms(map);
 	}
 
 	/**

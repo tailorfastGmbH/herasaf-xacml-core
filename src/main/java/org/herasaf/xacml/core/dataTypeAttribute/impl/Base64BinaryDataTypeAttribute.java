@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,8 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Base64Binary;
 
@@ -33,9 +35,9 @@ public class Base64BinaryDataTypeAttribute extends AbstractDataTypeAttribute<Bas
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public Base64Binary convertTo(String jaxbRepresentation) throws SyntaxException {
+	public Base64Binary convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new Base64Binary(jaxbRepresentation.trim());
+			return new Base64Binary(((String) jaxbRepresentation.get(0)).trim());
 		} catch (Exception e) {
 			throw new SyntaxException(e);
 		}

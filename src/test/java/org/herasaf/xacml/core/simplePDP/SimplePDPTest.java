@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -36,13 +36,16 @@ import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
 import org.herasaf.xacml.core.context.RequestMarshaller;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
+import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResponseType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;
 import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;
-import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
+import org.herasaf.xacml.core.policy.impl.SubjectType;
+import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
+import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -52,7 +55,7 @@ import org.testng.annotations.Test;
  * expected.
  * 
  * @author Florian Huonder
- * @author René Eggenschwiler
+ * @author RenÃ© Eggenschwiler
  */
 public class SimplePDPTest {
 	private PDP simplePDP;
@@ -66,7 +69,7 @@ public class SimplePDPTest {
 	 */
 	@DataProvider(name = "policy-request-response-combinations")
 	public Object[][] initializeTestCases() throws Exception {
-		SimplePDPFactory.getSimplePDP(); // This line is needed that the JAXB
+		InitializerExecutor.runInitializers();
 		// stuff is initialized.
 
 		return new Object[][] {
@@ -78,7 +81,11 @@ public class SimplePDPTest {
 				new Object[] {
 						loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy02.xml"),
 						loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
-						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") }, };
+						loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") }, 
+				new Object[] {
+                                                loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/PolicyEnvironment.xml"),
+                                                loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml"),
+                                                loadResponse("/org/herasaf/xacml/core/simplePDP/responses/Response01.xml") }, };
 	}
 
 	/**
@@ -128,6 +135,25 @@ public class SimplePDPTest {
 
 		deploymentRepo.undeploy(policy.getId());
 		System.out.println();
+	}
+
+	@Test
+	public void testUnknownFunctionID() throws Exception {
+	        UnorderedPolicyRepository deploymentRepo = (UnorderedPolicyRepository) simplePDP
+	                        .getPolicyRepository();
+
+	        Evaluatable policy = 
+	                        loadPolicy("/org/herasaf/xacml/core/simplePDP/policies/Policy01.xml");
+	        // Modify the policy
+	        SubjectType subject = policy.getTarget().getSubjects().getSubjects().get(0);
+	        subject.getSubjectMatches().get(0).setMatchFunction(null);
+	        deploymentRepo.deploy(policy);
+
+	        RequestType request = 
+	                        loadRequest("/org/herasaf/xacml/core/simplePDP/requests/Request01.xml");
+	        ResponseType response = simplePDP.evaluate(request);
+
+	        assertTrue(response.getResults().get(0).getDecision() == DecisionType.INDETERMINATE);
 	}
 
 	/**
@@ -315,7 +341,7 @@ public class SimplePDPTest {
 		PDP secondSimplePDP = SimplePDPFactory.getSimplePDP();
 		assertNotSame(secondSimplePDP, simplePDP);
 	}
-
+	
 	/**
 	 * Loads an {@link Evaluatable} from the class path.
 	 * 

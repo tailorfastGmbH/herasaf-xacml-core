@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +30,7 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -68,8 +69,7 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 		if (possiblePolicies == null) {
 			// It is an illegal state if the list containing the policies is
 			// null.
-			logger
-					.error("The possiblePolicies list was null. This is an illegal state.");
+			logger.error("The possiblePolicies list was null. This is an illegal state.");
 			evaluationContext
 					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			return DecisionType.INDETERMINATE;
@@ -88,13 +88,16 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 		 * skipped and a NOT_APPLICABLE is returned.
 		 */
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+		        Evaluatable eval = possiblePolicies.get(i);
+		        if (eval instanceof IdReferenceType) {
+		                eval = evaluationContext.getPolicyRetrievalPoint().getEvaluatable(
+		                                                                                  eval.getId());
+		        }
 
 			if (eval == null) {
 				// It is an illegal state if the list contains any
 				// null.
-				logger
-						.error("The list of possible policies must not contain any null values.");
+				logger.error("The list of possible policies must not contain any null values.");
 				evaluationContext
 						.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
@@ -106,10 +109,9 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger
-						.debug("Starting evaluation of: {}", eval.getId()
-								.getId());
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
+				logger.debug("Starting evaluation of: {}", eval.getId()
+						.toString());
 			}
 
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
@@ -126,9 +128,9 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 			}
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger.debug("Evaluation of {} was: {}", eval.getId().getId(),
-						decision.toString());
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
+				logger.debug("Evaluation of {} was: {}", eval.getId()
+						.toString(), decision.toString());
 				MDC.remove(MDC_EVALUATABLE_ID);
 			}
 
@@ -195,8 +197,8 @@ public class PolicyOnlyOneApplicableAlgorithm extends
 					 * the returned error is a processing exception. because of
 					 * this, the evaluation context have to be reset and set to
 					 * Processing-exception. See: OASIS eXtensible Access
-					 * Control Markup Langugage (XACML) 2.0, Errata 29 June
-					 * 2006</a> page 86 and page 139 and the specification of
+					 * Control Markup Langugage (XACML) 2.0, Errata 29. January
+					 * 2008</a> page 91 and page 146 and the specification of
 					 * the only-one-applicable algorithm for further
 					 * information.
 					 */

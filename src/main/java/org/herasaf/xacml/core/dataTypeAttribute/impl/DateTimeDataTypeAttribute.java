@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,29 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
+
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * This data type represents a http://www.w3.org/TR/xmlschema-2/#dateTime. See:
- * <A HREF="http://www.w3.org/TR/xmlschema-2/#dateTime"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#dateTime</A> for further
- * information.
+ * This data type represents a http://www.w3.org/TR/xmlschema-2/#dateTime. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#dateTime" target="_blank">http://www.w3.org/TR/xmlschema-2/#dateTime</A> for
+ * further information.
  * 
  * @author Stefan Oberholzer
+ * @author Florian Huonder
  */
 public class DateTimeDataTypeAttribute extends AbstractDataTypeAttribute<DateTime> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#dateTime";
+	private final Logger logger = LoggerFactory.getLogger(DateTimeDataTypeAttribute.class);
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public DateTime convertTo(String jaxbRepresentation) throws SyntaxException {
+	public DateTime convertTo(List<?> jaxbRepresentation) throws SyntaxException {
 		try {
-			return new DateTime(jaxbRepresentation.trim());
-		} catch (IllegalArgumentException e) {
+			return new DateTime(((String) jaxbRepresentation.get(0)).trim());
+		} catch (Exception e) {
+			logger.error("An unexpected error occured.", e);
 			throw new SyntaxException(e);
 		}
 	}

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -163,7 +163,7 @@ public class TestApplyType {
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
 		assertEquals(apply
-				.handle(request, new EvaluationContext(targetMatcher, new StatusCodeComparator())), result);
+				.handle(request, new EvaluationContext(targetMatcher, new StatusCodeComparator(), null)), result);
 	}
 
 	/**
@@ -184,7 +184,7 @@ public class TestApplyType {
 			JAXBElement<ApplyType> JaxbElem, Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
 		assertEquals(apply
-				.handle(request, new EvaluationContext(targetMatcher, new StatusCodeComparator())), result);
+				.handle(request, new EvaluationContext(targetMatcher, new StatusCodeComparator(), null)), result);
 	}
 
 	/**
@@ -202,7 +202,7 @@ public class TestApplyType {
 			Object result) throws Exception {
 		ApplyType apply = JaxbElem.getValue();
 		assertEquals(apply.handle(new RequestType(), new EvaluationContext(
-				targetMatcher, new StatusCodeComparator())), result);
+				targetMatcher, new StatusCodeComparator(), null)), result);
 
 	}
 

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,31 +19,59 @@ package org.herasaf.xacml.core.types.test;
 
 import static org.testng.Assert.assertEquals;
 
+import org.herasaf.xacml.core.SyntaxException;
+import org.herasaf.xacml.core.types.Date;
 import org.herasaf.xacml.core.types.DateTime;
-import org.testng.annotations.AfterMethod;
+import org.joda.time.DateTimeZone;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- *  Tests the {@link DateTime} basic data type.
+ * Tests the {@link DateTime} basic data type.
  * 
  * @author Florian Huonder
  */
 public class TestDateTime {
-	private DateTime dateTime;
+	private DateTimeZone defaultZone;
+
+	/**
+	 * Sets the default timezone to +00:00 for testing.
+	 */
+	@BeforeTest
+	public void init() {
+		defaultZone = DateTimeZone.getDefault();
+
+		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
+	}
+
+	@AfterTest
+	public void cleanUp() {
+		DateTimeZone.setDefault(defaultZone);
+	}
 
 	/**
 	 * Creates positive test cases.
 	 * 
 	 * @return The test cases.
 	 */
-	@DataProvider(name = "positiveCases")
+	@DataProvider(name = "positiveCasesWithNonZuluUtc")
+	public Object[][] createPositiveNonZuluCases() {
+		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239", "2005-02-02T12:00:01.239+00:00" },
+				new Object[] { "2005-02-02T12:00:01.239+00:00", "2005-02-02T12:00:01.239+00:00" },
+				new Object[] { "2005-02-02T12:00:01.239Z", "2005-02-02T12:00:01.239+00:00" },
+				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01+00:00" },
+				{ "2007-02-01T24:00:00", "2007-02-02T00:00:00+00:00" } };
+	}
+
+	@DataProvider(name = "positiveCasesWithZuluUtc")
 	public Object[][] createPositiveCases() {
-		return new Object[][] {
-				new Object[] { "2005-02-02T12:00:01.239",
-						"2005-02-02T12:00:01.239" },
-				new Object[] { "2005-02-02T12:00:01",
-						"2005-02-02T12:00:01" }, };
+		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239", "2005-02-02T12:00:01.239Z" },
+				new Object[] { "2005-02-02T12:00:01.239+00:00", "2005-02-02T12:00:01.239Z" },
+				new Object[] { "2005-02-02T12:00:01.239Z", "2005-02-02T12:00:01.239Z" },
+				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01Z" },
+				{ "2007-02-01T24:00:00", "2007-02-02T00:00:00Z" } };
 	}
 
 	/**
@@ -53,10 +81,7 @@ public class TestDateTime {
 	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
-		return new Object[][] {
-				new Object[] { "2005-02-02T12:00:01.239.9304" },
-				new Object[] { "2005-2-02T12:00:01.239" },
-				new Object[] { "12:00:00" },
+		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239.9304" }, new Object[] { "12:00:00" },
 				new Object[] { "2006-04-31" }, };
 	}
 
@@ -67,75 +92,90 @@ public class TestDateTime {
 	 */
 	@DataProvider(name = "comparison")
 	public Object[][] createComparisonData() {
-		return new Object[][] {
-				new Object[] { "2005-02-02T12:00:00", "2005-02-02T12:00:01", -1 },
+		return new Object[][] { new Object[] { "2005-02-02T12:00:00", "2005-02-02T12:00:01", -1 },
 				new Object[] { "2005-02-03T12:00:01", "2005-02-02T12:00:01", 1 },
 				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01", 0 },
-				new Object[] { "2005-02-02T12:00:01",
-						"2005-02-02T12:00:01.001", -1 },
-				new Object[] { "2005-02-02T12:00:01",
-						"2005-02-02T12:00:00.999", 1 },
-				new Object[] { "2005-02-02T12:00:01.645",
-						"2005-02-02T12:00:01.645", 0 }, };
-	}
-
-	/**
-	 * Clears the property javax.xml.datatype.DatatypeFactory.
-	 * This is only relevant for the {@link #testNoDataFactoryFound()} method.
-	 */
-	@AfterMethod
-	public void afterMethod() {
-		System.clearProperty("javax.xml.datatype.DatatypeFactory");
+				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01.001", -1 },
+				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:00.999", 1 },
+				new Object[] { "2005-02-02T12:00:01.645", "2005-02-02T12:00:01.645", 0 },
+				new Object[] { "2005-02-03T12:00:01Z", "2005-02-03T12:00:01", 0 },
+				new Object[] { "2005-02-03T12:00:01Z", "2005-02-03T12:00:01+00:00", 0 },
+				new Object[] { "2005-02-03T12:00:01+00:00", "2005-02-03T12:00:01+00:00", 0 },
+				new Object[] { "2005-02-03T12:00:01+00:00", "2005-02-03T12:00:01Z", 0 },
+				new Object[] { "2005-02-03T12:00:01+00:00", "2005-02-03T12:00:01", 0 },
+				new Object[] { "2005-02-03T11:00:01-01:00", "2005-02-03T12:00:01Z", 0 },
+				new Object[] { "2005-02-03T17:00:01+05:00", "2005-02-03T08:00:01-04:00", 0 }, };
 	}
 
 	/**
 	 * Test if the {@link DateTime} objects are properly created.
 	 * 
-	 * @param input The date-time in its String representation.
-	 * @param expected The expected String on {@link DateTime#toString()}.
-	 * @throws Exception If an error occurs.
+	 * @param input
+	 *            The date-time in its String representation.
+	 * @param expected
+	 *            The expected String on {@link DateTime#toString()}.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
-	@Test(dataProvider = "positiveCases")
-	public void testInput(String input, String expected) throws Exception {
-		dateTime = new DateTime(input);
+	@Test(dataProvider = "positiveCasesWithNonZuluUtc")
+	public void testNonZulu(String input, String expected) throws Exception {
+		Date.useZuluUtcRepresentation(false);
+		DateTime dateTime = new DateTime(input);
+		assertEquals(dateTime.toString(), expected);
+	}
+
+	@Test(dataProvider = "positiveCasesWithZuluUtc")
+	public void testZulu(String input, String expected) throws Exception {
+		DateTime.useZuluUtcRepresentation(true);
+		DateTime dateTime = new DateTime(input);
 		assertEquals(dateTime.toString(), expected);
 	}
 
 	/**
 	 * Tests if an {@link IllegalArgumentException} is thrown on illegal date-time representations.
-	 * @param input The illegal date-time strings.
-	 * @throws Exception If an error occurs.
-	 */
-	@Test(dataProvider = "negativeCases", expectedExceptions = { IllegalArgumentException.class })
-	public void testInputFail1(String input) throws Exception {
-		new DateTime(input);
-	}
-
-	/**
-	 * Tests if an exception is thrown when a non-existing DatatypeFactory is set.
 	 * 
-	 * @throws Exception If an error occurs.
+	 * @param input
+	 *            The illegal date-time strings.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
-	@Test(expectedExceptions = { IllegalArgumentException.class })
-	public void testNoDataFactoryFound() throws Exception {
-		System.setProperty("javax.xml.datatype.DatatypeFactory", "bla");
-		new DateTime("2005-02-02T12:00:01");
+	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
+	public void testInputFail(String input) throws Exception {
+		new DateTime(input);
 	}
 
 	/**
 	 * Tests if the comparison function of {@link DateTime} works properly.
 	 * 
-	 * @param input1 The first string.
-	 * @param input2 The second date-time string.
-	 * @param expected The expected result (-1, 0, 1).
-	 * @throws Exception If an error occurs.
+	 * @param input1
+	 *            The first string.
+	 * @param input2
+	 *            The second date-time string.
+	 * @param expected
+	 *            The expected result (-1, 0, 1).
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(dataProvider = "comparison")
-	public void testCompare(String input1, String input2, int expected)
-			throws Exception {
+	public void testCompare(String input1, String input2, int expected) throws Exception {
 		DateTime one = new DateTime(input1);
 		DateTime two = new DateTime(input2);
 
 		assertEquals(one.compareTo(two), expected);
+	}
+
+	@Test(dataProvider = "comparison")
+	public void testEquals(String input1, String input2, int expected) throws Exception {
+		DateTime one = new DateTime(input1);
+		DateTime two = new DateTime(input2);
+
+		boolean expectedEqualsResult;
+		if (expected == 0) {
+			expectedEqualsResult = true;
+		} else {
+			expectedEqualsResult = false;
+		}
+
+		assertEquals(one.equals(two), expectedEqualsResult);
 	}
 }

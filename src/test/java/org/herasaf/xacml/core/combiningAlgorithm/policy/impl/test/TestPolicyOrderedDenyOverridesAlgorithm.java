@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,8 +28,8 @@ import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.testng.annotations.Test;
 
 /**
- * This test tests the {@link PolicyOrderedDenyOverridesAlgorithm}. It tests various
- * combinations of different {@link PolicyCombiningAlgorithm}s and
+ * This test tests the {@link PolicyOrderedDenyOverridesAlgorithm}. It tests
+ * various combinations of different {@link PolicyCombiningAlgorithm}s and
  * {@link Evaluatable}s.
  * 
  * @author Florian Huonder
@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  */
 public class TestPolicyOrderedDenyOverridesAlgorithm extends
 		TestPolicyCombiningAlgorithm {
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -48,20 +48,22 @@ public class TestPolicyOrderedDenyOverridesAlgorithm extends
 	}
 
 	/**
-	 * This test calls the test method in the super class ({@link TestPolicyCombiningAlgorithm}).
-	 * This is only done to avoid duplicate code. This test method is equal for all combining algorithms.
+	 * This test calls the test method in the super class (
+	 * {@link TestPolicyCombiningAlgorithm}). This is only done to avoid
+	 * duplicate code. This test method is equal for all combining algorithms.
 	 */
-	@Test(enabled = true, dataProvider = "evaluatableCombinations")
-	protected void testPolicySetMatchAndOneEvaluatable(
-			PolicyCombiningAlgorithm alg, EvaluatableMock eval1,
-			EvaluationContext evaluationContext1, EvaluatableMock eval2,
-			EvaluationContext evaluationContext2, DecisionType expectedDecision,
+	@Test(dataProvider = "evaluatableCombinations")
+	public void testDenyOverridesCase(PolicyCombiningAlgorithm alg,
+			EvaluatableMock eval1, EvaluationContext evaluationContext1,
+			EvaluatableMock eval2, EvaluationContext evaluationContext2,
+			DecisionType expectedDecision,
 			List<ObligationType> expectedObligations,
 			StatusCode expectedStatusCode, Boolean expectedHasTargetMatched)
 			throws Exception {
-		super.testPolicySetMatchAndOneEvaluatable(alg, eval1, evaluationContext1, eval2,
-				evaluationContext2, expectedDecision, expectedObligations,
-				expectedStatusCode, expectedHasTargetMatched);
+		super.testPolicySetMatchAndOneEvaluatable(alg, eval1,
+				evaluationContext1, eval2, evaluationContext2,
+				expectedDecision, expectedObligations, expectedStatusCode,
+				expectedHasTargetMatched);
 	}
 
 	/**

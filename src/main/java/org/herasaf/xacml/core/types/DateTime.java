@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,54 +14,117 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.types;
 
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
+import org.herasaf.xacml.core.SyntaxException;
+import org.joda.time.Period;
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.DateTimeFormatterBuilder;
+import org.joda.time.format.ISODateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Represents a http://www.w3.org/2001/XMLSchema#dateTime. The specification can
- * be found at <A HREF="http://www.w3.org/2001/XMLSchema#dateTime"
- * TARGET="_blank">http://www.w3.org/2001/XMLSchema#dateTime</A>.
+ * This class can parse and print a dateTime of type http://www.w3.org/2001/XMLSchema#dateTime with the pattern
  * 
- * @author Stefan Oberholzer
+ * yyyy '-' MM '-' dd 'T' HH ':' mm ':' ss ('.' SSS)? ZZ?"
+ * 
+ * The fractional seconds and timezone parts are optional on creation. The {@link #toString()} method will always print
+ * the fractional seconds and the timezone.
+ * 
  * @author Florian Huonder
  */
 public class DateTime implements Comparable<DateTime> {
-	private static final String MATCH_PATTERN = "\\S*-\\S*:\\S*";
-	private XMLGregorianCalendar xmlCalendar;
+	private final Logger logger = LoggerFactory.getLogger(DateTime.class);
+	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
+	private static DateTimeFormatter DATE_TIME_PARSER;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
+	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
+	private static DateTimeFormatter MILLIS_PARSER;
+	private org.joda.time.DateTime dateTime;
+	private boolean noFractionalSeconds;
 
 	/**
-	 * Initializes a new {@link DateTime} object.
-	 * 
-	 * @param lexicalRepresentation
-	 *            The {@link String} representation of the time to created with
-	 *            this class.
-	 * @throws ConvertException
+	 * Initializes the formatters when the type is initialized.
 	 */
-	public DateTime(String lexicalRepresentation) {
-		try {
-			DatatypeFactory factory = DatatypeFactory.newInstance();
-			if (lexicalRepresentation.matches(MATCH_PATTERN)) {
-				this.xmlCalendar = factory.newXMLGregorianCalendar(lexicalRepresentation);
-			} else {
-				throw new IllegalArgumentException("Only a Date is allowed");
-			}
-		} catch (DatatypeConfigurationException e) {
-			throw new IllegalArgumentException(e);
-		}
+	static {
+		useZuluUtcRepresentation(false);
 	}
 
 	/**
-	 * Returns the instance of the {@link XMLGregorianCalendar} of this
-	 * {@link DateTime} class.
-	 * 
-	 * @return The {@link XMLGregorianCalendar} instance.
+	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
 	 */
-	public XMLGregorianCalendar getCalendar() {
-		return xmlCalendar;
+	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
+		// The default formatter for the timezone that can handle only +-00:00 for UTC.
+		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
+				2).toFormatter();
+		// The formatter for the timezone that can handle Zulu value 'Z'.
+		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
+				.toFormatter();
+		// The formatter for the fractional (3 digit) seconds
+		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
+				.appendFractionOfSecond(3, 3).toFormatter();
+		// This formatter equals: yyyy-MM-dd'T'HH:mm:ss
+		DateTimeFormatter dhmsFormatter = ISODateTimeFormat.dateHourMinuteSecond();
+
+		// This formatter equals: yyyy-MM-dd
+		DateTimeFormatter dateFormatter = ISODateTimeFormat.date();
+
+		// Accepts yyyy-MM-dd'T'24:00:00, Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
+		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().append(dateFormatter).appendLiteral("T24:00:00")
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
+
+		// Here a parser is created that parses a string of the form yyyy-MM-dd'T'HH:mm:ss. Further the string may have
+		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
+		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
+		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
+				.appendOptional(fractionalSecondsFormatter.getParser())
+				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
+
+		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd'T'HH:mm:ss.SSS ZZ (.SSS is not
+		// printed when its .000)
+
+		// Determine timezone formatter to be used.
+		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
+		if (useZuluUtcRepresentation) {
+			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+		} else {
+			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+		}
+
+		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
+				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
+
+		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
+				.append(fractionalSecondsFormatter).append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
+
+		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
+	}
+
+	public DateTime(String dateTimeString) throws SyntaxException {
+		dateTimeString = dateTimeString.trim();
+		try {
+			dateTime = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateTimeString);
+		} catch (IllegalArgumentException e) {
+			try {
+				// If parsing failed check if the time part is midnight as clockhour.
+				dateTime = DATE_TIME_PARSER_CLOCKHOUR.withOffsetParsed().parseDateTime(dateTimeString);
+				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
+				// shifted plus one.
+				dateTime = dateTime.plus(Period.days(1));
+			} catch (IllegalArgumentException e2) {
+				SyntaxException se = new SyntaxException("The dateTime '" + dateTimeString
+						+ "' is not a valid dateTime according to http://www.w3.org/2001/XMLSchema#dateTime", e);
+				logger.error(se.getMessage());
+				throw se;
+			}
+		} finally {
+			if (dateTime != null) {
+				// Check if the time part has fractional seconds
+				String millis = MILLIS_PARSER.print(dateTime);
+				noFractionalSeconds = millis.length() == 0;
+			}
+		}
 	}
 
 	/**
@@ -69,14 +132,21 @@ public class DateTime implements Comparable<DateTime> {
 	 */
 	@Override
 	public String toString() {
-		return xmlCalendar.toXMLFormat();
+		if (noFractionalSeconds) {
+			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(dateTime.withZoneRetainFields(dateTime.getZone()));
+		} else {
+			return DATE_TIME_PRINTER_WITH_MILLIS.print(dateTime.withZoneRetainFields(dateTime.getZone()));
+		}
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int compareTo(DateTime dateTime) {
-		return xmlCalendar.compare(dateTime.getCalendar());
+	public int compareTo(DateTime o) {
+		org.joda.time.DateTime jodaThisDateTime = this.getDateTime();
+		org.joda.time.DateTime jodaThatDateTime = o.getDateTime();
+		int comparisonResult = jodaThisDateTime.compareTo(jodaThatDateTime);
+		return comparisonResult;
 	}
 
 	/**
@@ -84,67 +154,38 @@ public class DateTime implements Comparable<DateTime> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		if (obj instanceof DateTime) {
-			if (this.compareTo((DateTime) obj) == 0) {
-				return true;
-			}
+		if (obj == null || !obj.getClass().isAssignableFrom(DateTime.class)) {
+			// Check if types are the same
+			return false;
 		}
-		return false;
+		org.joda.time.DateTime jodaThisDateTime = getDateTime();
+		org.joda.time.DateTime jodaThatDateTime = ((DateTime) obj).getDateTime();
+		boolean isEqual = jodaThisDateTime.isEqual(jodaThatDateTime);
+		return isEqual;
 	}
 
 	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public int hashCode() {
-		return xmlCalendar.hashCode();
-	}
-
-	/**
-	 * Adds the given {@link DayTimeDuration} to the {@link DateTime}.
+	 * Returns the internal representation of this dateTime.
 	 * 
-	 * @param duration
-	 *            The {@link DayTimeDuration} to add.
+	 * @return internal representation of this dateTime.
 	 */
-	public void add(DayTimeDuration duration) {
-		this.xmlCalendar.add(duration.getDuration());
+	public org.joda.time.DateTime getDateTime() {
+		return dateTime;
 	}
 
-	/**
-	 * The {@link YearMonthDuration} to add to this {@link DateTime}.
-	 * 
-	 * @param duration
-	 *            The {@link YearMonthDuration} to add.
-	 */
-	public void add(YearMonthDuration duration) {
-		this.xmlCalendar.add(duration.getDuration());
+	public void add(DayTimeDuration dayTimeDuration) {
+		dateTime = dateTime.plus(dayTimeDuration.getDuration());
 	}
 
-	/**
-	 * Subtracts the given {@link DayTimeDuration} from this {@link DateTime}.
-	 * 
-	 * @param duration
-	 *            The {@link DayTimeDuration} to subtract.
-	 */
-	public void subtract(DayTimeDuration duration) {
-		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new DayTimeDuration(duration.getDuration().toString().substring(1)).getDuration());
-		} else {
-			this.xmlCalendar.add(new DayTimeDuration("-" + duration.getDuration().toString()).getDuration());
-		}
+	public void add(YearMonthDuration yearMonthDuration) {
+		dateTime = dateTime.plus(yearMonthDuration.getDuration());
 	}
 
-	/**
-	 * The {@link YearMonthDuration} to subtract from this {@link DateTime}.
-	 * 
-	 * @param duration
-	 *            The {@link YearMonthDuration} to subtract.
-	 */
-	public void subtract(YearMonthDuration duration) {
-		if (duration.getDuration().toString().charAt(0) == '-') {
-			this.xmlCalendar.add(new YearMonthDuration(duration.getDuration().toString().substring(1)).getDuration());
-		} else {
-			this.xmlCalendar.add(new YearMonthDuration("-" + duration.getDuration().toString()).getDuration());
-		}
+	public void subtract(DayTimeDuration dayTimeDuration) {
+		dateTime = dateTime.minus(dayTimeDuration.getDuration());
+	}
+
+	public void subtract(YearMonthDuration yearMonthDuration) {
+		dateTime = dateTime.minus(yearMonthDuration.getDuration());
 	}
 }

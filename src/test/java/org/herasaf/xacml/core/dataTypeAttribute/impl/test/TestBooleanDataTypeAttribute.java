@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,9 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.BooleanDataTypeAttribute;
@@ -86,7 +89,9 @@ public class TestBooleanDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveDataTrue")
 	public void testInputTrue(String input) throws Exception {
-		assertTrue(dataType.convertTo(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertTrue(dataType.convertTo(data));
 	}
 
 	/**
@@ -97,7 +102,9 @@ public class TestBooleanDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveDataFalse")
 	public void testInputFalse(String input) throws Exception {
-		assertFalse(dataType.convertTo(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertFalse(dataType.convertTo(data));
 	}
 
 	/**
@@ -108,7 +115,9 @@ public class TestBooleanDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 
 	/**

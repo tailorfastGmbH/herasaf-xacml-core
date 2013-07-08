@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -30,6 +30,7 @@ import org.herasaf.xacml.core.context.impl.MissingAttributeDetailType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,8 +92,12 @@ public class PolicyPermitOverridesAlgorithm extends
 		 * skipped and a NOT_APPLICABLE is returned.
 		 */
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			final Evaluatable eval = possiblePolicies.get(i);
-
+		        Evaluatable eval = possiblePolicies.get(i);
+		        if (eval instanceof IdReferenceType) {
+		                eval = evaluationContext.getPolicyRetrievalPoint().getEvaluatable(
+		                                                                                  eval.getId());
+		        }
+                        
 			if (eval == null) {
 				// It is an illegal state if the list contains any
 				// null.
@@ -102,7 +107,7 @@ public class PolicyPermitOverridesAlgorithm extends
 						.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 				return DecisionType.INDETERMINATE;
 			}
-
+			
 			if (atLeastOnePermit
 					&& evaluationContext.isRespectAbandonedEvaluatables()
 					&& !eval.hasObligations()) {
@@ -122,10 +127,10 @@ public class PolicyPermitOverridesAlgorithm extends
 			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
 				logger
 						.debug("Starting evaluation of: {}", eval.getId()
-								.getId());
+						       .toString());
 			}
 
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
@@ -142,8 +147,8 @@ public class PolicyPermitOverridesAlgorithm extends
 			}
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger.debug("Evaluation of {} was: {}", eval.getId().getId(),
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
+				logger.debug("Evaluation of {} was: {}", eval.getId().toString(),
 						decision.toString());
 				MDC.remove(MDC_EVALUATABLE_ID);
 			}

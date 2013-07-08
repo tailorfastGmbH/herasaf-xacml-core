@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,6 +18,9 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
 import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.HexBinaryDataTypeAttribute;
@@ -40,7 +43,7 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@DataProvider(name = "negativeData")
 	public Object[][] initNegativeData() {
-		return new Object[][] { new Object[] { "12 34" }, };
+		return new Object[][] { new Object[] { "12 34" }, new Object[] { "r3" }, new Object[]{ "12h32"}};
 	}
 
 	/**
@@ -50,8 +53,10 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@DataProvider(name = "positiveData")
 	public Object[][] initPositiveData() {
-		return new Object[][] { new Object[] { "12", 18 },
-				new Object[] { "1F", 31 }, };
+		return new Object[][] { new Object[] { "12", new char[]{'1','2'} },
+				new Object[] { "1F", new char[]{'1', 'f'}}, 
+				new Object[] { "1f", new char[]{'1', 'f'}},
+				new Object[] { "FFFF", new char[]{'f', 'f', 'f', 'f'}},};
 	}
 
 	/**
@@ -72,9 +77,10 @@ public class TestHexBinaryDataTypeAttribute {
 	 * @throws Exception In case of an error.
 	 */
 	@Test(dataProvider = "positiveData")
-	public void testInput2(String hex, int integer) throws Exception {
-		assertEquals(dataType.convertTo(hex).getValue()[0],
-				(byte)integer);
+	public void testInput2(String hex, char[] result) throws Exception {
+		List<String> data = new ArrayList<String>();
+		data.add(hex);
+		assertEquals(String.valueOf(dataType.convertTo(data).getValue()), String.valueOf(result));
 	}
 
 	/**
@@ -85,7 +91,9 @@ public class TestHexBinaryDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 
 	/**

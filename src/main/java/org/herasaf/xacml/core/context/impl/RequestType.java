@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,12 +25,9 @@
 package org.herasaf.xacml.core.context.impl;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -38,13 +35,15 @@ import javax.xml.bind.annotation.XmlType;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateTimeDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
+import org.joda.time.DateTime;
 
 /**
  * <p>
  * Java class for RequestType complex type.
  * 
  * <p>
- * The following schema fragment specifies the expected content contained within this class.
+ * The following schema fragment specifies the expected content contained within
+ * this class.
  * 
  * <pre>
  * &lt;complexType name="RequestType">
@@ -61,231 +60,257 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
  * &lt;/complexType>
  * </pre>
  * 
- * See: <a href= "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access
- * Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 71, for further information.
+ * See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29.
+ * January 2008</a> page 71, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  */
 @XmlRootElement
-@XmlType(name = "RequestType", propOrder = { "subjects", "resources", "action", "environment" })
+@XmlType(name = "RequestType", propOrder = { "subjects", "resources", "action",
+		"environment" })
 public class RequestType implements Serializable {
 
-    private static final String DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-    private static final String DATE_PATTERN = "yyyy-MM-ddZ";
-    private static final String TIME_PATTERN = "HH:mm:ss.SSSZ";
-    private static final String CURRENT_DATETIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-dateTime";
-    private static final String CURRENT_DATE_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-date";
-    private static final String CURRENT_TIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-time";
+	private static final String DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+	private static final String DATE_PATTERN = "yyyy-MM-ddZ";
+	private static final String TIME_PATTERN = "HH:mm:ss.SSSZ"; //HH is the hour 0-23 (k would be 1-24)
+	private static final String CURRENT_DATETIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-dateTime";
+	private static final String CURRENT_DATE_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-date";
+	private static final String CURRENT_TIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-time";
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @XmlElement(name = "Subject", required = true)
-    private List<SubjectType> subjects;
-    @XmlElement(name = "Resource", required = true)
-    private List<ResourceType> resources;
-    @XmlElement(name = "Action", required = true)
-    private ActionType action;
-    @XmlElement(name = "Environment", required = true)
-    private EnvironmentType environment;
+	@XmlElement(name = "Subject", required = true)
+	private List<SubjectType> subjects;
+	@XmlElement(name = "Resource", required = true)
+	private List<ResourceType> resources;
+	@XmlElement(name = "Action", required = true)
+	private ActionType action;
+	@XmlElement(name = "Environment", required = true)
+	private EnvironmentType environment;
 
-    /**
-     * Sets the following attributes, if not already contained, into the request:
-     * <ul>
-     * <li>urn:oasis:names:tc:xacml:1.0:environment:current-dateTime</li>
-     * <li>urn:oasis:names:tc:xacml:1.0:environment:current-date</li>
-     * <li>urn:oasis:names:tc:xacml:1.0:environment:current-time</li>
-     * </ul>
-     * This behavior is required by the XACML 2.0 specification. See: <a href=
-     * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20" > OASIS eXtensible Access Control
-     * Markup Langugage (XACML) 2.0, Errata 29 June 2006</a> appendix B.8. Environment attributes, for further
-     * information.
-     * 
-     * @param marshaller
-     *            The {@link Marshaller} with which this request will be marshalled.
-     */
-    public void beforeMarshal(Marshaller marshaller) {
-        if (!envContainsAttributeId(CURRENT_TIME_DATATYPEID)) {
-            environment.getAttributes().add(createCurrentTime());
-        }
-        if (!envContainsAttributeId(CURRENT_DATE_DATATYPEID)) {
-            environment.getAttributes().add(createCurrentDate());
-        }
-        if (!envContainsAttributeId(CURRENT_DATETIME_DATATYPEID)) {
-            environment.getAttributes().add(createCurrentDateTime());
-        }
-    }
+	/**
+	 * Sets the following attributes to the according value of the given creationTime,
+	 * if the request does not already contain values for these attributes
+	 * <ul>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-dateTime</li>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-date</li>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-time</li>
+	 * </ul>
+	 * The XACML 2.0 specification. See: <a href=
+	 * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
+	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata
+	 * 29. January 2008</a> appendix B.8. Environment attributes, requires these attributes to be set on each request.
+	 * With this method a caller is able to add a date, time and datetime.
+	 * 
+	 * @param creationTime The creationTime to set to this request.
+	 */
+	public void setCreationTime(DateTime creationTime) {
+	        boolean foundCurrentTime = false;
+	        boolean foundCurrentDate = false;
+	        boolean foundCurrentDateTime = false;
+	        for (AttributeType attribute : environment.getAttributes()) {
+	                if (CURRENT_TIME_DATATYPEID.equals(attribute.getAttributeId())
+                                && attribute.getAttributeValues() != null && !attribute.getAttributeValues().isEmpty()) {
+                                foundCurrentTime = true;   
+                        } else if (CURRENT_DATE_DATATYPEID.equals(attribute.getAttributeId())
+                                && attribute.getAttributeValues() != null && !attribute.getAttributeValues().isEmpty()) {
+                                foundCurrentDate = true;   
+                        } else if (CURRENT_DATETIME_DATATYPEID.equals(attribute.getAttributeId())
+                                && attribute.getAttributeValues() != null && !attribute.getAttributeValues().isEmpty()) {
+                                foundCurrentDateTime = true;   
+                        }
+	        }
+	        if (!foundCurrentTime) {
+	                environment.getAttributes().add(createCurrentTime(creationTime));
+	        }
+	        if (!foundCurrentDate) {
+	                environment.getAttributes().add(createCurrentDate(creationTime));
+	        }
+	        if (!foundCurrentDateTime) {
+	                environment.getAttributes().add(createCurrentDateTime(creationTime));
+	        }
+	}
+	
+	/**
+	 * Sets the following attributes to the current time, if the request does not 
+	 * already contain values for these attributes
+	 * <ul>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-dateTime</li>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-date</li>
+	 * <li>urn:oasis:names:tc:xacml:1.0:environment:current-time</li>
+	 * </ul>
+	 * The XACML 2.0 specification. See: <a href=
+	 * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"
+	 * > OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata
+	 * 29. January 2008</a> appendix B.8. Environment attributes, requires these attributes to be set on each request.
+	 * With this method a caller is able to add the current date, time and datetime.
+	 */
+	public void ensureThatCreationTimeIsSet() {
+		DateTime dateTime = new DateTime();
+		setCreationTime(dateTime);
+	}
 
-    /**
-     * Creates a new {@link AttributeType} containing the current time.
-     * 
-     * @return The {@link AttributeType} containing the current time.
-     */
-    private AttributeType createCurrentTime() {
-        AttributeType currentTimeAttr = new AttributeType();
-        currentTimeAttr.setAttributeId(CURRENT_TIME_DATATYPEID);
-        currentTimeAttr.setDataType(new TimeDataTypeAttribute());
-        currentTimeAttr.getAttributeValues().add(createDateTime(TIME_PATTERN));
+	/**
+	 * Creates a new {@link AttributeType} containing the current time.
+	 * 
+	 * @return The {@link AttributeType} containing the current time.
+	 */
+	private AttributeType createCurrentTime(DateTime dateTime) {
+		AttributeType currentTimeAttr = new AttributeType();
+		currentTimeAttr.setAttributeId(CURRENT_TIME_DATATYPEID);
+		currentTimeAttr.setDataType(new TimeDataTypeAttribute());
+		currentTimeAttr.getAttributeValues().add(createDateTime(dateTime, TIME_PATTERN));
 
-        return currentTimeAttr;
-    }
+		return currentTimeAttr;
+	}
 
-    /**
-     * Creates a new {@link AttributeType} containing the current date.
-     * 
-     * @return The {@link AttributeType} containing the current date.
-     */
-    private AttributeType createCurrentDate() {
-        AttributeType currentDateAttr = new AttributeType();
-        currentDateAttr.setAttributeId(CURRENT_DATE_DATATYPEID);
-        currentDateAttr.setDataType(new DateDataTypeAttribute());
-        currentDateAttr.getAttributeValues().add(createDateTime(DATE_PATTERN));
+	/**
+	 * Creates a new {@link AttributeType} containing the current date.
+	 * 
+	 * @return The {@link AttributeType} containing the current date.
+	 */
+	private AttributeType createCurrentDate(DateTime dateTime) {
+		AttributeType currentDateAttr = new AttributeType();
+		currentDateAttr.setAttributeId(CURRENT_DATE_DATATYPEID);
+		currentDateAttr.setDataType(new DateDataTypeAttribute());
+		currentDateAttr.getAttributeValues().add(createDateTime(dateTime, DATE_PATTERN));
 
-        return currentDateAttr;
-    }
+		return currentDateAttr;
+	}
 
-    /**
-     * Creates a new {@link AttributeType} containing the current dateTime.
-     * 
-     * @return The {@link AttributeType} containing the current dateTime.
-     */
-    private AttributeType createCurrentDateTime() {
-        AttributeType currentDateTimeAttr = new AttributeType();
-        currentDateTimeAttr.setAttributeId(CURRENT_DATETIME_DATATYPEID);
-        currentDateTimeAttr.setDataType(new DateTimeDataTypeAttribute());
-        currentDateTimeAttr.getAttributeValues().add(createDateTime(DATE_TIME_PATTERN));
+	/**
+	 * Creates a new {@link AttributeType} containing the current dateTime.
+	 * 
+	 * @return The {@link AttributeType} containing the current dateTime.
+	 */
+	private AttributeType createCurrentDateTime(DateTime dateTime) {
+		AttributeType currentDateTimeAttr = new AttributeType();
+		currentDateTimeAttr.setAttributeId(CURRENT_DATETIME_DATATYPEID);
+		currentDateTimeAttr.setDataType(new DateTimeDataTypeAttribute());
+		currentDateTimeAttr.getAttributeValues().add(
+				createDateTime(dateTime, DATE_TIME_PATTERN));
 
-        return currentDateTimeAttr;
-    }
+		return currentDateTimeAttr;
+	}
 
-    /**
-     * FIXME Timezone awareness (see HERASAFXACMLCORE-28).
-     * 
-     * Creates a new {@link AttributeValueType} containing the current dateTime with the given pattern.
-     * 
-     * @return The current dateTime.
-     */
-    private AttributeValueType createDateTime(String pattern) {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
-        AttributeValueType attrValue = new AttributeValueType();
-        String value = sdf.format(cal.getTime());
-        value = value.substring(0, value.length() - 2) + ":" + value.substring(value.length() - 2, value.length());
-        attrValue.getContent().add(value);
+	/**
+	 * Creates a new {@link AttributeValueType} containing the current dateTime
+	 * with the given pattern.
+	 * 
+	 * @return The current dateTime.
+	 */
+	private AttributeValueType createDateTime(DateTime dateTime, String pattern) {
+		
+		String value = dateTime.toString(pattern);
+		
+		AttributeValueType attrValue = new AttributeValueType();
+		attrValue.getContent().add(value);
 
-        return attrValue;
-    }
+		return attrValue;
+	}
 
-    /**
-     * Checks if the environment already contains an element with ID id. It returns true if such an element is already
-     * in the environment, false otherwise.
-     * 
-     * @return true if an element with ID id is already in the environment, false otherwise.
-     */
-    private boolean envContainsAttributeId(String id) {
-        for (AttributeType attr : environment.getAttributes()) {
-            if (attr.getAttributeId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
-    }
+	/**
+	 * Gets the value of the subjects property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the subjects property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getSubjects().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link SubjectType }
+	 * 
+	 * 
+	 */
+	public List<SubjectType> getSubjects() {
+		if (subjects == null) {
+			subjects = new ArrayList<SubjectType>();
+		}
+		return this.subjects;
+	}
 
-    /**
-     * Gets the value of the subjects property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
-     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
-     * the subjects property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * 
-     * <pre>
-     * getSubjects().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list {@link SubjectType }
-     * 
-     * 
-     */
-    public List<SubjectType> getSubjects() {
-        if (subjects == null) {
-            subjects = new ArrayList<SubjectType>();
-        }
-        return this.subjects;
-    }
+	/**
+	 * Gets the value of the resources property.
+	 * 
+	 * <p>
+	 * This accessor method returns a reference to the live list, not a
+	 * snapshot. Therefore any modification you make to the returned list will
+	 * be present inside the JAXB object. This is why there is not a
+	 * <CODE>set</CODE> method for the resources property.
+	 * 
+	 * <p>
+	 * For example, to add a new item, do as follows:
+	 * 
+	 * <pre>
+	 * getResources().add(newItem);
+	 * </pre>
+	 * 
+	 * 
+	 * <p>
+	 * Objects of the following type(s) are allowed in the list
+	 * {@link ResourceType }
+	 * 
+	 * 
+	 */
+	public List<ResourceType> getResources() {
+		if (resources == null) {
+			resources = new ArrayList<ResourceType>();
+		}
+		return this.resources;
+	}
 
-    /**
-     * Gets the value of the resources property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list, not a snapshot. Therefore any modification you make to
-     * the returned list will be present inside the JAXB object. This is why there is not a <CODE>set</CODE> method for
-     * the resources property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * 
-     * <pre>
-     * getResources().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list {@link ResourceType }
-     * 
-     * 
-     */
-    public List<ResourceType> getResources() {
-        if (resources == null) {
-            resources = new ArrayList<ResourceType>();
-        }
-        return this.resources;
-    }
+	/**
+	 * Gets the value of the action property.
+	 * 
+	 * @return possible object is {@link ActionType }
+	 * 
+	 */
+	public ActionType getAction() {
+		return action;
+	}
 
-    /**
-     * Gets the value of the action property.
-     * 
-     * @return possible object is {@link ActionType }
-     * 
-     */
-    public ActionType getAction() {
-        return action;
-    }
+	/**
+	 * Sets the value of the action property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link ActionType }
+	 * 
+	 */
+	public void setAction(ActionType value) {
+		this.action = value;
+	}
 
-    /**
-     * Sets the value of the action property.
-     * 
-     * @param value
-     *            allowed object is {@link ActionType }
-     * 
-     */
-    public void setAction(ActionType value) {
-        this.action = value;
-    }
+	/**
+	 * Gets the value of the environment property.
+	 * 
+	 * @return possible object is {@link EnvironmentType }
+	 * 
+	 */
+	public EnvironmentType getEnvironment() {
+		return environment;
+	}
 
-    /**
-     * Gets the value of the environment property.
-     * 
-     * @return possible object is {@link EnvironmentType }
-     * 
-     */
-    public EnvironmentType getEnvironment() {
-        return environment;
-    }
-
-    /**
-     * Sets the value of the environment property.
-     * 
-     * @param value
-     *            allowed object is {@link EnvironmentType }
-     * 
-     */
-    public void setEnvironment(EnvironmentType value) {
-        this.environment = value;
-    }
+	/**
+	 * Sets the value of the environment property.
+	 * 
+	 * @param value
+	 *            allowed object is {@link EnvironmentType }
+	 * 
+	 */
+	public void setEnvironment(EnvironmentType value) {
+		this.environment = value;
+	}
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -60,7 +60,7 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 
 		assertEquals("test", (String) attrVal.handle(new RequestType(),
-				new EvaluationContext(targetMatcher, new StatusCodeComparator())));
+				new EvaluationContext(targetMatcher, new StatusCodeComparator(), null)));
 	}
 
 	/**
@@ -77,7 +77,7 @@ public class TestAttributeValueType {
 		attrVal.getContent().add("test");
 		attrVal.getContent().add("test2");
 
-		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher, new StatusCodeComparator()));
+		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null));
 	}
 
 	/**
@@ -92,6 +92,6 @@ public class TestAttributeValueType {
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
 		attrVal.getContent().add(new Integer("1"));
-		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher, new StatusCodeComparator()));
+		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null));
 	}
 }

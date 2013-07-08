@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -30,8 +31,7 @@ import org.slf4j.LoggerFactory;
  * Converts an URN to a {@link PolicyCombiningAlgorithm}. The default
  * {@link PolicyCombiningAlgorithm}s are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix C page 146. <br>
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> appendix C page 140. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
@@ -41,7 +41,7 @@ public class PolicyCombiningAlgorithmJAXBTypeAdapter extends
 		XmlAdapter<String, PolicyCombiningAlgorithm> {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(PolicyCombiningAlgorithmJAXBTypeAdapter.class);
-	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms;
+	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms = new HashMap<String, PolicyCombiningAlgorithm>();
 
 	/**
 	 * This method sets the {@link Map} containing the mapping between policy
@@ -51,9 +51,9 @@ public class PolicyCombiningAlgorithmJAXBTypeAdapter extends
 	 *            The {@link Map} containing the mapping between ID's and policy
 	 *            combining algorithms.
 	 */
-	public static void setCombiningAlgorithms(
+	public static void addCombiningAlgorithms(
 			final Map<String, PolicyCombiningAlgorithm> algorithms) {
-		combiningAlgorithms = algorithms;
+		combiningAlgorithms.putAll(algorithms);
 	}
 
 	/**

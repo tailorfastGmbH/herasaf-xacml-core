@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -93,7 +93,7 @@ public class TestRuleTargetEvaluation {
 			DecisionType expectedDecision, StatusCode expectedStatusCode,
 			boolean missingAttributeExpected) {
 
-		EvaluationContext infos = new EvaluationContext(new TargetMatcherMock(), new StatusCodeComparator());
+		EvaluationContext infos = new EvaluationContext(new TargetMatcherMock(), new StatusCodeComparator(), null);
 		DecisionType decision = alg.evaluate(null, eval, infos);
 		assertEquals(decision, expectedDecision);
 		assertEquals(infos.getStatusCode(), expectedStatusCode);

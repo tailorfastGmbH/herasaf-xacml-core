@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -57,7 +57,7 @@ import javax.xml.bind.annotation.XmlType;
  * @version 1.0
  * @author <i>generated</i>
  */
-@XmlRootElement
+@XmlRootElement(name = "Status", namespace="urn:oasis:names:tc:xacml:2.0:context:schema:os")
 @XmlType(name = "StatusType", propOrder = { "statusCode", "statusMessage", "statusDetail" })
 public class StatusType implements Serializable {
 

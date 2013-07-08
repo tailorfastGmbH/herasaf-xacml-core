@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -20,6 +20,8 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 import static org.testng.Assert.assertEquals;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.HexBinaryDataTypeAttribute;
@@ -78,7 +80,9 @@ public class TestIntegerDataTypeAttribute {
 	 */
 	@Test(dataProvider = "positiveData")
 	public void testInput(String input) throws Exception {
-		assertEquals(new BigInteger(input), dataType.convertTo(input));
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		assertEquals(new BigInteger(input), dataType.convertTo(data));
 	}
 
 	/**
@@ -100,6 +104,8 @@ public class TestIntegerDataTypeAttribute {
 	 */
 	@Test(dataProvider = "negativeData", expectedExceptions = { SyntaxException.class })
 	public void testWrongInput(String input) throws Exception {
-		dataType.convertTo(input);
+		List<String> data = new ArrayList<String>();
+		data.add(input);
+		dataType.convertTo(data);
 	}
 }

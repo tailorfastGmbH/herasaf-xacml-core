@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,6 +32,7 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.combiningAlgorithm.rule.AbstractRuleCombiningAlgorithm;
+import org.herasaf.xacml.core.converter.EvaluatableIdJAXBTypeAdapter;
 import org.herasaf.xacml.core.converter.RuleCombiningAlgorithmJAXBTypeAdapter;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -75,14 +76,13 @@ import org.herasaf.xacml.core.policy.EvaluatableID;
  * <br /><br />
  * See: <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 52, for further information.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 56, for further information.
  * 
  * @version 1.0
  * @author <i>generated</i>
  * @author Florian Huonder
  */
-@XmlRootElement
+@XmlRootElement(name = "Policy", namespace="urn:oasis:names:tc:xacml:2.0:policy:schema:os")
 @XmlType(name = "PolicyType", propOrder = { "description", "policyDefaults", "target", "additionalInformation",
 		"obligations" })
 public class PolicyType implements Evaluatable, Serializable {
@@ -102,7 +102,8 @@ public class PolicyType implements Evaluatable, Serializable {
 	private ObligationsType obligations;
 	@XmlAttribute(name = "PolicyId", required = true)
 	@XmlSchemaType(name = "anyURI")
-	private String policyId;
+	@XmlJavaTypeAdapter(EvaluatableIdJAXBTypeAdapter.class)
+	private EvaluatableID policyId;
 	@XmlAttribute(name = "Version")
 	private String version;
 	@XmlAttribute(name = "RuleCombiningAlgId", required = true)
@@ -231,7 +232,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
-	public String getPolicyId() {
+	public EvaluatableID getPolicyId() {
 		return policyId;
 	}
 
@@ -242,7 +243,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	 *            allowed object is {@link String }
 	 * 
 	 */
-	public void setPolicyId(String value) {
+	public void setPolicyId(EvaluatableID value) {
 		this.policyId = value;
 	}
 
@@ -337,7 +338,7 @@ public class PolicyType implements Evaluatable, Serializable {
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
 	public EvaluatableID getId() {
-		return new EvaluatableIDImpl(getPolicyId());
+		return getPolicyId();
 	}
 
 	/*

@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -19,31 +19,75 @@ package org.herasaf.xacml.core.types.test;
 
 import static org.testng.Assert.assertEquals;
 
+import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Time;
-import org.testng.annotations.AfterMethod;
+import org.joda.time.DateTimeZone;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 /**
- *  Tests the {@link Time} basic data type.
+ * TODO More tests.
+ * 
+ * Tests the {@link Time} basic data type.
  * 
  * @author Florian Huonder
  */
 public class TestTime {
-	
+
+	private DateTimeZone defaultZone;
+
 	/**
-	 * Creates positive test cases. 
+	 * Sets the default timezone to +00:00 for testing.
+	 */
+	@BeforeTest
+	public void init() {
+		defaultZone = DateTimeZone.getDefault();
+
+		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
+	}
+
+	@AfterTest
+	public void cleanUp() {
+		DateTimeZone.setDefault(defaultZone);
+	}
+
+	/**
+	 * Creates positive test cases.
 	 * 
 	 * @return The test cases.
 	 */
-	@DataProvider(name = "positiveCases")
-	public Object[][] createPositiveCases() {
-		return new Object[][] { new Object[] { "12:00:01.239" },
-				new Object[] { "12:00:01.2" },
-				new Object[] { "12:00:01.35" },
-				new Object[] { "12:00:01" },
-				new Object[] { "12:00:01-05:00" }
-		};
+	@DataProvider(name = "positiveCasesWithNonZulu")
+	public Object[][] createPositiveCasesWithNonZulu() {
+		return new Object[][] { new Object[] { "12:00:01.2", "12:00:01.2+00:00" },
+				new Object[] { "12:00:01.35", "12:00:01.35+00:00" },
+				new Object[] { "12:00:01.35Z", "12:00:01.35+00:00" },
+				new Object[] { "12:00:01.35+00:00", "12:00:01.35+00:00" },
+				new Object[] { "12:00:01.239", "12:00:01.239+00:00" }, new Object[] { "12:00:01", "12:00:01+00:00" },
+				new Object[] { "12:00:01-05:00", "12:00:01-05:00" }, new Object[] { "24:00:00", "00:00:00+00:00" } };
+	}
+
+	@DataProvider(name = "positiveCasesWithZulu")
+	public Object[][] createPositiveCasesWithZulu() {
+		return new Object[][] { new Object[] { "12:00:01.2", "12:00:01.2Z" },
+				new Object[] { "12:00:01.35", "12:00:01.35Z" }, new Object[] { "12:00:01.35Z", "12:00:01.35Z" },
+				new Object[] { "12:00:01.35+00:00", "12:00:01.35Z" }, new Object[] { "12:00:01.239", "12:00:01.239Z" },
+				new Object[] { "12:00:01", "12:00:01Z" }, new Object[] { "12:00:01-05:00", "12:00:01-05:00" },
+				new Object[] { "24:00:00", "00:00:00Z" } };
+	}
+
+	/**
+	 * Creates positive test cases.
+	 * 
+	 * @return The test cases.
+	 */
+	@DataProvider(name = "timezoneCases")
+	public Object[][] createTimezoneCases() {
+		return new Object[][] { new Object[] { "12:00:01.239+01:00", "12:00:01.239+01:00" },
+				new Object[] { "12:00:01-09:00", "12:00:01-09:00" },
+				new Object[] { "12:00:01+00:00", "12:00:01+00:00" },
+				new Object[] { "12:00:01-00:00", "12:00:01+00:00" }, };
 	}
 
 	/**
@@ -54,11 +98,24 @@ public class TestTime {
 	@DataProvider(name = "comparison")
 	public Object[][] createComparisonData() {
 		return new Object[][] { new Object[] { "12:00:00", "13:00:00", -1 },
-				new Object[] { "15:00:00", "13:00:00", 1 },
-				new Object[] { "13:00:00", "13:00:00", 0 },
-				new Object[] { "12:00:01", "12:00:01.001", -1 },
-				new Object[] { "15:03:00", "13:00:00.234", 1 },
-				new Object[] { "13:00:00.978", "13:00:00.978", 0 }, };
+				new Object[] { "15:00:00", "13:00:00", 1 }, new Object[] { "13:00:00", "13:00:00", 0 },
+				new Object[] { "12:00:01", "12:00:01.001", -1 }, new Object[] { "15:03:00", "13:00:00.234", 1 },
+				new Object[] { "13:00:00.978", "13:00:00.978", 0 }, new Object[] { "12:00:00Z", "12:00:00+00:00", 0 },
+				new Object[] { "12:00:00+00:00", "12:00:00+00:00", 0 },
+				new Object[] { "12:00:00", "12:00:00+00:00", 0 }, new Object[] { "12:00:00", "12:00:00Z", 0 },
+				new Object[] { "12:00:00Z", "14:00:00+02:00", 0 },
+				new Object[] { "12:00:00+00:00", "14:00:00+02:00", 0 },
+				new Object[] { "12:00:00", "14:00:00+02:00", 0 }, new Object[] { "12:00:00", "09:00:00-03:00", 0 }, };
+	}
+
+	@DataProvider(name = "equals")
+	public Object[][] createEqualsData() {
+		return new Object[][] { new Object[] { "12:00:00", "12:00:00", true },
+				new Object[] { "12:00:00", "13:00:00", false }, new Object[] { "14:00:00", "13:00:00", false },
+				new Object[] { "12:00:00+00:00", "13:00:00+01:00", true },
+				new Object[] { "12:00:00", "13:00:00+01:00", true },
+				new Object[] { "12:00:00Z", "13:00:00+01:00", true },
+				new Object[] { "09:00:00-03:00", "16:00:00+04:00", true }, };
 	}
 
 	/**
@@ -68,66 +125,61 @@ public class TestTime {
 	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
-		return new Object[][] { new Object[] { "12.00.01" },
-				new Object[] { "2005-10-10" }, };
+		return new Object[][] { new Object[] { "12.00.01" }, new Object[] { "2005-10-10" }, };
 	}
 
-	/**
-	 * Clears the property javax.xml.datatype.DatatypeFactory.
-	 * This is only relevant for the {@link #testNoDataFactoryFound()} method.
-	 */
-	@AfterMethod
-	public void afterMethod() {
-		System.clearProperty("javax.xml.datatype.DatatypeFactory");
-	}
-
-	/**
-	 * Test if the {@link Time} objects are properly created.
-	 * 
-	 * @param input The time in its String representation.
-	 * @throws Exception If an error occurs.
-	 */
-	@Test(dataProvider = "positiveCases")
-	public void testInput1(String input) throws Exception {
+	@Test(dataProvider = "positiveCasesWithNonZulu")
+	public void testWithNonZulu(String input, String expected) throws Exception {
+		Time.useZuluUtcRepresentation(false);
 		Time time = new Time(input);
-		assertEquals(time.toString(), input);
+		assertEquals(time.toString(), expected);
+	}
+
+	@Test(dataProvider = "positiveCasesWithZulu")
+	public void testTimezoneInput(String input, String expected) throws Exception {
+		Time.useZuluUtcRepresentation(true);
+		Time time = new Time(input);
+		assertEquals(time.toString(), expected);
 	}
 
 	/**
 	 * Tests if an {@link IllegalArgumentException} is thrown on illegal time representations.
-	 * @param input The illegal time strings.
-	 * @throws Exception If an error occurs.
+	 * 
+	 * @param input
+	 *            The illegal time strings.
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
-	@Test(dataProvider = "negativeCases", expectedExceptions = { IllegalArgumentException.class })
+	@Test(dataProvider = "negativeCases", expectedExceptions = { SyntaxException.class })
 	public void testInputFail(String input) throws Exception {
 		new Time(input);
 	}
 
 	/**
-	 * Tests if an exception is thrown when a non-existing DatatypeFactory is set.
-	 * 
-	 * @throws Exception If an error occurs.
-	 */
-	@Test(expectedExceptions = { IllegalArgumentException.class })
-	public void testNoDataFactoryFound() throws Exception {
-		System.setProperty("javax.xml.datatype.DatatypeFactory", "bla");
-		new Time("12:00:01");
-	}
-
-	/**
 	 * Tests if the comparison function of {@link Time} works properly.
 	 * 
-	 * @param input1 The first string.
-	 * @param input2 The second time string.
-	 * @param expected The expected result (-1, 0, 1).
-	 * @throws Exception If an error occurs.
+	 * @param input1
+	 *            The first string.
+	 * @param input2
+	 *            The second time string.
+	 * @param expected
+	 *            The expected result (-1, 0, 1).
+	 * @throws Exception
+	 *             If an error occurs.
 	 */
 	@Test(dataProvider = "comparison")
-	public void testCompare(String input1, String input2, int expected)
-			throws Exception {
+	public void testCompare(String input1, String input2, int expected) throws Exception {
 		Time one = new Time(input1);
 		Time two = new Time(input2);
 
 		assertEquals(one.compareTo(two), expected);
+	}
+
+	@Test(dataProvider = "equals")
+	public void testEquals(String input1, String input2, boolean expected) throws Exception {
+		Time one = new Time(input1);
+		Time two = new Time(input2);
+
+		assertEquals(one.equals(two), expected);
 	}
 }

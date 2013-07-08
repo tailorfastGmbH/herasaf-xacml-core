@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,14 +17,15 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute;
 
+import java.util.List;
+
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
  * A data type represents the type of an attribute value in JAXB. The XACML 2.0
  * default data types are defined in the <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix A.2, page 103.
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> appendix A.2, page 109.
  * 
  * @author Florian Huonder
  * @param <E>
@@ -43,9 +44,9 @@ public interface DataTypeAttribute<E> extends java.io.Serializable {
 	 * Converts a JAXB-representation string into the data type E.
 	 * 
 	 * @param jaxbRepresentation
-	 *            The string to convert
+	 *            The list of objects to convert
 	 * @return Returns the created object.
 	 * @throws SyntaxException
 	 */
-	E convertTo(String jaxbRepresentation) throws SyntaxException;
+	E convertTo(List<?> jaxbRepresentation) throws SyntaxException;
 }

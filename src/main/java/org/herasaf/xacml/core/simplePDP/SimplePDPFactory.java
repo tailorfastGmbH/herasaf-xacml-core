@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -26,11 +26,12 @@ import org.herasaf.xacml.core.api.PDP;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplicableAlgorithm;
-import org.herasaf.xacml.core.simplePDP.initializers.DataTypesJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.Initializer;
 import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
-import org.herasaf.xacml.core.simplePDP.initializers.PolicyCombiningAlgorithmsJAXBInitializer;
-import org.herasaf.xacml.core.simplePDP.initializers.RuleCombiningAlgorithmsJAXBInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.datatypes.Xacml20DefaultDataTypesJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.functions.Xacml20DefaultFunctionsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.policycombiningalgorithms.Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.rulecombiningalgorithms.Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -53,12 +54,12 @@ import org.slf4j.LoggerFactory;
  * <li>Policy repository: {@link MapBasedSimplePolicyRepository}</li>
  * <li>Root combining algorithm: {@link PolicyOnlyOneApplicableAlgorithm}</li>
  * <li>PIP: <code>null</code> (No Policy Information Point used)</li>
- * <li>Data types used: see {@link DataTypesJAXBInitializer}</li>
- * <li>Functions used: see {@link DataTypesJAXBInitializer}</li>
+ * <li>Data types used: see {@link Xacml20DefaultDataTypesJaxbInitializer}</li>
+ * <li>Functions used: see {@link Xacml20DefaultFunctionsJaxbInitializer}</li>
  * <li>Policy Combining Algorithms used: see
- * {@link PolicyCombiningAlgorithmsJAXBInitializer}</li>
+ * {@link Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer}</li>
  * <li>Rule Combining Algorithms used: see
- * {@link RuleCombiningAlgorithmsJAXBInitializer}</li>
+ * {@link Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer}</li>
  * <li>JAXB Marshaller/Unmarshaller used: see
  * {@link ContextAndPolicyInitializer}
  * </ul>
@@ -91,8 +92,7 @@ import org.slf4j.LoggerFactory;
  * <li>
  * <a href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20" >
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> page 132, "Appendix C. Combining algorithms (normative)", for
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 January 2008 page 83</a> page 140, "Appendix C. Combining algorithms (normative)", for
  * further information.</li>
  * <li><a href="http://forum.herasaf.org/index.php/topic,3.0.html">Discussion
  * about abandoned obligations</a> in the HERAS-AF Forum</li>
@@ -113,6 +113,23 @@ public final class SimplePDPFactory {
 	 * intended to be used in a static way.
 	 */
 	private SimplePDPFactory() {
+	}
+	
+	/**
+	 * Gets the default list of initializers.
+	 * This method directly calls the {@link InitializerExecutor#getDefaultInitializers()}.
+	 * 
+	 * This list includes the {@link Xacml20DefaultFunctionsJaxbInitializer},
+	 * {@link Xacml20DefaultDataTypesJaxbInitializer},
+	 * {@link Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer},
+	 * {@link Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer}, and
+	 * {@link ContextAndPolicyInitializer}.
+	 * 
+	 * @see InitializerExecutor#getDefaultInitializers()
+	 * @return the default list of initializers
+	 */
+	public static Set<Initializer> getDefaultInitializers() {
+		return InitializerExecutor.getDefaultInitializers();
 	}
 
 	/**
@@ -135,7 +152,7 @@ public final class SimplePDPFactory {
 		LOGGER.info("Custom initializers are in use.");
 		InitializerExecutor.setInitalizers(initalizers);
 	}
-
+	
 	/**
 	 * Resets the factory to only use the default initializers.
 	 */
@@ -154,7 +171,7 @@ public final class SimplePDPFactory {
 	 * @return The created {@link PDP}.
 	 */
 	public static PDP getSimplePDP(SimplePDPConfiguration simplePDPConfiguration) {
-		InitializerExecutor.runInitializers();
+		InitializerExecutor.runInitializers(simplePDPConfiguration);
 		return new SimplePDP(simplePDPConfiguration);
 	}
 
@@ -175,7 +192,7 @@ public final class SimplePDPFactory {
 	public static PDP getSimplePDP(
 			SimplePDPConfiguration simplePDPConfiguration,
 			Class<? extends SimplePDP> customPDP) {
-		InitializerExecutor.runInitializers();
+		InitializerExecutor.runInitializers(simplePDPConfiguration);
 		try {
 			Constructor<? extends SimplePDP> constructor = customPDP
 					.getConstructor(SimplePDPConfiguration.class);

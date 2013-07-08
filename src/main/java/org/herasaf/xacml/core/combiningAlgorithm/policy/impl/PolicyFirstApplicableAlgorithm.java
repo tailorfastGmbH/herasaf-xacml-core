@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -28,6 +28,7 @@ import org.herasaf.xacml.core.context.impl.DecisionType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.impl.EffectType;
+import org.herasaf.xacml.core.policy.impl.IdReferenceType;
 import org.herasaf.xacml.core.policy.impl.ObligationType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,9 +81,13 @@ public class PolicyFirstApplicableAlgorithm extends
 		 * skipped and a NOT_APPLICABLE is returned.
 		 */
 		for (int i = 0; i < possiblePolicies.size(); i++) {
-			Evaluatable eval = possiblePolicies.get(i);
+		        Evaluatable eval = possiblePolicies.get(i);
+		        if (eval instanceof IdReferenceType) {
+		                eval = evaluationContext.getPolicyRetrievalPoint().getEvaluatable(
+		                                                                                  eval.getId());
+		        }
 
-			if (eval == null) {
+		        if (eval == null) {
 				// It is an illegal state if the list contains any
 				// null.
 				logger
@@ -98,10 +103,9 @@ public class PolicyFirstApplicableAlgorithm extends
 			evaluationContext.resetStatus();
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
 				logger
-						.debug("Starting evaluation of: {}", eval.getId()
-								.getId());
+						.debug("Starting evaluation of: {}", eval.getId().toString());
 			}
 
 			CombiningAlgorithm combiningAlg = eval.getCombiningAlg();
@@ -118,8 +122,8 @@ public class PolicyFirstApplicableAlgorithm extends
 			}
 
 			if (logger.isDebugEnabled()) {
-				MDC.put(MDC_EVALUATABLE_ID, eval.getId().getId());
-				logger.debug("Evaluation of {} was: {}", eval.getId().getId(),
+				MDC.put(MDC_EVALUATABLE_ID, eval.getId().toString());
+				logger.debug("Evaluation of {} was: {}", eval.getId().toString(),
 						decision.toString());
 				MDC.remove(MDC_EVALUATABLE_ID);
 			}

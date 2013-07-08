@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -86,8 +86,8 @@ public class TargetMatcherImpl implements TargetMatcher {
 			}
 
 			logger.debug("Starting environments match.");
-			boolean environmentsMatches = environmentMatch(target
-					.getEnvironments(), request, evaluationContext);
+			boolean environmentsMatches = environmentMatch(
+					target.getEnvironments(), request, evaluationContext);
 			logger.debug("Environments match resulted in: {}",
 					environmentsMatches);
 			if (!environmentsMatches) {
@@ -99,9 +99,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 		// then the overall target is considered a match.
 		//
 		// This part references OASIS eXtensible Access Control Markup Language
-		// (XACML) 2.0, Errata 29 June 2006
+		// (XACML) 2.0, Errata 29 January 2008
 		// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-		// on page 45 (5.5).
+		// on page 48 (5.5).
 		return TargetMatchingResult.MATCH;
 	}
 
@@ -135,17 +135,16 @@ public class TargetMatcherImpl implements TargetMatcher {
 		}
 		for (int i = 0; i < subjects.getSubjects().size(); i++) {
 			SubjectType targetSubject = subjects.getSubjects().get(i);
-			logger.debug("Starting subject match. (id:{})", targetSubject
-					.toString());
+			logger.debug("Starting subject match. (id:{})", targetSubject);
 			boolean matches = match(targetSubject.getSubjectMatches(), request,
 					evaluationContext);
 			if (matches) {
 				// If one subject matches the subjects matches and returns true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Langugage (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 January 2008
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-				// on page 46 (5.6).
+				// on page 49 (5.6).
 				logger.debug("Subject match resulted in: {}", matches);
 				return true;
 			}
@@ -184,8 +183,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 		}
 		for (int i = 0; i < resources.getResources().size(); i++) {
 			ResourceType targetResource = resources.getResources().get(i);
-			logger.debug("Starting resource match. (id:{})", targetResource
-					.toString());
+			logger.debug("Starting resource match. (id:{})", targetResource);
 			boolean matches = match(targetResource.getResourceMatches(),
 					request, evaluationContext);
 			if (matches) {
@@ -193,9 +191,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Langugage (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 January 2008
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-				// on page 47 (5.9).
+				// on page 50 (5.9).
 				logger.debug("Resource match resulted in: {}", matches);
 				return true;
 			}
@@ -233,17 +231,16 @@ public class TargetMatcherImpl implements TargetMatcher {
 		}
 		for (int i = 0; i < actions.getActions().size(); i++) {
 			ActionType targetAction = actions.getActions().get(i);
-			logger.debug("Starting action match. (id:{})", targetAction
-					.toString());
+			logger.debug("Starting action match. (id:{})", targetAction);
 			boolean matches = match(targetAction.getActionMatches(), request,
 					evaluationContext);
 			if (matches) {
 				// If one action matches the actions matches and returns true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Langugage (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 January 2008
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-				// on page 48 (5.12).
+				// on page 51 (5.12).
 				logger.debug("Action match resulted in: {}", matches);
 				return true;
 			}
@@ -284,7 +281,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 			EnvironmentType targetEnvironment = environments.getEnvironments()
 					.get(i);
 			logger.debug("Starting environment match. (id:{})",
-					targetEnvironment.toString());
+					targetEnvironment);
 			boolean matches = match(targetEnvironment.getEnvironmentMatches(),
 					request, evaluationContext);
 			if (matches) {
@@ -292,9 +289,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// returns true.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Langugage (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 January 2008
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-				// on page 50 (5.15).
+				// on page 53 (5.15).
 				logger.debug("Environment match resulted in: {}", matches);
 				return true;
 			}
@@ -330,9 +327,12 @@ public class TargetMatcherImpl implements TargetMatcher {
 		for (int i = 0; i < matches.size(); i++) {
 			Match match = matches.get(i);
 			Function matchFunction = match.getMatchFunction();
-			logger
-					.debug("Matching with function: {}", matchFunction
-							.toString());
+			logger.debug("Matching with function: {}", matchFunction);
+			if (matchFunction == null) {
+				String message = "Match function cannot be retrieved.";
+				logger.error(message);
+				throw new SyntaxException(message);
+			}
 			AttributeDesignatorType designator = match.getAttributeDesignator();
 			List<?> requestAttributeValues = (List<?>) designator.handle(
 					request, evaluationContext); // Fetches
@@ -348,12 +348,11 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// checked.
 			//
 			// This part references OASIS eXtensible Access Control Markup
-			// Langugage (XACML) 2.0, Errata 29 June 2006
+			// Langugage (XACML) 2.0, Errata 29 January 2008
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-			// on page 79 (Match evaluation, line 3394).
+			// on page 84 (Match evaluation).
 			if (requestAttributeValues.size() == 0) {
-				logger
-						.debug("Request did not contain the required attributes.");
+				logger.debug("Request did not contain the required attributes.");
 				return false;
 			}
 
@@ -367,23 +366,20 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// supplied as the first argument.
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Langugage (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 January 2008
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-				// on page 79 (Match evaluation, line 3371).
+				// on page 84 (Match evaluation).
 				AttributeValueType policyAttributeValue = match
 						.getAttributeValue();
 				matchMatches = (Boolean) matchFunction.handle(
 						policyAttributeValue.getDataType().convertTo(
-								(String) policyAttributeValue.getContent().get(
-										0)), requestAttributeValue);
-				logger
-						.debug(
-								"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
-								new Object[] {
-										matchMatches,
-										policyAttributeValue.getDataType(),
-										policyAttributeValue.getContent()
-												.get(0), requestAttributeValue });
+								policyAttributeValue.getContent()), requestAttributeValue);
+				logger.debug(
+						"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
+						new Object[] { matchMatches,
+								policyAttributeValue.getDataType(),
+								policyAttributeValue.getContent().get(0),
+								requestAttributeValue });
 
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request
@@ -391,9 +387,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 				// (therefore the break)
 				//
 				// This part references OASIS eXtensible Access Control Markup
-				// Langugage (XACML) 2.0, Errata 29 June 2006
+				// Langugage (XACML) 2.0, Errata 29 January 2008
 				// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-				// on page 79 (Match evaluation, line 3398).
+				// on page 84 (Match evaluation).
 				if (matchMatches) {
 					break;
 				}
@@ -407,9 +403,9 @@ public class TargetMatcherImpl implements TargetMatcher {
 			// does not match the request.
 			//
 			// This part references OASIS eXtensible Access Control Markup
-			// Langugage (XACML) 2.0, Errata 29 June 2006
+			// Langugage (XACML) 2.0, Errata 29 January 2008
 			// (http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20)
-			// on page 46 (5.7).
+			// on page 49 (5.7).
 			if (!matchMatches) {
 				return false;
 			}

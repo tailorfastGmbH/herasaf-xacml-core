@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,9 +18,17 @@ package org.herasaf.xacml.core.simplePDP.initializers;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.herasaf.xacml.core.api.PDP;
+import org.herasaf.xacml.core.simplePDP.SimplePDPConfiguration;
 import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
+import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.JaxbContextInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.datatypes.Xacml20DefaultDataTypesJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.functions.Xacml20DefaultFunctionsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.policycombiningalgorithms.Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer;
+import org.herasaf.xacml.core.simplePDP.initializers.jaxb.typeadapter.xacml20.rulecombiningalgorithms.Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,8 +44,8 @@ public class InitializerExecutor {
 
 	private transient static final Logger LOGGER = LoggerFactory
 			.getLogger(InitializerExecutor.class);
-
 	private static Set<Initializer> initializers;
+	private static AtomicBoolean initializersRan = new AtomicBoolean(false);
 
 	/**
 	 * The constructor is private to avoid instantiation. It is intended to be
@@ -49,21 +57,22 @@ public class InitializerExecutor {
 	/**
 	 * Gets the default list of initializers.
 	 * 
-	 * This list includes the {@link FunctionsJAXBInitializer},
-	 * {@link DataTypesJAXBInitializer},
-	 * {@link RuleCombiningAlgorithmsJAXBInitializer},
-	 * {@link PolicyCombiningAlgorithmsJAXBInitializer}, and
-	 * {@link ContextAndPolicyInitializer}.
+	 * This list includes the 
+	 * 		{@link Xacml20DefaultFunctionsJaxbInitializer},
+	 * 		{@link Xacml20DefaultDataTypesJaxbInitializer},
+	 * 		{@link Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer},
+	 * 		{@link Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer}, and
+	 * 		{@link JaxbContextInitializer}.
 	 * 
 	 * @return the default list of initializers
 	 */
 	public static Set<Initializer> getDefaultInitializers() {
 		Set<Initializer> initializers = new HashSet<Initializer>();
-		initializers.add(new FunctionsJAXBInitializer());
-		initializers.add(new DataTypesJAXBInitializer());
-		initializers.add(new RuleCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new PolicyCombiningAlgorithmsJAXBInitializer());
-		initializers.add(new JAXBInitializer());
+		initializers.add(new Xacml20DefaultFunctionsJaxbInitializer());
+		initializers.add(new Xacml20DefaultDataTypesJaxbInitializer());
+		initializers.add(new Xacml20DefaultRuleCombiningAlgorithmsJaxbInitializer());
+		initializers.add(new Xacml20DefaultPolicyCombiningAlgorithmsJaxbInitializer());
+		initializers.add(new JaxbContextInitializer());
 
 		return initializers;
 	}
@@ -86,34 +95,50 @@ public class InitializerExecutor {
 	 */
 	public static void setInitalizers(Set<Initializer> initalizers) {
 		LOGGER.info("Custom initializers are in use.");
-		InitializerExecutor.initializers = initalizers;
+		if (initalizers != InitializerExecutor.initializers) {
+		    InitializerExecutor.initializers = initalizers;
+		    initializersRan.set(false);
+		}
 	}
 
 	/**
 	 * Resets the executor to only use the default initializers.
 	 */
 	public static void resetInitializers() {
-		InitializerExecutor.initializers = getDefaultInitializers();
+		InitializerExecutor.initializers = null;
+		initializersRan.set(false);
 	}
 
+	/**
+         * Runs all {@link Initializer}s. If no custom initializers were set then
+         * use the default initializers as retrieved by
+         * {@link #getDefaultInitializers()}.
+         */
+        public static void runInitializers() {
+                runInitializers(null);
+        }
+        
 	/**
 	 * Runs all {@link Initializer}s. If no custom initializers were set then
 	 * use the default initializers as retrieved by
 	 * {@link #getDefaultInitializers()}.
 	 */
-	public static void runInitializers() {
-		Set<Initializer> inits;
+	public static void runInitializers(SimplePDPConfiguration configuration) {
+		if (!initializersRan.get()) { //if the initializers were not executed earlier.
+			Set<Initializer> inits;
 
-		if (initializers == null) {
-			inits = getDefaultInitializers();
-		} else {
-			inits = initializers;
-		}
-
-		if (inits != null) {
-			for (Initializer initializer : inits) {
-				initializer.run();
+			if (initializers == null) {
+				inits = getDefaultInitializers();
+			} else {
+				inits = initializers;
 			}
-		}
+
+			if (inits != null) {
+				for (Initializer initializer : inits) {
+					initializer.run(configuration);
+				}
+			}
+			initializersRan.set(true);
+		} 
 	}
 }

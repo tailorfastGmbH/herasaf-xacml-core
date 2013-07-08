@@ -1,5 +1,5 @@
 /*
- * Copyright 2008-2010 HERAS-AF (www.herasaf.org)
+ * Copyright 2008 - 2012 HERAS-AF (www.herasaf.org)
  * Holistic Enterprise-Ready Application Security Architecture Framework
  * 
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.converter;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -30,8 +31,7 @@ import org.slf4j.LoggerFactory;
  * Converts an URN to a function. The default functions are defined in the <a
  * href=
  * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29 June
- * 2006</a> appendix A.3, page 117. <br>
+ * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> appendix A.3, page 113. <br>
  * 
  * @author Sacha Dolski
  * @author Florian Huonder
@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
 public class FunctionsJAXBTypeAdapter extends XmlAdapter<String, Function> {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(FunctionsJAXBTypeAdapter.class);
-	private static Map<String, Function> functions;
+	private static Map<String, Function> functions = new HashMap<String, Function>();
 
 	/**
 	 * This method sets the {@link Map} containing the mapping between functions
@@ -50,8 +50,8 @@ public class FunctionsJAXBTypeAdapter extends XmlAdapter<String, Function> {
 	 *            The {@link Map} containing the mapping between ID's and
 	 *            functions
 	 */
-	public static void setFunctions(final Map<String, Function> functions) {
-		FunctionsJAXBTypeAdapter.functions = functions;
+	public static void addFunctions(final Map<String, Function> functions) {
+		FunctionsJAXBTypeAdapter.functions.putAll(functions);
 	}
 
 	/**
