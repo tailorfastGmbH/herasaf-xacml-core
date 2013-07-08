@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Policy xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os access_control-xacml-2.0-policy-schema-os.xsd"
+	xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:context="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:first-applicable"
+	PolicyId="urn:org:herasaf:xacml:test:P1">
+	
+	<!-- This is the combiner parameters element that is (in the schema) before the Target element -->
+	<CombinerParameters>
+		<CombinerParameter ParameterName="testParam">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Person</AttributeValue>
+		</CombinerParameter>
+	</CombinerParameters>	
+
+	<Target />
+	
+	<!-- This is the combiner parameters element that is (in the schema) in the choice (after the Target) -->	
+	<CombinerParameters>
+		<CombinerParameter ParameterName="testParam2">
+			<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Company</AttributeValue>
+		</CombinerParameter>
+	</CombinerParameters>
+</Policy>
