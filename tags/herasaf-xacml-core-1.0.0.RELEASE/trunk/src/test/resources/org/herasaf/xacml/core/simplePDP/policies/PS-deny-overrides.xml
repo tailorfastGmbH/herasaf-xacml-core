@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<PolicySet xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os http://docs.oasis-open.org/xacml/access_control-xacml-2.0-policy-schema-os.xsd"
+	PolicySetId="urn:oasis:names:tc:xacml:2.0:conformance-test:IID006:policyset5-root"
+	PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.0:policy-combining-algorithm:deny-overrides">
+	<Target />
+	<Policy
+		RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides"
+		PolicyId="urn:oasis:names:tc:example:LeftPolicy1">
+		<Target />
+		<Rule Effect="Deny" RuleId="urn:oasis:names:tc:xacml:2.0:example:SimpleRule1">
+		</Rule>
+	</Policy>
+	<Policy
+		RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides"
+		PolicyId="urn:oasis:names:tc:example:RightPolicy1">
+		<Target />
+		<Rule Effect="Deny" RuleId="urn:oasis:names:tc:xacml:2.0:example:SimpleRule1">
+		</Rule>
+		<Obligations>
+			<Obligation FulfillOn="Deny" ObligationId="expectedObligation"></Obligation>
+		</Obligations>
+	</Policy>
+</PolicySet>
