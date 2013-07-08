@@ -45,13 +45,13 @@
 	</ciManagement>
 	<scm>
 		<connection>
-			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/
+			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/trunk/
 		</connection>
 		<developerConnection>
-			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/
+			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/trunk/
 		</developerConnection>
 		<url>
-			https://herasaf.jira.com/svn/XACMLCORE/
+			https://herasaf.jira.com/svn/XACMLCORE/trunk/
 		</url>
 	</scm>
 
