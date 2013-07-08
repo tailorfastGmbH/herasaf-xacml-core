@@ -11,7 +11,7 @@
 	<groupId>org.herasaf.xacml.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
 	<artifactId>herasaf-xacml-core</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
 	<packaging>bundle</packaging>
-	<version>1.0.0.RELEASE-SNAPSHOT</version>
+	<version>1.0.0.RELEASE</version>
 	<!-- [major].[minor].[revision] major version = HERAS-AF release -> (API 
 		changes on the main Interfaces (PDP,PIP,REPO etc.) or XACML Version change) 
 		minor version = Changes to the framework where the user is affected (e.g. 
@@ -45,13 +45,13 @@
 	</ciManagement>
 	<scm>
 		<connection>
-			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/trunk/
+			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/tags/herasaf-xacml-core-1.0.0.RELEASE
 		</connection>
 		<developerConnection>
-			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/trunk/
+			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/tags/herasaf-xacml-core-1.0.0.RELEASE
 		</developerConnection>
 		<url>
-			https://herasaf.jira.com/svn/XACMLCORE/trunk/
+			https://herasaf.jira.com/svn/XACMLCORE/tags/herasaf-xacml-core-1.0.0.RELEASE
 		</url>
 	</scm>
 
