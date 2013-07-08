@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.herasaf.xacml.core.simplePDP;
+package org.herasaf.xacml.core.simplePDP.referenceloading;
 
 import static org.testng.Assert.assertTrue;
 
@@ -30,6 +30,8 @@ import org.herasaf.xacml.core.context.RequestMarshaller;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResponseType;
+import org.herasaf.xacml.core.simplePDP.SimplePDP;
+import org.herasaf.xacml.core.simplePDP.SimplePDPFactory;
 import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
 import org.herasaf.xacml.core.simplePDP.initializers.api.Initializer;
 import org.testng.annotations.BeforeClass;

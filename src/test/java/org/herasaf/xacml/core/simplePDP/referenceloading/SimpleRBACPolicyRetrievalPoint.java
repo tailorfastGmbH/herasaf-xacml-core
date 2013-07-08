@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.herasaf.xacml.core.simplePDP;
+package org.herasaf.xacml.core.simplePDP.referenceloading;
 
 import java.io.File;
 import java.net.URL;

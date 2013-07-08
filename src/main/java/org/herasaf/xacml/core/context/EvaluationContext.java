@@ -406,6 +406,9 @@ public class EvaluationContext {
 		return stringValue.toString();
 	}
 
+	/**
+	 * Returns the current configured {@link PolicyRetrievalPoint}.
+	 */
 	public PolicyRetrievalPoint getPolicyRetrievalPoint() {
 		return policyRetrievalPoint;
 	}
