@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jaxb:bindings jaxb:version="2.1"
+	xmlns:jaxb="http://java.sun.com/xml/ns/jaxb"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xs:schemaLocation="http://java.sun.com/xml/ns/jaxb http://java.sun.com/xml/ns/jaxb/bindingschema_2_0.xsd">
+	<jaxb:bindings
+		schemaLocation="access_control-xacml-2.0-context-schema-os.xsd">
+		<jaxb:bindings node="/xs:schema">
+			<jaxb:schemaBindings>
+				<jaxb:package name="org.herasaf.xacml.core.context" />
+			</jaxb:schemaBindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ActionType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Attribute']">
+				<jaxb:property name="attributes" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='EnvironmentType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Attribute']">
+				<jaxb:property name="attributes" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ResourceType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Attribute']">
+				<jaxb:property name="attributes" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='SubjectType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Attribute']">
+				<jaxb:property name="attributes" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='AttributeType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:AttributeValue']">
+				<jaxb:property name="attributeValues" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='MissingAttributeDetailType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:AttributeValue']">
+				<jaxb:property name="attributeValues" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='RequestType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Subject']">
+				<jaxb:property name="subjects" />
+			</jaxb:bindings>
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Resource']">
+				<jaxb:property name="resources" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings node="//xs:complexType[@name='ResponseType']">
+			<jaxb:bindings
+				node=".//xs:element[@ref='xacml-context:Result']">
+				<jaxb:property name="results" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+		<jaxb:bindings
+			node="//xs:complexType[@name='StatusDetailType']">
+			<jaxb:bindings node=".//xs:any[@namespace='##any']">
+				<jaxb:property name="content" />
+			</jaxb:bindings>
+		</jaxb:bindings>
+
+	</jaxb:bindings>
+</jaxb:bindings>

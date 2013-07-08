@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Policy xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	RuleCombiningAlgId="urn:oasis:names:tc:xacml:1.0:rule-combining-algorithm:deny-overrides"
+	PolicyId="urn:oasis:names:tc:example:SimplePolicyEnvironment"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os http://docs.oasis-open.org/xacml/access_control-xacml-2.0-policy-schema-os.xsd">
+	<Target>
+		<Subjects>
+			<Subject>
+				<SubjectMatch
+					MatchId="urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
+						med.example.com
+					</AttributeValue>
+					<SubjectAttributeDesignator
+						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
+						DataType="urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name" />
+				</SubjectMatch>
+			</Subject>
+		</Subjects>
+	</Target>
+	<Rule Effect="Permit" RuleId="urn:oasis:names:tc:xacml:2.0:example:SimpleRuleEnvironment">
+		<Target>
+			<Environments>
+              <Environment>
+                <EnvironmentMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:dateTime-less-than">
+                  <AttributeValue DataType="http://www.w3.org/2001/XMLSchema#dateTime">2012-10-09T10:51:25.359Z</AttributeValue>
+                  <EnvironmentAttributeDesignator DataType="http://www.w3.org/2001/XMLSchema#dateTime" 
+                    AttributeId="urn:oasis:names:tc:xacml:1.0:environment:current-dateTime" />
+                </EnvironmentMatch>
+              </Environment>
+            </Environments>
+        </Target>
+	</Rule>
+</Policy>
