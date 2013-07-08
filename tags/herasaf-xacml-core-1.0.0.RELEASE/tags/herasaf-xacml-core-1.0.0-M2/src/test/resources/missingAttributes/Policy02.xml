@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<PolicySet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="urn:oasis:names:tc:xacml:2.0:policy:schema:os access_control-xacml-2.0-policy-schema-os.xsd"
+	xmlns="urn:oasis:names:tc:xacml:2.0:policy:schema:os" xmlns:context="urn:oasis:names:tc:xacml:2.0:context:schema:os"
+	PolicyCombiningAlgId="urn:oasis:names:tc:xacml:1.1:policy-combining-algorithm:ordered-permit-overrides"
+	PolicySetId="urn:org:herasaf:xacml:test:PS1">
+	<Target>
+		<Resources>
+			<Resource>
+				<ResourceMatch MatchId="urn:oasis:names:tc:xacml:1.0:function:string-equal">
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">Name</AttributeValue>
+					<ResourceAttributeDesignator
+						AttributeId="urn:oasis:names:tc:xacml:1.0:resource:resource-id"
+						DataType="http://www.w3.org/2001/XMLSchema#string" MustBePresent="true" />
+				</ResourceMatch>
+			</Resource>
+		</Resources>
+	</Target>
+</PolicySet>
