@@ -17,20 +17,11 @@
 
 package org.herasaf.xacml.core.utils;
 
-import java.io.File;
-import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.XMLConstants;
 import javax.xml.bind.ValidationEventHandler;
-import javax.xml.transform.Source;
-import javax.xml.transform.stream.StreamSource;
 import javax.xml.validation.Schema;
-import javax.xml.validation.SchemaFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,22 +39,16 @@ public class JAXBMarshallerConfiguration {
 	private transient final Logger logger = LoggerFactory
 			.getLogger(JAXBMarshallerConfiguration.class);
 
-	private static final String CLASSPATH_PREFIX = "classpath:";
-	private static final String FILE_PREFIX = "file:";
-	private static final String URL_PREFIX = "url:";
-
 	/** Tells if the output should be formatted. */
 	private boolean formattedOutput;
 	/** Tells if the output should be fragmented. */
 	private boolean fragment;
+
+	/** Contains the schema and its location. */
+	private SchemaConfiguration schemaConfiguration;
 	/** Tells if the schema location should be added to the output. */
 	private boolean writeSchemaLocation;
-	/** The list with the schema locations. */
-	private List<String> schemaLocation;
-	/** The given schemaPaths for creating the schema used at validation. */
-	private List<String> schemaPaths;
-	/** The used Schema. */
-	private Schema schema;
+
 	/** Tells if the input should be validated before parsing. */
 	private boolean validateParsing;
 	/** Tells if the output should be validated before writing. */
@@ -76,8 +61,7 @@ public class JAXBMarshallerConfiguration {
 	 * Default Constructor
 	 */
 	public JAXBMarshallerConfiguration() {
-		schemaLocation = new ArrayList<String>();
-		schemaPaths = new ArrayList<String>();
+		schemaConfiguration = new SchemaConfiguration();
 	}
 
 	/**
@@ -146,7 +130,7 @@ public class JAXBMarshallerConfiguration {
 	 * @throws SAXException
 	 */
 	public Schema getSchema() {
-		return schema;
+		return this.schemaConfiguration.getSchema();
 	}
 
 	/**
@@ -173,99 +157,12 @@ public class JAXBMarshallerConfiguration {
 	 */
 	public void setSchemaByPath(String... schemaPaths) throws SAXException,
 			MalformedURLException {
-		if (isEmpty(schemaPaths)) {
-			throw new IllegalArgumentException(
-					"The parameter SchemaPaths must contain at least one path.");
-		}
-		this.schemaPaths = Arrays.asList(schemaPaths);
-
-		Source[] schemaSources = new StreamSource[schemaPaths.length];
-		for (int i = 0; i < schemaPaths.length; i++) {
-			String schema = schemaPaths[i].trim();
-			if (schema.regionMatches(true, 0, URL_PREFIX, 0,
-					URL_PREFIX.length())) { // if
-				// the schemaPath has the url: prefix
-				URL url = new URL(schema.substring(URL_PREFIX.length()));
-				schemaSources[i] = new StreamSource(url.toExternalForm());
-			} else if (schema.regionMatches(true, 0, FILE_PREFIX, 0,
-					FILE_PREFIX.length())) { // if
-				// the schemaPath has the file: prefix
-				File file = new File(schema.substring(FILE_PREFIX.length()));
-				schemaSources[i] = new StreamSource(file);
-			} else if (schema.regionMatches(true, 0, CLASSPATH_PREFIX, 0,
-					CLASSPATH_PREFIX.length())) { // if
-				// the schemaPath has the classpath: prefix
-				InputStream schemaInput = JAXBMarshallerConfiguration.class
-						.getResourceAsStream(leadingSlash(schema
-								.substring(CLASSPATH_PREFIX.length())));
-				if (schemaInput == null) {
-					throw new IllegalArgumentException(schema);
-				}
-				schemaSources[i] = new StreamSource(schemaInput);
-			} else { // if no prefix is provided, the default is classpath:
-				logger.warn(
-						"No prefix (file: || url: || classpath:) given for schema for JAXB validation. Falling back to classpath:{}",
-						leadingSlash(schema));
-
-				InputStream schemaInput = JAXBMarshallerConfiguration.class
-						.getResourceAsStream(leadingSlash(schema));
-				if (schemaInput == null) {
-					throw new IllegalArgumentException(schema);
-				}
-				schemaSources[i] = new StreamSource(schemaInput);
-			}
-		}
-
-		SchemaFactory sf = SchemaFactory
-				.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-		this.schema = createSchema(sf, schemaSources);
-	}
-
-	private <T> boolean isEmpty(T... values) {
-		return (values == null || values.length == 0);
-	}
-
-	/**
-	 * Creates a new schema for validating. If the schema given by the source(s)
-	 * cannot be loaded <code>null</code> is returned and validating is turned
-	 * off.
-	 * 
-	 * @param sf
-	 *            The factory to create the schema.
-	 * @param source
-	 *            The source(s) where the schema is(are). At least one source is
-	 *            mandatory.
-	 * @throw IllegalArgumentException If the parameter source is empty.
-	 * 
-	 * @return The created schema or <code>null</code> if it fails.
-	 */
-	private Schema createSchema(SchemaFactory sf, Source... source) {
-		if (isEmpty(source)) {
-			throw new IllegalArgumentException(
-					"The parameter source must contain at least one value");
-		}
 		try {
-			return sf.newSchema(source);
+			schemaConfiguration.setSchemaByPath(schemaPaths);
 		} catch (SAXException e) {
 			setValidateParsing(false);
 			setValidateWriting(false);
 			logger.warn("Validating turned off because schema could not be initialized.");
-		}
-		return null;
-	}
-
-	/**
-	 * checks if a given String has a leading slash and adds one otherwise.
-	 * 
-	 * @param input
-	 *            The String to add a leading slash if missing.
-	 * @return The String with a leading slash.
-	 */
-	private String leadingSlash(String input) {
-		if (input.startsWith("/")) {
-			return input;
-		} else {
-			return "/" + input;
 		}
 	}
 
@@ -275,13 +172,7 @@ public class JAXBMarshallerConfiguration {
 	 * @return The location of the schema file.
 	 */
 	public String getSchemaLocationAsString() {
-		StringBuilder sb = new StringBuilder();
-		for (String str : schemaLocation) {
-			sb.append(str);
-			sb.append(" ");
-		}
-
-		return sb.toString();
+		return schemaConfiguration.getSchemaLocationAsString();
 	}
 
 	/**
@@ -291,10 +182,7 @@ public class JAXBMarshallerConfiguration {
 	 *            The list of schema locations.
 	 */
 	public void setSchemaLocation(List<String> schemaLocation) {
-		this.schemaLocation = new ArrayList<String>();
-		for (String str : schemaLocation) {
-			this.schemaLocation.add(str.trim());
-		}
+		schemaConfiguration.setSchemaLocation(schemaLocation);
 	}
 
 	/**
@@ -375,14 +263,11 @@ public class JAXBMarshallerConfiguration {
 		builder.append("validateWriting = ");
 		builder.append(isValidateWriting());
 		builder.append(", ");
-		builder.append("schema = ");
-		builder.append(this.schemaPaths.toString());
-		builder.append(", ");
+		builder.append("schemaConfiguraiton = {");
+		builder.append(this.schemaConfiguration.toString());
+		builder.append("}, ");
 		builder.append("writeSchemaLocation = ");
 		builder.append(isWriteSchemaLocation());
-		builder.append(", ");
-		builder.append("schemaLocation = ");
-		builder.append(getSchemaLocationAsString());
 		builder.append("}");
 		return builder.toString();
 	}
