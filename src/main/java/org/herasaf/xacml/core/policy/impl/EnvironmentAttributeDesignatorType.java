@@ -77,7 +77,7 @@ public class EnvironmentAttributeDesignatorType extends AttributeDesignatorType 
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
-			List<AttributeValueType> attrValues = evaluationContext.getPIP().addEnvironmentAttributesToRequest(request, getAttributeId(),
+			List<AttributeValueType> attrValues = evaluationContext.getPIP().fetchEnvironmentAttributes(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}

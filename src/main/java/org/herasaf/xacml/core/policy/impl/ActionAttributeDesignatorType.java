@@ -77,7 +77,7 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
-			List<AttributeValueType> attrValues = evaluationContext.getPIP().addActionAttributesToRequest(request, getAttributeId(),
+			List<AttributeValueType> attrValues = evaluationContext.getPIP().fetchActionAttributes(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}

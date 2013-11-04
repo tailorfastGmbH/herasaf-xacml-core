@@ -79,7 +79,7 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		 * further information.
 		 */
 		if (returnValues.size() == 0 && evaluationContext.getPIP() != null) {
-			List<AttributeValueType> attrValues = evaluationContext.getPIP().addResourceAttributesToRequest(request, getAttributeId(),
+			List<AttributeValueType> attrValues = evaluationContext.getPIP().fetchResourceAttributes(request, getAttributeId(),
 					getDataType().toString(), getIssuer());
 			addAndConvertAttrValue(returnValues, attrValues);
 		}
