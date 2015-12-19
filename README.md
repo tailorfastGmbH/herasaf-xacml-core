@@ -3,8 +3,6 @@
 Welcome to HERAS-AF XACML Core.
 HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 
-## License ##
-HERAS-AF XACML Core is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).
 
 ## XACML 2.0 Features ##
 * All XACML 2.0 features needed for conformance
@@ -19,6 +17,13 @@ HERAS-AF XACML Core is available under the [Apache 2.0 License](http://www.apach
 * Marshalling capabilities (JAXB) from and to various formats (File, Streams, ...) of Evaluatables, Requests and Responses.
 * Various configuration possibilities through the SimplePDPFactory.
 
+## Developer's Resources ##
+|||
+| ------------- | ------------- |
+| Issue Tracking | https://herasaf.jira.com/secure/Dashboard.jspa |
+| Wiki (including User's Guide) | https://herasaf.jira.com/wiki/display/XACMLCORE/XACML+Core+1.0.0.RELEASE |
+| E-Mail | [info@herasaf.org](mailto:info@herasaf.org) |
+
 ## Who is using? ##
 ||
 | ------------- |
@@ -28,9 +33,5 @@ HERAS-AF XACML Core is available under the [Apache 2.0 License](http://www.apach
 | HERAS-AF is built into the core of a beta version of an [Orange](http://www.orange.com) privacy management service, enabling Orange users to manage access permissions to their personal data and APIs services shared with third party services. More precisely, the "user privacy" service checks if a third party service is authorized to access to Orange users' personal data (like profile or geolocation)/applications (calendar, address book...). A web interface available to Orange users offers a central point to manage access control policies and access history of their personal data (http://privacy.orange.fr). |
 | "The Enabling Grids for E-sciencE (EGEE) project is funded by the European Commission and aims to build on recent advances in grid technology and develop a service grid infrastructure which is available to scientists 24 hours-a-day." (http://public.eu-egee.org). EGEE uses the HERASAF XACML implementation for their Authorization Framework (https://twiki.cern.ch/twiki/bin/view/EGEE/AuthorizationFramework). |
 
-## Developer's Resources ##
-|||
-| ------------- | ------------- |
-| Issue Tracking | https://herasaf.jira.com/secure/Dashboard.jspa |
-| Wiki (including User's Guide) | https://herasaf.jira.com/wiki/display/XACMLCORE/XACML+Core+1.0.0.RELEASE |
-| E-Mail | [info@herasaf.org](mailto:info@herasaf.org) |
+## License ##
+HERAS-AF XACML Core is available under the [Apache 2.0 License](http://www.apache.org/licenses/LICENSE-2.0).
