@@ -29,8 +29,8 @@ HERAS-AF XACML Core is available under the [Apache 2.0 License](http://www.apach
 | "The Enabling Grids for E-sciencE (EGEE) project is funded by the European Commission and aims to build on recent advances in grid technology and develop a service grid infrastructure which is available to scientists 24 hours-a-day." (http://public.eu-egee.org). EGEE uses the HERASAF XACML implementation for their Authorization Framework (https://twiki.cern.ch/twiki/bin/view/EGEE/AuthorizationFramework). |
 
 ## Developer's Resources ##
-||
-| ------------- |
+|||
+| ------------- | ------------- |
 | Issue Tracking | https://herasaf.jira.com/secure/Dashboard.jspa |
 | Wiki (including User's Guide) | https://herasaf.jira.com/wiki/display/XACMLCORE/XACML+Core+1.0.0.RELEASE |
 | E-Mail | [info@herasaf.org](mailto:info@herasaf.org) |
