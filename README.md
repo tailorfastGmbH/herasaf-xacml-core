@@ -20,6 +20,8 @@ HERAS-AF XACML Core is available under the [Apache 2.0 License](http://www.apach
 * Various configuration possibilities through the SimplePDPFactory.
 
 ## Who is using? ##
+|||
+| ------------- | ------------------------------ |
 | [Nedap]()http://www.nedap.com/ is a company based in the Netherlands that provides solutions for physical access control. Nedap's new generation products will build up on XACML as access control language. HERAS-AF XACML Core is integrated to enforce the physical access based on the deployed policies. |
 | [Forcare B.V.](http://www.forcare.nl/) is a Dutch software company providing software products and services for healthcare. Its focus is interoperability between healthcare IT systems. Forcare B.V. provides products and services to allow existing systems to (electronically) interconnect to share and exchange patient data.  |
 | [PrimeLife](http://primelife.ercim.eu/) will address the core privacy and trust issues pertaining to the challenges of how to protect privacy in emerging Internet applications such as collaborative scenarios and virtual communities; and how to maintain life-long privacy. Its long-term vision is to counter the trend to life-long personal data trails without compromising on functionality. It will build upon and expand the FP6 project Prime that has shown how privacy technologies can enable citizens to execute their legal rights to control personal information in on-line transactions. The main objective of the project is to bring sustainable privacy and identity management to future networks and services. PrimeLife is developped by IBM Research and various other companies and universities: Consortium. |
