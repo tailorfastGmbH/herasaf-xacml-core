@@ -4,11 +4,13 @@ HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 
 [TOC]
 
-## XACML 2.0 Features ##
+## Features ##
+
+### XACML 2.0 ###
 * All XACML 2.0 features needed for conformance
 * Obligations (including AttributeAssignments)
 
-## Features beyond XACML 2.0 ##
+### Beyond XACML 2.0 ###
 * Factory for creating a simple PDP that initializes all minimal needed components automatically.
 * PDP for evaluating XACML 2.0 requests.
 * A simple PolicyRepository that holds the currently deployed Evaluatables in the memory for evaluation.
