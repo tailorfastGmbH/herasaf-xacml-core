@@ -20,13 +20,14 @@ HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 * Various configuration possibilities through the SimplePDPFactory.
 
 ## Developer's Resources ##
-|||
-| ------------- | ------------- |
-| Issue Tracking |https://herasaf.jira.com/projects/XACMLCORE |
-| Wiki (including User's Guide) | https://herasaf.jira.com/wiki/display/XACMLCORE/XACML+Core+1.0.0.RELEASE |
-| E-Mail | [info@herasaf.org](mailto:info@herasaf.org) |
-
 If you have any quetions regarding how to use the herasaf-xacml-core or about the project use [Stackoverflow](http://stackoverflow.com/) with the tags **#xacml** or **#herasaf**
+
+||||
+| ------------- | ------------- | ------------- |
+| Issue Tracking |https://herasaf.jira.com/projects/XACMLCORE | Create a new issue if you like. |
+| Wiki (including User's Guide) | https://herasaf.jira.com/wiki/display/XACMLCORE/XACML+Core+1.0.0.RELEASE | Read our User's Guide about how to use the library. |
+| E-Mail | [info@herasaf.org](mailto:info@herasaf.org) | Write us an e-mail, if you have any questions. |
+
 
 ## Who is using? ##
 ||
