@@ -3,7 +3,7 @@
 Welcome to HERAS-AF XACML Core.
 HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 
-<<toc>>
+[TOC]
 
 ## XACML 2.0 Features ##
 * All XACML 2.0 features needed for conformance
