@@ -14,7 +14,7 @@ HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 * A simple PolicyRepository that holds the currently deployed Evaluatables in the memory for evaluation.
 * Possibility of loading local references.
 * Various extension Points for adding new functions, combining algorithms, data types.
-* Marshalling capabilities (JAXB) from and to various formats (File, Streams, ...) of Evaluatables, Requests and Responses.
+* Marshalling capabilities (JAXB) from and to various formats (File, Streams, ...) of Policies, PolicySets, Requests and Responses.
 * Various configuration possibilities through the SimplePDPFactory.
 
 ## Developer's Resources ##
