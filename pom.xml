@@ -1,78 +1,78 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.herasaf.xacml</groupId>
-		<artifactId>herasaf-xacml</artifactId>
-		<version>1.0.0.RELEASE</version> <!-- use most recent, final RootRoot-POM -->
-	</parent>
-
-	<!-- Project -->
-	<groupId>org.herasaf.xacml.core</groupId>   <!-- Naming: org.herasaf.xacml.<componentname] -->
-	<artifactId>herasaf-xacml-core</artifactId> <!-- Naming: herasaf-xacml-<componentname> -->
+	<groupId>org.herasaf.xacml.core</groupId>
+	<artifactId>herasaf-xacml-core</artifactId>
 	<packaging>bundle</packaging>
 	<version>1.0.1.RELEASE-SNAPSHOT</version>
-	<!-- [major].[minor].[revision] major version = HERAS-AF release -> (API 
-		changes on the main Interfaces (PDP,PIP,REPO etc.) or XACML Version change) 
-		minor version = Changes to the framework where the user is affected (e.g. 
-		indexer config file changes, repo internal core api changes, feature improvements) 
-		revision version = changes of implementations (internal bugfixes, patches, 
-		internal improvements etc.) Process: "top-down-propagation" = core version 
-		change propagates to Repo to repo-locator etc... (pseudo automatic, because 
-		updates in dependencies) Option for the future: User version ranges for dependency 
-		management (e.g repo needs a version of core between 2.5.0 and 2.5.999) -->
 
-	<!-- Project Information -->
-	<name>HERAS-AF XACML :: Core</name> <!-- HERAS-AF XACML :: <ComponentName> -->
+	<name>HERAS-AF XACML :: Core</name>
 	<description>The core component contains the evaluation engine. This means: combining algorithms, functions, data types, and API interfaces.</description> <!-- mandatory for HERAS-AF -->
-	<url>http://www.herasaf.org</url> <!-- always HERAS-AF Homepage -->
+	<url>https://bitbucket.org/herasaf/herasaf-xacml-core</url>
 
-	<!-- Inception Year is inherited from parent pom !!!DO NOT OVERRIDE!!! -->
-	<!-- Licenses is inherited from parent pom !!!DO NOT OVERRIDE!!! -->
-	<!-- Organization is inherited from parent pom !!!DO NOT OVERRIDE!!! -->
+	<inceptionYear>2006</inceptionYear>
+	<licenses>
+		<license>
+			<name>Apache License Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+	<organization>
+		<name>HERAS-AF</name>
+		<url>https://bitbucket.org/herasaf/herasaf-xacml-core</url>
+	</organization>
 
-	<!-- Project Environment/Infrastructure ### MANDATORY ### -->
 	<issueManagement>
-		<system>JIRA</system> <!-- This value must be JIRA! -->
-		<url>http://dev.herasaf.org/secure/project/ViewProject.jspa?pid=10061</url>
-		<!-- always pattern: "<JIRA Server>/browse/<componentKey>" (e.g. "http://jira.herasaf.org/POLICYREPOSITORY" -->
+		<system>JIRA</system>
+		<url>https://herasaf.jira.com/projects/XACMLCORE</url>
 	</issueManagement>
 	<ciManagement>
 		<system>Atlassian Bamboo</system>
-		<url>http://dev.herasaf.org/builds/browse/XACMLCORE
-		</url>
-		<!-- always pattern: "<Bamboo Server>/browse/<componentKey>" (e.g. "http://bamboo.herasaf.org/POLICYREPOSITORY" -->
+		<url>https://herasaf.jira.com/builds</url>
 	</ciManagement>
 	<scm>
 		<connection>
-			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/trunk/
+			scm:git:https://bitbucket.org/herasaf/herasaf-xacml-core
 		</connection>
 		<developerConnection>
-			scm:svn:https://herasaf.jira.com/svn/XACMLCORE/trunk/
+			scm:git:https://bitbucket.org/herasaf/herasaf-xacml-core
 		</developerConnection>
 		<url>
-			https://herasaf.jira.com/svn/XACMLCORE/trunk/
+			https://bitbucket.org/herasaf/herasaf-xacml-core
 		</url>
 	</scm>
 
 	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.compile.version>1.5</java.compile.version>
+
 		<reporting.findbugs.excludeFile.location>src/main/config/reporting/findbugs-excludes.xml</reporting.findbugs.excludeFile.location>
 		<reporting.checkstyle.excludeFile.location>src/main/config/reporting/checkstyle-suppressions.xml</reporting.checkstyle.excludeFile.location>
 
 		<!-- Dependencies versions -->
-		<jaxb.version>2.2.4-1</jaxb.version> <!-- attention, this is the latest version that supportes Java 5 -->
-		<slf4j.version>1.7.5</slf4j.version>
-		<logback.version>1.0.13</logback.version>
-		<testng.version>6.8.7</testng.version>
-		<xmlunit.version>1.5</xmlunit.version>
-		<jodatime.version>2.3</jodatime.version>
+		<jaxb.version>2.2.4-1</jaxb.version> <!-- attention: this is the latest version that supports Java 5 -->
+		<jodatime.version>2.9.1</jodatime.version>
+		<slf4j.version>1.7.13</slf4j.version>
+
+		<testng.version>6.8.21</testng.version> <!-- attention: this is the latest version that supports Java 5 -->
+		<junit.version>4.12</junit.version>
+		<xmlunit.version>1.6</xmlunit.version>
+		<logback.version>1.0.13</logback.version>  <!-- attention: this is the latest version that supports Java 5 -->
+		
+		<bundle.plugin.version>2.4.0</bundle.plugin.version> <!-- attention: this is the latest version that supports Java 5 -->
+		<compiler.plugin.version>3.3</compiler.plugin.version>
+		<javadoc.plugin.version>2.10.3</javadoc.plugin.version>
+		<source.plugin.version>2.4</source.plugin.version>
+		<surefire.plugin.version>2.19</surefire.plugin.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-		    <groupId>com.sun.xml.bind</groupId>
-		    <artifactId>jaxb-impl</artifactId>
-		    <version>${jaxb.version}</version>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>joda-time</groupId>
@@ -97,6 +97,12 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>${junit.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
 			<groupId>xmlunit</groupId>
 			<artifactId>xmlunit</artifactId>
 			<version>${xmlunit.version}</version>
@@ -109,19 +115,44 @@
 			<plugin>
 				<groupId>org.apache.felix</groupId>
 				<artifactId>maven-bundle-plugin</artifactId>
-				<version>2.3.7</version>
+				<version>${bundle.plugin.version}</version>
 				<extensions>true</extensions>
 				<configuration>
 					<instructions>
-						<Export-Package>org.herasaf.xacml.core.*</Export-Package>
 						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Import-Package>
+							*
+						</Import-Package>
+						<Export-Package>
+							org.herasaf.xacml.core.*
+						</Export-Package>
 					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${compiler.plugin.version}</version>
+				<configuration>
+					<source>${java.compile.version}</source>
+					<target>${java.compile.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${surefire.plugin.version}</version>
+				<configuration>
+					<skip>false</skip>
+					<argLine>-Xms512m -Xmx1024m</argLine>
+					<forkCount>1C</forkCount>
+					<reuseForks>false</reuseForks>
 				</configuration>
 			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
@@ -157,4 +188,42 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+
+	<profiles>
+		<profile>
+			<id>release</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<version>${javadoc.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>attach-javadoc</id>
+								<phase>install</phase>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<version>${source.plugin.version}</version>
+						<executions>
+							<execution>
+								<id>attach-sources</id>
+								<phase>install</phase>
+								<goals>
+									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 </project>
