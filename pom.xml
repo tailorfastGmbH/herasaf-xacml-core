@@ -34,10 +34,10 @@
 	</ciManagement>
 	<scm>
 		<connection>
-			scm:git:https://bitbucket.org/herasaf/herasaf-xacml-core.git
+			scm:git:ssh://git@bitbucket.org:herasaf/herasaf-xacml-core.git
 		</connection>
 		<developerConnection>
-			scm:git:https://bitbucket.org/herasaf/herasaf-xacml-core.git
+			scm:git:ssh://git@bitbucket.org:herasaf/herasaf-xacml-core.git
 		</developerConnection>
 		<url>
 			https://bitbucket.org/herasaf/herasaf-xacml-core
