@@ -60,12 +60,13 @@
 		<junit.version>4.12</junit.version>
 		<xmlunit.version>1.6</xmlunit.version>
 		<logback.version>1.0.13</logback.version>  <!-- attention: this is the latest version that supports Java 5 -->
-		
+
 		<bundle.plugin.version>2.4.0</bundle.plugin.version> <!-- attention: this is the latest version that supports Java 5 -->
 		<compiler.plugin.version>3.3</compiler.plugin.version>
 		<javadoc.plugin.version>2.10.3</javadoc.plugin.version>
 		<source.plugin.version>2.4</source.plugin.version>
 		<surefire.plugin.version>2.19</surefire.plugin.version>
+		<release.plugin.version>2.5.3</release.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -148,6 +149,11 @@
 					<forkCount>1C</forkCount>
 					<reuseForks>false</reuseForks>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>${release.plugin.version}</version>
 			</plugin>
 		</plugins>
 		<pluginManagement>
