@@ -32,6 +32,8 @@ The current release is available from maven central.
 </dependency>
 ```
 
+[Release Notes](https://herasaf.jira.com/projects/XACMLCORE/versions/10330)
+
 ||||
 | ------------- | ------------- | ------------- |
 | Issue Tracking |https://herasaf.jira.com/projects/XACMLCORE | Create a new issue if you like. |
