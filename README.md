@@ -32,7 +32,8 @@ The current release is available from maven central.
 </dependency>
 ```
 
-[Release Notes](https://herasaf.jira.com/projects/XACMLCORE/versions/10330)
+[Release Notes 1.0.2.RELEASE](https://herasaf.jira.com/projects/XACMLCORE/versions/10530)
+[Release Notes 1.0.1.RELEASE](https://herasaf.jira.com/projects/XACMLCORE/versions/10330)
 
 ||||
 | ------------- | ------------- | ------------- |
