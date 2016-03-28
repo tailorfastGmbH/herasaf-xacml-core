@@ -28,7 +28,7 @@ The current release is available from maven central.
 <dependency>
     <groupId>org.herasaf.xacml.core</groupId>
     <artifactId>herasaf-xacml-core</artifactId>
-    <version>1.0.1.RELEASE</version>
+    <version>1.0.2.RELEASE</version>
 </dependency>
 ```
 
