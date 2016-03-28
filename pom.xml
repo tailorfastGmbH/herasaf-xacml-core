@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.herasaf.xacml.core</groupId>
@@ -22,6 +23,13 @@
 		<name>HERAS-AF</name>
 		<url>https://bitbucket.org/herasaf/herasaf-xacml-core</url>
 	</organization>
+	<developers>
+		<developer>
+			<name>Florian Huonder</name>
+			<organization>HERAS-AF</organization>
+			<organizationUrl>https://bitbucket.org/herasaf/herasaf-xacml-core</organizationUrl>
+		</developer>
+	</developers>
 
 	<issueManagement>
 		<system>JIRA</system>
@@ -41,8 +49,8 @@
 		<url>
 			https://bitbucket.org/herasaf/herasaf-xacml-core
 		</url>
-	  <tag>HEAD</tag>
-  </scm>
+		<tag>HEAD</tag>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
