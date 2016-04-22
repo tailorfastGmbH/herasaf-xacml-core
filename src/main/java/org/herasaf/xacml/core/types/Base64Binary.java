@@ -16,8 +16,9 @@
  */
 package org.herasaf.xacml.core.types;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * This is the representation of a value encoded in base64. The constructor
@@ -27,33 +28,60 @@ import java.util.List;
  * @author Florian Huonder
  */
 public class Base64Binary {
-	private static final List<Character> BASE64CHARS = Arrays.asList('A', 'B',
+	private static final Set<Character> BASE64CHARS;
+	private static final Set<Character> IGNORED_WHITESPACE;
+	
+	static {
+		BASE64CHARS = new HashSet<Character>();
+		Collections.addAll(BASE64CHARS, 'A', 'B',
 			'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
 			'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'a', 'b',
 			'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
 			'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1',
 			'2', '3', '4', '5', '6', '7', '8', '9', '+', '/');
+		
+		IGNORED_WHITESPACE = new HashSet<Character>();
+		Collections.addAll(IGNORED_WHITESPACE, '\t', '\n', '\r', ' ', '\u00A0',
+				'\u2007', '\u202F');
+	}
 
-	private String base64String;
+	private final String base64String;
 
 	public Base64Binary(String stringRepresentation) {
-		stringRepresentation = stringRepresentation.trim();
-		if ((stringRepresentation.length() % 4) != 0 || stringRepresentation.length() == 0) {
-			throw new IllegalArgumentException(
-					"A Base64Binary string's length must be a multiple of four.");
+		final char[] chars= stringRepresentation.toCharArray();
+				
+		int relevantCharsCount = 0;
+		boolean isPadding = false;
+		
+		for (int i = 0; i < chars.length; ++i) {
+			final char c = chars[i];
+			
+			// Whitespace is not part of the message and must generally be ignored.
+			if (IGNORED_WHITESPACE.contains(c)) {
+				continue;
+			}
+			
+			relevantCharsCount++;
+
+			// '=' can only occur in the padding
+			if (isPadding) {
+				if(c != '='){
+					throw new IllegalArgumentException("Encountered padding character ");
+				} 
+			} else {
+				if (c == '='){
+					isPadding = true;
+				} else {
+					if(!BASE64CHARS.contains(c)){
+						throw new IllegalArgumentException("Base64 string contains '" + c + "' that is not a valid Base64 character.");
+					}
+				}
+			}	
 		}
 		
-		char[] chars = new char[stringRepresentation.length()];
-		stringRepresentation.getChars(0, stringRepresentation.length(), chars, 0);
-		for(int i = 0; i < chars.length; i++){
-			char c = chars[i];
-			if(c == '=' && ((i != chars.length - 1 && i != chars.length - 2))){
-				//= can only occur at one of the last two positions, depending on the length of the original string.
-				throw new IllegalArgumentException("Given Base64 string is not a valid Base64 type.");
-			}
-			if(!BASE64CHARS.contains(c) && c != '='){
-				throw new IllegalArgumentException("Base64 string contains '" + c + "' that is not a valid Base64 character.");
-			}
+		if (relevantCharsCount % 4 != 0 || relevantCharsCount == 0) {
+			throw new IllegalArgumentException(
+					"A Base64Binary string's length must be a multiple of four.");
 		}
 		
 		base64String = stringRepresentation;
