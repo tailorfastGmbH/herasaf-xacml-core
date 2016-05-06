@@ -49,26 +49,21 @@ public class Base64Binary {
 		final char[] characters = stringRepresentation.toCharArray();
 		int relevantCharsCount = 0;
 		boolean isPreviousPaddingCharacter = false;
-
 		for (int i = 0; i < characters.length; ++i) {
 			char character = characters[i];
-
 			final boolean isWhitespaceCharacter = IGNORED_WHITESPACE.contains(character);
 			if (isWhitespaceCharacter) {
 				continue;
 			}
-
 			relevantCharsCount++;
 			isPreviousPaddingCharacter = verifyCharacter(character, isPreviousPaddingCharacter);
 		}
-
 		verifyLength(relevantCharsCount);
 		base64String = stringRepresentation;
 	}
 
 	private boolean verifyCharacter(final char character, final boolean isPreviousPaddingCharacter) {
 		final boolean isPaddingCharacter = PADDING_CHAR == character;
-
 		if (isPreviousPaddingCharacter && !isPaddingCharacter) {
 			throw new IllegalArgumentException("Encountered non-padding character.");
 		} else {
@@ -82,7 +77,6 @@ public class Base64Binary {
 
 	private void verifyBase64Character(final char character) {
 		final boolean isBase64Character = BASE64CHARS.contains(character);
-
 		if (!isBase64Character) {
 			String message = String.format("Base64 string contains '%s' which is not a valid Base64 character.",
 					character);
@@ -93,7 +87,6 @@ public class Base64Binary {
 	private void verifyLength(final int relevantCharsCount) {
 		final boolean isNotMultipleOfFour = relevantCharsCount % 4 != 0;
 		final boolean hasNoRelevantCharacters = relevantCharsCount == 0;
-
 		if (isNotMultipleOfFour || hasNoRelevantCharacters) {
 			throw new IllegalArgumentException("A Base64Binary string's length must be a multiple of four.");
 		}
