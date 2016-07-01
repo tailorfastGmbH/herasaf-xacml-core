@@ -17,35 +17,31 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 
 /**
- * This data type represents a
- * urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration. See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 111, for further information.
- * 
- * @author Stefan Oberholzer
- * @version 1.0
+ * This data type represents a urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration. See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access Control Markup
+ * Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 111, for further information.
  */
 public class DayTimeDurationDataTypeAttribute extends AbstractDataTypeAttribute<DayTimeDuration> {
 	public static final String ID = "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration";
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public DayTimeDuration convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new DayTimeDuration(((String) jaxbRepresentation.get(0)).trim());
-		} catch (IllegalArgumentException e) {
-			throw new SyntaxException(e);
-		}
+	public String getDatatypeURI() {
+		return ID;
 	}
 
 	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
+	@Override
+	public DayTimeDuration convertTo(String jaxbRepresentation) throws SyntaxException {
+		try {
+			DayTimeDuration dayTimeDuration = new DayTimeDuration(jaxbRepresentation);
+			return dayTimeDuration;
+		} catch (IllegalArgumentException e) {
+			throw new SyntaxException(e);
+		}
 	}
 }

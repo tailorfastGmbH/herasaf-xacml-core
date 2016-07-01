@@ -100,6 +100,10 @@ public class Time implements Comparable<Time> {
 		timeString = timeString.trim();
 		try {
 			time = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(timeString);
+		} catch (UnsupportedOperationException e) {
+			String message = "Parsing time is not supported.";
+			logger.error(message);
+			throw new SyntaxException(message, e);
 		} catch (IllegalArgumentException e) {
 			try {
 				// If parsing failed check if the time is midnight as clockhour.
@@ -108,10 +112,11 @@ public class Time implements Comparable<Time> {
 				// shifted plus one
 				time = time.plus(Period.days(1));
 			} catch (IllegalArgumentException e2) {
-				SyntaxException se = new SyntaxException("The time '" + timeString
-						+ "' is not a valid time according to http://www.w3.org/2001/XMLSchema#time", e);
-				logger.error(se.getMessage());
-				throw se;
+				String message = String.format(
+						"The time '%s' is not a valid time according to http://www.w3.org/2001/XMLSchema#time",
+						timeString);
+				logger.error(message);
+				throw new SyntaxException(message, e);
 			}
 		} finally {
 			if (time != null) {

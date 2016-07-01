@@ -17,34 +17,31 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.RFC822Name;
 
 /**
- * This data type represents a
- * urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name. See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 110, for further information.
- * 
- * @author Stefan Oberholzer
+ * This data type represents a urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name. See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access Control Markup
+ * Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 110, for further information.
  */
 public class RFC822NameDataTypeAttribute extends AbstractDataTypeAttribute<RFC822Name> {
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name";
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public RFC822Name convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new RFC822Name(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e) {
-			throw new SyntaxException(e);
-		}
+	public String getDatatypeURI() {
+		return ID;
 	}
 
 	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
+	@Override
+	public RFC822Name convertTo(String jaxbRepresentation) throws SyntaxException {
+		try {
+			RFC822Name rfc822Name = new RFC822Name(jaxbRepresentation);
+			return rfc822Name;
+		} catch (IllegalArgumentException e) {
+			throw new SyntaxException(e);
+		}
 	}
 }

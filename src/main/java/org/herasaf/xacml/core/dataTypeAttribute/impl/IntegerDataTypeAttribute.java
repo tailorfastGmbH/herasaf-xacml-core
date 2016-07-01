@@ -18,33 +18,31 @@
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import java.math.BigInteger;
-import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
  * This data type represents a http://www.w3.org/2001/XMLSchema#integer. See: <A
- * HREF="http://www.w3.org/TR/xmlschema-2/#integer"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for further
- * information.
- * 
- * @author Stefan Oberholzer
+ * HREF="http://www.w3.org/TR/xmlschema-2/#integer" target="_blank">http://www.w3.org/TR/xmlschema-2/#integer</A> for
+ * further information.
  */
 public class IntegerDataTypeAttribute extends AbstractDataTypeAttribute<BigInteger> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#integer";
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public BigInteger convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new BigInteger(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e) {
-			throw new SyntaxException(e);
-		}
+	public String getDatatypeURI() {
+		return ID;
 	}
 
 	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
+	@Override
+	public BigInteger convertTo(String jaxbRepresentation) throws SyntaxException {
+		try {
+			BigInteger bigInteger = new BigInteger(jaxbRepresentation);
+			return bigInteger;
+		} catch (NumberFormatException e) {
+			throw new SyntaxException(e);
+		}
 	}
 }

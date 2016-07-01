@@ -16,38 +16,26 @@
  */
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
- * This data type represents a http://www.w3.org/2001/XMLSchema#date. See: <A
- * HREF="http://www.w3.org/TR/xmlschema-2/#date"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#date</A> for further
- * information.
- * 
- * @author Florian Huonder
+ * This data type represents a http://www.w3.org/2001/XMLSchema#date. See: <A HREF="http://www.w3.org/TR/xmlschema-2/#date"
+ * target="_blank">http://www.w3.org/TR/xmlschema-2/#date</A> for further information.
  */
 public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
-	public static final String ID = "http://www.w3.org/2001/XMLSchema#date";
-	private static final long serialVersionUID = 1L;
-	private final Logger logger = LoggerFactory.getLogger(DateDataTypeAttribute.class);
+    public static final String ID = "http://www.w3.org/2001/XMLSchema#date";
+    private static final long serialVersionUID = 1L;
 
-	/** {@inheritDoc} */
-	public Date convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new Date(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e){
-			logger.error("An unexpected error occured.", e);
-			throw new SyntaxException(e);
-		}
-	}
+    /** {@inheritDoc} */
+    public String getDatatypeURI() {
+        return ID;
+    }
 
-	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Date convertTo(String jaxbRepresentation) throws SyntaxException {
+        Date date = new Date(jaxbRepresentation);
+        return date;
+    }
 }
