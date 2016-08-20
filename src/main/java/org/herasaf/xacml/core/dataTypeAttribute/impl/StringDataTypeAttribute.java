@@ -17,26 +17,42 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
+import java.util.List;
+
+import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * This data type represents a http://www.w3.org/2001/XMLSchema#string. See: <A
- * HREF="http://www.w3.org/TR/xmlschema-2/#string"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#string</A> for further
- * information.
- * 
- * @author Stefan Oberholzer
+ * This data type represents a http://www.w3.org/2001/XMLSchema#string. See: <A HREF="http://www.w3.org/TR/xmlschema-2/#string"
+ * target="_blank">http://www.w3.org/TR/xmlschema-2/#string</A> for further information.
  */
-public class StringDataTypeAttribute extends AbstractSimpleDataTypeAttribute<String> {
-	public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
-	private static final long serialVersionUID = 1L;
+public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
+    public static final String ID = "http://www.w3.org/2001/XMLSchema#string";
+    private static final long serialVersionUID = 1L;
 
-	/** {@inheritDoc} */
-	public String convertTo(String jaxbRepresentation) {
-		return jaxbRepresentation;
-	}
+    /**
+     * {@inheritDoc}
+     * <p>
+     * <b>This implementation:</b>
+     * <p>
+     * Interprets an empty list as an empty {@link String} value.
+     */
+    @Override
+    public String convertTo(List<?> jaxbRepresentation) throws SyntaxException {
+        boolean isEmptyList = jaxbRepresentation.isEmpty();
+        if (isEmptyList) {
+            return "";
+        }
+        String convertedValue = super.convertTo(jaxbRepresentation);
+        return convertedValue;
+    }
 
-	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
-	}
+    /** {@inheritDoc} */
+    public String convertTo(String jaxbRepresentation) {
+        return jaxbRepresentation;
+    }
+
+    /** {@inheritDoc} */
+    public String getDatatypeURI() {
+        return ID;
+    }
 }

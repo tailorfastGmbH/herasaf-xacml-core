@@ -17,33 +17,30 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
  * This data type represents a http://www.w3.org/2001/XMLSchema#double. See: <a
- * href="http://www.w3.org/TR/xmlschema-2/#double"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A> for further
- * information. target="_blank">http://www.w3.org/TR/xmlschema-2/#double</a>
- * 
- * @author Stefan Oberholzer
+ * href="http://www.w3.org/TR/xmlschema-2/#double" target="_blank">http://www.w3.org/TR/xmlschema-2/#double</A> for
+ * further information. target="_blank">http://www.w3.org/TR/xmlschema-2/#double</a>
  */
 public class DoubleDataTypeAttribute extends AbstractDataTypeAttribute<Double> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#double";
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public Double convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return Double.parseDouble(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e) {
-			throw new SyntaxException(e);
-		}
+	public String getDatatypeURI() {
+		return ID;
 	}
 
 	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
+	@Override
+	public Double convertTo(String jaxbRepresentation) throws SyntaxException {
+		try {
+			double parsedDouble = Double.parseDouble(jaxbRepresentation);
+			return parsedDouble;
+		} catch (NumberFormatException e) {
+			throw new SyntaxException(e);
+		}
 	}
 }

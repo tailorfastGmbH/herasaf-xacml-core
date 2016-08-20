@@ -17,18 +17,13 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.HexBinary;
 
 /**
- * This data type represents a http://www.w3.org/2001/XMLSchema#hexBinary.
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#hexBinary"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#hexBinary</A> for further
- * information.
- * 
- * @author Stefan Oberholzer
+ * This data type represents a http://www.w3.org/2001/XMLSchema#hexBinary. See: <A
+ * HREF="http://www.w3.org/TR/xmlschema-2/#hexBinary" target="_blank">http://www.w3.org/TR/xmlschema-2/#hexBinary</A>
+ * for further information.
  */
 public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBinary> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#hexBinary";
@@ -37,18 +32,18 @@ public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBin
 	/**
 	 * {@inheritDoc}
 	 */
-	public HexBinary convertTo(List<?> jaxbRepresentation) throws SyntaxException {
+	public String getDatatypeURI() {
+		return ID;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public HexBinary convertTo(String jaxbRepresentation) throws SyntaxException {
 		try {
-			return new HexBinary(((String) jaxbRepresentation.get(0)).trim());
+			HexBinary hexBinary = new HexBinary(jaxbRepresentation);
+			return hexBinary;
 		} catch (IllegalArgumentException e) {
 			throw new SyntaxException(e);
 		}
-	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	public String getDatatypeURI() {
-		return ID;
 	}
 }

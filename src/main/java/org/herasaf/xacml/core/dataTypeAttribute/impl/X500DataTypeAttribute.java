@@ -17,35 +17,32 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import javax.security.auth.x500.X500Principal;
 
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * This data type represents a urn:oasis:names:tc:xacml:2.0:data-type:x500Name.
- * See: <a href=
- * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20">
- * OASIS eXtensible Access Control Markup Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 110, for further information.
- * 
- * @author Stefan Oberholzer
+ * This data type represents a urn:oasis:names:tc:xacml:2.0:data-type:x500Name. See: <a href=
+ * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20"> OASIS eXtensible Access Control Markup
+ * Langugage (XACML) 2.0, Errata, 29 January 2008</a> page 110, for further information.
  */
 public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Principal> {
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:data-type:x500Name";
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
-	public X500Principal convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new X500Principal(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e) {
-			throw new SyntaxException(e);
-		}
+	public String getDatatypeURI() {
+		return ID;
 	}
 
 	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
+	@Override
+	public X500Principal convertTo(String jaxbRepresentation) throws SyntaxException {
+		try {
+			X500Principal x500Principal = new X500Principal(jaxbRepresentation);
+			return x500Principal;
+		} catch (IllegalArgumentException e) {
+			throw new SyntaxException(e);
+		}
 	}
 }
