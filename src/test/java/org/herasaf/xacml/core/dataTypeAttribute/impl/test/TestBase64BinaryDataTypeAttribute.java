@@ -48,7 +48,10 @@ public class TestBase64BinaryDataTypeAttribute {
 				new Object[] {"TXkgdGVzdCBzdHJpbmcu"}, //My test string.
 				new Object[] {"AA=="}, //""
 				new Object[] {"MTIzNDU2Nzg5MA=="}, //1234567890
+				new Object[] {"MTIz N DU2N	zg5MA=="}, //same as above, but with random whitespace (space, non-breakable space, tab)
+				new Object[] {"MTIzNDU2Nzg5MA=\n="}, //1234567890 with new line in padding
 				new Object[] {"VGhpcyBpcyBhIHNlbnRlbmNlIHdpdGhvdXQgYSBwdW5jdHVhdGlvbiBtYXJr"}, //This is a sentence without a punctuation mark
+				new Object[] {"TWFyeSBoYWQgYSBsaXR0bGUgbGFtYi4="}, // Mary had a little lamb.
 		};
 	}
 	
@@ -65,6 +68,8 @@ public class TestBase64BinaryDataTypeAttribute {
 				new Object[] {"1234567890"},
 				new Object[] {"This is a sentence without a punctuation mark"},
 				new Object[] {"==MTIzNDU2Nzg5MA"},
+				new Object[] {"TXkgdGVzdCBzdHJpbmcö"}, // ö is not in legal character set
+				new Object[] {"MTIzNDU2Nzg5Mö=="}, // ö is not in legal character set
 		};
 	}
 	

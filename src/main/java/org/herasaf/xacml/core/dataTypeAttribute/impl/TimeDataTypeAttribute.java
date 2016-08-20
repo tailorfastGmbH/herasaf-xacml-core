@@ -16,39 +16,27 @@
  */
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Time;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * This data type represents a http://www.w3.org/2001/XMLSchema#time. See: <A
- * HREF="http://www.w3.org/TR/xmlschema-2/#time"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#time</A> for further
+ * HREF="http://www.w3.org/TR/xmlschema-2/#time" target="_blank">http://www.w3.org/TR/xmlschema-2/#time</A> for further
  * information.
- * 
- * @author Stefan Oberholzer
- * @author Florian Huonder
  */
 public class TimeDataTypeAttribute extends AbstractDataTypeAttribute<Time> {
 	public static final String ID = "http://www.w3.org/2001/XMLSchema#time";
 	private static final long serialVersionUID = 1L;
-	private final Logger logger = LoggerFactory.getLogger(TimeDataTypeAttribute.class);
-
-	/** {@inheritDoc} */
-	public Time convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new Time(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e){
-			logger.error("An unexpected error occured.", e);
-			throw new SyntaxException(e);
-		}
-	}
 
 	/** {@inheritDoc} */
 	public String getDatatypeURI() {
 		return ID;
+	}
+
+	/** {@inheritDoc} */
+	@Override
+	public Time convertTo(String jaxbRepresentation) throws SyntaxException {
+		Time time = new Time(jaxbRepresentation);
+		return time;
 	}
 }

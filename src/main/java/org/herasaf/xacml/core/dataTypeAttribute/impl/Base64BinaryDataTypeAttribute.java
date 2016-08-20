@@ -17,34 +17,30 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Base64Binary;
 
 /**
- * This data type represents a http://www.w3.org/2001/XMLSchema#base64Binary.
- * See: <A HREF="http://www.w3.org/TR/xmlschema-2/#base64Binary"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#base64Binary</A> for
- * further information.
- * 
- * @author Florian Huonder
+ * This data type represents a http://www.w3.org/2001/XMLSchema#base64Binary. See: <A HREF="http://www.w3.org/TR/xmlschema-2/#base64Binary"
+ * target="_blank">http://www.w3.org/TR/xmlschema-2/#base64Binary</A> for further information.
  */
 public class Base64BinaryDataTypeAttribute extends AbstractDataTypeAttribute<Base64Binary> {
-	public static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
-	private static final long serialVersionUID = 1L;
+    public static final String ID = "http://www.w3.org/2001/XMLSchema#base64Binary";
+    private static final long serialVersionUID = 1L;
 
-	/** {@inheritDoc} */
-	public Base64Binary convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new Base64Binary(((String) jaxbRepresentation.get(0)).trim());
-		} catch (Exception e) {
-			throw new SyntaxException(e);
-		}
-	}
+    /** {@inheritDoc} */
+    public String getDatatypeURI() {
+        return ID;
+    }
 
-	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Base64Binary convertTo(String jaxbRepresentation) throws SyntaxException {
+        try {
+            Base64Binary base64Binary = new Base64Binary(jaxbRepresentation);
+            return base64Binary;
+        } catch (IllegalArgumentException e) {
+            throw new SyntaxException(e);
+        }
+    }
 }

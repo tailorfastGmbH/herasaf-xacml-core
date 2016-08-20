@@ -17,36 +17,31 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * This data type represents a http://www.w3.org/2001/XMLSchema#boolean. See: <A
- * HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#boolean</A> for further
- * information.
- * 
- * @author Stefan Oberholzer
+ * This data type represents a http://www.w3.org/2001/XMLSchema#boolean. See: <A HREF="http://www.w3.org/TR/xmlschema-2/#boolean"
+ * target="_blank">http://www.w3.org/TR/xmlschema-2/#boolean</A> for further information.
  */
 public class BooleanDataTypeAttribute extends AbstractDataTypeAttribute<Boolean> {
-	public static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
-	private static final long serialVersionUID = 1L;
+    public static final String ID = "http://www.w3.org/2001/XMLSchema#boolean";
+    private static final long serialVersionUID = 1L;
 
-	/** {@inheritDoc} */
-	public Boolean convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		String value = ((String) jaxbRepresentation.get(0)).trim();
-		if (value.equals("1") || value.equals("true")) {
-			return true;
-		}
-		if (value.equals("0") || value.equals("false")) {
-			return false;
-		}
-		throw new SyntaxException();
-	}
+    /** {@inheritDoc} */
+    public String getDatatypeURI() {
+        return ID;
+    }
 
-	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public Boolean convertTo(String jaxbRepresentation) throws SyntaxException {
+        if (jaxbRepresentation.equals("1") || jaxbRepresentation.equals("true")) {
+            return true;
+        }
+        if (jaxbRepresentation.equals("0") || jaxbRepresentation.equals("false")) {
+            return false;
+        }
+        String message = String.format("%s is not a valid boolean representation.", jaxbRepresentation);
+        throw new SyntaxException(message);
+    }
 }

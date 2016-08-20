@@ -14,38 +14,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 
 /**
- * This data type represents a http://www.w3.org/2001/XMLSchema#anyURI. See: <A
- * HREF="http://www.w3.org/TR/xmlschema-2/#anyURI"
- * target="_blank">http://www.w3.org/TR/xmlschema-2/#anyURI</A> for further
- * information.
- * 
- * @author Stefan Oberholzer
+ * This data type represents a http://www.w3.org/2001/XMLSchema#anyURI. See: <A HREF="http://www.w3.org/TR/xmlschema-2/#anyURI"
+ * target="_blank">http://www.w3.org/TR/xmlschema-2/#anyURI</A> for further information.
  */
 public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
-	public static final String ID = "http://www.w3.org/2001/XMLSchema#anyURI";
-	private static final long serialVersionUID = 1L;
+    public static final String ID = "http://www.w3.org/2001/XMLSchema#anyURI";
+    private static final long serialVersionUID = 1L;
 
-	/** {@inheritDoc} */
-	public URI convertTo(List<?> jaxbRepresentation) throws SyntaxException {
-		try {
-			return new URI(((String) jaxbRepresentation.get(0)).trim());
-		} catch (URISyntaxException e) {
-			throw new SyntaxException(e);
-		}
-	}
+    /** {@inheritDoc} */
+    public String getDatatypeURI() {
+        return ID;
+    }
 
-	/** {@inheritDoc} */
-	public String getDatatypeURI() {
-		return ID;
-	}
+    /** {@inheritDoc} */
+    @Override
+    public URI convertTo(String jaxbRepresentation) throws SyntaxException {
+        try {
+            URI uri = new URI(jaxbRepresentation);
+            return uri;
+        } catch (URISyntaxException e) {
+            throw new SyntaxException(e);
+        }
+    }
 }

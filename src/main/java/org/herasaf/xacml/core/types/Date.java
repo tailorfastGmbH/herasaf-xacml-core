@@ -88,10 +88,14 @@ public class Date implements Comparable<Date> {
 		try {
 			date = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateString);
 		} catch (IllegalArgumentException e) {
-			SyntaxException se = new SyntaxException("The date '" + dateString
-					+ "' is not a valid date according to http://www.w3.org/2001/XMLSchema#date", e);
-			logger.error(se.getMessage());
-			throw se;
+			String message = String.format(
+					"The date '%s' is not a valid date according to http://www.w3.org/2001/XMLSchema#date", dateString);
+			logger.error(message);
+			throw new SyntaxException(message, e);
+		} catch (UnsupportedOperationException e) {
+			String message = "Parsing date is not supported.";
+			logger.error(message);
+			throw new SyntaxException(message, e);
 		}
 	}
 

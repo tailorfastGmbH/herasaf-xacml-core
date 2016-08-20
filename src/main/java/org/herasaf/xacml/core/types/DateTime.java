@@ -105,6 +105,10 @@ public class DateTime implements Comparable<DateTime> {
 		dateTimeString = dateTimeString.trim();
 		try {
 			dateTime = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateTimeString);
+		} catch (UnsupportedOperationException e) {
+			String message = "Parsing dateTime is not supported.";
+			logger.error(message);
+			throw new SyntaxException(message, e);
 		} catch (IllegalArgumentException e) {
 			try {
 				// If parsing failed check if the time part is midnight as clockhour.
@@ -113,10 +117,11 @@ public class DateTime implements Comparable<DateTime> {
 				// shifted plus one.
 				dateTime = dateTime.plus(Period.days(1));
 			} catch (IllegalArgumentException e2) {
-				SyntaxException se = new SyntaxException("The dateTime '" + dateTimeString
-						+ "' is not a valid dateTime according to http://www.w3.org/2001/XMLSchema#dateTime", e);
-				logger.error(se.getMessage());
-				throw se;
+				String message = String
+						.format("The dateTime '%s' is not a valid dateTime according to http://www.w3.org/2001/XMLSchema#dateTime",
+								dateTimeString);
+				logger.error(message);
+				throw new SyntaxException(message, e);
 			}
 		} finally {
 			if (dateTime != null) {
