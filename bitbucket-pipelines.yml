@@ -1,6 +1,6 @@
 #  Bitbucket build
 
-image: maven:3.6.3
+image: maven:3.8.2-openjdk-8
 
 pipelines:
   default:
