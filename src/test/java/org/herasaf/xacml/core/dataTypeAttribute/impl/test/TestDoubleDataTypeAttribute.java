@@ -17,10 +17,11 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
-import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.junit.Assert.assertEquals;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DoubleDataTypeAttribute;
@@ -87,7 +88,7 @@ public class TestDoubleDataTypeAttribute {
 			throws Exception {
 		List<String> data = new ArrayList<String>();
 		data.add(Double.toString(input));
-		assertEquals(input, dataType.convertTo(data));
+		assertEquals(input, dataType.convertTo(data), 0.0d);
 	}
 
 	/**
