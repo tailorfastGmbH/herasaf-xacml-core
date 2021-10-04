@@ -54,33 +54,33 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.compile.version>1.5</java.compile.version>
+		<java.compile.version>1.8</java.compile.version>
 
 		<reporting.findbugs.excludeFile.location>src/main/config/reporting/findbugs-excludes.xml</reporting.findbugs.excludeFile.location>
 		<reporting.checkstyle.excludeFile.location>src/main/config/reporting/checkstyle-suppressions.xml</reporting.checkstyle.excludeFile.location>
 
 		<!-- Dependencies versions -->
-		<jaxb.version>2.2.4-1</jaxb.version> <!-- attention: this is the latest version that supports Java 5 -->
-		<jodatime.version>2.9.1</jodatime.version>
-		<slf4j.version>1.7.13</slf4j.version>
+		<jaxb.version>2.3.5</jaxb.version>
+		<jodatime.version>2.10.12</jodatime.version>
+		<slf4j.version>1.7.32</slf4j.version>
 
-		<testng.version>6.8.21</testng.version> <!-- attention: this is the latest version that supports Java 5 -->
-		<junit.version>4.12</junit.version>
+		<testng.version>7.4.0</testng.version>
+		<junit.version>4.13.2</junit.version>
 		<xmlunit.version>1.6</xmlunit.version>
-		<logback.version>1.0.13</logback.version>  <!-- attention: this is the latest version that supports Java 5 -->
+		<logback.version>1.2.5</logback.version>
 
-		<bundle.plugin.version>2.4.0</bundle.plugin.version> <!-- attention: this is the latest version that supports Java 5 -->
-		<compiler.plugin.version>3.3</compiler.plugin.version>
-		<javadoc.plugin.version>2.10.3</javadoc.plugin.version>
-		<source.plugin.version>2.4</source.plugin.version>
-		<surefire.plugin.version>2.19</surefire.plugin.version>
-		<release.plugin.version>2.4.2</release.plugin.version> <!-- attention: this is the latest version that supports Java 5 -->
+		<bundle.plugin.version>5.1.2</bundle.plugin.version>
+		<compiler.plugin.version>3.8.1</compiler.plugin.version>
+		<javadoc.plugin.version>3.3.3</javadoc.plugin.version>
+		<source.plugin.version>3.2.1</source.plugin.version>
+		<surefire.plugin.version>2.22.2</surefire.plugin.version>
+		<release.plugin.version>2.5.3</release.plugin.version>
 	</properties>
 
 	<dependencies>
 		<dependency>
-			<groupId>com.sun.xml.bind</groupId>
-			<artifactId>jaxb-impl</artifactId>
+			<groupId>org.glassfish.jaxb</groupId>
+			<artifactId>jaxb-runtime</artifactId>
 			<version>${jaxb.version}</version>
 		</dependency>
 		<dependency>
