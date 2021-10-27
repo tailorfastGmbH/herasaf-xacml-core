@@ -44,6 +44,7 @@ public abstract class AbstractAtLeastOneMemberOfFunction<T> extends AbstractFunc
 	 * <br>
 	 * Returns true if at least one element of the first argument is contained in the second argument.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

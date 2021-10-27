@@ -49,6 +49,7 @@ public class UriStringConcatenateFunction extends AbstractFunction {
 	 * return type is the concatenation of the arguments in the order they
 	 * appear.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length < 2) {

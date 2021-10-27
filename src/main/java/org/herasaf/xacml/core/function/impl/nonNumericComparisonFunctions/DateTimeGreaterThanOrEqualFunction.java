@@ -41,7 +41,7 @@ public class DateTimeGreaterThanOrEqualFunction extends AbstractFunction {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-greater-than-or-equal";
-	private final Logger logger = LoggerFactory.getLogger(DateTimeGreaterThanOrEqualFunction.class);
+	private static final Logger logger = LoggerFactory.getLogger(DateTimeGreaterThanOrEqualFunction.class);
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -61,6 +61,7 @@ public class DateTimeGreaterThanOrEqualFunction extends AbstractFunction {
 	 * the system property {@code user.timezone}. If that is {@code null} or is not a valid identifier, then the value
 	 * of the JDK {@code TimeZone} default is converted. If that fails, {@code UTC} is used.</b>
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

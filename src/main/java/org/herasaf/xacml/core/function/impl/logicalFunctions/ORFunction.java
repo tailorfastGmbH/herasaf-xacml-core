@@ -39,6 +39,7 @@ public class ORFunction extends AbstractFunction {
 	 * Takes at least one {@link Boolean} value returns <code>true</code> if one
 	 * of them is <code>true</code>. Otherwise false is returnes.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length == 0) {

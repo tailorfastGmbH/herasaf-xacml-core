@@ -49,9 +49,9 @@ public class TestDoubleDataTypeAttribute {
 				new Object[] { -1E4, "-1E4" },
 				new Object[] { 1267.43233E12, "1267.43233E12" },
 				new Object[] { 12.78e-2, "12.78e-2" },
-				new Object[] { new Double(12), "12" },
-				new Object[] { new Double("-0"), "-0" },
-				new Object[] { new Double(0), "0" }, };
+				new Object[] { Double.valueOf(12), "12" },
+				new Object[] { Double.valueOf("-0"), "-0" },
+				new Object[] { Double.valueOf(0), "0" }, };
 	}
 
 	/**
@@ -62,9 +62,9 @@ public class TestDoubleDataTypeAttribute {
 	@DataProvider(name = "positiveDataComplex")
 	public Object[][] initPositiveDataComplex() {
 		return new Object[][] {
-				new Object[] { new Double(12), "12" },
-				new Object[] { new Double("-0"), "-0" },
-				new Object[] { new Double(0), "0" }, };
+				new Object[] { Double.valueOf(12), "12" },
+				new Object[] { Double.valueOf("-0"), "-0" },
+				new Object[] { Double.valueOf(0), "0" }, };
 	}
 
 	/**

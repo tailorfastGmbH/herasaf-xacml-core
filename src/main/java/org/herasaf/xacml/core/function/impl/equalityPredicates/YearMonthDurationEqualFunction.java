@@ -44,6 +44,7 @@ public class YearMonthDurationEqualFunction extends AbstractFunction {
 	 * Takes two {@link YearMonthDuration} objects as parameters and returns
 	 * wheter they are equal or not as {@link Boolean} value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

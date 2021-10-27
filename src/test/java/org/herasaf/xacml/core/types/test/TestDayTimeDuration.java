@@ -16,13 +16,13 @@
  */
 package org.herasaf.xacml.core.types.test;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-import static org.testng.Assert.fail;
-
 import org.herasaf.xacml.core.types.DayTimeDuration;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
+import static org.testng.Assert.fail;
 
 /**
  *  Tests the {@link DayTimeDuration} basic data type.
@@ -40,30 +40,29 @@ public class TestDayTimeDuration {
 	public Object[][] createPositivePossibleData() {
 		return new Object[][] {
 				new Object[] { "P9DT12H", "P9DT12H" },
-				new Object[] { "P9DT12M1.23S", "P9DT12M1.230S" },
-				new Object[] { "P9DT12M1.0S", "P9DT12M1S" },
+				new Object[] { "P9DT12M1.23S", "P9DT12M1.23S" },
+				new Object[] { "P9DT12M1.0S", "P9DT12M1.0S" },
 				new Object[] { "P9DT12M", "P9DT12M" },
-				new Object[] { "P9DT12.12S", "P9DT12.120S" },
-				new Object[] { "P9DT132.0S", "P9DT132S" },
+				new Object[] { "P9DT12.12S", "P9DT12.12S" },
+				new Object[] { "P9DT132.0S", "P9DT132.0S" },
 				new Object[] { "PT123H", "PT123H" },
-				new Object[] { "PT123M1.23S", "PT123M1.230S" },
-				new Object[] { "PT123M1.2S", "PT123M1.200S" },
+				new Object[] { "PT123M1.23S", "PT123M1.23S" },
+				new Object[] { "PT123M1.2S", "PT123M1.2S" },
 				new Object[] { "PT123M", "PT123M" },
 				new Object[] { "PT123M", "PT123M" },
-				new Object[] { "PT123.3S", "PT123.300S" },
+				new Object[] { "PT123.3S", "PT123.3S" },
 				new Object[] { "P1DT12H1M12.234S", "P1DT12H1M12.234S" },
-				new Object[] { "P9DT12H1.1S", "P9DT12H1.100S" },
+				new Object[] { "P9DT12H1.1S", "P9DT12H1.1S" },
 				new Object[] { "PT123H2M12.234S", "PT123H2M12.234S" },
-				new Object[] { "PT123H1.9S", "PT123H1.900S" },
-				new Object[] { "P9DT12H0.2342S", "P9DT12H0.234S" },
+				new Object[] { "PT123H1.9S", "PT123H1.9S" },
+				new Object[] { "P9DT12H0.2342S", "P9DT12H0.2342S" },
 				new Object[] { "P9DT12M1S","P9DT12M1S" },
 				new Object[] { "P9DT132S", "P9DT132S"},
 				new Object[] { "P50DT5H4M3S", "P50DT5H4M3S"},
-				new Object[] { "P9DT12H.2342S", "P9DT12H0.234S" },
-				new Object[] { "P9DT12M.23S", "P9DT12M0.230S" },
-				new Object[] { "P9DT.17S", "P9DT0.170S" },
-				new Object[] { "PT123M.23S", "PT123M0.230S" },
-
+				new Object[] { "P9DT12H0.2342S", "P9DT12H0.2342S" },
+				new Object[] { "P9DT12M0.23S", "P9DT12M0.23S" },
+				new Object[] { "P9DT0.170S", "P9DT0.170S" },
+				new Object[] { "PT123M0.23S", "PT123M0.23S" },
 		};
 	}
 
@@ -100,6 +99,7 @@ public class TestDayTimeDuration {
 				new Object[] { "PT123HM12.S" },
 				new Object[] { "P9DT12HM12.S" },
 				new Object[] { "PT123HM12S" },
+				new Object[] { "PT-123HM12S" },
 		};
 	}
 

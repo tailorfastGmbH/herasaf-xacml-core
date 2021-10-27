@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractPolicyCombiningAlgorithmsJaxbTypeAdapterInitializer extends AbstractJaxbTypeAdapterInitializer<AbstractPolicyCombiningAlgorithm> {
 	
-	private transient static Logger logger = LoggerFactory.getLogger(AbstractPolicyCombiningAlgorithmsJaxbTypeAdapterInitializer.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractPolicyCombiningAlgorithmsJaxbTypeAdapterInitializer.class);
 	
 	/**
 	 * {@inheritDoc}

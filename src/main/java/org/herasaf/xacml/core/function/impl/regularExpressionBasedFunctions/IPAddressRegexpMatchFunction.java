@@ -49,6 +49,7 @@ public class IPAddressRegexpMatchFunction extends AbstractFunction {
 	 * the second argument of type
 	 * urn:oasis:names:tc:xacml:2.0:data-type:ipAddress.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

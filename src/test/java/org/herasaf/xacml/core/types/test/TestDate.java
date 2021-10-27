@@ -16,15 +16,16 @@
  */
 package org.herasaf.xacml.core.types.test;
 
-import static org.testng.Assert.assertEquals;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
-import org.joda.time.DateTimeZone;
-import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Tests the {@link Date} basic data type.
@@ -32,22 +33,14 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestDate {
-	private DateTimeZone defaultZone;
-
-	/**
-	 * Sets the default timezone to +00:00 for testing.
-	 */
-	@BeforeTest
-	public void init() {
-		defaultZone = DateTimeZone.getDefault();
-
-		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
-	}
-
-	@AfterTest
-	public void cleanUp() {
-		DateTimeZone.setDefault(defaultZone);
-	}
+    
+    /**
+     * Sets the default timezone to +00:00 for testing.
+     */
+    @BeforeTest
+    public void init(){
+        Date.configureWith(false, ZoneOffset.UTC);
+    }
 
 	/**
 	 * Creates positive test cases.
@@ -94,7 +87,7 @@ public class TestDate {
 	public Object[][] createComparisonData() {
 		return new Object[][] { new Object[] { "2004-11-01", "2004-12-01", -1 },
 				new Object[] { "2005-12-01", "2004-12-01", 1 }, new Object[] { "2004-12-01", "2004-12-01", 0 },
-				new Object[] { "1998-12-01", "2004-12-01", -1 }, new Object[] { "2035-09-01", "2004-12-01", 1 },
+				new Object[] { "1998-12-01", "2004-12-01", -6 }, new Object[] { "2035-09-01", "2004-12-01", 31 },
 				new Object[] { "2000-03-12", "2000-03-12", 0 }, };
 	}
 
@@ -130,11 +123,9 @@ public class TestDate {
 	 */
 	@Test(dataProvider = "timezoneTests")
 	public void testPositiveTimeZone(String input, String expected, String timezone) throws Exception {
-		DateTimeZone defaultZone = DateTimeZone.getDefault();
-		DateTimeZone.setDefault(DateTimeZone.forID(timezone));
+		Date.configureWith(false, ZoneId.of(timezone));
 		Date date = new Date(input);
 		assertEquals(date.toString(), expected);
-		DateTimeZone.setDefault(defaultZone);
 	}
 
 	/**
@@ -156,7 +147,7 @@ public class TestDate {
 
 	@Test(dataProvider = "positiveCasesDefaultTimeZoneWithZulu")
 	public void testWithZulu(String input, String expected) throws Exception {
-		Date.useZuluUtcRepresentation(true);
+		Date.configureWith(true, ZoneOffset.UTC);
 		Date date = new Date(input);
 		assertEquals(date.toString(), expected);
 	}

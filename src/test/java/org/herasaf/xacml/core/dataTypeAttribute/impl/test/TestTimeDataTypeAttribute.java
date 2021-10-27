@@ -21,10 +21,11 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
-import org.joda.time.DateTimeZone;
+import java.time.ZoneOffset;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -38,22 +39,22 @@ import org.testng.annotations.Test;
 public class TestTimeDataTypeAttribute {
 	private TimeDataTypeAttribute dataType;
 
-	private DateTimeZone defaultZone;
-
-	/**
-	 * Sets the default timezone to +00:00 for testing.
-	 */
-	@BeforeTest
-	public void init() {
-		defaultZone = DateTimeZone.getDefault();
-
-		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
-	}
-
-	@AfterTest
-	public void cleanUp() {
-		DateTimeZone.setDefault(defaultZone);
-	}
+    private TimeZone defaultZone;
+    
+    /**
+     * Sets the default timezone to +00:00 for testing.
+     */
+    @BeforeTest
+    public void init(){
+        defaultZone = TimeZone.getDefault();
+        
+        TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC));
+    }
+    
+    @AfterTest
+    public void cleanUp(){
+        TimeZone.setDefault(defaultZone);
+    }
 	
 	/**
 	 * Creates negative test cases for the test.

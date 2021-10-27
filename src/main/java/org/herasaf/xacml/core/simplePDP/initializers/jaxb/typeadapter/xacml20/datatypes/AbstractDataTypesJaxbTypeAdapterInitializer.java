@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class AbstractDataTypesJaxbTypeAdapterInitializer extends AbstractJaxbTypeAdapterInitializer<DataTypeAttribute<?>> {
-	private transient static Logger logger = LoggerFactory.getLogger(AbstractDataTypesJaxbTypeAdapterInitializer.class);
+	private static final Logger logger = LoggerFactory.getLogger(AbstractDataTypesJaxbTypeAdapterInitializer.class);
 	
 	/**
 	 * {@inheritDoc}

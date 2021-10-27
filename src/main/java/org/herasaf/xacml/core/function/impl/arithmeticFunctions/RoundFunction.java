@@ -45,6 +45,7 @@ public class RoundFunction extends AbstractFunction {
 	 * {@inheritDoc} Takes a {@link Double} value and returns the result of the
 	 * round function on it as Double.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

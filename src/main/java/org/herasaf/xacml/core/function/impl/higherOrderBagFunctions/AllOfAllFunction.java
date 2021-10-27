@@ -46,6 +46,7 @@ public class AllOfAllFunction extends AbstractFunction {
 	 * if applied to all values of the first {@link List} with every value of
 	 * the second {@link List}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != VALID_LENGTH) {

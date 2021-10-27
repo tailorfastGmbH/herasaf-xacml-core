@@ -42,6 +42,7 @@ public class TimeEqualFunction extends AbstractFunction {
 	 * Takes two {@link Time} objects as parameters and returns wheter they are
 	 * equal or not as {@link Boolean} value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

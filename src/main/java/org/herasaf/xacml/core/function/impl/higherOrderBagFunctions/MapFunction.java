@@ -44,6 +44,7 @@ public class MapFunction extends AbstractFunction {
 	 * {@link List} as second argument. Creates a new bag with the returned
 	 * types when called the function with all values in the {@link List}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

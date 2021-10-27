@@ -50,6 +50,7 @@ public class DateTimeSubtractDayTimeDurationFunction extends AbstractFunction {
 	 * result of adding the {@link DayTimeDuration} to the {@link DateTime}
 	 * duration as {@link DateTime}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

@@ -17,18 +17,17 @@
 
 package org.herasaf.xacml.core.function.impl.setFunction;
 
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.herasaf.xacml.core.function.Function;
-import org.herasaf.xacml.core.function.impl.setFunction.DayTimeDurationIntersectionFunction;
 import org.herasaf.xacml.core.types.DayTimeDuration;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertTrue;
 
 /**
  * Tests if the Intersection function works properly.

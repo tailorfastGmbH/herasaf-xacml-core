@@ -47,6 +47,7 @@ public class X500NameMatchFunction extends AbstractFunction {
 	 * <br>
 	 * Returns true if the two arguments of type {@link X500Principal} match.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

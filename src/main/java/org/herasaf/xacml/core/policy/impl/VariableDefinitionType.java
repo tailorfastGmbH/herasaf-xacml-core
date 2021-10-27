@@ -141,6 +141,7 @@ public class VariableDefinitionType implements Serializable, Variable {
 	 * org.herasaf.xacml.core.policy.impl.Variable#getValue(org.herasaf.xacml
 	 * .core.context.impl.RequestType, java.util.Map)
 	 */
+	@Override
 	public Object getValue(RequestType request, EvaluationContext evaluationContext) throws MissingAttributeException,
 			SyntaxException, ProcessingException {
 		return ((ExpressionType) getExpression().getValue()).handle(request, evaluationContext);

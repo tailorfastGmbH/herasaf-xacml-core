@@ -49,6 +49,7 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	}
 	
 	/** {@inheritDoc} */
+	@Override
 	public String getCombiningAlgorithmId() {
 		return "CombiningAlgorithmMock";
 	}
@@ -56,6 +57,7 @@ public class CombiningAlgorithmMock implements CombiningAlgorithm {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluate(RequestType request, Evaluatable evals, EvaluationContext evalContext) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 		for (ObligationType obligation : evaluationContext.getObligations().getObligations()) {

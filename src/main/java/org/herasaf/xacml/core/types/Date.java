@@ -17,12 +17,13 @@
 package org.herasaf.xacml.core.types;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
-import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 
 /**
  * This class can parse and print a date of type http://www.w3.org/2001/XMLSchema#date with the pattern
@@ -38,62 +39,44 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class Date implements Comparable<Date> {
-	private final Logger logger = LoggerFactory.getLogger(Date.class);
-	private static DateTimeFormatter DATE_TIME_PARSER;
-	private static DateTimeFormatter DATE_TIME_PRINTER;
-	private DateTime date;
-
-	/**
-	 * Initializes the formatters when the type is initialized.
-	 */
-	static {
-		useZuluUtcRepresentation(false);
-	}
+	private static final Logger logger = LoggerFactory.getLogger(Date.class);
+	private LocalDate date;
+	private ZoneOffset offset;
+	private static boolean useZuluRepresentation = false;
+	private static ZoneId defaultZoneId = ZoneOffset.UTC;
 
 	/**
 	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
 	 */
 	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
-		// The default formatter for the timezone that can handle only +-00:00 for UTC.
-		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
-				2).toFormatter();
-		// The formatter for the timezone that can handle Zulu value 'Z'.
-		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
-				.toFormatter();
-
-		// This formatter equals: yyyy-MM-dd
-		DateTimeFormatter dhmsFormatter = ISODateTimeFormat.date();
-
-		// Determine timezone formatter to be used.
-		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
-		if (useZuluUtcRepresentation) {
-			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
-		} else {
-			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
-		}
-
-		// Here a parser is created that parses a string of the form yyyy-MM-dd. Further the string may have
-		// a timezone. withOffsetParsed makes the parser to respect the set timezone (if one is set)
-		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
-		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter().withOffsetParsed();
-
-		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd ZZ
-		DATE_TIME_PRINTER = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.append(dateTimeFormatterToBeUsedInPrinter.getPrinter()).toFormatter();
+		Date.useZuluRepresentation = useZuluUtcRepresentation;
+	}
+	
+	/**
+	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00)
+	 * @param defaultZoneId -  ZoneId used to handle local dates.
+	 */
+	public static void configureWith(boolean useZuluUtcRepresentation, ZoneId defaultZoneId) {
+		useZuluUtcRepresentation(useZuluUtcRepresentation);
+		Date.defaultZoneId = defaultZoneId;
 	}
 
 	public Date(String dateString) throws SyntaxException {
-		dateString = dateString.trim();
+		String trimmedDate = dateString.trim();
 		try {
-			date = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateString);
-		} catch (IllegalArgumentException e) {
+			// Java's Time API does not support date's having a zone offset, so manually handle this case,
+			// by splitting date's having a offset.
+			if (trimmedDate.length() >=11) {
+				date = LocalDate.parse(trimmedDate.substring(0, 10));
+				offset = ZoneOffset.of(trimmedDate
+						.subSequence(10, trimmedDate.length()).toString());
+			} else {
+				date = LocalDate.parse(trimmedDate);
+				offset = date.atStartOfDay().atZone(defaultZoneId).getOffset();
+			}
+		} catch (DateTimeException e) {
 			String message = String.format(
 					"The date '%s' is not a valid date according to http://www.w3.org/2001/XMLSchema#date", dateString);
-			logger.error(message);
-			throw new SyntaxException(message, e);
-		} catch (UnsupportedOperationException e) {
-			String message = "Parsing date is not supported.";
 			logger.error(message);
 			throw new SyntaxException(message, e);
 		}
@@ -104,17 +87,20 @@ public class Date implements Comparable<Date> {
 	 */
 	@Override
 	public String toString() {
-		return DATE_TIME_PRINTER.print(date);
+		String formatOffset = useZuluRepresentation
+				? offset.toString()
+				: offset.toString().replace("Z", "+00:00");
+		return date.toString() + formatOffset;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int compareTo(Date o) {
-		DateTime jodaThisDate = this.getDate();
-		DateTime jodaThatDate = o.getDate();
-		int comparisonResult = jodaThisDate.compareTo(jodaThatDate);
-		return comparisonResult;
+		LocalDate thisDate = this.getDate();
+		LocalDate thatDate = o.getDate();
+		return thisDate.compareTo(thatDate);
 	}
 
 	/**
@@ -126,8 +112,8 @@ public class Date implements Comparable<Date> {
 			// Check if types are the same
 			return false;
 		}
-		DateTime jodaThisDate = getDate();
-		DateTime jodaThatDate = ((Date) obj).getDate();
+		LocalDate jodaThisDate = getDate();
+		LocalDate jodaThatDate = ((Date) obj).getDate();
 		boolean isEqual = jodaThisDate.isEqual(jodaThatDate);
 		return isEqual;
 	}
@@ -137,7 +123,7 @@ public class Date implements Comparable<Date> {
 	 * 
 	 * @return internal representation of this date.
 	 */
-	public DateTime getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 

@@ -49,6 +49,7 @@ public class AnyURIRegexpMatchFunction extends AbstractFunction {
 	 * http://www.w3.org/2001/XMLSchema#string (must be an expression) matches
 	 * the second argument of type http://www.w3.org/2001/XMLSchema#anyURI.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

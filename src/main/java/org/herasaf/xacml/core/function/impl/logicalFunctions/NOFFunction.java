@@ -45,6 +45,7 @@ public class NOFFunction extends AbstractFunction {
 	 * is thrown. If the amount of true values is reached, true is returned,
 	 * otherwise false is returned.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		Integer minOccurence;
 		int handledArrayFields = 1;

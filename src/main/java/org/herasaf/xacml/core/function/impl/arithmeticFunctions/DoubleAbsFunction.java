@@ -45,6 +45,7 @@ public class DoubleAbsFunction extends AbstractFunction {
 	 * {@inheritDoc} takes one {@link Double} parameter and returnes the
 	 * absolute value of the {@link Double}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

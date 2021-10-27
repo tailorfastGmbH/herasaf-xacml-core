@@ -51,12 +51,13 @@ import org.slf4j.LoggerFactory;
  */
 public class TargetMatcherImpl implements TargetMatcher {
 	private static final long serialVersionUID = 1L;
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(TargetMatcherImpl.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TargetMatchingResult match(RequestType request, TargetType target,
 			EvaluationContext evaluationContext) throws SyntaxException,
 			ProcessingException, MissingAttributeException {
@@ -376,10 +377,7 @@ public class TargetMatcherImpl implements TargetMatcher {
 								policyAttributeValue.getContent()), requestAttributeValue);
 				logger.debug(
 						"Match function resulted in {} with policy attribute datatype:{} value:{} and request attribute value:{}",
-						new Object[] { matchMatches,
-								policyAttributeValue.getDataType(),
-								policyAttributeValue.getContent().get(0),
-								requestAttributeValue });
+						matchMatches, policyAttributeValue.getDataType(), policyAttributeValue.getContent().get(0), requestAttributeValue);
 
 				// If the call of the match function (above) returns true for at
 				// least one attribute value in the request

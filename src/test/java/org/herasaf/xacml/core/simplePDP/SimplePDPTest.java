@@ -134,7 +134,6 @@ public class SimplePDPTest {
 				+ response.getResults().get(0).getDecision());
 
 		deploymentRepo.undeploy(policy.getId());
-		System.out.println();
 	}
 
 	@Test

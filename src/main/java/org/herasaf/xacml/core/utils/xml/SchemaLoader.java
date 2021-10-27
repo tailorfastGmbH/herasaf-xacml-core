@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
  * @author Stefan Oberholzer
  */
 public class SchemaLoader {
-	private transient final Logger logger = LoggerFactory.getLogger(SchemaLoader.class);
+	private static final Logger logger = LoggerFactory.getLogger(SchemaLoader.class);
 
 	private static final String CLASSPATH_PREFIX = "classpath:";
 	private static final String FILE_PREFIX = "file:";

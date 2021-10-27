@@ -50,6 +50,7 @@ public class DateSubtractYearMonthDurationFunction extends AbstractFunction {
 	 * result of subtracting the {@link YearMonthDuration} from the {@link Date}
 	 * . The return value is a {@link Date}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

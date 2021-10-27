@@ -45,6 +45,7 @@ public class FloorFunction extends AbstractFunction {
 	 * {@inheritDoc} Takes one {@link Double} value as parameter and returns the
 	 * floor value as {@link Double}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

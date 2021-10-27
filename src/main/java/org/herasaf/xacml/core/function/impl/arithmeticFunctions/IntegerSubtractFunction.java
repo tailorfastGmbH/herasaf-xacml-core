@@ -48,6 +48,7 @@ public class IntegerSubtractFunction extends AbstractFunction {
 	 * returns the result of subtracting the second from the first as
 	 * {@link BigInteger}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

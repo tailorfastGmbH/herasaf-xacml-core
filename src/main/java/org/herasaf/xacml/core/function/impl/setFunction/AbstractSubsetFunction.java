@@ -43,6 +43,7 @@ public abstract class AbstractSubsetFunction<T> extends AbstractFunction {
 	 * <br>
 	 * Returns true if the first argument is a subset of the second argument.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

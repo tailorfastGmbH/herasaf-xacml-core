@@ -68,7 +68,7 @@ public class TestDayTimeDurationDataTypeAttribute {
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
 		List<String> data = new ArrayList<String>();
-		data.add("+P9DT4H");
+		data.add("?P9DT4H");
 		dataType.convertTo(data);
 	}
 

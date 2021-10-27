@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.bagFunctions;
 
-import org.joda.time.DateTime;
+import java.time.OffsetDateTime;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ import org.joda.time.DateTime;
  * @author Stefan Oberholzer
  * @author Florian Huonder
  */
-public class TimeIsInFunction extends AbstractIsInFunction<DateTime> {
+public class TimeIsInFunction extends AbstractIsInFunction<OffsetDateTime> {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-is-in";

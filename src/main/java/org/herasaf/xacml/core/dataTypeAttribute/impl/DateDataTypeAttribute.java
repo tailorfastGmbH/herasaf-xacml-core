@@ -28,6 +28,7 @@ public class DateDataTypeAttribute extends AbstractDataTypeAttribute<Date> {
     private static final long serialVersionUID = 1L;
 
     /** {@inheritDoc} */
+    @Override
     public String getDatatypeURI() {
         return ID;
     }

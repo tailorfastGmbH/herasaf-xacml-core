@@ -40,7 +40,7 @@ import org.slf4j.LoggerFactory;
  */
 public class DataTypeJAXBTypeAdapter extends
 		XmlAdapter<String, DataTypeAttribute<?>> {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(DataTypeJAXBTypeAdapter.class);
 	private static Map<String, DataTypeAttribute<?>> dataTypeAttributes = new HashMap<String, DataTypeAttribute<?>>();
 

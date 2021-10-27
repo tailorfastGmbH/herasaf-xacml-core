@@ -45,6 +45,7 @@ public class AnyOfFunction extends AbstractFunction {
 	 * function with the second argument and every value in the list and returns
 	 * the {@link Boolean} true if any of them result in true.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != VALID_LENGTH) {

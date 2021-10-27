@@ -32,6 +32,7 @@ public class HexBinaryDataTypeAttribute extends AbstractDataTypeAttribute<HexBin
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String getDatatypeURI() {
 		return ID;
 	}

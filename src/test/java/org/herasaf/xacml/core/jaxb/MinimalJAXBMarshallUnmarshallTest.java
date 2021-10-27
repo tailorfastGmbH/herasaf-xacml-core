@@ -16,13 +16,6 @@
  */
 package org.herasaf.xacml.core.jaxb;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
 import org.custommonkey.xmlunit.XMLAssert;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.WritingException;
@@ -41,11 +34,17 @@ import org.herasaf.xacml.core.policy.impl.TargetType;
 import org.herasaf.xacml.core.simplePDP.initializers.InitializerExecutor;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 /**
  * 

@@ -56,7 +56,7 @@ public class PortRange {
 		int position = portRange.indexOf("-");
 		if (position == -1) {
 			try {
-				lowerValue = upperValue = Integer.valueOf(portRange.substring(
+				lowerValue = upperValue = Integer.parseInt(portRange.substring(
 						0, portRange.length()));
 			} catch (Exception e) {
 				throw new IllegalArgumentException("No port range: "
@@ -66,11 +66,11 @@ public class PortRange {
 			try {
 				String value = portRange.substring(0, position);
 				if (!value.equals("")) {
-					lowerValue = new Integer(value);
+					lowerValue = Integer.parseInt(value);
 				}
 				value = portRange.substring(position + 1, portRange.length());
 				if (!value.equals("")) {
-					upperValue = new Integer(value);
+					upperValue = Integer.parseInt(value);
 				}
 			} catch (NumberFormatException e) {
 				throw new IllegalArgumentException("No port range: "

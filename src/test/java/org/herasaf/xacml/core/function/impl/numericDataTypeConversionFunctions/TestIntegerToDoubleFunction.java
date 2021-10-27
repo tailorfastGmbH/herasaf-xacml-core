@@ -17,15 +17,14 @@
 
 package org.herasaf.xacml.core.function.impl.numericDataTypeConversionFunctions;
 
-import static org.testng.Assert.assertEquals;
-
-import java.math.BigInteger;
-
 import org.herasaf.xacml.core.function.Function;
-import org.herasaf.xacml.core.function.impl.numericDataTypeConversionFunctions.IntegerToDoubleFunction;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.math.BigInteger;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Tests if the IntegerToDouble function works properly.

@@ -59,6 +59,7 @@ public abstract class AbstractIsInFunction<T> extends AbstractFunction {
 	 * not.
 	 * </p>
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

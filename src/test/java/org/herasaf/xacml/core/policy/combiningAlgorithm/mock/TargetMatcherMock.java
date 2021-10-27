@@ -65,6 +65,7 @@ public class TargetMatcherMock implements TargetMatcher {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public TargetMatchingResult match(RequestType req, TargetType target,
 			EvaluationContext evaluationContext) throws SyntaxException,
 			ProcessingException {

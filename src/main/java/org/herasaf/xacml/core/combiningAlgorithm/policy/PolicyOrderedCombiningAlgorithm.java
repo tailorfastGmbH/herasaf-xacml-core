@@ -39,6 +39,7 @@ public abstract class PolicyOrderedCombiningAlgorithm extends AbstractPolicyComb
     /**
      * {@inheritDoc}
      */
+    @Override
     public DecisionType evaluate(final RequestType request, final Evaluatable evals,
             final EvaluationContext evaluationContext) {
         final TargetMatchingResult decision = matchTarget(request, evals.getTarget(), evaluationContext);

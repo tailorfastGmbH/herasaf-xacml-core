@@ -17,23 +17,22 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.io.Serializable;
-import java.util.List;
-
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
-import javax.xml.bind.annotation.XmlValue;
-import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
-
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlSchemaType;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.adapters.CollapsedStringAdapter;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * <p>
@@ -171,6 +170,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
+	@Override
 	public CombiningAlgorithm getCombiningAlg() {
 		UnsupportedOperationException e = new UnsupportedOperationException(
 				"PolicyReferences are not supported in this version.");
@@ -184,6 +184,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
+	@Override
 	public EvaluatableID getId() {
 		return new EvaluatableIDImpl(value);
 	}
@@ -194,6 +195,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
+	@Override
 	public TargetType getTarget() {
 		UnsupportedOperationException e = new UnsupportedOperationException(
 				"PolicyReferences are not supported in this version.");
@@ -207,6 +209,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
+	@Override
 	public String getEvalutableVersion() {
 		UnsupportedOperationException e = new UnsupportedOperationException(
 				"PolicyReferences are not supported in this version.");
@@ -217,6 +220,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean hasObligations() {
 		return true; // Returns always true because it cannot be determined if a
 		// remote Policy contains Obligations.
@@ -225,6 +229,7 @@ public class IdReferenceType implements Serializable, Evaluatable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<ObligationType> getContainedObligations(EffectType effect) {
 		UnsupportedOperationException e = new UnsupportedOperationException(
 				"PolicyReferences are not supported in this version.");

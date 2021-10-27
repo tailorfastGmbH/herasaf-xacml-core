@@ -49,6 +49,7 @@ public class DNSNameRegexpMatchFunction extends AbstractFunction {
 	 * the second argument of type
 	 * urn:oasis:names:tc:xacml:2.0:data-type:dnsName.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

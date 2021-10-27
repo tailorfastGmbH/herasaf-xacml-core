@@ -46,6 +46,7 @@ public class DoubleGreaterThanOrEqualFunction extends AbstractFunction {
 	 * Returns true if the first argument of type double is greater or equal
 	 * than the second argument.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

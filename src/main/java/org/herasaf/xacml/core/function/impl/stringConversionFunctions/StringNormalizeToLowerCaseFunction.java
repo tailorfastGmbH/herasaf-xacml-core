@@ -46,6 +46,7 @@ public class StringNormalizeToLowerCaseFunction extends AbstractFunction {
 	 * <br>
 	 * Converts each upper case character to its lower case equivalent.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

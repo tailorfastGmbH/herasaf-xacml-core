@@ -45,6 +45,7 @@ public class DoubleSubtractFunction extends AbstractFunction {
 	 * {@inheritDoc} Takes two {@link Double} values as parameters and returns
 	 * the result of subtracting the first by the second as {@link Double}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

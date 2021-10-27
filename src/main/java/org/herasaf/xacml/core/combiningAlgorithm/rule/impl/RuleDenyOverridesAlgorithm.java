@@ -53,7 +53,7 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 
 	private static final long serialVersionUID = 1L;
 
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(RuleDenyOverridesAlgorithm.class);
 
 	/**
@@ -67,6 +67,7 @@ public class RuleDenyOverridesAlgorithm extends RuleUnorderedCombiningAlgorithm 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluateRuleList(final RequestType request,
 			final List<RuleType> rules,
 			final EvaluationContext evaluationContext) {

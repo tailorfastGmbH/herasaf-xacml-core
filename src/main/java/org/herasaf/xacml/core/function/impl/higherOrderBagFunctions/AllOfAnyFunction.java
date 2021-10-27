@@ -56,6 +56,7 @@ public class AllOfAnyFunction extends AbstractFunction {
 	 * function and the second list as additional parameters. If any of them
 	 * returns true, true is returned.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != VALID_LENGTH) {

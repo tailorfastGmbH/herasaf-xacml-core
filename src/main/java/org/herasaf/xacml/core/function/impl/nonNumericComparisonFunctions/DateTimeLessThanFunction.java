@@ -58,6 +58,7 @@ public class DateTimeLessThanFunction extends AbstractFunction {
 	 * the system property {@code user.timezone}. If that is {@code null} or is not a valid identifier, then the value
 	 * of the JDK {@code TimeZone} default is converted. If that fails, {@code UTC} is used.</b>
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

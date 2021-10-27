@@ -39,6 +39,7 @@ public class NotFunction extends AbstractFunction {
 	 * Takes at one {@link Boolean} value as parameter. And returns the inverted
 	 * value of the {@link Boolean}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

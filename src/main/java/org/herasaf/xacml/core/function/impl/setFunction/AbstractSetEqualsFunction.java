@@ -44,6 +44,7 @@ public abstract class AbstractSetEqualsFunction<T> extends AbstractFunction {
 	 * Returns true if the first argument set and the second argument set are
 	 * equal.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

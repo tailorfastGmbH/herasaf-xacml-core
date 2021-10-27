@@ -41,6 +41,7 @@ public abstract class PolicyUnorderedCombiningAlgorithm extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluate(final RequestType request,
 			final Evaluatable evals, final EvaluationContext evaluationContext) {
 		final TargetMatchingResult decision = matchTarget(request, evals

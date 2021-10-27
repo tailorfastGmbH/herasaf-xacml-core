@@ -91,7 +91,7 @@ public class TestAttributeValueType {
 	@Test(enabled = true, expectedExceptions = ExpressionProcessingException.class)
 	public void testHandleExceptionWrongType() throws Exception {
 		attrVal.setDataType(new StringDataTypeAttribute());
-		attrVal.getContent().add(new Integer("1"));
+		attrVal.getContent().add(Integer.valueOf("1"));
 		attrVal.handle(new RequestType(), new EvaluationContext(targetMatcher, new StatusCodeComparator(), null));
 	}
 }

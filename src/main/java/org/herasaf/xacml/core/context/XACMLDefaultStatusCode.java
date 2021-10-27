@@ -59,6 +59,7 @@ public enum XACMLDefaultStatusCode implements StatusCode {
      * 
      * @return The current {@link StatusCode}.
      */
+    @Override
     public String getValue() {
         return value;
     }

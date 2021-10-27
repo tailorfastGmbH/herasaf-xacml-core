@@ -67,7 +67,7 @@ public class TestYearMonthDurationDataTypeAttribute {
 	@Test(expectedExceptions = { SyntaxException.class })
 	public void testInputtrueWrongSpelled() throws Exception {
 		List<String> data = new ArrayList<String>();
-		data.add("+P9Y3M");
+		data.add("?P9Y3M");
 		dataType.convertTo(data);
 	}
 

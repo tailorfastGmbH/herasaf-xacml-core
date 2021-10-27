@@ -17,19 +17,19 @@
 
 package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 
-import static org.testng.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.BooleanDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateTimeDataTypeAttribute;
-import org.joda.time.DateTimeZone;
-import org.testng.annotations.AfterTest;
+import org.herasaf.xacml.core.types.DateTime;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.time.ZoneOffset;
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Tests if the {@link DateTimeDataTypeAttribute} works properly.
@@ -38,21 +38,13 @@ import org.testng.annotations.Test;
  */
 public class TestDateTimeDataTypeAttribute {
 	private DateTimeDataTypeAttribute dataType;
-	private DateTimeZone defaultZone;
 	
 	/**
 	 * Sets the default timezone to +00:00 for testing.
 	 */
 	@BeforeTest
 	public void init(){
-		defaultZone = DateTimeZone.getDefault();
-		
-		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
-	}
-	
-	@AfterTest
-	public void cleanUp(){
-		DateTimeZone.setDefault(defaultZone);
+		DateTime.configureWith(false, ZoneOffset.UTC);
 	}
 	
 	/**

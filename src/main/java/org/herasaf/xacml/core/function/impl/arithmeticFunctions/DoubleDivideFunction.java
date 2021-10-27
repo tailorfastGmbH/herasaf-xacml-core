@@ -45,6 +45,7 @@ public class DoubleDivideFunction extends AbstractFunction {
 	 * {@inheritDoc} takes 2 {@link Double} parameters and returne the result
 	 * ,of dividing the first by the second, as {@link Double} value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

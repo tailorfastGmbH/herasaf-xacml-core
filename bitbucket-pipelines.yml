@@ -1,4 +1,9 @@
-#  Bitbucket build
+#  Template maven-build
+
+#  This template allows you to test and build your Java project with Maven.
+#  The workflow allows running tests, code checkstyle and security scans on the default branch.
+
+# Prerequisites: pom.xml and appropriate project structure should exist in the repository.
 
 image: maven:3.8.2-openjdk-8
 

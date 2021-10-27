@@ -48,6 +48,7 @@ public class IntegerGreaterThanFunction extends AbstractFunction {
 	 * Returns true if the first argument of type integer is greater than the
 	 * second argument.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

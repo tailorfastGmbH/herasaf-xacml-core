@@ -31,6 +31,7 @@ public class X500DataTypeAttribute extends AbstractDataTypeAttribute<X500Princip
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
+	@Override
 	public String getDatatypeURI() {
 		return ID;
 	}

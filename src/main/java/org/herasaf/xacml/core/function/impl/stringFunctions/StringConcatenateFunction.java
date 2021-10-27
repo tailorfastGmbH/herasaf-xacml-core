@@ -45,6 +45,7 @@ public class StringConcatenateFunction extends AbstractFunction {
 	 * <br>
 	 * Returns the concatenation of the arguments in their order.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length < 2) {

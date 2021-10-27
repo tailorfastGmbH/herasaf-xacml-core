@@ -47,6 +47,7 @@ public class IntegerAbsFunction extends AbstractFunction {
 	 * {@inheritDoc} takes one {@link BigInteger} value as parameter and
 	 * returnes it's absolut value as {@link BigInteger}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

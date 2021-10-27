@@ -49,6 +49,7 @@ public abstract class AbstractRuleCombiningAlgorithm extends AbstractCombiningAl
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluateRule(final RequestType request, final RuleType rule,
 			final EvaluationContext evaluationContext) {
 		/*

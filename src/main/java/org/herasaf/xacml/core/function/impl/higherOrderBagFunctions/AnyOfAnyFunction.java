@@ -45,6 +45,7 @@ public class AnyOfAnyFunction extends AbstractFunction {
 	 * every value of the first list with every value of the second list. If one
 	 * function call returnes true, <code>true</code> is returned.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != VALID_LENGTH) {

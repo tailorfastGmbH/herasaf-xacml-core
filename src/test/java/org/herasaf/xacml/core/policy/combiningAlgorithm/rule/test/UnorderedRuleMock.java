@@ -96,6 +96,7 @@ public class UnorderedRuleMock extends RuleUnorderedCombiningAlgorithm {
 	/**
 	 * Returns always permit.
 	 */
+	@Override
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possiblePolicies,
 			EvaluationContext evaluationContexts) {

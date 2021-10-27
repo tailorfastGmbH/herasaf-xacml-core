@@ -22,7 +22,9 @@ import static org.testng.Assert.assertEquals;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.types.Date;
 import org.herasaf.xacml.core.types.DateTime;
-import org.joda.time.DateTimeZone;
+import java.time.ZoneOffset;
+import java.util.TimeZone;
+
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
@@ -34,22 +36,22 @@ import org.testng.annotations.Test;
  * @author Florian Huonder
  */
 public class TestDateTime {
-	private DateTimeZone defaultZone;
-
-	/**
-	 * Sets the default timezone to +00:00 for testing.
-	 */
-	@BeforeTest
-	public void init() {
-		defaultZone = DateTimeZone.getDefault();
-
-		DateTimeZone.setDefault(DateTimeZone.forOffsetHours(0));
-	}
-
-	@AfterTest
-	public void cleanUp() {
-		DateTimeZone.setDefault(defaultZone);
-	}
+    private TimeZone defaultZone;
+    
+    /**
+     * Sets the default timezone to +00:00 for testing.
+     */
+    @BeforeTest
+    public void init(){
+        defaultZone = TimeZone.getDefault();
+        
+        TimeZone.setDefault(TimeZone.getTimeZone(ZoneOffset.UTC));
+    }
+    
+    @AfterTest
+    public void cleanUp(){
+        TimeZone.setDefault(defaultZone);
+    }
 
 	/**
 	 * Creates positive test cases.
@@ -58,11 +60,16 @@ public class TestDateTime {
 	 */
 	@DataProvider(name = "positiveCasesWithNonZuluUtc")
 	public Object[][] createPositiveNonZuluCases() {
-		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239", "2005-02-02T12:00:01.239+00:00" },
-				new Object[] { "2005-02-02T12:00:01.239+00:00", "2005-02-02T12:00:01.239+00:00" },
-				new Object[] { "2005-02-02T12:00:01.239Z", "2005-02-02T12:00:01.239+00:00" },
-				new Object[] { "2005-02-02T12:00:01", "2005-02-02T12:00:01+00:00" },
-				{ "2007-02-01T24:00:00", "2007-02-02T00:00:00+00:00" } };
+		return new Object[][]{
+				new Object[]{"2005-02-02T12:00:01.239",
+						"2005-02-02T12:00:01.239+00:00"},
+				new Object[]{"2005-02-02T12:00:01.239+00:00",
+						"2005-02-02T12:00:01.239+00:00"},
+				new Object[]{"2005-02-02T12:00:01.239Z",
+						"2005-02-02T12:00:01.239+00:00"},
+				new Object[]{"2005-02-02T12:00:01",
+						"2005-02-02T12:00:01+00:00"},
+				{"2007-02-01T23:59:59", "2007-02-01T23:59:59+00:00"}};
 	}
 
 	@DataProvider(name = "positiveCasesWithZuluUtc")
@@ -81,8 +88,8 @@ public class TestDateTime {
 	 */
 	@DataProvider(name = "negativeCases")
 	public Object[][] createNegativeCases() {
-		return new Object[][] { new Object[] { "2005-02-02T12:00:01.239.9304" }, new Object[] { "12:00:00" },
-				new Object[] { "2006-04-31" }, };
+		return new Object[][]{new Object[]{"2005-02-02T12:00:01.239.9304"},
+				new Object[]{"12:00:00"}, new Object[]{"2006-04-31"}};
 	}
 
 	/**

@@ -47,11 +47,13 @@ public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
     }
 
     /** {@inheritDoc} */
+    @Override
     public String convertTo(String jaxbRepresentation) {
         return jaxbRepresentation;
     }
 
     /** {@inheritDoc} */
+    @Override
     public String getDatatypeURI() {
         return ID;
     }

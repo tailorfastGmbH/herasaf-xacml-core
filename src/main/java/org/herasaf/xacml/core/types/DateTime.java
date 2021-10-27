@@ -17,118 +17,95 @@
 package org.herasaf.xacml.core.types;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
-import org.joda.time.format.ISODateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAccessor;
+import java.time.temporal.TemporalUnit;
+
 /**
- * This class can parse and print a dateTime of type http://www.w3.org/2001/XMLSchema#dateTime with the pattern
+ * This class can parse and print a dateTime of type
+ * http://www.w3.org/2001/XMLSchema#dateTime with the pattern
  * 
  * yyyy '-' MM '-' dd 'T' HH ':' mm ':' ss ('.' SSS)? ZZ?"
  * 
- * The fractional seconds and timezone parts are optional on creation. The {@link #toString()} method will always print
- * the fractional seconds and the timezone.
+ * The fractional seconds and timezone parts are optional on creation. The
+ * {@link #toString()} method will always print the fractional seconds and the
+ * timezone.
  * 
  * @author Florian Huonder
  */
 public class DateTime implements Comparable<DateTime> {
-	private final Logger logger = LoggerFactory.getLogger(DateTime.class);
-	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
-	private static DateTimeFormatter DATE_TIME_PARSER;
-	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
-	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
-	private static DateTimeFormatter MILLIS_PARSER;
-	private org.joda.time.DateTime dateTime;
-	private boolean noFractionalSeconds;
+	private static final Logger logger = LoggerFactory
+			.getLogger(DateTime.class);
+	private static DateTimeFormatter dateTimeFormatter;
+	private static ZoneId defaultZoneId;
+	private OffsetDateTime dateTime;
+
 
 	/**
 	 * Initializes the formatters when the type is initialized.
 	 */
 	static {
-		useZuluUtcRepresentation(false);
+		configureWith(false, ZoneOffset.UTC);
 	}
-
+	
 	/**
 	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
 	 */
 	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
-		// The default formatter for the timezone that can handle only +-00:00 for UTC.
-		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
-				2).toFormatter();
-		// The formatter for the timezone that can handle Zulu value 'Z'.
-		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
-				.toFormatter();
-		// The formatter for the fractional (3 digit) seconds
-		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
-				.appendFractionOfSecond(3, 3).toFormatter();
-		// This formatter equals: yyyy-MM-dd'T'HH:mm:ss
-		DateTimeFormatter dhmsFormatter = ISODateTimeFormat.dateHourMinuteSecond();
-
-		// This formatter equals: yyyy-MM-dd
-		DateTimeFormatter dateFormatter = ISODateTimeFormat.date();
-
-		// Accepts yyyy-MM-dd'T'24:00:00, Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
-		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().append(dateFormatter).appendLiteral("T24:00:00")
-				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
-
-		// Here a parser is created that parses a string of the form yyyy-MM-dd'T'HH:mm:ss. Further the string may have
-		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
-		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
-		DATE_TIME_PARSER = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.appendOptional(fractionalSecondsFormatter.getParser())
-				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
-
-		// Here a printer is created that prints this dateTime in the form yyyy-MM-dd'T'HH:mm:ss.SSS ZZ (.SSS is not
-		// printed when its .000)
-
-		// Determine timezone formatter to be used.
-		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
 		if (useZuluUtcRepresentation) {
-			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+			dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		} else {
-			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+			dateTimeFormatter = new DateTimeFormatterBuilder()
+					.parseCaseInsensitive()
+					.parseLenient()
+					.append(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
+					.appendOffset("+HH:MM", "+00:00")
+					.toFormatter();
 		}
+	}
 
-		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
-
-		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().append(dhmsFormatter)
-				.append(fractionalSecondsFormatter).append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
-
-		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
+	/**
+	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00)
+	 * @param defaultZoneId -  ZoneId used to handle local dates.
+	 */
+	public static void configureWith(
+			boolean useZuluUtcRepresentation, ZoneId defaultZoneId) {
+		DateTime.defaultZoneId = defaultZoneId;
+		useZuluUtcRepresentation(useZuluUtcRepresentation);
 	}
 
 	public DateTime(String dateTimeString) throws SyntaxException {
-		dateTimeString = dateTimeString.trim();
 		try {
-			dateTime = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(dateTimeString);
-		} catch (UnsupportedOperationException e) {
-			String message = "Parsing dateTime is not supported.";
+			// Java implement strict ISO8601 which does not allow 24:00, but XML-DateTime does.
+			boolean handle24hours = dateTimeString.contains("T24:00");
+			if (handle24hours) {
+				dateTimeString = dateTimeString.replace("T24:00", "T00:00");
+			}
+			TemporalAccessor parsed = DateTimeFormatter.ISO_DATE_TIME.parseBest(
+					dateTimeString.trim(), OffsetDateTime::from, LocalDateTime::from);
+			if (parsed instanceof LocalDateTime) {
+				dateTime = ((LocalDateTime) parsed).atZone(defaultZoneId).toOffsetDateTime();
+			} else {
+				dateTime = (OffsetDateTime) parsed;
+			}
+			if (handle24hours) {
+				dateTime = dateTime.plus(1, ChronoUnit.DAYS);
+			}
+		} catch (DateTimeParseException e) {
+			String message = String.format(
+					"Parsing dateTime %s is not supported.", dateTimeString);
 			logger.error(message);
 			throw new SyntaxException(message, e);
-		} catch (IllegalArgumentException e) {
-			try {
-				// If parsing failed check if the time part is midnight as clockhour.
-				dateTime = DATE_TIME_PARSER_CLOCKHOUR.withOffsetParsed().parseDateTime(dateTimeString);
-				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
-				// shifted plus one.
-				dateTime = dateTime.plus(Period.days(1));
-			} catch (IllegalArgumentException e2) {
-				String message = String
-						.format("The dateTime '%s' is not a valid dateTime according to http://www.w3.org/2001/XMLSchema#dateTime",
-								dateTimeString);
-				logger.error(message);
-				throw new SyntaxException(message, e);
-			}
-		} finally {
-			if (dateTime != null) {
-				// Check if the time part has fractional seconds
-				String millis = MILLIS_PARSER.print(dateTime);
-				noFractionalSeconds = millis.length() == 0;
-			}
 		}
 	}
 
@@ -137,21 +114,17 @@ public class DateTime implements Comparable<DateTime> {
 	 */
 	@Override
 	public String toString() {
-		if (noFractionalSeconds) {
-			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(dateTime.withZoneRetainFields(dateTime.getZone()));
-		} else {
-			return DATE_TIME_PRINTER_WITH_MILLIS.print(dateTime.withZoneRetainFields(dateTime.getZone()));
-		}
+		return dateTime.format(dateTimeFormatter);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int compareTo(DateTime o) {
-		org.joda.time.DateTime jodaThisDateTime = this.getDateTime();
-		org.joda.time.DateTime jodaThatDateTime = o.getDateTime();
-		int comparisonResult = jodaThisDateTime.compareTo(jodaThatDateTime);
-		return comparisonResult;
+		OffsetDateTime thisDateTime = this.getDateTime();
+		OffsetDateTime thatDateTime = o.getDateTime();
+		return OffsetDateTime.timeLineOrder().compare(thisDateTime, thatDateTime);
 	}
 
 	/**
@@ -163,10 +136,9 @@ public class DateTime implements Comparable<DateTime> {
 			// Check if types are the same
 			return false;
 		}
-		org.joda.time.DateTime jodaThisDateTime = getDateTime();
-		org.joda.time.DateTime jodaThatDateTime = ((DateTime) obj).getDateTime();
-		boolean isEqual = jodaThisDateTime.isEqual(jodaThatDateTime);
-		return isEqual;
+		OffsetDateTime thisDateTime = getDateTime();
+		OffsetDateTime thatDateTime = ((DateTime) obj).getDateTime();
+		return thisDateTime.isEqual(thatDateTime);
 	}
 
 	/**
@@ -174,7 +146,7 @@ public class DateTime implements Comparable<DateTime> {
 	 * 
 	 * @return internal representation of this dateTime.
 	 */
-	public org.joda.time.DateTime getDateTime() {
+	public OffsetDateTime getDateTime() {
 		return dateTime;
 	}
 

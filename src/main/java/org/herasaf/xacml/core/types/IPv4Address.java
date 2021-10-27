@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
  * @see IPAddress
  */
 public class IPv4Address extends IPAddress {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(IPv4Address.class);
 	private static String hostPart = "(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
 	private static String networkPart = "/(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";

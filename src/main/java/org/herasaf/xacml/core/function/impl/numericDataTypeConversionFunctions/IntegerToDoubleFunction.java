@@ -47,6 +47,7 @@ public class IntegerToDoubleFunction extends AbstractFunction {
 	 * <br>
 	 * Returns the intger value as double with the same numeric value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

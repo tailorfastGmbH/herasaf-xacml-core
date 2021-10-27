@@ -60,6 +60,7 @@ public class VariableValue implements Variable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Object getValue(RequestType request, EvaluationContext evaluationContext) {
 		return value;
 	}

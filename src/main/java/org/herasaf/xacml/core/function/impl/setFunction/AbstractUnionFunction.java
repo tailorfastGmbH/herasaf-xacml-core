@@ -46,6 +46,7 @@ public abstract class AbstractUnionFunction<T> extends AbstractFunction {
 	 * <br>
 	 * Returns a bag containing all elements from the first and the second bag.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

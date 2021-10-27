@@ -43,6 +43,7 @@ public class Base64BinaryEqualFunction extends AbstractFunction {
 	 * Takes two {@link Base64Binary} objects as parameters and returns wheter
 	 * they are equal or not as {@link Boolean} value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

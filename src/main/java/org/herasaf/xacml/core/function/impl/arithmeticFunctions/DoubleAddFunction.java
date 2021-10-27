@@ -45,6 +45,7 @@ public class DoubleAddFunction extends AbstractFunction {
 	 * {@inheritDoc} takes at least 2 {@link Double} values and returnes the sum
 	 * of them as {@link Double} value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length < 2) {
@@ -56,7 +57,7 @@ public class DoubleAddFunction extends AbstractFunction {
 				integers[i] = (Double) args[i];
 			}
 
-			Double result = new Double("0");
+			Double result = Double.valueOf("0");
 			for (Double i : integers) {
 				result = result.doubleValue() + i.doubleValue();
 			}

@@ -53,7 +53,7 @@ import org.xml.sax.SAXException;
  */
 public class JaxbContextInitializer implements Initializer {
 
-    private transient final Logger logger = LoggerFactory.getLogger(JaxbContextInitializer.class);
+    private static final Logger logger = LoggerFactory.getLogger(JaxbContextInitializer.class);
 
     private static final String CONTEXT_SCHEMA_PATH = "classpath:/access_control-xacml-2.0-context-schema-os.xsd";
     private static final String POLICY_SCHEMA_PATH = "classpath:/access_control-xacml-2.0-policy-schema-os.xsd";
@@ -67,6 +67,7 @@ public class JaxbContextInitializer implements Initializer {
     /**
      * {@inheritDoc}
      */
+    @Override
     public void run(SimplePDPConfiguration configuration) {
         initializePolicyContext(configuration);
         initializeRequestContext(configuration);

@@ -29,6 +29,7 @@ public abstract class AbstractFunction implements Function {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public String toString() {
 		return getFunctionId();
 	}
@@ -36,6 +37,7 @@ public abstract class AbstractFunction implements Function {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int hashCode() {
 		return getFunctionId().hashCode();
 	}
@@ -43,6 +45,7 @@ public abstract class AbstractFunction implements Function {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean equals(Object obj) {
 		if (obj == null) {
 			return false;
@@ -61,5 +64,6 @@ public abstract class AbstractFunction implements Function {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public abstract String getFunctionId();
 }

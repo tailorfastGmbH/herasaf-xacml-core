@@ -45,6 +45,7 @@ public class StringNormalizeSpaceFunction extends AbstractFunction {
 	 * <br>
 	 * Strips off all leading and trailing white spaces.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

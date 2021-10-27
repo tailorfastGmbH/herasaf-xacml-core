@@ -80,6 +80,7 @@ public class ResourceMatchType implements Serializable, Match {
 	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getAttributeValue()
 	 */
+	@Override
 	public AttributeValueType getAttributeValue() {
 		return attributeValue;
 	}
@@ -121,6 +122,7 @@ public class ResourceMatchType implements Serializable, Match {
 	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getAttributeSelector()
 	 */
+	@Override
 	public AttributeSelectorType getAttributeSelector() {
 		return attributeSelector;
 	}
@@ -141,6 +143,7 @@ public class ResourceMatchType implements Serializable, Match {
 	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getMatchFunction()
 	 */
+	@Override
 	public Function getMatchFunction() {
 		return matchFunction;
 	}
@@ -160,6 +163,7 @@ public class ResourceMatchType implements Serializable, Match {
 	 * 
 	 * @see org.herasaf.core.policy.impl.Match#getAttributeDesignator()
 	 */
+	@Override
 	public AttributeDesignatorType getAttributeDesignator() {
 		return getResourceAttributeDesignator();
 	}

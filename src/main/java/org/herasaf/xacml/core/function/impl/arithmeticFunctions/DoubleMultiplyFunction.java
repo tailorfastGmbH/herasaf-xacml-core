@@ -45,6 +45,7 @@ public class DoubleMultiplyFunction extends AbstractFunction {
 	 * {@inheritDoc} takes 2 {@link Double} parameters and returns the
 	 * {@link Double} result of multiplying them.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

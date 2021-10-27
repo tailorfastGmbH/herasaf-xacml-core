@@ -42,8 +42,8 @@ public class TestDoubleDivideFunction {
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
-			new Object[] { new Double("1.0"), new Double("1.0"), new Double("1.0")},
-			new Object[] { new Double("99.0"), new Double("3.0"), new Double("33.0")},
+			new Object[] { Double.valueOf("1.0"), Double.valueOf("1.0"), Double.valueOf("1.0")},
+			new Object[] { Double.valueOf("99.0"), Double.valueOf("3.0"), Double.valueOf("33.0")},
 		};
 	}
 
@@ -55,8 +55,8 @@ public class TestDoubleDivideFunction {
 	@DataProvider(name="dataBy0")
 	public Object[][] createDataBy0(){
 		return new Object[][]{
-			new Object[] { new Double("1.0")},
-			new Object[] { new Double("99.0")},
+			new Object[] { Double.valueOf("1.0")},
+			new Object[] { Double.valueOf("99.0")},
 		};
 	}
 	
@@ -90,7 +90,7 @@ public class TestDoubleDivideFunction {
 	 */
 	@Test(dataProvider="dataBy0", expectedExceptions={FunctionProcessingException.class})
 	public void testDivideBy0Args(Double i1) throws Exception {
-		ia.handle(i1, new Double("0.0"));
+		ia.handle(i1, Double.valueOf("0.0"));
 	}
 	
 	/**

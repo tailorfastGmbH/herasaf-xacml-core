@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RuleCombiningAlgorithmJAXBTypeAdapter extends
 		XmlAdapter<String, RuleCombiningAlgorithm> {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(RuleCombiningAlgorithmJAXBTypeAdapter.class);
 	private static Map<String, RuleCombiningAlgorithm> combiningAlgorithms = new HashMap<String, RuleCombiningAlgorithm>();
 

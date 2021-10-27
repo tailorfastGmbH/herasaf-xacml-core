@@ -47,6 +47,7 @@ public class StringGreaterThanFunction extends AbstractFunction {
 	 * http://www.w3.org/2001/XMLSchema#string is greater than the second
 	 * argument.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

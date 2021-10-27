@@ -56,6 +56,7 @@ public abstract class AbstractBagFunction<T> extends AbstractFunction {
 	 * {@link List} containing the values.
 	 * </p>
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		List<T> stringBag;

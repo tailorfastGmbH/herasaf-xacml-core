@@ -36,7 +36,7 @@ import org.xml.sax.SAXException;
  * @author René Eggenschwiler
  */
 public class JAXBMarshallerConfiguration {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(JAXBMarshallerConfiguration.class);
 
 	/** Tells if the output should be formatted. */

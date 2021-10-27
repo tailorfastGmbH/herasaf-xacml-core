@@ -55,12 +55,13 @@ public class PolicyDenyOverridesAlgorithm extends
 
 	private static final long serialVersionUID = 1L;
 
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(PolicyDenyOverridesAlgorithm.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluateEvaluatableList(final RequestType request,
 			final List<Evaluatable> possiblePolicies,
 			final EvaluationContext evaluationContext) {

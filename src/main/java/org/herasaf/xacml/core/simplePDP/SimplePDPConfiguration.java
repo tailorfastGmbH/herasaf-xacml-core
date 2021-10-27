@@ -27,7 +27,9 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.impl.PolicyOnlyOneApplic
 import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.targetMatcher.TargetMatcher;
 import org.herasaf.xacml.core.targetMatcher.impl.TargetMatcherImpl;
-import org.joda.time.DateTimeZone;
+
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +42,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class SimplePDPConfiguration {
-    private final Logger logger = LoggerFactory.getLogger(SimplePDPConfiguration.class);
+    private static final Logger logger = LoggerFactory.getLogger(SimplePDPConfiguration.class);
 
     /**
      * The root {@link PolicyCombiningAlgorithm} to be used in the {@link SimplePDP} on which this {@link SimplePDPConfiguration} will be
@@ -90,7 +92,7 @@ public class SimplePDPConfiguration {
      * value is GMT</b>.
      */
     // default value is set in the getter, if needed.
-    private DateTimeZone timeZone;
+    private ZoneId timeZone;
 
     /**
      * The flag indicating if the UTC timezone representation shall be +00:00 or 'Z' (for Zulu). <b>Default value is:</b> {@code}false
@@ -221,7 +223,7 @@ public class SimplePDPConfiguration {
      * @param timeZone
      *            The {@link DateTimeZone} of the timezone that shall be used as default.
      */
-    public void setTimeZone(DateTimeZone timeZone) {
+    public void setTimeZone(ZoneOffset timeZone) {
         this.timeZone = timeZone;
     }
 
@@ -230,13 +232,13 @@ public class SimplePDPConfiguration {
      *
      * @return The configured time zone.
      */
-    public DateTimeZone getTimeZone() {
+    public ZoneId getTimeZone() {
         if (timeZone != null) {
             logger.info("Using custom timezone: {}", timeZone);
             return timeZone;
         }
         logger.info("Using default timezone: {}", timeZone);
-        return DateTimeZone.forID("GMT");
+        return ZoneOffset.UTC;
     }
 
     /**

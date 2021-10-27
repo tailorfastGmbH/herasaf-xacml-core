@@ -47,6 +47,7 @@ public abstract class AbstractIntersectionFunction<T> extends AbstractFunction {
 	 * Returns a bag containing all elements that are common in the first and
 	 * the second bag.
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {

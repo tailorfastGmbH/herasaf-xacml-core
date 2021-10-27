@@ -50,7 +50,7 @@ public class RuleFirstApplicableAlgorithm extends
 
 	private static final long serialVersionUID = 1L;
 
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(RuleFirstApplicableAlgorithm.class);
 
 	/**
@@ -64,6 +64,7 @@ public class RuleFirstApplicableAlgorithm extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluateRuleList(final RequestType request,
 			final List<RuleType> rules,
 			final EvaluationContext evaluationContext) {

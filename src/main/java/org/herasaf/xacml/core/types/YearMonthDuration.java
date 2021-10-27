@@ -18,11 +18,11 @@
 package org.herasaf.xacml.core.types;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Period;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 /**
  * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration".<br>
@@ -32,19 +32,9 @@ import org.joda.time.format.PeriodFormatterBuilder;
  * @author Florian Huonder
  */
 public class YearMonthDuration implements Comparable<YearMonthDuration> {
-	private Period duration;
+	private Period period;
 	private boolean negative = false;
-	private static final PeriodFormatter PERIOD_FORMATTER;
 
-	static {
-		// This formatter only accepts positive periods. The reason is that Joda Time Period can be negative on each
-		// place. Means this would be valid "P-123Y-34M"
-		// The urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration allows only something like "-P123Y34M". Due to
-		// this fact here only positive values are saved
-		// and the negative case is tracked separately.
-		PERIOD_FORMATTER = new PeriodFormatterBuilder().rejectSignedValues(true).appendLiteral("P").appendYears()
-				.appendSuffix("Y").appendMonths().appendSuffix("M").toFormatter();
-	}
 
 	/**
 	 * Creates a new {@link YearMonthDuration} with the given duration.
@@ -59,8 +49,11 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 			negative = true;
 			durationString = durationString.substring(1);
 		}
-
-		this.duration = PERIOD_FORMATTER.parsePeriod(durationString);
+		try {
+			this.period = Period.parse(durationString);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**
@@ -68,27 +61,20 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 	 */
 	@Override
 	public String toString() {
-		return (negative) ? "-" + PERIOD_FORMATTER.print(duration) : PERIOD_FORMATTER.print(duration);
+		return (negative) ? "-" + period : period.toString();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
-	public int compareTo(YearMonthDuration o) {
-		DateTime startInstant = new DateTime(0L);
-		Duration thisDuration = duration.toDurationFrom(startInstant);
-		Duration compareDuration = o.getDuration().toDurationFrom(startInstant);
-
-		return thisDuration.compareTo(compareDuration);
+	@Override
+    public int compareTo(YearMonthDuration o) {
+		return LocalDate.now().plus(getDuration()).compareTo(LocalDate.now().plus(o.getDuration()));
 	}
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
-		result = prime * result + (negative ? 1231 : 1237);
-		return result;
+		return Objects.hash(period, negative);
 	}
 
 	@Override
@@ -100,17 +86,15 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 		if (getClass() != obj.getClass())
 			return false;
 		YearMonthDuration other = (YearMonthDuration) obj;
-		if (duration == null) {
-			if (other.duration != null)
-				return false;
-		} else if (!duration.equals(other.duration))
+		if (!Objects.equals(period, other.period)) {
 			return false;
+		}
 		if (negative != other.negative)
 			return false;
 		return true;
 	}
 
 	public Period getDuration() {
-		return duration;
+		return period;
 	}
 }

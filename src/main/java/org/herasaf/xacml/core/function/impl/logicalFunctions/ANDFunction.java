@@ -39,6 +39,7 @@ public class ANDFunction extends AbstractFunction {
 	 * Takes at least one {@link Boolean} value returns <code>true</code> if all
 	 * of them are <code>true</code>. Otherwise false is returnes.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length == 0) {

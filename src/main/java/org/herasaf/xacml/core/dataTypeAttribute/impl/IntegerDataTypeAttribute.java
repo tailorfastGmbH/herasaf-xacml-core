@@ -31,6 +31,7 @@ public class IntegerDataTypeAttribute extends AbstractDataTypeAttribute<BigInteg
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
+	@Override
 	public String getDatatypeURI() {
 		return ID;
 	}

@@ -24,18 +24,20 @@
 
 package org.herasaf.xacml.core.context.impl;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import org.herasaf.xacml.core.dataTypeAttribute.impl.DateDataTypeAttribute;
+import org.herasaf.xacml.core.dataTypeAttribute.impl.DateTimeDataTypeAttribute;
+import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
-import org.herasaf.xacml.core.dataTypeAttribute.impl.DateDataTypeAttribute;
-import org.herasaf.xacml.core.dataTypeAttribute.impl.DateTimeDataTypeAttribute;
-import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
-import org.joda.time.DateTime;
+import java.io.Serializable;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>
@@ -73,9 +75,6 @@ import org.joda.time.DateTime;
 		"environment" })
 public class RequestType implements Serializable {
 
-	private static final String DATE_TIME_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
-	private static final String DATE_PATTERN = "yyyy-MM-ddZ";
-	private static final String TIME_PATTERN = "HH:mm:ss.SSSZ"; //HH is the hour 0-23 (k would be 1-24)
 	private static final String CURRENT_DATETIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-dateTime";
 	private static final String CURRENT_DATE_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-date";
 	private static final String CURRENT_TIME_DATATYPEID = "urn:oasis:names:tc:xacml:1.0:environment:current-time";
@@ -107,7 +106,7 @@ public class RequestType implements Serializable {
 	 * 
 	 * @param creationTime The creationTime to set to this request.
 	 */
-	public void setCreationTime(DateTime creationTime) {
+	public void setCreationTime(OffsetDateTime creationTime) {
 	        boolean foundCurrentTime = false;
 	        boolean foundCurrentDate = false;
 	        boolean foundCurrentDateTime = false;
@@ -149,7 +148,7 @@ public class RequestType implements Serializable {
 	 * With this method a caller is able to add the current date, time and datetime.
 	 */
 	public void ensureThatCreationTimeIsSet() {
-		DateTime dateTime = new DateTime();
+	    OffsetDateTime dateTime = OffsetDateTime.now();
 		setCreationTime(dateTime);
 	}
 
@@ -158,11 +157,11 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The {@link AttributeType} containing the current time.
 	 */
-	private AttributeType createCurrentTime(DateTime dateTime) {
+	private AttributeType createCurrentTime(OffsetDateTime dateTime) {
 		AttributeType currentTimeAttr = new AttributeType();
 		currentTimeAttr.setAttributeId(CURRENT_TIME_DATATYPEID);
 		currentTimeAttr.setDataType(new TimeDataTypeAttribute());
-		currentTimeAttr.getAttributeValues().add(createDateTime(dateTime, TIME_PATTERN));
+		currentTimeAttr.getAttributeValues().add(createDateTime(dateTime, DateTimeFormatter.ISO_DATE));
 
 		return currentTimeAttr;
 	}
@@ -172,11 +171,11 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The {@link AttributeType} containing the current date.
 	 */
-	private AttributeType createCurrentDate(DateTime dateTime) {
+	private AttributeType createCurrentDate(OffsetDateTime dateTime) {
 		AttributeType currentDateAttr = new AttributeType();
 		currentDateAttr.setAttributeId(CURRENT_DATE_DATATYPEID);
 		currentDateAttr.setDataType(new DateDataTypeAttribute());
-		currentDateAttr.getAttributeValues().add(createDateTime(dateTime, DATE_PATTERN));
+		currentDateAttr.getAttributeValues().add(createDateTime(dateTime, DateTimeFormatter.ISO_DATE));
 
 		return currentDateAttr;
 	}
@@ -186,12 +185,12 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The {@link AttributeType} containing the current dateTime.
 	 */
-	private AttributeType createCurrentDateTime(DateTime dateTime) {
+	private AttributeType createCurrentDateTime(OffsetDateTime dateTime) {
 		AttributeType currentDateTimeAttr = new AttributeType();
 		currentDateTimeAttr.setAttributeId(CURRENT_DATETIME_DATATYPEID);
 		currentDateTimeAttr.setDataType(new DateTimeDataTypeAttribute());
 		currentDateTimeAttr.getAttributeValues().add(
-				createDateTime(dateTime, DATE_TIME_PATTERN));
+				createDateTime(dateTime, DateTimeFormatter.ISO_DATE_TIME));
 
 		return currentDateTimeAttr;
 	}
@@ -202,10 +201,11 @@ public class RequestType implements Serializable {
 	 * 
 	 * @return The current dateTime.
 	 */
-	private AttributeValueType createDateTime(DateTime dateTime, String pattern) {
+	private AttributeValueType createDateTime(OffsetDateTime dateTime, DateTimeFormatter format) {
 		
-		String value = dateTime.toString(pattern);
-		
+		String value = dateTime.atZoneSameInstant(ZoneOffset.UTC)
+				.format(format);
+
 		AttributeValueType attrValue = new AttributeValueType();
 		attrValue.getContent().add(value);
 

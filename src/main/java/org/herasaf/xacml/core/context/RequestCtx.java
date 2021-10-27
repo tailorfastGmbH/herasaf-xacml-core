@@ -58,7 +58,7 @@ import org.xml.sax.ContentHandler;
 @Deprecated
 public class RequestCtx implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(RequestCtx.class);
 	private RequestType request;
 	private static JAXBContext CONTEXT;

@@ -47,6 +47,7 @@ public class StringLessThanOrEqualFunction extends AbstractFunction {
 	 * http://www.w3.org/2001/XMLSchema#string is lesser than or equal the
 	 * second argument.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

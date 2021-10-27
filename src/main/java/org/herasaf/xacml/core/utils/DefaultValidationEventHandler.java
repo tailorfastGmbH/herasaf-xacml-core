@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class DefaultValidationEventHandler implements ValidationEventHandler {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(DefaultValidationEventHandler.class);
 
 	/**
@@ -39,6 +39,7 @@ public class DefaultValidationEventHandler implements ValidationEventHandler {
 	 * {@link ValidationEvent#ERROR} and {@link ValidationEvent#FATAL_ERROR}
 	 * event.
 	 */
+	@Override
 	public boolean handleEvent(ValidationEvent event) {
 		switch (event.getSeverity()) {
 		case ValidationEvent.WARNING:

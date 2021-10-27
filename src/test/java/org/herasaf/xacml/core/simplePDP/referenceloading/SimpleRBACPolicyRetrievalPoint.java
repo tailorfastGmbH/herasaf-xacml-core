@@ -46,6 +46,7 @@ public class SimpleRBACPolicyRetrievalPoint implements PolicyRetrievalPoint {
             InitializerExecutor.runInitializers();
     }
     
+    @Override
     @Deprecated
     public List<Evaluatable> getEvaluatables(
         org.herasaf.xacml.core.context.RequestCtx request
@@ -53,10 +54,12 @@ public class SimpleRBACPolicyRetrievalPoint implements PolicyRetrievalPoint {
             return getEvaluatables((RequestType)null);
     }
     
+    @Override
     public List<Evaluatable> getEvaluatables(RequestType request) {
             return new ArrayList<Evaluatable>(policyCache.values());
     }   
     
+    @Override
     public Evaluatable getEvaluatable(EvaluatableID id) {
             // See if it's a primary policy
             if (policyCache.containsKey(id.toString())) {

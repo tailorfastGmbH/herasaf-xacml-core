@@ -47,6 +47,7 @@ public class IntegerMultiplyFunction extends AbstractFunction {
 	 * {@inheritDoc} Takes two {@link BigInteger} values as parameter and
 	 * returns the result of multiplying them as {@link BigInteger}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

@@ -17,15 +17,14 @@
 
 package org.herasaf.xacml.core.function.impl.numericDataTypeConversionFunctions;
 
-import static org.testng.Assert.assertEquals;
-
-import java.math.BigInteger;
-
 import org.herasaf.xacml.core.function.Function;
-import org.herasaf.xacml.core.function.impl.numericDataTypeConversionFunctions.DoubleToIntegerFunction;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.math.BigInteger;
+
+import static org.testng.Assert.assertEquals;
 
 /**
  * Tests if the DoubleToInteger function works properly.
@@ -66,7 +65,7 @@ public class TestDoubleToIntegerFunction {
 	 */
 	@Test(dataProvider="args")
 	public void testArgs(String i1, String result) throws Exception {
-		assertEquals(((BigInteger)ia.handle(new Double(i1))).toString(), result);
+		assertEquals(((BigInteger)ia.handle(Double.valueOf(i1))).toString(), result);
 	}
 
 	/**

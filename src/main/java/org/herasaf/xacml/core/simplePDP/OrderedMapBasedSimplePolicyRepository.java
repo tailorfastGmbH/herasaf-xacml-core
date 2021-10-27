@@ -45,6 +45,7 @@ public class OrderedMapBasedSimplePolicyRepository extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void deploy(Evaluatable evaluatable, int position) {
 		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(
 				evaluatable, evaluatable.getId());
@@ -58,9 +59,10 @@ public class OrderedMapBasedSimplePolicyRepository extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void deploy(Map<Integer, Evaluatable> evaluatables) {
 		for (Integer key : evaluatables.keySet()) {
-			deploy(evaluatables.get(key), key.intValue());
+			deploy(evaluatables.get(key), key);
 		}
 	}
 }

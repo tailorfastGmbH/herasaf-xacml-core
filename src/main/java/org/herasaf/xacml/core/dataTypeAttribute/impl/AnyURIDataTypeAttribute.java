@@ -30,6 +30,7 @@ public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
     private static final long serialVersionUID = 1L;
 
     /** {@inheritDoc} */
+    @Override
     public String getDatatypeURI() {
         return ID;
     }

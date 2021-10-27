@@ -55,6 +55,7 @@ public abstract class AbstractBagSizeFunction<T> extends AbstractFunction {
 	 * takes a List as parameter and returns the size of the list.
 	 * </p>
 	 */
+	@Override
 	@SuppressWarnings("unchecked")
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
@@ -62,8 +63,7 @@ public abstract class AbstractBagSizeFunction<T> extends AbstractFunction {
 				throw new FunctionProcessingException(
 						"Invalid number of parameters");
 			}
-			return new BigInteger(Integer.valueOf(((List<T>) args[0]).size())
-					.toString());
+			return new BigInteger(Integer.toString(((List<T>) args[0]).size()));
 		} catch (ClassCastException e) {
 			throw new FunctionProcessingException(e);
 		} catch (Exception e) {

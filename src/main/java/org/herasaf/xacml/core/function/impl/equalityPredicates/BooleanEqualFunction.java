@@ -41,6 +41,7 @@ public class BooleanEqualFunction extends AbstractFunction {
 	 * Takes two {@link Boolean} objects as parameters and returns wheter they
 	 * are equal or not as {@link Boolean} value.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

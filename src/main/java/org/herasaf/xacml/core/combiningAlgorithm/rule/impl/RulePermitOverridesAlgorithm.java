@@ -54,7 +54,7 @@ public class RulePermitOverridesAlgorithm extends
 
 	private static final long serialVersionUID = 1L;
 
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(RulePermitOverridesAlgorithm.class);
 
 	/**
@@ -68,6 +68,7 @@ public class RulePermitOverridesAlgorithm extends
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public DecisionType evaluateRuleList(final RequestType request,
 			final List<RuleType> rules,
 			final EvaluationContext evaluationContext) {

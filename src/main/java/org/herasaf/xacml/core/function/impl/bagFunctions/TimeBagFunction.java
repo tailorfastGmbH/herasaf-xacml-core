@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.bagFunctions;
 
-import org.joda.time.DateTime;
+import java.time.OffsetDateTime;
 
 /**
  * <p>
@@ -34,7 +34,7 @@ import org.joda.time.DateTime;
  * @author Florian Huonder
  * 
  */
-public class TimeBagFunction extends AbstractBagFunction<DateTime> {
+public class TimeBagFunction extends AbstractBagFunction<OffsetDateTime> {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:time-bag";

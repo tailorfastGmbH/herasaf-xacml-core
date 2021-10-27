@@ -61,7 +61,6 @@
 
 		<!-- Dependencies versions -->
 		<jaxb.version>2.3.5</jaxb.version>
-		<jodatime.version>2.10.12</jodatime.version>
 		<slf4j.version>1.7.32</slf4j.version>
 
 		<testng.version>7.4.0</testng.version>
@@ -82,11 +81,6 @@
 			<groupId>org.glassfish.jaxb</groupId>
 			<artifactId>jaxb-runtime</artifactId>
 			<version>${jaxb.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>joda-time</groupId>
-			<artifactId>joda-time</artifactId>
-			<version>${jodatime.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>

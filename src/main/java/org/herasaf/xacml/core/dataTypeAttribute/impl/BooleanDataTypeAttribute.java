@@ -28,6 +28,7 @@ public class BooleanDataTypeAttribute extends AbstractDataTypeAttribute<Boolean>
     private static final long serialVersionUID = 1L;
 
     /** {@inheritDoc} */
+    @Override
     public String getDatatypeURI() {
         return ID;
     }

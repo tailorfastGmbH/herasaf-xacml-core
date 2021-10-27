@@ -38,7 +38,7 @@ import org.slf4j.LoggerFactory;
  * @author René Eggenschwiler
  */
 public class FunctionsJAXBTypeAdapter extends XmlAdapter<String, Function> {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(FunctionsJAXBTypeAdapter.class);
 	private static Map<String, Function> functions = new HashMap<String, Function>();
 

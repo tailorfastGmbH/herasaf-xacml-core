@@ -53,6 +53,7 @@ public class AnyOfAllFunction extends AbstractFunction {
 	 * returns true, the result is true.
 	 */
 
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != VALID_LENGTH) {

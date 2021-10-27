@@ -41,12 +41,12 @@ public class TestDoubleAddFunction {
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
-			new Object[] { new Double("1.0"), new Double("1.0"), new Double("2.0")},
-			new Object[] { new Double("0.5"), new Double("0.5"), new Double("1.0")},
-			new Object[] { new Double("-1.0"), new Double("-3.6"), new Double("-4.6")},
-			new Object[] { new Double("-1.2"), new Double("3.9"), new Double("2.7")},
-			new Object[] { new Double("1.5"), new Double("4.5"), new Double("6")},
-			new Object[] { new Double("0.01"), new Double("1.95"), new Double("1.96")},
+			new Object[] { Double.valueOf("1.0"), Double.valueOf("1.0"), Double.valueOf("2.0")},
+			new Object[] { Double.valueOf("0.5"), Double.valueOf("0.5"), Double.valueOf("1.0")},
+			new Object[] { Double.valueOf("-1.0"), Double.valueOf("-3.6"), Double.valueOf("-4.6")},
+			new Object[] { Double.valueOf("-1.2"), Double.valueOf("3.9"), Double.valueOf("2.7")},
+			new Object[] { Double.valueOf("1.5"), Double.valueOf("4.5"), Double.valueOf("6")},
+			new Object[] { Double.valueOf("0.01"), Double.valueOf("1.95"), Double.valueOf("1.96")},
 		};
 	}
 
@@ -58,12 +58,12 @@ public class TestDoubleAddFunction {
 	@DataProvider(name="data3Args")
 	public Object[][] createData3Args(){
 		return new Object[][]{
-				new Object[] { new Double("1.0"), new Double("1.0"), new Double("1.15"), new Double("3.15")},
-				new Object[] { new Double("0.5"), new Double("0.5"), new Double("1.5"), new Double("2.5")},
-				new Object[] { new Double("-1.0"), new Double("-3.6"), new Double("-1.3"), new Double("-5.9")},
-				new Object[] { new Double("-1.2"), new Double("3.9"), new Double("12.0"), new Double("14.7")},
-				new Object[] { new Double("1.5"), new Double("4.5"), new Double("1.0"), new Double("7")},
-				new Object[] { new Double("0.01"), new Double("1.95"), new Double("0.001"), new Double("1.961")},
+				new Object[] { Double.valueOf("1.0"), Double.valueOf("1.0"), Double.valueOf("1.15"), Double.valueOf("3.15")},
+				new Object[] { Double.valueOf("0.5"), Double.valueOf("0.5"), Double.valueOf("1.5"), Double.valueOf("2.5")},
+				new Object[] { Double.valueOf("-1.0"), Double.valueOf("-3.6"), Double.valueOf("-1.3"), Double.valueOf("-5.9")},
+				new Object[] { Double.valueOf("-1.2"), Double.valueOf("3.9"), Double.valueOf("12.0"), Double.valueOf("14.7")},
+				new Object[] { Double.valueOf("1.5"), Double.valueOf("4.5"), Double.valueOf("1.0"), Double.valueOf("7")},
+				new Object[] { Double.valueOf("0.01"), Double.valueOf("1.95"), Double.valueOf("0.001"), Double.valueOf("1.961")},
 		};
 	}
 

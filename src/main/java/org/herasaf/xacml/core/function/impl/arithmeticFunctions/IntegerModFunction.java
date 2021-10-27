@@ -48,6 +48,7 @@ public class IntegerModFunction extends AbstractFunction {
 	 * returns the modulo of dividing the first by the second as
 	 * {@link BigInteger}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

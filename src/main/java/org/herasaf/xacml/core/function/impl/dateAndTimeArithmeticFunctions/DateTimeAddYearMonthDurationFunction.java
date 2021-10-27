@@ -50,6 +50,7 @@ public class DateTimeAddYearMonthDurationFunction extends AbstractFunction {
 	 * result of subtracting the {@link YearMonthDuration} from the
 	 * {@link DateTime} duration as {@link DateTime}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

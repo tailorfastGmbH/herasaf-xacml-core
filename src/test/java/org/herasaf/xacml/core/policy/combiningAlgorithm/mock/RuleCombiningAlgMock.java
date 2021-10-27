@@ -91,6 +91,7 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
+	@Override
 	public DecisionType evaluate(RequestType request, Evaluatable evals,
 			EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
@@ -109,6 +110,7 @@ public class RuleCombiningAlgMock extends AbstractRuleCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
+	@Override
 	public DecisionType evaluateRuleList(RequestType request,
 			List<RuleType> possibleEvaluatables,
 			EvaluationContext evaluationContext) {

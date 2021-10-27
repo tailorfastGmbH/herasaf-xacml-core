@@ -16,50 +16,42 @@
  */
 package org.herasaf.xacml.core.types;
 
-import org.joda.time.DateTime;
-import org.joda.time.Duration;
-import org.joda.time.Period;
-import org.joda.time.format.PeriodFormatter;
-import org.joda.time.format.PeriodFormatterBuilder;
+import java.time.Duration;
+import java.time.format.DateTimeParseException;
+import java.util.Objects;
 
 /**
- * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see Page 111 of the XACML 2.0 specification,
- * Errata, 29 January 2008). The specification contains an error. Therefore the implementation has the following except
- * for the following discrepancy to the specification:
+ * Represents a "urn:oasis:names:tc:xacml:2.0:data-type:dayTimeDuration" (see
+ * Page 111 of the XACML 2.0 specification, Errata, 29 January 2008). The
+ * specification contains an error. Therefore the implementation has the
+ * following except for the following discrepancy to the specification:
  * <ul>
  * <li>The calculation of the dayTimeDuration in units of seconds is:<br />
  * <code>( ( ('value of the day component' * 24)<br />+ ('value of the hour component') * 60)<br />
- * + ('value of the minute component')*60)<br />+ ('value of the second component')</code><br />
+ * + ('value of the minute component')*60)<br />+ ('value of the second component')</code><br
+ * />
  * <br />
  * </li>
- * <li>The duration must be a valid http://www.w3.org/2001/XMLSchema#duration data type (See: <a
- * href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration"
- * >http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration</a> for further information.) Therefore the data type
- * accepts a shortened range of values.</li>
+ * <li>The duration must be a valid http://www.w3.org/2001/XMLSchema#duration
+ * data type (See:
+ * <a href="http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration"
+ * >http://www.w3.org/TR/2001/REC-xmlschema-2-20010502/#duration</a> for further
+ * information.) Therefore the data type accepts a shortened range of
+ * values.</li>
  * </ul>
  * 
  * <b>Note:</b><br />
- * According to the XACML specification match algorithm a dayTimeDuration can only have a one digit for a day. Because
- * this does not make sense and the XACML conformance tests are designed to allow multiple digits for a day, the match
- * pattern is adjusted.
+ * According to the XACML specification match algorithm a dayTimeDuration can
+ * only have a one digit for a day. Because this does not make sense and the
+ * XACML conformance tests are designed to allow multiple digits for a day, the
+ * match pattern is adjusted.
  * 
  * @author Florian Huonder
  */
 public class DayTimeDuration implements Comparable<DayTimeDuration> {
-	private Period duration;
+	private Duration duration;
+	private String durationValue;
 	private boolean negative = false;
-	private static final PeriodFormatter PERIOD_FORMATTER;
-
-	static {
-		// This formatter only accepts positive periods. The reason is that Joda Time Period can be negative on each
-		// place. Means this would be valid "P-3DT-34M"
-		// The urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration allows only something like "-P3DT34M". Due to
-		// this fact here only positive values are saved
-		// and the negative case is tracked separately.
-		PERIOD_FORMATTER = new PeriodFormatterBuilder().rejectSignedValues(true).appendLiteral("P").appendDays()
-				.appendSuffix("D").appendSeparatorIfFieldsAfter("T").appendHours().appendSuffix("H").appendMinutes()
-				.appendSuffix("M").appendSecondsWithOptionalMillis().appendSuffix("S").toFormatter();
-	}
 
 	/**
 	 * Creates a new {@link DayTimeDuration} with the given duration.
@@ -69,13 +61,30 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	 * @throws ConvertException
 	 */
 	public DayTimeDuration(String durationString) {
-		durationString = durationString.trim();
-		if (durationString.startsWith("-")) {
-			negative = true;
-			durationString = durationString.substring(1);
-		}
+		try {
+			// This formatter only accepts positive periods. The reason is that
+			// Java Time Duration can be negative on each
+			// place. Means this would be valid "P-3DT-34M"
+			// The urn:oasis:names:tc:xacml:2.0:data-type:yearMonthDuration
+			// allows only something like "-P3DT34M". Due to
+			// this fact here only positive values are saved
+			// and the negative case is tracked separately.
+			durationValue =  durationString.trim();
+			
+			String negationParsedValue = durationValue;
+			if (negationParsedValue.startsWith("-")) {
+				negative = true;
+				negationParsedValue = durationString.substring(1);
+			}
+			if (negationParsedValue.contains("-")) {
+				throw new IllegalArgumentException(
+						"Negation only permitted for the whole value, not at each single place.");
+			}
 
-		this.duration = PERIOD_FORMATTER.parsePeriod(durationString);
+			duration = Duration.parse(negationParsedValue);
+		} catch (DateTimeParseException e) {
+			throw new IllegalArgumentException(e);
+		}
 	}
 
 	/**
@@ -83,18 +92,17 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	 */
 	@Override
 	public String toString() {
-		return (negative) ? "-" + PERIOD_FORMATTER.print(duration) : PERIOD_FORMATTER.print(duration);
+		return durationValue;
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int compareTo(DayTimeDuration o) {
-		DateTime startInstant = new DateTime(0L);
-		Duration thisDuration = duration.toDurationFrom(startInstant);
-		Duration compareDuration = o.getDuration().toDurationFrom(startInstant);
+		Duration compareDuration = o.getDuration();
 
-		return thisDuration.compareTo(compareDuration);
+		return duration.compareTo(compareDuration);
 	}
 
 	/**
@@ -102,11 +110,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	 */
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((duration == null) ? 0 : duration.hashCode());
-		result = prime * result + (negative ? 1231 : 1237);
-		return result;
+		return Objects.hash(duration, negative);
 	}
 
 	/**
@@ -121,11 +125,9 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 		if (getClass() != obj.getClass())
 			return false;
 		DayTimeDuration other = (DayTimeDuration) obj;
-		if (duration == null) {
-			if (other.duration != null)
-				return false;
-		} else if (!duration.equals(other.duration))
+		if (!Objects.equals(duration, other.duration)) {
 			return false;
+		}
 		if (negative != other.negative)
 			return false;
 		return true;
@@ -136,7 +138,7 @@ public class DayTimeDuration implements Comparable<DayTimeDuration> {
 	 * 
 	 * @return The {@link Duration}.
 	 */
-	protected Period getDuration() {
+	protected Duration getDuration() {
 		return duration;
 	}
 }

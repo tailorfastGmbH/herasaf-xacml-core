@@ -47,6 +47,7 @@ public class IntegerAddFunction extends AbstractFunction {
 	 * {@inheritDoc} Takes at least two {@link BigInteger} values as parameter
 	 * and returnes the sum of them as {@link BigInteger}.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length < 2) {

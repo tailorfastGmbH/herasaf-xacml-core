@@ -43,6 +43,7 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	public boolean returnTargetFailure;
 	
 	/** {@inheritDoc} */
+	@Override
 	public String getCombiningAlgorithmId() {
 		return "CombiningAlgorithmMock";
 	}
@@ -94,6 +95,7 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
+	@Override
 	public DecisionType evaluate(RequestType request, Evaluatable evals, EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();
 		if (missingAttr != null) {
@@ -112,6 +114,7 @@ public class PolicyCombiningAlgMock implements PolicyCombiningAlgorithm {
 	 * {@link StatusCode}, {@link DecisionType} and
 	 * {@link MissingAttributeDetailType}.
 	 */
+	@Override
 	public DecisionType evaluateEvaluatableList(RequestType request, List<Evaluatable> possibleEvaluatables,
 			EvaluationContext evaluationContext) {
 		List<MissingAttributeDetailType> missingAttributes = new ArrayList<MissingAttributeDetailType>();

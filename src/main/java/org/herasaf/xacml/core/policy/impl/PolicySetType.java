@@ -184,6 +184,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * @return possible object is {@link TargetType }
 	 * 
 	 */
+	@Override
 	public TargetType getTarget() {
 		return target;
 	}
@@ -307,6 +308,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * @return possible object is {@link String }
 	 * 
 	 */
+	@Override
 	public PolicyCombiningAlgorithm getCombiningAlg() {
 		return policyCombiningAlg;
 	}
@@ -361,6 +363,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
+	@Override
 	public EvaluatableID getId() {
 		return getPolicySetId();
 	}
@@ -370,6 +373,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	 * 
 	 * @see org.herasaf.xacml.core.policy.impl.Evaluatable#getId()
 	 */
+	@Override
 	public String getEvalutableVersion() {
 		return getVersion();
 	}
@@ -391,6 +395,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public boolean hasObligations() {
 		return hasObligations;
 	}
@@ -398,6 +403,7 @@ public class PolicySetType implements Evaluatable, Serializable {
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<ObligationType> getContainedObligations(EffectType effect) {
 		List<ObligationType> result = new ArrayList<ObligationType>();
 		if (obligations != null) {

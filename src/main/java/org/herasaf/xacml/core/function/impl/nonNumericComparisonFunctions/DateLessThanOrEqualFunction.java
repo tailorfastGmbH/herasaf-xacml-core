@@ -40,7 +40,7 @@ public class DateLessThanOrEqualFunction extends AbstractFunction {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:date-less-than-or-equal";
-	private final Logger logger = LoggerFactory.getLogger(DateLessThanFunction.class);
+	private static final Logger logger = LoggerFactory.getLogger(DateLessThanFunction.class);
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -60,6 +60,7 @@ public class DateLessThanOrEqualFunction extends AbstractFunction {
      * If that is {@code null} or is not a valid identifier, then the value of the
      * JDK {@code TimeZone} default is converted. If that fails, {@code UTC} is used.</b>
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

@@ -54,6 +54,7 @@ public abstract class AbstractOneAndOnlyFunction<T> extends AbstractFunction {
 	 * exception if more than value is in the list.
 	 * </p>
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 1) {

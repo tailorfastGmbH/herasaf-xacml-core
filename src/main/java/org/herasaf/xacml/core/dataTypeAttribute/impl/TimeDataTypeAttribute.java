@@ -29,6 +29,7 @@ public class TimeDataTypeAttribute extends AbstractDataTypeAttribute<Time> {
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
+	@Override
 	public String getDatatypeURI() {
 		return ID;
 	}

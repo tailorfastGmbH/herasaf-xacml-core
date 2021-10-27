@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.setFunction;
 
-import org.herasaf.xacml.core.types.DateTime;
+import java.time.OffsetDateTime;
 
 /**
  * <p>
@@ -33,7 +33,7 @@ import org.herasaf.xacml.core.types.DateTime;
  * 
  * @author Stefan Oberholzer
  */
-public class DateTimeAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<DateTime> {
+public class DateTimeAtLeastOneMemberOfFunction extends AbstractAtLeastOneMemberOfFunction<OffsetDateTime> {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-at-least-one-member-of";

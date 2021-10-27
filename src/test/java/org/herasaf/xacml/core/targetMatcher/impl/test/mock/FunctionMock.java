@@ -45,6 +45,7 @@ public class FunctionMock extends AbstractFunction {
 	 * 
 	 * Throws an exception if set so or returns the request values.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		if (exceptionProcessing) {
 			throw new FunctionProcessingException();

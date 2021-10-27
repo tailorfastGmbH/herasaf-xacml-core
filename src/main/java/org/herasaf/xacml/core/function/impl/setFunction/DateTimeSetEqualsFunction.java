@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.function.impl.setFunction;
 
-import org.herasaf.xacml.core.types.DateTime;
+import java.time.OffsetDateTime;
 
 /**
  * <p>
@@ -32,7 +32,7 @@ import org.herasaf.xacml.core.types.DateTime;
  * 
  * @author Stefan Oberholzer
  */
-public class DateTimeSetEqualsFunction extends AbstractSetEqualsFunction<DateTime> {
+public class DateTimeSetEqualsFunction extends AbstractSetEqualsFunction<OffsetDateTime> {
 
 	/** XACML function ID. */
 	public static final String ID = "urn:oasis:names:tc:xacml:1.0:function:dateTime-set-equals";

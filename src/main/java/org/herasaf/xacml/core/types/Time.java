@@ -17,12 +17,16 @@
 package org.herasaf.xacml.core.types;
 
 import org.herasaf.xacml.core.SyntaxException;
-import org.joda.time.DateTime;
-import org.joda.time.Period;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.DateTimeFormatterBuilder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.time.LocalTime;
+import java.time.OffsetTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 
 /**
  * This class can parse and print a time of type http://www.w3.org/2001/XMLSchema#time with the pattern
@@ -35,14 +39,9 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class Time implements Comparable<Time> {
-	private final Logger logger = LoggerFactory.getLogger(Time.class);
-	private static DateTimeFormatter DATE_TIME_PARSER;
-	private static DateTimeFormatter DATE_TIME_PARSER_CLOCKHOUR;
-	private static DateTimeFormatter DATE_TIME_PRINTER_WITH_MILLIS;
-	private static DateTimeFormatter DATE_TIME_PRINTER_WITHOUT_MILLIS;
-	private static DateTimeFormatter MILLIS_PARSER;
-	private DateTime time;
-	private boolean noFractionalSeconds;
+	private static final Logger logger = LoggerFactory.getLogger(Time.class);
+	private static DateTimeFormatter timeFormatter;
+	private OffsetTime time;
 
 	/**
 	 * Initializes the formatters when the type is initialized.
@@ -52,78 +51,36 @@ public class Time implements Comparable<Time> {
 	}
 
 	/**
-	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
+	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00)
 	 */
-	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
-		// The default formatter for the timezone that can handle only +-00:00 for UTC.
-		DateTimeFormatter defaultTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset(null, true, 2,
-				2).toFormatter();
-		// The formatter for the timezone that can handle Zulu value 'Z'.
-		DateTimeFormatter zuluTimezoneFormatter = new DateTimeFormatterBuilder().appendTimeZoneOffset("Z", true, 2, 2)
-				.toFormatter();
-		// The formatter for the fractional (3 digit) seconds
-		DateTimeFormatter fractionalSecondsFormatter = new DateTimeFormatterBuilder().appendLiteral('.')
-				.appendFractionOfSecond(0, 3).toFormatter();
-
-		// Here a parser is created that parses a string of the form HH:mm:ss. Further the string may have
-		// 3 digit fractional seconds (with a dot as prefix) and may have a timezone.
-		// Zulu timezone formatter is used because it can handle +-00:00 and 'Z' for UTC.
-		DATE_TIME_PARSER = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':').appendMinuteOfHour(2)
-				.appendLiteral(':').appendSecondOfMinute(2).appendOptional(fractionalSecondsFormatter.getParser())
-				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
-
-		DATE_TIME_PARSER_CLOCKHOUR = new DateTimeFormatterBuilder().appendLiteral("24:00:00")
-				.appendOptional(zuluTimezoneFormatter.getParser()).toFormatter();
-
-		// Determine timezone formatter to be used.
-		DateTimeFormatter dateTimeFormatterToBeUsedInPrinter;
+	public static void useZuluUtcRepresentation(
+			boolean useZuluUtcRepresentation) {
 		if (useZuluUtcRepresentation) {
-			dateTimeFormatterToBeUsedInPrinter = zuluTimezoneFormatter;
+			timeFormatter = new DateTimeFormatterBuilder()
+					.parseCaseInsensitive()
+					.append(DateTimeFormatter.ISO_LOCAL_TIME).optionalStart()
+					.appendOffsetId().toFormatter();
 		} else {
-			dateTimeFormatterToBeUsedInPrinter = defaultTimezoneFormatter;
+			timeFormatter = new DateTimeFormatterBuilder()
+					.parseCaseInsensitive()
+					.append(DateTimeFormatter.ISO_LOCAL_TIME).optionalStart()
+					.appendOffset("+HH:MM", "+00:00").toFormatter();
 		}
-
-		// Here a printer is created that prints this dateTime in the form HH:mm:ss.SSS ZZ (.SSS is not printed when its
-		// .000)
-		DATE_TIME_PRINTER_WITHOUT_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
-				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2)
-				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
-
-		DATE_TIME_PRINTER_WITH_MILLIS = new DateTimeFormatterBuilder().appendHourOfDay(2).appendLiteral(':')
-				.appendMinuteOfHour(2).appendLiteral(':').appendSecondOfMinute(2).append(fractionalSecondsFormatter)
-				.append(dateTimeFormatterToBeUsedInPrinter).toFormatter();
-
-		MILLIS_PARSER = new DateTimeFormatterBuilder().appendFractionOfSecond(0, 3).toFormatter();
 	}
 
 	public Time(String timeString) throws SyntaxException {
-		timeString = timeString.trim();
 		try {
-			time = DATE_TIME_PARSER.withOffsetParsed().parseDateTime(timeString);
-		} catch (UnsupportedOperationException e) {
+			TemporalAccessor parsed = timeFormatter.parseBest(
+					timeString.trim().replace("Z", "+00:00"), OffsetTime::from, LocalTime::from);
+			if (parsed instanceof LocalTime) {
+				time = ((LocalTime) parsed).atOffset(ZoneOffset.UTC);
+			} else {
+				time = (OffsetTime) parsed;
+			}
+		} catch (DateTimeParseException e) {
 			String message = "Parsing time is not supported.";
 			logger.error(message);
 			throw new SyntaxException(message, e);
-		} catch (IllegalArgumentException e) {
-			try {
-				// If parsing failed check if the time is midnight as clockhour.
-				time = DATE_TIME_PARSER_CLOCKHOUR.withOffsetParsed().parseDateTime(timeString);
-				// The parser accepts 24:00:00 but it is saved as 00:00:00 the same day. Due to this the day must be
-				// shifted plus one
-				time = time.plus(Period.days(1));
-			} catch (IllegalArgumentException e2) {
-				String message = String.format(
-						"The time '%s' is not a valid time according to http://www.w3.org/2001/XMLSchema#time",
-						timeString);
-				logger.error(message);
-				throw new SyntaxException(message, e);
-			}
-		} finally {
-			if (time != null) {
-				// Check if the time has fractional seconds
-				String millis = MILLIS_PARSER.print(time);
-				noFractionalSeconds = millis.length() == 0;
-			}
 		}
 	}
 
@@ -132,21 +89,17 @@ public class Time implements Comparable<Time> {
 	 */
 	@Override
 	public String toString() {
-		if (noFractionalSeconds) {
-			return DATE_TIME_PRINTER_WITHOUT_MILLIS.print(time);
-		} else {
-			return DATE_TIME_PRINTER_WITH_MILLIS.print(time);
-		}
+		return time.format(timeFormatter);
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int compareTo(Time o) {
-		DateTime jodaThisTime = this.getTime();
-		DateTime jodaThatTime = o.getTime();
-		int comparisonResult = jodaThisTime.compareTo(jodaThatTime);
-		return comparisonResult;
+		OffsetTime thisTime = this.getTime();
+		OffsetTime thatTime = o.getTime();
+		return thisTime.withOffsetSameInstant(thatTime.getOffset()).compareTo(thatTime);
 	}
 
 	/**
@@ -158,10 +111,9 @@ public class Time implements Comparable<Time> {
 			// Check if types are the same
 			return false;
 		}
-		DateTime jodaThisTime = getTime();
-		DateTime jodaThatTime = ((Time) obj).getTime();
-		boolean isEqual = jodaThisTime.isEqual(jodaThatTime);
-		return isEqual;
+		OffsetTime thisTime = getTime();
+		OffsetTime thatTime = ((Time) obj).getTime();
+		return thisTime.withOffsetSameInstant(thatTime.getOffset()).equals(thatTime);
 	}
 
 	/**
@@ -169,7 +121,7 @@ public class Time implements Comparable<Time> {
 	 * 
 	 * @return internal representation of this dateTime.
 	 */
-	public DateTime getTime() {
+	public OffsetTime getTime() {
 		return time;
 	}
 }

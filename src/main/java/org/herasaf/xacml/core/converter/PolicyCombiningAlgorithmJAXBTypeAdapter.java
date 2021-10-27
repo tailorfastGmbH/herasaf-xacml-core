@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public class PolicyCombiningAlgorithmJAXBTypeAdapter extends
 		XmlAdapter<String, PolicyCombiningAlgorithm> {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(PolicyCombiningAlgorithmJAXBTypeAdapter.class);
 	private static Map<String, PolicyCombiningAlgorithm> combiningAlgorithms = new HashMap<String, PolicyCombiningAlgorithm>();
 

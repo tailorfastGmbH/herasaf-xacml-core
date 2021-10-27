@@ -34,7 +34,7 @@ public class JAXBMarshallerConfigurationTest {
 	@Test(expectedExceptions = IllegalArgumentException.class)
 	public void testSetSchemaByPathEmptyList() throws MalformedURLException,
 			SAXException {
-		config.setSchemaByPath(new String[] {});
+		config.setSchemaByPath();
 	}
 
 	// TODO Implement

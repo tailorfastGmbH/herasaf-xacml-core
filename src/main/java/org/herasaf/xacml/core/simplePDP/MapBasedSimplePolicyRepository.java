@@ -71,7 +71,7 @@ public class MapBasedSimplePolicyRepository implements
 	// Mapping that tells which policies are under which root.
 	protected Map<EvaluatableID, List<EvaluatableID>> rootEvaluatableMapping;
 	protected List<Evaluatable> rootEvaluatables; // The root evaluatables
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(MapBasedSimplePolicyRepository.class);
 
 	/**
@@ -95,6 +95,7 @@ public class MapBasedSimplePolicyRepository implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void deploy(Collection<Evaluatable> evaluatables) {
 
 		for (Evaluatable eval : evaluatables) {
@@ -134,6 +135,7 @@ public class MapBasedSimplePolicyRepository implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void deploy(Evaluatable evaluatable) {
 		Map<EvaluatableID, List<Evaluatable>> newIndividualEvaluatables = splitIntoIndividuals(
 				evaluatable, evaluatable.getId());
@@ -147,6 +149,7 @@ public class MapBasedSimplePolicyRepository implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void undeploy(EvaluatableID id) {
 		boolean foundAtLeastOneMatchingEvaluatable = false;
 		for (int i = 0; i < rootEvaluatables.size(); i++) {
@@ -171,6 +174,7 @@ public class MapBasedSimplePolicyRepository implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public void undeploy(Collection<EvaluatableID> ids) {
 		for (EvaluatableID id : ids) {
 			undeploy(id);
@@ -190,6 +194,7 @@ public class MapBasedSimplePolicyRepository implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public List<Evaluatable> getDeployment() {
 		return rootEvaluatables;
 	}
@@ -215,6 +220,7 @@ public class MapBasedSimplePolicyRepository implements
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public Evaluatable getEvaluatable(EvaluatableID id) {
 		List<Evaluatable> evals = individualEvaluatables.get(id);
 		if (evals != null) {
@@ -236,6 +242,7 @@ public class MapBasedSimplePolicyRepository implements
 	 * 
 	 * @deprecated Use {@link #getEvaluatables(RequestType)} instead.
 	 */
+	@Override
 	@Deprecated
 	public List<Evaluatable> getEvaluatables(RequestCtx requestCtx) {
 		return rootEvaluatables;
@@ -247,6 +254,7 @@ public class MapBasedSimplePolicyRepository implements
 	 * Due to the fact that this implementation does not implement any index.
 	 * All root {@link Evaluatable}s are returned by default.
 	 */
+	@Override
 	public List<Evaluatable> getEvaluatables(RequestType request) {
 		return rootEvaluatables;
 	}

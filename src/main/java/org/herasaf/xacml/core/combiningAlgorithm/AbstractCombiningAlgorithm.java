@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	private static final long serialVersionUID = 1L;
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(AbstractCombiningAlgorithm.class);
 
 	/**
@@ -84,20 +84,20 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 			evaluationContext
 					.updateStatusCode(XACMLDefaultStatusCode.SYNTAX_ERROR);
 			evaluationContext.setTargetMatched(false);
-			logger.debug("Syntax error occurred.");
+			logger.debug("Syntax error occurred.", e);
 			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		} catch (ProcessingException e) {
 			evaluationContext
 					.updateStatusCode(XACMLDefaultStatusCode.PROCESSING_ERROR);
 			evaluationContext.setTargetMatched(false);
-			logger.debug("Processing error occurred.");
+			logger.debug("Processing error occurred.", e);
 			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		} catch (MissingAttributeException e) {
 			evaluationContext
 					.updateStatusCode(XACMLDefaultStatusCode.MISSING_ATTRIBUTE);
 			evaluationContext.addMissingAttributes(e.getMissingAttribute());
 			evaluationContext.setTargetMatched(false);
-			logger.debug("Missing attribute error occurred.");
+			logger.debug("Missing attribute error occurred.", e);
 			targetMatchDecision = TargetMatchingResult.INDETERMINATE;
 		}
 
@@ -145,5 +145,6 @@ public abstract class AbstractCombiningAlgorithm implements CombiningAlgorithm {
 	 * 
 	 * @return The ID of the combining algorithm.
 	 */
+	@Override
 	public abstract String getCombiningAlgorithmId();
 }

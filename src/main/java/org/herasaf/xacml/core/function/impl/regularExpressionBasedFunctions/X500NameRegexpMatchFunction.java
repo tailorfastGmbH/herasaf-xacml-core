@@ -50,6 +50,7 @@ public class X500NameRegexpMatchFunction extends AbstractFunction {
 	 * the second argument of type
 	 * urn:oasis:names:tc:xacml:1.0:data-type:x500Name.
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

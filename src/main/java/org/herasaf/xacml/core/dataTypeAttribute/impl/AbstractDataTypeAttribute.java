@@ -34,6 +34,7 @@ public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<
     private static final long serialVersionUID = 1L;
 
     /** {@inheritDoc} */
+    @Override
     public T convertTo(List<?> jaxbRepresentation) throws SyntaxException {
         verifySize(jaxbRepresentation, 1);
         Object simpleType = jaxbRepresentation.get(0);
@@ -50,16 +51,19 @@ public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<
     public abstract T convertTo(String jaxbRepresentation) throws SyntaxException;
 
     /** {@inheritDoc} */
+    @Override
     public String toString() {
         return getDatatypeURI();
     }
 
     /** {@inheritDoc} */
+    @Override
     public int hashCode() {
         return getDatatypeURI().hashCode();
     }
 
     /** {@inheritDoc} */
+    @Override
     public boolean equals(Object o) {
         if (o == null) {
             return false;

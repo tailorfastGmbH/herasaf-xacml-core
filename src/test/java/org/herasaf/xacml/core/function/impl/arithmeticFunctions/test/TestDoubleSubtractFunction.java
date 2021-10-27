@@ -41,12 +41,12 @@ public class TestDoubleSubtractFunction {
 	@DataProvider(name="data2Args")
 	public Object[][] createData2Args(){
 		return new Object[][]{
-				new Object[] { new Double("1.0"), new Double("1.0"), new Double("0.0")},
-				new Object[] { new Double("0.5"), new Double("0.5"), new Double("0.0")},
-				new Object[] { new Double("-1.0"), new Double("-3.6"), new Double("2.6")},
-				new Object[] { new Double("-1.2"), new Double("3.9"), new Double("-5.1")},
-				new Object[] { new Double("1.5"), new Double("4.5"), new Double("-3")},
-				new Object[] { new Double("0.01"), new Double("1.95"), new Double("-1.94")},
+				new Object[] { Double.valueOf("1.0"), Double.valueOf("1.0"), Double.valueOf("0.0")},
+				new Object[] { Double.valueOf("0.5"), Double.valueOf("0.5"), Double.valueOf("0.0")},
+				new Object[] { Double.valueOf("-1.0"), Double.valueOf("-3.6"), Double.valueOf("2.6")},
+				new Object[] { Double.valueOf("-1.2"), Double.valueOf("3.9"), Double.valueOf("-5.1")},
+				new Object[] { Double.valueOf("1.5"), Double.valueOf("4.5"), Double.valueOf("-3")},
+				new Object[] { Double.valueOf("0.01"), Double.valueOf("1.95"), Double.valueOf("-1.94")},
 		};
 	}
 

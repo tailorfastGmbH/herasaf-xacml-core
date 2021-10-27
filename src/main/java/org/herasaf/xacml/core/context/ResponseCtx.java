@@ -56,7 +56,7 @@ import org.xml.sax.ContentHandler;
 @Deprecated
 public class ResponseCtx implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(ResponseCtx.class);
 	private ResponseType response;
 	private static JAXBContext CONTEXT;

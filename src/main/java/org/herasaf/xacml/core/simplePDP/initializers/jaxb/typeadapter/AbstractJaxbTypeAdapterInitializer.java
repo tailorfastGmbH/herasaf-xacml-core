@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractJaxbTypeAdapterInitializer<T> implements
 		Initializer {
-	private transient static Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(AbstractJaxbTypeAdapterInitializer.class);
 
 	/**
@@ -50,6 +50,7 @@ public abstract class AbstractJaxbTypeAdapterInitializer<T> implements
 	 * instantiated objects. These objectes are then set into the corresponding
 	 * type adapter through {@link #setInstancesIntoTypeAdapter(Map)}.
 	 */
+	@Override
 	public final void run(SimplePDPConfiguration configuration) {
 		Map<String, T> instancesMap = createTypeInstances();
 		setInstancesIntoTypeAdapter(instancesMap);
@@ -110,7 +111,7 @@ public abstract class AbstractJaxbTypeAdapterInitializer<T> implements
 	private T createInstance(Class<T> type) {
 		T instance;
 		try {
-			instance = type.newInstance();
+			instance = type.getDeclaredConstructor().newInstance();
 		} catch (Exception e) {
 			String message = String
 					.format("Unable to instantiate object of type [%s]",

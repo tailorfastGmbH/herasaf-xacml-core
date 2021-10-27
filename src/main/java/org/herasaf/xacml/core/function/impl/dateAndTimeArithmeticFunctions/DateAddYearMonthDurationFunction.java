@@ -48,6 +48,7 @@ public class DateAddYearMonthDurationFunction extends AbstractFunction {
 	 * {@link Date} resulting of adding the {@link YearMonthDuration} month
 	 * duration to the {@link Date}
 	 */
+	@Override
 	public Object handle(Object... args) throws FunctionProcessingException {
 		try {
 			if (args.length != 2) {

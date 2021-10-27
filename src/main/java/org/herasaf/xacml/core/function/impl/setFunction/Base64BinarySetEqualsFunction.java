@@ -40,6 +40,7 @@ public class Base64BinarySetEqualsFunction extends AbstractSetEqualsFunction<Bas
 	private static final long serialVersionUID = 1L;
 
 	/** {@inheritDoc} */
+	@Override
 	public String getFunctionId() {
 		return ID;
 	}

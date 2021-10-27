@@ -74,6 +74,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * Returns the combining algorithm of this {@link Evaluatable} that is of
 	 * type {@link CombiningAlgorithmMock}.
 	 */
+	@Override
 	public CombiningAlgorithm getCombiningAlg()
 			throws EvaluatableNotFoundException {
 
@@ -92,6 +93,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * @return A list of all {@link ObligationType}s in the {@link Evaluatable}
 	 *         that match the effect.
 	 */
+	@Override
 	public List<ObligationType> getContainedObligations(EffectType effect) {
 		List<ObligationType> obligations = new ArrayList<ObligationType>();
 		switch (effect) {
@@ -115,6 +117,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * The version of the {@link Evaluatable}. Because the {@link Evaluatable}
 	 * is a mock it always returns <b>MOCK</b>.
 	 */
+	@Override
 	public String getEvalutableVersion() throws EvaluatableNotFoundException {
 		return "MOCK";
 	}
@@ -124,6 +127,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * 
 	 * Because it is a mock it always returns null.
 	 */
+	@Override
 	public EvaluatableID getId() throws EvaluatableNotFoundException {
 		return null;
 	}
@@ -133,6 +137,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * 
 	 * This mock does not have a target.
 	 */
+	@Override
 	public TargetType getTarget() throws EvaluatableNotFoundException {
 		return null;
 	}
@@ -140,6 +145,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	/**
 	 * {@inheritDoc} 
 	 */
+	@Override
 	public boolean hasObligations() {
 		return (denyObligation != null || permitObligation != null || evaluationContext
 				.getObligations().getObligations().size() > 0);
@@ -204,6 +210,7 @@ public class EvaluatableMock implements Evaluatable, Cloneable {
 	 * 
 	 * Returns the decision and whether it has or has not permit/deny {@link ObligationType}s.
 	 */
+	@Override
 	public String toString() {
 		return "EvaluatableMock[decision=" + decision + ", hasDenyObligation="
 				+ (denyObligation != null) + ", hasPermitObligation="

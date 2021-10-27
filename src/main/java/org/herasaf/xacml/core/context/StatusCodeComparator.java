@@ -31,12 +31,13 @@ import org.slf4j.LoggerFactory;
  * @author Florian Huonder
  */
 public class StatusCodeComparator implements Comparator<StatusCode> {
-	private transient final Logger logger = LoggerFactory
+	private static final Logger logger = LoggerFactory
 			.getLogger(StatusCodeComparator.class);
 
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public int compare(StatusCode sc1, StatusCode sc2) {
 		if (sc1 instanceof XACMLDefaultStatusCode
 				&& sc2 instanceof XACMLDefaultStatusCode) {
