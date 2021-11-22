@@ -26,9 +26,6 @@ import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyOrderedCombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyUnorderedCombiningAlgorithm;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.ResponseCtx;
-import org.herasaf.xacml.core.context.ResponseCtxFactory;
 import org.herasaf.xacml.core.context.ResponseMarshaller;
 import org.herasaf.xacml.core.context.StatusCodeComparator;
 import org.herasaf.xacml.core.context.impl.AttributeType;
@@ -157,34 +154,6 @@ public class SimplePDP implements PDP {
      * >http://logback.qos.ch/manual/mdc.html</a>.<br />
      * See the description in the Getting Started Guide on the
      * HERAS<sup>AF</sup> Wiki of how to configure MDC.
-     * 
-     * @deprecated Use {@link #evaluate(RequestType)} instead.
-     */
-    @Override
-    @Deprecated
-    public ResponseCtx evaluate(RequestCtx request) {
-        return new ResponseCtx(evaluate(request.getRequest()));
-    }
-
-    /**
-     * {@inheritDoc} <br />
-     * <br />
-     * <b>Logging:</b><br />
-     * This section is relevant for all users of the {@link SimplePDP} in a
-     * multi-threaded environment. All logging messages during the evaluation
-     * should be connected with a correlation ID to be able to distinguish the
-     * different requesters. Due to the fact that this connection lays with the
-     * requester here is a hint how this could be realized with the SLF4J
-     * Logging Framework (<a
-     * href="http://www.slf4j.org">http://www.slf4j.org</a>) used here if the
-     * underlying logging framework (such as logback) supports MDC (Mapped
-     * Diagnostic Context).<br />
-     * The MDC (Mapped Diagnostic Context) shall be used to distinguish the
-     * different requesters as described here: <a
-     * href="http://logback.qos.ch/manual/mdc.html"
-     * >http://logback.qos.ch/manual/mdc.html</a>.<br />
-     * See the description in the Getting Started Guide on the
-     * HERAS<sup>AF</sup> Wiki of how to configure MDC.
      */
     @Override
     public ResponseType evaluate(RequestType request) {
@@ -220,30 +189,7 @@ public class SimplePDP implements PDP {
     }
 
     /**
-     * This method uses the default HERAS-AF {@link ResponseCtxFactory}. This
-     * method may be overriden in an extending subclass.
-     * 
-     * @param request
-     *            The requests corresponding to the response to create.
-     * @param decision
-     *            The decision of the response.
-     * @param evaluationContext
-     *            The evaluation context of this evaluation.
-     * @return The created {@link ResponseCtx}.
-     * 
-     * @deprecated Use
-     *             {@link #createResponse(RequestType, DecisionType, EvaluationContext)}
-     *             instead.
-     */
-    @Deprecated
-    protected ResponseCtx createResponse(RequestCtx request,
-            DecisionType decision, EvaluationContext evaluationContext) {
-        return ResponseCtxFactory.create(request.getRequest(), decision,
-                evaluationContext);
-    }
-
-    /**
-     * This method uses the default HERAS-AF {@link ResponseCtxFactory}. This
+     * This method uses the default HERAS-AF {@link ResponseMarshaller}. This
      * method may be overriden in an extending subclass.
      * 
      * @param request

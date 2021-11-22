@@ -57,24 +57,6 @@ public interface PIP {
 			String issuer, String subjectCategory);
 
 	/**
-	 * Does the same as {@link #fetchSubjectAttributes(RequestType, String, String, String, String)} but with an
-	 * inappropriate naming. This method ought not be used and will be removed in a future version.
-	 *
-	 * @deprecated Use {@link #fetchSubjectAttributes(RequestType, String, String, String, String)} instead. For
-	 *             interface implementors: The subject attribute designator does no longer respect this method and you
-	 *             have to ensure that your logic for this method is also executed when
-	 *             {@link #fetchSubjectAttributes(RequestType, String, String, String, String)} is called. E.g. by
-	 *             moving the code from
-	 *             {@link #addSubjectAttributesToRequest(RequestType, String, String, String, String)} to
-	 *             {@link #fetchSubjectAttributes(RequestType, String, String, String, String)} and call
-	 *             {@link #fetchSubjectAttributes(RequestType, String, String, String, String)} from
-	 *             {@link #addSubjectAttributesToRequest(RequestType, String, String, String, String)}.
-	 */
-	@Deprecated
-	List<AttributeValueType> addSubjectAttributesToRequest(RequestType request, String attributeId, String dataType,
-			String issuer, String subjectCategory);
-
-	/**
 	 * Returns the requested <b>resource</b> attribute(s) (specified by <code>attibuteId</code>, <code>dataType</code>
 	 * and <code>issuer</code>) if the attribute(s) could be resolved.
 	 *
@@ -93,23 +75,6 @@ public interface PIP {
 	 * @return The found attribute(s). If no attribute(s) were found an empty {@link List} is returned.
 	 */
 	List<AttributeValueType> fetchResourceAttributes(RequestType request, String attributeId, String dataType,
-			String issuer);
-
-	/**
-	 * Does the same as {@link #fetchResourceAttributes(RequestType, String, String, String)} but with an inappropriate
-	 * naming. This method ought not be used and will be removed in a future version.
-	 *
-	 * @deprecated Use {@link #fetchResourceAttributes(RequestType, String, String, String)} instead. For interface
-	 *             implementors: The resource attribute designator does no longer respect this method and you have to
-	 *             ensure that your logic for this method is also executed when
-	 *             {@link #fetchResourceAttributes(RequestType, String, String, String)} is called. E.g. by moving the
-	 *             code from {@link #addResourceAttributesToRequest(RequestType, String, String, String)} to
-	 *             {@link #fetchResourceAttributes(RequestType, String, String, String)} and call
-	 *             {@link #fetchResourceAttributes(RequestType, String, String, String)} from
-	 *             {@link #addResourceAttributesToRequest(RequestType, String, String, String)}.
-	 */
-	@Deprecated
-	List<AttributeValueType> addResourceAttributesToRequest(RequestType request, String attributeId, String dataType,
 			String issuer);
 
 	/**
@@ -134,23 +99,6 @@ public interface PIP {
 			String issuer);
 
 	/**
-	 * Does the same as {@link #fetchActionAttributes(RequestType, String, String, String)} but with an inappropriate
-	 * naming. This method ought not be used and will be removed in a future version.
-	 *
-	 * @deprecated Use {@link #fetchActionAttributes(RequestType, String, String, String)} instead. For interface
-	 *             implementors: The action attribute designator does no longer respect this method and you have to
-	 *             ensure that your logic for this method is also executed when
-	 *             {@link #fetchActionAttributes(RequestType, String, String, String)} is called.E.g. by moving the code
-	 *             from {@link #addActionAttributesToRequest(RequestType, String, String, String)} to
-	 *             {@link #fetchActionAttributes(RequestType, String, String, String)} and call
-	 *             {@link #fetchActionAttributes(RequestType, String, String, String)} from
-	 *             {@link #addActionAttributesToRequest(RequestType, String, String, String)}.
-	 */
-	@Deprecated
-	List<AttributeValueType> addActionAttributesToRequest(RequestType request, String attributeId, String dataType,
-			String issuer);
-
-	/**
 	 * Returns the requested <b>environment</b> attribute(s) (specified by <code>attibuteId</code>,
 	 * <code>dataType</code> and <code>issuer</code>) if the attribute(s) could be resolved.
 	 *
@@ -170,21 +118,4 @@ public interface PIP {
 	 */
 	List<AttributeValueType> fetchEnvironmentAttributes(RequestType request, String attributeId, String dataType,
 			String issuer);
-
-	/**
-	 * Does the same as {@link #fetchEnvironmentAttributes(RequestType, String, String, String)} but with an
-	 * inappropriate naming. This method ought not be used and will be removed in a future version.
-	 *
-	 * @deprecated Use {@link #fetchEnvironmentAttributes(RequestType, String, String, String)} instead. For interface
-	 *             implementors: The environment attribute designator does no longer respect this method and you have to
-	 *             ensure that your logic for this method is also executed when
-	 *             {@link #fetchEnvironmentAttributes(RequestType, String, String, String)} is called. E.g. by moving
-	 *             the code from {@link #addEnvironmentAttributesToRequest(RequestType, String, String, String)} to
-	 *             {@link #fetchEnvironmentAttributes(RequestType, String, String, String)} and call
-	 *             {@link #fetchEnvironmentAttributes(RequestType, String, String, String)} from
-	 *             {@link #addEnvironmentAttributesToRequest(RequestType, String, String, String)}.
-	 */
-	@Deprecated
-	List<AttributeValueType> addEnvironmentAttributesToRequest(RequestType request, String attributeId,
-			String dataType, String issuer);
 }

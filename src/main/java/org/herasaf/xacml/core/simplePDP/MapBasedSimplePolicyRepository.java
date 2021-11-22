@@ -16,19 +16,11 @@
  */
 package org.herasaf.xacml.core.simplePDP;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.herasaf.xacml.core.PolicyRepositoryException;
 import org.herasaf.xacml.core.api.DeploymentModification;
 import org.herasaf.xacml.core.api.PolicyRepository;
 import org.herasaf.xacml.core.api.PolicyRetrievalPoint;
 import org.herasaf.xacml.core.api.UnorderedPolicyRepository;
-import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
@@ -37,6 +29,13 @@ import org.herasaf.xacml.core.policy.impl.PolicySetType;
 import org.herasaf.xacml.core.policy.impl.PolicyType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is the very simple implementation of the {@link PolicyRepository}. This
@@ -232,20 +231,6 @@ public class MapBasedSimplePolicyRepository implements
 		}
 		throw new PolicyRepositoryException("No Evaluatable with ID "
 				+ id.toString() + " found.");
-	}
-
-	/**
-	 * {@inheritDoc}
-	 * 
-	 * Due to the fact that this implementation does not implement any index.
-	 * All root {@link Evaluatable}s are returned by default.
-	 * 
-	 * @deprecated Use {@link #getEvaluatables(RequestType)} instead.
-	 */
-	@Override
-	@Deprecated
-	public List<Evaluatable> getEvaluatables(RequestCtx requestCtx) {
-		return rootEvaluatables;
 	}
 
 	/**

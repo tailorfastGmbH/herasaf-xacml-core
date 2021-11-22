@@ -47,14 +47,6 @@ public class SimpleRBACPolicyRetrievalPoint implements PolicyRetrievalPoint {
     }
     
     @Override
-    @Deprecated
-    public List<Evaluatable> getEvaluatables(
-        org.herasaf.xacml.core.context.RequestCtx request
-    ) {
-            return getEvaluatables((RequestType)null);
-    }
-    
-    @Override
     public List<Evaluatable> getEvaluatables(RequestType request) {
             return new ArrayList<Evaluatable>(policyCache.values());
     }   
