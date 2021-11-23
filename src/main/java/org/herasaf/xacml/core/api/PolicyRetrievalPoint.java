@@ -16,12 +16,11 @@
  */
 package org.herasaf.xacml.core.api;
 
-import java.util.List;
-
-import org.herasaf.xacml.core.context.RequestCtx;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.EvaluatableID;
+
+import java.util.List;
 
 /**
  * The evaluation policy repository contains the deployed and currently active
@@ -44,28 +43,6 @@ public interface PolicyRetrievalPoint {
 	 * @return The {@link Evaluatable} with the given {@link EvaluatableID}.
 	 */
 	Evaluatable getEvaluatable(EvaluatableID evaluatableID);
-
-	/**
-	 * Returns at least all {@link Evaluatable}s that may match the given
-	 * request. At least means that all matchings are returned but it is
-	 * possible that more than the matching {@link Evaluatable}s are returned.
-	 * 
-	 * An advanced PolicyRepository implementation could e.g. use an index to
-	 * reduce the amount of returned policies, so that the PDP can evaluate less
-	 * polices. That could speed up overall performance. It is very important
-	 * that the implementation does only "not return" policies which can be
-	 * explicitly "not be applicable" for the given RequestCtx.
-	 * 
-	 * @param request
-	 *            The request for whom all returned {@link Evaluatable} shall
-	 *            match.
-	 * @return A {@link List} of {@link Evaluatable}s that may match onto the
-	 *         given {@link RequestCtx}.
-	 *         
-	 * @deprecated Use {@link #getEvaluatables(RequestType)} instead. 
-	 */
-	@Deprecated
-	List<Evaluatable> getEvaluatables(RequestCtx request);
 
 	/**
 	 * Returns at least all {@link Evaluatable}s that may match the given

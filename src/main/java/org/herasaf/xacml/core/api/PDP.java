@@ -19,8 +19,6 @@ package org.herasaf.xacml.core.api;
 
 import org.herasaf.xacml.core.combiningAlgorithm.CombiningAlgorithm;
 import org.herasaf.xacml.core.combiningAlgorithm.policy.PolicyCombiningAlgorithm;
-import org.herasaf.xacml.core.context.RequestCtx;
-import org.herasaf.xacml.core.context.ResponseCtx;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResponseType;
 
@@ -44,23 +42,6 @@ import org.herasaf.xacml.core.context.impl.ResponseType;
  * @author René Eggenschwiler
  */
 public interface PDP {
-
-    /**
-     * This method evaluates an XACML access control request. This request is encapsulated in a {@link RequestCtx}
-     * object. After the evaluation the result is returned in a {@link ResponseCtx} object.
-     * 
-     * The chapter about funtional requirements in the <a href=
-     * "http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml#XACML20" > OASIS eXtensible Access Control
-     * Markup Langugage (XACML) 2.0, Errata 29. January 2008</a> page 85, specifies in detail the evaluation process.
-     * 
-     * @param request
-     *            The {@link RequestCtx} that shall be evaluated.
-     * @return The {@link ResponseCtx} containing the result of the evaluation.
-     * 
-     * @deprecated Use {@link #evaluate(RequestType)} instead.
-     */
-    @Deprecated
-    ResponseCtx evaluate(RequestCtx request);
 
     /**
      * This method evaluates an XACML access control request. After the evaluation the result is returned in a
