@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>org.herasaf.xacml.core</groupId>
@@ -9,47 +8,32 @@
 
 	<name>HERAS-AF XACML :: Core</name>
 	<description>The core component contains the evaluation engine. This means: combining algorithms, functions, data types, and API interfaces.</description> <!-- mandatory for HERAS-AF -->
-	<url>https://bitbucket.org/herasaf/herasaf-xacml-core</url>
+	<url>https://github.com/prolutionsGmbH/herasaf-xacml-core</url>
 
 	<inceptionYear>2006</inceptionYear>
 	<licenses>
 		<license>
 			<name>Apache License Version 2.0</name>
 			<url>http://www.apache.org/licenses/LICENSE-2.0</url>
-			<distribution>repo</distribution>
 		</license>
 	</licenses>
 	<organization>
-		<name>HERAS-AF</name>
-		<url>https://bitbucket.org/herasaf/herasaf-xacml-core</url>
+		<name>prolutions GmbH</name>
+		<url>https://www.prolutions.ch</url>
 	</organization>
 	<developers>
 		<developer>
 			<name>Florian Huonder</name>
-			<organization>HERAS-AF</organization>
-			<organizationUrl>https://bitbucket.org/herasaf/herasaf-xacml-core</organizationUrl>
+		</developer>
+		<developer>
+			<name>Sacha Dolski</name>
 		</developer>
 	</developers>
 
-	<issueManagement>
-		<system>JIRA</system>
-		<url>https://herasaf.jira.com/projects/XACMLCORE</url>
-	</issueManagement>
-	<ciManagement>
-		<system>Atlassian Bamboo</system>
-		<url>https://herasaf.jira.com/builds</url>
-	</ciManagement>
 	<scm>
-		<connection>
-			scm:git:ssh://git@bitbucket.org:herasaf/herasaf-xacml-core.git
-		</connection>
-		<developerConnection>
-			scm:git:ssh://git@bitbucket.org:herasaf/herasaf-xacml-core.git
-		</developerConnection>
-		<url>
-			https://bitbucket.org/herasaf/herasaf-xacml-core
-		</url>
-		<tag>HEAD</tag>
+		<connection>scm:git:git://github.com/prolutionsGmbH/herasaf-xacml-core.git</connection>
+		<developerConnection>scm:git:ssh://github.com:prolutionsGmbH/herasaf-xacml-core.git</developerConnection>
+		<url>https://github.com/prolutionsGmbH/herasaf-xacml-core/tree/main</url>
 	</scm>
 
 	<properties>
@@ -60,20 +44,21 @@
 		<reporting.checkstyle.excludeFile.location>src/main/config/reporting/checkstyle-suppressions.xml</reporting.checkstyle.excludeFile.location>
 
 		<!-- Dependencies versions -->
-		<jaxb.version>2.3.5</jaxb.version>
+		<jaxb.version>3.0.2</jaxb.version>
 		<slf4j.version>1.7.32</slf4j.version>
 
 		<testng.version>7.4.0</testng.version>
 		<junit.version>4.13.2</junit.version>
 		<xmlunit.version>1.6</xmlunit.version>
-		<logback.version>1.2.5</logback.version>
+		<logback.version>1.2.7</logback.version>
 
 		<bundle.plugin.version>5.1.2</bundle.plugin.version>
 		<compiler.plugin.version>3.8.1</compiler.plugin.version>
-		<javadoc.plugin.version>3.3.3</javadoc.plugin.version>
+		<javadoc.plugin.version>3.3.1</javadoc.plugin.version>
 		<source.plugin.version>3.2.1</source.plugin.version>
 		<surefire.plugin.version>2.22.2</surefire.plugin.version>
 		<release.plugin.version>2.5.3</release.plugin.version>
+		<pgp.plugin.version>1.1</pgp.plugin.version>
 	</properties>
 
 	<dependencies>
@@ -206,10 +191,12 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-javadoc-plugin</artifactId>
 						<version>${javadoc.plugin.version}</version>
+						<configuration>
+							<failOnError>false</failOnError>
+						</configuration>
 						<executions>
 							<execution>
-								<id>attach-javadoc</id>
-								<phase>install</phase>
+								<id>attach-javadocs</id>
 								<goals>
 									<goal>jar</goal>
 								</goals>
@@ -223,9 +210,20 @@
 						<executions>
 							<execution>
 								<id>attach-sources</id>
-								<phase>install</phase>
 								<goals>
 									<goal>jar-no-fork</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					<plugin>
+						<groupId>org.kohsuke</groupId>
+						<artifactId>pgp-maven-plugin</artifactId>
+						<version>${pgp.plugin.version}</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>sign</goal>
 								</goals>
 							</execution>
 						</executions>
