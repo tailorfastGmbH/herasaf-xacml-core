@@ -1,0 +1,19 @@
+parameters:
+  - name: tag
+    displayName: Git Tag
+    type: string
+
+steps:
+  - bash: |
+      if [ -z "$TAG" ]; then
+        echo "##vso[task.logissue type=error;]Missing template parameter \"tag\""
+        echo "##vso[task.complete result=Failed;]"
+      fi
+    env:
+      TAG: ${{ parameters.tag }}
+    displayName: Check for required parameters
+
+  - task: git-tag-on-release-task@9
+    displayName: "Add Tag to git"
+    inputs:
+      staticTagName: "${{ parameters.tag }}"

@@ -1,0 +1,50 @@
+parameters:
+  - name: mavenVersionFormat
+    displayName: Version Format String for Maven Artifacts
+    type: string
+    default: $(GitVersion.MajorMinorPatch)  
+
+  - name: gitVersionConfigurationFile
+    displayName: Path to GitVersion Configuration File
+    type: string
+    # Beware: This path is relative to repository referencing this template, NOT the repository this template is stored in
+    default: ci/GitVersion.yaml
+
+jobs:
+  - job: SemVer
+    displayName: "Semantic Version - Semantic Release"
+    steps:
+      - task: gitversion/setup@0
+        displayName: Install GitVersion
+        inputs:
+          versionSpec: '5.x'
+          includePrerelease: true
+      
+      - task: gitversion/execute@0
+        displayName: Determine Semantic Version
+        inputs:
+          useConfigFile: true
+          configFilePath: '${{ parameters.gitVersionConfigurationFile }}'
+            
+      - bash: |
+          mkdir -p $(Pipeline.Workspace)/variables
+          echo "${{ parameters.mavenVersionFormat }}-$(Build.SourceBranchName)-SNAPSHOT" > $(Pipeline.Workspace)/variables/VERSION.txt
+        condition: and(succeeded(), and(eq(variables.isMainBranch, False), eq(variables.isReleaseBranch, False)))
+        displayName: Save Version and Tag Info to File
+
+      - bash: |
+          mkdir -p $(Pipeline.Workspace)/variables
+          echo "${{ parameters.mavenVersionFormat }}-SNAPSHOT" > $(Pipeline.Workspace)/variables/VERSION.txt
+        condition: and(succeeded(), eq(variables.isMainBranch, True))
+        displayName: Save Version and Tag Info to File
+
+      - bash: |
+          mkdir -p $(Pipeline.Workspace)/variables
+          echo "${{ parameters.mavenVersionFormat }}" > $(Pipeline.Workspace)/variables/VERSION.txt
+          echo "$(GitVersion.MajorMinorPatch)" > $(Pipeline.Workspace)/variables/TAG_NAME.txt
+        condition: and(succeeded(), eq(variables.isReleaseBranch, True))
+        displayName: Save Version Info to File
+
+      # Publish variables folder as pipeline artifact
+      - publish: $(Pipeline.Workspace)/variables
+        artifact: variables

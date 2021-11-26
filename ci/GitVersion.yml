@@ -1,0 +1,16 @@
+mode: Mainline
+major-version-bump-message: '^(breaking|major|BREAKING CHANGE)(\(.*\))?:'
+minor-version-bump-message: '^(feature|minor|feat)(\(.*\))?:'
+patch-version-bump-message: '^(fix|patch|docs|style|refactor|perf|test|chore)(\(.*\))?:'
+no-bump-message: '\+semver:\s?(none|skip)|ci skip'
+ignore:
+  sha: []
+merge-message-formats: {}
+assembly-versioning-scheme: MajorMinorPatch
+assembly-file-versioning-scheme: MajorMinorPatchTag
+increment: Inherit
+legacy-semver-padding: 4
+build-metadata-padding: 4
+commits-since-version-source-padding: 4
+commit-message-incrementing: Enabled
+commit-date-format: 'yyyy-MM-dd'

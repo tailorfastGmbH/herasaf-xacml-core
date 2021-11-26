@@ -1,0 +1,65 @@
+pool:
+  vmImage: 'ubuntu-20.04'
+
+variables:
+  # Common variables and constants
+  ### Pipeline-related
+  - name: isMainBranch
+    value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
+  - name: isReleaseBranch
+    value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')]
+    
+  ### Build-related
+  - name: MAVEN_CACHE_FOLDER
+    value: $(Pipeline.Workspace)/.m2/repository
+  - name: MAVEN_OPTS
+    value: -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)
+  - name: JDK_VERSION
+    value: '1.8'
+  # Project-specific variables
+  - name: projectName
+    value: $(Build.DefinitionName)
+  - name: GIT_VERSION_CONFIGURATION
+    value: ci/GitVersion.yml  
+
+stages:
+  # Prepare Semantic Versioning
+  - stage: StageVersion
+    displayName: 'Semantic Version'
+    jobs:
+      - template: ci/semver.yml
+        parameters:
+          gitVersionConfigurationFile: $(GIT_VERSION_CONFIGURATION)
+
+  # Build Container Image
+  - stage: Build
+    displayName: Build
+    dependsOn: StageVersion
+    jobs:
+      - job: Build
+        displayName: Build Project
+        steps:
+          # Get target build version
+          - template: ci/read-semver-files-steps.yml
+
+          - template: ci/maven-build-steps.yml
+            parameters:
+              projectName: $(projectName)
+              projectVersion: $(version)
+              mavenGoals: deploy
+
+
+  # Tag only on release branch
+  - stage: StageTag
+    displayName: 'Create Tag on Git Repository'
+    dependsOn: Build
+    condition: and(succeeded(), eq(variables.isReleaseBranch, true))
+    jobs:
+      - job: TagGitRepo
+        steps:
+          # Get tag based on Semantic Versioning
+          - template: ci/read-semver-files-steps.yml
+          # Tag Git repository
+          - template: ci/git-tag-steps.yml
+            parameters:
+              tag: $(tagName)
