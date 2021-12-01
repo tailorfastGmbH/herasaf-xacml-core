@@ -29,7 +29,7 @@ import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalUnit;
+import java.util.Objects;
 
 /**
  * This class can parse and print a dateTime of type
@@ -44,12 +44,10 @@ import java.time.temporal.TemporalUnit;
  * @author Florian Huonder
  */
 public class DateTime implements Comparable<DateTime> {
-	private static final Logger logger = LoggerFactory
-			.getLogger(DateTime.class);
+	private static final Logger logger = LoggerFactory.getLogger(DateTime.class);
 	private static DateTimeFormatter dateTimeFormatter;
 	private static ZoneId defaultZoneId;
 	private OffsetDateTime dateTime;
-
 
 	/**
 	 * Initializes the formatters when the type is initialized.
@@ -57,42 +55,41 @@ public class DateTime implements Comparable<DateTime> {
 	static {
 		configureWith(false, ZoneOffset.UTC);
 	}
-	
+
 	/**
-	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
+	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or
+	 * standard (+00:00).
 	 */
 	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
 		if (useZuluUtcRepresentation) {
 			dateTimeFormatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		} else {
-			dateTimeFormatter = new DateTimeFormatterBuilder()
-					.parseCaseInsensitive()
-					.parseLenient()
-					.append(DateTimeFormatter.ISO_LOCAL_DATE_TIME)
-					.appendOffset("+HH:MM", "+00:00")
-					.toFormatter();
+			dateTimeFormatter = new DateTimeFormatterBuilder().parseCaseInsensitive().parseLenient()
+					.append(DateTimeFormatter.ISO_LOCAL_DATE_TIME).appendOffset("+HH:MM", "+00:00").toFormatter();
 		}
 	}
 
 	/**
-	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00)
-	 * @param defaultZoneId -  ZoneId used to handle local dates.
+	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be
+	 *                                 represented in Zulu ('Z') or standard
+	 *                                 (+00:00)
+	 * @param defaultZoneId            - ZoneId used to handle local dates.
 	 */
-	public static void configureWith(
-			boolean useZuluUtcRepresentation, ZoneId defaultZoneId) {
+	public static void configureWith(boolean useZuluUtcRepresentation, ZoneId defaultZoneId) {
 		DateTime.defaultZoneId = defaultZoneId;
 		useZuluUtcRepresentation(useZuluUtcRepresentation);
 	}
 
 	public DateTime(String dateTimeString) throws SyntaxException {
 		try {
-			// Java implement strict ISO8601 which does not allow 24:00, but XML-DateTime does.
+			// Java implement strict ISO8601 which does not allow 24:00, but XML-DateTime
+			// does.
 			boolean handle24hours = dateTimeString.contains("T24:00");
 			if (handle24hours) {
 				dateTimeString = dateTimeString.replace("T24:00", "T00:00");
 			}
-			TemporalAccessor parsed = DateTimeFormatter.ISO_DATE_TIME.parseBest(
-					dateTimeString.trim(), OffsetDateTime::from, LocalDateTime::from);
+			TemporalAccessor parsed = DateTimeFormatter.ISO_DATE_TIME.parseBest(dateTimeString.trim(),
+					OffsetDateTime::from, LocalDateTime::from);
 			if (parsed instanceof LocalDateTime) {
 				dateTime = ((LocalDateTime) parsed).atZone(defaultZoneId).toOffsetDateTime();
 			} else {
@@ -102,8 +99,7 @@ public class DateTime implements Comparable<DateTime> {
 				dateTime = dateTime.plus(1, ChronoUnit.DAYS);
 			}
 		} catch (DateTimeParseException e) {
-			String message = String.format(
-					"Parsing dateTime %s is not supported.", dateTimeString);
+			String message = String.format("Parsing dateTime %s is not supported.", dateTimeString);
 			logger.error(message);
 			throw new SyntaxException(message, e);
 		}
@@ -141,6 +137,11 @@ public class DateTime implements Comparable<DateTime> {
 		return thisDateTime.isEqual(thatDateTime);
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(dateTime);
+	}
+
 	/**
 	 * Returns the internal representation of this dateTime.
 	 * 
@@ -155,7 +156,11 @@ public class DateTime implements Comparable<DateTime> {
 	}
 
 	public void add(YearMonthDuration yearMonthDuration) {
-		dateTime = dateTime.plus(yearMonthDuration.getDuration());
+		if (yearMonthDuration.isNegative()) {
+			dateTime = dateTime.minus(yearMonthDuration.getDuration());
+		} else {
+			dateTime = dateTime.plus(yearMonthDuration.getDuration());
+		}
 	}
 
 	public void subtract(DayTimeDuration dayTimeDuration) {
@@ -163,6 +168,10 @@ public class DateTime implements Comparable<DateTime> {
 	}
 
 	public void subtract(YearMonthDuration yearMonthDuration) {
-		dateTime = dateTime.minus(yearMonthDuration.getDuration());
+		if (yearMonthDuration.isNegative()) {
+			dateTime = dateTime.plus(yearMonthDuration.getDuration());
+		} else {
+			dateTime = dateTime.minus(yearMonthDuration.getDuration());
+		}
 	}
 }

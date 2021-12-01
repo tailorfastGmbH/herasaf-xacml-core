@@ -27,6 +27,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.temporal.TemporalAccessor;
+import java.util.Objects;
 
 /**
  * This class can parse and print a time of type http://www.w3.org/2001/XMLSchema#time with the pattern
@@ -114,6 +115,11 @@ public class Time implements Comparable<Time> {
 		OffsetTime thisTime = getTime();
 		OffsetTime thatTime = ((Time) obj).getTime();
 		return thisTime.withOffsetSameInstant(thatTime.getOffset()).equals(thatTime);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(time);
 	}
 
 	/**

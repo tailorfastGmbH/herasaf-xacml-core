@@ -24,17 +24,21 @@ import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 /**
- * This class can parse and print a date of type http://www.w3.org/2001/XMLSchema#date with the pattern
+ * This class can parse and print a date of type
+ * http://www.w3.org/2001/XMLSchema#date with the pattern
  * 
  * yyyy '-' MM '-' dd ZZ?"
  * 
- * The timezone part is optional on creation. The {@link #toString()} method will always print the timezone.
+ * The timezone part is optional on creation. The {@link #toString()} method
+ * will always print the timezone.
  * 
- * <b>Note</b> Having set a standard timezone means that for all calculations the offset is set to the offset to UTC.
- * This means if the timezone is e.g. GMT+1 (for Zurich) the date is printed as yyyy-mm-dd-01:00. This is the timezone
- * calculated back to UTC. So a comparison is possible.
+ * <b>Note</b> Having set a standard timezone means that for all calculations
+ * the offset is set to the offset to UTC. This means if the timezone is e.g.
+ * GMT+1 (for Zurich) the date is printed as yyyy-mm-dd-01:00. This is the
+ * timezone calculated back to UTC. So a comparison is possible.
  * 
  * @author Florian Huonder
  */
@@ -46,15 +50,18 @@ public class Date implements Comparable<Date> {
 	private static ZoneId defaultZoneId = ZoneOffset.UTC;
 
 	/**
-	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00).
+	 * Is used to set whether the UTC timezone shall be represented in Zulu ('Z') or
+	 * standard (+00:00).
 	 */
 	public static void useZuluUtcRepresentation(boolean useZuluUtcRepresentation) {
 		Date.useZuluRepresentation = useZuluUtcRepresentation;
 	}
-	
+
 	/**
-	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be represented in Zulu ('Z') or standard (+00:00)
-	 * @param defaultZoneId -  ZoneId used to handle local dates.
+	 * @param useZuluUtcRepresentation - whether the UTC timezone shall be
+	 *                                 represented in Zulu ('Z') or standard
+	 *                                 (+00:00)
+	 * @param defaultZoneId            - ZoneId used to handle local dates.
 	 */
 	public static void configureWith(boolean useZuluUtcRepresentation, ZoneId defaultZoneId) {
 		useZuluUtcRepresentation(useZuluUtcRepresentation);
@@ -64,12 +71,12 @@ public class Date implements Comparable<Date> {
 	public Date(String dateString) throws SyntaxException {
 		String trimmedDate = dateString.trim();
 		try {
-			// Java's Time API does not support date's having a zone offset, so manually handle this case,
+			// Java's Time API does not support date's having a zone offset, so manually
+			// handle this case,
 			// by splitting date's having a offset.
-			if (trimmedDate.length() >=11) {
+			if (trimmedDate.length() >= 11) {
 				date = LocalDate.parse(trimmedDate.substring(0, 10));
-				offset = ZoneOffset.of(trimmedDate
-						.subSequence(10, trimmedDate.length()).toString());
+				offset = ZoneOffset.of(trimmedDate.subSequence(10, trimmedDate.length()).toString());
 			} else {
 				date = LocalDate.parse(trimmedDate);
 				offset = date.atStartOfDay().atZone(defaultZoneId).getOffset();
@@ -87,9 +94,7 @@ public class Date implements Comparable<Date> {
 	 */
 	@Override
 	public String toString() {
-		String formatOffset = useZuluRepresentation
-				? offset.toString()
-				: offset.toString().replace("Z", "+00:00");
+		String formatOffset = useZuluRepresentation ? offset.toString() : offset.toString().replace("Z", "+00:00");
 		return date.toString() + formatOffset;
 	}
 
@@ -118,6 +123,11 @@ public class Date implements Comparable<Date> {
 		return isEqual;
 	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(date, offset);
+	}
+
 	/**
 	 * Returns the internal representation of this date.
 	 * 
@@ -133,7 +143,11 @@ public class Date implements Comparable<Date> {
 	 * @param yearMonthDuration
 	 */
 	public void add(YearMonthDuration yearMonthDuration) {
-		date = date.plus(yearMonthDuration.getDuration());
+		if (yearMonthDuration.isNegative()) {
+			date = date.minus(yearMonthDuration.getDuration());
+		} else {
+			date = date.plus(yearMonthDuration.getDuration());
+		}
 	}
 
 	/**
@@ -142,6 +156,10 @@ public class Date implements Comparable<Date> {
 	 * @param yearMonthDuration
 	 */
 	public void subtract(YearMonthDuration yearMonthDuration) {
-		date = date.minus(yearMonthDuration.getDuration());
+		if (yearMonthDuration.isNegative()) {
+			date = date.plus(yearMonthDuration.getDuration());
+		} else {
+			date = date.minus(yearMonthDuration.getDuration());
+		}
 	}
 }

@@ -17,6 +17,7 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAttribute;
@@ -28,6 +29,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
+import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.converter.DataTypeJAXBTypeAdapter;
@@ -179,8 +181,25 @@ public abstract class AttributeDesignatorType extends ExpressionType {
 	public abstract Object handle(RequestType request, EvaluationContext evaluationContext)
 			throws ExpressionProcessingException, MissingAttributeException, SyntaxException;
 
-	public abstract Object handle(RequestType request)
-			throws ExpressionProcessingException, MissingAttributeException, SyntaxException;
+	protected List<Object> handle(List<AttributeType> requestAttributes) throws ExpressionProcessingException,
+			MissingAttributeException, SyntaxException {
+		List<Object> returnValues = new ArrayList<>();
+
+		for (AttributeType attr : requestAttributes) {
+			validateAttributeType(attr);
+			if (getAttributeId().equals(attr.getAttributeId())
+					&& getDataType().toString().equals(attr.getDataType().toString())) {
+				if (getIssuer() != null) {
+					if (getIssuer().equals(attr.getIssuer())) {
+						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+					}
+				} else {
+					addAndConvertAttrValue(returnValues, attr.getAttributeValues());
+				}
+			}
+		}
+		return returnValues;
+	}
 
 	
 	/**
@@ -204,6 +223,28 @@ public abstract class AttributeDesignatorType extends ExpressionType {
 			} catch (ClassCastException e) {
 				throw new SyntaxException(e);
 			}
+		}
+	}
+
+	protected void validateAttributeDesignator() throws SyntaxException {
+		if (getAttributeId() == null) {
+			String message = "Attribute AttributeId of AttributeDesignator must be present.";
+			throw new SyntaxException(message);
+		}
+		if (getDataType() == null) {
+			String message = "Attribute DataType of AttributeDesignator must be present.";
+			throw new SyntaxException(message);
+		}
+	}
+
+	private void validateAttributeType(AttributeType requestAttributeType) throws SyntaxException {
+		if (requestAttributeType.getAttributeId() == null) {
+			String message = "Attribute AttributeId of AttributeType must be present.";
+			throw new SyntaxException(message);
+		}
+		if (requestAttributeType.getDataType() == null) {
+			String message = "Attribute DataType of AttributeType must be present.";
+			throw new SyntaxException(message);
 		}
 	}
 }

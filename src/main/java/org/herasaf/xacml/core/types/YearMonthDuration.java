@@ -97,4 +97,8 @@ public class YearMonthDuration implements Comparable<YearMonthDuration> {
 	public Period getDuration() {
 		return period;
 	}
+
+	public boolean isNegative() {
+		return negative;
+	}
 }

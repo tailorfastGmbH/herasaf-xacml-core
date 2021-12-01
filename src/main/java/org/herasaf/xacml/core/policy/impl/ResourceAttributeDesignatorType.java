@@ -25,7 +25,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.ResourceType;
@@ -68,6 +67,7 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
+		validateAttributeDesignator();
 		List<Object> returnValues = handle(request);
 
 		/*
@@ -89,10 +89,6 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		return returnValues;
 	}
 
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<Object> handle(RequestType request) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
@@ -101,18 +97,7 @@ public class ResourceAttributeDesignatorType extends AttributeDesignatorType {
 		// over it.
 		List<ResourceType> resources = request.getResources();
 		for (ResourceType res : resources) {
-			for (AttributeType attr : res.getAttributes()) {
-				if (getAttributeId().equals(attr.getAttributeId())
-						&& getDataType().toString().equals(attr.getDataType().toString())) {
-					if (getIssuer() != null) {
-						if (getIssuer().equals(attr.getIssuer())) {
-							addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-						}
-					} else {
-						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-					}
-				}
-			}
+			returnValues.addAll(handle(res.getAttributes()));
 		}
 		return returnValues;
 	}

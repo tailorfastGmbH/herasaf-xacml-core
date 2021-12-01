@@ -17,6 +17,9 @@
 
 package org.herasaf.xacml.core.types;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 /**
  * Represents a http://www.w3.org/2001/XMLSchema#hexBinary.<br>
  * See: <a href=
@@ -73,7 +76,7 @@ public class HexBinary {
 	public boolean equals(Object obj) {
 		if (obj != null) {
 			if (obj.getClass().isAssignableFrom(HexBinary.class)) {
-				return ((HexBinary) obj).getValue().equals(value);
+				return Arrays.equals(((HexBinary) obj).getValue(),value);
 			}
 		}
 		return false;
@@ -84,7 +87,7 @@ public class HexBinary {
 	 */
 	@Override
 	public int hashCode() {
-		return value.hashCode();
+		return Arrays.hashCode(value);
 	}
 
 	@Override
