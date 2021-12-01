@@ -2,4 +2,5 @@
 /.settings
 /.classpath
 /.project
+/.devcontainer
 test-output/

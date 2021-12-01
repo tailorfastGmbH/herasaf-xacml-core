@@ -4,16 +4,19 @@ parameters:
     type: string
 
 steps:
+  - checkout: self
+    persistCredentials: true
   - bash: |
       if [ -z "$TAG" ]; then
         echo "##vso[task.logissue type=error;]Missing template parameter \"tag\""
         echo "##vso[task.complete result=Failed;]"
       fi
+
+      git config --global user.email $(Build.RequestedForEmail)
+      git config --global user.name $(Build.RequestedFor)
+
+      git tag $TAG
+      git push origin --tags
     env:
       TAG: ${{ parameters.tag }}
-    displayName: Check for required parameters
-
-  - task: git-tag-on-release-task@9
-    displayName: "Add Tag to git"
-    inputs:
-      staticTagName: "${{ parameters.tag }}"
+    displayName: Check for required parameters and Tag

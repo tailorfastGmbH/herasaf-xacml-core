@@ -10,7 +10,7 @@ steps:
       echo "##vso[task.setvariable variable=version]$version"
     displayName: Read versioning info from file
 
-  # If we run on main branch, read the tagging info from a file, then expose it to rest of the job
+  # If we run on the relase branch, read the tagging info from a file, then expose it to rest of the job
   - bash: |
       tagName=$(cat $(Pipeline.Workspace)/variables/TAG_NAME.txt)
       echo "##vso[task.setvariable variable=tagName]$tagName"

@@ -4,7 +4,7 @@
 	<groupId>org.herasaf.xacml.core</groupId>
 	<artifactId>herasaf-xacml-core</artifactId>
 	<packaging>bundle</packaging>
-	<version>1.1.0-SNAPSHOT</version>
+	<version>${revision}</version>
 
 	<name>HERAS-AF XACML :: Core</name>
 	<description>The core component contains the evaluation engine. This means: combining algorithms, functions, data types, and API interfaces.</description> <!-- mandatory for HERAS-AF -->
@@ -36,7 +36,15 @@
 		<url>https://github.com/prolutionsGmbH/herasaf-xacml-core/tree/main</url>
 	</scm>
 
+	<distributionManagement>
+		<repository>
+			<id>herasaf_repo</id>
+			<url>https://prolutions.pkgs.visualstudio.com/herasaf/_packaging/herasaf_repo/maven/v1</url>
+		</repository>
+	</distributionManagement>
+
 	<properties>
+		<revision>0.0.0</revision>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.compile.version>1.8</java.compile.version>
 
@@ -142,6 +150,35 @@
 				<artifactId>maven-release-plugin</artifactId>
 				<version>${release.plugin.version}</version>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>${javadoc.plugin.version}</version>
+				<configuration>
+					<failOnError>false</failOnError>
+				</configuration>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>${source.plugin.version}</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
@@ -177,7 +214,7 @@
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
-				</plugin>
+				</plugin>				
 			</plugins>
 		</pluginManagement>
 	</build>
@@ -187,35 +224,6 @@
 			<id>release</id>
 			<build>
 				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>${javadoc.plugin.version}</version>
-						<configuration>
-							<failOnError>false</failOnError>
-						</configuration>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>${source.plugin.version}</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar-no-fork</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
 					<plugin>
 						<groupId>org.kohsuke</groupId>
 						<artifactId>pgp-maven-plugin</artifactId>

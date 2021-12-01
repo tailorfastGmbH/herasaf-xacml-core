@@ -2,6 +2,8 @@ pool:
   vmImage: 'ubuntu-20.04'
 
 variables:
+  - group: PGP
+  - group: MavenCentral
   # Common variables and constants
   ### Pipeline-related
   - name: isMainBranch
@@ -20,7 +22,7 @@ variables:
   - name: projectName
     value: $(Build.DefinitionName)
   - name: GIT_VERSION_CONFIGURATION
-    value: ci/GitVersion.yml  
+    value: ci/GitVersion.yml
 
 stages:
   # Prepare Semantic Versioning
@@ -31,7 +33,6 @@ stages:
         parameters:
           gitVersionConfigurationFile: $(GIT_VERSION_CONFIGURATION)
 
-  # Build Container Image
   - stage: Build
     displayName: Build
     dependsOn: StageVersion
@@ -41,13 +42,17 @@ stages:
         steps:
           # Get target build version
           - template: ci/read-semver-files-steps.yml
-
+          - task: DownloadSecureFile@1
+            name: pgpPrivateKey
+            displayName: 'Download PGP Private Key'
+            inputs:
+              secureFile: 'prolutions.priv.pgp'
+            condition: and(succeeded(), eq(variables.isReleaseBranch, true))
           - template: ci/maven-build-steps.yml
             parameters:
               projectName: $(projectName)
               projectVersion: $(version)
-              mavenGoals: deploy
-
+              isRelease: $(isReleaseBranch)
 
   # Tag only on release branch
   - stage: StageTag
@@ -63,3 +68,40 @@ stages:
           - template: ci/git-tag-steps.yml
             parameters:
               tag: $(tagName)
+
+  - stage: deploy_maven_central_staging
+    displayName: Deploy to maven central staging repository
+    dependsOn: StageTag
+    condition: and(succeeded(), eq(variables.isReleaseBranch, True))
+    jobs:
+      - job: prepare_deploy
+        displayName: Prepare bundle and deploy
+        steps:
+          - template: ci/read-semver-files-steps.yml
+          - task: DownloadPackage@1
+            inputs:
+              packageType: 'maven'
+              feed: 'c80e28a2-572f-48ba-a715-f7fca8864286/7fde40f3-107c-49e6-990a-60547712b18e'
+              definition: 'org.herasaf.xacml.core:herasaf-xacml-core'
+              version: $(version)
+              view: 'local'
+              extract: true
+              downloadPath: '$(System.ArtifactsDirectory)'
+          - bash: |
+              ls -al $(System.ArtifactsDirectory)
+              rm $(System.ArtifactsDirectory)/*.asc.*
+              rm $(System.ArtifactsDirectory)/*.sha*
+              rm $(System.ArtifactsDirectory)/*.md5
+
+              cd $(System.ArtifactsDirectory) && jar -cvf bundle.jar herasaf-xacml-core-$(version)* && cd -
+              httpResponse=$(curl -w "%{http_code}" -v -H "Authorization: Basic $(prolutions_basic_auth_user_token)" -X POST -F file=@$(System.ArtifactsDirectory)/bundle.jar https://oss.sonatype.org/service/local/staging/bundle_upload -o output.log)
+              echo "maven central response: "
+              echo "$(cat output.log)"
+
+              if [ "$httpResponse" == "201" ]; then
+                echo "deploy to maven central staging reposiory successful: $httpResponse"
+              else
+                echo "deploy to maven central staging reposiory failed: $httpResponse"
+                exit 1
+              fi
+            displayName: Bundle and deploy

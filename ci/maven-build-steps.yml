@@ -7,15 +7,15 @@ parameters:
     displayName: Target build version
     type: string
 
-  - name: mavenGoals
-    displayName: "Override Maven goals (default: deploy)"
-    type: string
-    default: deploy
-
   - name: mavenOptions
     displayName: Additional Maven Options
     type: string
     default:
+
+  - name: isRelease
+    displayName: Is a release build (just a workaround because variable.isRelease is not accessible)
+    type: string
+    default: false
 
 steps:
   - bash: |
@@ -31,6 +31,14 @@ steps:
       PROJECT_NAME: ${{ parameters.projectName }}
       PROJECT_VERSION: ${{ parameters.projectVersion }}
     displayName: Check for required parameters
+  #Set the build command
+  - bash: |
+      if [ ${{ parameters.isRelease }} == "True" ]; then
+        echo "##vso[task.setvariable variable=mavenGoals]deploy -Prelease -Dpgp.secretkey=keyfile:$(pgpPrivateKey.secureFilePath) -Dpgp.passphrase=literal:$(prolutions_pgp_key_passphrase)"
+      else
+        echo "##vso[task.setvariable variable=mavenGoals]deploy"
+      fi
+    displayName: Determine the build command
 
   # Save a copy of the original POM file because JaCoCo modifies it, which breaks caching
   - script: cp pom.xml pom.xml.orig
@@ -46,19 +54,28 @@ steps:
         maven
       path: $(MAVEN_CACHE_FOLDER)
 
+  - task: MavenAuthenticate@0
+    displayName: 'Maven Authenticate'
+    inputs:
+      artifactsFeeds: herasaf_repo
+
+  - bash: |
+      sed -i "s/\${revision}/${{parameters.projectVersion}}/" pom.xml
+    displayName: adjust pom file with version
+
   # Maven build, test
   - task: Maven@3
     displayName: 'Build & Unit Test'
     inputs:
       mavenPomFile: 'pom.xml'
       mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
-      mavenAuthenticateFeed: true
+      #mavenAuthenticateFeed: true
       skipEffectivePom: true
       javaHomeOption: 'JDKVersion'
       jdkVersionOption: '$(JDK_VERSION)'
       jdkArchitectureOption: 'x64'
       publishJUnitResults: true
-      goals: ${{ parameters.mavenGoals }}
+      goals: $(mavenGoals)
       codeCoverageToolOption: JaCoCo
       testResultsFiles: '**/surefire-reports/TEST-*.xml'
       options: '-Drevision=${{parameters.projectVersion}} ${{ parameters.mavenOptions }}'
