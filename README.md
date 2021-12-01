@@ -1,3 +1,5 @@
+[![Build Status](https://prolutions.visualstudio.com/herasaf/_apis/build/status/prolutionsGmbH.herasaf-xacml-core?branchName=main)](https://prolutions.visualstudio.com/herasaf/_build/latest?definitionId=8&branchName=main)
+
 Welcome to HERAS-AF XACML Core.
 HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 

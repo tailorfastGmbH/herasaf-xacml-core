@@ -1,0 +1,81 @@
+parameters:
+  - name: projectName
+    displayName: Name of the Project to build
+    type: string
+
+  - name: projectVersion
+    displayName: Target build version
+    type: string
+
+  - name: mavenOptions
+    displayName: Additional Maven Options
+    type: string
+    default:
+
+  - name: isRelease
+    displayName: Is a release build (just a workaround because variable.isRelease is not accessible)
+    type: string
+    default: false
+
+steps:
+  - bash: |
+      if [ -z "$PROJECT_NAME" ]; then
+        echo "##vso[task.logissue type=error;]Missing template parameter \"projectName\""
+        echo "##vso[task.complete result=Failed;]"
+      fi
+      if [ -z "$PROJECT_VERSION" ]; then
+        echo "##vso[task.logissue type=error;]Missing template parameter \"projectVersion\""
+        echo "##vso[task.complete result=Failed;]"
+      fi
+    env:
+      PROJECT_NAME: ${{ parameters.projectName }}
+      PROJECT_VERSION: ${{ parameters.projectVersion }}
+    displayName: Check for required parameters
+  #Set the build command
+  - bash: |
+      if [ ${{ parameters.isRelease }} == "True" ]; then
+        echo "##vso[task.setvariable variable=mavenGoals]deploy -Prelease -Dpgp.secretkey=keyfile:$(pgpPrivateKey.secureFilePath) -Dpgp.passphrase=literal:$(prolutions_pgp_key_passphrase)"
+      else
+        echo "##vso[task.setvariable variable=mavenGoals]deploy"
+      fi
+    displayName: Determine the build command
+
+  # Save a copy of the original POM file because JaCoCo modifies it, which breaks caching
+  - script: cp pom.xml pom.xml.orig
+    displayName: Save original pom.xml
+
+  # Maven Cache
+  - task: Cache@2
+    displayName: Cache Maven local repo
+    inputs:
+      key: 'maven | "$(Agent.OS)" | **/pom.xml.orig' # Use original, unaltered pom file as key in Cache
+      restoreKeys: |
+        maven | "$(Agent.OS)"
+        maven
+      path: $(MAVEN_CACHE_FOLDER)
+
+  - task: MavenAuthenticate@0
+    displayName: 'Maven Authenticate'
+    inputs:
+      artifactsFeeds: herasaf_repo
+
+  - bash: |
+      sed -i "s/\${revision}/${{parameters.projectVersion}}/" pom.xml
+    displayName: adjust pom file with version
+
+  # Maven build, test
+  - task: Maven@3
+    displayName: 'Build & Unit Test'
+    inputs:
+      mavenPomFile: 'pom.xml'
+      mavenOptions: '-Xmx3072m $(MAVEN_OPTS)'
+      #mavenAuthenticateFeed: true
+      skipEffectivePom: true
+      javaHomeOption: 'JDKVersion'
+      jdkVersionOption: '$(JDK_VERSION)'
+      jdkArchitectureOption: 'x64'
+      publishJUnitResults: true
+      goals: $(mavenGoals)
+      codeCoverageToolOption: JaCoCo
+      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+      options: '-Drevision=${{parameters.projectVersion}} ${{ parameters.mavenOptions }}'
