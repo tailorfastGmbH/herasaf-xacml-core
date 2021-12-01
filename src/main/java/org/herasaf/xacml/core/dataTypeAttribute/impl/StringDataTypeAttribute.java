@@ -57,4 +57,9 @@ public class StringDataTypeAttribute extends AbstractDataTypeAttribute<String> {
     public String getDatatypeURI() {
         return ID;
     }
+
+    @Override
+    protected String format(String jaxbRepresentation){
+        return jaxbRepresentation;
+    }
 }

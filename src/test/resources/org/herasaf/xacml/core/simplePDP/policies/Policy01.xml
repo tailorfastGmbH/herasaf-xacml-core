@@ -9,9 +9,7 @@
 			<Subject>
 				<SubjectMatch
 					MatchId="urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match">
-					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
-						med.example.com
-					</AttributeValue>
+					<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">med.example.com</AttributeValue>
 					<SubjectAttributeDesignator
 						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
 						DataType="urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name" />
@@ -25,9 +23,7 @@
 				<Subject>
 					<SubjectMatch
 						MatchId="urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match">
-						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
-							med.example.com
-						</AttributeValue>
+						<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">med.example.com</AttributeValue>
 						<SubjectAttributeDesignator
 							AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"
 							DataType="urn:oasis:names:tc:xacml:1.0:data-type:rfc822Name" />
@@ -37,9 +33,7 @@
 		</Target>
 		<Condition>
 			<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:rfc822Name-match">
-				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">
-					med.example.com
-				</AttributeValue>
+				<AttributeValue DataType="http://www.w3.org/2001/XMLSchema#string">med.example.com</AttributeValue>
 				<Apply FunctionId="urn:oasis:names:tc:xacml:1.0:function:rfc822Name-one-and-only">
 					<SubjectAttributeDesignator
 						AttributeId="urn:oasis:names:tc:xacml:1.0:subject:subject-id"

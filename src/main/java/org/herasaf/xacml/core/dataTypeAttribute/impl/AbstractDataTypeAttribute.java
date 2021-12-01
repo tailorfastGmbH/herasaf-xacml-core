@@ -38,7 +38,8 @@ public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<
     public T convertTo(List<?> jaxbRepresentation) throws SyntaxException {
         verifySize(jaxbRepresentation, 1);
         Object simpleType = jaxbRepresentation.get(0);
-        return convertTo(((String) simpleType).trim());
+        String formattedSimpleType = format((String) simpleType);
+        return convertTo(formattedSimpleType);
     }
 
     /**
@@ -49,6 +50,10 @@ public abstract class AbstractDataTypeAttribute<T> implements DataTypeAttribute<
      * @throws SyntaxException when an error occurs while converting
      */
     public abstract T convertTo(String jaxbRepresentation) throws SyntaxException;
+
+    protected String format(String jaxbRepresentation){
+        return jaxbRepresentation.trim();
+    }
 
     /** {@inheritDoc} */
     @Override
