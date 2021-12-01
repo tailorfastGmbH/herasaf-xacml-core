@@ -25,12 +25,11 @@ HERAS-AF XACML Core is an open source XACML 2.0 implementation.
 If you have any quetions regarding how to use the herasaf-xacml-core or about the project use [Stackoverflow](http://stackoverflow.com/) with the tags **#herasaf** or **#xacml**.
 
 The current release is available from maven central.
-```
-#!xml
+```xml
 <dependency>
     <groupId>org.herasaf.xacml.core</groupId>
     <artifactId>herasaf-xacml-core</artifactId>
-    <version>1.0.4.RELEASE</version>
+    <version>2.0.2</version>
 </dependency>
 ```
 
