@@ -33,20 +33,6 @@ The current release is available from maven central.
     <version>1.0.4.RELEASE</version>
 </dependency>
 ```
-[Release Notes 1.0.4.RELEASE](https://herasaf.jira.com/browse/XACMLCORE/fixforversion/10630)
-
-[Release Notes 1.0.3.RELEASE](https://herasaf.jira.com/projects/XACMLCORE/versions/10730)
-
-[Release Notes 1.0.2.RELEASE](https://herasaf.jira.com/projects/XACMLCORE/versions/10530)
-
-[Release Notes 1.0.1.RELEASE](https://herasaf.jira.com/projects/XACMLCORE/versions/10330)
-
-||||
-| ------------- | ------------- | ------------- |
-| Issue Tracking |https://herasaf.jira.com/projects/XACMLCORE | Create a new issue if you like. |
-| Wiki (including User's Guide) | https://herasaf.jira.com/wiki/display/XACMLCORE/XACML+Core+1.0.0.RELEASE | Read our User's Guide about how to use the library. |
-| E-Mail | [info@herasaf.org](mailto:info@herasaf.org) | Write us an e-mail, if you have any questions. |
-
 
 ## Who is using? ##
 ||
