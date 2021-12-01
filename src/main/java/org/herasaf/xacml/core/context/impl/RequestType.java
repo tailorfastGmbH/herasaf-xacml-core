@@ -161,7 +161,7 @@ public class RequestType implements Serializable {
 		AttributeType currentTimeAttr = new AttributeType();
 		currentTimeAttr.setAttributeId(CURRENT_TIME_DATATYPEID);
 		currentTimeAttr.setDataType(new TimeDataTypeAttribute());
-		currentTimeAttr.getAttributeValues().add(createDateTime(dateTime, DateTimeFormatter.ISO_DATE));
+		currentTimeAttr.getAttributeValues().add(createDateTime(dateTime, DateTimeFormatter.ISO_TIME));
 
 		return currentTimeAttr;
 	}

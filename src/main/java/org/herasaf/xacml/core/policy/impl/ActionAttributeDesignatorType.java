@@ -17,7 +17,6 @@
 
 package org.herasaf.xacml.core.policy.impl;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlRootElement;
@@ -25,7 +24,6 @@ import javax.xml.bind.annotation.XmlType;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.policy.ExpressionProcessingException;
@@ -66,6 +64,7 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
+		validateAttributeDesignator();
 		List<Object> returnValues = handle(request);
 
 		/*
@@ -87,27 +86,9 @@ public class ActionAttributeDesignatorType extends AttributeDesignatorType {
 		return returnValues;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<Object> handle(RequestType request) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
-		List<Object> returnValues = new ArrayList<Object>();
-
-		// A RequestType is not thread safe, because of this you can iterate
-		// over it.
-		for (AttributeType attr : request.getAction().getAttributes()) {
-			if (getAttributeId().equals(attr.getAttributeId()) && getDataType().toString().equals(attr.getDataType().toString())) {
-				if (getIssuer() != null) {
-					if (getIssuer().equals(attr.getIssuer())) {
-						addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-					}
-				} else {
-					addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-				}
-			}
-		}
+		List<Object> returnValues = handle(request.getAction().getAttributes());
 		return returnValues;
-	}	
+	}
 }

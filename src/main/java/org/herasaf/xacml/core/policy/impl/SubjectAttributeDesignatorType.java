@@ -19,15 +19,12 @@ package org.herasaf.xacml.core.policy.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
-import org.herasaf.xacml.core.context.impl.AttributeType;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;
 import org.herasaf.xacml.core.context.impl.RequestType;
 import org.herasaf.xacml.core.context.impl.SubjectType;
@@ -96,6 +93,7 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 	@Override
 	public Object handle(RequestType request, EvaluationContext evaluationContext) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
+		validateAttributeDesignator();
 		List<Object> returnValues = handle(request);
 
 		/*
@@ -117,32 +115,17 @@ public class SubjectAttributeDesignatorType extends AttributeDesignatorType {
 		return returnValues;
 	}
 	
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
 	public List<Object> handle(RequestType request) throws ExpressionProcessingException,
 			MissingAttributeException, SyntaxException {
 		List<Object> returnValues = new ArrayList<Object>();
 
-		// A RequestType is not thread safe, because of this you can iterate
+		// A SubjectType is not thread safe, because of this you can iterate
 		// over it.
 		List<SubjectType> subjects = request.getSubjects();
 
 		for (SubjectType sub : subjects) {
 			if (sub.getSubjectCategory().equals(getSubjectCategory())) {
-				for (AttributeType attr : sub.getAttributes()) {
-					if (getAttributeId().equals(attr.getAttributeId())
-							&& getDataType().toString().equals(attr.getDataType().toString())) {
-						if (getIssuer() != null) {
-							if (getIssuer().equals(attr.getIssuer())) {
-								addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-							}
-						} else {
-							addAndConvertAttrValue(returnValues, attr.getAttributeValues());
-						}
-					}
-				}
+				returnValues.addAll(handle(sub.getAttributes()));
 			}
 		}
 		return returnValues;
