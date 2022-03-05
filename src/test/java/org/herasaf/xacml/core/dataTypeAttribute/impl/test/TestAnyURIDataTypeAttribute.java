@@ -21,6 +21,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
@@ -69,6 +70,13 @@ public class TestAnyURIDataTypeAttribute {
 		data.add("hallo/du/.ch");
 		assertEquals(dataType.convertTo(data), new URI("hallo/du/.ch"));
 	}
+	
+	@Test
+	public void testEmpty() throws Exception{
+		List<String> data = Collections.emptyList();
+		assertEquals(dataType.convertTo(data), new URI(""));
+	}
+	
 	
 	/**
 	 * Tests if the datatype does not accept illegal arguments.
