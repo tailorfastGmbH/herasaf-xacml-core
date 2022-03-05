@@ -18,6 +18,8 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.List;
 
 import org.herasaf.xacml.core.SyntaxException;
 
@@ -34,9 +36,20 @@ public class AnyURIDataTypeAttribute extends AbstractDataTypeAttribute<URI> {
     public String getDatatypeURI() {
         return ID;
     }
+    
+    /** {@inheritDoc} */
+    @Override
+    public URI convertTo(List<?> jaxbRepresentation) throws SyntaxException {
+        if (jaxbRepresentation.isEmpty()) {
+            return convertTo("");
+        }
+        URI convertedValue = super.convertTo(jaxbRepresentation);
+        return convertedValue;
+    }
 
     /** {@inheritDoc} */
     @Override
+    
     public URI convertTo(String jaxbRepresentation) throws SyntaxException {
         try {
             URI uri = new URI(jaxbRepresentation);
