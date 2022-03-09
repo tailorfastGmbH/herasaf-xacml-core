@@ -17,6 +17,11 @@ parameters:
     type: string
     default: false
 
+  - name: isPullRequest
+    displayName: Is a pull request build (just a workaround because variable.isPullRequest is not accessible)
+    type: string
+    default: false
+
 steps:
   - bash: |
       if [ -z "$PROJECT_NAME" ]; then
@@ -35,8 +40,10 @@ steps:
   - bash: |
       if [ ${{ parameters.isRelease }} == "True" ]; then
         echo "##vso[task.setvariable variable=mavenGoals]deploy -Prelease -Dpgp.secretkey=keyfile:$(pgpPrivateKey.secureFilePath) -Dpgp.passphrase=literal:$(prolutions_pgp_key_passphrase)"
-      else
+      elif [ ${{ parameters.isPullRequest }} == "False" ]; then
         echo "##vso[task.setvariable variable=mavenGoals]deploy"
+      else
+        echo "##vso[task.setvariable variable=mavenGoals]verify"
       fi
     displayName: Determine the build command
 
