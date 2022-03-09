@@ -10,6 +10,8 @@ variables:
     value: $[eq(variables['Build.SourceBranch'], 'refs/heads/main')]
   - name: isReleaseBranch
     value: $[startsWith(variables['Build.SourceBranch'], 'refs/heads/release/')]
+  - name: isPullRequest
+    value: $[startsWith(variables['Build.SourceBranch'], 'refs/pull/')]
     
   ### Build-related
   - name: MAVEN_CACHE_FOLDER
@@ -53,6 +55,7 @@ stages:
               projectName: $(projectName)
               projectVersion: $(version)
               isRelease: $(isReleaseBranch)
+              isPullRequest: $(isPullRequest)
 
   # Tag only on release branch
   - stage: StageTag
