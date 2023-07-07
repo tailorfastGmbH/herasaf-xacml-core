@@ -21,7 +21,7 @@ package org.herasaf.xacml.core.dataTypeAttribute.impl.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DoubleDataTypeAttribute;

@@ -1,7 +1,7 @@
 package org.herasaf.xacml.core.tests.combinerParameters;
 
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertEquals;
 
 import org.herasaf.xacml.core.policy.Evaluatable;
 import org.herasaf.xacml.core.policy.PolicyMarshaller;

@@ -22,6 +22,6 @@
 // Generated on: 2007.10.03 at 07:56:30 AM CEST 
 //
 
-@javax.xml.bind.annotation.XmlSchema(namespace = "urn:oasis:names:tc:xacml:2.0:context:schema:os", elementFormDefault = javax.xml.bind.annotation.XmlNsForm.QUALIFIED)
-@javax.xml.bind.annotation.XmlAccessorType(javax.xml.bind.annotation.XmlAccessType.FIELD)
+@jakarta.xml.bind.annotation.XmlSchema(namespace = "urn:oasis:names:tc:xacml:2.0:context:schema:os", elementFormDefault = jakarta.xml.bind.annotation.XmlNsForm.QUALIFIED)
+@jakarta.xml.bind.annotation.XmlAccessorType(jakarta.xml.bind.annotation.XmlAccessType.FIELD)
 package org.herasaf.xacml.core.context.impl;

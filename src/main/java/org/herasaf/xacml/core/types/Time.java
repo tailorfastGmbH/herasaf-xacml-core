@@ -79,8 +79,8 @@ public class Time implements Comparable<Time> {
 				time = (OffsetTime) parsed;
 			}
 		} catch (DateTimeParseException e) {
-			String message = "Parsing time is not supported.";
-			logger.error(message);
+			String message = String.format("Parsing time %s is not supported.", timeString);
+			logger.warn(message);
 			throw new SyntaxException(message, e);
 		}
 	}

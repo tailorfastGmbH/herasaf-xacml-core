@@ -18,8 +18,8 @@
 package org.herasaf.xacml.core.policy.impl;
 
 import java.util.List;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;
 import org.herasaf.xacml.core.context.impl.AttributeValueType;

@@ -17,7 +17,7 @@
 
 package org.herasaf.xacml.core.policy.combiningAlgorithm.rule.impl.test;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.core.policy.impl.ApplyType;
 import org.herasaf.xacml.core.policy.impl.ConditionType;

@@ -1,6 +1,6 @@
 package org.herasaf.xacml.core.converter;
 
-import javax.xml.bind.annotation.adapters.XmlAdapter;
+import jakarta.xml.bind.annotation.adapters.XmlAdapter;
 
 import org.herasaf.xacml.core.policy.EvaluatableID;
 import org.herasaf.xacml.core.policy.impl.EvaluatableIDImpl;

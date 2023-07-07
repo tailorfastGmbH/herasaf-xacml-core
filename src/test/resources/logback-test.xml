@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<layout class="ch.qos.logback.classic.PatternLayout">
+		<encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
 			<Pattern>%d{HH:mm:ss.SSS} %-5level Logger[%logger{36}] - Request[%X{org:herasaf:request:xacml:evaluation:requesttime}] - EvaluatableId[%X{org:herasaf:xacml:evaluation:evaluatableid}] - RuleId[%X{org:herasaf:xacml:evaluation:ruleid}] %msg%n</Pattern>
-		</layout>
+		</encoder>
 	</appender>
 
 	<root level="info">

@@ -1,5 +1,5 @@
 pool:
-  vmImage: 'ubuntu-20.04'
+  vmImage: 'ubuntu-22.04'
 
 variables:
   - group: PGP
@@ -19,7 +19,7 @@ variables:
   - name: MAVEN_OPTS
     value: -Dmaven.repo.local=$(MAVEN_CACHE_FOLDER)
   - name: JDK_VERSION
-    value: '1.8'
+    value: '11'
   # Project-specific variables
   - name: projectName
     value: $(Build.DefinitionName)

@@ -54,7 +54,7 @@ public class IPv4Address extends IPAddress {
 		if (!value.matches(REGEX)) {
 			IllegalArgumentException e = new IllegalArgumentException(value
 					+ " is not a valid IP Address.");
-			logger.error(e.getMessage());
+			logger.warn(e.getMessage());
 			throw e;
 		}
 		try {
