@@ -100,7 +100,7 @@ public class DateTime implements Comparable<DateTime> {
 			}
 		} catch (DateTimeParseException e) {
 			String message = String.format("Parsing dateTime %s is not supported.", dateTimeString);
-			logger.error(message);
+			logger.warn(message);
 			throw new SyntaxException(message, e);
 		}
 	}

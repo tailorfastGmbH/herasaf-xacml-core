@@ -84,7 +84,7 @@ public class Date implements Comparable<Date> {
 		} catch (DateTimeException e) {
 			String message = String.format(
 					"The date '%s' is not a valid date according to http://www.w3.org/2001/XMLSchema#date", dateString);
-			logger.error(message);
+			logger.warn(message);
 			throw new SyntaxException(message, e);
 		}
 	}

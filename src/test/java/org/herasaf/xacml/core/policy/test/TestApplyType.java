@@ -21,7 +21,7 @@ import static org.testng.Assert.assertEquals;
 
 import java.util.Arrays;
 
-import javax.xml.bind.JAXBElement;
+import jakarta.xml.bind.JAXBElement;
 
 import org.herasaf.xacml.core.SyntaxException;
 import org.herasaf.xacml.core.context.EvaluationContext;

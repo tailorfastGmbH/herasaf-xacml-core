@@ -28,9 +28,9 @@ import org.herasaf.xacml.core.dataTypeAttribute.impl.DateDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.DateTimeDataTypeAttribute;
 import org.herasaf.xacml.core.dataTypeAttribute.impl.TimeDataTypeAttribute;
 
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
+import jakarta.xml.bind.annotation.XmlType;
 
 import java.io.Serializable;
 import java.time.OffsetDateTime;

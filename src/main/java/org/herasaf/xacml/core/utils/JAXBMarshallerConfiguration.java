@@ -20,7 +20,7 @@ package org.herasaf.xacml.core.utils;
 import java.net.MalformedURLException;
 import java.util.List;
 
-import javax.xml.bind.ValidationEventHandler;
+import jakarta.xml.bind.ValidationEventHandler;
 import javax.xml.validation.Schema;
 
 import org.slf4j.Logger;

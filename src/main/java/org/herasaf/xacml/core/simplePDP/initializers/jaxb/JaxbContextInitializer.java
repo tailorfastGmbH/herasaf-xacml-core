@@ -20,8 +20,8 @@ import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
+import jakarta.xml.bind.JAXBContext;
+import jakarta.xml.bind.JAXBException;
 
 import org.herasaf.xacml.core.InitializationException;
 import org.herasaf.xacml.core.context.RequestMarshaller;
